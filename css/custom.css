@@ -104,11 +104,13 @@
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
 }
 
+/* Compact header with proper spacing */
 .md-header__inner {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
+/* Logo sizing */
 .md-header__button.md-logo img,
 .md-header__button.md-logo svg {
   width: 28px;
@@ -116,12 +118,56 @@
   color: #fafaf8;
 }
 
+/* Always show the title -- never hide on scroll */
 .md-header__title {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
 
+.md-header__topic:first-child {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Prevent title from being replaced by page title on scroll */
+.md-header__title[data-md-state="active"] .md-header__topic {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  pointer-events: auto;
+  position: relative;
+}
+
+.md-header__title[data-md-state="active"] .md-header__topic + .md-header__topic {
+  opacity: 0;
+  transform: none;
+  transition: none;
+  pointer-events: none;
+  position: absolute;
+}
+
+/* Fix search box -- prevent overlap with theme toggle */
+.md-search {
+  max-width: 180px;
+  margin-right: 4px;
+}
+
+.md-search__input {
+  font-size: 13px;
+  height: 32px;
+  padding-left: 36px;
+  padding-right: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+/* Give header buttons proper spacing */
+.md-header__button {
+  margin: 0 2px;
+}
+
+/* Section tabs -- compact with strong active indicator */
 .md-tabs {
   background-color: #1a1a1a;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -130,18 +176,22 @@
 .md-tabs__link {
   font-size: 12.5px;
   font-weight: 500;
-  letter-spacing: 0.02em;
-  opacity: 0.5;
-  padding: 0 12px;
+  letter-spacing: 0.01em;
+  opacity: 0.45;
+  padding: 8px 14px;
+  transition: opacity 0.15s ease;
 }
 
+/* Strong active tab: bright text + solid underline */
 .md-tabs__link--active {
-  opacity: 0.9;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  color: #fafaf8;
+  border-bottom: 2px solid #fafaf8;
+  font-weight: 600;
 }
 
 .md-tabs__link:hover {
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 /* Breadcrumb path bar */
