@@ -1,0 +1,469 @@
+/* Agentic AI for Serious Engineers - Custom Theme
+   Matches sunilprakash.com design language:
+   Ma (negative space), Kanso (simplicity), Shibui (subtle refinement) */
+
+/* ---- Fonts ---- */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ---- Color Palette ---- */
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #1a1a1a;
+  --md-primary-fg-color--light: #6b6b6b;
+  --md-primary-fg-color--dark: #111;
+  --md-primary-bg-color: #fafaf8;
+  --md-primary-bg-color--light: #fff;
+  --md-accent-fg-color: #1a1a1a;
+  --md-default-bg-color: #fafaf8;
+  --md-default-fg-color: #1a1a1a;
+  --md-default-fg-color--light: #6b6b6b;
+  --md-default-fg-color--lighter: #999;
+  --md-default-fg-color--lightest: #e8e8e8;
+  --md-typeset-color: #1a1a1a;
+  --md-code-bg-color: #f5f5f3;
+  --md-code-fg-color: #1a1a1a;
+  --md-footer-bg-color: #1a1a1a;
+  --md-footer-fg-color: rgba(255, 255, 255, 0.7);
+  --md-footer-fg-color--light: rgba(255, 255, 255, 0.5);
+  --md-footer-fg-color--lighter: rgba(255, 255, 255, 0.3);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #141413;
+  --md-default-fg-color: rgba(255, 255, 255, 0.87);
+  --md-default-fg-color--light: rgba(255, 255, 255, 0.6);
+  --md-default-fg-color--lighter: rgba(255, 255, 255, 0.4);
+  --md-default-fg-color--lightest: rgba(255, 255, 255, 0.1);
+  --md-primary-fg-color: #fafaf8;
+  --md-primary-bg-color: #1a1a1a;
+  --md-accent-fg-color: rgba(255, 255, 255, 0.87);
+  --md-code-bg-color: #1e1e1c;
+  --md-code-fg-color: rgba(255, 255, 255, 0.87);
+  --md-typeset-color: rgba(255, 255, 255, 0.87);
+  --md-footer-bg-color: #111;
+}
+
+/* ---- Typography ---- */
+:root {
+  --md-text-font: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --md-code-font: "IBM Plex Mono", "SF Mono", monospace;
+}
+
+.md-typeset {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--md-typeset-color);
+}
+
+.md-typeset h1 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(26px, 3.5vw, 36px);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+  color: var(--md-typeset-color);
+}
+
+.md-typeset h2 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(20px, 2.5vw, 26px);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset h3 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.35;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.md-typeset h4 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  margin-top: 1.5rem;
+}
+
+/* ---- Header / Navigation ---- */
+.md-header {
+  background-color: var(--md-primary-fg-color);
+  box-shadow: none;
+}
+
+.md-header[data-md-state="shadow"] {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
+}
+
+.md-tabs {
+  background-color: var(--md-primary-fg-color);
+}
+
+.md-tabs__link {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  opacity: 1;
+}
+
+/* ---- Content Area ---- */
+.md-main__inner {
+  margin-top: 0;
+}
+
+.md-content {
+  max-width: 900px;
+}
+
+.md-content__inner {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+/* Hero diagrams break out of content column for full width */
+.md-typeset figure {
+  max-width: none;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  width: calc(100% + 4rem);
+}
+
+.md-typeset figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 4px;
+  background: #fff;
+  padding: 1rem;
+}
+
+.md-typeset figcaption {
+  text-align: center;
+  font-size: 13px;
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+@media (min-width: 1440px) {
+  .md-typeset figure {
+    margin-left: -4rem;
+    margin-right: -4rem;
+    width: calc(100% + 8rem);
+  }
+}
+
+/* ---- Sidebar Navigation ---- */
+.md-sidebar {
+  padding-top: 1.5rem;
+}
+
+.md-nav__link {
+  font-size: 13px;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-nav__link--active,
+.md-nav__link:hover {
+  color: var(--md-default-fg-color);
+}
+
+.md-nav__item--active > .md-nav__link {
+  font-weight: 500;
+  color: var(--md-default-fg-color);
+}
+
+/* ---- Tables ---- */
+.md-typeset table:not([class]) {
+  font-size: 14px;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-collapse: collapse;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-code-bg-color);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset table:not([class]) td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  vertical-align: top;
+}
+
+.md-typeset table:not([class]) tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---- Lists ---- */
+.md-typeset ul li,
+.md-typeset ol li {
+  margin-bottom: 0.4em;
+}
+
+/* ---- Blockquotes ---- */
+.md-typeset blockquote {
+  border-left: 2px solid var(--md-default-fg-color);
+  padding-left: 1.25rem;
+  color: var(--md-default-fg-color--light);
+  font-style: normal;
+}
+
+/* ---- Code ---- */
+.md-typeset code {
+  font-size: 13px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background-color: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset pre {
+  border-radius: 4px;
+  border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset pre code {
+  border: none;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ---- Horizontal Rules ---- */
+.md-typeset hr {
+  border: none;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  margin: 3rem 0;
+}
+
+/* ---- Admonitions ---- */
+.md-typeset .admonition,
+.md-typeset details {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--md-default-fg-color);
+  border-radius: 4px;
+  box-shadow: none;
+  background: var(--md-default-bg-color);
+}
+
+/* ---- Footer ---- */
+.md-footer {
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-footer-meta {
+  background-color: var(--md-footer-bg-color);
+}
+
+/* ---- Mermaid Diagrams ---- */
+.mermaid {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 4px;
+}
+
+/* ---- Executive Summary Styling ---- */
+/* First ul after h2 "Executive Summary" gets special treatment */
+.md-typeset h2#executive-summary + ul {
+  background: var(--md-code-bg-color);
+  border-left: 3px solid var(--md-default-fg-color);
+  padding: 20px 24px 20px 32px;
+  border-radius: 0 4px 4px 0;
+  list-style: none;
+  margin: 1.5rem 0 2rem;
+}
+
+.md-typeset h2#executive-summary + ul li {
+  padding: 4px 0;
+  position: relative;
+  padding-left: 0;
+}
+
+.md-typeset h2#executive-summary + ul li::before {
+  content: none;
+}
+
+/* ---- Search ---- */
+.md-search__input {
+  background-color: rgba(255, 255, 255, 0.08);
+  font-family: var(--md-text-font);
+}
+
+/* ---- Proof Strip ---- */
+.proof-strip {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--md-default-fg-color--light);
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding: 10px 0;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+/* ---- Smooth Transitions ---- */
+a,
+.md-nav__link,
+.md-tabs__link {
+  transition: color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+}
+
+/* ---- Diagram Viewer Modal ---- */
+.diagram-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.diagram-modal--open {
+  display: flex;
+  flex-direction: column;
+}
+
+.diagram-modal__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: #1a1a1a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.diagram-modal__title {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--md-text-font);
+}
+
+.diagram-modal__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.diagram-modal__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.diagram-modal__btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.diagram-modal__close {
+  width: 40px;
+  height: 40px;
+  margin-left: 12px;
+}
+
+.diagram-modal__zoom-level {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 44px;
+  text-align: center;
+  font-family: var(--md-code-font);
+}
+
+.diagram-modal__viewer {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  position: relative;
+}
+
+.diagram-modal__img {
+  max-width: 95%;
+  max-height: 90%;
+  transform-origin: center center;
+  transition: transform 0.1s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  background: #fff;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+/* Expand hint on figures */
+.diagram-expand-hint {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(26, 26, 26, 0.85);
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  font-family: var(--md-text-font);
+}
+
+.md-typeset figure:hover .diagram-expand-hint {
+  opacity: 1;
+}
+
+.md-typeset figure:hover img[src$=".svg"] {
+  border-color: var(--md-default-fg-color--light);
+}
+
+/* ---- Print ---- */
+@media print {
+  .md-typeset {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .md-typeset h1 {
+    font-size: 28px;
+  }
+
+  .md-typeset h2 {
+    font-size: 22px;
+  }
+}
