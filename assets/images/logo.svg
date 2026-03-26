@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 280 280">
+  <!-- Enso circle - organic brush stroke with taper at the gap -->
+  <path d="M140 22 C210 18, 262 65, 264 140 C266 218, 216 264, 140 264 C62 264, 16 216, 16 140 C16 74, 50 32, 92 24"
+        fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" opacity="0.82"/>
+  <!-- Subtle taper at start of enso -->
+  <path d="M92 24 C88 25, 85 26, 82 28"
+        fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- S - Shodo brush stroke -->
+  <!-- Top approach -->
+  <path d="M104 96 C118 90, 136 90, 142 98"
+        fill="none" stroke="#1a1a1a" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Diagonal thick downstroke -->
+  <path d="M142 98 C138 110, 118 118, 106 124"
+        fill="none" stroke="#1a1a1a" stroke-width="6.5" stroke-linecap="round"/>
+  <!-- Bottom curve - smooth gradual taper out -->
+  <path d="M106 124 C100 130, 104 142, 114 148 C124 153, 138 152, 148 148 C155 145, 160 141, 163 137"
+        fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round"/>
+  <!-- Gentle lift-off - brush gradually leaving paper -->
+  <path d="M163 137 C165 134, 166 131, 166 129"
+        fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- P - Bold vertical downstroke -->
+  <path d="M174 92 L174 160"
+        fill="none" stroke="#1a1a1a" stroke-width="7" stroke-linecap="round"/>
+  <!-- P bowl - lighter stroke -->
+  <path d="M174 92 C174 92, 180 90, 192 92 C206 96, 210 108, 206 118 C202 128, 190 132, 174 130"
+        fill="none" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Ink pool at base of P downstroke -->
+  <ellipse cx="174" cy="161" rx="2.5" ry="1.5" fill="#1a1a1a" opacity="0.3"/>
+</svg>
