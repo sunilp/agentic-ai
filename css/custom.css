@@ -94,29 +94,93 @@
   margin-top: 1.5rem;
 }
 
-/* ---- Header / Navigation ---- */
+/* ---- Header / Navigation (Option C: Dark Compact + Breadcrumb) ---- */
 .md-header {
-  background-color: var(--md-primary-fg-color);
+  background-color: #1a1a1a;
   box-shadow: none;
 }
 
 .md-header[data-md-state="shadow"] {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.md-header__inner {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  width: 28px;
+  height: 28px;
+  color: #fafaf8;
+}
+
+.md-header__title {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 .md-tabs {
-  background-color: var(--md-primary-fg-color);
+  background-color: #1a1a1a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .md-tabs__link {
-  font-size: 13px;
+  font-size: 12.5px;
+  font-weight: 500;
   letter-spacing: 0.02em;
-  opacity: 0.7;
+  opacity: 0.5;
+  padding: 0 12px;
 }
 
-.md-tabs__link--active,
+.md-tabs__link--active {
+  opacity: 0.9;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+
 .md-tabs__link:hover {
-  opacity: 1;
+  opacity: 0.85;
+}
+
+/* Breadcrumb path bar */
+.md-path {
+  background-color: var(--md-code-bg-color);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding: 6px 0;
+}
+
+.md-path__list {
+  font-size: 12px;
+}
+
+.md-path__link {
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-path__item:last-child .md-path__link {
+  color: var(--md-default-fg-color);
+  font-weight: 500;
+}
+
+/* Author backlink in header */
+.md-header__backlink {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  margin-left: 16px;
+  transition: color 0.2s ease;
+}
+
+.md-header__backlink:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Dark mode breadcrumb adjustments */
+[data-md-color-scheme="slate"] .md-path {
+  background-color: #1e1e1c;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
 /* ---- Content Area ---- */
