@@ -367,10 +367,17 @@
   content: none;
 }
 
-/* ---- Search ---- */
+/* ---- Search (compact) ---- */
 .md-search__input {
   background-color: rgba(255, 255, 255, 0.08);
   font-family: var(--md-text-font);
+  font-size: 13px;
+  height: 32px;
+}
+
+/* Hide the search icon label text, just show icon */
+.md-header .md-search {
+  max-width: 200px;
 }
 
 /* ---- Proof Strip ---- */
