@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="450" viewBox="0 0 500 450" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10B981"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="500" height="450" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="250" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">The Observe-Think-Act Loop</text>
+  <line x1="40" y1="42" x2="460" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- Center label -->
+  <circle cx="250" cy="248" r="46" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="2"/>
+  <text x="250" y="244" text-anchor="middle" font-size="13" font-weight="bold" fill="#374151">Agent</text>
+  <text x="250" y="260" text-anchor="middle" font-size="13" font-weight="bold" fill="#374151">Loop</text>
+
+  <!-- TOP: OBSERVE -->
+  <rect x="130" y="60" width="240" height="72" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="250" y="86" text-anchor="middle" font-size="15" font-weight="bold" fill="#1D4ED8">OBSERVE</text>
+  <text x="250" y="104" text-anchor="middle" font-size="11" fill="#6B7280">Read context and tool results</text>
+  <text x="250" y="120" text-anchor="middle" font-size="11" fill="#6B7280">from previous step</text>
+
+  <!-- BOTTOM-RIGHT: THINK -->
+  <rect x="300" y="304" width="172" height="72" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+  <text x="386" y="330" text-anchor="middle" font-size="15" font-weight="bold" fill="#92400E">THINK</text>
+  <text x="386" y="348" text-anchor="middle" font-size="11" fill="#6B7280">Model reasons over</text>
+  <text x="386" y="364" text-anchor="middle" font-size="11" fill="#6B7280">accumulated evidence</text>
+
+  <!-- BOTTOM-LEFT: ACT -->
+  <rect x="28" y="304" width="172" height="72" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="114" y="330" text-anchor="middle" font-size="15" font-weight="bold" fill="#B91C1C">ACT</text>
+  <text x="114" y="348" text-anchor="middle" font-size="11" fill="#6B7280">Call tool or produce</text>
+  <text x="114" y="364" text-anchor="middle" font-size="11" fill="#6B7280">final answer</text>
+
+  <!-- Arrow: OBSERVE → THINK (top-center down-right) -->
+  <path d="M340,132 Q420,200 420,302" fill="none" stroke="#6B7280" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="408" y="218" font-size="11" fill="#6B7280" text-anchor="start">LLM call</text>
+
+  <!-- Arrow: THINK → ACT (bottom-right to bottom-left) -->
+  <line x1="298" y1="342" x2="202" y2="342" stroke="#6B7280" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="250" y="334" text-anchor="middle" font-size="11" fill="#6B7280">tool call</text>
+
+  <!-- Arrow: ACT → OBSERVE (bottom-left back up to top-center) -->
+  <path d="M80,302 Q80,200 160,132" fill="none" stroke="#6B7280" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="55" y="218" font-size="11" fill="#6B7280" text-anchor="middle">result</text>
+  <text x="55" y="232" font-size="11" fill="#6B7280" text-anchor="middle">in context</text>
+
+  <!-- STOP exit arrow from ACT -->
+  <line x1="114" y1="376" x2="114" y2="416" stroke="#10B981" stroke-width="2" marker-end="url(#arr-green)"/>
+  <rect x="50" y="416" width="130" height="28" rx="6" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+  <text x="115" y="434" text-anchor="middle" font-size="12" font-weight="bold" fill="#065F46">Final Answer</text>
+  <text x="30" y="398" font-size="10" fill="#10B981">answer ready</text>
+
+  <!-- Budget exhausted note -->
+  <text x="250" y="434" text-anchor="middle" font-size="10" fill="#9CA3AF">Loop exits when answer ready or step budget exhausted</text>
+</svg>

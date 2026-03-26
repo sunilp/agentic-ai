@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" width="700" height="400" style="background:#fff;font-family:system-ui,-apple-system,sans-serif;">
+
+  <!-- Background -->
+  <rect width="700" height="400" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="350" y="28" text-anchor="middle" font-size="16" font-weight="600" fill="#374151">The Agent Tax: Overhead by Architecture</text>
+
+  <!-- Subtitle -->
+  <text x="350" y="48" text-anchor="middle" font-size="12" fill="#6B7280">Bar length = relative overhead (longer = more expensive / harder)</text>
+
+  <!-- Y-axis label groups: architectures -->
+  <!-- Rows: Workflow (y=90), Single Agent (y=175), Multi-Agent (y=260), Multi-Agent + HITL (y=345) -->
+
+  <!-- ========== GRID & AXIS ========== -->
+  <!-- X axis labels: Low, Medium, High -->
+  <line x1="190" y1="65" x2="650" y2="65" stroke="#D1D5DB" stroke-width="1"/>
+  <line x1="190" y1="65" x2="190" y2="370" stroke="#6B7280" stroke-width="1.5"/>
+
+  <!-- X scale markers -->
+  <line x1="190" y1="65" x2="190" y2="370" stroke="#D1D5DB" stroke-width="1"/>
+  <line x1="343" y1="65" x2="343" y2="370" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="497" y1="65" x2="497" y2="370" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="650" y1="65" x2="650" y2="370" stroke="#D1D5DB" stroke-width="1"/>
+
+  <text x="190" y="60" text-anchor="middle" font-size="10" fill="#6B7280">Low</text>
+  <text x="343" y="60" text-anchor="middle" font-size="10" fill="#6B7280">Medium</text>
+  <text x="497" y="60" text-anchor="middle" font-size="10" fill="#6B7280">High</text>
+  <text x="650" y="60" text-anchor="middle" font-size="10" fill="#6B7280">Very High</text>
+
+  <!-- Color scale: green (#10B981) -> yellow (#F59E0B) -> red (#EF4444) -->
+  <!-- Low = green, Medium-Low = #84CC16, Medium = #F59E0B, High = #F97316, Very High = #EF4444 -->
+
+  <!-- ========== ROW 1: WORKFLOW ========== -->
+  <text x="185" y="82" text-anchor="end" font-size="13" font-weight="600" fill="#374151">Workflow</text>
+
+  <!-- Latency: short (0-80px out of 460 total) -->
+  <text x="185" y="99" text-anchor="end" font-size="11" fill="#6B7280">Latency</text>
+  <rect x="190" y="88" width="80" height="16" rx="4" fill="#10B981"/>
+  <text x="275" y="100" font-size="10" fill="#6B7280" dx="4">1x</text>
+
+  <!-- Cost: short -->
+  <text x="185" y="118" text-anchor="end" font-size="11" fill="#6B7280">Cost</text>
+  <rect x="190" y="107" width="80" height="16" rx="4" fill="#10B981"/>
+  <text x="275" y="119" font-size="10" fill="#6B7280" dx="4">1x</text>
+
+  <!-- Debuggability: easy = short green -->
+  <text x="185" y="137" text-anchor="end" font-size="11" fill="#6B7280">Debuggability</text>
+  <rect x="190" y="126" width="80" height="16" rx="4" fill="#10B981"/>
+  <text x="275" y="138" font-size="10" fill="#6B7280" dx="4">Easy</text>
+
+  <!-- Divider -->
+  <line x1="190" y1="154" x2="650" y2="154" stroke="#F3F4F6" stroke-width="1"/>
+
+  <!-- ========== ROW 2: SINGLE AGENT ========== -->
+  <text x="185" y="167" text-anchor="end" font-size="13" font-weight="600" fill="#374151">Single Agent</text>
+
+  <!-- Latency: medium -->
+  <text x="185" y="184" text-anchor="end" font-size="11" fill="#6B7280">Latency</text>
+  <rect x="190" y="173" width="200" height="16" rx="4" fill="#F59E0B"/>
+  <text x="395" y="185" font-size="10" fill="#6B7280" dx="4">2-5x</text>
+
+  <!-- Cost: medium -->
+  <text x="185" y="203" text-anchor="end" font-size="11" fill="#6B7280">Cost</text>
+  <rect x="190" y="192" width="200" height="16" rx="4" fill="#F59E0B"/>
+  <text x="395" y="204" font-size="10" fill="#6B7280" dx="4">2-5x</text>
+
+  <!-- Debuggability: medium -->
+  <text x="185" y="222" text-anchor="end" font-size="11" fill="#6B7280">Debuggability</text>
+  <rect x="190" y="211" width="200" height="16" rx="4" fill="#F59E0B"/>
+  <text x="395" y="223" font-size="10" fill="#6B7280" dx="4">N model calls to trace</text>
+
+  <!-- Divider -->
+  <line x1="190" y1="239" x2="650" y2="239" stroke="#F3F4F6" stroke-width="1"/>
+
+  <!-- ========== ROW 3: MULTI-AGENT ========== -->
+  <text x="185" y="252" text-anchor="end" font-size="13" font-weight="600" fill="#374151">Multi-Agent</text>
+
+  <!-- Latency: high -->
+  <text x="185" y="269" text-anchor="end" font-size="11" fill="#6B7280">Latency</text>
+  <rect x="190" y="258" width="350" height="16" rx="4" fill="#F97316"/>
+  <text x="545" y="270" font-size="10" fill="#6B7280" dx="4">3-8x</text>
+
+  <!-- Cost: high -->
+  <text x="185" y="288" text-anchor="end" font-size="11" fill="#6B7280">Cost</text>
+  <rect x="190" y="277" width="350" height="16" rx="4" fill="#F97316"/>
+  <text x="545" y="289" font-size="10" fill="#6B7280" dx="4">3-8x</text>
+
+  <!-- Debuggability: hard -->
+  <text x="185" y="307" text-anchor="end" font-size="11" fill="#6B7280">Debuggability</text>
+  <rect x="190" y="296" width="350" height="16" rx="4" fill="#F97316"/>
+  <text x="545" y="308" font-size="10" fill="#6B7280" dx="4">Blame diffusion</text>
+
+  <!-- Divider -->
+  <line x1="190" y1="324" x2="650" y2="324" stroke="#F3F4F6" stroke-width="1"/>
+
+  <!-- ========== ROW 4: MULTI-AGENT + HITL ========== -->
+  <text x="185" y="337" text-anchor="end" font-size="13" font-weight="600" fill="#374151">Multi-Agent</text>
+  <text x="185" y="350" text-anchor="end" font-size="11" font-weight="500" fill="#6B7280">+ HITL</text>
+
+  <!-- Latency: very high -->
+  <text x="185" y="358" text-anchor="end" font-size="11" fill="#6B7280">Latency</text>
+  <rect x="190" y="347" width="460" height="14" rx="4" fill="#EF4444"/>
+  <!-- overflow indicator -->
+  <text x="652" y="358" font-size="10" fill="#EF4444" font-weight="600" dx="1">+human</text>
+
+  <!-- Cost: very high -->
+  <text x="185" y="374" text-anchor="end" font-size="11" fill="#6B7280">Cost</text>
+  <rect x="190" y="363" width="390" height="14" rx="4" fill="#EF4444"/>
+  <text x="585" y="374" font-size="10" fill="#6B7280" dx="4">+ review time</text>
+
+  <!-- Debuggability: hard but auditable note -->
+  <text x="185" y="390" text-anchor="end" font-size="11" fill="#6B7280">Debuggability</text>
+  <rect x="190" y="379" width="350" height="14" rx="4" fill="#F97316"/>
+  <text x="545" y="390" font-size="10" fill="#6B7280" dx="4">+ audit trail</text>
+
+</svg>

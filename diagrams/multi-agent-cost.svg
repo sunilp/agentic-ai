@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="350" viewBox="0 0 700 350" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="350" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="350" y="36" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Cost Multiplication: Single vs. Multi-Agent</text>
+  <line x1="60" y1="48" x2="640" y2="48" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- ===== LEFT PANEL: Single Agent ===== -->
+  <rect x="30" y="60" width="270" height="200" rx="12" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+  <text x="165" y="84" text-anchor="middle" font-size="14" font-weight="bold" fill="#374151">Single Agent</text>
+
+  <!-- 1 model call box -->
+  <rect x="80" y="100" width="170" height="52" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="165" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">1 Model Call</text>
+  <text x="165" y="139" text-anchor="middle" font-size="11" fill="#6B7280">retrieve + reason + answer</text>
+
+  <!-- Label row -->
+  <rect x="55" y="175" width="220" height="62" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+  <text x="165" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#065F46">1x tokens</text>
+  <text x="165" y="213" text-anchor="middle" font-size="12" font-weight="bold" fill="#065F46">1x latency</text>
+  <text x="165" y="228" text-anchor="middle" font-size="11" fill="#6B7280">baseline cost</text>
+
+  <!-- Divider -->
+  <line x1="350" y1="65" x2="350" y2="255" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- ===== RIGHT PANEL: Multi-Agent ===== -->
+  <rect x="400" y="60" width="270" height="200" rx="12" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+  <text x="535" y="84" text-anchor="middle" font-size="14" font-weight="bold" fill="#374151">Multi-Agent (3 roles)</text>
+
+  <!-- Retriever box -->
+  <rect x="415" y="96" width="140" height="40" rx="8" fill="#ffffff" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="485" y="113" text-anchor="middle" font-size="12" font-weight="bold" fill="#1D4ED8">RetrieverAgent</text>
+  <text x="485" y="128" text-anchor="middle" font-size="10" fill="#6B7280">model call 1</text>
+
+  <!-- Arrow down -->
+  <line x1="485" y1="136" x2="485" y2="148" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Reasoner box -->
+  <rect x="415" y="148" width="140" height="40" rx="8" fill="#ffffff" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="485" y="165" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400E">ReasoningAgent</text>
+  <text x="485" y="180" text-anchor="middle" font-size="10" fill="#6B7280">model call 2</text>
+
+  <!-- Arrow down -->
+  <line x1="485" y1="188" x2="485" y2="200" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Verifier box -->
+  <rect x="415" y="200" width="140" height="40" rx="8" fill="#ffffff" stroke="#10B981" stroke-width="1.5"/>
+  <text x="485" y="217" text-anchor="middle" font-size="12" font-weight="bold" fill="#065F46">VerifierAgent</text>
+  <text x="485" y="232" text-anchor="middle" font-size="10" fill="#6B7280">model call 3</text>
+
+  <!-- Verification retry dashed loop -->
+  <path d="M 555 220 C 590 220, 590 168, 555 168" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-red)"/>
+  <text x="598" y="197" text-anchor="middle" font-size="9" fill="#EF4444" transform="rotate(90 598 197)">retry</text>
+  <text x="609" y="197" text-anchor="middle" font-size="9" fill="#EF4444" transform="rotate(90 609 197)">+call 4</text>
+
+  <!-- Label row -->
+  <rect x="55" y="275" width="220" height="52" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+  <text x="165" y="298" text-anchor="middle" font-size="12" font-weight="bold" fill="#065F46">1x tokens · 1x latency</text>
+  <text x="165" y="315" text-anchor="middle" font-size="11" fill="#6B7280">baseline</text>
+
+  <rect x="425" y="275" width="245" height="52" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+  <text x="548" y="298" text-anchor="middle" font-size="12" font-weight="bold" fill="#991B1B">3-5x tokens · 3-5x latency</text>
+  <text x="548" y="315" text-anchor="middle" font-size="11" fill="#6B7280">with verification retry</text>
+</svg>

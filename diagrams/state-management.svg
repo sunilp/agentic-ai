@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="350" viewBox="0 0 700 350" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="350" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Three Types of Agent State</text>
+  <line x1="40" y1="42" x2="660" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- Timeline background (conversation span) -->
+  <rect x="28" y="60" width="644" height="180" rx="10" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+  <text x="48" y="80" font-size="11" font-weight="bold" fill="#2563EB" letter-spacing="1">SESSION STATE — spans the full conversation</text>
+
+  <!-- SessionState inner box -->
+  <rect x="44" y="90" width="612" height="136" rx="8" fill="#ffffff" stroke="#3B82F6" stroke-width="1"/>
+  <text x="350" y="116" text-anchor="middle" font-size="14" font-weight="bold" fill="#1D4ED8">Session State</text>
+  <text x="350" y="134" text-anchor="middle" font-size="11" fill="#6B7280">Conversation history · query-answer pairs · turn count</text>
+  <text x="350" y="152" text-anchor="middle" font-size="11" fill="#6B7280">Persists across all queries in a session</text>
+
+  <!-- TaskState inner box (inside session) -->
+  <!-- Timeline background (task span) -->
+  <rect x="120" y="160" width="460" height="50" rx="8" fill="#FFF7ED" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="350" y="180" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400E">Task State — spans one query</text>
+  <text x="350" y="198" text-anchor="middle" font-size="11" fill="#6B7280">Steps taken · current result · confidence · budget remaining · complete/over-budget flags</text>
+
+  <!-- Arrow: Session feeds into Task -->
+  <line x1="350" y1="226" x2="350" y2="252" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="362" y="244" font-size="10" fill="#6B7280">new task</text>
+
+  <!-- WorkingMemory box (inside task, narrowest) -->
+  <rect x="200" y="254" width="300" height="54" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+  <text x="350" y="276" text-anchor="middle" font-size="13" font-weight="bold" fill="#065F46">Working Memory — spans one step</text>
+  <text x="350" y="294" text-anchor="middle" font-size="11" fill="#6B7280">Intermediate results · tool outputs · gathered evidence</text>
+
+  <!-- Span indicators below -->
+  <line x1="28" y1="318" x2="672" y2="318" stroke="#93C5FD" stroke-width="2"/>
+  <text x="350" y="314" text-anchor="middle" font-size="10" fill="#3B82F6">← Session spans full conversation →</text>
+
+  <line x1="120" y1="328" x2="580" y2="328" stroke="#F59E0B" stroke-width="2"/>
+  <text x="350" y="324" text-anchor="middle" font-size="10" fill="#F59E0B">← Task spans one query →</text>
+
+  <line x1="200" y1="338" x2="500" y2="338" stroke="#10B981" stroke-width="2"/>
+  <text x="350" y="348" text-anchor="middle" font-size="10" fill="#10B981">← Working memory: one step →</text>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="400" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Context Assembly: Three Layers</text>
+  <line x1="60" y1="42" x2="540" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- Layer 1: System Prompt -->
+  <rect x="60" y="60" width="480" height="84" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="90" y="85" font-size="12" font-weight="bold" fill="#2563EB" letter-spacing="1">LAYER 1 — SYSTEM PROMPT</text>
+  <text x="300" y="110" text-anchor="middle" font-size="14" font-weight="bold" fill="#1D4ED8">Role definition and constraints</text>
+  <text x="300" y="130" text-anchor="middle" font-size="11" fill="#6B7280">"You are a document intelligence assistant. Answer only from provided evidence."</text>
+
+  <!-- Arrow Layer 1 → 2 -->
+  <line x1="300" y1="144" x2="300" y2="172" stroke="#2563EB" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arr-blue)"/>
+
+  <!-- Layer 2: Evidence -->
+  <rect x="60" y="173" width="480" height="84" rx="8" fill="#FFF7ED" stroke="#F59E0B" stroke-width="2"/>
+  <text x="90" y="198" font-size="12" font-weight="bold" fill="#B45309" letter-spacing="1">LAYER 2 — EVIDENCE</text>
+  <text x="300" y="223" text-anchor="middle" font-size="14" font-weight="bold" fill="#92400E">Retrieved document chunks with sources</text>
+  <text x="300" y="243" text-anchor="middle" font-size="11" fill="#6B7280">[Excerpt 1] (Source: architecture.md, relevance: 0.87) · [Excerpt 2] ...</text>
+
+  <!-- Arrow Layer 2 → 3 -->
+  <line x1="300" y1="257" x2="300" y2="285" stroke="#2563EB" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arr-blue)"/>
+
+  <!-- Layer 3: User Query -->
+  <rect x="60" y="286" width="480" height="72" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="90" y="311" font-size="12" font-weight="bold" fill="#065F46" letter-spacing="1">LAYER 3 — USER QUERY</text>
+  <text x="300" y="336" text-anchor="middle" font-size="14" font-weight="bold" fill="#065F46">The actual question being asked</text>
+  <text x="300" y="350" text-anchor="middle" font-size="11" fill="#6B7280">"What are the failure modes documented in the architecture file?"</text>
+
+  <!-- Bottom arrow and label -->
+  <line x1="300" y1="358" x2="300" y2="378" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="300" y="394" text-anchor="middle" font-size="12" fill="#374151" font-weight="bold">Assembled into completion request → model</text>
+</svg>
