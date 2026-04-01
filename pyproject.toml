@@ -28,6 +28,12 @@ dev = [
     "ruff>=0.4",
     "mypy>=1.10",
 ]
+foundations = [
+    "google-adk>=1.0",
+    "langchain>=0.3",
+    "langchain-core>=0.3",
+    "langchain-anthropic>=0.3",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -53,6 +59,7 @@ ignore = ["E501"]
 "project/**/run.py" = ["E402"]
 "project/**/agent.py" = ["E402"]
 "tests/integration/test_hitl_pipeline.py" = ["E402"]
+"src/ch00/*.py" = ["E402"]
 
 [tool.mypy]
 python_version = "3.11"

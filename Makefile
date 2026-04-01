@@ -1,4 +1,4 @@
-.PHONY: install test lint eval run clean serve build-site deploy compare-multiagent
+.PHONY: install test lint eval run clean serve build-site deploy compare-multiagent foundations foundations-compare
 
 install:
 	pip install -e ".[dev]"
@@ -48,3 +48,11 @@ clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
 	rm -rf .pytest_cache .mypy_cache .ruff_cache
+
+foundations:
+	python src/ch00/llm_basics.py
+	python src/ch00/tool_use.py
+	python src/ch00/raw_agent.py
+
+foundations-compare:
+	python src/ch00/eval_compare.py
