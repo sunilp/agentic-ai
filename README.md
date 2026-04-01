@@ -19,6 +19,17 @@ This repository is the **code companion** to *Agentic AI for Serious Engineers*.
 
 The book teaches you when to build an agent, when not to, and how to make the ones you build survive production. The code here lets you run every concept hands-on.
 
+## New to agentic AI?
+
+Start with the **Foundations** -- four hands-on sections that take you from zero to building your first agent. No framework required. No prior AI experience needed.
+
+| # | Section | What you learn |
+|---|---------|----------------|
+| 0a | [How LLMs Actually Work](docs/book/00a-how-llms-work.md) | The engineer's mental model: APIs, tokens, context, hallucination |
+| 0b | [From API Calls to Tool Use](docs/book/00b-api-to-tools.md) | Function calling, schema validation, giving the model hands |
+| 0c | [Your First Agent, No Framework](docs/book/00c-first-agent.md) | Build a complete agent in 100 lines. See it work. See it break. |
+| 0d | [The Same Agent, With a Framework](docs/book/00d-frameworks.md) | ADK and LangChain side-by-side. Eval comparison. Choose with data. |
+
 ## What is in this repo
 
 - **Working code for every chapter** -- tool registries, context pipelines, agent loops, multi-agent orchestration, human-in-the-loop gates, evaluation harnesses, and security hardening

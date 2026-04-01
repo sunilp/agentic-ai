@@ -21,6 +21,17 @@ Most agentic AI material teaches you how to build an impressive demo. This book 
 
 This repository is the **code companion**. It contains working Python implementations for every concept, 52+ passing tests, two end-to-end projects, and 22 hand-crafted architecture diagrams.
 
+## New to agentic AI?
+
+Start with the **[Foundations](book/00a-how-llms-work.md)** -- four hands-on sections that take you from zero to building your first agent. No framework required. No prior AI experience needed.
+
+| # | Section | What you learn |
+|---|---------|----------------|
+| 0a | [How LLMs Actually Work](book/00a-how-llms-work.md) | The engineer's mental model: APIs, tokens, context, hallucination |
+| 0b | [From API Calls to Tool Use](book/00b-api-to-tools.md) | Function calling, schema validation, giving the model hands |
+| 0c | [Your First Agent, No Framework](book/00c-first-agent.md) | Build a complete agent in 100 lines. See it work. See it break. |
+| 0d | [The Same Agent, With a Framework](book/00d-frameworks.md) | ADK and LangChain side-by-side. Eval comparison. Choose with data. |
+
 ## Chapters
 
 | # | Chapter | What you learn |

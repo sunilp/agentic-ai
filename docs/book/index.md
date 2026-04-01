@@ -8,6 +8,19 @@ This book teaches you when to build an agent, when not to, and how to make the o
 
 Chapter 1 is available here as a free sample. The full book is available on [Amazon](https://www.amazon.com/dp/B0GVG6848F).
 
+## Foundations
+
+Not familiar with LLMs or the basics of function calling? Start here before diving into the chapters. These four sections take you from zero to a working agent -- no framework required.
+
+| # | Section | What you learn |
+|---|---------|----------------|
+| 0a | [How LLMs Actually Work](00a-how-llms-work.md) | The engineer's mental model: APIs, tokens, context, hallucination |
+| 0b | [From API Calls to Tool Use](00b-api-to-tools.md) | Function calling, schema validation, giving the model hands |
+| 0c | [Your First Agent, No Framework](00c-first-agent.md) | Build a complete agent in 100 lines. See it work. See it break. |
+| 0d | [The Same Agent, With a Framework](00d-frameworks.md) | ADK and LangChain side-by-side. Eval comparison. Choose with data. |
+
+**[Start with the Foundations](00a-how-llms-work.md)** if you are new to agentic AI. Skip ahead to Chapter 1 if you are already comfortable with LLM APIs and tool calling.
+
 ## Chapters
 
 | # | Title | Focus |

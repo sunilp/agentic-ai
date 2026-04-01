@@ -12,6 +12,15 @@ The book is available on [Amazon](https://www.amazon.com/dp/B0GVG6848F). Seven c
 
 This repository is the **code companion** -- working implementations, tests, diagrams, and evaluation evidence.
 
+## Foundations (pre-read)
+
+Four hands-on sections published as a free pre-read for readers new to LLMs and agentic AI:
+
+- **[How LLMs Actually Work](book/00a-how-llms-work.md)** -- APIs, tokens, context windows, hallucination
+- **[From API Calls to Tool Use](book/00b-api-to-tools.md)** -- Function calling, schema validation, tool execution
+- **[Your First Agent, No Framework](book/00c-first-agent.md)** -- Complete agent in 100 lines, end-to-end
+- **[The Same Agent, With a Framework](book/00d-frameworks.md)** -- ADK and LangChain side-by-side with eval comparison
+
 ## Shipped in this repo
 
 - **Working code** for every concept: tool registry, context pipeline, agent loop, workflow implementation, bounded agent, state management, multi-agent orchestration, approval gates, escalation engine, audit logging, eval harness, tracer, reliability hardening, cost profiler, security hardening
