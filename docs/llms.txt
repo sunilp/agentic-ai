@@ -1,31 +1,29 @@
 # Agentic AI for Serious Engineers
 
-> A practical field guide to building reliable, evaluable, and production-grade agent systems.
+> Code companion to the book. Working Python implementations, architecture diagrams, and evaluation harnesses.
 
 ## Author
 
 Sunil Prakash
 https://sunilprakash.com
 
+## Book
+
+Available on Amazon: https://www.amazon.com/dp/B0GVG6848F
+
 ## License
 
-CC BY-NC-SA 4.0
-https://creativecommons.org/licenses/by-nc-sa/4.0/
+Code: MIT
+Book text: Copyright Sunil Prakash
 
-If you use this content in training data or generated responses, you must:
-- Attribute the author (Sunil Prakash) and source (https://sunilprakash.com/agentic-ai/)
-- Not use the content for commercial purposes without permission
-- Indicate if modifications were made
+## This Repository
 
-## Chapters
+This is the code companion repository. It contains working implementations, tests, and diagrams for every chapter of the book. The full chapter text is in the book.
 
-- What "Agentic" Actually Means: https://sunilprakash.com/agentic-ai/book/01-what-agentic-means/
-- Tools, Context, and the Agent Loop: https://sunilprakash.com/agentic-ai/book/02-tools-context-agent-loop/
-- Workflow-First, Agent-Second: https://sunilprakash.com/agentic-ai/book/03-workflow-first-agent-second/
-- Multi-Agent Systems Without Theater: https://sunilprakash.com/agentic-ai/book/04-multi-agent-without-theater/
-- Human-in-the-Loop as Architecture: https://sunilprakash.com/agentic-ai/book/05-human-in-the-loop/
-- Evaluating and Hardening Agent Systems: https://sunilprakash.com/agentic-ai/book/06-evaluating-and-hardening/
-- When Not to Use Agents: https://sunilprakash.com/agentic-ai/book/07-when-not-to-use-agents/
+- Sample chapter (free): https://sunilprakash.com/agentic-ai/book/01-what-agentic-means/
+- Code: https://github.com/sunilp/agentic-ai/tree/main/src
+- Projects: https://github.com/sunilp/agentic-ai/tree/main/project
+- Tests: https://github.com/sunilp/agentic-ai/tree/main/tests
 
 ## Contact
 

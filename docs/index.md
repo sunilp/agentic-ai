@@ -1,5 +1,5 @@
 ---
-description: "A free, open engineering guide to building reliable, evaluable, and production-grade agentic AI systems. For experienced software engineers."
+description: "Code companion to Agentic AI for Serious Engineers. Working Python implementations, architecture diagrams, and evaluation harnesses for production-grade agent systems."
 hide:
   - navigation
   - toc
@@ -13,11 +13,13 @@ hide:
 
 **A practical field guide to building reliable, evaluable, and production-grade agent systems**
 
-Most agentic AI material teaches you how to make an impressive demo. This book teaches engineers how to build agent systems that survive real-world constraints.
+<p style="text-align: center; margin: 1.5rem 0;">
+  <a href="https://www.amazon.com/dp/B0GVG6848F" style="display: inline-block; padding: 0.75rem 2rem; background: #FF9900; color: #000; text-decoration: none; font-weight: 600; border-radius: 4px;">Get the Book on Amazon</a>
+</p>
 
-This is written for backend engineers, platform engineers, and staff+ engineers who understand distributed systems, reliability, and the cost of complexity -- but are relatively new to AI. You do not need a machine learning background. You need the judgment to know when AI helps and when it makes things worse.
+Most agentic AI material teaches you how to build an impressive demo. This book teaches engineers how to build agent systems that survive real-world constraints: unclear requirements, bad tool outputs, partial failures, prompt injection, and cost pressure.
 
-What makes this different is the engineering-first approach. Every concept comes with failure modes, tradeoffs against alternatives, and evaluation criteria. There is no vibes-based testing, no "just prompt it better" advice, and no framework worship. The goal is transferable understanding: principles that hold regardless of which SDK ships next month.
+This repository is the **code companion**. It contains working Python implementations for every concept, 52+ passing tests, two end-to-end projects, and 22 hand-crafted architecture diagrams.
 
 ## Chapters
 
@@ -31,13 +33,7 @@ What makes this different is the engineering-first approach. Every concept comes
 | 6 | [Evaluating and Hardening Agent Systems](book/06-evaluating-and-hardening.md) | Eval harnesses, tracing, reliability, cost, security |
 | 7 | [When Not to Use Agents](book/07-when-not-to-use-agents.md) | The signature chapter -- judgment over hype |
 
-## Learning Paths
-
-| Path | Chapters | Time |
-|------|----------|------|
-| **Fast Engineer** | 1, 2, 7 | ~1 hour |
-| **Full Mastery** | 1 through 7 in order | ~4 hours |
-| **Enterprise Architect** | 1, 3, 5, 6, 7 | ~2.5 hours |
+Chapter 1 is available as a **[free sample](book/01-what-agentic-means.md)**. The full book is on **[Amazon](https://www.amazon.com/dp/B0GVG6848F)**.
 
 ## Projects
 
@@ -46,8 +42,13 @@ Two end-to-end systems built incrementally through the chapters:
 - **[Document Intelligence Agent](projects/doc-intelligence-agent.md)** -- Ingest documents, retrieve evidence, answer with citations, escalate on uncertainty
 - **[Incident Runbook Agent](projects/incident-runbook-agent.md)** -- Inspect signals, search runbooks, propose remediation, request human approval
 
+## Evidence
+
+- **[Baseline Eval Report](proof/baseline-eval-report.md)** -- Gold dataset evaluation with rubric scoring
+- **[Architecture Comparison](proof/workflow-vs-agent-comparison.md)** -- Workflow vs agent side-by-side metrics
+- **[Trace Examples](proof/trace-example.md)** -- Structured execution traces with token accounting
+- **[Failure Case Studies](proof/failure-cases.md)** -- Real failure analysis and lessons learned
+
 ---
 
-This book is free to read online. Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) -- share and adapt with credit, non-commercial use only.
-
-[GitHub Repository](https://github.com/sunilp/agentic-ai) | [sunilprakash.com](https://sunilprakash.com)
+[Get the book on Amazon](https://www.amazon.com/dp/B0GVG6848F) | [GitHub Repository](https://github.com/sunilp/agentic-ai) | [sunilprakash.com](https://sunilprakash.com)
