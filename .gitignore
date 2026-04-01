@@ -18,3 +18,4 @@ dist/
 site/
 proposals/
 publish/
+.worktrees/
