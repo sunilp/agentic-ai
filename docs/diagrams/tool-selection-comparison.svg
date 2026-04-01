@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="380" viewBox="0 0 680 380" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="680" height="380" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Tool Selection: Why Descriptions Matter</text>
+  <line x1="40" y1="42" x2="640" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- LEFT PANEL: Good (green) -->
+  <rect x="30" y="56" width="300" height="296" rx="10" fill="#F0FDF4" stroke="#22c55e" stroke-width="2.5"/>
+  <text x="180" y="80" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803D">Good Tool Description</text>
+  <line x1="50" y1="88" x2="310" y2="88" stroke="#86EFAC" stroke-width="1"/>
+
+  <!-- Tool definition box -->
+  <rect x="48" y="98" width="264" height="68" rx="6" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1"/>
+  <text x="70" y="116" font-size="10" font-weight="bold" fill="#15803D">Tool: calculator</text>
+  <text x="70" y="133" font-size="10" fill="#374151">"Performs arithmetic:</text>
+  <text x="70" y="148" font-size="10" fill="#374151"> addition, subtraction,</text>
+  <text x="70" y="163" font-size="10" fill="#374151"> multiplication, division."</text>
+
+  <!-- Arrow down -->
+  <line x1="180" y1="167" x2="180" y2="196" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Query -->
+  <rect x="48" y="198" width="264" height="36" rx="6" fill="#ffffff" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="180" y="221" text-anchor="middle" font-size="12" fill="#374151">Query: <tspan font-weight="bold">"What is 15 × 7?"</tspan></text>
+
+  <!-- Arrow down -->
+  <line x1="180" y1="235" x2="180" y2="264" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Model selects -->
+  <rect x="48" y="266" width="264" height="30" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1"/>
+  <text x="180" y="286" text-anchor="middle" font-size="11" fill="#1D4ED8">Model selects: <tspan font-weight="bold">calculator</tspan></text>
+
+  <!-- Arrow down -->
+  <line x1="180" y1="297" x2="180" y2="316" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Result -->
+  <rect x="48" y="318" width="264" height="24" rx="6" fill="#DCFCE7" stroke="#22c55e" stroke-width="2"/>
+  <text x="180" y="334" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803D">Result: 105  &#10003; Correct</text>
+
+<!-- RIGHT PANEL: Bad (red) -->
+  <rect x="350" y="56" width="300" height="296" rx="10" fill="#FEF2F2" stroke="#EF4444" stroke-width="2.5"/>
+  <text x="500" y="80" text-anchor="middle" font-size="14" font-weight="bold" fill="#B91C1C">Vague Tool Description</text>
+  <line x1="370" y1="88" x2="630" y2="88" stroke="#FCA5A5" stroke-width="1"/>
+
+  <!-- Tool definition box -->
+  <rect x="368" y="98" width="264" height="68" rx="6" fill="#FEE2E2" stroke="#FCA5A5" stroke-width="1"/>
+  <text x="390" y="116" font-size="10" font-weight="bold" fill="#B91C1C">Tool: calculator</text>
+  <text x="390" y="133" font-size="10" fill="#374151">"A tool for processing</text>
+  <text x="390" y="148" font-size="10" fill="#374151"> numbers and returning</text>
+  <text x="390" y="163" font-size="10" fill="#374151"> information."</text>
+
+  <!-- Arrow down -->
+  <line x1="500" y1="167" x2="500" y2="196" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Query -->
+  <rect x="368" y="198" width="264" height="36" rx="6" fill="#ffffff" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="500" y="221" text-anchor="middle" font-size="12" fill="#374151">Query: <tspan font-weight="bold">"What is 15 × 7?"</tspan></text>
+
+  <!-- Arrow down -->
+  <line x1="500" y1="235" x2="500" y2="264" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Model selects wrong -->
+  <rect x="368" y="266" width="264" height="30" rx="6" fill="#FEE2E2" stroke="#EF4444" stroke-width="1"/>
+  <text x="500" y="286" text-anchor="middle" font-size="11" fill="#B91C1C">Model selects: <tspan font-weight="bold">web_search</tspan></text>
+
+  <!-- Arrow down -->
+  <line x1="500" y1="297" x2="500" y2="316" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Result -->
+  <rect x="368" y="318" width="264" height="24" rx="6" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <text x="500" y="334" text-anchor="middle" font-size="12" font-weight="bold" fill="#B91C1C">Result: search snippets  &#10007; Wrong tool</text>
+
+  <!-- Caption -->
+  <text x="340" y="366" text-anchor="middle" font-size="11" fill="#374151">Tool selection is driven entirely by the description you write. Be precise and unambiguous.</text>
+  <text x="340" y="379" text-anchor="middle" font-size="11" fill="#9CA3AF">Treat tool descriptions as API contracts, not comments.</text>
+</svg>

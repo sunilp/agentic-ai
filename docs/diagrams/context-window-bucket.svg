@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="480" viewBox="0 0 500 480" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="500" height="480" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="250" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">The Context Window Bucket</text>
+  <line x1="40" y1="42" x2="460" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- Capacity label -->
+  <text x="250" y="62" text-anchor="middle" font-size="13" fill="#374151">Fixed capacity: <tspan font-weight="bold" fill="#111827">128,000 tokens</tspan> — once full, oldest content is dropped</text>
+
+  <!-- Bucket outline -->
+  <rect x="130" y="78" width="240" height="320" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="2"/>
+
+  <!-- Overflow zone (red, top) -->
+  <rect x="130" y="78" width="240" height="38" rx="4" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="250" y="96" text-anchor="middle" font-size="11" font-weight="bold" fill="#B91C1C">OVERFLOW — CONTENT LOST</text>
+  <text x="250" y="110" text-anchor="middle" font-size="10" fill="#EF4444">tokens above limit are truncated</text>
+
+  <!-- Segment 5: Tool Results (purple) — from top of content area -->
+  <rect x="130" y="116" width="240" height="56" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1"/>
+  <text x="250" y="138" text-anchor="middle" font-size="12" font-weight="bold" fill="#5B21B6">Tool Results</text>
+  <text x="250" y="155" text-anchor="middle" font-size="10" fill="#6B7280">Function outputs, API responses</text>
+  <text x="388" y="147" text-anchor="middle" font-size="10" fill="#8B5CF6">~25K tokens</text>
+
+  <!-- Segment 4: Conversation History (amber) -->
+  <rect x="130" y="172" width="240" height="68" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+  <text x="250" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400E">Conversation History</text>
+  <text x="250" y="213" text-anchor="middle" font-size="10" fill="#6B7280">Prior turns, user messages</text>
+  <text x="388" y="207" text-anchor="middle" font-size="10" fill="#F59E0B">~30K tokens</text>
+
+  <!-- Segment 3: Retrieved Documents (green) — large -->
+  <rect x="130" y="240" width="240" height="88" fill="#F0FDF4" stroke="#22c55e" stroke-width="1"/>
+  <text x="250" y="268" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803D">Retrieved Documents</text>
+  <text x="250" y="286" text-anchor="middle" font-size="10" fill="#6B7280">RAG chunks, search results</text>
+  <text x="250" y="303" text-anchor="middle" font-size="10" fill="#6B7280">knowledge base content</text>
+  <text x="388" y="285" text-anchor="middle" font-size="10" fill="#22c55e">~50K tokens</text>
+
+  <!-- Segment 2: Few-shot Examples (light blue) -->
+  <rect x="130" y="328" width="240" height="42" fill="#DBEAFE" stroke="#93C5FD" stroke-width="1"/>
+  <text x="250" y="346" text-anchor="middle" font-size="12" font-weight="bold" fill="#1E40AF">Few-shot Examples</text>
+  <text x="250" y="362" text-anchor="middle" font-size="10" fill="#6B7280">Input/output demonstrations</text>
+  <text x="388" y="352" text-anchor="middle" font-size="10" fill="#3B82F6">~15K tokens</text>
+
+  <!-- Segment 1: System Prompt (blue, bottom) -->
+  <rect x="130" y="370" width="240" height="28" rx="0" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1"/>
+  <rect x="130" y="384" width="240" height="14" rx="0" fill="#EFF6FF"/>
+  <rect x="130" y="370" width="240" height="28" rx="0" fill="none" stroke="#3B82F6" stroke-width="1"/>
+  <text x="250" y="382" text-anchor="middle" font-size="12" font-weight="bold" fill="#1D4ED8">System Prompt</text>
+  <text x="388" y="385" text-anchor="middle" font-size="10" fill="#3B82F6">~8K tokens</text>
+
+  <!-- Bottom of bucket (floor) -->
+  <rect x="128" y="396" width="244" height="4" rx="2" fill="#D1D5DB"/>
+
+  <!-- Legend / caption -->
+  <text x="250" y="428" text-anchor="middle" font-size="11" fill="#374151">Fill order: system prompt first, examples, documents, history, tool results</text>
+  <text x="250" y="448" text-anchor="middle" font-size="11" fill="#9CA3AF">Engineer's job: decide what fills the bucket and in what order.</text>
+  <text x="250" y="466" text-anchor="middle" font-size="11" fill="#EF4444">What overflows gets forgotten.</text>
+</svg>
