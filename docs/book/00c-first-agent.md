@@ -46,7 +46,14 @@ The loop implements observe-think-act-repeat. This cycle has a name in the liter
 
 ## Building it step by step
 
-The skeleton above is pseudocode. The real thing lives in `src/ch00/raw_agent.py`, about 100 lines. We'll walk through it in pieces.
+The skeleton above is pseudocode. The real thing lives in `src/ch00/raw_agent.py`, about 100 lines. To run it yourself from the repo root:
+
+```bash
+export ANTHROPIC_API_KEY="your-key-here"
+python -m src.ch00.raw_agent "What is 15 * 7 + 3?"
+```
+
+You will see the trace output shown later in this section. We will walk through the code in pieces first.
 
 ### The system prompt
 

@@ -34,7 +34,7 @@ print(message.content[0].text)
 ```
 
 !!! info "What just happened"
-    You sent a string to an API. You got a string back. You paid for both strings, measured in tokens. That's the entire contract.
+    You sent a string to an API. You got a string back. You paid for both strings, measured in tokens. That's the entire contract. For this query, that is roughly 30 tokens in and 10 tokens out. At current pricing, about $0.0003. Cheap for one call. Less cheap when your agent makes fifty calls per user request.
 
 That raw SDK call is the simplest way to understand what is happening. It is useful for experiments and first contact. But it becomes painful in real systems: provider-specific code leaks into every file, testing requires live API calls, swapping models means rewriting imports, and cost tracking gets scattered.
 

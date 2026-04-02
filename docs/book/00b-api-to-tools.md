@@ -101,7 +101,11 @@ The cycle has four steps:
   <figcaption>Figure 0b.1: The function calling cycle. The model never executes anything. It writes JSON. You do the work.</figcaption>
 </figure>
 
-Let's build this from scratch. First, we need a way to define tools. Here's the `Tool` class and `ToolRegistry` from this book's companion code:
+Let's build this from scratch. First, we need a way to define tools.
+
+The code below uses Pydantic, a Python library for data validation using type annotations. If you have used dataclasses, think of Pydantic as dataclasses with built-in validation: you declare fields with types, and Pydantic rejects any input that does not match. `BaseModel` is the base class. `Field` adds constraints like minimum values or defaults. `model_validate()` checks a dictionary against the type annotations and raises `ValidationError` if anything is wrong. We use it here because the model will send us JSON arguments, and we need to validate those arguments before running any code.
+
+Here is the `Tool` class and `ToolRegistry` from this book's companion code:
 
 ```python
 from pydantic import BaseModel, Field
