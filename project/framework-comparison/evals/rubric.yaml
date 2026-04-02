@@ -1,0 +1,18 @@
+scoring:
+  exact_match: 1.0
+  substring_match: 0.8
+  no_match: 0.0
+
+metrics:
+  - accuracy
+  - total_tokens
+  - average_latency_ms
+  - total_cost_usd
+
+# Notes:
+# - exact_match: expected.strip().lower() == actual.strip().lower()
+# - substring_match: expected.strip().lower() in actual.strip().lower()
+# - no_match: neither condition holds
+#
+# This is an intentionally simple rubric to illustrate eval structure.
+# Production evaluations would use semantic similarity or an LLM-as-judge.

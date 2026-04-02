@@ -1,0 +1,11 @@
+queries:
+  - query: "What is 15 * 7?"
+    expected: "105"
+  - query: "Search for agentic AI and summarize what you find."
+    expected: "Wikipedia article about agentic AI"
+  - query: "How many words are in 'the quick brown fox jumps over the lazy dog'?"
+    expected: "9"
+  - query: "What is 100 / 4 + 10?"
+    expected: "35"
+  - query: "Search for machine learning and tell me the first result."
+    expected: "Wikipedia article about machine learning"

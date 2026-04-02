@@ -1,0 +1,96 @@
+---
+description: "Side-by-side comparison of raw, ADK, and LangChain agent implementations on identical queries."
+---
+
+# Framework Comparison
+
+Side-by-side comparison of three agent implementations on identical test queries: raw (no framework), Google ADK, and LangChain. Companion to Section 0d of "Agentic AI for Serious Engineers."
+
+## What's inside
+
+- `src/raw_agent.py` -- Thin wrapper around `src/ch00/raw_agent.Agent`. No additional dependencies.
+- `src/adk_agent.py` -- Thin wrapper around `src/ch00/adk_agent.create_adk_agent`. Requires `google-adk`. If not installed, the column is skipped with a clear message.
+- `src/langchain_agent.py` -- Thin wrapper around `src/ch00/langchain_agent.create_langchain_agent`. Requires `langchain-core`, `langchain-anthropic`, and `langgraph`. If not installed, the column is skipped.
+- `src/compare.py` -- Runs all available implementations concurrently against the shared test queries and prints a comparison table.
+- `evals/test_queries.yaml` -- Five benchmark queries with expected answers.
+- `evals/rubric.yaml` -- Scoring rules (exact match = 1.0, substring = 0.8, no match = 0.0) and reported metrics.
+- `evals/run_eval.py` -- Full eval runner with per-query detail and summary table.
+
+## Prerequisites
+
+```bash
+# Base install (raw agent works with this)
+make install
+
+# Optional: enable ADK column
+pip install google-adk
+
+# Optional: enable LangChain column
+pip install langchain-core langchain-anthropic langgraph
+```
+
+## How to run
+
+```bash
+# Quick comparison (available implementations only)
+python project/framework-comparison/src/compare.py
+
+# Full eval with scoring
+python project/framework-comparison/evals/run_eval.py
+```
+
+## What you'll see
+
+With only the raw agent available:
+
+```
+Framework Comparison -- Foundations Section 0d
+=================================================================
+Running 5 queries across available implementations...
+
+=================================================================
+Implementation: raw_agent
+=================================================================
+Query                                  Score  Steps  Tokens       ms
+--------------------------------------  ------  -----  ------  ------
+What is 15 * 7?                           0.8      2     140    43.1
+...
+
+Implementation: adk_agent
+  SKIPPED: google-adk is not installed. Install with: pip install google-adk
+
+Implementation: langchain_agent
+  SKIPPED: langchain-core is not installed. ...
+
+=======================================================================
+Summary
+=======================================================================
+Implementation         Avg Score  Total Tokens     Avg ms   Total cost
+---------------------------------------------------------------------
+raw_agent                   0.84           700       41.2   $0.000560
+adk_agent           skipped (not installed)
+langchain_agent     skipped (not installed)
+```
+
+With all three frameworks installed, the summary table shows all columns and makes the overhead of each framework visible in tokens, latency, and cost.
+
+## What this comparison measures
+
+The rubric (`evals/rubric.yaml`) reports four metrics:
+
+| Metric | What it measures |
+|--------|-----------------|
+| accuracy | Average score across queries (0.0-1.0) |
+| total_tokens | Sum of all tokens consumed across the query set |
+| average_latency_ms | Mean time per query |
+| total_cost_usd | Estimated dollar cost for the full query set |
+
+The accuracy metric is identical across all three implementations because they run the same tools against the same queries. What differs is the overhead: how many extra tokens each framework adds to the prompt, how much latency the framework's orchestration layer contributes, and whether the framework exposes token usage data at all (ADK does not expose raw counts in the default runner).
+
+## What the comparison shows
+
+Section 0d makes the argument empirically: when accuracy is held constant (same tools, same queries), the question becomes what a framework costs you and what it gives back. The comparison table quantifies the cost side. The give-back -- guardrails, observability, deployment infrastructure -- is harder to measure but is what the rest of the book is about.
+
+## Connection to the book
+
+Section 0d evaluates three agent frameworks against the same task. This project makes that evaluation runnable so you can see the numbers yourself rather than take the chapter's word for them. The framework selection framework introduced in Section 0d -- choose raw when you need control, choose a framework when you need infrastructure -- is grounded in this data.
