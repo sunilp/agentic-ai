@@ -79,6 +79,10 @@ nav:
       - 6. Evaluating and Hardening Agent Systems: book/06-evaluating-and-hardening.md
       - 7. When Not to Use Agents: book/07-when-not-to-use-agents.md
   - Projects:
+    - LLM Explorer: projects/llm-explorer.md
+    - Tool-Using Assistant: projects/tool-using-assistant.md
+    - Research Agent: projects/research-agent.md
+    - Framework Comparison: projects/framework-comparison.md
     - Document Intelligence Agent: projects/doc-intelligence-agent.md
     - Incident Runbook Agent: projects/incident-runbook-agent.md
   - Evidence:
