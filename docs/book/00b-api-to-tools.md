@@ -44,7 +44,7 @@ Version your prompts in source control. When output quality degrades, `git diff`
 
 ## Few-shot examples are your type system
 
-When the model needs to follow a pattern, show it the pattern. This is called few-shot prompting, and it is the single most effective technique for getting consistent structured output.
+When the model needs to follow a pattern, show it the pattern. This is called few-shot prompting, and in my experience it is the most effective technique for getting consistent structured output.
 
 Consider a task where you need the model to classify customer support messages into categories. Without examples:
 
@@ -303,11 +303,11 @@ print(result)
 # "Error: division by zero"
 ```
 
-That's it. That is the entire mechanism behind function calling. Every framework you've seen, LangChain's tools, CrewAI's tool decorator, Anthropic's tool use API, is doing exactly this. They define a schema. They send it to the model. The model returns JSON. They validate and execute. The abstractions vary. The mechanism does not.
+That's it. That is the entire mechanism behind function calling. Every major framework I've looked at, LangChain's tools, CrewAI's tool decorator, Anthropic's tool use API, follows this same pattern. They define a schema. They send it to the model. The model returns JSON. They validate and execute. The abstractions vary. The core mechanism does not.
 
 ## Schema validation is your safety net
 
-The model will hallucinate arguments. This is not a possibility. It is a certainty. The model will pass a string where you need an integer. It will invent parameters that don't exist. It will pass "modulo" as an operation to your calculator that only knows add, subtract, multiply, divide.
+The model will hallucinate arguments. Not occasionally. Routinely. The model will pass a string where you need an integer. It will invent parameters that don't exist. It will pass "modulo" as an operation to your calculator that only knows add, subtract, multiply, divide.
 
 Without validation, here's what happens:
 
@@ -366,6 +366,9 @@ print(result)
 #   Input should be less than or equal to 10
 #     [type=less_than_equal, input_value=500, input=500]
 ```
+
+!!! warning "Failure case study: the hallucinated argument that almost caused silent corruption"
+    A data pipeline agent had a `write_record` tool that accepted a `priority` field: an integer from 1 (low) to 5 (critical). Without Pydantic validation, the model passed `priority: 10` for a routine log entry. The write succeeded. No error. The record was stored with priority 10, which was outside the application's expected range. Downstream alerting logic treated anything above 5 as a system emergency and paged the on-call team at 3am. With `Field(ge=1, le=5)` on the Pydantic model, the validation error would have been caught before the write, the model would have received "Input should be less than or equal to 5," and it would have retried with a valid value. The gap between "the function accepts an int" and "the function accepts an int between 1 and 5" is where silent data corruption lives.
 
 <figure>
   <img src="../../diagrams/tool-selection-comparison.svg" alt="Comparison of tool calls with and without schema validation, showing clean errors vs runtime crashes" />
@@ -436,6 +439,9 @@ A few practical guidelines for tool descriptions:
 
 **Don't describe the implementation.** "Uses a PostgreSQL full-text search index with ts_vector" is irrelevant to the model. "Search the knowledge base for documents matching a query" is what it needs.
 
+!!! warning "Failure case study: the vague description"
+    A customer support agent had two tools: `get_order` ("Get order information") and `get_account` ("Get account information"). When users asked "Where's my package?", the model picked `get_account` about 40% of the time. Both descriptions mentioned "information" without saying what kind. The fix: change `get_order` to "Look up shipping status, delivery date, and tracking number for a specific order ID" and `get_account` to "Retrieve account profile, billing address, and payment methods for a customer." After that change, routing accuracy on order-tracking queries went from ~60% to over 95%. The model was not confused about the task. It was confused about which tool matched the task. Specific descriptions fixed it.
+
 When you have more than five or six tools, the model's selection accuracy starts to degrade. Not because it can't read six descriptions, but because the probability of description overlap increases. If you find yourself registering fifteen tools, that's an architectural signal. Split them into groups. Use a routing step where one model call picks the category, then a second call picks the specific tool within that category. Chapter 4 covers this pattern in depth.
 
 ## The gap this doesn't cover
@@ -473,8 +479,8 @@ Schema validation isn't optional. The model will hallucinate arguments. Pydantic
 
 Tool descriptions are selection criteria. Write them for a literal reader who will pick the tool that sounds most relevant to the query.
 
-And the limitation: all of this operates in a single turn. One tool call, one result. The next section adds the loop that turns tool use into agent behavior.
+And the limitation: all of this operates in a single turn. One tool call, one result. The model cannot look at a search result and decide "that's not what I needed, let me refine my query." It cannot chain a search, a calculation on the search results, and a summary together. It does one thing, and stops.
+
+The next section adds the loop that removes that ceiling. You will build, in about 100 lines of Python, a system that can observe the result of its action, decide whether it is sufficient, and take another action if it is not. The mechanism is a while loop with an LLM inside it. The engineering challenge is knowing when that loop should stop.
 
 For a fully built tool-using assistant with proper error handling and logging, see the [Tool-Using Assistant](../projects/tool-using-assistant.md) project.
-
-Next, we add the loop.
