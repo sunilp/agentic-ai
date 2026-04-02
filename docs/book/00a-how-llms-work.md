@@ -164,6 +164,9 @@ The dangerous part: when context overflows, the model doesn't crash. It degrades
 
 "Lost in the middle" is a well-documented phenomenon. Models pay the most attention to the beginning and end of the context, and less attention to the middle. When you add a 50-page document to the context, something gets pushed out or ignored. Usually it's the instructions you put at the beginning.
 
+!!! warning "Failure case study: the instruction that vanished"
+    A document-analysis agent had a system prompt that began with "Always respond in JSON format." It worked perfectly in testing with short documents. In production, users started uploading 50-page contracts, roughly 40,000 tokens of retrieved text. The model began responding in prose, ignoring the JSON instruction entirely. No error. No warning. The system prompt was still there, just buried under so much context that the model stopped attending to it. The fix was two-fold: put critical formatting instructions both at the start AND end of the context (bracketing), and switch to provider-level structured output enforcement so the format constraint was not dependent on the model's attention.
+
 This is why context management is engineering, not just prompt writing. The decisions about what goes into the context, in what order, and what gets dropped when space is tight, these are architectural decisions with direct impact on system quality.
 
 <figure>
@@ -179,6 +182,9 @@ This is not a bug to fix. It is a fundamental property of how these models work.
 
 You will read advice telling you to add "only answer based on the provided context" to your system prompt. This helps. It reduces the rate of hallucination. It does not solve the problem. The model can and will still generate plausible-sounding text that isn't supported by the context. I've seen models cite specific paragraph numbers from documents that don't have paragraph numbers. I've seen them invent API endpoints with correct-looking URL structures and reasonable-sounding parameter names. The text looks right because the model is very good at producing text that looks right.
 
+!!! warning "Failure case study: the citation that looked right"
+    A research assistant agent was asked to summarize findings from a set of uploaded documents and cite its sources. It returned: "According to Document 3, Section 4.2, page 17, the failure rate exceeds 12%." The response looked credible. But Document 3 had no numbered sections, was only 5 pages long, and never mentioned failure rates. The model generated a citation that matched the structural pattern of academic references without any grounding in the actual content. The fix: every citation the model produces must be verified in code. Extract the claimed source, look up the actual text, and confirm the claim appears there. If it does not, flag it or drop it. Never pass model-generated citations through to users without programmatic verification.
+
 Every reliable mitigation for hallucination is engineering, not prompting.
 
 **Grounding:** Give the model source material and constrain it to answer from that material. This is what RAG does. It doesn't eliminate hallucination, but it gives the model something real to work from.
@@ -189,7 +195,7 @@ Every reliable mitigation for hallucination is engineering, not prompting.
 
 **Escalation:** When confidence is low, say so. "I don't have enough information to answer this" is a better response than a confident wrong answer. Build your system to produce this response when the evidence is thin.
 
-These are code solutions, not prompt solutions. You cannot prompt your way to reliability. You can engineer your way there.
+These are code solutions, not prompt solutions. Prompting helps at the margins, but you cannot prompt your way to production reliability. You can engineer your way there.
 
 <figure>
   <img src="../../diagrams/hallucination-mental-model.svg" alt="Mental model showing that LLMs predict likely tokens, not verified facts" />
@@ -200,13 +206,13 @@ These are code solutions, not prompt solutions. You cannot prompt your way to re
 
 When the model generates the next token, it doesn't pick one deterministically (by default). It produces a probability distribution over all possible tokens, then samples from that distribution. Temperature controls how peaked or flat that distribution is.
 
-**Temperature 0** (or near-zero): The model almost always picks the highest-probability token. Output is deterministic, or very close to it. Same input produces the same output. This is what you want for agents making decisions.
+**Temperature 0** (or near-zero): The model almost always picks the highest-probability token. Output is deterministic, or very close to it. Same input produces the same output. This is the right default for agent decision paths, tool selection, structured extraction, and anything where you need reproducible behavior. Not every agent step needs temperature 0, though. Steps that generate diverse search queries, brainstorm alternative approaches, or produce varied rephrasing can benefit from a small amount of temperature (0.2-0.3).
 
 **Temperature 0.7-1.0:** The distribution is flatter. Lower-probability tokens have a real chance of being selected. Output is more varied, more "creative." This is useful for brainstorming, creative writing, or generating diverse examples.
 
-**Temperature above 1.0:** The distribution is nearly flat. The model picks tokens almost at random. Output becomes incoherent. Don't do this.
+**Temperature above 1.0:** The distribution is nearly flat and output becomes increasingly incoherent. In production agent systems, there is almost no reason to go above 1.0. In research or creative applications, controlled high temperature paired with top-p sampling can be useful for exploring the edges of a distribution. For everything in this book, stay at or below 0.3.
 
-For agents, use temperature 0 or near-zero. You want predictable decisions, not creative ones. When your agent is deciding whether to call the search tool or the calculator, you want it to make the same decision every time for the same input.
+For agents, default to temperature 0 for decision-making steps. Tool selection, routing, structured extraction, and any step where you need predictable, testable behavior. When your agent is deciding whether to call the search tool or the calculator, you want it to make the same decision every time for the same input. For generative sub-steps where variety helps, bring temperature up slightly, but keep it bounded.
 
 ```python
 from src.shared.model_client import create_client
@@ -250,7 +256,7 @@ for _ in range(3):
 ```
 
 !!! info "What just happened"
-    Temperature 0 gives you repeatability. Temperature 1.0 gives you variety. For agent systems where you need predictable, testable behavior, always default to temperature 0. Save higher temperatures for tasks where diversity is the goal.
+    Temperature 0 gives you repeatability. Temperature 1.0 gives you variety. For agent decision paths where you need predictable, testable behavior, default to temperature 0. For sub-steps where diversity helps (query expansion, brainstorming), a small amount of temperature (0.2-0.3) is reasonable. The key is to be deliberate about the choice, not to apply one setting everywhere.
 
 There's a common misconception that temperature 0 means "more accurate." It doesn't. It means "most probable." The most probable completion can still be wrong. Temperature controls randomness, not correctness.
 
@@ -319,12 +325,83 @@ This is the bridge between "text generator" and "system component." When the mod
 
 I think the right default is to use provider-level schema enforcement whenever it's available, and fall back to parsing only when it's not. Provider enforcement is more reliable, costs nothing extra, and removes an entire category of bugs. The parsing fallback exists for the real world, where you don't always control which model you're calling.
 
+### The validation ladder
+
+Parsing is step one. But "valid JSON" is not the same as "data I can trust." Production systems need three layers of validation after parsing: schema validation, semantic validation, and a clear failure policy.
+
+```python
+from pydantic import BaseModel, Field, ValidationError
+from datetime import date
+
+# Layer 1: Schema validation
+class ExtractionResult(BaseModel):
+    answer: str = Field(min_length=1)
+    confidence: float = Field(ge=0.0, le=1.0)
+    source_document: str
+    extracted_date: date
+
+# Layer 2: Semantic validation
+def validate_semantics(result: ExtractionResult, available_docs: list[str]) -> list[str]:
+    """Business logic checks that schema validation can't catch."""
+    errors = []
+    if result.source_document not in available_docs:
+        errors.append(f"Source '{result.source_document}' not in provided documents")
+    if result.extracted_date > date.today():
+        errors.append(f"Extracted date {result.extracted_date} is in the future")
+    if result.confidence > 0.95 and len(result.answer) < 10:
+        errors.append("High confidence with very short answer is suspicious")
+    return errors
+
+# Layer 3: Retry/repair with failure policy
+async def extract_with_validation(
+    client, messages: list, available_docs: list[str], max_retries: int = 2
+) -> ExtractionResult:
+    for attempt in range(max_retries + 1):
+        response = await client.complete(
+            CompletionRequest(messages=messages, temperature=0.0)
+        )
+        parsed = parse_structured_output(response.content)
+
+        if parsed is None:
+            messages.append(Message(
+                role=Role.USER,
+                content="Your response was not valid JSON. Return only a JSON object."
+            ))
+            continue
+
+        try:
+            result = ExtractionResult(**parsed)
+        except ValidationError as e:
+            messages.append(Message(
+                role=Role.USER,
+                content=f"JSON parsed but failed validation: {e}. Fix and retry."
+            ))
+            continue
+
+        semantic_errors = validate_semantics(result, available_docs)
+        if semantic_errors:
+            messages.append(Message(
+                role=Role.USER,
+                content=f"Data failed business rules: {semantic_errors}. Fix and retry."
+            ))
+            continue
+
+        return result
+
+    raise ExtractionError("Structured extraction failed after retries")
+```
+
+The key principle: if structured output fails after your retry budget, return a typed error, not a raw string. Your downstream code should never have to guess whether it received valid data. Either it gets a validated `ExtractionResult`, or it gets an `ExtractionError` it can handle explicitly.
+
+!!! warning "Failure case study: valid JSON, invalid data"
+    A classification agent returned `{"confidence": 1.5, "category": "high_risk", "review_date": "next Tuesday"}`. The JSON parsed without errors. The downstream routing logic treated 1.5 as a valid confidence score, escalated the case as ultra-high-confidence, and logged "next Tuesday" as a date string that broke the reporting pipeline three hours later when a batch job tried to parse it. Schema validation (Pydantic) would have caught the confidence value immediately. Semantic validation would have caught the non-ISO date. Without the validation ladder, syntactically correct garbage flows downstream and breaks things far from the source.
+
 ## Putting it together
 
-You now have a mental model of the machine you're building with. It takes text and returns text. It costs money per token, with completion tokens costing more than prompt tokens. It has a fixed-size working memory that degrades silently when overloaded. It confidently generates plausible text whether or not that text is true. Its randomness is tunable, and for agent work you want it pinned to zero. Getting structured data out of it requires either provider enforcement or defensive parsing.
+You now have a mental model of the machine you are building with. It takes text, returns text, costs money per token, has a fixed memory, and confidently makes things up. Every engineering decision from here forward is about working within and around these constraints.
 
-Every engineering decision from here forward is about working within and around these constraints. Context management. Cost control. Hallucination mitigation. Structured interfaces between the model and the rest of your system. These are the problems this book solves.
+Now that you know the model is probabilistic, bounded by context, vulnerable to unsupported confident text, and unreliable at structure by default, the next engineering problems are concrete: How do you give it tools with contracts it cannot violate? How do you assemble context that fits the window without losing critical instructions? How do you evaluate whether the system actually works, not just looks like it works? And how do you bound its autonomy so it fails gracefully instead of confidently?
+
+The next three sections build these answers. Section 0b gives the model hands. Section 0c gives it a loop. Section 0d shows you what frameworks do with both.
 
 For hands-on experiments with everything in this section, see the [LLM Explorer](../projects/llm-explorer.md) project.
-
-Next, we give it the ability to do things.
