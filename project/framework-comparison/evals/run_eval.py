@@ -27,7 +27,6 @@ if str(_AGENT_SRC_DIR) not in sys.path:
 import yaml  # noqa: E402
 
 from src.ch00.llm_basics import estimate_cost  # noqa: E402
-from src.shared.model_client import MockClient  # noqa: E402
 from src.shared.types import CompletionResponse, TokenUsage, ToolCall  # noqa: E402
 
 # ---------------------------------------------------------------------------
@@ -205,7 +204,9 @@ async def _run_adk(queries: list[dict[str, str]], rubric: dict[str, Any]) -> lis
     return results
 
 
-async def _run_langchain(queries: list[dict[str, str]], rubric: dict[str, Any]) -> list[dict[str, Any]]:
+async def _run_langchain(
+    queries: list[dict[str, str]], rubric: dict[str, Any]
+) -> list[dict[str, Any]]:
     try:
         from langchain_agent import run_langchain_agent
     except ImportError as exc:
@@ -307,8 +308,7 @@ def _print_summary(all_results: dict[str, list[dict[str, Any]]]) -> None:
         avg_ms = sum(r["elapsed_ms"] for r in active) / len(active)
         total_cost = sum(r["cost_usd"] for r in active)
         print(
-            f"{name:<22} {avg_score:>10.2f} {total_tokens:>13} "
-            f"{avg_ms:>8.1f} ${total_cost:>11.6f}"
+            f"{name:<22} {avg_score:>10.2f} {total_tokens:>13} {avg_ms:>8.1f} ${total_cost:>11.6f}"
         )
 
 
@@ -325,9 +325,11 @@ async def _main() -> None:
     rubric = load_rubric()
 
     print(f"Loaded {len(queries)} queries from {_QUERIES_PATH.name}")
-    print(f"Scoring: exact={rubric['scoring']['exact_match']}  "
-          f"substring={rubric['scoring']['substring_match']}  "
-          f"no_match={rubric['scoring']['no_match']}")
+    print(
+        f"Scoring: exact={rubric['scoring']['exact_match']}  "
+        f"substring={rubric['scoring']['substring_match']}  "
+        f"no_match={rubric['scoring']['no_match']}"
+    )
     print()
 
     raw_results, adk_results, lc_results = await asyncio.gather(

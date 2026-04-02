@@ -8,8 +8,6 @@ No additional dependencies required -- works with the base install.
 
 from __future__ import annotations
 
-from typing import Any
-
 from src.ch00.raw_agent import Agent, AgentResult
 from src.ch00.tool_use import create_default_registry
 from src.shared.model_client import MockClient

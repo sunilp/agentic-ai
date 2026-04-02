@@ -26,14 +26,13 @@ if str(_SRC_DIR) not in sys.path:
     sys.path.insert(0, str(_SRC_DIR))
 
 import yaml  # noqa: E402
+from agent import ResearchAgent  # noqa: E402
+from tools import create_research_registry  # noqa: E402
 
 from src.ch00.eval_compare import EvalResult, print_comparison, score_answer  # noqa: E402
 from src.ch00.llm_basics import estimate_cost  # noqa: E402
 from src.shared.model_client import MockClient  # noqa: E402
 from src.shared.types import CompletionResponse, TokenUsage, ToolCall  # noqa: E402
-
-from agent import ResearchAgent  # noqa: E402
-from tools import create_research_registry  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Load test cases
@@ -88,9 +87,7 @@ def _scripted_responses_for(query: str) -> list[CompletionResponse]:
         ]
     if "quick brown fox" in q:
         return [
-            _tr(
-                "The phrase 'the quick brown fox jumps over the lazy dog' contains 9 words."
-            ),
+            _tr("The phrase 'the quick brown fox jumps over the lazy dog' contains 9 words."),
         ]
     if "agentic ai" in q and "summarize" in q:
         return [

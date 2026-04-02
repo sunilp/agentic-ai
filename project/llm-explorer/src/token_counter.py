@@ -139,7 +139,9 @@ def print_comparison(results: list[TokenEstimate]) -> None:
     for r in results:
         tiktoken_str = str(r.tiktoken_count) if r.tiktoken_count is not None else "n/a"
         error_str = f"{r.error_pct:+.1f}%" if r.error_pct is not None else "n/a"
-        print(f"{r.label:<22} {r.char_len:>7} {r.char_estimate:>9} {tiktoken_str:>12} {error_str:>8}")
+        print(
+            f"{r.label:<22} {r.char_len:>7} {r.char_estimate:>9} {tiktoken_str:>12} {error_str:>8}"
+        )
     print()
 
 
@@ -213,16 +215,12 @@ def print_batch_projections(projections: list[BatchProjection]) -> None:
     print(header)
     print("-" * len(header))
     for proj in projections:
-        print(
-            f"{proj.model:<35} ${proj.cost_per_doc:>9.6f} ${proj.total_cost_usd:>11.2f}"
-        )
+        print(f"{proj.model:<35} ${proj.cost_per_doc:>9.6f} ${proj.total_cost_usd:>11.2f}")
     cheapest = projections[0]
     priciest = projections[-1]
     if len(projections) > 1:
         ratio = priciest.total_cost_usd / max(cheapest.total_cost_usd, 1e-12)
-        print(
-            f"\nCost spread: {cheapest.model} vs {priciest.model} = {ratio:.1f}x difference"
-        )
+        print(f"\nCost spread: {cheapest.model} vs {priciest.model} = {ratio:.1f}x difference")
     print()
 
 

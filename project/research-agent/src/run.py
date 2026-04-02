@@ -31,11 +31,11 @@ _SRC_DIR = Path(__file__).resolve().parent
 if str(_SRC_DIR) not in sys.path:
     sys.path.insert(0, str(_SRC_DIR))
 
-from src.shared.model_client import MockClient  # noqa: E402
-from src.shared.types import CompletionResponse, TokenUsage, ToolCall  # noqa: E402
-
 from agent import ResearchAgent, export_trace, print_trace  # noqa: E402
 from tools import create_research_registry  # noqa: E402
+
+from src.shared.model_client import MockClient  # noqa: E402
+from src.shared.types import CompletionResponse, TokenUsage, ToolCall  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Mock response builder

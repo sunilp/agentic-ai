@@ -201,7 +201,9 @@ def print_overflow_results(results: list[OverflowExperimentResult]) -> None:
     print(f"Target sentence: {TARGET_ANSWER!r}")
     print()
 
-    header = f"{'Fill %':>7} {'Est tokens':>11} {'Utilisation':>12} {'Found?':>7} {'Quality':>8}  Bar"
+    header = (
+        f"{'Fill %':>7} {'Est tokens':>11} {'Utilisation':>12} {'Found?':>7} {'Quality':>8}  Bar"
+    )
     print(header)
     print("-" * (len(header) + 22))
     for r in results:

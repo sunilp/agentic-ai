@@ -67,7 +67,7 @@ async def run_langchain_agent(query: str, max_steps: int = 5) -> LangChainResult
 
     try:
         result = await agent.ainvoke({"messages": [HumanMessage(content=query)]})
-    except Exception as exc:  # noqa: BLE001
+    except Exception:  # noqa: BLE001
         elapsed_ms = (time.monotonic() - t0) * 1000
         return LangChainResult(
             answer=None,
@@ -89,9 +89,7 @@ async def run_langchain_agent(query: str, max_steps: int = 5) -> LangChainResult
             break
 
     # Count steps as the number of AI messages (each represents a model call).
-    steps = sum(
-        1 for msg in messages if getattr(msg, "type", None) == "ai"
-    )
+    steps = sum(1 for msg in messages if getattr(msg, "type", None) == "ai")
 
     # Token usage -- LangChain exposes this on the response metadata when available.
     total_tokens = 0

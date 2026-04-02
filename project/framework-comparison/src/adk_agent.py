@@ -45,9 +45,7 @@ async def run_adk_agent(query: str, max_steps: int = 5) -> ADKResult:
         ImportError: If google-adk is not installed.
     """
     if not ADK_AVAILABLE:
-        raise ImportError(
-            "google-adk is not installed. Install with: pip install google-adk"
-        )
+        raise ImportError("google-adk is not installed. Install with: pip install google-adk")
 
     try:
         from google.adk.runners import InMemoryRunner
@@ -61,13 +59,9 @@ async def run_adk_agent(query: str, max_steps: int = 5) -> ADKResult:
 
     t0 = time.monotonic()
     runner = InMemoryRunner(agent=agent)
-    session = await runner.session_service.create_session(
-        app_name=runner.app_name, user_id="eval"
-    )
+    session = await runner.session_service.create_session(app_name=runner.app_name, user_id="eval")
 
-    content = genai_types.Content(
-        role="user", parts=[genai_types.Part(text=query)]
-    )
+    content = genai_types.Content(role="user", parts=[genai_types.Part(text=query)])
 
     answer: str | None = None
     steps = 0

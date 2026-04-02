@@ -39,10 +39,10 @@ if TYPE_CHECKING:
 # Module-level summarize client (injected before use)
 # ---------------------------------------------------------------------------
 
-_summarize_client: "ModelClient | None" = None
+_summarize_client: ModelClient | None = None
 
 
-def set_summarize_client(client: "ModelClient") -> None:
+def set_summarize_client(client: ModelClient) -> None:
     """Inject a ModelClient to be used by the summarize tool.
 
     Call this before running any agent that uses the summarize tool.
@@ -328,7 +328,9 @@ if __name__ == "__main__":
 
     print("\nCalculator examples:")
     for op, a, b in [("add", 15, 7), ("multiply", 15, 7), ("power", 2, 8)]:
-        print(f"  {op}({a}, {b}) = {execute_tool_call(registry, 'calculator', {'operation': op, 'a': a, 'b': b})}")
+        print(
+            f"  {op}({a}, {b}) = {execute_tool_call(registry, 'calculator', {'operation': op, 'a': a, 'b': b})}"
+        )
 
     print("\nSearch:")
     result = execute_tool_call(registry, "search", {"query": "agentic AI", "max_results": 2})
@@ -346,6 +348,9 @@ if __name__ == "__main__":
     result = execute_tool_call(
         registry,
         "summarize",
-        {"text": "Agentic AI refers to AI systems that can autonomously plan and execute multi-step tasks.", "max_words": 10},
+        {
+            "text": "Agentic AI refers to AI systems that can autonomously plan and execute multi-step tasks.",
+            "max_words": 10,
+        },
     )
     print(f"  {result}")

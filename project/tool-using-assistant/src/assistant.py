@@ -264,7 +264,9 @@ DEMO_SCENARIOS: list[tuple[str, list[CompletionResponse]]] = [
     (
         "Search for information about transformer neural networks.",
         [
-            _make_tool_response("search", {"query": "transformer neural networks", "max_results": 3}),
+            _make_tool_response(
+                "search", {"query": "transformer neural networks", "max_results": 3}
+            ),
             _make_text_response(
                 "Found 3 results about transformer neural networks, including a Wikipedia overview "
                 "and research resources."

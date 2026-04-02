@@ -15,7 +15,6 @@ Run with:
 from __future__ import annotations
 
 import asyncio
-import json
 import sys
 from pathlib import Path
 from typing import Any
@@ -30,7 +29,6 @@ from pydantic import BaseModel, ValidationError, field_validator  # noqa: E402
 from src.ch00.llm_basics import call_llm, parse_structured_output  # noqa: E402
 from src.shared.model_client import MockClient  # noqa: E402
 from src.shared.types import CompletionResponse, TokenUsage  # noqa: E402
-
 
 # ---------------------------------------------------------------------------
 # Pydantic schemas for structured extraction
@@ -71,9 +69,7 @@ class EntityExtractionResult(BaseModel):
     def validate_count_matches_entities(cls, v: int, info: Any) -> int:
         entities = info.data.get("entities", [])
         if entities and v != len(entities):
-            raise ValueError(
-                f"entity_count ({v}) does not match len(entities) ({len(entities)})"
-            )
+            raise ValueError(f"entity_count ({v}) does not match len(entities) ({len(entities)})")
         return v
 
 
@@ -256,6 +252,7 @@ async def demo_extraction_with_fallback() -> None:
 
 
 if __name__ == "__main__":
+
     async def _main() -> None:
         print("=" * 60)
         print("Structured output patterns")

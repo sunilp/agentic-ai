@@ -16,7 +16,6 @@ Run with:
 from __future__ import annotations
 
 import json
-import os
 import sys
 from enum import StrEnum
 from pathlib import Path
@@ -80,9 +79,7 @@ class FileReaderInput(BaseModel):
     """
 
     path: str = Field(description="Relative path to a file within the project directory.")
-    max_lines: int = Field(
-        default=50, ge=1, le=500, description="Maximum number of lines to read."
-    )
+    max_lines: int = Field(default=50, ge=1, le=500, description="Maximum number of lines to read.")
 
 
 # ---------------------------------------------------------------------------
@@ -131,7 +128,9 @@ def word_counter(text: str) -> str:
         A JSON string with word_count, character_count, and sentence_count.
     """
     words = text.split()
-    sentences = [s.strip() for s in text.replace("!", ".").replace("?", ".").split(".") if s.strip()]
+    sentences = [
+        s.strip() for s in text.replace("!", ".").replace("?", ".").split(".") if s.strip()
+    ]
     result = {
         "word_count": len(words),
         "character_count": len(text),
@@ -323,7 +322,9 @@ if __name__ == "__main__":
     print(f"  search('agentic AI', max_results=2) -> {result[:120]}...")
 
     # File reader (README exists)
-    result = execute_tool_call(registry, "file_reader", {"path": "project/tool-using-assistant/README.md", "max_lines": 5})
+    result = execute_tool_call(
+        registry, "file_reader", {"path": "project/tool-using-assistant/README.md", "max_lines": 5}
+    )
     print(f"  file_reader('project/tool-using-assistant/README.md', 5) -> {result[:120]}...")
 
     # Validation error

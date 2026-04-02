@@ -360,9 +360,7 @@ def print_trace(trace: AgentTrace) -> None:
     print("-" * 60)
     for step in trace.steps:
         if step.type == "tool_call":
-            print(
-                f"[{step.step}] tool_call  {step.tool}({step.arguments})"
-            )
+            print(f"[{step.step}] tool_call  {step.tool}({step.arguments})")
             result_preview = (step.result or "")[:80]
             if len(step.result or "") > 80:
                 result_preview += "..."
@@ -439,7 +437,9 @@ if __name__ == "__main__":
                         "read_url",
                         {"url": "https://en.wikipedia.org/wiki/Agentic_AI", "max_chars": 500},
                     ),
-                    _text_resp("Agentic AI refers to AI systems capable of autonomous multi-step reasoning and tool use."),
+                    _text_resp(
+                        "Agentic AI refers to AI systems capable of autonomous multi-step reasoning and tool use."
+                    ),
                 ],
             ),
         ]

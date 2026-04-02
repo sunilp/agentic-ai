@@ -30,8 +30,6 @@ if str(_SRC_DIR) not in sys.path:
 import yaml  # noqa: E402
 
 from src.ch00.llm_basics import estimate_cost  # noqa: E402
-from src.ch00.tool_use import create_default_registry  # noqa: E402
-from src.shared.model_client import MockClient  # noqa: E402
 from src.shared.types import CompletionResponse, TokenUsage, ToolCall  # noqa: E402
 
 # ---------------------------------------------------------------------------
@@ -140,7 +138,6 @@ async def _run_raw(queries: list[dict[str, str]]) -> list[FrameworkResult]:
     from raw_agent import run_raw_agent
 
     results: list[FrameworkResult] = []
-    registry = create_default_registry()
 
     for case in queries:
         query = case["query"]
@@ -323,7 +320,9 @@ def _print_framework_results(name: str, results: list[FrameworkResult]) -> None:
     print("-" * len(header))
     for r in results:
         q_short = r.query[:36] + ".." if len(r.query) > 38 else r.query
-        print(f"{q_short:<38} {r.score:>6.1f} {r.steps:>6} {r.total_tokens:>7} {r.elapsed_ms:>7.1f}")
+        print(
+            f"{q_short:<38} {r.score:>6.1f} {r.steps:>6} {r.total_tokens:>7} {r.elapsed_ms:>7.1f}"
+        )
 
 
 def print_summary(all_results: dict[str, list[FrameworkResult]]) -> None:
@@ -348,8 +347,7 @@ def print_summary(all_results: dict[str, list[FrameworkResult]]) -> None:
         avg_ms = sum(r.elapsed_ms for r in active) / len(active)
         total_cost = sum(r.cost_usd for r in active)
         print(
-            f"{name:<22} {avg_score:>10.2f} {total_tokens:>13} "
-            f"{avg_ms:>8.1f} ${total_cost:>11.6f}"
+            f"{name:<22} {avg_score:>10.2f} {total_tokens:>13} {avg_ms:>8.1f} ${total_cost:>11.6f}"
         )
 
 
