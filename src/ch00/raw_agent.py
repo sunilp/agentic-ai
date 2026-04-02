@@ -14,10 +14,9 @@ import asyncio
 import time
 from dataclasses import dataclass, field
 
+from src.ch00.tool_use import ToolRegistry, execute_tool_call
 from src.shared.model_client import ModelClient
 from src.shared.types import CompletionRequest, Message, Role
-from src.ch00.tool_use import ToolRegistry, execute_tool_call
-
 
 # ---------------------------------------------------------------------------
 # System prompt
@@ -113,13 +112,15 @@ class Agent:
                 tc = response.tool_calls[0]
                 tool_result = execute_tool_call(self.registry, tc.name, tc.arguments)
 
-                trace.append({
-                    "type": "tool_call",
-                    "step": steps,
-                    "tool": tc.name,
-                    "arguments": tc.arguments,
-                    "result": tool_result,
-                })
+                trace.append(
+                    {
+                        "type": "tool_call",
+                        "step": steps,
+                        "tool": tc.name,
+                        "arguments": tc.arguments,
+                        "result": tool_result,
+                    }
+                )
 
                 # Append the assistant's tool-call turn and the tool result.
                 messages.append(
@@ -140,11 +141,13 @@ class Agent:
 
             # Model returned a text answer -- we are done.
             if response.content:
-                trace.append({
-                    "type": "response",
-                    "step": steps,
-                    "content": response.content,
-                })
+                trace.append(
+                    {
+                        "type": "response",
+                        "step": steps,
+                        "content": response.content,
+                    }
+                )
                 elapsed_ms = (time.monotonic() - start_time) * 1000
                 return AgentResult(
                     answer=response.content,
@@ -175,9 +178,9 @@ class Agent:
 
 
 if __name__ == "__main__":
+    from src.ch00.tool_use import create_default_registry
     from src.shared.model_client import MockClient
     from src.shared.types import CompletionResponse, TokenUsage, ToolCall
-    from src.ch00.tool_use import create_default_registry
 
     def _make_tool_response(name: str, args: dict) -> CompletionResponse:
         return CompletionResponse(
@@ -206,19 +209,25 @@ if __name__ == "__main__":
             # 2. Tool call then answer.
             (
                 "What is 12 multiplied by 13?",
-                MockClient(responses=[
-                    _make_tool_response("calculator", {"operation": "multiply", "a": 12, "b": 13}),
-                    _make_text_response("12 * 13 = 156.0"),
-                ]),
+                MockClient(
+                    responses=[
+                        _make_tool_response(
+                            "calculator", {"operation": "multiply", "a": 12, "b": 13}
+                        ),
+                        _make_text_response("12 * 13 = 156.0"),
+                    ]
+                ),
             ),
             # 3. Budget exhaustion (only tool calls, no final answer).
             (
                 "Search for everything ever written about AI.",
-                MockClient(responses=[
-                    _make_tool_response("search", {"query": "AI history"}),
-                    _make_tool_response("search", {"query": "AI future"}),
-                    _make_tool_response("search", {"query": "AI ethics"}),
-                ]),
+                MockClient(
+                    responses=[
+                        _make_tool_response("search", {"query": "AI history"}),
+                        _make_tool_response("search", {"query": "AI future"}),
+                        _make_tool_response("search", {"query": "AI ethics"}),
+                    ]
+                ),
             ),
         ]
 
@@ -233,7 +242,9 @@ if __name__ == "__main__":
             print(f"Trace ({len(result.trace)} entries):")
             for entry in result.trace:
                 if entry["type"] == "tool_call":
-                    print(f"  [{entry['step']}] tool_call  {entry['tool']}({entry['arguments']}) -> {entry['result'][:60]!r}")
+                    print(
+                        f"  [{entry['step']}] tool_call  {entry['tool']}({entry['arguments']}) -> {entry['result'][:60]!r}"
+                    )
                 else:
                     print(f"  [{entry['step']}] response   {entry['content'][:60]!r}")
             print()

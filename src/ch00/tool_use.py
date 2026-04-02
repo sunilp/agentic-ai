@@ -10,8 +10,9 @@ from __future__ import annotations
 
 import asyncio
 import json
+from collections.abc import Callable
 from enum import StrEnum
-from typing import Any, Callable, Type
+from typing import Any
 
 from pydantic import BaseModel, Field, ValidationError
 
@@ -21,12 +22,11 @@ from src.shared.types import (
     CompletionResponse,
     Message,
     Role,
+    TokenUsage,
     ToolCall,
     ToolParameter,
     ToolSchema,
-    TokenUsage,
 )
-
 
 # ---------------------------------------------------------------------------
 # Enums and input models
@@ -139,7 +139,7 @@ class Tool:
         name: str,
         description: str,
         fn: Callable[..., str],
-        input_model: Type[BaseModel],
+        input_model: type[BaseModel],
     ) -> None:
         self.name = name
         self.description = description
@@ -226,7 +226,7 @@ class ToolRegistry:
         name: str,
         description: str,
         fn: Callable[..., str],
-        input_model: Type[BaseModel],
+        input_model: type[BaseModel],
     ) -> None:
         """Register a tool under *name*.
 
@@ -343,7 +343,9 @@ if __name__ == "__main__":
 
         # --- 2. Direct tool invocation with validation ---
         print("Direct calculator call:")
-        result = execute_tool_call(registry, "calculator", {"operation": "multiply", "a": 6, "b": 7})
+        result = execute_tool_call(
+            registry, "calculator", {"operation": "multiply", "a": 6, "b": 7}
+        )
         print(f"  6 * 7 = {result}\n")
 
         print("Division by zero:")

@@ -21,7 +21,6 @@ from src.ch00.tool_use import create_default_registry
 from src.shared.model_client import MockClient
 from src.shared.types import CompletionResponse, TokenUsage, ToolCall
 
-
 # ---------------------------------------------------------------------------
 # Result type
 # ---------------------------------------------------------------------------
@@ -34,7 +33,7 @@ class EvalResult:
     query: str
     expected: str
     actual: str
-    score: float          # 0.0 to 1.0
+    score: float  # 0.0 to 1.0
     tokens: int
     latency_ms: float
     cost_estimate: float  # USD
@@ -125,20 +124,20 @@ def print_comparison(results: dict[str, list[EvalResult]]) -> None:
     """
     # Per-query detail.
     for impl_name, eval_results in results.items():
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"Implementation: {impl_name}")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
         print(f"{'Query':<40} {'Expected':<12} {'Got':<25} {'Score'}")
-        print(f"{'-'*40} {'-'*12} {'-'*25} {'-'*5}")
+        print(f"{'-' * 40} {'-' * 12} {'-' * 25} {'-' * 5}")
         for r in eval_results:
             query_short = r.query[:38] + ".." if len(r.query) > 40 else r.query
             actual_short = r.actual[:23] + ".." if len(r.actual) > 25 else r.actual
             print(f"{query_short:<40} {r.expected:<12} {actual_short:<25} {r.score:.1f}")
 
     # Summary table.
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print("Summary")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     header = f"{'Implementation':<20} {'Avg Score':>10} {'Total Tokens':>13} {'Avg Latency ms':>15} {'Total Cost USD':>15}"
     print(header)
     print("-" * len(header))
@@ -180,7 +179,9 @@ async def _run_raw_agent_evals() -> list[EvalResult]:
             "12 + 8 = 20",
         ),
         (
-            ToolCall(id="tc2", name="calculator", arguments={"operation": "multiply", "a": 9, "b": 7}),
+            ToolCall(
+                id="tc2", name="calculator", arguments={"operation": "multiply", "a": 9, "b": 7}
+            ),
             "9 * 7 = 63",
         ),
         (
@@ -188,11 +189,15 @@ async def _run_raw_agent_evals() -> list[EvalResult]:
             "There are 4 words in that sentence.",
         ),
         (
-            ToolCall(id="tc4", name="search", arguments={"query": "machine learning", "max_results": 2}),
+            ToolCall(
+                id="tc4", name="search", arguments={"query": "machine learning", "max_results": 2}
+            ),
             "Here are results about machine learning.",
         ),
         (
-            ToolCall(id="tc5", name="calculator", arguments={"operation": "divide", "a": 100, "b": 4}),
+            ToolCall(
+                id="tc5", name="calculator", arguments={"operation": "divide", "a": 100, "b": 4}
+            ),
             "100 / 4 = 25",
         ),
     ]
@@ -256,6 +261,7 @@ async def _run_raw_agent_evals() -> list[EvalResult]:
 
 
 if __name__ == "__main__":
+
     async def _demo() -> None:
         print("Running eval harness against raw agent (MockClient)...")
         raw_results = await _run_raw_agent_evals()

@@ -1,10 +1,11 @@
 """Tests for the raw agent module (Section 0c)."""
 
 import pytest
+
+from src.ch00.raw_agent import Agent
+from src.ch00.tool_use import create_default_registry
 from src.shared.model_client import MockClient
 from src.shared.types import CompletionResponse, TokenUsage, ToolCall
-from src.ch00.raw_agent import Agent, AgentResult
-from src.ch00.tool_use import create_default_registry
 
 
 def _mock_text_response(content: str) -> CompletionResponse:
@@ -37,10 +38,12 @@ async def test_agent_returns_text_response_immediately():
 
 @pytest.mark.asyncio
 async def test_agent_executes_tool_then_responds():
-    client = MockClient(responses=[
-        _mock_tool_response("calculator", {"operation": "add", "a": 2, "b": 3}),
-        _mock_text_response("2 + 3 = 5"),
-    ])
+    client = MockClient(
+        responses=[
+            _mock_tool_response("calculator", {"operation": "add", "a": 2, "b": 3}),
+            _mock_text_response("2 + 3 = 5"),
+        ]
+    )
     registry = create_default_registry()
     agent = Agent(client=client, registry=registry, max_steps=5)
     result = await agent.run("What is 2 + 3?")
@@ -61,10 +64,12 @@ async def test_agent_respects_budget():
 
 @pytest.mark.asyncio
 async def test_agent_handles_unknown_tool():
-    client = MockClient(responses=[
-        _mock_tool_response("nonexistent_tool", {"foo": "bar"}),
-        _mock_text_response("I couldn't find the tool, but here's my answer."),
-    ])
+    client = MockClient(
+        responses=[
+            _mock_tool_response("nonexistent_tool", {"foo": "bar"}),
+            _mock_text_response("I couldn't find the tool, but here's my answer."),
+        ]
+    )
     registry = create_default_registry()
     agent = Agent(client=client, registry=registry, max_steps=5)
     result = await agent.run("Do something")
@@ -74,10 +79,12 @@ async def test_agent_handles_unknown_tool():
 
 @pytest.mark.asyncio
 async def test_agent_trace_records_steps():
-    client = MockClient(responses=[
-        _mock_tool_response("calculator", {"operation": "multiply", "a": 6, "b": 7}),
-        _mock_text_response("6 * 7 = 42"),
-    ])
+    client = MockClient(
+        responses=[
+            _mock_tool_response("calculator", {"operation": "multiply", "a": 6, "b": 7}),
+            _mock_text_response("6 * 7 = 42"),
+        ]
+    )
     registry = create_default_registry()
     agent = Agent(client=client, registry=registry, max_steps=5)
     result = await agent.run("What is 6 * 7?")

@@ -26,6 +26,7 @@ try:
     LANGCHAIN_AVAILABLE = True
 except ImportError:
     LANGCHAIN_AVAILABLE = False
+
     # Provide a no-op decorator so the function definitions below remain valid
     # even when langchain_core is absent.
     def langchain_tool(fn):  # type: ignore[misc]

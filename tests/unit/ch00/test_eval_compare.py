@@ -1,6 +1,6 @@
 """Tests for the eval comparison module (Section 0d)."""
 
-from src.ch00.eval_compare import score_answer, EvalResult
+from src.ch00.eval_compare import EvalResult, score_answer
 
 
 def test_score_answer_exact_match():

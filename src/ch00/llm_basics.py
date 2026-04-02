@@ -64,7 +64,9 @@ def estimate_cost(prompt_tokens: int, completion_tokens: int, model: str) -> flo
         Estimated cost in USD as a float.
     """
     prompt_price, completion_price = MODEL_PRICING.get(model, _DEFAULT_PRICING)
-    cost = (prompt_tokens / 1_000_000) * prompt_price + (completion_tokens / 1_000_000) * completion_price
+    cost = (prompt_tokens / 1_000_000) * prompt_price + (
+        completion_tokens / 1_000_000
+    ) * completion_price
     return float(cost)
 
 
@@ -144,7 +146,12 @@ if __name__ == "__main__":
         print(f"Estimated tokens: {estimated}\n")
 
         # --- Cost estimation ---
-        for model in ("gpt-4o", "gpt-4o-mini", "claude-sonnet-4-20250514", "claude-haiku-4-5-20251001"):
+        for model in (
+            "gpt-4o",
+            "gpt-4o-mini",
+            "claude-sonnet-4-20250514",
+            "claude-haiku-4-5-20251001",
+        ):
             cost = estimate_cost(prompt_tokens=1000, completion_tokens=500, model=model)
             print(f"Cost for {model}: ${cost:.6f}")
         print()

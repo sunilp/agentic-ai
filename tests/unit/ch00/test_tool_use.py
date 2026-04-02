@@ -2,13 +2,13 @@
 
 import pytest
 from pydantic import ValidationError
+
 from src.ch00.tool_use import (
-    Tool,
-    ToolRegistry,
     CalculatorInput,
+    ToolRegistry,
     calculator,
-    word_count,
     execute_tool_call,
+    word_count,
 )
 
 

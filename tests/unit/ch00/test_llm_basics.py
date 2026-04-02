@@ -4,14 +4,15 @@ These tests use MockClient so they run without API keys.
 """
 
 import pytest
-from src.shared.model_client import MockClient
-from src.shared.types import CompletionResponse, TokenUsage
+
 from src.ch00.llm_basics import (
     call_llm,
     count_tokens_estimate,
     estimate_cost,
     parse_structured_output,
 )
+from src.shared.model_client import MockClient
+from src.shared.types import CompletionResponse, TokenUsage
 
 
 def test_count_tokens_estimate():
