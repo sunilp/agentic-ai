@@ -21,7 +21,7 @@ while steps < budget:
         return response.content  # Model decided it's done
 ```
 
-That's it. That is the entire architecture. Every framework, every SDK, every "agent platform" is a wrapper around this loop.
+That's it. That is the core architecture. Every framework, every SDK, every "agent platform" I've looked at wraps some variation of this loop.
 
 Read it line by line:
 
@@ -192,7 +192,7 @@ async def run(self, user_query: str) -> AgentResult:
 
 Walk through the key decisions:
 
-**`for step in range(self.max_steps)`** is a hard ceiling. The loop runs at most `max_steps` times. Default is 5. This is the simplest possible guardrail, and it's non-negotiable. Remove it and a single confused query can burn through your entire API budget.
+**`for step in range(self.max_steps)`** is a hard ceiling. The loop runs at most `max_steps` times. Default is 5. This is the simplest possible guardrail, and I would not ship an agent without it. Remove it and a single confused query can burn through your entire API budget.
 
 **`CompletionRequest(messages=messages, tools=tool_schemas)`** sends the full conversation plus all tool schemas every iteration. The model sees everything: the system prompt, the original question, every tool call it made, every result it got. This growing message list is the agent's working memory.
 
@@ -267,6 +267,9 @@ The model never stopped searching. It kept finding new facets, kept deciding the
 !!! warning "Why this happens"
     The model has no internal sense of "enough." It doesn't know when diminishing returns kick in. If the task is unbounded ("everything about X"), the model will keep exploring until something forces it to stop. The budget is that force. But the budget is a blunt instrument. It stops the loop. It doesn't teach the model to converge. Better system prompts, explicit instructions about when to stop searching, are part of the fix. Chapter 6 covers this in depth.
 
+!!! warning "Failure case study: the $2 query that should have cost $0.05"
+    A product comparison agent had `max_steps=10` because the developer wanted to "give it room to think." A user asked "What's the cheapest flight from London to Paris next Tuesday?" The agent searched for flights, then searched for airline reviews, then searched for airport transfer options, then searched for hotel deals near the airport, then searched for travel insurance, then searched for visa requirements, then searched for currency exchange rates. Seven search calls, each feeding back context that grew the token count per call. Total cost: $1.87 for a query that needed one search and one answer. The fix: start with `max_steps=3`. If the agent exhausts its budget, examine the trace. Most of the time, the task was answerable in fewer steps and the model was being "thorough" rather than efficient. Raise the budget only after you have evidence that more steps produce materially better answers for your workload.
+
 ### Failure 2: The hallucinated tool call
 
 The model invents a tool that doesn't exist. This happens when the model's training data includes functions that your registry doesn't have.
@@ -315,6 +318,9 @@ Nothing in the trace looks wrong. One step, an answer, no budget exhaustion. Eve
 !!! warning "Why this is the dangerous one"
     The infinite loop is visible. The hallucinated tool call produces an error. But the confident wrong answer looks exactly like a correct answer. The only way to catch it is to build evaluation into your system: compare the agent's output against ground truth. Prompting alone does not solve this. You need test suites. Chapter 6 builds them.
 
+!!! warning "Failure case study: one search was not enough"
+    A fact-checking agent was asked "Is Company X still publicly traded?" It searched once, found a 2023 article mentioning the company's IPO, and answered "Yes, Company X is publicly traded." It did not search for more recent news. The company had been taken private six months earlier. The agent stopped after one search because it had "enough information to answer fully," exactly as the system prompt instructed. The fix was not to remove that instruction (you need it to prevent runaway loops). The fix was to add a verification nudge to the system prompt: "For factual claims about current status, search for the most recent information available, not just the first result." A more robust fix, covered in Chapter 6, is to build minimum-step checks: if the task type requires recency, require at least two searches with different date-scoped queries before answering.
+
 <figure>
   <img src="../../diagrams/three-failure-modes.svg" alt="Three failure modes: infinite loop (budget exhaustion), hallucinated tool (error recovery), confident wrong answer (silent failure)" />
   <figcaption>Figure 0c.3: Three failure modes. The first two are loud. The third is silent. Silent failures are the ones that reach production.</figcaption>
@@ -334,7 +340,7 @@ You already have this. The `max_steps` parameter caps the loop:
 agent = Agent(client=client, registry=registry, max_steps=5)
 ```
 
-Five is a reasonable default for simple tasks. For complex research tasks that chain many tool calls, you might go to 10 or 15. Going above 20 is almost always a sign that the task is too vague or the tools are too narrow. If the agent needs 20 steps, reconsider the task decomposition before raising the budget.
+Five is a reasonable default for simple tasks. For complex research tasks that chain many tool calls, you might go to 10 or 15. Going above 20 is usually a sign that the task is too vague or the tools are too narrow. If the agent needs 20 steps, reconsider the task decomposition before raising the budget.
 
 ### Guardrail 2: Input validation
 
@@ -525,6 +531,6 @@ This is the agent you'll compare against every framework you evaluate. When some
 
 ## What you built, and what comes next
 
-You just built an agent. It works. It also breaks in predictable ways. You added basic guardrails that help, but you made a dozen judgment calls by instinct: how many tools, how big the budget, when to stop, what to do when confidence is low. Chapter 1 gives you the precise vocabulary to think about these decisions. It defines exactly what separates an agent from a workflow from a tool-using system, and gives you a framework for choosing the right one. The rest of the book gives you the engineering to build it for production.
+You just built an agent. It works. It also breaks in predictable ways. You added basic guardrails that help, but you made a dozen judgment calls by instinct: how big the budget, when to stop searching, what to do when confidence is low, whether this task even needed an agent or could have been a simple tool call. Those instincts were sometimes right. But instincts do not scale to a team of five engineers building agent systems. Chapter 1 gives you the precise vocabulary to make these decisions explicit. It defines five system types, from single LLM calls through multi-agent orchestrations, and gives you a decision framework for choosing when a task needs the loop you just built and when a deterministic workflow is the better call. The rest of the book gives you the engineering to build whichever one you choose, for production.
 
 For an expanded version with more tools, proper error handling, and example queries, see the [Research Agent](../projects/research-agent.md) project.
