@@ -172,6 +172,12 @@ The philosophical difference matters here. LangChain was built as a composition 
 
 LangChain has the largest ecosystem. It also has the highest abstraction penalty. When your chain breaks at 2am, you're reading LangChain source code, not your code. This is not a disqualifying flaw. It's a fact you should know before you commit.
 
+!!! warning "Failure case study: the 40-line traceback"
+    A LangChain agent failed on a tool call where the model passed a string instead of an integer for a `max_results` parameter. The traceback was 42 lines long, starting in `langgraph.pregel`, passing through `langchain_core.runnables`, `langchain_core.tools`, and three layers of internal dispatch before reaching the actual TypeError in user code. An engineer spent 25 minutes reading framework internals before finding the one relevant line. The same bug in the raw agent produced a 4-line trace: the tool name, the bad arguments, the Pydantic validation error, and the error message sent back to the model. The fix in both cases was identical (add type validation). The diagnosis time was not. This is what "abstraction penalty" means in practice. If your team adds a framework, add structured logging at YOUR layer too, not just the framework's. Log the tool name, the raw arguments, and the result before the framework touches them. When something breaks, you want your logs to tell you what happened, independent of whether the framework's logs are readable.
+
+!!! warning "Failure case study: the same bug, visible in seconds"
+    That same type mismatch in ADK produced a trace entry showing: tool name `search`, arguments `{"query": "python", "max_results": "five"}`, and result `Validation error: Input should be a valid integer`. Three fields. No framework internals. The engineer saw the bad argument, saw the validation error, and fixed the tool description to clarify "max_results must be a number, not a word" in under two minutes. This is not because ADK is "better." It is because ADK's tracing exposes tool-level details by default. The principle: when evaluating frameworks, give them a bad input and read the error output. The framework that shows you the problem fastest is the one that will cost you the least at 2am.
+
 **Observability.** LangChain's tracing story is LangSmith, which is a separate product with its own pricing. ADK's tracing is built into the framework. Your raw agent's tracing is whatever you build. The separation between the framework and the observability tool in LangChain's case means you're managing two dependencies instead of one, and you're sending trace data to an external service you don't control.
 
 ## The three-way comparison
@@ -206,7 +212,7 @@ I have opinions. Strong ones. Here they are.
 
 If you're building something serious, pick a framework that gives you visibility, not convenience. Traces matter more than fewer lines of code. An agent that runs correctly but can't be debugged when it doesn't is a liability. Every production incident I've seen with agent systems came down to the same question: what did the model do, and why? Frameworks that answer this question well (ADK does, LangSmith does if you pay for it, your raw trace list does if you build it properly) are worth the dependency. Frameworks that hide this information behind convenience wrappers are not.
 
-If you're learning, build raw first. Always. Then move to a framework. Never the other way around. If you start with a framework, you'll learn the framework's API without understanding what it's doing underneath. When something breaks (and it will), you'll be debugging abstractions you don't understand. You'll google the error message instead of reading the code. You'll copy-paste solutions from Stack Overflow instead of reasoning about the system. Building raw first takes two days. It saves you months of confused debugging later.
+If you're learning, build raw first. Then move to a framework. I would not recommend the reverse. Starting with a framework means learning its API without understanding what it's doing underneath. When something breaks (and it will), you end up debugging abstractions you don't understand. You google the error message instead of reading the code. You copy-paste solutions from Stack Overflow instead of reasoning about the system. Building raw first takes two days. It saves you months of confused debugging later.
 
 If your team already uses LangChain, that's fine. Understand what it's doing (you now can), and add the engineering discipline the framework doesn't give you. Add structured evaluation. Add cost tracking. Add budget limits. Add trace export. LangChain gives you the plumbing. It doesn't give you the engineering practices. Those are on you, and they matter more than the plumbing.
 
@@ -294,7 +300,7 @@ The numbers don't lie. This is how you make framework decisions: with data, not 
 </figure>
 
 !!! warning "The eval mindset"
-    The most important takeaway from this section is not which framework scored highest. It's that you can answer the question at all. Most teams pick frameworks based on blog posts, conference talks, and GitHub stars. Then they wonder why the thing doesn't work for their use case. The teams that succeed pick frameworks based on measured performance against their own workloads. Build the eval first. Then try the frameworks. Not the other way around.
+    The most important takeaway from this section is not which framework scored highest. It's that you can answer the question at all. Too many teams pick frameworks based on blog posts, conference talks, and GitHub stars. Then they wonder why the thing doesn't work for their use case. The teams I've seen succeed pick frameworks based on measured performance against their own workloads. Build the eval first. Then try the frameworks. Not the other way around.
 
 ## What you've built, and what comes next
 
@@ -302,7 +308,9 @@ You've now built the same agent three ways. You understand what happens at every
 
 The raw agent taught you the mechanism. The framework agents taught you the tradeoffs. The eval harness taught you how to choose. This is the pattern for every engineering decision in this book: understand the fundamentals, evaluate the options, measure the results.
 
-You're ready for the book. [Chapter 1](01-what-agentic-means.md) gives you the vocabulary to think precisely about what you just built. It defines five system types, from LLM applications through multi-agent systems, and gives you a decision framework for choosing the right one. The rest of the book gives you the engineering discipline to build it for production.
+You also made a lot of decisions by feel. You picked a budget of 5 without measuring whether 3 was enough. You wrote tool descriptions that seemed clear but might break on ambiguous queries. You chose a system prompt by instinct. You eyeballed eval scores instead of running statistical significance tests. All of that worked for a three-tool demo agent. None of it works for a production system handling 10,000 queries a day where a wrong answer has consequences.
+
+[Chapter 1](01-what-agentic-means.md) replaces instinct with engineering vocabulary. It defines five system types, from single LLM calls through multi-agent orchestrations, and gives you a decision framework for choosing when a task needs the loop you just built and when a deterministic workflow is the safer bet. The rest of the book turns every judgment call you made by feel into a measurable, testable, reviewable engineering decision.
 
 [Get the book on Amazon](https://www.amazon.com/dp/B0GVG6848F){ .md-button .md-button--primary }
 
