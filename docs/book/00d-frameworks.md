@@ -16,6 +16,19 @@ The point is not "frameworks are good" or "frameworks are bad." The point is to 
 
 Here is the question that separates engineers who use frameworks well from engineers who suffer under them: when this breaks at 2am, will I be debugging my code or the framework's code? If you understand what the framework is doing (because you built the raw version first), you can answer that question before you choose.
 
+## What frameworks actually automate
+
+Before comparing specific frameworks, it helps to name the four things you built by hand that every framework handles for you:
+
+1. **Tool registration.** You wrote `Tool`, `ToolRegistry`, and `to_schema()` to convert Pydantic models into JSON schemas. Frameworks do this automatically from type hints and docstrings.
+2. **The agent loop.** You wrote the `for step in range(max_steps)` loop that calls the model, checks for tool calls, dispatches, and appends results. Frameworks run this loop internally.
+3. **Conversation state.** You manually grew the `messages` list, appending assistant tool calls and tool results. Frameworks manage this list for you.
+4. **Tracing.** You built a `trace` list of dictionaries. Frameworks generate structured, exportable traces automatically.
+
+The tool logic (the actual `calculator`, `search`, `word_count` functions) stays yours. The system prompt stays yours. The failure modes stay yours. The framework replaces the plumbing, not the engineering decisions.
+
+With that in mind, let's see how two frameworks handle the same agent.
+
 ## Google ADK: the primary walkthrough
 
 Google's Agent Development Kit is opinionated about the things that matter in production: tracing, evaluation, and tool registration. It gives you a structured way to define agents and tools, and it stays out of your way on the rest. Let's rebuild the research agent.
@@ -162,7 +175,7 @@ agent = create_react_agent(model, tools)
 ```
 
 !!! info "What just happened"
-    About 35 lines. The `@tool` decorator works similarly to ADK's `FunctionTool`: it reads the docstring and type hints to build the tool schema. `create_react_agent` wires up the ReAct loop internally. Three imports, three decorated functions, three lines of setup.
+    About 35 lines. The `@tool` decorator works similarly to ADK's `FunctionTool`: it reads the docstring and type hints to build the tool schema. `create_react_agent` wires up the ReAct loop internally. Three imports, three decorated functions, three lines of setup. Notice `ChatAnthropic(model="claude-haiku-4-5-20251001")` at line 159: LangChain uses provider-specific model classes rather than the provider-neutral `ModelClient` you built in Section 0a. This is a philosophical choice. ADK abstracts the provider. LangChain ties your code to a specific provider class. If you later swap from Anthropic to OpenAI, the raw agent and the ADK agent need a config change. The LangChain agent needs a code change.
 
 The philosophical difference matters here. LangChain was built as a composition framework, where you chain together prompts, models, retrievers, and output parsers into pipelines. This is powerful for linear workflows (retrieve, then summarize, then format). It is awkward for agents, where the control flow is a loop, not a chain. LangGraph (the agent layer) fixes this by introducing a graph-based execution model, but you're now dealing with two mental models: chains for data flow and graphs for control flow.
 

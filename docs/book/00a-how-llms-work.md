@@ -36,7 +36,10 @@ print(message.content[0].text)
 !!! info "What just happened"
     You sent a string to an API. You got a string back. You paid for both strings, measured in tokens. That's the entire contract.
 
-Now here's the same operation using the shared model client from this book's codebase:
+That raw SDK call is the simplest way to understand what is happening. It is useful for experiments and first contact. But it becomes painful in real systems: provider-specific code leaks into every file, testing requires live API calls, swapping models means rewriting imports, and cost tracking gets scattered.
+
+The companion code wraps this single operation in a provider-neutral client. Same contract (text in, text out), but now testable, swappable, and observable:
+
 
 ```python
 from src.shared.model_client import create_client
@@ -60,7 +63,7 @@ print(response.content)
 !!! info "What just happened"
     The model client wraps the raw API with typed inputs and outputs. Your agent code never imports `anthropic` or `openai` directly. You can swap providers, add cost tracking, or switch to a mock for testing, all without changing the code that calls it.
 
-Why bother with the wrapper? Because when you build agents, you will call the model hundreds of times per day. You will want to track costs. You will want to swap between a fast cheap model and a slow expensive one depending on the task. You will want to run tests without hitting a real API. The wrapper makes all of that possible by centralizing the one operation that matters.
+So which should you use? Use the raw SDK call to understand the mechanics. Use the wrapper when the model becomes part of a larger system. The rest of this book uses the wrapper because agents call the model hundreds of times per day, and you will want to track costs, swap between a fast cheap model and a slow expensive one depending on the task, and run tests without hitting a real API. The wrapper makes all of that possible by centralizing the one operation that matters.
 
 This is the foundation. If you understand this, you understand 80% of what frameworks are doing. The other 20% is prompt management, tool routing, and retry logic. All useful. None of it magic.
 

@@ -393,7 +393,7 @@ This is 10% of what production hardening looks like. Chapter 6 gives you the oth
 
 ## The code in full
 
-Here is the complete agent in one block. You can read this top to bottom in ten minutes and understand everything that happens. No hidden utilities. No imports from libraries that do the hard work for you. The `ModelClient`, `ToolRegistry`, and `execute_tool_call` were all built from scratch in the previous sections.
+Here is the complete agent in one block. You can read this top to bottom in ten minutes and understand everything that happens. No hidden utilities. No imports from libraries that do the hard work for you. The three imports at the top are the pieces you built in previous sections: `ModelClient` (the provider-neutral wrapper from Section 0a), `ToolRegistry` and `execute_tool_call` (the tool registration and dispatch from Section 0b). In the companion code, these live in `src/shared/` and `src/ch00/`. In a real project, they would be your own modules.
 
 ```python
 """A minimal agent: a while loop with an LLM inside it."""
@@ -527,7 +527,7 @@ class Agent:
 
 One file. One class. One loop. No decorators, no metaclasses, no dependency injection. Every line is visible. Every decision is explicit.
 
-This is the agent you'll compare against every framework you evaluate. When someone shows you a 500-line agent class with plugins, middleware, and lifecycle hooks, ask: what does this give me that the 100-line version doesn't? Knowing the baseline is how you tell the difference.
+This is the agent you will compare against every framework you evaluate. You wrote the tool registry, the schema generation, the validation layer, the agent loop, the trace, and the guardrails. In Section 0d, you will rebuild this same agent using Google ADK and LangChain. The tool logic stays the same. The system prompt stays the same. The failure modes stay the same. What changes is that four things get automated: tool registration (the `ToolRegistry` and `to_schema()` you wrote), the agent loop (the `for` loop above), conversation state (the growing `messages` list), and tracing (the `trace` dictionary). The hard engineering decisions do not disappear. They just move inside the framework. When someone shows you a 500-line agent class with plugins, middleware, and lifecycle hooks, you will now know exactly what those 500 lines are wrapping: the 100-line version you just wrote.
 
 ## What you built, and what comes next
 

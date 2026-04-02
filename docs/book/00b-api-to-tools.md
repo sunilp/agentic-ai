@@ -303,7 +303,7 @@ print(result)
 # "Error: division by zero"
 ```
 
-That's it. That is the entire mechanism behind function calling. Every major framework I've looked at, LangChain's tools, CrewAI's tool decorator, Anthropic's tool use API, follows this same pattern. They define a schema. They send it to the model. The model returns JSON. They validate and execute. The abstractions vary. The core mechanism does not.
+That is the entire mechanism behind function calling. You defined a Pydantic model, wrote `to_schema()` to generate the JSON schema, built `execute_tool_call()` to validate and dispatch. Every major framework automates exactly these three steps. LangChain's `@tool` decorator reads your type hints and generates the schema. Google ADK's `FunctionTool` reads the docstring. CrewAI's tool registration does the same. The pattern is identical; only the syntax changes. You built it by hand so you understand what the framework is doing when it hides these lines from you. Section 0d will show you the same tools wrapped in ADK and LangChain, and you will see that the 30 lines of schema and validation machinery you just wrote collapse into a single decorator.
 
 ## Schema validation is your safety net
 
