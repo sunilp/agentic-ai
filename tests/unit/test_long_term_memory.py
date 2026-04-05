@@ -94,6 +94,18 @@ def test_worthiness_filter_accepts_low_confidence_escalation():
     assert f.is_worthy(category=MemoryCategory.ESCALATION, confidence=0.3) is True
 
 
+def test_store_escalation(ltm):
+    record_id = ltm.store_escalation(
+        query="complex billing question",
+        reason="Low retrieval relevance, insufficient evidence",
+        context="User asked about multi-currency charges",
+    )
+    assert record_id is not None
+    record = ltm.get(record_id)
+    assert record.category == MemoryCategory.ESCALATION
+    assert "Low retrieval relevance" in record.outcome
+
+
 def test_stale_flagging(ltm):
     old_timestamp = datetime.now(timezone.utc) - timedelta(days=31)
     record = MemoryRecord(
