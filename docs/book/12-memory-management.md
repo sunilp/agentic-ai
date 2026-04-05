@@ -26,7 +26,7 @@ What makes memory particularly treacherous as an engineering problem is that the
 This chapter builds three memory layers -- session, long-term, and shared -- that address each failure. For each layer, we build the mechanism, measure its impact, and then attack it, because memory introduces new surfaces that Chapter 11's defenses do not cover. The Agent Tax applies here in full force: every memory layer adds latency, storage cost, privacy exposure, and failure modes. You should build only the layers you need, measured against the failures you actually observe.
 
 <figure>
-  <img src="../diagrams/memory-hierarchy.svg" alt="Three-layer memory architecture: context window, session memory, long-term memory, and shared memory with data flow and persistence boundaries" />
+  <img src="../../diagrams/memory-hierarchy.svg" alt="Three-layer memory architecture: context window, session memory, long-term memory, and shared memory with data flow and persistence boundaries" />
   <figcaption>Figure 1: The memory hierarchy -- from ephemeral context window to persistent shared state</figcaption>
 </figure>
 
@@ -39,7 +39,7 @@ The naive solution is recency truncation: keep the most recent messages, drop th
 ### Three strategies for bounded context
 
 <figure>
-  <img src="../diagrams/truncation-strategies.svg" alt="Side-by-side comparison of recency, importance, and compaction truncation strategies on the same conversation" />
+  <img src="../../diagrams/truncation-strategies.svg" alt="Side-by-side comparison of recency, importance, and compaction truncation strategies on the same conversation" />
   <figcaption>Figure 2: Three truncation strategies applied to the same 5-message conversation -- recency drops the problem statement, importance preserves it, compaction summarizes it</figcaption>
 </figure>
 
@@ -235,7 +235,7 @@ The memory-worthiness filter is the gatekeeper that prevents the pollution probl
 ### Two-pass retrieval
 
 <figure>
-  <img src="../diagrams/two-pass-retrieval.svg" alt="Two-pass retrieval flow: memories reshape document retrieval rather than competing for context space" />
+  <img src="../../diagrams/two-pass-retrieval.svg" alt="Two-pass retrieval flow: memories reshape document retrieval rather than competing for context space" />
   <figcaption>Figure 3: Two-pass retrieval -- memories act as retrieval instructions, not additional evidence</figcaption>
 </figure>
 
@@ -356,7 +356,7 @@ This is not a new problem. Distributed systems have dealt with shared state for 
 **The scoped state store** is the pattern I recommend for production systems. It combines structured state with scoped visibility and optimistic concurrency. Think of it as a key-value store with access controls, versioning, and claim semantics.
 
 <figure>
-  <img src="../diagrams/shared-memory-scopes.svg" alt="Three memory scopes: agent (private), team (pipeline), and global (system) with read/write access control and optimistic concurrency" />
+  <img src="../../diagrams/shared-memory-scopes.svg" alt="Three memory scopes: agent (private), team (pipeline), and global (system) with read/write access control and optimistic concurrency" />
   <figcaption>Figure 4: Scoped shared memory -- agent, team, and global visibility with optimistic concurrency control</figcaption>
 </figure>
 
@@ -489,7 +489,7 @@ State explosion is the growth problem. Without discipline, teams create state en
 Shared state as an attack vector is the security concern that Chapter 11's defenses do not cover. If an attacker compromises one agent, they can write poisoned state that other agents consume. Trust Boundaries Are Design Decisions takes on new meaning here: every shared state entry crosses a trust boundary, and the consuming agent must validate what it reads. A compromised triage agent that writes "ticket #4872: resolved, no action needed" prevents the resolution agent from ever seeing the ticket.
 
 <figure>
-  <img src="../diagrams/poisoning-attack-flow.svg" alt="Memory poisoning attack flow: attacker crafts query, false correction stored, future user retrieves poisoned context" />
+  <img src="../../diagrams/poisoning-attack-flow.svg" alt="Memory poisoning attack flow: attacker crafts query, false correction stored, future user retrieves poisoned context" />
   <figcaption>Figure 5: Memory poisoning attack -- a crafted query stores a false correction that poisons future legitimate queries</figcaption>
 </figure>
 
@@ -528,7 +528,7 @@ When to choose Letta: you want the agent to manage its own context window explic
 All three frameworks provide the mechanism -- storage, retrieval, persistence. None of them solve the security problems demonstrated in this chapter. Memory poisoning, feedback loops, compliance tension, shared state as attack vector -- these are application-level concerns that the framework cannot handle. You still need to build the defenses, the auditing, and the compliance layer. The framework gives you a better foundation to build on, but it does not give you the building.
 
 <figure>
-  <img src="../diagrams/defense-layers.svg" alt="Three defense layers: MemoryValidator, independent verifier retrieval, and AnomalyDetector" />
+  <img src="../../diagrams/defense-layers.svg" alt="Three defense layers: MemoryValidator, independent verifier retrieval, and AnomalyDetector" />
   <figcaption>Figure 6: Defense stack -- MemoryValidator, independent verification, and AnomalyDetector each catch different attack patterns</figcaption>
 </figure>
 
