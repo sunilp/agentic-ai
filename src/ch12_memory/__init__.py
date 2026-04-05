@@ -1,1 +1,1 @@
-"""Chapter 12 — Memory Management for Agentic Systems."""
+"""Chapter 12: Memory Management for Production Agents."""
