@@ -1,0 +1,47 @@
+# Eval rubric -- scoring criteria and thresholds
+# Used by the eval runner to grade agent performance across datasets.
+
+pass_threshold: 0.7
+
+criteria:
+  - name: accuracy
+    weight: 1.0
+    description: >
+      Fraction of eval queries where the agent's final answer matches
+      the expected answer (exact or semantic match). This is the primary
+      quality signal.
+
+  - name: memory_hit_rate
+    weight: 0.5
+    description: >
+      Fraction of queries where the agent successfully retrieved the
+      relevant memory entry before answering. Measures retrieval recall
+      independent of answer correctness.
+
+  - name: contradiction_rate
+    weight: 0.8
+    description: >
+      Fraction of responses that contradict previously stored verified
+      facts. Lower is better -- the score is computed as (1 - rate) so
+      that a higher score means fewer contradictions.
+
+  - name: cost_efficiency
+    weight: 0.3
+    description: >
+      Ratio of baseline token cost to actual token cost for the eval
+      run. A value above 1.0 means the agent used fewer tokens than
+      the baseline; below 1.0 means it used more.
+
+  - name: latency
+    weight: 0.2
+    description: >
+      Fraction of queries answered within the target latency threshold
+      (default 2 seconds for retrieval, 5 seconds for multi-turn).
+      Measured end-to-end from query submission to final answer.
+
+metrics:
+  - accuracy
+  - memory_hit_rate
+  - contradiction_rate
+  - cost_efficiency
+  - latency

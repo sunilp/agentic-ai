@@ -1,0 +1,70 @@
+# Multi-agent coordination eval dataset
+# Each scenario tests how agents coordinate to avoid duplication,
+# handle conflicts, and maintain pipeline visibility.
+
+scenarios:
+  - id: duplicate_retrieval_prevention
+    description: "Two retrieval agents should not fetch the same document chunk"
+    query: "Summarize the Q1 earnings report."
+    agents:
+      - name: retriever_a
+        role: "Primary retrieval agent for financial docs"
+      - name: retriever_b
+        role: "Secondary retrieval agent for supplementary data"
+    expected_behavior: >
+      Only one agent retrieves the core earnings document. The second agent
+      fetches supplementary data such as analyst commentary or press releases,
+      with no overlapping chunk IDs in the combined result set.
+
+  - id: verifier_rejection_adaptation
+    description: "Retrieval agent adapts after the verifier rejects a source"
+    query: "What are the side effects of medication X?"
+    agents:
+      - name: retriever
+        role: "Fetches candidate passages from the medical knowledge base"
+      - name: verifier
+        role: "Validates factual accuracy and source credibility"
+    expected_behavior: >
+      When the verifier rejects a passage from an unverified forum post,
+      the retriever re-queries using only peer-reviewed sources and does
+      not re-submit the rejected passage.
+
+  - id: ticket_claiming
+    description: "Two support agents should not both claim the same ticket"
+    query: "Handle incoming support ticket TK-90421."
+    agents:
+      - name: support_agent_1
+        role: "Handles billing and payment tickets"
+      - name: support_agent_2
+        role: "Handles technical and product tickets"
+    expected_behavior: >
+      Exactly one agent claims the ticket based on its category. The other
+      agent observes the claim in shared state and does not attempt to
+      process the same ticket. Claim is recorded with agent ID and timestamp.
+
+  - id: contradictory_responses_prevention
+    description: "Two agents must not give conflicting answers to the same question"
+    query: "Is the annual conference in September or October this year?"
+    agents:
+      - name: calendar_agent
+        role: "Manages event calendar and scheduling"
+      - name: communications_agent
+        role: "Drafts announcements and public-facing content"
+    expected_behavior: >
+      Both agents consult the single source of truth (events database).
+      If one agent detects a discrepancy with the other's draft, it flags
+      the conflict before any response is sent to the user.
+
+  - id: pipeline_status_visibility
+    description: "Downstream agent can see the status of upstream processing"
+    query: "Generate the monthly analytics report."
+    agents:
+      - name: data_collector
+        role: "Aggregates raw metrics from multiple sources"
+      - name: report_generator
+        role: "Formats collected data into the final report"
+    expected_behavior: >
+      The report generator waits until the data collector publishes a
+      completion signal with row counts. If the collector fails or times
+      out, the generator surfaces the partial-data warning rather than
+      proceeding silently with incomplete data.
