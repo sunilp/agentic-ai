@@ -28,7 +28,7 @@ class ScopeType(StrEnum):
 class MemoryRecord(BaseModel):
     """A single episodic memory captured from agent execution."""
 
-    id: str = ""
+    id: str = ""  # Empty until persisted; MemoryStore assigns a UUID on store()
     query: str
     context: str
     outcome: str
@@ -40,6 +40,7 @@ class MemoryRecord(BaseModel):
     embedding: list[float] = Field(default_factory=list, exclude=True)
 
 
+# Used by SharedMemory in Task 5
 class SharedEntry(BaseModel):
     """A key-value entry shared across agents or teams."""
 

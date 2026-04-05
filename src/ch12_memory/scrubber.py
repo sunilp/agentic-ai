@@ -9,7 +9,6 @@ way to reduce PII surface area in agent conversation logs.
 from __future__ import annotations
 
 import re
-from typing import List, Tuple
 
 
 class PIIScrubber:
@@ -28,7 +27,7 @@ class PIIScrubber:
     # Each tuple is (raw_pattern, replacement_token).
     # Order matters: more specific patterns (credit cards with separators)
     # should appear before broader numeric patterns.
-    PATTERNS: List[Tuple[str, str]] = [
+    PATTERNS: list[tuple[str, str]] = [
         # Credit card numbers — with dashes, spaces, or no separators
         # Covers 13-19 digit card numbers (Visa, MC, Amex, Discover, etc.)
         (
@@ -55,12 +54,12 @@ class PIIScrubber:
 
     def __init__(
         self,
-        extra_patterns: List[Tuple[str, str]] | None = None,
+        extra_patterns: list[tuple[str, str]] | None = None,
     ) -> None:
         raw = list(self.PATTERNS)
         if extra_patterns:
             raw.extend(extra_patterns)
-        self._compiled: List[Tuple[re.Pattern[str], str]] = [
+        self._compiled: list[tuple[re.Pattern[str], str]] = [
             (re.compile(pat), repl) for pat, repl in raw
         ]
 

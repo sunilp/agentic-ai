@@ -22,6 +22,7 @@ class MemoryStore:
 
     def __init__(self, db_path: str) -> None:
         self._conn = sqlite3.connect(db_path)
+        self._conn.row_factory = sqlite3.Row
         self._conn.execute("PRAGMA journal_mode=WAL")
         self._create_table()
 
@@ -116,9 +117,9 @@ class MemoryStore:
             return []
 
         cur = self._conn.execute("SELECT * FROM memories WHERE embedding IS NOT NULL")
-        scored: list[tuple[float, tuple]] = []
+        scored: list[tuple[float, sqlite3.Row]] = []
         for row in cur.fetchall():
-            emb = self._decode_embedding(row[9])  # embedding is column index 9
+            emb = self._decode_embedding(row["embedding"])
             if emb is None:
                 continue
             emb_norm = np.linalg.norm(emb)
@@ -183,18 +184,17 @@ class MemoryStore:
         return np.frombuffer(blob, dtype=np.float32)
 
     @staticmethod
-    def _row_to_record(row: tuple) -> MemoryRecord:
-        emb_blob = row[9]
-        embedding = MemoryStore._decode_embedding(emb_blob)
+    def _row_to_record(row: sqlite3.Row) -> MemoryRecord:
+        embedding = MemoryStore._decode_embedding(row["embedding"])
         return MemoryRecord(
-            id=row[0],
-            query=row[1],
-            context=row[2],
-            outcome=row[3],
-            correction=row[4],
-            category=MemoryCategory(row[5]),
-            timestamp=datetime.fromisoformat(row[6]),
-            access_count=row[7],
-            usefulness_score=row[8],
+            id=row["id"],
+            query=row["query"],
+            context=row["context"],
+            outcome=row["outcome"],
+            correction=row["correction"],
+            category=MemoryCategory(row["category"]),
+            timestamp=datetime.fromisoformat(row["timestamp"]),
+            access_count=row["access_count"],
+            usefulness_score=row["usefulness_score"],
             embedding=embedding.tolist() if embedding is not None else [],
         )

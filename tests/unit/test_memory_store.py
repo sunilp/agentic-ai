@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from src.ch12_memory.memory_store import MemoryStore
-from src.ch12_memory.types import MemoryCategory, MemoryRecord, ScopeType
+from src.ch12_memory.types import MemoryCategory, MemoryRecord
 
 
 def _make_record(
@@ -116,3 +116,16 @@ class TestFlagStaleRecords:
         stale = store.find_stale(max_age_days=30)
         assert len(stale) == 1
         assert stale[0].query == "ancient"
+
+
+class TestStats:
+    def test_stats_returns_correct_totals(self, store: MemoryStore):
+        store.store(_make_record(query="first"))
+        store.store(_make_record(query="second"))
+
+        result = store.stats()
+
+        assert result.total_records == 2
+        assert result.stale_records == 2  # neither has been accessed
+        assert result.avg_usefulness == pytest.approx(0.0)
+        assert result.avg_access_count == pytest.approx(0.0)
