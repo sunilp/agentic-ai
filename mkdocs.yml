@@ -78,6 +78,8 @@ nav:
       - 5. Human-in-the-Loop as Architecture: book/05-human-in-the-loop.md
       - 6. Evaluating and Hardening Agent Systems: book/06-evaluating-and-hardening.md
       - 7. When Not to Use Agents: book/07-when-not-to-use-agents.md
+    - Part IV - Advanced Patterns:
+      - 12. Memory Management: book/12-memory-management.md
   - Projects:
     - LLM Explorer: projects/llm-explorer.md
     - Tool-Using Assistant: projects/tool-using-assistant.md
@@ -85,6 +87,7 @@ nav:
     - Framework Comparison: projects/framework-comparison.md
     - Document Intelligence Agent: projects/doc-intelligence-agent.md
     - Incident Runbook Agent: projects/incident-runbook-agent.md
+    - Memory Agent: projects/memory-agent.md
   - Evidence:
     - Baseline Eval Report: proof/baseline-eval-report.md
     - Architecture Comparison: proof/workflow-vs-agent-comparison.md
