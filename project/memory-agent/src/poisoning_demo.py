@@ -38,7 +38,7 @@ def demo_direct_poisoning() -> None:
 
     with tempfile.TemporaryDirectory() as tmp:
         store = MemoryStore(db_path=str(Path(tmp) / "demo.db"))
-        ltm = LongTermMemory(store=store)
+        _ = LongTermMemory(store=store)  # available for extended demo
 
         poisoned = MemoryRecord(
             query="What is the maximum refund amount?",

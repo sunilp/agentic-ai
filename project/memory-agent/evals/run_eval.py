@@ -7,11 +7,9 @@ datasets are well-formed and ready for integration with the agent
 evaluation pipeline.
 """
 
-import sys
 from pathlib import Path
 
 import yaml
-
 
 EVAL_DIR = Path(__file__).resolve().parent
 
@@ -21,7 +19,7 @@ def load_yaml(filename: str) -> dict:
     filepath = EVAL_DIR / filename
     if not filepath.exists():
         raise FileNotFoundError(f"Eval dataset not found: {filepath}")
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         data = yaml.safe_load(f)
     if data is None:
         raise ValueError(f"Empty or invalid YAML: {filepath}")

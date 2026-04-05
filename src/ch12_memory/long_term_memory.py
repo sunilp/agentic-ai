@@ -13,7 +13,6 @@ from __future__ import annotations
 from src.ch12_memory.memory_store import MemoryStore
 from src.ch12_memory.types import MemoryCategory, MemoryRecord
 
-
 _ALWAYS_STORE_CATEGORIES = frozenset(
     {
         MemoryCategory.CORRECTION,
