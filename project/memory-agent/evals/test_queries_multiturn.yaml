@@ -1,0 +1,84 @@
+# Multi-turn conversation eval dataset
+# Each sequence has turns, an expected_answer, and a critical_turn index
+# Critical information appears in early turns; the question comes in a later turn.
+
+sequences:
+  - id: billing_dispute
+    description: "Customer disputes a charge; critical amount mentioned early"
+    turns:
+      - role: user
+        content: "I see a charge of $187.43 on my statement from last Tuesday."
+      - role: assistant
+        content: "I can help you look into that charge. Can you tell me the last four digits of the card used?"
+      - role: user
+        content: "It ends in 4829. I definitely did not authorize this."
+      - role: assistant
+        content: "Let me pull up the transaction details for card ending 4829."
+      - role: user
+        content: "What was the exact amount I mentioned earlier?"
+    expected_answer: "$187.43"
+    critical_turn: 0
+
+  - id: shipping_address_change
+    description: "Customer changes shipping address mid-conversation"
+    turns:
+      - role: user
+        content: "I need to update my shipping address to 742 Evergreen Terrace, Springfield, IL 62704."
+      - role: assistant
+        content: "Sure, I can update that. Can you confirm your order number?"
+      - role: user
+        content: "Order number is ORD-2026-88421."
+      - role: assistant
+        content: "Found it. The order is currently in processing. I will update the address now."
+      - role: user
+        content: "Can you read back the new address I gave you?"
+    expected_answer: "742 Evergreen Terrace, Springfield, IL 62704"
+    critical_turn: 0
+
+  - id: product_comparison
+    description: "User compares two products; key specs introduced across turns"
+    turns:
+      - role: user
+        content: "I am comparing the X200 and the X400 laptops. The X200 has 16GB RAM and costs $1,199."
+      - role: assistant
+        content: "Good choices. Do you know the specs for the X400?"
+      - role: user
+        content: "The X400 has 32GB RAM and costs $1,599. Both have 512GB SSD."
+      - role: assistant
+        content: "So the X400 doubles the RAM for $400 more. What matters most to you?"
+      - role: user
+        content: "What is the price difference between the two models?"
+    expected_answer: "$400"
+    critical_turn: 0
+
+  - id: technical_error_code
+    description: "User reports an error code early; asks about it later"
+    turns:
+      - role: user
+        content: "My deployment is failing with error code ERR-5092-TIMEOUT."
+      - role: assistant
+        content: "That error usually relates to a network timeout during build. Which service are you deploying?"
+      - role: user
+        content: "It is the payment-gateway service on our staging cluster."
+      - role: assistant
+        content: "Got it. Let me check known issues for that service."
+      - role: user
+        content: "What was the error code I reported at the start?"
+    expected_answer: "ERR-5092-TIMEOUT"
+    critical_turn: 0
+
+  - id: refund_with_conditions
+    description: "Agent states refund conditions; user asks about them later"
+    turns:
+      - role: user
+        content: "I want to return the wireless headphones I bought last week."
+      - role: assistant
+        content: "Returns are accepted within 30 days. Since you bought them last week you are within the window. The refund will be $89.99 minus a $7.50 restocking fee."
+      - role: user
+        content: "OK let me think about it. By the way, is the charger included with the replacement model?"
+      - role: assistant
+        content: "Yes, the replacement model ships with a USB-C charger in the box."
+      - role: user
+        content: "Going back to the return -- how much would I actually receive after the fee?"
+    expected_answer: "$82.49"
+    critical_turn: 1

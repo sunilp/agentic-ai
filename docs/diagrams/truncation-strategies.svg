@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="460" viewBox="0 0 800 460" font-family="'IBM Plex Sans', sans-serif">
+  <defs>
+    <marker id="arr-d" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a3a5c"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="460" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="34" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a1a">Truncation Strategies — Same 5-Message Conversation</text>
+  <line x1="80" y1="48" x2="720" y2="48" stroke="#7eb3d8" stroke-width="1"/>
+
+  <!-- Column headers -->
+  <text x="145" y="76" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Recency</text>
+  <text x="145" y="92" text-anchor="middle" font-size="11" fill="#6b7280">Keep newest N</text>
+
+  <text x="400" y="76" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Importance</text>
+  <text x="400" y="92" text-anchor="middle" font-size="11" fill="#6b7280">Score and rank</text>
+
+  <text x="655" y="76" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Compaction</text>
+  <text x="655" y="92" text-anchor="middle" font-size="11" fill="#6b7280">Summarize old turns</text>
+
+  <!-- Vertical dividers -->
+  <line x1="270" y1="60" x2="270" y2="420" stroke="#e8f0f7" stroke-width="1.5"/>
+  <line x1="530" y1="60" x2="530" y2="420" stroke="#e8f0f7" stroke-width="1.5"/>
+
+  <!-- ═══ RECENCY COLUMN ═══ -->
+  <!-- Msg 1: DROPPED -->
+  <rect x="40" y="110" width="210" height="42" rx="6" fill="#ffffff" stroke="#7eb3d8" stroke-width="1.5" opacity="0.4"/>
+  <line x1="40" y1="131" x2="250" y2="131" stroke="#ef4444" stroke-width="2"/>
+  <text x="145" y="126" text-anchor="middle" font-size="12" fill="#6b7280" opacity="0.5">M1: "Transfer $5K from acct #4421"</text>
+  <text x="145" y="140" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="bold">DROPPED</text>
+  <!-- Critical marker -->
+  <rect x="40" y="106" width="52" height="14" rx="3" fill="#ef4444"/>
+  <text x="66" y="116" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold">CRITICAL</text>
+
+  <!-- Msg 2: DROPPED -->
+  <rect x="40" y="160" width="210" height="42" rx="6" fill="#ffffff" stroke="#7eb3d8" stroke-width="1.5" opacity="0.4"/>
+  <line x1="40" y1="181" x2="250" y2="181" stroke="#ef4444" stroke-width="2"/>
+  <text x="145" y="178" text-anchor="middle" font-size="12" fill="#6b7280" opacity="0.5">M2: "Confirmed, processing"</text>
+  <text x="145" y="192" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="bold">DROPPED</text>
+
+  <!-- Msg 3: KEPT -->
+  <rect x="40" y="210" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="145" y="235" text-anchor="middle" font-size="12" fill="#1a1a1a">M3: "What's the balance?"</text>
+
+  <!-- Msg 4: KEPT -->
+  <rect x="40" y="260" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="145" y="285" text-anchor="middle" font-size="12" fill="#1a1a1a">M4: "Balance is $12,300"</text>
+
+  <!-- Msg 5: KEPT -->
+  <rect x="40" y="310" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="145" y="335" text-anchor="middle" font-size="12" fill="#1a1a1a">M5: "Undo last transfer"</text>
+
+  <!-- Problem annotation -->
+  <rect x="40" y="364" width="210" height="36" rx="6" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="145" y="386" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">Lost: account # and amount</text>
+
+  <!-- ═══ IMPORTANCE COLUMN ═══ -->
+  <!-- Msg 1: KEPT (high score) -->
+  <rect x="295" y="110" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="400" y="135" text-anchor="middle" font-size="12" fill="#1a1a1a">M1: "Transfer $5K from acct #4421"</text>
+  <rect x="295" y="106" width="52" height="14" rx="3" fill="#1a3a5c"/>
+  <text x="321" y="116" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold">score: 9</text>
+
+  <!-- Msg 2: KEPT -->
+  <rect x="295" y="160" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="400" y="185" text-anchor="middle" font-size="12" fill="#1a1a1a">M2: "Confirmed, processing"</text>
+  <rect x="295" y="156" width="52" height="14" rx="3" fill="#3d7ab5"/>
+  <text x="321" y="166" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold">score: 6</text>
+
+  <!-- Msg 3: DROPPED (low score) -->
+  <rect x="295" y="210" width="210" height="42" rx="6" fill="#ffffff" stroke="#7eb3d8" stroke-width="1.5" opacity="0.4"/>
+  <line x1="295" y1="231" x2="505" y2="231" stroke="#ef4444" stroke-width="2"/>
+  <text x="400" y="228" text-anchor="middle" font-size="12" fill="#6b7280" opacity="0.5">M3: "What's the balance?"</text>
+  <text x="400" y="242" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="bold">DROPPED (score: 2)</text>
+
+  <!-- Msg 4: KEPT -->
+  <rect x="295" y="260" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="400" y="285" text-anchor="middle" font-size="12" fill="#1a1a1a">M4: "Balance is $12,300"</text>
+  <rect x="295" y="256" width="52" height="14" rx="3" fill="#3d7ab5"/>
+  <text x="321" y="266" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold">score: 7</text>
+
+  <!-- Msg 5: KEPT -->
+  <rect x="295" y="310" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="400" y="335" text-anchor="middle" font-size="12" fill="#1a1a1a">M5: "Undo last transfer"</text>
+  <rect x="295" y="306" width="52" height="14" rx="3" fill="#1a3a5c"/>
+  <text x="321" y="316" text-anchor="middle" font-size="9" fill="#ffffff" font-weight="bold">score: 8</text>
+
+  <!-- Result annotation -->
+  <rect x="295" y="364" width="210" height="36" rx="6" fill="#f0fdf4" stroke="#10b981" stroke-width="1.5"/>
+  <text x="400" y="386" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Retains critical context</text>
+
+  <!-- ═══ COMPACTION COLUMN ═══ -->
+  <!-- Summary block for M1-M3 -->
+  <rect x="550" y="110" width="210" height="92" rx="6" fill="#e8f0f7" stroke="#3d7ab5" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="655" y="135" text-anchor="middle" font-size="11" fill="#3d7ab5" font-weight="bold">[Summary]</text>
+  <text x="655" y="152" text-anchor="middle" font-size="11" font-family="'IBM Plex Mono', monospace" fill="#1a1a1a">User transferred $5K from</text>
+  <text x="655" y="166" text-anchor="middle" font-size="11" font-family="'IBM Plex Mono', monospace" fill="#1a1a1a">acct #4421. Balance: $12,300.</text>
+  <text x="655" y="186" text-anchor="middle" font-size="10" fill="#6b7280">M1 + M2 + M3 compressed</text>
+
+  <!-- Msg 4: KEPT -->
+  <rect x="550" y="260" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="655" y="285" text-anchor="middle" font-size="12" fill="#1a1a1a">M4: "Balance is $12,300"</text>
+
+  <!-- Msg 5: KEPT -->
+  <rect x="550" y="310" width="210" height="42" rx="6" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="655" y="335" text-anchor="middle" font-size="12" fill="#1a1a1a">M5: "Undo last transfer"</text>
+
+  <!-- Arrow showing compression -->
+  <line x1="655" y1="206" x2="655" y2="255" stroke="#3d7ab5" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-d)"/>
+  <text x="670" y="232" font-size="10" fill="#3d7ab5">gap</text>
+
+  <!-- Result annotation -->
+  <rect x="550" y="364" width="210" height="36" rx="6" fill="#f0fdf4" stroke="#10b981" stroke-width="1.5"/>
+  <text x="655" y="386" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Best of both: saves tokens + facts</text>
+
+  <!-- Bottom legend -->
+  <rect x="60" y="416" width="680" height="30" rx="6" fill="#f9fafb" stroke="#e8f0f7" stroke-width="1"/>
+  <rect x="80" y="425" width="14" height="14" rx="3" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="100" y="436" font-size="11" fill="#1a1a1a">Kept</text>
+  <rect x="150" y="425" width="14" height="14" rx="3" fill="#ffffff" stroke="#7eb3d8" stroke-width="1.5" opacity="0.4"/>
+  <text x="170" y="436" font-size="11" fill="#1a1a1a">Dropped</text>
+  <rect x="240" y="425" width="14" height="14" rx="3" fill="#e8f0f7" stroke="#3d7ab5" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="260" y="436" font-size="11" fill="#1a1a1a">Summary</text>
+  <text x="420" y="436" font-size="11" fill="#6b7280">Message 1 contains account number and transfer amount (critical for undo).</text>
+</svg>

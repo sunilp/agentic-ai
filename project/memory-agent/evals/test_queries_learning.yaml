@@ -1,0 +1,39 @@
+# Learning eval dataset -- repeated-mistake scenarios
+# Each scenario tests whether the agent learns to prefer the correct source
+# after being corrected.
+
+scenarios:
+  - id: wrong_refund_doc
+    description: "Agent cites outdated refund policy; should learn to use updated version"
+    query: "What is the refund window for digital purchases?"
+    wrong_source: "refund_policy_v1.md"
+    correct_source: "refund_policy_v3.md"
+    expected_answer: "Digital purchases can be refunded within 14 days of purchase, provided the content has not been downloaded more than once."
+
+  - id: wrong_shipping_doc
+    description: "Agent uses domestic shipping doc for international query"
+    query: "How long does shipping to Germany take?"
+    wrong_source: "shipping_domestic.md"
+    correct_source: "shipping_international.md"
+    expected_answer: "Standard shipping to Germany takes 10 to 15 business days. Express shipping takes 3 to 5 business days."
+
+  - id: outdated_pricing
+    description: "Agent quotes last quarter's pricing instead of current pricing"
+    query: "What is the monthly cost of the Pro plan?"
+    wrong_source: "pricing_q4_2025.yaml"
+    correct_source: "pricing_q1_2026.yaml"
+    expected_answer: "The Pro plan costs $49 per month when billed monthly, or $39 per month when billed annually."
+
+  - id: wrong_contact_info
+    description: "Agent provides old support email that bounces"
+    query: "How do I reach enterprise support?"
+    wrong_source: "contacts_legacy.md"
+    correct_source: "contacts_current.md"
+    expected_answer: "Enterprise support is available at enterprise-support@example.com or by calling 1-800-555-0199 during business hours."
+
+  - id: deprecated_api
+    description: "Agent references deprecated v1 API endpoint instead of v2"
+    query: "What endpoint do I use to create a new webhook?"
+    wrong_source: "api_v1_reference.md"
+    correct_source: "api_v2_reference.md"
+    expected_answer: "Use POST /v2/webhooks with a JSON body containing the target_url and event_types fields."

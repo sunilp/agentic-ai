@@ -30,6 +30,13 @@ Four hands-on sections published as a free pre-read for readers new to LLMs and 
 - **22 architecture-grade diagrams** (hand-crafted SVGs)
 - **Infrastructure**: pyproject.toml, Makefile, .env.example
 
+## Part IV: Advanced Patterns (bonus chapters)
+
+New chapters extending the book's operating patterns into advanced territory:
+
+- **[Chapter 12: Memory Management](book/12-memory-management.md)** -- Session memory, long-term learning, multi-agent coordination, and memory security
+- More chapters planned
+
 ## What might come next
 
 - Additional code examples for advanced topics
