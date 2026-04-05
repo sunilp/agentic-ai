@@ -25,6 +25,11 @@ What makes memory particularly treacherous as an engineering problem is that the
 
 This chapter builds three memory layers -- session, long-term, and shared -- that address each failure. For each layer, we build the mechanism, measure its impact, and then attack it, because memory introduces new surfaces that Chapter 11's defenses do not cover. The Agent Tax applies here in full force: every memory layer adds latency, storage cost, privacy exposure, and failure modes. You should build only the layers you need, measured against the failures you actually observe.
 
+<figure>
+  <img src="../diagrams/memory-hierarchy.svg" alt="Three-layer memory architecture: context window, session memory, long-term memory, and shared memory with data flow and persistence boundaries" />
+  <figcaption>Figure 1: The memory hierarchy -- from ephemeral context window to persistent shared state</figcaption>
+</figure>
+
 ## Session memory: surviving the context window
 
 The first failure -- the customer forced to re-explain their billing dispute -- is the most common and most visible. It happens because LLM context windows are finite, and production conversations regularly exceed them. GPT-4 Turbo has 128K tokens. Claude 3.5 has 200K. These sound generous until you consider that a customer support interaction with document retrievals, tool call results, and system prompts can consume 30K tokens per turn. Four turns and you are at 120K. The fifth turn pushes the earliest messages out.
@@ -32,6 +37,11 @@ The first failure -- the customer forced to re-explain their billing dispute -- 
 The naive solution is recency truncation: keep the most recent messages, drop the oldest. This is simple, deterministic, and wrong in exactly the case that matters most. The problem statement almost always lives in the first few messages. The customer explains what happened, then the remaining conversation is clarification and resolution. Truncate from the front and you lose the problem. The agent becomes the colleague who walks into a meeting twenty minutes late and asks everyone to start over.
 
 ### Three strategies for bounded context
+
+<figure>
+  <img src="../diagrams/truncation-strategies.svg" alt="Side-by-side comparison of recency, importance, and compaction truncation strategies on the same conversation" />
+  <figcaption>Figure 2: Three truncation strategies applied to the same 5-message conversation -- recency drops the problem statement, importance preserves it, compaction summarizes it</figcaption>
+</figure>
 
 **Recency** is the baseline. Keep the last N tokens of conversation history. Implementation is trivial -- slice the message list from the end. The failure mode is equally trivial: anything important that happened early in the conversation disappears. For short interactions (three to five turns), recency works fine. For the multi-turn disputes, escalations, and investigations that generate the most customer frustration, it fails precisely when it matters.
 
@@ -224,6 +234,11 @@ The memory-worthiness filter is the gatekeeper that prevents the pollution probl
 
 ### Two-pass retrieval
 
+<figure>
+  <img src="../diagrams/two-pass-retrieval.svg" alt="Two-pass retrieval flow: memories reshape document retrieval rather than competing for context space" />
+  <figcaption>Figure 3: Two-pass retrieval -- memories act as retrieval instructions, not additional evidence</figcaption>
+</figure>
+
 The standard RAG pattern retrieves documents and stuffs them into the context. Long-term memories compete for the same limited context space. If you retrieve three documents and five memories, you have consumed context budget that could have gone to conversation history or reasoning.
 
 A better architecture uses two-pass retrieval. In the first pass, the system retrieves relevant memories. In the second pass, those memories reshape the document retrieval query rather than competing for context space.
@@ -339,6 +354,11 @@ This is not a new problem. Distributed systems have dealt with shared state for 
 **The message log** treats shared state as a stream of events. Every agent action produces a message. Other agents consume the log to understand what has happened. This is event sourcing applied to agents. The advantage is complete auditability -- the log is the history. The disadvantage is that agents must process the entire relevant log to understand the current state, which consumes context tokens and scales poorly as the log grows. A 50-agent system producing 20 events per minute generates 1,000 events per minute. An agent joining mid-stream needs to read hundreds of events to understand the current state. You can compact the log, but then you have the same summarization fidelity problems from the session memory section.
 
 **The scoped state store** is the pattern I recommend for production systems. It combines structured state with scoped visibility and optimistic concurrency. Think of it as a key-value store with access controls, versioning, and claim semantics.
+
+<figure>
+  <img src="../diagrams/shared-memory-scopes.svg" alt="Three memory scopes: agent (private), team (pipeline), and global (system) with read/write access control and optimistic concurrency" />
+  <figcaption>Figure 4: Scoped shared memory -- agent, team, and global visibility with optimistic concurrency control</figcaption>
+</figure>
 
 ```python
 class SharedMemoryStore:
@@ -468,6 +488,11 @@ State explosion is the growth problem. Without discipline, teams create state en
 
 Shared state as an attack vector is the security concern that Chapter 11's defenses do not cover. If an attacker compromises one agent, they can write poisoned state that other agents consume. Trust Boundaries Are Design Decisions takes on new meaning here: every shared state entry crosses a trust boundary, and the consuming agent must validate what it reads. A compromised triage agent that writes "ticket #4872: resolved, no action needed" prevents the resolution agent from ever seeing the ticket.
 
+<figure>
+  <img src="../diagrams/poisoning-attack-flow.svg" alt="Memory poisoning attack flow: attacker crafts query, false correction stored, future user retrieves poisoned context" />
+  <figcaption>Figure 5: Memory poisoning attack -- a crafted query stores a false correction that poisons future legitimate queries</figcaption>
+</figure>
+
 > *The scoped state store uses a flat key-value model. But agent coordination often involves graph relationships -- Agent A depends on Agent B's output, which depends on Agent C's output. What would a graph-native shared memory look like, where the nodes are state entries and the edges are dependency relationships? Would explicit dependency tracking prevent cascading failures, or would the graph itself become too complex to manage?*
 
 ## Production alternatives: Mem0, Zep, and Letta
@@ -501,6 +526,11 @@ When to choose Letta: you want the agent to manage its own context window explic
 ### What none of them solve
 
 All three frameworks provide the mechanism -- storage, retrieval, persistence. None of them solve the security problems demonstrated in this chapter. Memory poisoning, feedback loops, compliance tension, shared state as attack vector -- these are application-level concerns that the framework cannot handle. You still need to build the defenses, the auditing, and the compliance layer. The framework gives you a better foundation to build on, but it does not give you the building.
+
+<figure>
+  <img src="../diagrams/defense-layers.svg" alt="Three defense layers: MemoryValidator, independent verifier retrieval, and AnomalyDetector" />
+  <figcaption>Figure 6: Defense stack -- MemoryValidator, independent verification, and AnomalyDetector each catch different attack patterns</figcaption>
+</figure>
 
 ## What could be next
 
