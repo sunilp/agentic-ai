@@ -15,7 +15,7 @@ Implements two guard-rail classes that sit in front of the memory pipeline:
 from __future__ import annotations
 
 import re
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from src.ch12_memory.types import MemoryCategory, MemoryRecord
 
@@ -90,5 +90,5 @@ class MemoryAnomalyDetector:
         if record.access_count != 0:
             return False
 
-        age = datetime.now(timezone.utc) - record.timestamp
+        age = datetime.now(UTC) - record.timestamp
         return age > self._threshold

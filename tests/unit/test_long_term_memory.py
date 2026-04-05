@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -107,7 +107,7 @@ def test_store_escalation(ltm):
 
 
 def test_stale_flagging(ltm):
-    old_timestamp = datetime.now(timezone.utc) - timedelta(days=31)
+    old_timestamp = datetime.now(UTC) - timedelta(days=31)
     record = MemoryRecord(
         query="old query",
         context="old context",

@@ -1,7 +1,7 @@
 """Integration tests for memory poisoning defenses."""
 
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -82,7 +82,7 @@ def test_sleeper_memory_flagged_by_anomaly_detector():
         access_count=0,
     )
     # MemoryRecord.timestamp is datetime — set it to 60 days ago
-    sleeper.timestamp = datetime.now(timezone.utc) - timedelta(days=60)
+    sleeper.timestamp = datetime.now(UTC) - timedelta(days=60)
     assert detector.is_suspicious_activation(sleeper) is True
 
 
@@ -97,7 +97,7 @@ def test_legitimate_old_memory_not_flagged():
         access_count=15,
     )
     # Old timestamp but has been accessed frequently
-    legitimate.timestamp = datetime.now(timezone.utc) - timedelta(days=60)
+    legitimate.timestamp = datetime.now(UTC) - timedelta(days=60)
     assert detector.is_suspicious_activation(legitimate) is False
 
 

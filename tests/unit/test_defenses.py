@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from src.ch12_memory.defenses import MemoryAnomalyDetector, MemoryValidator
 from src.ch12_memory.types import MemoryCategory, MemoryRecord
@@ -54,7 +54,7 @@ def test_anomaly_detector_flags_dormant_activation():
         access_count=0,
     )
     # Set timestamp to 30 days ago to simulate a dormant memory
-    record.timestamp = datetime.now(timezone.utc) - timedelta(days=30)
+    record.timestamp = datetime.now(UTC) - timedelta(days=30)
     assert d.is_suspicious_activation(record) is True
 
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -26,7 +26,7 @@ def _make_record(
         correction=correction,
         category=category,
         embedding=embedding or [0.1, 0.2, 0.3, 0.4],
-        timestamp=timestamp or datetime.now(timezone.utc),
+        timestamp=timestamp or datetime.now(UTC),
     )
 
 
@@ -105,7 +105,7 @@ class TestIncrementAccessCount:
 class TestFlagStaleRecords:
     def test_flag_stale_records(self, store: MemoryStore):
         # Record created 60 days ago with zero access
-        old_time = datetime.now(timezone.utc) - timedelta(days=60)
+        old_time = datetime.now(UTC) - timedelta(days=60)
         old_record = _make_record(query="ancient", timestamp=old_time)
         store.store(old_record)
 

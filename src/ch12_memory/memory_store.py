@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sqlite3
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import numpy as np
 
@@ -135,7 +135,7 @@ class MemoryStore:
 
     def find_stale(self, max_age_days: int = 30) -> list[MemoryRecord]:
         """Return records with zero accesses older than *max_age_days*."""
-        cutoff = (datetime.now(timezone.utc) - timedelta(days=max_age_days)).isoformat()
+        cutoff = (datetime.now(UTC) - timedelta(days=max_age_days)).isoformat()
         cur = self._conn.execute(
             """
             SELECT * FROM memories

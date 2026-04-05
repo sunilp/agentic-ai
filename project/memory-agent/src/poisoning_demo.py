@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import sys
 import tempfile
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 # Ensure project root is on the path so ``src.*`` imports resolve.
@@ -127,10 +127,10 @@ def demo_sleeper_memory() -> None:
         access_count=0,
     )
     # Backdate timestamp to 90 days ago to simulate long dormancy.
-    sleeper.timestamp = datetime.now(timezone.utc) - timedelta(days=90)
+    sleeper.timestamp = datetime.now(UTC) - timedelta(days=90)
 
     suspicious = detector.is_suspicious_activation(sleeper)
-    age_days = (datetime.now(timezone.utc) - sleeper.timestamp).days
+    age_days = (datetime.now(UTC) - sleeper.timestamp).days
 
     print(f"\n  Memory ID      : {sleeper.id}")
     print(f"  Age (days)     : {age_days}")
@@ -151,7 +151,7 @@ def demo_sleeper_memory() -> None:
         category=MemoryCategory.CORRECTION,
         access_count=15,
     )
-    legitimate.timestamp = datetime.now(timezone.utc) - timedelta(days=90)
+    legitimate.timestamp = datetime.now(UTC) - timedelta(days=90)
 
     legit_flagged = detector.is_suspicious_activation(legitimate)
     print(f"\n  Legitimate record (access_count=15) flagged: {legit_flagged}")

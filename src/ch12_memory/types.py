@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import StrEnum
 
 from pydantic import BaseModel, Field
@@ -34,7 +34,7 @@ class MemoryRecord(BaseModel):
     outcome: str
     correction: str | None = None
     category: MemoryCategory
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
     access_count: int = 0
     usefulness_score: float = 0.0
     embedding: list[float] = Field(default_factory=list, exclude=True)
@@ -49,7 +49,7 @@ class SharedEntry(BaseModel):
     value: str
     version: int = 1
     agent_id: str = ""
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
     reason: str = ""
 
 
