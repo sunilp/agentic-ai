@@ -32,15 +32,15 @@ Start with the **Foundations** -- four hands-on sections that take you from zero
 
 ## What is in this repo
 
-- **Working code for every chapter** -- tool registries, context pipelines, agent loops, multi-agent orchestration, human-in-the-loop gates, evaluation harnesses, and security hardening
-- **Two end-to-end projects** -- Document Intelligence Agent and Incident Runbook Agent
-- **52+ passing tests** -- unit and integration tests for every module
-- **22 architecture diagrams** -- hand-crafted SVGs covering system types, coordination patterns, trust boundaries, and failure surfaces
-- **Evaluation evidence** -- baseline eval reports, architecture comparisons, traced execution examples, and failure case studies
+- **Working code for every chapter** -- tool registries, context pipelines, agent loops, multi-agent orchestration, human-in-the-loop gates, evaluation harnesses, security hardening, and memory management
+- **Three end-to-end projects** -- Document Intelligence Agent, Incident Runbook Agent, and Memory-Augmented Agent
+- **130+ passing tests** -- unit and integration tests for every module
+- **28 architecture diagrams** -- hand-crafted SVGs covering system types, coordination patterns, trust boundaries, failure surfaces, and memory architectures
+- **Evaluation evidence** -- baseline eval reports, architecture comparisons, traced execution examples, failure case studies, and memory poisoning attack demos
 
 ## The Book
 
-Seven chapters covering the full lifecycle of building production agent systems.
+Seven chapters covering the full lifecycle of building production agent systems, plus bonus chapters on advanced topics.
 
 | # | Chapter | Focus |
 |---|---------|-------|
@@ -51,6 +51,12 @@ Seven chapters covering the full lifecycle of building production agent systems.
 | 5 | Human-in-the-Loop as Architecture | Approval gates, escalation policy, and audit trails |
 | 6 | Evaluating and Hardening Agents | Eval, tracing, reliability, cost, security |
 | 7 | When Not to Use Agents | The signature chapter -- building engineering judgment |
+
+### Part IV: Advanced Patterns (bonus)
+
+| # | Chapter | Focus |
+|---|---------|-------|
+| 12 | [Memory Management](docs/book/12-memory-management.md) | Session memory, long-term learning, multi-agent coordination, memory security |
 
 **[Read the free sample chapter](docs/book/01-what-agentic-means.md)** or **[get the full book on Amazon](https://www.amazon.com/dp/B0GVG6848F)**.
 
@@ -81,10 +87,12 @@ Copy `.env.example` to `.env` and add your API key before running.
 │   ├── ch03/                      # Workflow vs agent comparison, state, planning
 │   ├── ch04_multiagent/           # Multi-agent contracts, agents, orchestrator
 │   ├── ch05_hitl/                 # Approval gates, escalation, audit logging
-│   └── ch06/                      # Eval harness, traces, reliability, security
+│   ├── ch06/                      # Eval harness, traces, reliability, security
+│   └── ch12_memory/               # Session, long-term, shared memory, defenses
 ├── project/                       # End-to-end projects
 │   ├── doc-intelligence-agent/    # Ingestion, retrieval, citations, escalation
-│   └── incident-runbook-agent/    # Multi-agent with human approval
+│   ├── incident-runbook-agent/    # Multi-agent with human approval
+│   └── memory-agent/              # Memory-augmented pipeline, poisoning demos, evals
 ├── tests/
 │   ├── unit/                      # Component-level tests
 │   └── integration/               # Pipeline and system tests
@@ -112,4 +120,4 @@ Written by [Sunil Prakash](https://sunilprakash.com) -- engineering leader focus
 
 ## License
 
-Code in this repository is licensed under MIT. The book text is copyright Sunil Prakash -- [available on Amazon](https://www.amazon.com/dp/B0GVG6848F).
+Code in this repository is licensed under MIT. The book text (Chapters 1-7) is copyright Sunil Prakash -- [available on Amazon](https://www.amazon.com/dp/B0GVG6848F). Bonus chapter text (Chapter 12+) is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
