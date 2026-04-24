@@ -70,16 +70,24 @@ nav:
       - From API Calls to Tool Use: book/00b-api-to-tools.md
       - Your First Agent, No Framework: book/00c-first-agent.md
       - The Same Agent, With a Framework: book/00d-frameworks.md
-    - Chapters:
+      - Connecting Your Agent to MCP: book/00e-connecting-to-mcp.md
+    - Part I - Building:
       - 1. What "Agentic" Actually Means: book/01-what-agentic-means.md
       - 2. Tools, Context, and the Agent Loop: book/02-tools-context-agent-loop.md
-      - 3. Workflow-First, Agent-Second: book/03-workflow-first-agent-second.md
+      - 3. Workflow First, Agent Second: book/03-workflow-first-agent-second.md
       - 4. Multi-Agent Systems Without Theater: book/04-multi-agent-without-theater.md
+    - Part II - Judging:
       - 5. Human-in-the-Loop as Architecture: book/05-human-in-the-loop.md
-      - 6. Evaluating and Hardening Agent Systems: book/06-evaluating-and-hardening.md
+      - 6. Evaluating and Hardening Agents: book/06-evaluating-and-hardening.md
       - 7. When Not to Use Agents: book/07-when-not-to-use-agents.md
+    - Part III - Operating:
+      - 8. Metacognition and Self-Reflection: book/08-metacognition.md
+      - 9. Deploying and Scaling: book/09-deployment.md
+      - 10. Governance and Auditability: book/10-governance.md
+      - 11. Security Deep Dive: book/11-security.md
     - Part IV - Advanced Patterns:
       - 12. Memory Management: book/12-memory-management.md
+      - 13. Agent Protocols in Production: book/13-agent-protocols-in-production.md
   - Projects:
     - LLM Explorer: projects/llm-explorer.md
     - Tool-Using Assistant: projects/tool-using-assistant.md

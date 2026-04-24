@@ -4,13 +4,13 @@ description: "What makes a system agentic? Precise definitions of LLM apps, work
 
 # Chapter 1: What "Agentic" Actually Means
 
-## Why this matters
+A team spent four months building what they called an agent. It had tools, a system prompt, and an API endpoint. It processed customer queries, looked up account information, searched a knowledge base, and generated responses. The architecture diagram showed an agent loop with dynamic tool selection.
 
-The word "agent" is used to describe everything from a chatbot with a system prompt to a multi-model orchestration system that autonomously manages infrastructure. This is not just a naming problem. When a term means everything, it means nothing, and engineering decisions based on ambiguous terminology produce ambiguous systems.
+When we instrumented it, the data told a different story. The system called the same three tools in the same order on every query. It never skipped a step. It never went back to re-retrieve after seeing the account. It never decided that a different approach was needed. It was a workflow wearing an agent costume. The agent loop added 3x latency, 2.5x token cost, and occasional random skipping behavior where the model decided to drop the account lookup step entirely, producing generic responses for customers with specific billing problems.
 
-The cost of this ambiguity is concrete. Teams build agents when they need workflows. They build multi-agent systems when a single tool-using loop would suffice. They add autonomy to systems that need predictability. And they do this not because they lack skill, but because the vocabulary they are working with does not help them distinguish between fundamentally different system shapes.
+Replacing the agent with a fixed three-step pipeline improved response time, reduced cost, and eliminated the skipping behavior. Four months of engineering, rebuilt in a week, because nobody had asked the question this chapter answers: what kind of system are we actually building?
 
-This chapter establishes precise definitions. Not to be pedantic, but because the architectural choice between these patterns is the most consequential decision you will make in an LLM-powered system. Get it right and you have a system that is testable, cost-efficient, and appropriately scoped. Get it wrong and you have an expensive, unpredictable black box that everyone is afraid to touch.
+The word "agent" is used to describe everything from a chatbot with a system prompt to a multi-model orchestration system that autonomously manages infrastructure. When a term means everything, it means nothing, and engineering decisions based on ambiguous terminology produce ambiguous systems. Teams build agents when they need workflows. They add autonomy to systems that need predictability. Not because they lack skill, but because the vocabulary they are working with does not help them distinguish between fundamentally different system shapes.
 
 ## The five system types
 

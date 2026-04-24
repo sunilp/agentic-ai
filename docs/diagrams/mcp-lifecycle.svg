@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" width="780" height="300" style="background:#fff;font-family:system-ui,-apple-system,sans-serif;">
+
+  <rect width="780" height="300" fill="#ffffff"/>
+
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3d7ab5"/>
+    </marker>
+    <marker id="ar-back" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#7eb3d8"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="390" y="28" text-anchor="middle" font-size="16" font-weight="600" fill="#1a1a1a">MCP Protocol Lifecycle</text>
+  <text x="390" y="48" text-anchor="middle" font-size="11" fill="#999">What happens when your agent connects to an MCP server</text>
+
+  <!-- Client box -->
+  <rect x="40" y="80" width="160" height="180" rx="8" fill="#e8f0f7" stroke="#3d7ab5" stroke-width="1.5"/>
+  <text x="120" y="105" text-anchor="middle" font-size="13" font-weight="600" fill="#1a3a5c">Your Agent</text>
+  <text x="120" y="122" text-anchor="middle" font-size="9" fill="#6B7280">(MCP Client)</text>
+
+  <!-- Server box -->
+  <rect x="580" y="80" width="160" height="180" rx="8" fill="#c5d5e4" stroke="#7eb3d8" stroke-width="1.5"/>
+  <text x="660" y="105" text-anchor="middle" font-size="13" font-weight="600" fill="#1a3a5c">MCP Server</text>
+  <text x="660" y="122" text-anchor="middle" font-size="9" fill="#6B7280">(Tools + Data)</text>
+
+  <!-- Step 1: Initialize -->
+  <rect x="260" y="72" width="260" height="36" rx="6" fill="#fff" stroke="#3d7ab5" stroke-width="1"/>
+  <circle cx="278" cy="90" r="11" fill="#3d7ab5"/>
+  <text x="278" y="94" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">1</text>
+  <text x="310" y="86" font-size="10" font-weight="600" fill="#1a3a5c">Initialize</text>
+  <text x="310" y="100" font-size="8.5" fill="#6B7280">Handshake: agree on capabilities</text>
+  <line x1="200" y1="90" x2="258" y2="90" stroke="#3d7ab5" stroke-width="1.5" marker-end="url(#ar)"/>
+  <line x1="522" y1="90" x2="580" y2="90" stroke="#3d7ab5" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- Step 2: Discover -->
+  <rect x="260" y="120" width="260" height="36" rx="6" fill="#fff" stroke="#3d7ab5" stroke-width="1"/>
+  <circle cx="278" cy="138" r="11" fill="#3d7ab5"/>
+  <text x="278" y="142" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">2</text>
+  <text x="310" y="134" font-size="10" font-weight="600" fill="#1a3a5c">Discover</text>
+  <text x="310" y="148" font-size="8.5" fill="#6B7280">Client calls tools/list, gets available tools</text>
+  <line x1="200" y1="133" x2="258" y2="133" stroke="#3d7ab5" stroke-width="1.2" marker-end="url(#ar)"/>
+  <line x1="580" y1="143" x2="522" y2="143" stroke="#7eb3d8" stroke-width="1.2" marker-end="url(#ar-back)"/>
+
+  <!-- Step 3: Invoke -->
+  <rect x="260" y="168" width="260" height="36" rx="6" fill="#fff" stroke="#3d7ab5" stroke-width="1"/>
+  <circle cx="278" cy="186" r="11" fill="#3d7ab5"/>
+  <text x="278" y="190" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">3</text>
+  <text x="310" y="182" font-size="10" font-weight="600" fill="#1a3a5c">Invoke</text>
+  <text x="310" y="196" font-size="8.5" fill="#6B7280">LLM picks a tool, client sends tools/call</text>
+  <line x1="200" y1="181" x2="258" y2="181" stroke="#3d7ab5" stroke-width="1.2" marker-end="url(#ar)"/>
+  <line x1="580" y1="191" x2="522" y2="191" stroke="#7eb3d8" stroke-width="1.2" marker-end="url(#ar-back)"/>
+
+  <!-- Step 4: Repeat -->
+  <rect x="260" y="216" width="260" height="36" rx="6" fill="#fff" stroke="#3d7ab5" stroke-width="1"/>
+  <circle cx="278" cy="234" r="11" fill="#3d7ab5"/>
+  <text x="278" y="238" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">4</text>
+  <text x="310" y="230" font-size="10" font-weight="600" fill="#1a3a5c">Loop</text>
+  <text x="310" y="244" font-size="8.5" fill="#6B7280">Result goes back to LLM, which decides next step</text>
+
+  <!-- Loop arrow -->
+  <path d="M 390 252 L 390 270 L 180 270 L 180 175 L 200 175" fill="none" stroke="#3d7ab5" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ar)"/>
+  <text x="280" y="283" text-anchor="middle" font-size="8.5" fill="#3d7ab5" font-style="italic">Agent loop continues until the LLM has enough info to answer</text>
+
+</svg>
