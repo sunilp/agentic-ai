@@ -1,6 +1,6 @@
 # Code Reference
 
-Source code for all examples and projects. [View on GitHub](https://github.com/sunilp/agentic-ai-for-serious-engineers/tree/master/src)
+Source code for all examples and projects. [View on GitHub](https://github.com/sunilp/agentic-ai/tree/master/src)
 
 ## Shared (`src/shared/`)
 
@@ -67,3 +67,14 @@ Evaluation, observability, reliability, cost, and security.
 | `reliability.py` | Retry logic, timeout handling, fallback chains, circuit breakers |
 | `cost_profiler.py` | Token counting, cost estimation, per-call and per-session tracking |
 | `security.py` | Input sanitization, output validation, tool permission enforcement |
+
+## Chapter 12 (`src/ch12_memory/`)
+
+Memory management: session, long-term, shared memory, and security.
+
+| Module | Description |
+|--------|-------------|
+| `session_memory.py` | Context management with importance-weighted truncation and compaction |
+| `long_term_memory.py` | Persistent memory with worthiness filtering and two-pass retrieval |
+| `shared_memory.py` | Multi-agent state coordination with scoped access and optimistic concurrency |
+| `memory_validator.py` | Memory poisoning detection and validation at storage and retrieval time |
