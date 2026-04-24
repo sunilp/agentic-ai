@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="380" viewBox="0 0 720 380" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="380" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="360" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Guardrails: Before and After</text>
+  <line x1="40" y1="42" x2="680" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- LEFT PANEL: Without Guardrails -->
+  <rect x="30" y="56" width="295" height="296" rx="10" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="178" y="82" text-anchor="middle" font-size="15" font-weight="bold" fill="#B91C1C">Without Guardrails</text>
+  <line x1="50" y1="92" x2="305" y2="92" stroke="#FCA5A5" stroke-width="1"/>
+
+  <!-- Bullet items -->
+  <!-- Item 1 -->
+  <circle cx="64" cy="122" r="6" fill="#EF4444"/>
+  <text x="80" y="126" font-size="13" font-weight="bold" fill="#374151">Infinite loops</text>
+  <text x="80" y="143" font-size="11" fill="#6B7280">Agent runs forever burning tokens,</text>
+  <text x="80" y="158" font-size="11" fill="#6B7280">no termination condition enforced.</text>
+
+  <!-- Item 2 -->
+  <circle cx="64" cy="185" r="6" fill="#EF4444"/>
+  <text x="80" y="189" font-size="13" font-weight="bold" fill="#374151">Crashes on bad input</text>
+  <text x="80" y="206" font-size="11" fill="#6B7280">Tool receives unexpected data types.</text>
+  <text x="80" y="221" font-size="11" fill="#6B7280">Unhandled exception. Silent failure.</text>
+
+  <!-- Item 3 -->
+  <circle cx="64" cy="248" r="6" fill="#EF4444"/>
+  <text x="80" y="252" font-size="13" font-weight="bold" fill="#374151">No visibility into steps</text>
+  <text x="80" y="269" font-size="11" fill="#6B7280">Can't diagnose what went wrong.</text>
+  <text x="80" y="284" font-size="11" fill="#6B7280">No token/cost/step data logged.</text>
+
+  <!-- Item 4 -->
+  <circle cx="64" cy="311" r="6" fill="#EF4444"/>
+  <text x="80" y="315" font-size="13" font-weight="bold" fill="#374151">Wrong answer ships</text>
+  <text x="80" y="332" font-size="11" fill="#6B7280">No output validation. Confident but</text>
+  <text x="80" y="347" font-size="11" fill="#6B7280">incorrect result reaches the user.</text>
+
+  <!-- CENTER: +10 lines label -->
+  <rect x="328" y="170" width="64" height="52" rx="8" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+  <text x="360" y="190" text-anchor="middle" font-size="10" font-weight="bold" fill="#374151">+10 lines</text>
+  <text x="360" y="206" text-anchor="middle" font-size="10" fill="#6B7280">of code</text>
+  <text x="360" y="218" text-anchor="middle" font-size="18" fill="#374151">&#8594;</text>
+
+  <!-- RIGHT PANEL: With Guardrails -->
+  <rect x="395" y="56" width="295" height="296" rx="10" fill="#F0FDF4" stroke="#22c55e" stroke-width="2"/>
+  <text x="543" y="82" text-anchor="middle" font-size="15" font-weight="bold" fill="#15803D">With Guardrails</text>
+  <line x1="415" y1="92" x2="670" y2="92" stroke="#86EFAC" stroke-width="1"/>
+
+  <!-- Bullet items -->
+  <!-- Item 1 -->
+  <circle cx="429" cy="122" r="6" fill="#22c55e"/>
+  <text x="445" y="126" font-size="13" font-weight="bold" fill="#374151">Budget stops at 5 steps</text>
+  <text x="445" y="143" font-size="11" fill="#6B7280">Configurable max_steps=5. Loop exits</text>
+  <text x="445" y="158" font-size="11" fill="#6B7280">cleanly with a "budget exceeded" result.</text>
+
+  <!-- Item 2 -->
+  <circle cx="429" cy="185" r="6" fill="#22c55e"/>
+  <text x="445" y="189" font-size="13" font-weight="bold" fill="#374151">Pydantic catches bad args</text>
+  <text x="445" y="206" font-size="11" fill="#6B7280">Tool schemas validated before dispatch.</text>
+  <text x="445" y="221" font-size="11" fill="#6B7280">Type errors caught with clear messages.</text>
+
+  <!-- Item 3 -->
+  <circle cx="429" cy="248" r="6" fill="#22c55e"/>
+  <text x="445" y="252" font-size="13" font-weight="bold" fill="#374151">Each step logged</text>
+  <text x="445" y="269" font-size="11" fill="#6B7280">Step number, tool name, tokens used,</text>
+  <text x="445" y="284" font-size="11" fill="#6B7280">cost, latency captured per step.</text>
+
+  <!-- Item 4 -->
+  <circle cx="429" cy="311" r="6" fill="#22c55e"/>
+  <text x="445" y="315" font-size="13" font-weight="bold" fill="#374151">Output schema enforced</text>
+  <text x="445" y="332" font-size="11" fill="#6B7280">Structured output validated. Malformed</text>
+  <text x="445" y="347" font-size="11" fill="#6B7280">responses rejected before delivery.</text>
+
+  <!-- Caption -->
+  <text x="360" y="368" text-anchor="middle" font-size="11" fill="#374151">Guardrails are not optional safety features. They are the engineering interface between your code and the model.</text>
+</svg>

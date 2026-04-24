@@ -151,6 +151,7 @@
 .md-search {
   max-width: 180px;
   margin-right: 4px;
+  order: 1;
 }
 
 .md-search__input {
@@ -160,6 +161,12 @@
   padding-right: 8px;
   background-color: rgba(255, 255, 255, 0.08);
   border-radius: 4px;
+}
+
+/* Ensure palette toggle doesn't overlap search icon */
+.md-header__option {
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 
 /* Give header buttons proper spacing */
@@ -423,11 +430,6 @@
   font-family: var(--md-text-font);
   font-size: 13px;
   height: 32px;
-}
-
-/* Hide the search icon label text, just show icon */
-.md-header .md-search {
-  max-width: 200px;
 }
 
 /* ---- Proof Strip ---- */

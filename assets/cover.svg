@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap');
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0,0 L 12,5 L 0,10 L 3,5 Z" fill="#1a1a1a"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="900" fill="#fafaf8"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="600" height="6" fill="#1a1a1a"/>
+
+  <!-- Geometric element: layered agent loop -->
+  <g transform="translate(300, 270)">
+    <!-- Middle ring (decorative) -->
+    <circle cx="0" cy="0" r="85" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+    <!-- Inner ring -->
+    <circle cx="0" cy="0" r="48" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+
+    <!-- Clockwise curved arrows: OBSERVE → ACT → THINK → OBSERVE -->
+    <!-- Each arc runs between nodes with gaps, using marker-end for arrowhead -->
+
+    <!-- OBSERVE (top) → ACT (bottom-right) -->
+    <path d="M 18,-128 A 132,132 0 0,1 104,52"
+          fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- ACT (bottom-right) → THINK (bottom-left) -->
+    <path d="M 96,78 A 132,132 0 0,1 -96,78"
+          fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- THINK (bottom-left) → OBSERVE (top) -->
+    <path d="M -104,52 A 132,132 0 0,1 -18,-128"
+          fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- Three nodes -->
+    <circle cx="0" cy="-132" r="10" fill="#1a1a1a"/>
+    <circle cx="114" cy="66" r="10" fill="#1a1a1a"/>
+    <circle cx="-114" cy="66" r="10" fill="#1a1a1a"/>
+
+    <!-- Labels on nodes -->
+    <text x="0" y="-152" font-family="IBM Plex Mono, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="600">OBSERVE</text>
+    <text x="142" y="72" font-family="IBM Plex Mono, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="600">ACT</text>
+    <text x="-142" y="72" font-family="IBM Plex Mono, monospace" font-size="12" fill="#1a1a1a" text-anchor="end" font-weight="600">THINK</text>
+
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="4" fill="#1a1a1a"/>
+
+    <!-- Inner labels positioned between center and inner ring -->
+    <text x="0" y="-56" font-family="IBM Plex Mono, monospace" font-size="10" fill="#bbb" text-anchor="middle">evaluate</text>
+    <text x="50" y="34" font-family="IBM Plex Mono, monospace" font-size="10" fill="#bbb" text-anchor="middle">harden</text>
+    <text x="-50" y="34" font-family="IBM Plex Mono, monospace" font-size="10" fill="#bbb" text-anchor="middle">govern</text>
+
+    <!-- Subtle radial lines from center to inner ring -->
+    <line x1="0" y1="-8" x2="0" y2="-44" stroke="#e8e8e8" stroke-width="0.75"/>
+    <line x1="7" y1="4" x2="38" y2="24" stroke="#e8e8e8" stroke-width="0.75"/>
+    <line x1="-7" y1="4" x2="-38" y2="24" stroke="#e8e8e8" stroke-width="0.75"/>
+  </g>
+
+  <!-- Title -->
+  <text x="300" y="480" font-family="IBM Plex Sans, sans-serif" font-size="38" font-weight="700" fill="#1a1a1a" text-anchor="middle" letter-spacing="-0.5">Agentic AI</text>
+  <text x="300" y="525" font-family="IBM Plex Sans, sans-serif" font-size="38" font-weight="700" fill="#1a1a1a" text-anchor="middle" letter-spacing="-0.5">for Serious Engineers</text>
+
+  <!-- Divider -->
+  <line x1="250" y1="555" x2="350" y2="555" stroke="#1a1a1a" stroke-width="1.5"/>
+
+  <!-- Subtitle -->
+  <text x="300" y="590" font-family="IBM Plex Sans, sans-serif" font-size="15" font-weight="400" fill="#999" text-anchor="middle">A practical field guide to building reliable,</text>
+  <text x="300" y="612" font-family="IBM Plex Sans, sans-serif" font-size="15" font-weight="400" fill="#999" text-anchor="middle">evaluable, and production-grade agent systems.</text>
+
+  <!-- Chapter count -->
+  <text x="300" y="660" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="400" fill="#bbb" text-anchor="middle">7 chapters  ·  working code  ·  two threaded projects</text>
+
+  <!-- Bottom section -->
+  <rect x="0" y="800" width="600" height="100" fill="#1a1a1a"/>
+  <text x="300" y="845" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="500" fill="#fafaf8" text-anchor="middle">Sunil Prakash</text>
+  <text x="300" y="870" font-family="IBM Plex Mono, monospace" font-size="11" fill="#999" text-anchor="middle">sunilprakash.com/agentic-ai</text>
+</svg>

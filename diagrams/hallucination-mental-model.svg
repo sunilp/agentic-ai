@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="360" viewBox="0 0 680 360" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="680" height="360" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Hallucination: The Correct Mental Model</text>
+  <line x1="40" y1="42" x2="640" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- LEFT PANEL: What you think -->
+  <rect x="40" y="58" width="280" height="264" rx="10" fill="#F0FDF4" stroke="#22c55e" stroke-width="2.5"/>
+  <text x="180" y="84" text-anchor="middle" font-size="15" font-weight="bold" fill="#15803D">What You Think</text>
+  <line x1="60" y1="93" x2="300" y2="93" stroke="#86EFAC" stroke-width="1"/>
+
+  <!-- Magnifying glass icon (simplified) -->
+  <circle cx="180" cy="158" r="46" fill="#DCFCE7" stroke="#22c55e" stroke-width="2"/>
+  <circle cx="170" cy="148" r="26" fill="none" stroke="#15803D" stroke-width="3"/>
+  <line x1="189" y1="166" x2="205" y2="182" stroke="#15803D" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Document lines inside magnifier (fact-checking metaphor) -->
+  <line x1="160" y1="138" x2="182" y2="138" stroke="#15803D" stroke-width="2"/>
+  <line x1="158" y1="147" x2="183" y2="147" stroke="#15803D" stroke-width="2"/>
+  <line x1="160" y1="156" x2="178" y2="156" stroke="#15803D" stroke-width="2"/>
+  <!-- Checkmark overlay -->
+  <text x="195" y="128" font-size="18" fill="#22c55e" font-weight="bold">&#10003;</text>
+
+  <text x="180" y="225" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803D">Fact-Checking Mode</text>
+  <text x="180" y="245" text-anchor="middle" font-size="11" fill="#374151">"The model looks up the</text>
+  <text x="180" y="262" text-anchor="middle" font-size="11" fill="#374151">answer in its knowledge</text>
+  <text x="180" y="279" text-anchor="middle" font-size="11" fill="#374151">and verifies it's correct."</text>
+  <rect x="68" y="293" width="224" height="20" rx="4" fill="#DCFCE7"/>
+  <text x="180" y="307" text-anchor="middle" font-size="11" fill="#15803D">Feels reassuring. Is wrong.</text>
+
+  <!-- VS divider -->
+  <text x="340" y="200" text-anchor="middle" font-size="18" font-weight="bold" fill="#9CA3AF">vs</text>
+
+  <!-- RIGHT PANEL: What actually happens -->
+  <rect x="360" y="58" width="280" height="264" rx="10" fill="#FEF2F2" stroke="#EF4444" stroke-width="2.5"/>
+  <text x="500" y="84" text-anchor="middle" font-size="15" font-weight="bold" fill="#B91C1C">What Actually Happens</text>
+  <line x1="380" y1="93" x2="620" y2="93" stroke="#FCA5A5" stroke-width="1"/>
+
+  <!-- Dice icon (probability/randomness metaphor) -->
+  <rect cx="500" cy="158" x="462" y="118" width="72" height="72" rx="10" fill="#FEE2E2" stroke="#EF4444" stroke-width="2.5"/>
+  <!-- Dice dots -->
+  <circle cx="481" cy="137" r="5" fill="#EF4444"/>
+  <circle cx="503" cy="137" r="5" fill="#EF4444"/>
+  <circle cx="525" cy="137" r="5" fill="#EF4444"/>
+  <circle cx="481" cy="159" r="5" fill="#EF4444"/>
+  <circle cx="525" cy="159" r="5" fill="#EF4444"/>
+  <circle cx="481" cy="181" r="5" fill="#EF4444"/>
+  <circle cx="503" cy="181" r="5" fill="#EF4444"/>
+  <circle cx="525" cy="181" r="5" fill="#EF4444"/>
+  <!-- Probability bars behind dice -->
+  <rect x="432" y="148" width="18" height="22" rx="2" fill="#FECACA"/>
+  <rect x="432" y="138" width="18" height="10" rx="2" fill="#EF4444" opacity="0.5"/>
+  <text x="421" y="196" font-size="9" fill="#EF4444">P(word)</text>
+
+  <text x="500" y="225" text-anchor="middle" font-size="13" font-weight="bold" fill="#B91C1C">Probability Machine</text>
+  <text x="500" y="245" text-anchor="middle" font-size="11" fill="#374151">"The model predicts the</text>
+  <text x="500" y="262" text-anchor="middle" font-size="11" fill="#374151">most likely next token</text>
+  <text x="500" y="279" text-anchor="middle" font-size="11" fill="#374151">given what came before."</text>
+  <rect x="388" y="293" width="224" height="20" rx="4" fill="#FEE2E2"/>
+  <text x="500" y="307" text-anchor="middle" font-size="11" fill="#B91C1C">Plausible ≠ true. By design.</text>
+
+  <!-- Caption -->
+  <text x="340" y="345" text-anchor="middle" font-size="11" fill="#374151">Hallucination is not a bug. It is the expected output of a token predictor asked a factual question.</text>
+  <text x="340" y="360" text-anchor="middle" font-size="11" fill="#9CA3AF">Design your system accordingly: verify, don't assume.</text>
+</svg>

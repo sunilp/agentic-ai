@@ -1,0 +1,30 @@
+# Agentic AI for Serious Engineers
+
+> Code companion to the book. Working Python implementations, architecture diagrams, and evaluation harnesses.
+
+## Author
+
+Sunil Prakash
+https://sunilprakash.com
+
+## Book
+
+Available on Amazon: https://www.amazon.com/dp/B0GVG6848F
+
+## License
+
+Code: MIT
+Book text: Copyright Sunil Prakash
+
+## This Repository
+
+This is the code companion repository. It contains working implementations, tests, and diagrams for every chapter of the book. The full chapter text is in the book.
+
+- Sample chapter (free): https://sunilprakash.com/agentic-ai/book/01-what-agentic-means/
+- Code: https://github.com/sunilp/agentic-ai/tree/main/src
+- Projects: https://github.com/sunilp/agentic-ai/tree/main/project
+- Tests: https://github.com/sunilp/agentic-ai/tree/main/tests
+
+## Contact
+
+sunil@sunilprakash.com
