@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '~/layouts/PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import MagazineGrid from '~/components/layout/MagazineGrid.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+
+const entries = (await getCollection('patterns')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+
+<PageLayout
+  title="Patterns — Agentic AI for Serious Engineers"
+  description="Cross-cutting patterns. Each pattern is a hub linking the chapters, Field Notes, Recipes, and Labs that use it."
+  currentNav="Book"
+>
+  <Container>
+    <header style="margin: var(--space-7) 0 var(--space-6);">
+      <Tag>Patterns</Tag>
+      <KineticHeading level={1}>Patterns</KineticHeading>
+      <Dek italic>Cross-cutting patterns across the book. Each pattern hub links every chapter, Field Note, Recipe, and Lab that uses it.</Dek>
+    </header>
+
+    {entries.length === 0 ? (
+      <p style="color: var(--fg-light); font-style: italic;">No patterns yet.</p>
+    ) : (
+      <MagazineGrid cols={3}>
+        {entries.map((e) => (
+          <a class="pat-card" href={`/agentic-ai/patterns/${e.data.slug}/`}>
+            <div class="pat-card__name">{e.data.name}</div>
+            <p class="pat-card__one-line">{e.data.oneLine}</p>
+          </a>
+        ))}
+      </MagazineGrid>
+    )}
+  </Container>
+</PageLayout>
+
+<style>
+  .pat-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: var(--paper);
+    color: var(--fg);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  }
+
+  .pat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--brick);
+  }
+
+  .pat-card__name {
+    font-family: var(--font-display);
+    font-size: var(--display-3);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+  }
+
+  .pat-card__one-line {
+    color: var(--fg-light);
+    font-size: var(--body-2);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+</style>

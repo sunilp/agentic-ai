@@ -1,0 +1,247 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import PageLayout from './PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import Split from '~/components/layout/Split.astro';
+import MetaStrip from '~/components/universal/MetaStrip.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+import Breadcrumb from '~/components/universal/Breadcrumb.astro';
+import ProgressReader from '~/components/universal/ProgressReader.astro';
+import ChapterMap from '~/components/universal/ChapterMap.astro';
+import NextPrev from '~/components/universal/NextPrev.astro';
+import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
+import { entriesToContentEntries } from '~/lib/content-helpers';
+
+interface Props {
+  entry: CollectionEntry<'chapters'>;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+
+const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns] = await Promise.all([
+  getCollection('chapters'),
+  getCollection('fieldNotes'),
+  getCollection('recipes'),
+  getCollection('labs'),
+  getCollection('evidence'),
+  getCollection('projects'),
+  getCollection('patterns'),
+]);
+const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...patterns];
+const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
+const links = getReverseLinks(reverseIndex, entry.id);
+
+// Find prev/next by filename sort order.
+const sortedChapters = [...chapters].sort((a, b) => a.id.localeCompare(b.id));
+const currentIdx = sortedChapters.findIndex((c) => c.id === entry.id);
+const prev = currentIdx > 0 ? sortedChapters[currentIdx - 1] : null;
+const next = currentIdx < sortedChapters.length - 1 ? sortedChapters[currentIdx + 1] : null;
+
+const partLabels: Record<string, string> = {
+  'foundations': 'Foundations',
+  'I-build': 'Part I · Build',
+  'II-judge': 'Part II · Judge',
+  'III-operate': 'Part III · Operate',
+  'IV-advanced': 'Part IV · Advanced',
+};
+const partLabel = partLabels[d.part] ?? d.part;
+
+const chapterPrefix = entry.id.split('-')[0].toUpperCase();
+const dateStr = d.date.toISOString().slice(0, 10);
+const metaItems = [chapterPrefix, dateStr, `${d.readingTime} min`];
+
+const collectionRoute: Record<string, string> = {
+  chapters: '/agentic-ai/book',
+  fieldNotes: '/agentic-ai/field-notes',
+  recipes: '/agentic-ai/recipes',
+  projects: '/agentic-ai/projects',
+  evidence: '/agentic-ai/evidence',
+  labs: '/agentic-ai/labs',
+  patterns: '/agentic-ai/patterns',
+};
+---
+
+<PageLayout
+  title={`${d.title} — ${partLabel}`}
+  description={d.description}
+  currentNav="Book"
+>
+  <ProgressReader />
+
+  <Container>
+    <Breadcrumb
+      items={[
+        { label: 'Book', href: '/agentic-ai/book/' },
+        { label: partLabel, href: `/agentic-ai/book/#${d.part}` },
+        { label: chapterPrefix },
+      ]}
+    />
+
+    <Split ratio="3:1" gap="var(--space-7)">
+      <article class="chapter-main">
+        <Tag>{partLabel}</Tag>
+        <MetaStrip items={metaItems} />
+        <KineticHeading level={1}>{d.title}</KineticHeading>
+        <Dek italic>{d.description}</Dek>
+
+        <div class="chapter-body">
+          <slot />
+        </div>
+
+        <NextPrev
+          prev={prev ? { slug: prev.id, title: prev.data.title } : undefined}
+          next={next ? { slug: next.id, title: next.data.title } : undefined}
+        />
+
+        {(links.referencedBy.length > 0 || links.citedBy.length > 0) && (
+          <section class="chapter-cited-by">
+            <h2>Referenced by</h2>
+            <ul>
+              {[...links.referencedBy, ...links.citedBy].map((l) => (
+                <li><a href={`${collectionRoute[l.collection] ?? '/agentic-ai'}/${l.id}/`}>{l.collection}/{l.id}</a></li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </article>
+
+      <aside class="chapter-sidebar">
+        <ChapterMap currentSlug={entry.id} />
+      </aside>
+    </Split>
+  </Container>
+</PageLayout>
+
+<style>
+  .chapter-main {
+    max-width: 720px;
+  }
+
+  .chapter-body {
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .chapter-body :global(h2) {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--fg-faint);
+    scroll-margin-top: 80px;
+  }
+
+  .chapter-body :global(h3) {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-2);
+  }
+
+  .chapter-body :global(p),
+  .chapter-body :global(ul),
+  .chapter-body :global(ol) {
+    margin: 0 0 var(--space-4);
+  }
+
+  .chapter-body :global(li) {
+    margin-bottom: var(--space-2);
+  }
+
+  .chapter-body :global(a) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+  }
+
+  .chapter-body :global(a:hover) {
+    color: var(--brick);
+    text-decoration-color: var(--brick);
+  }
+
+  .chapter-body :global(blockquote) {
+    border-left: 2px solid var(--ink);
+    padding-left: var(--space-4);
+    margin: var(--space-5) 0;
+    color: var(--fg-light);
+    font-style: normal;
+  }
+
+  .chapter-body :global(pre) {
+    margin: var(--space-4) 0;
+  }
+
+  .chapter-body :global(table) {
+    border-collapse: collapse;
+    margin: var(--space-4) 0;
+    font-size: var(--body-2);
+    width: 100%;
+  }
+
+  .chapter-body :global(th),
+  .chapter-body :global(td) {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--fg-faint);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .chapter-body :global(th) {
+    background: var(--paper-recess);
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+  }
+
+  .chapter-body :global(figure) {
+    margin: var(--space-5) 0;
+  }
+
+  .chapter-body :global(figure img) {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-sm);
+    background: var(--paper-bright);
+  }
+
+  .chapter-body :global(figcaption) {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--fg-light);
+    text-align: center;
+    margin-top: var(--space-2);
+  }
+
+  .chapter-sidebar {
+    position: sticky;
+    top: 80px;
+    align-self: flex-start;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  .chapter-cited-by {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--fg-faint);
+  }
+
+  .chapter-cited-by h2 {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+
+  .chapter-cited-by ul { list-style: none; padding: 0; }
+  .chapter-cited-by a { font-family: var(--font-mono); font-size: var(--body-3); color: var(--fg); }
+
+  @media (max-width: 720px) {
+    .chapter-sidebar { display: none; }
+  }
+</style>

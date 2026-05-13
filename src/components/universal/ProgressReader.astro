@@ -1,0 +1,49 @@
+---
+/**
+ * ProgressReader — 2px brick-red bar fixed to viewport top.
+ * Fills 0% → 100% as the user scrolls the document.
+ * CSS scroll-timeline (Chrome 115+, Safari 17+). Gracefully hides on
+ * browsers without support (the bar is decorative, not load-bearing).
+ */
+---
+
+<div class="progress-reader" aria-hidden="true">
+  <div class="progress-reader__bar"></div>
+</div>
+
+<style>
+  .progress-reader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 150;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  .progress-reader__bar {
+    height: 100%;
+    width: 0;
+    background: var(--brick);
+    transform-origin: left;
+  }
+
+  @supports (animation-timeline: scroll(root)) {
+    .progress-reader__bar {
+      width: 100%;
+      transform: scaleX(0);
+      animation: progress-fill linear forwards;
+      animation-timeline: scroll(root);
+    }
+
+    @keyframes progress-fill {
+      to { transform: scaleX(1); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-reader__bar { animation: none; transform: scaleX(0); }
+  }
+</style>

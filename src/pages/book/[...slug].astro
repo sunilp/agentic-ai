@@ -1,0 +1,23 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ChapterLayout from '~/layouts/ChapterLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('chapters');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'chapters'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ChapterLayout entry={entry}>
+  <Content />
+</ChapterLayout>

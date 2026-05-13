@@ -1,0 +1,158 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '~/layouts/PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+
+const chapters = (await getCollection('chapters')).sort((a, b) => a.id.localeCompare(b.id));
+
+const parts = [
+  {
+    id: 'foundations',
+    label: 'Foundations',
+    description: 'Five hands-on sections that take you from zero to building your first agent and connecting it to tools via MCP.',
+    filter: (id: string) => id.startsWith('00'),
+  },
+  {
+    id: 'part-1',
+    label: 'Part I · Build',
+    description: 'From components to multi-agent systems.',
+    filter: (id: string) => /^0[1-4]-/.test(id),
+  },
+  {
+    id: 'part-2',
+    label: 'Part II · Judge',
+    description: 'Oversight, evaluation, and knowing when to stop.',
+    filter: (id: string) => /^0[5-7]-/.test(id),
+  },
+  {
+    id: 'part-3',
+    label: 'Part III · Operate',
+    description: 'Production reality.',
+    filter: (id: string) => /^(08|09|10|11)-/.test(id),
+  },
+  {
+    id: 'part-4',
+    label: 'Part IV · Advanced',
+    description: 'Memory and protocols at scale.',
+    filter: (id: string) => /^(12|13)-/.test(id),
+  },
+];
+
+function chapterPrefix(slug: string): string {
+  const m = slug.match(/^(\d+[a-z]?)/);
+  return m ? m[1] : slug;
+}
+---
+
+<PageLayout
+  title="The Book — Agentic AI for Serious Engineers"
+  description="A field guide to building reliable, evaluable, production-grade agent systems. 5 Foundations + 13 chapters across 4 parts."
+  currentNav="Book"
+>
+  <Container>
+    <header style="margin: var(--space-7) 0 var(--space-6);">
+      <Tag variant="accent">Book</Tag>
+      <KineticHeading level={1}>The Book</KineticHeading>
+      <Dek italic>A field guide to building reliable, evaluable, production-grade agent systems.</Dek>
+    </header>
+
+    {parts.map((part) => {
+      const partChapters = chapters.filter((c) => part.filter(c.id));
+      return (
+        <section class="book-part" id={part.id}>
+          <header class="book-part__header">
+            <h2 class="book-part__label">{part.label}</h2>
+            <p class="book-part__description">{part.description}</p>
+          </header>
+          <ol class="book-part__chapters">
+            {partChapters.map((c) => (
+              <li class="book-part__chapter">
+                <a href={`/agentic-ai/book/${c.id}/`}>
+                  <span class="book-part__chapter-num">{chapterPrefix(c.id).toUpperCase()}</span>
+                  <span class="book-part__chapter-title">{c.data.title}</span>
+                  <span class="book-part__chapter-meta">{c.data.readingTime} min</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      );
+    })}
+  </Container>
+</PageLayout>
+
+<style>
+  .book-part {
+    margin: var(--space-7) 0;
+  }
+
+  .book-part__header {
+    margin-bottom: var(--space-4);
+  }
+
+  .book-part__label {
+    font-family: var(--font-display);
+    font-size: var(--display-2);
+    font-weight: 500;
+    margin: 0 0 var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .book-part__description {
+    color: var(--fg-light);
+    font-size: var(--body-1);
+    margin: 0;
+  }
+
+  .book-part__chapters {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .book-part__chapter {
+    margin: 0;
+  }
+
+  .book-part__chapter a {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--fg-faint);
+    transition: background var(--dur-micro) var(--ease-out);
+  }
+
+  .book-part__chapter a:hover {
+    background: var(--paper-recess);
+  }
+
+  .book-part__chapter-num {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--brick);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+  }
+
+  .book-part__chapter-title {
+    font-family: var(--font-display);
+    font-size: var(--display-4);
+    font-weight: 500;
+  }
+
+  .book-part__chapter-meta {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    color: var(--fg-light);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+  }
+</style>

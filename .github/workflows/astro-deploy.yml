@@ -1,8 +1,9 @@
-name: Astro Build & Deploy (manual in W1)
+name: Astro Build & Deploy
 
 on:
-  workflow_dispatch:        # ONLY manual trigger during W1-W3.
-                            # W4: add `push: branches: [main, master]` to auto-deploy.
+  push:
+    branches: [master, main]
+  workflow_dispatch:
 
 permissions:
   contents: read

@@ -1,0 +1,86 @@
+---
+/**
+ * NextPrev — chapter pagination footer.
+ * Shows ← previous and next → links to adjacent chapters by filename order.
+ */
+interface Props {
+  prev?: { slug: string; title: string };
+  next?: { slug: string; title: string };
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav class="next-prev" aria-label="Chapter navigation">
+  {prev ? (
+    <a href={`/agentic-ai/book/${prev.slug}/`} class="next-prev__link next-prev__link--prev">
+      <div class="next-prev__label">← Previous</div>
+      <div class="next-prev__title">{prev.title}</div>
+    </a>
+  ) : (
+    <span class="next-prev__placeholder"></span>
+  )}
+  {next ? (
+    <a href={`/agentic-ai/book/${next.slug}/`} class="next-prev__link next-prev__link--next">
+      <div class="next-prev__label">Next →</div>
+      <div class="next-prev__title">{next.title}</div>
+    </a>
+  ) : (
+    <span class="next-prev__placeholder"></span>
+  )}
+</nav>
+
+<style>
+  .next-prev {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--fg-faint);
+  }
+
+  .next-prev__link {
+    display: block;
+    padding: var(--space-4) var(--space-5);
+    background: var(--paper);
+    color: var(--fg);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  }
+
+  .next-prev__link:hover {
+    border-color: var(--brick);
+    transform: translateY(-2px);
+  }
+
+  .next-prev__link--next {
+    text-align: right;
+  }
+
+  .next-prev__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+  }
+
+  .next-prev__title {
+    margin-top: var(--space-1);
+    font-family: var(--font-display);
+    font-size: var(--display-4);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+  }
+
+  .next-prev__placeholder {
+    visibility: hidden;
+  }
+
+  @media (max-width: 720px) {
+    .next-prev { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+
+const tracks = [
+  {
+    label: 'New to agentic AI',
+    description: 'You\'ve seen the hype. You want to know what\'s real and how to think about it.',
+    next: 'Start with the Foundations.',
+    cta: 'Foundations',
+    href: '/agentic-ai/book/00a-how-llms-work/',
+    chapters: ['00a How LLMs Work', '00b API to Tools', '00c Your First Agent', '01 What Agentic Means'],
+  },
+  {
+    label: 'Building an agent',
+    description: 'You\'re writing the code now. You want patterns that survive contact with production.',
+    next: 'Jump to the build-focused chapters and the flagship project.',
+    cta: 'Building chapters',
+    href: '/agentic-ai/book/#part-1',
+    chapters: ['02 Tools, Context, Agent Loop', '03 Workflow First', '04 Multi-Agent Without Theater', 'R-001 Strands on AgentCore'],
+  },
+  {
+    label: 'Running in production',
+    description: 'You shipped. Now you need to evaluate, harden, and operate.',
+    next: 'Evidence, evaluation, and operations chapters.',
+    cta: 'Evidence Wall',
+    href: '/agentic-ai/evidence/',
+    chapters: ['06 Evaluating and Hardening', '07 When Not to Use Agents', 'Evidence Wall', 'L-001 Lab Report'],
+  },
+];
+---
+
+<PageLayout
+  title="Start — Agentic AI for Serious Engineers"
+  description="Pick a path based on where you are: new to agentic AI, building, or running in production."
+  currentNav="Start"
+>
+  <Container>
+    <header style="margin: var(--space-7) 0 var(--space-6);">
+      <Tag>Start</Tag>
+      <KineticHeading level={1}>Start</KineticHeading>
+      <Dek italic>Pick the path that matches where you are. Each one is a curated reading list, not a 13-chapter slog.</Dek>
+    </header>
+
+    <div class="start-tracks">
+      {tracks.map((t) => (
+        <section class="start-track">
+          <div class="start-track__label">{t.label}</div>
+          <p class="start-track__description">{t.description}</p>
+          <p class="start-track__next"><em>{t.next}</em></p>
+
+          <ul class="start-track__chapters">
+            {t.chapters.map((c) => (<li>{c}</li>))}
+          </ul>
+
+          <a href={t.href} class="start-track__cta">{t.cta} →</a>
+        </section>
+      ))}
+    </div>
+  </Container>
+</PageLayout>
+
+<style>
+  .start-tracks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    margin: var(--space-7) 0;
+  }
+
+  .start-track {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6) var(--space-5);
+    background: var(--paper);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    transition: border-color var(--dur-micro) var(--ease-out);
+  }
+
+  .start-track:hover {
+    border-color: var(--brick);
+  }
+
+  .start-track__label {
+    font-family: var(--font-display);
+    font-size: var(--display-3);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+    color: var(--brick);
+    margin-bottom: var(--space-3);
+  }
+
+  .start-track__description {
+    font-size: var(--body-1);
+    color: var(--fg);
+    margin: 0 0 var(--space-3);
+    line-height: var(--lh-base);
+  }
+
+  .start-track__next {
+    color: var(--fg-light);
+    font-size: var(--body-2);
+    margin: 0 0 var(--space-4);
+    line-height: var(--lh-snug);
+  }
+
+  .start-track__chapters {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-5);
+    flex: 1;
+    border-left: 2px solid var(--brick-wash);
+    padding-left: var(--space-4);
+  }
+
+  .start-track__chapters li {
+    font-family: var(--font-mono);
+    font-size: var(--body-3);
+    color: var(--fg-light);
+    line-height: 1.8;
+  }
+
+  .start-track__cta {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+    text-decoration: none;
+    border-top: 1px solid var(--fg-faint);
+    padding-top: var(--space-3);
+  }
+
+  @media (max-width: 720px) {
+    .start-tracks { grid-template-columns: 1fr; }
+  }
+</style>
