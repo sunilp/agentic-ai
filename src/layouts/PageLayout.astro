@@ -6,6 +6,7 @@
 import { ClientRouter } from 'astro:transitions';
 import TopNav from '~/components/universal/TopNav.astro';
 import SiteFooter from '~/components/universal/SiteFooter.astro';
+import CommandPalette from '~/components/islands/CommandPalette.svelte';
 import '~/styles/global.css';
 
 interface Props {
@@ -42,6 +43,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
   <body class={bodyClass}>
     <a href="#main-content" class="skip-nav">Skip to content</a>
     <TopNav current={currentNav} />
+    <CommandPalette client:idle />
     <main id="main-content">
       <slot />
     </main>
