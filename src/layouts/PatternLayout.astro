@@ -29,7 +29,10 @@ const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns] = awai
 ]);
 const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...patterns];
 const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
-const links = getReverseLinks(reverseIndex, d.slug);
+// Patterns are stored in the reverse index by entry.id (the filename),
+// since the patterns schema has no `data.id` field. The mapper in
+// entriesToContentEntries falls back to entry.id when data.id is absent.
+const links = getReverseLinks(reverseIndex, entry.id);
 
 const collectionRoute: Record<string, string> = {
   chapters: '/agentic-ai/book',
