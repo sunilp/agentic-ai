@@ -1,0 +1,12 @@
+{
+  "sessionId": "rec001-2026-05-13-session-2",
+  "model": "claude-sonnet-4-6",
+  "query": "How do I evaluate an agent before shipping?",
+  "response": "Build the rubric first. Then build the agent.\n\nThe order matters because the rubric is what tells you whether the agent is good enough to ship. If you build the agent first, you'll evaluate it against the only behavior you've observed — its own. That's not evaluation; that's confirmation.\n\nA minimum-viable rubric has four parts:\n\n1. A gold dataset. Forty to a hundred inputs that cover the realistic distribution of what production will throw at the agent, including edge cases you've seen and adversarial inputs you can imagine. Don't draw these from training; draw them from the customer support inbox, the bug tracker, and incident postmortems.\n\n2. A grading rubric per output type. What counts as correct? What counts as partially correct? What counts as a hard fail? Each grade needs a defined criterion an LLM judge or human reviewer can apply without ambiguity.\n\n3. A run harness. A script that invokes the agent on every gold input, captures the full trace, and emits the score per item plus aggregate metrics: accuracy, cost per query, p50/p99 latency, and failure mode breakdown.\n\n4. A baseline. Run the harness against the workflow you're replacing, or against a single-prompt baseline. The agent only earns its complexity if it beats the baseline on at least one axis you care about by enough to justify the additional cost and risk.\n\nShip when the eval is green and the baseline comparison is honest. Not before. Not earlier.",
+  "totalTokens": 487,
+  "totalCost": 0.0043,
+  "trace": [
+    { "step": 1, "type": "reasoning", "content": "Eval question: lead with rubric-first principle." },
+    { "step": 2, "type": "reasoning", "content": "Four parts of minimum-viable rubric: gold data, grading criteria, run harness, baseline." }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "sessionId": "rec001-2026-05-13-session-1",
+  "model": "claude-sonnet-4-6",
+  "query": "Should I use an agent for this task?",
+  "response": "Default answer: probably not.\n\nThe useful question is whether the task requires reasoning that a deterministic workflow cannot encode. If you can list the steps, write a switch statement; that's a workflow. If the steps depend on the answer to the previous step in ways you can't enumerate, that's where an agent might earn its complexity.\n\nThree quick filters before reaching for an agent:\n\n1. Has the task been done by a workflow before in the same domain? If yes, default to workflow. Agents add latency, cost, and failure modes; a workflow that already does 95% of the job is the better starting point.\n\n2. Is the failure cost asymmetric? If a wrong answer costs 100x a missed answer, you want a workflow with explicit escalation paths, not an agent that might confidently produce a plausible-but-wrong response.\n\n3. Can you write an eval rubric? If you can't describe what good looks like in a way another engineer could grade, you cannot ship an agent for this task. You're not ready.\n\nIf you pass all three filters and the task still requires runtime decisions you can't enumerate, an agent is on the table. Start with a single agent calling tools, not a multi-agent system. Earn the complexity in layers.",
+  "totalTokens": 412,
+  "totalCost": 0.0036,
+  "trace": [
+    { "step": 1, "type": "reasoning", "content": "User is asking a vague meta-question. Frame the answer around the decision criteria, not a list of pros/cons." },
+    { "step": 2, "type": "reasoning", "content": "Lead with the default answer (no), then explain when the default flips." },
+    { "step": 3, "type": "reasoning", "content": "Three filters: workflow precedent, asymmetric cost, eval rubric readiness." }
+  ]
+}

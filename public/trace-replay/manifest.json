@@ -1,0 +1,19 @@
+{
+  "chips": [
+    {
+      "id": "should-i-use-an-agent",
+      "label": "Should I use an agent for this task?",
+      "file": "should-i-use-an-agent.json"
+    },
+    {
+      "id": "how-do-i-evaluate-an-agent",
+      "label": "How do I evaluate an agent before shipping?",
+      "file": "how-do-i-evaluate-an-agent.json"
+    },
+    {
+      "id": "multi-agent-got-worse",
+      "label": "Why did my multi-agent system get worse?",
+      "file": "multi-agent-got-worse.json"
+    }
+  ]
+}
