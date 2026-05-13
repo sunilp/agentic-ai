@@ -53,7 +53,10 @@
           <span class="eval-rubric__score-max">/ {dim.maxScore}</span>
         </div>
         <div class="eval-rubric__bar">
-          <div class="eval-rubric__bar-fill" style="width: {(dim.score / dim.maxScore) * 100}%"></div>
+          <div
+            class="eval-rubric__bar-fill"
+            style="width: {dim.maxScore > 0 ? Math.max(0, Math.min(100, (dim.score / dim.maxScore) * 100)) : 0}%"
+          ></div>
         </div>
         {#if activeDim === i && dim.criteria}
           <div class="eval-rubric__detail">
