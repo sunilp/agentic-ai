@@ -40,8 +40,41 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <ClientRouter />
   </head>
   <body class={bodyClass}>
+    <a href="#main-content" class="skip-nav">Skip to content</a>
     <TopNav current={currentNav} />
-    <slot />
+    <main id="main-content">
+      <slot />
+    </main>
     <SiteFooter />
   </body>
 </html>
+
+<style>
+  .skip-nav {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: var(--space-3) var(--space-5);
+    background: var(--ink);
+    color: var(--paper);
+    z-index: 200;
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+  }
+
+  .skip-nav:focus {
+    left: 0;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+</style>
