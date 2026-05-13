@@ -18,7 +18,7 @@ const { background = 'transparent', class: className } = Astro.props;
 <style>
   .full-bleed {
     width: 100vw;
-    margin-left: 50%;
-    transform: translateX(-50%);
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
   }
 </style>
