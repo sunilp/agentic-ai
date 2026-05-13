@@ -23,3 +23,12 @@ docs/assets/prompts/
 templates/
 .editorial/
 schedule/
+node_modules/
+cdk.out/
+**/.cli/
+**/.env.local
+recipes/**/node_modules/
+recipes/**/cdk.out/
+recipes/**/dist/
+recipes/**/.venv/
+recipes/R-001/rec001/

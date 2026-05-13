@@ -1,0 +1,12 @@
+{
+  "name": "agentic-ai-recipe-001-strands-agentcore",
+  "version": "0.1.0",
+  "description": "Recipe R-001: Build and deploy your first Strands agent on AgentCore Runtime. Code companion to https://sunilprakash.com/agentic-ai/recipes/",
+  "private": true,
+  "devDependencies": {
+    "@aws/agentcore": "^0.13.1"
+  },
+  "scripts": {
+    "agentcore": "agentcore"
+  }
+}

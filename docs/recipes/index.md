@@ -14,7 +14,7 @@ The bar is "you can build this in an afternoon." Not "you can read about how som
 
 | # | Title | Stack | Verified |
 |---|-------|-------|----------|
-| _R-001_ | Build and deploy your first Strands agent on AgentCore Runtime | AWS Bedrock AgentCore, Strands | _shipping 2026-05-20_ |
+| [R-001](001-strands-on-agentcore-runtime.md) | Build and deploy your first Strands agent on AgentCore Runtime | AWS Bedrock AgentCore, Strands | 2026-05-13 |
 | _R-002_ | OAuth 3LO with AgentCore Identity | Bedrock AgentCore Identity, Cognito or Auth0 | _shipping 2026-06-03_ |
 | _R-003_ | Expose an MCP server as tools via AgentCore Gateway | AgentCore Gateway, MCP | _shipping 2026-06-13_ |
 | _R-004_ | Prompt caching and cross-region inference for Claude on Bedrock | Bedrock, Claude 4.x family | _shipping 2026-06-24_ |

@@ -94,6 +94,7 @@ nav:
     - "FN-002 - Your eval rubric needs failure buckets": field-notes/002-eval-rubric-failure-buckets.md
   - Recipes:
     - recipes/index.md
+    - "R-001 - Build your first Strands agent on AgentCore Runtime": recipes/001-strands-on-agentcore-runtime.md
   - Projects:
     - LLM Explorer: projects/llm-explorer.md
     - Tool-Using Assistant: projects/tool-using-assistant.md
