@@ -1,0 +1,58 @@
+---
+/**
+ * Banner — Field Note / Lab Report hero banner image.
+ * 1200x630 aspect ratio. Lazy-loaded with placeholder background.
+ * Optional scroll-driven parallax (CSS @scroll-timeline; falls back gracefully).
+ */
+interface Props {
+  src: string;
+  alt: string;
+  parallax?: boolean;
+  class?: string;
+}
+
+const { src, alt, parallax = true, class: className } = Astro.props;
+---
+
+<figure class:list={['banner', parallax && 'banner--parallax', className]}>
+  <img src={src} alt={alt} class="banner__img" loading="eager" decoding="async" width="1200" height="630" />
+</figure>
+
+<style>
+  .banner {
+    margin: var(--space-6) 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--paper-recess);
+  }
+
+  .banner__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Scroll-driven parallax — CSS-native (Chrome/Edge/Safari 17+).
+     Falls back to no parallax on older browsers. Zero JS. */
+  @supports (animation-timeline: scroll()) {
+    .banner--parallax .banner__img {
+      animation: banner-parallax linear;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    @keyframes banner-parallax {
+      from { transform: translateY(-20px) scale(1.04); }
+      to { transform: translateY(20px) scale(1.04); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .banner--parallax .banner__img {
+      animation: none;
+      transform: none;
+    }
+  }
+</style>
