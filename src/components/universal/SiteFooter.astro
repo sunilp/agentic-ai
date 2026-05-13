@@ -1,0 +1,125 @@
+---
+/**
+ * SiteFooter — bottom of every page.
+ * Cadence strip, secondary nav, social, copyright.
+ */
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__cadence">
+      <span class="site-footer__cadence-label">Cadence</span>
+      <span>Field Notes Thu/Sun</span>
+      <span>·</span>
+      <span>Recipes Wed</span>
+      <span>·</span>
+      <span>Labs every 2-3 wks</span>
+    </div>
+
+    <div class="site-footer__columns">
+      <div class="site-footer__col">
+        <div class="site-footer__col-label">Read</div>
+        <a href="/agentic-ai/manifesto/">Manifesto</a>
+        <a href="/agentic-ai/patterns/">Patterns</a>
+        <a href="/agentic-ai/roadmap/">Roadmap</a>
+      </div>
+      <div class="site-footer__col">
+        <div class="site-footer__col-label">Build</div>
+        <a href="/agentic-ai/code/">Code reference</a>
+        <a href="https://github.com/sunilp/agentic-ai" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="site-footer__col">
+        <div class="site-footer__col-label">Subscribe</div>
+        <a
+          href="https://www.linkedin.com/newsletters/building-ai-systems-7310391508670377984/"
+          target="_blank"
+          rel="noopener"
+        >
+          LinkedIn newsletter →
+        </a>
+      </div>
+    </div>
+
+    <div class="site-footer__base">
+      <span>&copy; 2026 Sunil Prakash · MIT license · Book on <a href="https://www.amazon.com/dp/B0GVG6848F">Amazon</a></span>
+      <a href="https://sunilprakash.com" class="site-footer__home">sunilprakash.com</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: var(--space-9);
+  }
+
+  .site-footer__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-7) var(--space-5) var(--space-5);
+  }
+
+  .site-footer__cadence {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    letter-spacing: var(--tracking-loose);
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .site-footer__cadence-label {
+    color: var(--brick);
+    margin-right: var(--space-3);
+  }
+
+  .site-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    padding: var(--space-6) 0;
+  }
+
+  .site-footer__col { display: flex; flex-direction: column; gap: var(--space-2); }
+
+  .site-footer__col-label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    letter-spacing: var(--tracking-loose);
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: var(--space-2);
+  }
+
+  .site-footer__col a {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: var(--body-2);
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .site-footer__col a:hover { color: var(--paper); }
+
+  .site-footer__base {
+    padding-top: var(--space-5);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: var(--body-3);
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .site-footer__base a { color: rgba(255, 255, 255, 0.75); }
+
+  @media (max-width: 720px) {
+    .site-footer__columns { grid-template-columns: 1fr; gap: var(--space-4); }
+  }
+</style>

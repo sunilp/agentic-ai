@@ -1,0 +1,31 @@
+---
+/**
+ * Tag — small uppercase label. Default ink, accent for brick-red.
+ */
+interface Props {
+  variant?: 'default' | 'accent';
+  size?: 'sm' | 'md';
+}
+
+const { variant = 'default', size = 'md' } = Astro.props;
+---
+
+<span class:list={['tag', `tag--${variant}`, `tag--${size}`]}>
+  <slot />
+</span>
+
+<style>
+  .tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    font-weight: 500;
+  }
+
+  .tag--default { color: var(--fg-light); }
+  .tag--accent { color: var(--brick); }
+
+  .tag--sm { font-size: var(--meta-3); }
+  .tag--md { font-size: var(--meta-2); }
+</style>

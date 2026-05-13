@@ -1,0 +1,41 @@
+---
+/**
+ * MetaStrip — small monospaced strip at top of Field Notes, Recipes, Labs.
+ * Format: ID · DATE · READING TIME · CHAPTER
+ */
+interface Props {
+  items: string[];          // ['FN-001', '2026-05-14', '4 min', 'Ch 4']
+}
+
+const { items } = Astro.props;
+---
+
+<div class="meta-strip">
+  {items.map((item, i) => (
+    <>
+      {i > 0 && <span class="meta-strip__sep">·</span>}
+      <span>{item}</span>
+    </>
+  ))}
+</div>
+
+<style>
+  .meta-strip {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    letter-spacing: var(--tracking-loose);
+    text-transform: uppercase;
+    color: var(--fg-light);
+    padding: var(--space-2) 0;
+    border-top: 1px solid var(--fg-faint);
+    border-bottom: 1px solid var(--fg-faint);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .meta-strip__sep {
+    color: var(--fg-lighter);
+  }
+</style>

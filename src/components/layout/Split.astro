@@ -1,0 +1,39 @@
+---
+/**
+ * Split — two-column layout with configurable ratio.
+ * Used by Chapter layout (3:1 reader + TOC) and other split content.
+ * Note: stacks to single column below 720px (hardcoded breakpoint;
+ * CSS custom properties cannot be used inside @media queries).
+ */
+interface Props {
+  ratio?: string;
+  gap?: string;
+  class?: string;
+}
+
+const { ratio = '1:1', gap = 'var(--space-6)', class: className } = Astro.props;
+const [rawA, rawB] = ratio.split(':').map((v) => Number(v.trim()));
+const a = Number.isFinite(rawA) && rawA > 0 ? rawA : 1;
+const b = Number.isFinite(rawB) && rawB > 0 ? rawB : 1;
+---
+
+<div
+  class:list={['split', className]}
+  style={`--col-a: ${a}fr; --col-b: ${b}fr; --gap: ${gap}`}
+>
+  <slot />
+</div>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: var(--col-a) var(--col-b);
+    gap: var(--gap);
+  }
+
+  @media (max-width: 720px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

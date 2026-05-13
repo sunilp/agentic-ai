@@ -32,3 +32,8 @@ recipes/**/cdk.out/
 recipes/**/dist/
 recipes/**/.venv/
 recipes/R-001/rec001/
+
+# Astro
+.astro/
+*.log
+.env.production

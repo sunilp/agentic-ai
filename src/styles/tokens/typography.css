@@ -1,0 +1,30 @@
+/* Typography tokens — Section 8.2 of design spec */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+
+  --display-1: clamp(28px, 4vw, 44px);
+  --display-2: clamp(22px, 3vw, 32px);
+  --display-3: clamp(18px, 2.2vw, 23px);
+  --display-4: 16px;
+
+  --body-1: 17px;
+  --body-2: 15px;
+  --body-3: 13px;
+
+  --meta-1: 12px;
+  --meta-2: 11px;
+  --meta-3: 10px;
+
+  --lh-tight: 1.18;
+  --lh-snug: 1.35;
+  --lh-base: 1.65;
+  --lh-mono: 1.6;
+
+  --tracking-tight: -0.01em;
+  --tracking-loose: 0.08em;
+}

@@ -1,0 +1,80 @@
+---
+/**
+ * PageLayout — base HTML scaffold used by every page.
+ * Includes <head> with fonts/global CSS, TopNav, SiteFooter, ClientRouter for View Transitions.
+ */
+import { ClientRouter } from 'astro:transitions';
+import TopNav from '~/components/universal/TopNav.astro';
+import SiteFooter from '~/components/universal/SiteFooter.astro';
+import '~/styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  currentNav?: string;     // matches TopNav `current` prop
+  bodyClass?: string;
+}
+
+const { title, description, ogImage, currentNav, bodyClass } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" href="/agentic-ai/favicon.png" type="image/png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:url" content={canonicalURL} />
+    {description && <meta property="og:description" content={description} />}
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <ClientRouter />
+  </head>
+  <body class={bodyClass}>
+    <a href="#main-content" class="skip-nav">Skip to content</a>
+    <TopNav current={currentNav} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  .skip-nav {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: var(--space-3) var(--space-5);
+    background: var(--ink);
+    color: var(--paper);
+    z-index: 200;
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+  }
+
+  .skip-nav:focus {
+    left: 0;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+</style>

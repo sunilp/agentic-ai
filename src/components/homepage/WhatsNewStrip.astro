@@ -1,0 +1,128 @@
+---
+/**
+ * WhatsNewStrip — 3 latest publications card row.
+ * W1: hard-coded with FN-002, FN-001, R-001 (the existing live issues).
+ * W2: will switch to dynamic loading from Content Collections once content is ported.
+ */
+interface Item {
+  kicker: string;
+  title: string;
+  href: string;
+  banner: string;
+  bannerAlt: string;
+}
+
+const items: Item[] = [
+  {
+    kicker: 'FN-002 · Field Note',
+    title: 'Your eval rubric needs failure buckets, not just scores',
+    href: '/agentic-ai/field-notes/002-eval-rubric-failure-buckets/',
+    banner: '/agentic-ai/assets/banners/fn-002.png',
+    bannerAlt: 'Eval rubric failure buckets banner',
+  },
+  {
+    kicker: 'FN-001 · Field Note',
+    title: 'The multi-agent papers nobody is citing',
+    href: '/agentic-ai/field-notes/001-multi-agent-papers-nobody-cites/',
+    banner: '/agentic-ai/assets/banners/fn-001.png',
+    bannerAlt: 'Multi-agent papers banner',
+  },
+  {
+    kicker: 'R-001 · Recipe',
+    title: 'Build your first Strands agent on AgentCore',
+    href: '/agentic-ai/recipes/001-strands-on-agentcore-runtime/',
+    banner: '/agentic-ai/assets/banners/r-001.png',
+    bannerAlt: 'Strands AgentCore banner',
+  },
+];
+---
+
+<section class="whats-new">
+  <header class="whats-new__header">
+    <div class="whats-new__label">What's new</div>
+    <a class="whats-new__see-all" href="/agentic-ai/field-notes/">See all →</a>
+  </header>
+
+  <div class="whats-new__grid">
+    {items.map((item) => (
+      <a class="whats-new__card" href={item.href}>
+        <img src={item.banner} alt={item.bannerAlt} class="whats-new__banner" loading="lazy" width="600" height="315" />
+        <div class="whats-new__kicker">{item.kicker}</div>
+        <h3 class="whats-new__title">{item.title}</h3>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .whats-new { margin: var(--space-7) 0; }
+
+  .whats-new__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-4);
+  }
+
+  .whats-new__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+
+  .whats-new__see-all {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+  }
+
+  .whats-new__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .whats-new__card {
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition: transform var(--dur-micro) var(--ease-out);
+  }
+
+  .whats-new__card:hover { transform: translateY(-2px); }
+
+  .whats-new__banner {
+    width: 100%;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    background: var(--paper-recess);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-sm);
+  }
+
+  .whats-new__kicker {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+  }
+
+  .whats-new__title {
+    font-family: var(--font-display);
+    font-size: var(--display-3);
+    line-height: var(--lh-snug);
+    font-weight: 500;
+    margin: 0;
+    color: var(--fg);
+  }
+
+  @media (max-width: 720px) {
+    .whats-new__grid { grid-template-columns: 1fr; }
+  }
+</style>

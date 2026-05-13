@@ -1,0 +1,20 @@
+/* Spacing tokens — non-linear scale, 4px first step then 4/8/16/32px jumps.
+   Section 8.3 of design spec. */
+
+:root {
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* Reading column + container */
+  --reader-max: 720px;
+  --container-max: 1200px;
+}

@@ -1,0 +1,45 @@
+---
+/**
+ * Stamp — brick-red textured stamp. Houdini paint worklet with SVG fallback.
+ * Used on homepage hero, manifesto, pullquote corners as brand signature.
+ */
+interface Props {
+  width?: string;
+  height?: string;
+  rotation?: number;
+  opacity?: number;
+  class?: string;
+}
+
+const { width = '32px', height = '42px', rotation = 2, opacity = 0.85, class: className } = Astro.props;
+---
+
+<span
+  class:list={['stamp', className]}
+  style={`width: ${width}; height: ${height}; --stamp-rotation: ${rotation}; --stamp-opacity: ${opacity}`}
+  aria-hidden="true"
+></span>
+
+<style>
+  .stamp {
+    display: inline-block;
+    background: paint(brick-stamp);
+  }
+
+  @supports not (background: paint(brick-stamp)) {
+    .stamp {
+      background-image: url('/agentic-ai/svg/brick-stamp.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+  }
+</style>
+
+<script>
+  // Register the paint worklet on browsers that support it.
+  if ('paintWorklet' in CSS) {
+    // @ts-ignore — CSS.paintWorklet is in TS lib.dom but typed loosely.
+    CSS.paintWorklet.addModule('/agentic-ai/paint/brick-stamp.js');
+  }
+</script>

@@ -1,0 +1,42 @@
+---
+/**
+ * KineticHeading — Fraunces large heading with fade-in reveal on first paint.
+ * Used on hero only (one per page). On other pages use plain <h1>.
+ * CSS-only animation — no JS needed, no FOUC. Re-fires on each VT navigation
+ * because Astro re-renders the element. Reduced-motion shows it instantly.
+ */
+interface Props {
+  level?: 1 | 2;
+  class?: string;
+}
+
+const { level = 1, class: className } = Astro.props;
+const Tag = `h${level}` as 'h1' | 'h2';
+---
+
+<Tag class:list={['kinetic-heading', className]}>
+  <slot />
+</Tag>
+
+<style>
+  .kinetic-heading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--lh-tight);
+    opacity: 0;
+    animation: kinetic-fade var(--dur-hero) var(--ease-out) forwards;
+  }
+
+  @keyframes kinetic-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kinetic-heading {
+      opacity: 1;
+      animation: none;
+    }
+  }
+</style>

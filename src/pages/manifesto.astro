@@ -1,0 +1,146 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Stamp from '~/components/universal/Stamp.astro';
+---
+
+<PageLayout
+  title="The Serious Engineer's Manifesto — Agentic AI"
+  description="Ten principles for engineers who build agents that survive contact with reality. Earn the complexity."
+>
+  <Reader>
+    <div class="manifesto__hero">
+      <Stamp class="manifesto__stamp" width="42px" height="56px" rotation={3} />
+      <Tag variant="accent">Manifesto</Tag>
+      <KineticHeading level={1}>The Serious Engineer's Manifesto</KineticHeading>
+      <Dek italic>Ten principles for engineers who build agents that survive contact with reality.</Dek>
+    </div>
+
+    <ol class="manifesto__list">
+      <li>
+        <h3>The default is not to use an agent.</h3>
+        <p>If a deterministic workflow gets you 95% there, that's the architecture. Reach for an agent only when the task requires reasoning the workflow cannot encode.</p>
+      </li>
+      <li>
+        <h3>Workflows beat agents on most measurable axes.</h3>
+        <p>Lower latency, lower cost, fewer failure modes, easier evaluation. The win condition for adopting an agent is dynamic judgment, not raw capability.</p>
+      </li>
+      <li>
+        <h3>Evaluation is the first artifact, not the last.</h3>
+        <p>Build the rubric and the test set before you build the agent. If you cannot describe what "good" looks like, you cannot ship one.</p>
+      </li>
+      <li>
+        <h3>A demo is not a system.</h3>
+        <p>Demos succeed in two minutes against one prompt. Systems succeed at 99th-percentile latency, malformed input, partial tool failures, and adversarial users.</p>
+      </li>
+      <li>
+        <h3>The trace is the truth.</h3>
+        <p>If you cannot inspect why the agent did what it did, you cannot debug, audit, or improve it. Tracing is not a nice-to-have.</p>
+      </li>
+      <li>
+        <h3>Cost compounds. So does latency.</h3>
+        <p>A 5-step agent on a 50-token tool budget at 2.5x retry rate is a $1 query that takes 18 seconds. Multiply by traffic. Decide if the value is there.</p>
+      </li>
+      <li>
+        <h3>Multi-agent is workflow with extra steps, unless coordination is the problem.</h3>
+        <p>Most multi-agent systems are sequential workflows pretending to be social. If the agents do not genuinely negotiate, you have not gained anything.</p>
+      </li>
+      <li>
+        <h3>Human-in-the-loop is architecture, not UI.</h3>
+        <p>Approval gates, escalation paths, audit trails — these are first-class system components, designed up front, not bolted on after legal complains.</p>
+      </li>
+      <li>
+        <h3>Memory is risk before it is feature.</h3>
+        <p>Cross-session state widens the blast radius of every failure: prompt injection, leakage, drift, replay. Treat memory like you treat a database table.</p>
+      </li>
+      <li>
+        <h3>Earn the complexity.</h3>
+        <p>Every framework, every tool, every model parameter you add must justify itself with measurable improvement. If the eval scores don't move, the complexity isn't worth it.</p>
+      </li>
+    </ol>
+
+    <PullQuote>
+      "Most agents are workflows in costume. Earn the complexity."
+    </PullQuote>
+
+    <p class="manifesto__close">
+      These ten principles are the spine of the book. Every chapter, Field Note, Recipe, and Lab Report
+      tests one or more of them against real systems. When a principle conflicts with a finding,
+      the principle gets updated and the conflict is documented.
+    </p>
+
+    <p class="manifesto__revised">
+      Last revised: 2026-05-13.
+    </p>
+  </Reader>
+</PageLayout>
+
+<style>
+  .manifesto__hero {
+    position: relative;
+    padding-top: var(--space-7);
+  }
+
+  .manifesto__stamp {
+    position: absolute;
+    top: var(--space-3);
+    right: 0;
+  }
+
+  .manifesto__list {
+    list-style: none;
+    counter-reset: manifesto;
+    padding: 0;
+    margin: var(--space-6) 0;
+  }
+
+  .manifesto__list li {
+    counter-increment: manifesto;
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--fg-faint);
+    position: relative;
+    padding-left: var(--space-7);
+  }
+
+  .manifesto__list li::before {
+    content: counter(manifesto, decimal-leading-zero) ".";
+    position: absolute;
+    left: 0;
+    top: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--brick);
+    letter-spacing: 0.02em;
+  }
+
+  .manifesto__list h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--display-3);
+    line-height: var(--lh-snug);
+    margin: 0 0 var(--space-3);
+    color: var(--fg);
+  }
+
+  .manifesto__list p {
+    margin: 0;
+    color: var(--fg-light);
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .manifesto__close {
+    margin-top: var(--space-6);
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .manifesto__revised {
+    color: var(--fg-light);
+    margin-top: var(--space-5);
+  }
+</style>

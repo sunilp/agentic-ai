@@ -1,0 +1,24 @@
+---
+/**
+ * FullBleed — viewport-width section. Breaks out of Container.
+ * Use for hero bands, evidence stat strips, manifesto pullquotes.
+ */
+interface Props {
+  background?: string;
+  class?: string;
+}
+
+const { background = 'transparent', class: className } = Astro.props;
+---
+
+<section class:list={['full-bleed', className]} style={`background: ${background}`}>
+  <slot />
+</section>
+
+<style>
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+</style>

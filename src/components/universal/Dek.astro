@@ -1,0 +1,30 @@
+---
+/**
+ * Dek — one-sentence claim sub-title. Fraunces, larger than body.
+ */
+interface Props {
+  italic?: boolean;
+}
+
+const { italic = false } = Astro.props;
+---
+
+<p class:list={['dek', italic && 'dek--italic']}>
+  <slot />
+</p>
+
+<style>
+  .dek {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--display-3);
+    line-height: var(--lh-snug);
+    color: var(--fg);
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .dek--italic { font-style: italic; }
+</style>

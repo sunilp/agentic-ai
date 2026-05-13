@@ -1,0 +1,17 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "src/**/*"],
+  "exclude": ["dist", "node_modules", "site", "recipes", "docs", "diagrams", "tests", "project", "templates"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+      "~/lib/*": ["src/lib/*"],
+      "~/components/*": ["src/components/*"],
+      "~/styles/*": ["src/styles/*"],
+      "~/layouts/*": ["src/layouts/*"]
+    },
+    "jsx": "preserve",
+    "verbatimModuleSyntax": false
+  }
+}

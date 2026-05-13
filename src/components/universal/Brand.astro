@@ -1,0 +1,47 @@
+---
+/**
+ * Brand — site logotype, links to homepage.
+ */
+interface Props {
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { size = 'md' } = Astro.props;
+---
+
+<a href="/agentic-ai/" class:list={['brand', `brand--${size}`]}>
+  <span class="brand__title">Agentic AI</span>
+  <span class="brand__subtitle">for serious engineers</span>
+</a>
+
+<style>
+  .brand {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1.1;
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .brand__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .brand__subtitle {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+
+  .brand--sm .brand__title { font-size: 14px; }
+  .brand--sm .brand__subtitle { font-size: 9px; margin-top: 1px; }
+  .brand--md .brand__title { font-size: 18px; }
+  .brand--md .brand__subtitle { font-size: 10px; margin-top: 2px; }
+  .brand--lg .brand__title { font-size: 24px; }
+  .brand--lg .brand__subtitle { font-size: 11px; margin-top: 3px; }
+
+  .brand:hover .brand__title { color: var(--brick); }
+</style>

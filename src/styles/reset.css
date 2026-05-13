@@ -1,0 +1,28 @@
+/* Minimal reset. Inspired by modern-normalize, trimmed. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; tab-size: 4; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--body-1);
+  line-height: var(--lh-base);
+  color: var(--fg);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6, p { margin: 0; }
+
+a { color: inherit; text-decoration: none; }
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+
+button { font: inherit; cursor: pointer; }
+
+ul, ol { margin: 0; padding: 0; }
+
+::selection { background: var(--brick); color: var(--paper); }

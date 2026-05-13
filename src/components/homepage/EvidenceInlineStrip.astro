@@ -1,0 +1,101 @@
+---
+/**
+ * EvidenceInlineStrip — homepage stat strip below hero.
+ * 3 large numbers with count-up animation. Proof above the fold.
+ */
+interface Stat {
+  to: number;
+  decimals?: number;
+  suffix: string;
+  label: string;
+  variant?: 'default' | 'accent';
+}
+
+interface Props {
+  stats?: Stat[];
+}
+
+const defaultStats: Stat[] = [
+  { to: 3.4, decimals: 1, suffix: 'pp', label: 'Workflow > Agent', variant: 'accent' },
+  { to: 2.4, decimals: 1, suffix: '×', label: 'Cost ratio', variant: 'accent' },
+  { to: 2.2, decimals: 1, suffix: '×', label: 'Latency', variant: 'accent' },
+];
+
+const { stats = defaultStats } = Astro.props;
+---
+
+<section class="evidence-strip" aria-label="Evidence at a glance">
+  <div class="evidence-strip__inner">
+    {stats.map((stat) => (
+      <div class="evidence-strip__stat">
+        <div
+          class:list={['evidence-strip__value', `evidence-strip__value--${stat.variant ?? 'default'}`]}
+          data-count-to={stat.to}
+          data-count-decimals={stat.decimals ?? 1}
+          data-count-suffix={stat.suffix}
+        >
+          0{stat.suffix}
+        </div>
+        <div class="evidence-strip__label">{stat.label}</div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  import { observeCountUps } from '~/components/client/count-up';
+
+  let observer: IntersectionObserver | null = observeCountUps();
+
+  document.addEventListener('astro:page-load', () => {
+    observer?.disconnect();
+    observer = observeCountUps();
+  });
+
+  document.addEventListener('astro:before-preparation', () => {
+    observer?.disconnect();
+    observer = null;
+  });
+</script>
+
+<style>
+  .evidence-strip {
+    border-top: 1px solid var(--fg-faint);
+    border-bottom: 1px solid var(--fg-faint);
+    padding: var(--space-5) 0;
+    margin: var(--space-3) 0 var(--space-7);
+  }
+
+  .evidence-strip__inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .evidence-strip__stat {
+    text-align: center;
+    border-left: 1px solid var(--fg-faint);
+    padding: 0 var(--space-3);
+  }
+
+  .evidence-strip__stat:first-child { border-left: 0; }
+
+  .evidence-strip__value {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .evidence-strip__value--accent { color: var(--brick); }
+
+  .evidence-strip__label {
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+</style>

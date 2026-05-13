@@ -1,0 +1,26 @@
+---
+/**
+ * Reader — 720px reading column.
+ * Used by Chapter, FieldNote, Recipe bodies. Centered with padding.
+ */
+interface Props {
+  maxWidth?: string;
+  class?: string;
+}
+
+const { maxWidth = 'var(--reader-max)', class: className } = Astro.props;
+---
+
+<div class:list={['reader', className]} style={`--reader-width: ${maxWidth}`}>
+  <slot />
+</div>
+
+<style>
+  .reader {
+    max-width: var(--reader-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+</style>

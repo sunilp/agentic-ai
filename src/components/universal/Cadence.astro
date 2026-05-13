@@ -1,0 +1,27 @@
+---
+/**
+ * Cadence — pill showing publication schedule.
+ */
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<span class="cadence">{text}</span>
+
+<style>
+  .cadence {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    background: var(--paper-recess);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--fg-faint);
+  }
+</style>
