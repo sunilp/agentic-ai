@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" font-family="'IBM Plex Sans', sans-serif">
+  <defs>
+    <marker id="arr-dl-dk" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a3a5c"/>
+    </marker>
+    <marker id="arr-dl-md" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3d7ab5"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="480" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="34" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a1a">Defense Layers — Memory Integrity Pipeline</text>
+  <line x1="100" y1="48" x2="700" y2="48" stroke="#7eb3d8" stroke-width="1"/>
+
+  <!-- Pipeline flow (left side): Input -->
+  <rect x="40" y="80" width="120" height="50" rx="8" fill="#1a3a5c" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="100" y="102" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">Agent Output</text>
+  <text x="100" y="118" text-anchor="middle" font-size="10" fill="#7eb3d8">correction to store</text>
+
+  <!-- Arrow down to Layer 1 -->
+  <line x1="100" y1="130" x2="100" y2="158" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arr-dl-dk)"/>
+
+  <!-- ═══ LAYER 1: MemoryValidator ═══ -->
+  <rect x="40" y="160" width="720" height="86" rx="10" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="70" y="182" font-size="11" font-weight="bold" fill="#1a3a5c" letter-spacing="1">LAYER 1</text>
+  <rect x="150" y="170" width="200" height="56" rx="8" fill="#ffffff" stroke="#3d7ab5" stroke-width="2"/>
+  <text x="250" y="194" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">MemoryValidator</text>
+  <text x="250" y="212" text-anchor="middle" font-size="11" fill="#6b7280">Cross-checks against evidence</text>
+
+  <!-- How it works -->
+  <rect x="400" y="170" width="340" height="56" rx="6" fill="#ffffff" stroke="#7eb3d8" stroke-width="1.5"/>
+  <text x="420" y="190" font-size="11" fill="#1a1a1a" font-weight="bold">How:</text>
+  <text x="460" y="190" font-size="11" fill="#6b7280">Retrieves source docs for the claim</text>
+  <text x="420" y="206" font-size="11" fill="#1a1a1a" font-weight="bold">Action:</text>
+  <text x="468" y="206" font-size="11" fill="#6b7280">Reject if no supporting evidence</text>
+  <text x="420" y="220" font-size="11" font-family="'IBM Plex Mono', monospace" fill="#3d7ab5">if similarity(claim, source) &lt; 0.7: reject</text>
+
+  <!-- Arrow: Layer 1 pass → Layer 2 -->
+  <line x1="100" y1="246" x2="100" y2="272" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arr-dl-dk)"/>
+  <text x="114" y="262" font-size="10" fill="#059669" font-weight="bold">pass</text>
+
+  <!-- ═══ LAYER 2: Independent Verification ═══ -->
+  <rect x="40" y="274" width="720" height="86" rx="10" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="70" y="296" font-size="11" font-weight="bold" fill="#1a3a5c" letter-spacing="1">LAYER 2</text>
+  <rect x="150" y="284" width="200" height="56" rx="8" fill="#ffffff" stroke="#3d7ab5" stroke-width="2"/>
+  <text x="250" y="306" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Independent Verifier</text>
+  <text x="250" y="324" text-anchor="middle" font-size="11" fill="#6b7280">Separate agent, own retrieval</text>
+
+  <!-- How it works -->
+  <rect x="400" y="284" width="340" height="56" rx="6" fill="#ffffff" stroke="#7eb3d8" stroke-width="1.5"/>
+  <text x="420" y="304" font-size="11" fill="#1a1a1a" font-weight="bold">How:</text>
+  <text x="460" y="304" font-size="11" fill="#6b7280">30% spot-check with fresh retrieval</text>
+  <text x="420" y="320" font-size="11" fill="#1a1a1a" font-weight="bold">Action:</text>
+  <text x="468" y="320" font-size="11" fill="#6b7280">Flag disagreements for human review</text>
+  <text x="420" y="334" font-size="11" font-family="'IBM Plex Mono', monospace" fill="#3d7ab5">if random() &lt; 0.3: verify(claim)</text>
+
+  <!-- Arrow: Layer 2 pass → Layer 3 -->
+  <line x1="100" y1="360" x2="100" y2="386" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arr-dl-dk)"/>
+  <text x="114" y="376" font-size="10" fill="#059669" font-weight="bold">pass</text>
+
+  <!-- ═══ LAYER 3: AnomalyDetector ═══ -->
+  <rect x="40" y="388" width="720" height="80" rx="10" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="70" y="410" font-size="11" font-weight="bold" fill="#1a3a5c" letter-spacing="1">LAYER 3</text>
+  <rect x="150" y="396" width="200" height="56" rx="8" fill="#ffffff" stroke="#3d7ab5" stroke-width="2"/>
+  <text x="250" y="420" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">AnomalyDetector</text>
+  <text x="250" y="438" text-anchor="middle" font-size="11" fill="#6b7280">Runtime monitoring</text>
+
+  <!-- How it works -->
+  <rect x="400" y="396" width="340" height="56" rx="6" fill="#ffffff" stroke="#7eb3d8" stroke-width="1.5"/>
+  <text x="420" y="416" font-size="11" fill="#1a1a1a" font-weight="bold">How:</text>
+  <text x="460" y="416" font-size="11" fill="#6b7280">Flags dormant memories that suddenly activate</text>
+  <text x="420" y="432" font-size="11" fill="#1a1a1a" font-weight="bold">Action:</text>
+  <text x="468" y="432" font-size="11" fill="#6b7280">Quarantine + alert if spike detected</text>
+  <text x="420" y="446" font-size="11" font-family="'IBM Plex Mono', monospace" fill="#3d7ab5">if access_spike(mem) &gt; 3x: quarantine</text>
+
+  <!-- Memory Store (output, right side) -->
+  <rect x="660" y="80" width="100" height="50" rx="8" fill="#1a3a5c" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="710" y="102" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">Memory</text>
+  <text x="710" y="118" text-anchor="middle" font-size="10" fill="#7eb3d8">clean store</text>
+
+  <!-- Final arrow from Layer 3 to Memory Store (going up-right) -->
+  <path d="M 350 430 Q 500 470 710 132" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-dl-dk)"/>
+  <text x="560" y="310" font-size="10" fill="#059669" font-weight="bold" transform="rotate(-55 560 310)">all layers pass</text>
+
+  <!-- Reject arrows (going right out) -->
+  <text x="770" y="206" font-size="10" fill="#dc2626" font-weight="bold" text-anchor="end">reject</text>
+  <text x="770" y="320" font-size="10" fill="#dc2626" font-weight="bold" text-anchor="end">flag</text>
+  <text x="770" y="432" font-size="10" fill="#dc2626" font-weight="bold" text-anchor="end">quarantine</text>
+</svg>

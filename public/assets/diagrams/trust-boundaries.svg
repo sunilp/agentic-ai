@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="560" viewBox="0 0 800 560" font-family="Arial, Helvetica, sans-serif">
+  <!-- Background -->
+  <rect width="800" height="560" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="34" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Agent Trust Boundaries</text>
+  <line x1="80" y1="46" x2="720" y2="46" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- Zone 1: Outermost — UNTRUSTED (red tint) -->
+  <rect x="60" y="66" width="680" height="440" rx="20" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <!-- Zone label: top-left inside band -->
+  <text x="82" y="91" font-size="11" font-weight="bold" fill="#EF4444" letter-spacing="0.5">UNTRUSTED</text>
+  <!-- Zone title inline -->
+  <text x="400" y="107" text-anchor="middle" font-size="15" font-weight="bold" fill="#B91C1C">External Input</text>
+  <!-- Components in outer zone (top and bottom bands) -->
+  <rect x="120" y="118" width="180" height="44" rx="8" fill="#ffffff" stroke="#FCA5A5" stroke-width="1.5"/>
+  <text x="210" y="136" text-anchor="middle" font-size="13" font-weight="bold" fill="#991B1B">User Queries</text>
+  <text x="210" y="153" text-anchor="middle" font-size="11" fill="#6B7280">Raw natural language</text>
+
+  <rect x="500" y="118" width="180" height="44" rx="8" fill="#ffffff" stroke="#FCA5A5" stroke-width="1.5"/>
+  <text x="590" y="136" text-anchor="middle" font-size="13" font-weight="bold" fill="#991B1B">Retrieved Documents</text>
+  <text x="590" y="153" text-anchor="middle" font-size="11" fill="#6B7280">External corpus data</text>
+
+  <!-- Zone 2: SEMI-TRUSTED (yellow tint) -->
+  <rect x="130" y="174" width="540" height="310" rx="16" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="152" y="197" font-size="11" font-weight="bold" fill="#D97706" letter-spacing="0.5">SEMI-TRUSTED</text>
+  <text x="400" y="212" text-anchor="middle" font-size="15" font-weight="bold" fill="#92400E">Agent Reasoning</text>
+
+  <rect x="175" y="224" width="190" height="44" rx="8" fill="#ffffff" stroke="#FCD34D" stroke-width="1.5"/>
+  <text x="270" y="242" text-anchor="middle" font-size="13" font-weight="bold" fill="#78350F">Model Output</text>
+  <text x="270" y="259" text-anchor="middle" font-size="11" fill="#6B7280">Generated text · reasoning</text>
+
+  <rect x="435" y="224" width="190" height="44" rx="8" fill="#ffffff" stroke="#FCD34D" stroke-width="1.5"/>
+  <text x="530" y="242" text-anchor="middle" font-size="13" font-weight="bold" fill="#78350F">Tool Call Decisions</text>
+  <text x="530" y="259" text-anchor="middle" font-size="11" fill="#6B7280">Inferred arguments · intent</text>
+
+  <!-- Zone 3: ENFORCED (green tint) -->
+  <rect x="200" y="280" width="400" height="178" rx="14" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="222" y="301" font-size="11" font-weight="bold" fill="#059669" letter-spacing="0.5">ENFORCED</text>
+  <text x="400" y="316" text-anchor="middle" font-size="15" font-weight="bold" fill="#065F46">Tool Execution</text>
+
+  <rect x="228" y="328" width="155" height="44" rx="8" fill="#ffffff" stroke="#6EE7B7" stroke-width="1.5"/>
+  <text x="305" y="346" text-anchor="middle" font-size="12" font-weight="bold" fill="#064E3B">Registry Validation</text>
+  <text x="305" y="362" text-anchor="middle" font-size="11" fill="#6B7280">Schema · signature check</text>
+
+  <rect x="418" y="328" width="155" height="44" rx="8" fill="#ffffff" stroke="#6EE7B7" stroke-width="1.5"/>
+  <text x="495" y="346" text-anchor="middle" font-size="12" font-weight="bold" fill="#064E3B">Permission Check</text>
+  <text x="495" y="362" text-anchor="middle" font-size="11" fill="#6B7280">Allow · deny · scope</text>
+
+  <rect x="310" y="386" width="180" height="44" rx="8" fill="#ffffff" stroke="#6EE7B7" stroke-width="1.5"/>
+  <text x="400" y="404" text-anchor="middle" font-size="12" font-weight="bold" fill="#064E3B">Side-Effect Classification</text>
+  <text x="400" y="420" text-anchor="middle" font-size="11" fill="#6B7280">Read-only · write · irreversible</text>
+
+  <!-- Zone 4: Core — TRUSTED (deep green) -->
+  <rect x="270" y="438" width="260" height="68" rx="12" fill="#ECFDF5" stroke="#059669" stroke-width="2.5"/>
+  <text x="292" y="457" font-size="11" font-weight="bold" fill="#059669" letter-spacing="0.5">TRUSTED</text>
+  <text x="400" y="468" text-anchor="middle" font-size="15" font-weight="bold" fill="#064E3B">Policy Layer</text>
+  <text x="400" y="484" text-anchor="middle" font-size="11" fill="#374151">Permission Policy  ·  Approval Gates</text>
+  <text x="400" y="498" text-anchor="middle" font-size="11" fill="#374151">Audit Log  ·  Rate Limits</text>
+
+  <!-- Legend -->
+  <rect x="62" y="520" width="675" height="28" rx="6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1"/>
+  <rect x="76" y="530" width="12" height="12" rx="2" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
+  <text x="94" y="541" font-size="11" fill="#374151">Untrusted</text>
+  <rect x="168" y="530" width="12" height="12" rx="2" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="186" y="541" font-size="11" fill="#374151">Semi-Trusted</text>
+  <rect x="276" y="530" width="12" height="12" rx="2" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+  <text x="294" y="541" font-size="11" fill="#374151">Enforced Controls</text>
+  <rect x="404" y="530" width="12" height="12" rx="2" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+  <text x="422" y="541" font-size="11" fill="#374151">Trusted Core</text>
+  <text x="590" y="541" font-size="11" fill="#9CA3AF">Each inner zone enforces the outer zone's outputs.</text>
+</svg>

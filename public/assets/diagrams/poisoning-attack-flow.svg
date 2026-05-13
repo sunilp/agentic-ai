@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="440" viewBox="0 0 800 440" font-family="'IBM Plex Sans', sans-serif">
+  <defs>
+    <marker id="arr-p-dk" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a3a5c"/>
+    </marker>
+    <marker id="arr-p-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-p-grn" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="440" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="34" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a1a">Memory Poisoning Attack — Injection and Retrieval</text>
+  <line x1="80" y1="48" x2="720" y2="48" stroke="#7eb3d8" stroke-width="1"/>
+
+  <!-- ═══ PHASE 1: ATTACK (top row) ═══ -->
+  <text x="60" y="78" font-size="12" font-weight="bold" fill="#dc2626" letter-spacing="1">PHASE 1: POISONING</text>
+
+  <!-- Attacker -->
+  <rect x="40" y="92" width="130" height="56" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="105" y="116" text-anchor="middle" font-size="13" font-weight="bold" fill="#991b1b">Attacker</text>
+  <text x="105" y="132" text-anchor="middle" font-size="10" fill="#6b7280">Crafted query</text>
+
+  <!-- Arrow: Attacker → Agent -->
+  <line x1="170" y1="120" x2="218" y2="120" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-p-red)"/>
+
+  <!-- Agent processes -->
+  <rect x="220" y="92" width="140" height="56" rx="8" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="290" y="116" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a3a5c">Agent</text>
+  <text x="290" y="132" text-anchor="middle" font-size="10" fill="#6b7280">Processes query</text>
+
+  <!-- Arrow: Agent → False correction -->
+  <line x1="360" y1="120" x2="408" y2="120" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-p-red)"/>
+
+  <!-- False correction -->
+  <rect x="410" y="88" width="180" height="64" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="500" y="112" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">False Correction</text>
+  <text x="500" y="128" text-anchor="middle" font-size="10" font-family="'IBM Plex Mono', monospace" fill="#1a1a1a">"SLA is 99.0%"</text>
+  <text x="500" y="142" text-anchor="middle" font-size="10" fill="#6b7280">(actual: 99.9%)</text>
+
+  <!-- Arrow: False correction → Memory -->
+  <line x1="590" y1="120" x2="628" y2="120" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-p-red)"/>
+
+  <!-- Memory store -->
+  <rect x="630" y="92" width="130" height="56" rx="8" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="695" y="112" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Memory Store</text>
+  <text x="695" y="130" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="bold">Poisoned!</text>
+
+  <!-- Divider -->
+  <line x1="40" y1="170" x2="760" y2="170" stroke="#e8f0f7" stroke-width="2" stroke-dasharray="8,4"/>
+
+  <!-- ═══ PHASE 2: EXPLOITATION (middle row) ═══ -->
+  <text x="60" y="196" font-size="12" font-weight="bold" fill="#1a3a5c" letter-spacing="1">PHASE 2: EXPLOITATION</text>
+
+  <!-- Legitimate user -->
+  <rect x="40" y="210" width="130" height="56" rx="8" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="105" y="234" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a3a5c">Legit User</text>
+  <text x="105" y="250" text-anchor="middle" font-size="10" fill="#6b7280">"What is our SLA?"</text>
+
+  <!-- Arrow: User → Agent -->
+  <line x1="170" y1="238" x2="218" y2="238" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arr-p-dk)"/>
+
+  <!-- Agent -->
+  <rect x="220" y="210" width="140" height="56" rx="8" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="290" y="234" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a3a5c">Agent</text>
+  <text x="290" y="250" text-anchor="middle" font-size="10" fill="#6b7280">Retrieves context</text>
+
+  <!-- Arrow: Agent → Memory -->
+  <line x1="360" y1="238" x2="500" y2="238" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arr-p-dk)"/>
+  <text x="430" y="232" text-anchor="middle" font-size="10" fill="#6b7280">query memory</text>
+
+  <!-- Memory returns poison -->
+  <rect x="502" y="210" width="160" height="56" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="582" y="230" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">Poisoned Memory</text>
+  <text x="582" y="248" text-anchor="middle" font-size="10" font-family="'IBM Plex Mono', monospace" fill="#1a1a1a">"SLA is 99.0%"</text>
+  <text x="582" y="260" text-anchor="middle" font-size="10" fill="#dc2626">trusted as correction</text>
+
+  <!-- Arrow: Memory → Wrong answer -->
+  <line x1="662" y1="238" x2="695" y2="238" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-p-red)"/>
+
+  <!-- Wrong answer -->
+  <rect x="697" y="214" width="80" height="48" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="737" y="236" text-anchor="middle" font-size="11" font-weight="bold" fill="#991b1b">Wrong</text>
+  <text x="737" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#991b1b">Answer</text>
+
+  <!-- Divider -->
+  <line x1="40" y1="286" x2="760" y2="286" stroke="#e8f0f7" stroke-width="2" stroke-dasharray="8,4"/>
+
+  <!-- ═══ DEFENSE LAYER ═══ -->
+  <text x="60" y="312" font-size="12" font-weight="bold" fill="#059669" letter-spacing="1">DEFENSE: MEMORY VALIDATOR</text>
+
+  <!-- Replayed attack path with defense -->
+  <rect x="40" y="326" width="130" height="50" rx="8" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="105" y="348" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Agent</text>
+  <text x="105" y="362" text-anchor="middle" font-size="10" fill="#6b7280">Wants to store</text>
+
+  <!-- Arrow to validator -->
+  <line x1="170" y1="351" x2="228" y2="351" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arr-p-dk)"/>
+
+  <!-- MemoryValidator -->
+  <rect x="230" y="322" width="200" height="58" rx="8" fill="#f0fdf4" stroke="#059669" stroke-width="2"/>
+  <text x="330" y="344" text-anchor="middle" font-size="13" font-weight="bold" fill="#065f46">MemoryValidator</text>
+  <text x="330" y="360" text-anchor="middle" font-size="10" fill="#6b7280">Cross-checks against evidence</text>
+  <text x="330" y="374" text-anchor="middle" font-size="10" font-family="'IBM Plex Mono', monospace" fill="#059669">validate(correction, sources)</text>
+
+  <!-- Arrow: Validator rejects -->
+  <line x1="430" y1="340" x2="488" y2="340" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-p-red)"/>
+
+  <!-- Rejected -->
+  <rect x="490" y="326" width="120" height="50" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="550" y="348" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">REJECTED</text>
+  <text x="550" y="362" text-anchor="middle" font-size="10" fill="#6b7280">No evidence match</text>
+
+  <!-- Arrow: Validator passes -->
+  <line x1="430" y1="362" x2="488" y2="380" stroke="#059669" stroke-width="2" marker-end="url(#arr-p-grn)"/>
+
+  <!-- Accepted -->
+  <rect x="490" y="376" width="120" height="40" rx="8" fill="#f0fdf4" stroke="#059669" stroke-width="2"/>
+  <text x="550" y="400" text-anchor="middle" font-size="12" font-weight="bold" fill="#065f46">ACCEPTED</text>
+
+  <!-- Arrow: Accepted → Memory -->
+  <line x1="610" y1="396" x2="648" y2="396" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-p-grn)"/>
+
+  <!-- Memory store (clean) -->
+  <rect x="650" y="376" width="110" height="40" rx="8" fill="#e8f0f7" stroke="#1a3a5c" stroke-width="2"/>
+  <text x="705" y="400" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a3a5c">Memory</text>
+</svg>

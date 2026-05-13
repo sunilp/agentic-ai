@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" style="background:#fff;font-family:system-ui,-apple-system,sans-serif;">
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" font-size="16" font-weight="600" fill="#374151">Agent Architecture Decision Framework</text>
+
+  <!-- ===================== START NODE ===================== -->
+  <!-- Start: "New AI task" oval at top center -->
+  <ellipse cx="400" cy="65" rx="75" ry="24" fill="#374151"/>
+  <text x="400" y="70" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">New AI task</text>
+
+  <!-- Arrow down from start -->
+  <line x1="400" y1="89" x2="400" y2="117" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ===================== DECISION 1 ===================== -->
+  <!-- Diamond at (400, 143) -->
+  <polygon points="400,117 470,143 400,169 330,143" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="400" y="140" text-anchor="middle" font-size="11" fill="#374151">Can you draw the</text>
+  <text x="400" y="154" text-anchor="middle" font-size="11" fill="#374151">flowchart?</text>
+
+  <!-- Yes arrow: right to Workflow stop -->
+  <line x1="470" y1="143" x2="555" y2="143" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="513" y="136" text-anchor="middle" font-size="11" fill="#10B981" font-weight="600">Yes</text>
+  <!-- Workflow box -->
+  <rect x="555" y="121" width="110" height="44" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="610" y="140" text-anchor="middle" font-size="12" font-weight="600" fill="#065F46">Use a</text>
+  <text x="610" y="155" text-anchor="middle" font-size="12" font-weight="600" fill="#065F46">Workflow</text>
+  <!-- STOP indicator -->
+  <text x="680" y="143" text-anchor="start" font-size="18" fill="#10B981">&#x2717;</text>
+
+  <!-- No arrow: down -->
+  <line x1="400" y1="169" x2="400" y2="197" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="387" y="185" text-anchor="end" font-size="11" fill="#EF4444" font-weight="600">No</text>
+
+  <!-- ===================== DECISION 2 ===================== -->
+  <polygon points="400,197 470,223 400,249 330,223" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="400" y="219" text-anchor="middle" font-size="11" fill="#374151">Multi-step reasoning</text>
+  <text x="400" y="233" text-anchor="middle" font-size="11" fill="#374151">required?</text>
+
+  <!-- No arrow: left to Workflow stop -->
+  <line x1="330" y1="223" x2="200" y2="223" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="265" y="216" text-anchor="middle" font-size="11" fill="#10B981" font-weight="600">No</text>
+  <!-- Workflow box (left) -->
+  <rect x="90" y="201" width="110" height="44" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="145" y="220" text-anchor="middle" font-size="12" font-weight="600" fill="#065F46">Use a</text>
+  <text x="145" y="235" text-anchor="middle" font-size="12" font-weight="600" fill="#065F46">Workflow</text>
+  <text x="89" y="223" text-anchor="end" font-size="18" fill="#10B981">&#x2717;</text>
+
+  <!-- Yes arrow: down -->
+  <line x1="400" y1="249" x2="400" y2="277" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="387" y="265" text-anchor="end" font-size="11" fill="#EF4444" font-weight="600">Yes</text>
+
+  <!-- ===================== DECISION 3 ===================== -->
+  <polygon points="400,277 470,303 400,329 330,303" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="400" y="299" text-anchor="middle" font-size="11" fill="#374151">Single agent</text>
+  <text x="400" y="313" text-anchor="middle" font-size="11" fill="#374151">sufficient?</text>
+
+  <!-- Yes arrow: right to Single Agent stop -->
+  <line x1="470" y1="303" x2="555" y2="303" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="513" y="296" text-anchor="middle" font-size="11" fill="#10B981" font-weight="600">Yes</text>
+  <!-- Single Agent box -->
+  <rect x="555" y="281" width="110" height="44" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="610" y="300" text-anchor="middle" font-size="12" font-weight="600" fill="#1E40AF">Use Single</text>
+  <text x="610" y="315" text-anchor="middle" font-size="12" font-weight="600" fill="#1E40AF">Agent</text>
+  <text x="680" y="303" text-anchor="start" font-size="18" fill="#3B82F6">&#x2717;</text>
+
+  <!-- No arrow: down -->
+  <line x1="400" y1="329" x2="400" y2="357" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="387" y="345" text-anchor="end" font-size="11" fill="#EF4444" font-weight="600">No</text>
+
+  <!-- ===================== DECISION 4 ===================== -->
+  <polygon points="400,357 470,383 400,409 330,383" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="400" y="378" text-anchor="middle" font-size="11" fill="#374151">Role specialization or</text>
+  <text x="400" y="392" text-anchor="middle" font-size="11" fill="#374151">verification needed?</text>
+
+  <!-- No arrow: left to Single Agent -->
+  <line x1="330" y1="383" x2="200" y2="383" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="265" y="376" text-anchor="middle" font-size="11" fill="#10B981" font-weight="600">No</text>
+  <!-- Single Agent box (left) -->
+  <rect x="90" y="361" width="110" height="44" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="145" y="380" text-anchor="middle" font-size="12" font-weight="600" fill="#1E40AF">Use Single</text>
+  <text x="145" y="395" text-anchor="middle" font-size="12" font-weight="600" fill="#1E40AF">Agent</text>
+  <text x="89" y="383" text-anchor="end" font-size="18" fill="#3B82F6">&#x2717;</text>
+
+  <!-- Yes arrow: down -->
+  <line x1="400" y1="409" x2="400" y2="437" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="387" y="425" text-anchor="end" font-size="11" fill="#EF4444" font-weight="600">Yes</text>
+
+  <!-- ===================== MULTI-AGENT OUTCOME ===================== -->
+  <rect x="330" y="437" width="140" height="44" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="400" y="456" text-anchor="middle" font-size="12" font-weight="600" fill="#92400E">Use Multi-Agent</text>
+  <text x="400" y="471" text-anchor="middle" font-size="11" fill="#92400E">System</text>
+
+  <!-- ===================== DECISION 5 (HITL overlay) ===================== -->
+  <!-- Arrow right from multi-agent to HITL check -->
+  <line x1="470" y1="459" x2="530" y2="459" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- HITL check box - orange annotation -->
+  <rect x="530" y="437" width="170" height="44" rx="8" fill="#FFF7ED" stroke="#F97316" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="615" y="454" text-anchor="middle" font-size="11" font-weight="600" fill="#C2410C">High-risk / oversight</text>
+  <text x="615" y="468" text-anchor="middle" font-size="11" fill="#C2410C">needed? Add HITL gates</text>
+
+  <!-- Arrow markers definition -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#6B7280"/>
+    </marker>
+  </defs>
+
+</svg>

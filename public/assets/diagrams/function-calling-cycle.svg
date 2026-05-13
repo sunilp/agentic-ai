@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="500" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Function Calling: The Full Cycle</text>
+  <line x1="40" y1="42" x2="660" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- Node 1: Your Code (top-left) -->
+  <rect x="40" y="70" width="180" height="72" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="130" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#1D4ED8">1. Your Code</text>
+  <text x="130" y="112" text-anchor="middle" font-size="10" fill="#6B7280">send schema + prompt</text>
+  <text x="130" y="128" text-anchor="middle" font-size="10" fill="#3B82F6">{"tools": [...], "messages": [...]}</text>
+
+  <!-- Arrow 1 → 2 -->
+  <line x1="221" y1="106" x2="278" y2="106" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="249" y="98" text-anchor="middle" font-size="9" fill="#374151">HTTP POST</text>
+
+  <!-- Node 2: API (top-right) -->
+  <rect x="480" y="70" width="180" height="72" rx="8" fill="#F0FDF4" stroke="#22c55e" stroke-width="2"/>
+  <text x="570" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803D">2. LLM API</text>
+  <text x="570" y="112" text-anchor="middle" font-size="10" fill="#6B7280">model sees schema</text>
+  <text x="570" y="128" text-anchor="middle" font-size="10" fill="#6B7280">decides to call a tool</text>
+
+  <!-- Arrow 2 → 3 (right side going down) -->
+  <line x1="570" y1="143" x2="570" y2="198" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="600" y="175" font-size="9" fill="#374151">tool_call JSON</text>
+
+  <!-- Node 3: Model Response (bottom-right) -->
+  <rect x="480" y="200" width="180" height="80" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+  <text x="570" y="222" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400E">3. Model Response</text>
+  <text x="570" y="240" text-anchor="middle" font-size="10" fill="#6B7280">{"tool_calls": [{</text>
+  <text x="570" y="255" text-anchor="middle" font-size="10" fill="#6B7280">  "name": "get_weather",</text>
+  <text x="570" y="270" text-anchor="middle" font-size="10" fill="#6B7280">  "args": {"city": "NYC"}}]}</text>
+
+  <!-- Arrow 3 → 4 (bottom going left) -->
+  <line x1="479" y1="240" x2="221" y2="240" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="350" y="232" text-anchor="middle" font-size="9" fill="#374151">your code receives this</text>
+
+  <!-- Node 4: Execute Function (bottom-left) -->
+  <rect x="40" y="200" width="180" height="80" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="130" y="222" text-anchor="middle" font-size="13" font-weight="bold" fill="#5B21B6">4. Execute Function</text>
+  <text x="130" y="240" text-anchor="middle" font-size="10" fill="#6B7280">your code runs:</text>
+  <text x="130" y="255" text-anchor="middle" font-size="10" fill="#5B21B6">get_weather("NYC")</text>
+  <text x="130" y="270" text-anchor="middle" font-size="10" fill="#6B7280">→ "72°F, sunny"</text>
+
+  <!-- Arrow 4 → 5 (left side going down) -->
+  <line x1="130" y1="281" x2="130" y2="338" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="90" y="314" font-size="9" fill="#374151">function</text>
+  <text x="90" y="326" font-size="9" fill="#374151">result</text>
+
+  <!-- Node 5: Back to API (bottom center) -->
+  <rect x="40" y="340" width="180" height="72" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="130" y="364" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">5. Send Result to API</text>
+  <text x="130" y="381" text-anchor="middle" font-size="10" fill="#6B7280">{"role": "tool",</text>
+  <text x="130" y="396" text-anchor="middle" font-size="10" fill="#6B7280"> "content": "72°F, sunny"}</text>
+
+  <!-- Arrow 5 → 1 (loop back, curved) -->
+  <path d="M220,376 Q350,430 350,130 Q350,106 281,106" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <text x="410" y="420" text-anchor="middle" font-size="10" fill="#9CA3AF">model now writes</text>
+  <text x="410" y="436" text-anchor="middle" font-size="10" fill="#9CA3AF">final answer or</text>
+  <text x="410" y="452" text-anchor="middle" font-size="10" fill="#9CA3AF">calls another tool</text>
+
+  <!-- Loop label in center -->
+  <rect x="268" y="290" width="164" height="32" rx="6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="350" y="307" text-anchor="middle" font-size="11" font-weight="bold" fill="#374151">Repeats until</text>
+  <text x="350" y="320" text-anchor="middle" font-size="11" fill="#6B7280">final answer returned</text>
+
+  <!-- Caption -->
+  <text x="350" y="480" text-anchor="middle" font-size="11" fill="#9CA3AF">The model never runs code. It only describes the call. Your code executes it.</text>
+</svg>

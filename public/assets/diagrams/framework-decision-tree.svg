@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400" viewBox="0 0 700 400" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="400" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Framework Decision Tree</text>
+  <line x1="40" y1="42" x2="660" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- ROOT: What are you building? -->
+  <rect x="220" y="60" width="260" height="56" rx="10" fill="#F3F4F6" stroke="#6B7280" stroke-width="2"/>
+  <text x="350" y="84" text-anchor="middle" font-size="14" font-weight="bold" fill="#111827">What are you building?</text>
+  <text x="350" y="102" text-anchor="middle" font-size="11" fill="#6B7280">Start here before choosing a framework</text>
+
+  <!-- Arrow left: Learning/exploring -->
+  <line x1="280" y1="116" x2="155" y2="168" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="185" y="147" text-anchor="middle" font-size="11" fill="#374151">Learning /</text>
+  <text x="185" y="160" text-anchor="middle" font-size="11" fill="#374151">exploring</text>
+
+  <!-- Arrow right: Production system -->
+  <line x1="420" y1="116" x2="545" y2="168" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="510" y="147" text-anchor="middle" font-size="11" fill="#374151">Production</text>
+  <text x="510" y="160" text-anchor="middle" font-size="11" fill="#374151">system</text>
+
+  <!-- LEFT LEAF: Build raw first -->
+  <rect x="50" y="170" width="210" height="60" rx="10" fill="#F0FDF4" stroke="#22c55e" stroke-width="2.5"/>
+  <text x="155" y="195" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803D">Build raw first</text>
+  <text x="155" y="213" text-anchor="middle" font-size="11" fill="#374151">Pure Python, direct API calls</text>
+  <text x="155" y="228" text-anchor="middle" font-size="10" fill="#6B7280">Learn the mechanics, not the abstraction</text>
+
+  <!-- RIGHT BRANCH: Production sub-question -->
+  <rect x="420" y="170" width="250" height="56" rx="10" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="2"/>
+  <text x="545" y="194" text-anchor="middle" font-size="13" font-weight="bold" fill="#374151">Need built-in tracing</text>
+  <text x="545" y="210" text-anchor="middle" font-size="13" font-weight="bold" fill="#374151">and eval pipeline?</text>
+
+  <!-- Arrow left from production branch: Not critical -->
+  <line x1="460" y1="226" x2="345" y2="286" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="368" y="257" text-anchor="middle" font-size="11" fill="#374151">Not critical</text>
+  <text x="368" y="270" text-anchor="middle" font-size="11" fill="#374151">right now</text>
+
+  <!-- Arrow right from production branch: Yes -->
+  <line x1="630" y1="226" x2="630" y2="286" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="650" y="262" font-size="11" fill="#374151">Yes,</text>
+  <text x="648" y="275" font-size="11" fill="#374151">critical</text>
+
+  <!-- Left leaf: LangChain -->
+  <rect x="230" y="288" width="230" height="60" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2.5"/>
+  <text x="345" y="312" text-anchor="middle" font-size="14" font-weight="bold" fill="#5B21B6">LangChain</text>
+  <text x="345" y="330" text-anchor="middle" font-size="11" fill="#374151">Rich ecosystem, many integrations</text>
+  <text x="345" y="345" text-anchor="middle" font-size="10" fill="#F59E0B">Watch out: version churn, opaque chains</text>
+
+  <!-- Right leaf: Google ADK -->
+  <rect x="495" y="288" width="175" height="60" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2.5"/>
+  <text x="582" y="312" text-anchor="middle" font-size="14" font-weight="bold" fill="#1D4ED8">Google ADK</text>
+  <text x="582" y="330" text-anchor="middle" font-size="11" fill="#374151">Tracing, evals, structured</text>
+  <text x="582" y="345" text-anchor="middle" font-size="10" fill="#F59E0B">Google Cloud ecosystem</text>
+
+  <!-- Dotted line from raw to right side (upgrade path) -->
+  <path d="M260,200 Q340,200 420,185" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="340" y="194" text-anchor="middle" font-size="9" fill="#22c55e">start here, upgrade later</text>
+
+  <!-- Caption -->
+  <text x="350" y="374" text-anchor="middle" font-size="11" fill="#374151">No framework is a permanent commitment. Start raw, add structure when you feel the pain of not having it.</text>
+  <text x="350" y="390" text-anchor="middle" font-size="11" fill="#9CA3AF">The right time to add a framework is when you keep re-solving the same problem.</text>
+</svg>
