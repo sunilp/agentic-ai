@@ -19,3 +19,7 @@ site/
 proposals/
 publish/
 .worktrees/
+docs/assets/prompts/
+templates/
+.editorial/
+schedule/

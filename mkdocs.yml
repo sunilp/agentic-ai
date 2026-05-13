@@ -88,6 +88,12 @@ nav:
     - Part IV - Advanced Patterns:
       - 12. Memory Management: book/12-memory-management.md
       - 13. Agent Protocols in Production: book/13-agent-protocols-in-production.md
+  - Field Notes:
+    - field-notes/index.md
+    - "FN-001 - The multi-agent papers nobody is citing": field-notes/001-multi-agent-papers-nobody-cites.md
+    - "FN-002 - Your eval rubric needs failure buckets": field-notes/002-eval-rubric-failure-buckets.md
+  - Recipes:
+    - recipes/index.md
   - Projects:
     - LLM Explorer: projects/llm-explorer.md
     - Tool-Using Assistant: projects/tool-using-assistant.md
@@ -122,6 +128,7 @@ extra:
 
 extra_css:
   - css/custom.css
+  - css/editorial.css
 
 copyright: >
   Copyright &copy; 2026 <a href="https://sunilprakash.com">Sunil Prakash</a> --

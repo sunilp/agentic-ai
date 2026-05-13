@@ -1,0 +1,104 @@
+---
+description: "Three papers and one practitioner survey put multi-agent failure rates between 41 and 86.7 percent and error amplification up to 17.2x. The version that survived production looks more like a CI pipeline than a faculty meeting."
+---
+
+<div class="fn-meta" markdown>
+<span>FN-001</span><span>2026-05-14</span><span>8 min read</span><span>Chapter 4, 7</span>
+</div>
+
+# The multi-agent papers nobody is citing
+
+<div class="fn-dek" markdown>
+Three studies published since March 2025 put multi-agent failure rates between 41 and 86.7 percent and error amplification up to 17.2x over single-agent baselines. The vendor decks have not caught up.
+</div>
+
+<figure markdown>
+  ![Editorial illustration of error amplification across multi-agent architectures](../assets/images/field-notes/001-banner.png){ loading=lazy }
+</figure>
+
+The pitch for multi-agent through 2024 and most of 2025 was simple: more agents, more capability. The pitch in 2026 should be different, because the data are in, and the data are not friendly to free-form coordination.
+
+Three papers and one practitioner essay set the new floor. None of them killed multi-agent. All of them killed the version of multi-agent that ships well as a demo and badly as a production system.
+
+## The papers
+
+**MAST** (Cemri, Pan, Yang et al., March 2025) is the first proper taxonomy of multi-agent failure modes. The authors measured seven open-source frameworks on standard benchmarks and reported failure rates between 41 and 86.7 percent. They cluster the failures into three buckets: specification issues, inter-agent misalignment, and task verification gaps. Inter-agent misalignment alone accounts for 36.9 percent of failures. The taxonomy is the most useful thing in the paper. The failure rates are the headline. [1]
+
+**The 17x Error Trap** is the popular framing of a DeepMind study published in December 2025. Unstructured peer-to-peer networks amplified small reasoning errors by up to 17.2x over single-agent baselines on the same task. Hierarchical orchestration with a verifier kept amplification under 2x. Free-form collaboration did not. The mechanism is intuitive in hindsight. In a network where every agent both produces and consumes, a small bias gets re-cited as evidence, and the system convinces itself of its own error. [2]
+
+**Multi-Agent in Production 2026: What Actually Survived** (Micheal Lanham) is the field survey that matters. Teams that shipped multi-agent in production had three architectural traits in common. A single orchestrator owned the plan. Message contracts read like API specs, with typed inputs and validated outputs. A verifier loop could fire a worker and force a retry. Nothing that looked like a Slack channel of debating agents survived contact with on-call rotations. [3]
+
+The constructive read across all three: the architectures that worked in production look more like a CI pipeline than a faculty meeting.
+
+<figure markdown>
+  ![Illustration of a hall-of-mirrors corridor in which a small mark on an inspection card is amplified through repeated reflections](../assets/images/field-notes/001-illustration.png){ loading=lazy }
+  <figcaption>A small mark, re-cited as evidence by every reflection, becomes its own argument.</figcaption>
+</figure>
+
+<figure markdown>
+  ![Diagram comparing error amplification in single-agent, hierarchical with verifier, and free-form coordination architectures](../diagrams/multi-agent-error-amplification.svg){ loading=lazy }
+  <figcaption>Error amplification across three architectures. MAST measured failure modes. DeepMind measured amplification ratios.</figcaption>
+</figure>
+
+## The bounded-agent test
+
+Chapter 4 of the book frames the multi-agent decision around three questions. If a workload cannot answer "yes" to all three, do not reach for multi-agent.
+
+1. **Decomposition is structural, not aspirational.** The task has a clean partition that any reasonable engineer would draw the same way: retriever, reasoner, verifier; or planner, executor, critic. If two engineers draw the partition differently, you do not have a multi-agent system. You have an architectural disagreement dressed up as architecture.
+2. **Each agent has an enforceable contract.** Inputs are typed. Outputs are validated. A downstream agent will reject a malformed message without invoking the upstream agent's reasoning. The MAST taxonomy calls the absence of this "inter-agent misalignment" and it is the largest single failure cluster they measured.
+3. **There is a verifier that can fire a worker.** The verifier is the bound on error compounding. Hierarchical orchestration with a verifier kept DeepMind's amplification under 2x. Free-form coordination did not. The verifier is the difference between a multi-agent system and an expensive single-agent system with extra latency.
+
+These three questions are the architectural floor. They are not the ceiling. A system that answers yes to all three can still fail in ways the three questions do not catch, particularly around cost and latency. But a system that answers no to any of them will almost certainly fail in production for the reasons MAST and DeepMind documented.
+
+## Where this fails
+
+The bounded-agent test breaks on tasks where decomposition is genuinely emergent. Open-ended research synthesis is the canonical example. You do not know which sub-tasks the work decomposes into until you have done some of the work. Forcing a partition up front and locking it behind contracts produces a worse answer than a single capable agent with broad context.
+
+The test also breaks when teams use multi-agent to compensate for context window limits. With 200K-token contexts widely available and prompt caching shipping across the major providers, the context excuse is gone for most enterprise workloads. If the only reason for splitting a task across agents is "the context is full," buy a better cache. Not more orchestration.
+
+The third failure mode is the most common in 2026. Teams adopt multi-agent for organisational reasons. Two teams own the work, so the system has two agents. That is a Conway's Law artifact, not an architecture decision. It will look fine until someone asks where the verifier is.
+
+## In code
+
+The pattern is implemented in [`src/ch04_multiagent/`](https://github.com/sunilp/agentic-ai/tree/main/src/ch04_multiagent) in the companion repo:
+
+- `contracts.py` -- typed message contracts between agents, addressing the second question
+- `orchestrator.py` -- single-orchestrator pattern with a verifier loop, addressing the third question
+- `compare.py` -- single-agent versus multi-agent on the same task, with accuracy, cost, and latency reported side by side
+
+Run `python -m ch04_multiagent.compare` to reproduce the comparison on the document-intelligence workload. The numbers move with model choice and seed. The shape is consistent with what MAST and DeepMind reported on much larger studies.
+
+<div class="fn-pullquote" markdown>
+Free-form agent collaboration is the slowest known way to amplify a small error into a large one.
+</div>
+
+## Sources
+
+<div class="fn-sources" markdown>
+
+1. Cemri, M., Pan, M., Yang, S., et al. *Why Do Multi-Agent LLM Systems Fail?* arXiv:2503.13657. <https://arxiv.org/pdf/2503.13657>
+2. *Why Your Multi-Agent System Is Failing: Escaping the 17x Error Trap of the "Bag of Agents".* Towards Data Science, summarising DeepMind work from December 2025. <https://towardsdatascience.com/why-your-multi-agent-system-is-failing-escaping-the-17x-error-trap-of-the-bag-of-agents/>
+3. Lanham, M. *Multi-Agent in Production in 2026: What Actually Survived.* <https://medium.com/@Micheal-Lanham/multi-agent-in-production-in-2026-what-actually-survived-f86de8bb1cd1>
+4. *The Multi-Agent Trap.* Towards Data Science. <https://towardsdatascience.com/the-multi-agent-trap/>
+
+</div>
+
+<div class="fn-footer" markdown>
+
+<div class="fn-footer-section" markdown>
+<span class="label">From the book</span>
+[Chapter 4: Multi-Agent Without Theater](../book/04-multi-agent-without-theater.md)<br>
+[Chapter 7: When Not to Use Agents](../book/07-when-not-to-use-agents.md)
+</div>
+
+<div class="fn-footer-section" markdown>
+<span class="label">In the code</span>
+[src/ch04_multiagent/](https://github.com/sunilp/agentic-ai/tree/main/src/ch04_multiagent)
+</div>
+
+<div class="fn-footer-section" markdown>
+<span class="label">Read next</span>
+[FN-002: Your eval rubric needs failure buckets](002-eval-rubric-failure-buckets.md) (Sunday 2026-05-17)
+</div>
+
+</div>
