@@ -7,7 +7,7 @@ import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Tag from '~/components/universal/Tag.astro';
 
-const entries = await getCollection('projects');
+const entries = (await getCollection('projects')).sort((a, b) => a.data.title.localeCompare(b.data.title));
 ---
 
 <PageLayout
