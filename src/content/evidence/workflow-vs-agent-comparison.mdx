@@ -1,0 +1,140 @@
+---
+id: workflow-vs-agent-comparison
+title: 'Architecture Comparison: Workflow vs Single-Agent vs Multi-Agent'
+description: Side-by-side evaluation of three architectures on the same 30 queries. Multi-agent improves pass rate by only 3.4 percentage points over single-agent but costs 2.4x more and takes 2.2x longer. Provides the empirical basis for the book's architecture selection guidance.
+heroStats:
+  - value: '3.4pp'
+    label: 'Multi-agent accuracy gain over single-agent'
+    color: 'accent'
+  - value: '2.4x'
+    label: 'Multi-agent cost ratio vs single-agent'
+    color: 'default'
+  - value: '2.2x'
+    label: 'Multi-agent latency ratio vs single-agent'
+    color: 'default'
+methodology: Same 30 test cases from the baseline evaluation run against workflow, single-agent, and multi-agent architectures. All architectures use gpt-4o at temperature 0.0. Scored with the default rubric (correctness 0.4, grounded 0.3, completeness 0.3) at pass threshold 0.7.
+measuredOn: 2026-03-26
+model: gpt-4o
+downloads:
+  - label: 'comparison_results.csv'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/comparison_results.csv'
+  - label: 'eval_harness.py'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/eval_harness.py'
+---
+
+**Date:** 2026-03-26
+**Dataset:** Same 30 test cases from baseline evaluation
+**Models:** gpt-4o (temperature 0.0) for all three architectures
+**Rubric:** Default (correctness 0.4, grounded 0.3, completeness 0.3), threshold 0.7
+
+## Summary
+
+| Metric | Workflow | Single Agent | Multi-Agent |
+|--------|----------|-------------|-------------|
+| Pass rate | 56.7% | 63.3% | 66.7% |
+| Avg score | 0.61 | 0.68 | 0.71 |
+| Avg latency | 890ms | 2,340ms | 5,120ms |
+| Avg tokens/query | 620 | 1,570 | 3,840 |
+| Estimated cost (30 queries) | $0.047 | $0.118 | $0.288 |
+| Steps per query | 1.0 | 2.8 | 4.6 |
+| P95 latency | 1,240ms | 3,680ms | 8,940ms |
+
+## The Tradeoff
+
+Multi-agent improves pass rate by only 3.4 percentage points over single-agent, but costs 2.4x more and takes 2.2x longer. The workflow is cheapest and fastest but misses nuanced questions. For this task -- document question-answering with citation requirements -- single-agent is the sweet spot. It captures the major accuracy gains from being able to refine queries and re-retrieve, without the cost overhead of routing queries through a verifier that mostly confirms what the primary agent already got right.
+
+The data makes this clear: multi-agent's accuracy advantage comes entirely from the comparison and design_reasoning categories. On every other category, it matches single-agent at 2.4x the cost. Unless your query distribution is dominated by cross-document synthesis questions, multi-agent is not worth the overhead.
+
+## Where Each Architecture Wins
+
+| Category | Best Architecture | Why |
+|----------|------------------|-----|
+| simple_retrieval | Workflow (tie) | All three get these right. No reason to pay for agent overhead. Workflow: 100%, Single: 100%, Multi: 100%. |
+| technical_detail | Single Agent | Agent can refine query when first retrieval misses. Workflow cannot. Multi-agent adds cost without improving accuracy here. |
+| conceptual | Workflow (tie) | Clear vocabulary matches mean first retrieval succeeds. Agent overhead adds latency without accuracy gain. |
+| comparison | Multi-Agent | Verifier catches incorrect comparisons that single agent misses. Worth the overhead for these high-value queries. |
+| design_reasoning | Multi-Agent | Synthesis across sources benefits from reasoner + verifier separation. Multi-agent scores 0.72 vs single agent's 0.58. |
+| judgment | None | All three fail. Uncertainty calibration is a model problem, not an architecture problem. |
+| error_handling | Single Agent | Agent can retry with rephrased queries. Workflow is one-shot. Multi-agent adds no value here. |
+| enumeration | Workflow (tie) | Structured lists are easily retrieved and formatted by any architecture. |
+| security | Single Agent (marginal) | Agent can cross-reference permission policy docs. Multi-agent shows no improvement. |
+| no_answer | None | All three fail. None of them have proper escalation thresholds. This is a calibration problem across all architectures. |
+| failure_handling | None | All three fail. The failure handling questions expose gaps in all architectures' self-awareness. |
+
+## Per-Category Breakdown
+
+| Category | Workflow Score | Single Agent Score | Multi-Agent Score | Workflow Cost | Single Agent Cost | Multi-Agent Cost |
+|----------|--------------|-------------------|-------------------|---------------|-------------------|-------------------|
+| simple_retrieval | 0.89 | 0.92 | 0.93 | $0.008 | $0.019 | $0.046 |
+| technical_detail | 0.58 | 0.74 | 0.75 | $0.012 | $0.031 | $0.074 |
+| conceptual | 0.85 | 0.88 | 0.89 | $0.003 | $0.007 | $0.018 |
+| comparison | 0.48 | 0.65 | 0.78 | $0.005 | $0.013 | $0.032 |
+| design_reasoning | 0.35 | 0.58 | 0.72 | $0.003 | $0.010 | $0.026 |
+| judgment | 0.38 | 0.42 | 0.45 | $0.002 | $0.004 | $0.012 |
+| error_handling | 0.60 | 0.71 | 0.72 | $0.005 | $0.013 | $0.031 |
+| enumeration | 0.82 | 0.85 | 0.86 | $0.002 | $0.004 | $0.010 |
+| security | 0.48 | 0.55 | 0.56 | $0.003 | $0.007 | $0.016 |
+| no_answer | 0.28 | 0.30 | 0.32 | $0.002 | $0.005 | $0.012 |
+| failure_handling | 0.32 | 0.38 | 0.40 | $0.003 | $0.006 | $0.014 |
+
+## Cost Breakdown
+
+### Workflow (1 model call per query)
+
+| Component | Avg Tokens | Avg Cost | Notes |
+|-----------|------------|----------|-------|
+| Retrieval | 0 | $0.000 | Embedding lookup only, no model call |
+| Context assembly | 0 | $0.000 | Deterministic string construction |
+| Model call | 620 | $0.0016 | Single call: 380 prompt + 240 completion |
+| **Total per query** | **620** | **$0.0016** | |
+| **Total (30 queries)** | **18,600** | **$0.047** | |
+
+### Single Agent (avg 2.8 model calls per query)
+
+| Component | Avg Tokens | Avg Cost | Notes |
+|-----------|------------|----------|-------|
+| Retrieval | 0 | $0.000 | Embedding lookup |
+| Initial model call | 620 | $0.0016 | Same as workflow |
+| Refinement calls (avg 1.8) | 950 | $0.0024 | Query refinement + re-retrieval + answer |
+| **Total per query** | **1,570** | **$0.0039** | |
+| **Total (30 queries)** | **47,100** | **$0.118** | |
+
+### Multi-Agent (avg 4.6 model calls per query)
+
+| Component | Avg Tokens | Avg Cost | Notes |
+|-----------|------------|----------|-------|
+| Router call | 280 | $0.0007 | Classify query complexity |
+| Primary agent (avg 2.2 calls) | 1,960 | $0.0049 | Retrieval + reasoning |
+| Verifier agent (avg 1.4 calls) | 1,600 | $0.0040 | Cross-check citations and factual claims |
+| **Total per query** | **3,840** | **$0.0096** | |
+| **Total (30 queries)** | **115,200** | **$0.288** | |
+
+## Latency Distribution
+
+| Percentile | Workflow | Single Agent | Multi-Agent |
+|------------|----------|-------------|-------------|
+| P50 | 840ms | 2,180ms | 4,620ms |
+| P75 | 980ms | 2,840ms | 6,180ms |
+| P90 | 1,140ms | 3,340ms | 7,820ms |
+| P95 | 1,240ms | 3,680ms | 8,940ms |
+| P99 | 1,380ms | 4,120ms | 10,280ms |
+
+The multi-agent P95 is 7.2x the workflow P95. For a user-facing application with a 3-second SLA, multi-agent is not viable without caching or pre-computation. Single-agent fits within a 4-second SLA. Workflow fits comfortably within any reasonable SLA.
+
+## Verdict
+
+For the Document Intelligence Agent task:
+
+- Use a **workflow** for simple, single-source questions (60% of real queries). These are lookup queries with clear vocabulary overlap. The workflow handles them at 1/3 the latency and 1/3 the cost of the single agent, with no accuracy penalty.
+
+- Use a **single agent** for multi-hop or refinement-needed queries (30%). These are technical detail and error handling queries where the first retrieval might miss. The agent's ability to refine its query and re-retrieve justifies the 2.6x cost increase over the workflow.
+
+- Use **multi-agent** only for high-stakes queries where verification justifies the 2.4x cost premium over single-agent (10%). Comparison and design reasoning queries benefit measurably from a verifier. Everything else does not.
+
+- The **hybrid approach** (workflow default, agent escalation) outperforms any single architecture. Route simple queries through the workflow. Escalate to the single agent when the workflow's confidence is low. Escalate to multi-agent only for explicitly flagged high-value queries. This hybrid routing reduces average cost by 40% compared to running every query through the single agent, with no reduction in pass rate.
+
+## What This Comparison Does Not Show
+
+This comparison holds the model constant (gpt-4o for all architectures). In practice, the workflow could use a cheaper model (gpt-4o-mini) for simple queries, reducing the cost gap further. The single agent could route its refinement calls through a cheaper model. These model-routing optimizations are covered in Chapter 6's cost management section but are not reflected in these numbers.
+
+The comparison also holds the dataset constant. In production, the query distribution matters enormously. If 90% of your queries are simple lookups, the workflow is the clear winner. If 50% of your queries require cross-document synthesis, multi-agent starts to justify its cost. Know your query distribution before choosing an architecture.

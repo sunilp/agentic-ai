@@ -1,0 +1,194 @@
+---
+id: failure-cases
+title: Failure Case Studies
+description: Five concrete failure cases from the Document Intelligence Agent baseline evaluation, each illustrating a different failure mode with root cause analysis and the fix applied during hardening. Covers escalation failure, citation fabrication, chunk boundary miss, tool argument hallucination, and budget exhaustion.
+heroStats:
+  - value: '37%'
+    label: 'Baseline failure rate (11/30)'
+    color: 'accent'
+  - value: '5'
+    label: 'No-citation failures (most common mode)'
+    color: 'default'
+methodology: Five failures selected from the 11 baseline failures to represent distinct root causes. Each case includes the full agent output, scoring breakdown, root cause diagnosis, and the specific fix applied during hardening. Combined, these five fixes moved pass rate from 63.3% to 83.3%.
+measuredOn: 2026-03-26
+model: gpt-4o
+downloads:
+  - label: 'failure_cases.json'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/failure_cases.json'
+  - label: 'eval_results.csv'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/eval_results.csv'
+---
+
+Five failures from the baseline evaluation. Each illustrates a different failure mode and what it teaches about agent system design. These are not hypothetical scenarios -- they are actual outputs from running `make eval` against the baseline implementation.
+
+---
+
+## Case 1: The Confident Wrong Answer
+
+**Case ID:** NA-001
+**Query:** "What quantum computing algorithms does the system support?"
+**Expected:** Escalate (no relevant documents)
+**Actual:** "The system supports various quantum-inspired optimization algorithms for document retrieval, including quantum approximate optimization for vector similarity search and quantum-enhanced embedding techniques."
+**Score:** 0.10 (FAIL)
+**Category:** no_answer
+**Failure type:** escalation_missed
+
+### What Happened
+
+The agent retrieved chunks about "algorithms" and "optimization" from unrelated code. The retrieval scores were low (0.31-0.42) but the agent answered confidently anyway, hallucinating from training knowledge. Every claim in the response is fabricated. The system has no quantum computing features. The model generated plausible technical language by combining real concepts (vector similarity, embeddings) with the query's topic (quantum computing).
+
+### Root Cause
+
+The confidence estimation heuristic does not distinguish between "low relevance retrieval" and "no relevant retrieval." A retrieval score of 0.35 should trigger escalation, not a confident answer. The system prompt instructs the agent to escalate when evidence is insufficient, but the model interprets "insufficient" differently when it has topically adjacent (but irrelevant) chunks in context. The presence of any evidence, regardless of quality, biases the model toward answering.
+
+### Fix Applied in Hardening
+
+Added a minimum retrieval relevance threshold of 0.5. Below that, the system escalates before the model call, removing the model's opportunity to confabulate. Post-hardening, this case correctly escalates with the response: "I don't have enough evidence to answer this question. The available documents cover document intelligence, evaluation, and security, but do not address quantum computing."
+
+### Design Lesson
+
+Never let the model decide whether to escalate based on weak evidence. Make it a system-level decision based on retrieval scores. The model is too agreeable -- it will try to answer anything you put in its context window. Escalation is an engineering control, not a prompt instruction.
+
+---
+
+## Case 2: Citation Fabrication
+
+**Case ID:** TD-007
+**Query:** "What is the structure of a TraceSpan and how does nesting work?"
+**Expected:** Description of TraceSpan fields with explanation of hierarchical nesting for debugging
+**Actual:** "The TraceSpan includes span_id, name, start_time, end_time, duration_ms, input_data, output_data, metadata, error, and children fields. Nesting allows parent spans to contain child spans, such as a retrieval span containing embedding and vector search sub-spans. [Source: src/ch06/tracer.py, line 42-55]"
+**Score:** 0.48 (FAIL)
+**Category:** technical_detail
+**Failure type:** no_citation
+
+### What Happened
+
+The answer content is correct. The field list matches the source code, and the nesting explanation is accurate. But the citation format is wrong in a subtle way: the agent cited "src/ch06/tracer.py, line 42-55" -- a source file path with line numbers -- instead of the expected format "[Source: chapter_06.md, tracer section]". The eval harness scored grounding at 0.0 because the cited source does not match any document in the corpus. The agent cited the code file directly (which it inferred from context) rather than the chapter that describes it.
+
+### Root Cause
+
+The system prompt says "cite your sources using [Source: filename, chunk_id] format." The retrieved chunks come from chapter_06.md, which discusses the tracer code and includes code snippets. The model saw the code snippet, recognized it as coming from tracer.py, and cited the original file rather than the document it was retrieved from. This is technically a reasonable inference, but it breaks the citation contract because tracer.py is not in the retrieval index.
+
+### Fix Applied in Hardening
+
+Two changes. First, the system prompt now explicitly says "cite the document the evidence was retrieved from, not the source code file it describes." Second, the response parser validates that cited sources match documents in the corpus index. If they do not match, the parser strips the invalid citation and the answer gets re-scored as uncited, triggering a retry with a citation-focused instruction.
+
+### Design Lesson
+
+Citation format is a contract between the agent and the eval harness. The model does not naturally understand this contract -- it cites what seems most helpful to the user. If citation format matters (and in production it does, because downstream systems parse citations programmatically), enforce it with validation, not just instructions.
+
+---
+
+## Case 3: Chunk Boundary Miss
+
+**Case ID:** CMP-002
+**Query:** "What are the tradeoffs between retry-on-all-exceptions versus selective retry?"
+**Expected:** Explanation covering: retrying all exceptions is simpler but wastes attempts on non-retryable errors; selective retry requires classifying errors but avoids wasting attempts; the 429 vs 400 distinction
+**Actual:** "Retrying on all exceptions provides simplicity -- any failure triggers a retry. However, this can waste retry attempts on errors that will never succeed, such as validation errors. Selective retry is more efficient but requires upfront classification of which errors are retryable." (No citation)
+**Score:** 0.62 (FAIL)
+**Category:** comparison
+**Failure type:** no_citation
+
+### What Happened
+
+The answer captures the general tradeoff but misses the specific examples from the documentation: the 429 (rate limited) vs 400 (bad request) distinction, and the guidance about 500 errors being "probably retryable." The retrieved chunks included this detail, but it spanned a chunk boundary. The key paragraph was split between chunk 15 (which ends with "you should narrow this to retryable errors only") and chunk 16 (which begins with "A 429 (rate limited) is retryable. A 400 (bad request) is not").
+
+The model received both chunks but they were not adjacent in the context window. Chunks 15 and 16 were separated by an unrelated chunk (chunk 17, about checkpointing) that had a slightly higher retrieval score for the keyword "retry." The model synthesized from chunk 15 alone, missing the concrete examples in chunk 16.
+
+### Root Cause
+
+The retrieval pipeline ranks chunks independently by relevance score. It does not consider chunk adjacency. When information spans a boundary, the two halves may be retrieved but interleaved with other chunks, breaking the narrative flow that the model needs to synthesize a complete answer. The 64-token overlap between chunks was not enough to capture the full 429/400 example.
+
+### Fix Applied in Hardening
+
+Added a "neighbor boost" to the retrieval pipeline: when a chunk scores above 0.7, its immediate neighbors (chunk N-1 and chunk N+1) get a 0.15 relevance boost. This keeps related chunks adjacent in the context window. Post-hardening, this case passes with score 0.82 and includes the specific HTTP status code examples.
+
+### Design Lesson
+
+Chunking is not just a preprocessing step -- it is an architectural decision that determines your retrieval ceiling. If your chunks are too small, answers span boundaries. If they are too large, irrelevant content dilutes the context. There is no universal right answer; the right chunk size depends on the structure of your source documents and the types of queries you expect.
+
+---
+
+## Case 4: Argument Hallucination in Tool Call
+
+**Case ID:** FH-001
+**Query:** "What does the agent do when retrieval returns zero results?"
+**Expected:** Description of the agent's behavior when no chunks meet the relevance threshold
+**Actual:** Agent called `search_documents(query="retrieval zero results handling", collection="error_handling_docs")` -- a collection that does not exist
+**Score:** 0.42 (FAIL)
+**Category:** failure_handling
+**Failure type:** incorrect
+
+### What Happened
+
+The agent decided that its initial retrieval was insufficient (correctly -- the top chunk scored only 0.52) and attempted to refine its search. But instead of reformulating the query and searching the same collection, it fabricated a collection name: `error_handling_docs`. The tool registry has one collection: `documents`. The agent invented a plausible-sounding but nonexistent collection, presumably because the query mentioned "error handling" and the model inferred a dedicated collection might exist.
+
+The tool call failed with "Collection 'error_handling_docs' not found." The agent then received this error as a tool result, but instead of retrying with the correct collection, it used its remaining step budget to answer from its initial (weak) retrieval. The final answer was vague and missed the specific behavior described in the source material.
+
+### Root Cause
+
+The tool schema describes the `collection` parameter as `str` with no enumeration of valid values. The model has no way to know which collections exist without either (a) a constrained parameter type listing valid options or (b) a tool that lists available collections. Neither was provided. The model guessed, and guessed wrong.
+
+### Fix Applied in Hardening
+
+Changed the `collection` parameter from a free-form string to an enum listing valid collection names. The model can no longer hallucinate collection names because the tool schema constrains the valid inputs. Additionally, added a `list_collections` tool that the agent can call to discover available collections at runtime.
+
+### Design Lesson
+
+Every free-form string parameter in a tool schema is an invitation for the model to hallucinate. Constrain tool parameters wherever possible: use enums, provide valid ranges, list allowed values. The more constrained the tool interface, the fewer ways the model can produce invalid calls. This is the principle from Chapter 2: tools should be hard to misuse.
+
+---
+
+## Case 5: Budget Exhaustion on Multi-Hop Question
+
+**Case ID:** FH-002
+**Query:** "How does the system recover from a mid-run model provider outage?"
+**Expected:** Explanation combining checkpointing (save state between steps), retry with backoff (handle transient failures), and circuit breaker (stop after sustained failures)
+**Actual:** After 5 steps, the agent produced a partial answer covering only retry with backoff. Checkpointing and circuit breakers were not mentioned.
+**Score:** 0.34 (FAIL)
+**Category:** failure_handling
+**Failure type:** incorrect
+
+### What Happened
+
+This query requires synthesizing information from three separate sections of Chapter 6: retry (reliability section), checkpointing (reliability section, different subsection), and circuit breakers (production notes). The agent's 5-step budget was consumed as follows:
+
+| Step | Action | Result |
+|------|--------|--------|
+| 1 | Retrieve "model provider outage recovery" | Top chunk: retry section (relevance: 0.62). No mention of checkpointing. |
+| 2 | Refine query: "system recovery provider failure" | Same chunks returned. Retrieval does not have enough diverse content for this broad query. |
+| 3 | Refine query: "handle API failure gracefully" | New chunk from reliability section about retry. Still no checkpointing or circuit breaker content. |
+| 4 | Tool call: `extract_code_block("chapter_06.md", "with_retry")` | Got the retry code. Agent now has detailed retry information but nothing else. |
+| 5 | Forced answer (budget exhausted) | Answered about retry only. |
+
+The agent spent 4 of 5 steps drilling deeper into retry instead of broadening its search to find checkpointing and circuit breakers. By the time it exhausted its budget, it had comprehensive retry information but had never encountered the other two recovery mechanisms.
+
+### Root Cause
+
+The agent's search refinement strategy is greedy: when a retrieval returns partially relevant results, it refines the query to get more relevant results on the same subtopic. It does not have a "broaden" strategy -- a way to explicitly search for related but different aspects of a question. The step budget of 5 is also tight for a three-part synthesis question; even with a broaden strategy, the agent might need 6-7 steps to find all three recovery mechanisms.
+
+### Fix Applied in Hardening
+
+Two changes. First, added a "decompose" step for multi-part questions. Before retrieval, the agent breaks the query into sub-questions: "How does the system retry on failure?", "How does the system save progress between steps?", "How does the system handle sustained outages?" Each sub-question gets its own retrieval. Second, increased the step budget from 5 to 8 for queries classified as "multi-hop" by the router.
+
+Post-hardening, this case scores 0.78 (PASS). The decomposition produces three sub-queries, each retrieving from different sections of Chapter 6, and the final answer covers all three recovery mechanisms.
+
+### Design Lesson
+
+Step budgets are not just cost controls -- they are architectural constraints. A budget of 5 steps works for single-topic queries but fails for synthesis questions that require visiting multiple sections of the corpus. Either increase the budget for complex queries (which costs more) or add a decomposition step that turns one complex query into several simple ones (which is more reliable). The decomposition approach is better because it converts a hard problem (multi-hop search) into several easy problems (single-hop search) that the agent already handles well.
+
+---
+
+## Summary of Fixes
+
+| Case | Failure Mode | Fix | Category |
+|------|-------------|-----|----------|
+| 1 | Confident wrong answer | Retrieval relevance threshold (0.5 minimum) | System-level control |
+| 2 | Citation fabrication | Citation validation + retry on format mismatch | Response parsing |
+| 3 | Chunk boundary miss | Neighbor boost in retrieval ranking | Retrieval pipeline |
+| 4 | Argument hallucination | Constrained tool parameters (enum instead of free string) | Tool design |
+| 5 | Budget exhaustion | Query decomposition + adaptive step budget | Agent architecture |
+
+Each fix addresses a different layer of the system. No single fix would resolve all five failures. This is why hardening is a multi-layer process: the eval report tells you what fails, the traces tell you why, and the fix depends on which layer is responsible.
+
+The combined effect of these five fixes, applied together, moves the baseline pass rate from 63.3% to 83.3%. The remaining failures are concentrated in judgment and no_answer categories that require deeper model capability improvements rather than system-level fixes.

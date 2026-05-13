@@ -1,0 +1,132 @@
+---
+id: baseline-eval-report
+title: Baseline Evaluation Report
+description: Baseline evaluation of the Document Intelligence Agent across 30 test cases covering 11 categories. Documents pass rates, failure distribution, and per-case scores using an LLM-judge rubric. Establishes the starting point before hardening passes described in Chapter 6.
+heroStats:
+  - value: '63.3%'
+    label: 'Pass rate (19/30)'
+    color: 'accent'
+  - value: '0.68'
+    label: 'Avg score'
+    color: 'default'
+methodology: 30 test cases across 11 categories run against the Document Intelligence Agent (single-agent, bounded, 5-step budget). LLM-judge rubric weights correctness 0.4, groundedness 0.3, and completeness 0.3. Cases scoring 0.7 or above are marked PASS.
+measuredOn: 2026-03-26
+model: gpt-4o
+downloads:
+  - label: 'eval_results.csv'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/eval_results.csv'
+  - label: 'eval_harness.py'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/eval_harness.py'
+---
+
+**Run ID:** baseline-v1
+**Date:** 2026-03-26
+**Agent:** Document Intelligence Agent (single-agent, bounded, 5-step budget)
+**Model:** gpt-4o (temperature 0.0)
+**Dataset:** 30 test cases across 11 categories
+**Harness:** `src/ch06/eval_harness.py` with default rubric (correctness 0.4, grounded 0.3, completeness 0.3)
+**Pass threshold:** 0.7
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Total cases | 30 |
+| Passed | 19 |
+| Failed | 11 |
+| Pass rate | 63.3% |
+| Average score | 0.68 |
+| Average latency | 2,340ms |
+| Total tokens | 47,200 |
+| Total cost | $0.118 |
+
+## Scores by Category
+
+| Category | Cases | Passed | Pass Rate | Avg Score |
+|----------|-------|--------|-----------|-----------|
+| simple_retrieval | 5 | 5 | 100% | 0.92 |
+| technical_detail | 7 | 5 | 71% | 0.74 |
+| conceptual | 2 | 2 | 100% | 0.88 |
+| comparison | 3 | 2 | 67% | 0.65 |
+| design_reasoning | 2 | 1 | 50% | 0.58 |
+| judgment | 1 | 0 | 0% | 0.42 |
+| error_handling | 3 | 2 | 67% | 0.71 |
+| enumeration | 1 | 1 | 100% | 0.85 |
+| security | 2 | 1 | 50% | 0.55 |
+| no_answer | 2 | 0 | 0% | 0.30 |
+| failure_handling | 2 | 0 | 0% | 0.38 |
+
+## Failure Distribution
+
+| Failure Category | Count | Description |
+|-----------------|-------|-------------|
+| no_citation | 5 | Answer lacked source citations |
+| incorrect | 4 | Answer contained wrong information |
+| escalation_missed | 2 | Should have escalated but answered confidently |
+
+## Analysis
+
+**What works well:**
+
+- Simple retrieval questions (100% pass rate) -- when the answer is directly in one chunk, the agent finds it reliably. These queries have clear vocabulary overlap with the indexed content and require no cross-document synthesis.
+- Conceptual questions with clear vocabulary matches perform well. "What is a bounded agent?" maps directly to chapter content.
+- The chunking strategy handles single-document answers effectively. Chunk sizes of 512 tokens with 64-token overlap capture most self-contained explanations.
+- Enumeration queries ("list the five hardening layers") work when the source text uses numbered lists or bullet points that survive chunking.
+
+**What fails:**
+
+- "No answer" cases (0% pass rate) -- the agent answers from training knowledge instead of escalating when evidence is insufficient. The confidence estimation heuristic is too generous. Both no_answer cases received retrieval scores below 0.4, but the agent still generated answers.
+- Design reasoning questions (50%) -- these require synthesizing across multiple chunks and the agent often cites only one source. The single-document retrieval bias means the agent finds one relevant paragraph and stops looking.
+- Judgment questions (0%) -- "when should you use a workflow instead of an agent?" requires reasoning the agent cannot do from document evidence alone. The answer involves weighing tradeoffs, which the model does from training data rather than retrieved evidence.
+- Failure handling (0%) -- the agent does not recognize when its own retrieval step returns low-quality results. It treats any retrieved content as valid evidence.
+
+**Key insight:** The baseline agent's biggest weakness is not retrieval quality -- it is uncertainty calibration. It does not know when it does not know. This is exactly what Chapter 6 addresses with proper evaluation and hardening. The five `no_citation` failures and two `escalation_missed` failures account for 64% of all failures, and both root causes trace back to the same problem: the agent lacks a reliable mechanism for assessing its own confidence.
+
+## Per-Case Results
+
+| Case ID | Category | Query | Score | Result | Failure Categories | Latency (ms) |
+|---------|----------|-------|-------|--------|-------------------|---------------|
+| SR-001 | simple_retrieval | What is the default chunk size used by the document loader? | 0.95 | PASS | -- | 1,820 |
+| SR-002 | simple_retrieval | What embedding model does the retriever use? | 0.90 | PASS | -- | 1,740 |
+| SR-003 | simple_retrieval | What is the pass threshold in the default rubric? | 0.95 | PASS | -- | 1,680 |
+| SR-004 | simple_retrieval | How many retry attempts does the reliability module default to? | 0.90 | PASS | -- | 1,920 |
+| SR-005 | simple_retrieval | What format does the tracer use for output files? | 0.90 | PASS | -- | 1,850 |
+| TD-001 | technical_detail | What retry strategy does the reliability module use? | 0.85 | PASS | -- | 2,140 |
+| TD-002 | technical_detail | What fields does the EvalCase model include? | 0.80 | PASS | -- | 2,280 |
+| TD-003 | technical_detail | How does the idempotency tracker key its cache? | 0.78 | PASS | -- | 2,410 |
+| TD-004 | technical_detail | What injection patterns does the security module detect? | 0.72 | PASS | -- | 2,560 |
+| TD-005 | technical_detail | What are the three scoring dimensions in the default rubric? | 0.75 | PASS | -- | 2,320 |
+| TD-006 | technical_detail | How does the checkpoint serialization handle non-JSON types? | 0.55 | FAIL | no_citation | 2,680 |
+| TD-007 | technical_detail | What is the structure of a TraceSpan and how does nesting work? | 0.48 | FAIL | no_citation | 2,740 |
+| CN-001 | conceptual | What is a bounded agent? | 0.92 | PASS | -- | 1,980 |
+| CN-002 | conceptual | What is the difference between evaluation and testing for LLM systems? | 0.84 | PASS | -- | 2,120 |
+| CMP-001 | comparison | How does the workflow implementation differ from the agent implementation? | 0.78 | PASS | -- | 2,890 |
+| CMP-002 | comparison | What are the tradeoffs between retry-on-all-exceptions versus selective retry? | 0.62 | FAIL | no_citation | 3,120 |
+| CMP-003 | comparison | Compare pattern-based injection detection with architectural defenses. | 0.55 | FAIL | incorrect | 3,340 |
+| DR-001 | design_reasoning | Why does the system use exponential backoff instead of fixed intervals? | 0.72 | PASS | -- | 2,680 |
+| DR-002 | design_reasoning | Why is the permission policy default restrictive rather than permissive? | 0.44 | FAIL | incorrect | 2,940 |
+| JD-001 | judgment | When should you use a workflow instead of an agent for document QA? | 0.42 | FAIL | incorrect | 3,180 |
+| EH-001 | error_handling | What happens when all retry attempts are exhausted? | 0.82 | PASS | -- | 2,240 |
+| EH-002 | error_handling | How does the agent handle a tool call with invalid arguments? | 0.75 | PASS | -- | 2,480 |
+| EH-003 | error_handling | What happens if the checkpoint file is corrupted? | 0.55 | FAIL | no_citation | 2,620 |
+| EN-001 | enumeration | List all failure categories tracked by the evaluation harness. | 0.85 | PASS | -- | 2,060 |
+| SC-001 | security | What side effects require approval in the default permission policy? | 0.72 | PASS | -- | 2,180 |
+| SC-002 | security | How does the system handle a successful prompt injection? | 0.38 | FAIL | incorrect, no_citation | 2,880 |
+| NA-001 | no_answer | What quantum computing algorithms does the system support? | 0.10 | FAIL | escalation_missed | 2,540 |
+| NA-002 | no_answer | What is the system's GDPR compliance status? | 0.12 | FAIL | escalation_missed | 2,380 |
+| FH-001 | failure_handling | What does the agent do when retrieval returns zero results? | 0.42 | FAIL | incorrect | 2,440 |
+| FH-002 | failure_handling | How does the system recover from a mid-run model provider outage? | 0.34 | FAIL | incorrect | 2,620 |
+
+## Interpreting These Results
+
+The 63.3% pass rate is a realistic baseline for a first implementation. It is not a good production number -- most teams would want 85%+ before shipping. But the value of this report is not the topline number. It is the failure distribution.
+
+Seven of eleven failures involve either missing citations or missing escalation. These are not model capability problems. They are system design problems with known fixes:
+
+1. **Citation enforcement.** Add citation format validation to the response parser. If the response lacks citations in the expected format, score it as a partial failure and retry with an explicit citation instruction.
+
+2. **Escalation threshold.** Set a minimum retrieval relevance score (0.5). Below that threshold, the agent should escalate rather than attempt to answer. The current system has no such threshold.
+
+3. **Multi-chunk synthesis.** For comparison and design reasoning queries, retrieve from multiple document sections and present them explicitly as separate evidence blocks. The current system retrieves the top-5 chunks but does not distinguish between "five chunks from one section" and "five chunks from five sections."
+
+These three fixes are implemented in the hardening pass described in Chapter 6. The post-hardening evaluation report shows the impact.
