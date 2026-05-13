@@ -45,6 +45,7 @@ const { stats = defaultStats } = Astro.props;
 <script>
   import { observeCountUps } from '~/components/client/count-up';
   observeCountUps();
+  document.addEventListener('astro:page-load', () => observeCountUps());
 </script>
 
 <style>

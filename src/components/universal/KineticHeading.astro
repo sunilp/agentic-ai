@@ -43,8 +43,11 @@ const Tag = `h${level}` as 'h1' | 'h2';
 </style>
 
 <script>
-  // Set data attribute after page load to avoid FOUC.
-  document.querySelectorAll('[data-kinetic]').forEach((el) => {
-    requestAnimationFrame(() => el.setAttribute('data-kinetic-ready', ''));
-  });
+  function initKinetic() {
+    document.querySelectorAll('[data-kinetic]:not([data-kinetic-ready])').forEach((el) => {
+      requestAnimationFrame(() => el.setAttribute('data-kinetic-ready', ''));
+    });
+  }
+  initKinetic();
+  document.addEventListener('astro:page-load', initKinetic);
 </script>
