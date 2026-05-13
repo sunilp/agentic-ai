@@ -78,20 +78,57 @@ Thirteen chapters across four parts, covering the full lifecycle of building pro
 
 **[Read the free sample chapter](docs/book/01-what-agentic-means.md)** or **[get the full book on Amazon](https://www.amazon.com/dp/B0GVG6848F)**.
 
-## Getting Started
+## Local Development
+
+Requires Node 22+ and pnpm.
 
 ```bash
-# Install
-make install
+pnpm install
+pnpm dev          # http://localhost:4321/agentic-ai/
+pnpm build        # produces dist/
+pnpm preview      # serves dist/ at the same URL
+pnpm test         # 11 unit tests (cross-links + reading-time)
+pnpm astro check  # type check
+```
 
-# Run tests
-make test
+## Stack
 
-# Run the Document Intelligence Agent
-make run
+- **Astro 5** — static site generator
+- **MDX content** — Content Collections + Zod schemas
+- **Svelte 5** — interactive islands (TraceReplay, TraceViewer, EvalRubric, ArchitectureToggle, D3Chart, CommandPalette)
+- **Pagefind** — static search
+- **Houdini paint worklet** — brand ink stamp (with SVG fallback)
+- **View Transitions API** — page navigation
+- **GitHub Pages deploy** — via `.github/workflows/astro-deploy.yml`
 
-# Run the eval harness
-make eval
+## Content Types
+
+Content lives under `src/content/` as MDX with Zod-validated frontmatter:
+
+- **chapters/** — 5 Foundations + 13 chapters
+- **fieldNotes/** — twice-weekly observations (Thursdays + Sundays)
+- **recipes/** — buildable-in-an-afternoon walkthroughs (Wednesdays)
+- **projects/** — case-study teardowns of 7 reference systems
+- **evidence/** — measured eval data backing the homepage stats
+- **labs/** — empirical Lab Reports (every 2-3 weeks)
+- **patterns/** — cross-cutting agent patterns
+
+## Code Examples
+
+Working Python implementations for every chapter also live in this repo:
+
+```bash
+# Run Document Intelligence Agent (Ch02-03)
+python -m project.doc_intelligence_agent
+
+# Run Incident Runbook Agent (Ch04-05)
+python -m project.incident_runbook_agent
+
+# Run Memory-Augmented Agent (Ch12)
+python -m project.memory_agent
+
+# Run the evaluation harness (Ch06)
+python -m src.ch06.eval_suite
 ```
 
 Copy `.env.example` to `.env` and add your API key before running.
