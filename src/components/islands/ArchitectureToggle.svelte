@@ -21,6 +21,7 @@
 <figure class="arch-toggle">
   <div class="arch-toggle__tabs" role="tablist" aria-label="Architecture comparison">
     <button
+      type="button"
       role="tab"
       aria-selected={active === 'a'}
       class="arch-toggle__tab"
@@ -30,6 +31,7 @@
       {a.label}
     </button>
     <button
+      type="button"
       role="tab"
       aria-selected={active === 'b'}
       class="arch-toggle__tab"
