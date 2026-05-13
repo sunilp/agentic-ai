@@ -1,0 +1,23 @@
+---
+/**
+ * Page — outermost container.
+ * Sets up <main> semantic landmark. Doesn't include nav/footer — those live in PageLayout.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<main class:list={['page', className]}>
+  <slot />
+</main>
+
+<style>
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
