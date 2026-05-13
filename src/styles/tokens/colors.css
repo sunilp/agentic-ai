@@ -1,0 +1,22 @@
+/* Color tokens — Section 8.1 of design spec */
+
+:root {
+  /* Surfaces */
+  --ink: #1a1a1a;            /* primary text, dark backgrounds */
+  --paper: #fafaf8;          /* primary background */
+  --paper-recess: #f5f5f3;   /* code blocks, inset surfaces */
+  --paper-bright: #ffffff;   /* figure backgrounds */
+
+  /* Type hierarchy */
+  --fg: #1a1a1a;
+  --fg-light: #6b6b6b;
+  --fg-lighter: #999999;
+  --fg-faint: #e8e8e8;
+
+  /* Brand — single accent only. Never introduce a second accent. */
+  --brick: #9b4a3f;
+  --brick-wash: rgba(155, 74, 63, 0.06);
+  --brick-rule: #9b4a3f;
+}
+
+/* No dark scheme custom palette — basic auto via CSS color-scheme; light-only is fine for W1. */
