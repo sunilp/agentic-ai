@@ -34,10 +34,12 @@ const inCodeLinks = toArr(inCode);
     <div class="footer-3col__label">In the code</div>
     {inCodeLinks.map((l) => <a href={l.href}>{l.label}</a>)}
   </div>
-  <div class="footer-3col__col">
-    <div class="footer-3col__label">Read next</div>
-    {readNext && <a href={readNext.href}>{readNext.label}</a>}
-  </div>
+  {readNext && (
+    <div class="footer-3col__col">
+      <div class="footer-3col__label">Read next</div>
+      <a href={readNext.href}>{readNext.label}</a>
+    </div>
+  )}
 </section>
 
 <style>
