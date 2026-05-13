@@ -1,0 +1,23 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import PatternLayout from '~/layouts/PatternLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('patterns');
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'patterns'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<PatternLayout entry={entry}>
+  <Content />
+</PatternLayout>
