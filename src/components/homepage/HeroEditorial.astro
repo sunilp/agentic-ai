@@ -65,6 +65,10 @@ import Stamp from '~/components/universal/Stamp.astro';
   }
 
   .hero__cta:hover { color: var(--brick); border-bottom-color: var(--brick); }
+  .hero__cta:focus-visible {
+    outline: 2px solid var(--brick);
+    outline-offset: 3px;
+  }
 
   .hero__cta--primary {
     background: var(--ink);
@@ -74,4 +78,8 @@ import Stamp from '~/components/universal/Stamp.astro';
   }
 
   .hero__cta--primary:hover { background: var(--brick); color: var(--paper); }
+  .hero__cta--primary:focus-visible {
+    outline: 2px solid var(--brick);
+    outline-offset: 3px;
+  }
 </style>
