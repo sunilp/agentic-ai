@@ -2,6 +2,7 @@
 /**
  * ProductCardHero — Project page 4-quadrant hero.
  * Run it / Read case study / See failures / View code as 4 cards.
+ * Each quadrant only renders if the corresponding prop is provided.
  * Run It and View Code are external links (target=_blank); others are in-page anchors.
  */
 interface Props {
@@ -11,26 +12,30 @@ interface Props {
   codeRepo?: string;
 }
 
-const { runIt, caseStudy = '#case-study', failures = '#failures', codeRepo } = Astro.props;
+const { runIt, caseStudy, failures, codeRepo } = Astro.props;
 ---
 
 <div class="product-card-hero">
   {runIt && (
-    <a href={runIt} class="product-card-hero__quadrant product-card-hero__quadrant--primary" target="_blank" rel="noopener">
+    <a href={runIt} class="product-card-hero__quadrant product-card-hero__quadrant--primary" target="_blank" rel="noopener noreferrer">
       <div class="product-card-hero__icon" aria-hidden="true">▷</div>
       <div class="product-card-hero__label">Run it</div>
     </a>
   )}
-  <a href={caseStudy} class="product-card-hero__quadrant">
-    <div class="product-card-hero__icon" aria-hidden="true">→</div>
-    <div class="product-card-hero__label">Read case study</div>
-  </a>
-  <a href={failures} class="product-card-hero__quadrant">
-    <div class="product-card-hero__icon" aria-hidden="true">⚠</div>
-    <div class="product-card-hero__label">See failures</div>
-  </a>
+  {caseStudy && (
+    <a href={caseStudy} class="product-card-hero__quadrant">
+      <div class="product-card-hero__icon" aria-hidden="true">→</div>
+      <div class="product-card-hero__label">Read case study</div>
+    </a>
+  )}
+  {failures && (
+    <a href={failures} class="product-card-hero__quadrant">
+      <div class="product-card-hero__icon" aria-hidden="true">⚠</div>
+      <div class="product-card-hero__label">See failures</div>
+    </a>
+  )}
   {codeRepo && (
-    <a href={codeRepo} class="product-card-hero__quadrant" target="_blank" rel="noopener">
+    <a href={codeRepo} class="product-card-hero__quadrant" target="_blank" rel="noopener noreferrer">
       <div class="product-card-hero__icon" aria-hidden="true">{`</>`}</div>
       <div class="product-card-hero__label">View code</div>
     </a>

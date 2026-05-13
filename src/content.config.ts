@@ -74,6 +74,8 @@ const projects = defineCollection({
     repoUrl: z.string().url(),
     liveDemoUrl: z.string().url().optional(),
     tryAgentTraceFile: z.string().optional(),
+    caseStudyAnchor: z.string().optional(),    // e.g. '#case-study' if MDX has that heading
+    failuresAnchor: z.string().optional(),     // e.g. '#failures' if MDX has that heading
     chapters: z.array(z.string()),
     references: z.array(z.string()).optional(),
   }),
