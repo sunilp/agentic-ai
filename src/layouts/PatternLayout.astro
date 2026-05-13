@@ -1,0 +1,150 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import PageLayout from './PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import Reader from '~/components/layout/Reader.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+import Callout from '~/components/universal/Callout.astro';
+import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
+import { entriesToContentEntries } from '~/lib/content-helpers';
+
+interface Props {
+  entry: CollectionEntry<'patterns'>;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+
+const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns] = await Promise.all([
+  getCollection('chapters'),
+  getCollection('fieldNotes'),
+  getCollection('recipes'),
+  getCollection('labs'),
+  getCollection('evidence'),
+  getCollection('projects'),
+  getCollection('patterns'),
+]);
+const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...patterns];
+const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
+const links = getReverseLinks(reverseIndex, d.slug);
+
+const collectionRoute: Record<string, string> = {
+  chapters: '/agentic-ai/book',
+  fieldNotes: '/agentic-ai/field-notes',
+  recipes: '/agentic-ai/recipes',
+  projects: '/agentic-ai/projects',
+  evidence: '/agentic-ai/evidence',
+  labs: '/agentic-ai/labs',
+  patterns: '/agentic-ai/patterns',
+};
+---
+
+<PageLayout
+  title={`${d.name} — Patterns`}
+  description={d.oneLine}
+  currentNav="Book"
+>
+  <Container>
+    <Reader>
+      <Tag>Pattern</Tag>
+      <KineticHeading level={1}>{d.name}</KineticHeading>
+      <Dek italic>{d.oneLine}</Dek>
+
+      {d.diagram && (
+        <figure class="pattern-diagram">
+          <img src={d.diagram} alt={`${d.name} pattern diagram`} loading="lazy" />
+        </figure>
+      )}
+
+      <h2 class="pattern-section-heading">When to use</h2>
+      <div class="pattern-section" set:html={d.whenToUse} />
+
+      <h2 class="pattern-section-heading">When not to use</h2>
+      <div class="pattern-section" set:html={d.whenNotToUse} />
+
+      {d.antiPattern && (
+        <Callout type="warn" label="Anti-pattern">
+          <div set:html={d.antiPattern} />
+        </Callout>
+      )}
+
+      <article class="pattern-body">
+        <slot />
+      </article>
+
+      {links.mentionedIn.length > 0 && (
+        <section class="pattern-used-in">
+          <h2>Used in</h2>
+          <ul>
+            {links.mentionedIn.map((l) => (
+              <li><a href={`${collectionRoute[l.collection] ?? '/agentic-ai'}/${l.id}/`}>{l.collection}/{l.id}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </Reader>
+  </Container>
+</PageLayout>
+
+<style>
+  .pattern-diagram {
+    margin: var(--space-5) 0;
+    padding: var(--space-5);
+    background: var(--paper-bright);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+  }
+
+  .pattern-diagram img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .pattern-section-heading {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .pattern-section {
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .pattern-section :global(p) {
+    margin: 0 0 var(--space-3);
+  }
+
+  .pattern-body {
+    margin-top: var(--space-5);
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .pattern-body :global(p),
+  .pattern-body :global(ul) {
+    margin: 0 0 var(--space-4);
+  }
+
+  .pattern-used-in {
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--fg-faint);
+  }
+
+  .pattern-used-in h2 {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+
+  .pattern-used-in ul { list-style: none; padding: 0; }
+  .pattern-used-in a { font-family: var(--font-mono); font-size: var(--body-3); color: var(--fg); }
+</style>
