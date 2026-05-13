@@ -1,0 +1,34 @@
+---
+title: Workflow First, Agent Second
+part: I-build
+description: "Why you should reach for deterministic workflows before agents. Decision criteria, architecture comparison, and the engineering instinct that saves production systems."
+readingTime: 2
+date: 2026-03-25
+status: draft
+---
+
+Every time a team builds an agent, they should first ask: would a workflow do the job? This chapter makes the comparison concrete by implementing the same task both ways and measuring the differences.
+
+## What this chapter covers
+
+- **The deterministic workflow** -- building a reliable pipeline for document question answering
+- **The bounded agent** -- the same task with LLM-driven decision making
+- **Same task, two ways: the comparison** -- accuracy, latency, cost, and debuggability metrics
+- **Design guidance: when to choose which** -- decision criteria for workflows vs agents
+- **Planning and single-agent design** -- state management and bounded autonomy
+- **Failure modes specific to this chapter** -- what breaks when you choose wrong
+
+## Code companion
+
+The working code for this chapter is in [`src/ch03/`](https://github.com/sunilp/agentic-ai/tree/main/src/ch03):
+
+- `workflow.py` -- Deterministic workflow implementation
+- `agent.py` -- Bounded agent implementation
+- `state.py` -- State management
+- `compare.py` -- Side-by-side comparison runner
+
+## Get the full chapter
+
+The complete chapter text is available in the book.
+
+[Get the book on Amazon](https://www.amazon.com/dp/B0GVG6848F)
