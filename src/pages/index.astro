@@ -6,6 +6,7 @@ import EvidenceInlineStrip from '~/components/homepage/EvidenceInlineStrip.astro
 import BuildJudgeOperateCards from '~/components/homepage/BuildJudgeOperateCards.astro';
 import WhatsNewStrip from '~/components/homepage/WhatsNewStrip.astro';
 import ManifestoPullquote from '~/components/homepage/ManifestoPullquote.astro';
+import TraceReplay from '~/components/islands/TraceReplay.svelte';
 ---
 
 <PageLayout
@@ -21,4 +22,8 @@ import ManifestoPullquote from '~/components/homepage/ManifestoPullquote.astro';
   </Container>
 
   <ManifestoPullquote />
+
+  <Container>
+    <TraceReplay client:visible />
+  </Container>
 </PageLayout>
