@@ -1,0 +1,76 @@
+---
+/**
+ * HeroStatGrid — Evidence page hero with 2 (or more) giant stats side-by-side.
+ * One default color (ink), one accent (brick-red) by convention.
+ */
+interface Stat {
+  value: string;
+  label: string;
+  color?: 'default' | 'accent';
+}
+
+interface Props {
+  items: Stat[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="hero-stat-grid">
+  <div class="hero-stat-grid__inner">
+    {items.map((stat) => (
+      <div class:list={['hero-stat-grid__stat', stat.color === 'accent' && 'hero-stat-grid__stat--accent']}>
+        <div class="hero-stat-grid__value">{stat.value}</div>
+        <div class="hero-stat-grid__label">{stat.label}</div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .hero-stat-grid {
+    margin: var(--space-5) 0 var(--space-7);
+  }
+
+  .hero-stat-grid__inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-1);
+    background: var(--fg-faint);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .hero-stat-grid__stat {
+    text-align: center;
+    padding: var(--space-6) var(--space-4);
+    background: var(--paper);
+  }
+
+  .hero-stat-grid__stat--accent {
+    background: var(--brick-wash);
+  }
+
+  .hero-stat-grid__value {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--fg);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .hero-stat-grid__stat--accent .hero-stat-grid__value {
+    color: var(--brick);
+  }
+
+  .hero-stat-grid__label {
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+</style>
