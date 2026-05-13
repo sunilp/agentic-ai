@@ -1,0 +1,167 @@
+/* Editorial styles for Field Notes and Recipes
+   Layered on top of custom.css. Minimal, restrained, designed to feel like
+   a publication rather than a blog. */
+
+/* ---- Series meta header ----
+   Small monospaced strip at the top of every issue.
+   Series number, date, reading time, chapter. */
+.md-typeset .fn-meta {
+  font-family: "IBM Plex Mono", "SF Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+  margin: 0.5rem 0 1.75rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .fn-meta p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.md-typeset .fn-meta span {
+  white-space: nowrap;
+}
+
+.md-typeset .fn-meta span + span::before {
+  content: "·";
+  display: inline-block;
+  margin: 0 0.55rem;
+  color: var(--md-default-fg-color--lighter);
+}
+
+/* ---- Dek ----
+   One sentence stating the claim. Set in the display serif. */
+.md-typeset .fn-dek {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(18px, 2.2vw, 23px);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  color: var(--md-default-fg-color);
+  margin: 0.5rem 0 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .fn-dek p {
+  margin: 0;
+}
+
+/* ---- Pull quote ----
+   The line readers excerpt. One per issue, max. */
+.md-typeset .fn-pullquote {
+  font-family: "Fraunces", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  color: var(--md-default-fg-color);
+  margin: 3rem 0;
+  padding: 0 0 0 1.75rem;
+  border-left: 2px solid var(--md-default-fg-color);
+  background: transparent;
+}
+
+.md-typeset .fn-pullquote p {
+  margin: 0;
+}
+
+/* ---- Verified on (Recipes only) ----
+   A small block declaring SDK versions and verification date. */
+.md-typeset .fn-verified {
+  font-family: "IBM Plex Mono", "SF Mono", monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--md-default-fg-color--light);
+  padding: 1rem 1.25rem;
+  margin: 2rem 0 2.5rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--md-default-fg-color);
+  border-radius: 4px;
+  background: var(--md-code-bg-color);
+}
+
+.md-typeset .fn-verified p {
+  margin: 0.25rem 0;
+}
+
+.md-typeset .fn-verified strong {
+  color: var(--md-default-fg-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+/* ---- Sources ----
+   Numbered list, slightly smaller, set off above the footer. */
+.md-typeset .fn-sources {
+  font-size: 14px;
+  line-height: 1.65;
+  margin-top: 2.5rem;
+}
+
+.md-typeset .fn-sources ol {
+  padding-left: 1.25rem;
+}
+
+.md-typeset .fn-sources li {
+  margin-bottom: 0.5rem;
+}
+
+.md-typeset .fn-sources a {
+  word-break: break-word;
+}
+
+/* ---- Issue footer ----
+   Three columns at the bottom: From the book, In the code, Read next. */
+.md-typeset .fn-footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem 2rem;
+  margin: 3.5rem 0 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 14px;
+}
+
+.md-typeset .fn-footer-section .label {
+  font-family: "IBM Plex Mono", "SF Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.md-typeset .fn-footer-section a {
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  transition: border-color 0.15s ease;
+}
+
+.md-typeset .fn-footer-section a:hover {
+  border-bottom-color: var(--md-default-fg-color);
+}
+
+@media (max-width: 720px) {
+  .md-typeset .fn-footer {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* ---- Banner image at the top of an issue ----
+   Sits between dek and opening paragraph. Restrained, no shadow. */
+.md-typeset figure:first-of-type img {
+  border-radius: 4px;
+}

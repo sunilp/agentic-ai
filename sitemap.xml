@@ -2,146 +2,162 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://sunilprakash.com/agentic-ai/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/principles/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/roadmap/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/00a-how-llms-work/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/00b-api-to-tools/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/00c-first-agent/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/00d-frameworks/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/00e-connecting-to-mcp/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/01-what-agentic-means/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/02-tools-context-agent-loop/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/03-workflow-first-agent-second/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/04-multi-agent-without-theater/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/05-human-in-the-loop/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/06-evaluating-and-hardening/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/07-when-not-to-use-agents/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/08-metacognition/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/09-deployment/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/10-governance/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/11-security/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/12-memory-management/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/book/13-agent-protocols-in-production/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/code/reference/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://sunilprakash.com/agentic-ai/field-notes/</loc>
+         <lastmod>2026-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://sunilprakash.com/agentic-ai/field-notes/001-multi-agent-papers-nobody-cites/</loc>
+         <lastmod>2026-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://sunilprakash.com/agentic-ai/field-notes/002-eval-rubric-failure-buckets/</loc>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/projects/doc-intelligence-agent/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/projects/framework-comparison/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/projects/incident-runbook-agent/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/projects/llm-explorer/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/projects/memory-agent/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/projects/research-agent/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/projects/tool-using-assistant/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/proof/baseline-eval-report/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/proof/failure-cases/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/proof/trace-example/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/proof/workflow-vs-agent-comparison/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://sunilprakash.com/agentic-ai/recipes/</loc>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/superpowers/plans/2026-04-02-foundations-pre-read/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
     <url>
          <loc>https://sunilprakash.com/agentic-ai/superpowers/specs/2026-04-02-foundations-pre-read-design/</loc>
-         <lastmod>2026-04-24</lastmod>
+         <lastmod>2026-05-13</lastmod>
     </url>
 </urlset>
