@@ -20,7 +20,6 @@ export default defineConfig({
     '/proof/workflow-vs-agent-comparison': '/agentic-ai/evidence/workflow-vs-agent-comparison/',
     '/proof/trace-example': '/agentic-ai/evidence/trace-example/',
     '/proof/failure-cases': '/agentic-ai/evidence/failure-cases/',
-    '/principles': '/agentic-ai/manifesto/',
     '/principles/': '/agentic-ai/manifesto/',
   },
 });
