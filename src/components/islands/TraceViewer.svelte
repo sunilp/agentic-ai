@@ -1,17 +1,24 @@
 <script lang="ts">
   /**
    * TraceViewer — interactive trace JSON viewer.
-   * Displays an array of trace steps with collapsible tool-call details
-   * and per-step token accounting. Svelte 5 runes API.
+   * Displays an array of trace steps with collapsible details and per-step
+   * token accounting. Tolerates the simpler TraceReplay JSON shape
+   * (`trace` array with `step`, `type`, `content` only) AND a richer
+   * shape used in chapters / FNs (`steps` array with full actor/timestamp/tool
+   * metadata). Svelte 5 runes API.
    *
    * Usage in MDX:
    *   <TraceViewer src="/agentic-ai/trace-replay/should-i-use-an-agent.json" client:visible />
    */
 
+  type Actor = 'user' | 'model' | 'tool';
+  type StepType = 'message' | 'tool_call' | 'tool_result' | 'reasoning';
+
   interface TraceStep {
-    timestamp: string;
-    actor: 'user' | 'model' | 'tool';
-    type: 'message' | 'tool_call' | 'tool_result';
+    step?: number;
+    timestamp?: string;
+    actor?: Actor;
+    type: StepType;
     content: string;
     toolName?: string;
     inputTokens?: number;
@@ -22,10 +29,12 @@
   interface Trace {
     sessionId: string;
     model: string;
-    timestamp: string;
+    timestamp?: string;
     totalTokens: number;
     totalCost: number;
-    steps: TraceStep[];
+    // Accept either `steps` (rich shape) or `trace` (TraceReplay shape).
+    steps?: TraceStep[];
+    trace?: TraceStep[];
   }
 
   let { src, trace }: { src?: string; trace?: Trace } = $props();
@@ -45,6 +54,16 @@
     return () => { aborted = true; };
   });
 
+  // Normalize: pick whichever step array is present.
+  const steps = $derived<TraceStep[]>(loadedTrace ? (loadedTrace.steps ?? loadedTrace.trace ?? []) : []);
+
+  function inferActor(step: TraceStep): Actor {
+    if (step.actor) return step.actor;
+    if (step.type === 'tool_call' || step.type === 'tool_result') return 'tool';
+    if (step.type === 'message') return 'user';
+    return 'model'; // reasoning, anything else
+  }
+
   function toggle(i: number) {
     if (expanded.has(i)) expanded.delete(i);
     else expanded.add(i);
@@ -63,10 +82,11 @@
       </span>
     </div>
     <ol class="trace-viewer__steps">
-      {#each loadedTrace.steps as step, i}
-        <li class="trace-viewer__step trace-viewer__step--{step.actor}">
-          <button class="trace-viewer__row" onclick={() => toggle(i)} aria-expanded={expanded.has(i)}>
-            <span class="trace-viewer__actor">{step.actor}</span>
+      {#each steps as step, i}
+        {@const actor = inferActor(step)}
+        <li class="trace-viewer__step trace-viewer__step--{actor}">
+          <button type="button" class="trace-viewer__row" onclick={() => toggle(i)} aria-expanded={expanded.has(i)}>
+            <span class="trace-viewer__actor">{actor}</span>
             <span class="trace-viewer__type">{step.type}{step.toolName ? `: ${step.toolName}` : ''}</span>
             <span class="trace-viewer__chevron">{expanded.has(i) ? '▾' : '▸'}</span>
           </button>
