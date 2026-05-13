@@ -1,0 +1,77 @@
+---
+/**
+ * HeroEditorial — homepage hero band.
+ * Fraunces headline + "earn the complexity" subtitle + brick-red ink stamp + three CTAs.
+ */
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Stamp from '~/components/universal/Stamp.astro';
+---
+
+<section class="hero">
+  <Stamp class="hero__stamp" width="48px" height="64px" rotation={2.5} />
+
+  <KineticHeading level={1}>
+    Build agents that survive contact with reality.
+  </KineticHeading>
+
+  <p class="hero__subtitle">Earn the complexity</p>
+
+  <div class="hero__ctas">
+    <a href="/agentic-ai/start/" class="hero__cta hero__cta--primary">Start →</a>
+    <a href="/agentic-ai/book/" class="hero__cta">Read the book</a>
+    <a href="/agentic-ai/evidence/" class="hero__cta">See the evidence</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding: var(--space-9) 0 var(--space-7);
+  }
+
+  .hero__stamp {
+    position: absolute;
+    top: var(--space-5);
+    right: 0;
+  }
+
+  .hero :global(.kinetic-heading) {
+    font-size: var(--display-1);
+    max-width: 720px;
+  }
+
+  .hero__subtitle {
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+    letter-spacing: var(--tracking-loose);
+    text-transform: uppercase;
+    color: var(--fg-light);
+  }
+
+  .hero__ctas {
+    margin-top: var(--space-5);
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .hero__cta {
+    font-size: var(--body-2);
+    color: var(--fg);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--ink);
+    transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+  }
+
+  .hero__cta:hover { color: var(--brick); border-bottom-color: var(--brick); }
+
+  .hero__cta--primary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--space-2) var(--space-4);
+    border-bottom: 0;
+  }
+
+  .hero__cta--primary:hover { background: var(--brick); color: var(--paper); }
+</style>
