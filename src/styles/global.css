@@ -1,0 +1,55 @@
+/* Global stylesheet — imports tokens + reset, sets baseline element styles. */
+
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/motion.css';
+@import './tokens/surfaces.css';
+@import './reset.css';
+
+/* Baseline element styles */
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--display-1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--display-2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--display-4);
+  line-height: var(--lh-snug);
+}
+
+p { margin-bottom: var(--space-4); }
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: var(--body-3);
+  background: var(--paper-recess);
+}
+
+code { padding: 2px 6px; border-radius: var(--radius-sm); }
+
+pre {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+a {
+  transition: color var(--dur-micro) var(--ease-out);
+}
+
+a:hover { color: var(--brick); }
