@@ -27,20 +27,35 @@ const { items } = Astro.props;
 </nav>
 
 <script>
+  let currentObserver: IntersectionObserver | null = null;
+
   function setupScrollSpy() {
+    // Disconnect any prior observer to avoid leaks across View Transitions.
+    currentObserver?.disconnect();
+    currentObserver = null;
+
     const links = document.querySelectorAll<HTMLAnchorElement>('.section-anchors__link[data-anchor]');
     if (!links.length) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // Pick the intersecting entry whose target is closest to the top
+        // of the viewport (smallest non-negative boundingClientRect.top).
+        // This avoids a race where two sections enter the viewport in the
+        // same callback batch and "last in iteration order wins".
+        let best: { id: string; top: number } | null = null;
         for (const entry of entries) {
-          const id = entry.target.id;
-          const link = document.querySelector(`.section-anchors__link[data-anchor="${id}"]`);
-          if (entry.isIntersecting) {
-            links.forEach((l) => l.classList.remove('section-anchors__link--active'));
-            link?.classList.add('section-anchors__link--active');
+          if (!entry.isIntersecting) continue;
+          const top = entry.boundingClientRect.top;
+          if (best === null || Math.abs(top) < Math.abs(best.top)) {
+            best = { id: entry.target.id, top };
           }
         }
+        if (!best) return;
+
+        links.forEach((l) => l.classList.remove('section-anchors__link--active'));
+        const link = document.querySelector(`.section-anchors__link[data-anchor="${best.id}"]`);
+        link?.classList.add('section-anchors__link--active');
       },
       { rootMargin: '-20% 0% -70% 0%' }
     );
@@ -49,10 +64,16 @@ const { items } = Astro.props;
       const target = document.getElementById(l.dataset.anchor || '');
       if (target) observer.observe(target);
     });
+
+    currentObserver = observer;
   }
 
   setupScrollSpy();
   document.addEventListener('astro:page-load', setupScrollSpy);
+  document.addEventListener('astro:before-preparation', () => {
+    currentObserver?.disconnect();
+    currentObserver = null;
+  });
 </script>
 
 <style>
