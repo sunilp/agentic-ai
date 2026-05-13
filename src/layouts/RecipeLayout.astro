@@ -1,0 +1,102 @@
+---
+/**
+ * RecipeLayout — verified, code-block-heavy treatment for Recipes.
+ * Anatomy: MetaStrip → KineticHeading → Dek → VerifiedStamp → Prerequisites → RunItCTA → MDX body → Footer3Col (added in MDX).
+ */
+import type { CollectionEntry } from 'astro:content';
+import PageLayout from './PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import MetaStrip from '~/components/universal/MetaStrip.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import VerifiedStamp from '~/components/universal/VerifiedStamp.astro';
+import Prerequisites from '~/components/universal/Prerequisites.astro';
+import RunItCTA from '~/components/universal/RunItCTA.astro';
+
+interface Props {
+  entry: CollectionEntry<'recipes'>;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+
+const verifiedDateStr = d.verifiedOn.toISOString().slice(0, 10);
+const chapterLabel = d.chapter.startsWith('ch-')
+  ? `Ch ${parseInt(d.chapter.slice(3), 10)}`
+  : d.chapter;
+const metaItems = [
+  d.id.toUpperCase(),
+  verifiedDateStr,
+  `${d.estimatedMinutes} min`,
+  chapterLabel,
+];
+const ogImage = `/agentic-ai/assets/banners/${d.id}.png`;
+---
+
+<PageLayout
+  title={`${d.title} — Recipes`}
+  description={d.description}
+  ogImage={ogImage}
+  currentNav="Recipes"
+>
+  <Reader>
+    <MetaStrip items={metaItems} />
+    <KineticHeading level={1}>{d.title}</KineticHeading>
+    <Dek italic>{d.description}</Dek>
+    <VerifiedStamp date={d.verifiedOn} versions={d.verifiedVersions} />
+    <Prerequisites items={d.prerequisites} />
+    <RunItCTA repo={d.runItRepo} />
+    <article class="recipe-body">
+      <slot />
+    </article>
+  </Reader>
+</PageLayout>
+
+<style>
+  .recipe-body {
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .recipe-body :global(h2) {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .recipe-body :global(h3) {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-2);
+  }
+
+  .recipe-body :global(p) {
+    margin: 0 0 var(--space-4);
+  }
+
+  .recipe-body :global(ul),
+  .recipe-body :global(ol) {
+    margin: 0 0 var(--space-4);
+    padding-left: var(--space-5);
+  }
+
+  .recipe-body :global(li) {
+    margin-bottom: var(--space-2);
+  }
+
+  .recipe-body :global(a) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+  }
+
+  .recipe-body :global(a:hover) {
+    color: var(--brick);
+    text-decoration-color: var(--brick);
+  }
+
+  .recipe-body :global(pre) {
+    margin: var(--space-4) 0;
+  }
+</style>
