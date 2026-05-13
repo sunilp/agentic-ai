@@ -1,0 +1,87 @@
+---
+/**
+ * Footer3Col — 3-column issue footer: From the book / In the code / Read next.
+ * Used at bottom of Field Notes, Recipes, Lab Reports.
+ */
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  fromBook?: Link | Link[];
+  inCode?: Link | Link[];
+  readNext?: Link;
+}
+
+const { fromBook, inCode, readNext } = Astro.props;
+
+function toArr(x: Link | Link[] | undefined): Link[] {
+  if (!x) return [];
+  return Array.isArray(x) ? x : [x];
+}
+
+const fromBookLinks = toArr(fromBook);
+const inCodeLinks = toArr(inCode);
+---
+
+<section class="footer-3col">
+  <div class="footer-3col__col">
+    <div class="footer-3col__label">From the book</div>
+    {fromBookLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+  </div>
+  <div class="footer-3col__col">
+    <div class="footer-3col__label">In the code</div>
+    {inCodeLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+  </div>
+  {readNext && (
+    <div class="footer-3col__col">
+      <div class="footer-3col__label">Read next</div>
+      <a href={readNext.href}>{readNext.label}</a>
+    </div>
+  )}
+</section>
+
+<style>
+  .footer-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--fg-faint);
+    font-size: var(--body-2);
+  }
+
+  .footer-3col__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .footer-3col__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    margin-bottom: var(--space-1);
+  }
+
+  .footer-3col__col a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .footer-3col__col a:hover {
+    color: var(--brick);
+    text-decoration-color: var(--brick);
+  }
+
+  @media (max-width: 720px) {
+    .footer-3col { grid-template-columns: 1fr; gap: var(--space-4); }
+  }
+</style>

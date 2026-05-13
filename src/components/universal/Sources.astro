@@ -1,0 +1,82 @@
+---
+/**
+ * Sources — numbered citation list at bottom of Field Notes.
+ */
+interface Source {
+  title: string;
+  url: string;
+  authors?: string[];
+  year?: number;
+}
+
+interface Props {
+  items: Source[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="sources" aria-labelledby="sources-heading">
+  <h2 id="sources-heading" class="sources__heading">Sources</h2>
+  <ol class="sources__list">
+    {items.map((s) => (
+      <li class="sources__item">
+        {s.authors && s.authors.length > 0 && (
+          <span class="sources__authors">{s.authors.join(', ')}</span>
+        )}
+        {s.year && <span class="sources__year">({s.year})</span>}
+        <a class="sources__title" href={s.url} target="_blank" rel="noopener">{s.title}</a>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .sources {
+    margin-top: var(--space-7);
+    font-size: var(--body-2);
+    line-height: 1.65;
+  }
+
+  .sources__heading {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    margin: 0 0 var(--space-3);
+    font-weight: 500;
+  }
+
+  .sources__list {
+    list-style: decimal;
+    padding-left: var(--space-5);
+    margin: 0;
+  }
+
+  .sources__item {
+    margin-bottom: var(--space-2);
+  }
+
+  .sources__authors {
+    color: var(--fg);
+  }
+
+  .sources__year {
+    color: var(--fg-light);
+    margin: 0 var(--space-2) 0 var(--space-1);
+  }
+
+  .sources__title {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+    word-break: break-word;
+  }
+
+  .sources__title:hover {
+    color: var(--brick);
+    text-decoration-color: var(--brick);
+  }
+</style>

@@ -1,0 +1,13 @@
+{
+  "sessionId": "rec001-2026-05-13-session-3",
+  "model": "claude-sonnet-4-6",
+  "query": "Why did my multi-agent system get worse, not better?",
+  "response": "Almost always: error amplification.\n\nIn a multi-agent system where every agent both produces and consumes, a small reasoning bias gets cited as evidence by the next agent, which makes the bias more confident, which the next agent cites more confidently still. By the third or fourth hop, the system has convinced itself of its own original mistake. The DeepMind December 2025 study put this at up to 17.2x amplification over single-agent baselines for unstructured peer-to-peer networks.\n\nThe other common cause is task-spec drift. The orchestrator asks for X. The first agent reformulates as X', the second as X'', the third returns an answer to X''' that nobody asked for. MAST (Cemri et al., March 2025) puts inter-agent misalignment at 36.9% of failures across seven open-source frameworks.\n\nThe fix is usually structural, not better prompts:\n\n1. Replace free-form coordination with hierarchical orchestration. One agent owns the plan. Worker agents have narrow, well-typed jobs. A verifier checks each step against a rubric before the next step runs.\n\n2. Add a verifier per step. The DeepMind study showed amplification stayed under 2x when each step was verified against the original task before the next step fired. The verifier doesn't need to be smart; it needs to be deterministic.\n\n3. Restrict who talks to whom. No agent should consume output from another agent without a defined protocol. The orchestration is just code.\n\nIf you do all three and the system is still worse than the single-agent baseline, the answer is: ship the single-agent baseline. Multi-agent is not always the right architecture even when the framework supports it.",
+  "totalTokens": 561,
+  "totalCost": 0.005,
+  "trace": [
+    { "step": 1, "type": "reasoning", "content": "Most likely cause: error amplification (DeepMind 17x finding). Cite that." },
+    { "step": 2, "type": "reasoning", "content": "Secondary cause: inter-agent task-spec drift (MAST 36.9% finding)." },
+    { "step": 3, "type": "reasoning", "content": "Three structural fixes: hierarchical orchestration, per-step verifier, restricted coordination." }
+  ]
+}

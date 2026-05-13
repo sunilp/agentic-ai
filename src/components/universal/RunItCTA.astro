@@ -1,0 +1,46 @@
+---
+/**
+ * RunItCTA — dark CTA strip used at the top of Recipes.
+ */
+interface Props {
+  repo: string;
+  label?: string;
+}
+
+const { repo, label = 'Run it locally' } = Astro.props;
+---
+
+<a class="run-it" href={repo} target="_blank" rel="noopener">
+  <div class="run-it__label">{label}</div>
+  <div class="run-it__cta">→ clone repo</div>
+</a>
+
+<style>
+  .run-it {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--space-5) 0;
+    padding: var(--space-4) var(--space-5);
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--dur-micro) var(--ease-out);
+  }
+
+  .run-it:hover { background: var(--brick); }
+
+  .run-it__label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--display-4);
+  }
+
+  .run-it__cta {
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+    letter-spacing: var(--tracking-loose);
+    opacity: 0.85;
+  }
+</style>

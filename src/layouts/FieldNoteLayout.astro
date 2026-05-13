@@ -1,0 +1,215 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import PageLayout from './PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import MetaStrip from '~/components/universal/MetaStrip.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Banner from '~/components/universal/Banner.astro';
+import Sources from '~/components/universal/Sources.astro';
+import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
+import { entriesToContentEntries } from '~/lib/content-helpers';
+
+interface Props {
+  entry: CollectionEntry<'fieldNotes'>;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+
+const [chapters, fieldNotes, recipes, labs, evidence, projects] = await Promise.all([
+  getCollection('chapters'),
+  getCollection('fieldNotes'),
+  getCollection('recipes'),
+  getCollection('labs'),
+  getCollection('evidence'),
+  getCollection('projects'),
+]);
+const allEntries = [
+  ...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects,
+];
+const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
+const links = getReverseLinks(reverseIndex, d.id);
+const hasReverseLinks = links.referencedBy.length > 0 || links.citedBy.length > 0;
+
+const collectionRoute: Record<string, string> = {
+  chapters: '/agentic-ai/book',
+  fieldNotes: '/agentic-ai/field-notes',
+  recipes: '/agentic-ai/recipes',
+  projects: '/agentic-ai/projects',
+  evidence: '/agentic-ai/evidence',
+  labs: '/agentic-ai/labs',
+  patterns: '/agentic-ai/patterns',
+};
+
+function linkHref(l: { id: string; collection: string }): string {
+  const base = collectionRoute[l.collection] ?? `/agentic-ai/${l.collection}`;
+  return `${base}/${l.id}/`;
+}
+
+function linkLabel(l: { id: string; collection: string }): string {
+  // Use uppercase ID for ids that look like 'fn-001', 'r-001', 'lab-001', etc.
+  // For chapter slugs like '04-multi-agent-without-theater', show 'Ch 4'.
+  const m = l.id.match(/^(\d+)([a-z]?)-/);
+  if (m && l.collection === 'chapters') {
+    return `Ch ${parseInt(m[1], 10)}${m[2].toUpperCase()}`;
+  }
+  return l.id.toUpperCase();
+}
+
+const dateStr = d.date.toISOString().slice(0, 10);
+const chapterLabel = d.primaryChapter.startsWith('ch-')
+  ? `Ch ${parseInt(d.primaryChapter.slice(3), 10)}`
+  : d.primaryChapter;
+const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterLabel];
+---
+
+<PageLayout
+  title={`${d.title} — Field Notes`}
+  description={d.description}
+  ogImage={d.banner}
+  currentNav="Field Notes"
+>
+  <Reader>
+    <MetaStrip items={metaItems} />
+    <KineticHeading level={1}>{d.title}</KineticHeading>
+    <Dek italic>{d.dek}</Dek>
+    <Banner src={d.banner} alt={`${d.title} banner illustration`} />
+    <article class="fn-body">
+      <slot />
+    </article>
+    <Sources items={d.sources} />
+    {hasReverseLinks && (
+      <section class="fn-referenced-by">
+        <h2 class="fn-referenced-by__heading">Cited by</h2>
+        <ul class="fn-referenced-by__list">
+          {[...links.referencedBy, ...links.citedBy].map((l) => (
+            <li>
+              <a href={linkHref(l)} class="fn-referenced-by__link">
+                <span class="fn-referenced-by__collection">{l.collection}</span>
+                <span class="fn-referenced-by__id">{linkLabel(l)}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </Reader>
+</PageLayout>
+
+<style>
+  .fn-body {
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .fn-body :global(h2) {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .fn-body :global(h3) {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-2);
+  }
+
+  .fn-body :global(p) {
+    margin: 0 0 var(--space-4);
+  }
+
+  .fn-body :global(ul),
+  .fn-body :global(ol) {
+    margin: 0 0 var(--space-4);
+    padding-left: var(--space-5);
+  }
+
+  .fn-body :global(li) {
+    margin-bottom: var(--space-2);
+  }
+
+  .fn-body :global(a) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+  }
+
+  .fn-body :global(a:hover) {
+    color: var(--brick);
+    text-decoration-color: var(--brick);
+  }
+
+  .fn-body :global(figure) {
+    margin: var(--space-5) 0;
+  }
+
+  .fn-body :global(figure img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--fg-faint);
+  }
+
+  .fn-body :global(figcaption) {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--fg-light);
+    margin-top: var(--space-2);
+    text-align: center;
+  }
+
+  .fn-referenced-by {
+    margin-top: var(--space-6);
+  }
+
+  .fn-referenced-by__heading {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    margin: 0 0 var(--space-3);
+    font-weight: 500;
+  }
+
+  .fn-referenced-by__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .fn-referenced-by__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .fn-referenced-by__link:hover {
+    color: var(--brick);
+    text-decoration-color: var(--brick);
+  }
+
+  .fn-referenced-by__collection {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+
+  .fn-referenced-by__id {
+    font-family: var(--font-mono);
+    font-size: var(--body-3);
+  }
+</style>

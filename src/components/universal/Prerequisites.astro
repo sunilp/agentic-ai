@@ -1,0 +1,57 @@
+---
+/**
+ * Prerequisites — bulleted block showing what you need to run the Recipe.
+ */
+interface Props {
+  items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="prerequisites">
+  <h2 class="prerequisites__heading">You need</h2>
+  <ul class="prerequisites__list">
+    {items.map((item) => <li>{item}</li>)}
+  </ul>
+</section>
+
+<style>
+  .prerequisites {
+    margin: var(--space-5) 0;
+  }
+
+  .prerequisites__heading {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    margin: 0 0 var(--space-3);
+    font-weight: 500;
+  }
+
+  .prerequisites__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .prerequisites__list li {
+    padding-left: var(--space-4);
+    position: relative;
+    font-size: var(--body-1);
+  }
+
+  .prerequisites__list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--brick);
+    font-size: var(--meta-1);
+    top: 4px;
+  }
+</style>

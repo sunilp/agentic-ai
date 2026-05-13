@@ -1,40 +1,54 @@
 ---
 /**
  * WhatsNewStrip — 3 latest publications card row.
- * W1: hard-coded with FN-002, FN-001, R-001 (the existing live issues).
- * W2: will switch to dynamic loading from Content Collections once content is ported.
+ * Dynamically loads from Content Collections (fieldNotes + recipes + labs)
+ * and shows the 3 most recent by date.
  */
-interface Item {
+import { getCollection } from 'astro:content';
+
+interface CardItem {
   kicker: string;
   title: string;
   href: string;
   banner: string;
   bannerAlt: string;
+  date: Date;
 }
 
-const items: Item[] = [
-  {
-    kicker: 'FN-002 · Field Note',
-    title: 'Your eval rubric needs failure buckets, not just scores',
-    href: '/agentic-ai/field-notes/002-eval-rubric-failure-buckets/',
-    banner: '/agentic-ai/assets/banners/fn-002.png',
-    bannerAlt: 'Eval rubric failure buckets banner',
-  },
-  {
-    kicker: 'FN-001 · Field Note',
-    title: 'The multi-agent papers nobody is citing',
-    href: '/agentic-ai/field-notes/001-multi-agent-papers-nobody-cites/',
-    banner: '/agentic-ai/assets/banners/fn-001.png',
-    bannerAlt: 'Multi-agent papers banner',
-  },
-  {
-    kicker: 'R-001 · Recipe',
-    title: 'Build your first Strands agent on AgentCore',
-    href: '/agentic-ai/recipes/001-strands-on-agentcore-runtime/',
-    banner: '/agentic-ai/assets/banners/r-001.png',
-    bannerAlt: 'Strands AgentCore banner',
-  },
+const [fns, recipes, labs] = await Promise.all([
+  getCollection('fieldNotes'),
+  getCollection('recipes'),
+  getCollection('labs'),
+]);
+
+const items: CardItem[] = [
+  ...fns.map((e) => ({
+    kicker: `${e.data.id.toUpperCase()} · Field Note`,
+    title: e.data.title,
+    href: `/agentic-ai/field-notes/${e.id}/`,
+    banner: e.data.banner,
+    bannerAlt: `${e.data.title} banner`,
+    date: e.data.date,
+  })),
+  ...recipes.map((e) => ({
+    kicker: `${e.data.id.toUpperCase()} · Recipe`,
+    title: e.data.title,
+    href: `/agentic-ai/recipes/${e.id}/`,
+    banner: `/agentic-ai/assets/banners/${e.data.id}.png`,
+    bannerAlt: `${e.data.title} banner`,
+    date: e.data.verifiedOn,
+  })),
+  ...labs.map((e) => ({
+    kicker: `${e.data.id.toUpperCase()} · Lab`,
+    title: e.data.title,
+    href: `/agentic-ai/labs/${e.id}/`,
+    banner: `/agentic-ai/assets/banners/${e.data.id}.png`,
+    bannerAlt: `${e.data.title} banner`,
+    date: e.data.date,
+  })),
 ];
+
+const top3 = items.sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 3);
 ---
 
 <section class="whats-new">
@@ -43,15 +57,19 @@ const items: Item[] = [
     <a class="whats-new__see-all" href="/agentic-ai/field-notes/">See all →</a>
   </header>
 
-  <div class="whats-new__grid">
-    {items.map((item) => (
-      <a class="whats-new__card" href={item.href}>
-        <img src={item.banner} alt={item.bannerAlt} class="whats-new__banner" loading="lazy" width="600" height="315" />
-        <div class="whats-new__kicker">{item.kicker}</div>
-        <h3 class="whats-new__title">{item.title}</h3>
-      </a>
-    ))}
-  </div>
+  {top3.length === 0 ? (
+    <p class="whats-new__empty">No recent issues yet.</p>
+  ) : (
+    <div class="whats-new__grid">
+      {top3.map((item) => (
+        <a class="whats-new__card" href={item.href}>
+          <img src={item.banner} alt={item.bannerAlt} class="whats-new__banner" loading="lazy" width="600" height="315" />
+          <div class="whats-new__kicker">{item.kicker}</div>
+          <h3 class="whats-new__title">{item.title}</h3>
+        </a>
+      ))}
+    </div>
+  )}
 </section>
 
 <style>
@@ -78,6 +96,11 @@ const items: Item[] = [
     text-transform: uppercase;
     letter-spacing: var(--tracking-loose);
     color: var(--brick);
+  }
+
+  .whats-new__empty {
+    color: var(--fg-light);
+    font-style: italic;
   }
 
   .whats-new__grid {
