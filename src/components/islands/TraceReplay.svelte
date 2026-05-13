@@ -28,6 +28,11 @@
 
   let { manifestUrl = '/agentic-ai/trace-replay/manifest.json' }: { manifestUrl?: string } = $props();
 
+  // Resolve session files relative to the manifest's directory so a caller can
+  // override manifestUrl to point at a different trace-replay folder and have
+  // chips load from there.
+  const sessionsBase = manifestUrl.replace(/[^/]*$/, '');
+
   let chips = $state<TraceChip[]>([]);
   let active = $state<string | null>(null);
   let session = $state<TraceSession | null>(null);
@@ -54,7 +59,7 @@
     replayProgress = 0;
 
     try {
-      const r = await fetch(`/agentic-ai/trace-replay/${chip.file}`);
+      const r = await fetch(`${sessionsBase}${chip.file}`);
       const data: TraceSession = await r.json();
       loading = false;
       session = data;
