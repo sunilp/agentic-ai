@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import PageLayout from './PageLayout.astro';
 import Reader from '~/components/layout/Reader.astro';
 import MetaStrip from '~/components/universal/MetaStrip.astro';
@@ -7,6 +8,8 @@ import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Banner from '~/components/universal/Banner.astro';
 import Sources from '~/components/universal/Sources.astro';
+import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
+import { entriesToContentEntries } from '~/lib/content-helpers';
 
 interface Props {
   entry: CollectionEntry<'fieldNotes'>;
@@ -14,6 +17,21 @@ interface Props {
 
 const { entry } = Astro.props;
 const d = entry.data;
+
+const [chapters, fieldNotes, recipes, labs, evidence, projects] = await Promise.all([
+  getCollection('chapters'),
+  getCollection('fieldNotes'),
+  getCollection('recipes'),
+  getCollection('labs'),
+  getCollection('evidence'),
+  getCollection('projects'),
+]);
+const allEntries = [
+  ...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects,
+];
+const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
+const links = getReverseLinks(reverseIndex, d.id);
+const hasReverseLinks = links.referencedBy.length > 0 || links.citedBy.length > 0;
 
 const dateStr = d.date.toISOString().slice(0, 10);
 const chapterLabel = d.primaryChapter.startsWith('ch-')
@@ -37,6 +55,16 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
       <slot />
     </article>
     <Sources items={d.sources} />
+    {hasReverseLinks && (
+      <section class="fn-referenced-by">
+        <h2 class="fn-referenced-by__heading">Cited by</h2>
+        <ul class="fn-referenced-by__list">
+          {[...links.referencedBy, ...links.citedBy].map((l) => (
+            <li>{l.collection}/{l.id}</li>
+          ))}
+        </ul>
+      </section>
+    )}
   </Reader>
 </PageLayout>
 
@@ -101,5 +129,27 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
     color: var(--fg-light);
     margin-top: var(--space-2);
     text-align: center;
+  }
+
+  .fn-referenced-by {
+    margin-top: var(--space-6);
+  }
+
+  .fn-referenced-by__heading {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    margin: 0 0 var(--space-3);
+    font-weight: 500;
+  }
+
+  .fn-referenced-by__list {
+    list-style: none;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: var(--body-3);
+    color: var(--fg-light);
   }
 </style>
