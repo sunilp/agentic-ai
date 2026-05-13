@@ -1,0 +1,26 @@
+---
+/**
+ * Container — 1200px wide container.
+ * Used by index pages, Evidence, Lab, Project hero sections.
+ */
+interface Props {
+  maxWidth?: string;
+  class?: string;
+}
+
+const { maxWidth = 'var(--container-max)', class: className } = Astro.props;
+---
+
+<div class:list={['container', className]} style={`--container-width: ${maxWidth}`}>
+  <slot />
+</div>
+
+<style>
+  .container {
+    max-width: var(--container-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+</style>
