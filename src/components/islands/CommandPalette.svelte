@@ -71,10 +71,12 @@
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowDown') {
       e.preventDefault();
+      if (results.length === 0) return;
       activeIdx = Math.min(activeIdx + 1, results.length - 1);
     }
     if (e.key === 'ArrowUp') {
       e.preventDefault();
+      if (results.length === 0) return;
       activeIdx = Math.max(activeIdx - 1, 0);
     }
     if (e.key === 'Enter' && results[activeIdx]) {
