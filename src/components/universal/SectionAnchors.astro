@@ -1,0 +1,102 @@
+---
+/**
+ * SectionAnchors — Lab Report sticky in-page navigation with scroll-spy.
+ * Section IDs must match the corresponding h2 ids in the body MDX.
+ */
+interface Section {
+  label: string;
+  anchor: string;
+}
+
+interface Props {
+  items: Section[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="section-anchors" aria-label="In-page navigation">
+  <div class="section-anchors__label">In this Lab</div>
+  <ul class="section-anchors__list">
+    {items.map((s) => (
+      <li>
+        <a href={`#${s.anchor}`} class="section-anchors__link" data-anchor={s.anchor}>{s.label}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  function setupScrollSpy() {
+    const links = document.querySelectorAll<HTMLAnchorElement>('.section-anchors__link[data-anchor]');
+    if (!links.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target.id;
+          const link = document.querySelector(`.section-anchors__link[data-anchor="${id}"]`);
+          if (entry.isIntersecting) {
+            links.forEach((l) => l.classList.remove('section-anchors__link--active'));
+            link?.classList.add('section-anchors__link--active');
+          }
+        }
+      },
+      { rootMargin: '-20% 0% -70% 0%' }
+    );
+
+    links.forEach((l) => {
+      const target = document.getElementById(l.dataset.anchor || '');
+      if (target) observer.observe(target);
+    });
+  }
+
+  setupScrollSpy();
+  document.addEventListener('astro:page-load', setupScrollSpy);
+</script>
+
+<style>
+  .section-anchors {
+    position: sticky;
+    top: 72px;
+    margin: var(--space-5) 0;
+    padding: var(--space-3) var(--space-4);
+    background: var(--paper-recess);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    z-index: 50;
+  }
+
+  .section-anchors__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    margin-bottom: var(--space-2);
+    font-weight: 500;
+  }
+
+  .section-anchors__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .section-anchors__link {
+    font-family: var(--font-mono);
+    font-size: var(--body-3);
+    color: var(--fg-light);
+    text-decoration: none;
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .section-anchors__link:hover,
+  .section-anchors__link--active {
+    color: var(--brick);
+    font-weight: 500;
+  }
+</style>

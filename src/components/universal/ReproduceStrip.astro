@@ -1,0 +1,68 @@
+---
+/**
+ * ReproduceStrip — Lab Report bottom strip with repo + data + seed.
+ */
+interface Props {
+  repo: string;
+  data: string;
+  seed?: number;
+}
+
+const { repo, data, seed } = Astro.props;
+---
+
+<aside class="reproduce-strip">
+  <div class="reproduce-strip__label">↓ Reproduce</div>
+  <div class="reproduce-strip__links">
+    <a href={repo} target="_blank" rel="noopener" class="reproduce-strip__link">Code</a>
+    <a href={data} target="_blank" rel="noopener" class="reproduce-strip__link">Data</a>
+    {seed !== undefined && <span class="reproduce-strip__seed">seed = {seed}</span>}
+  </div>
+</aside>
+
+<style>
+  .reproduce-strip {
+    margin: var(--space-6) 0;
+    padding: var(--space-4) var(--space-5);
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .reproduce-strip__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    font-weight: 600;
+  }
+
+  .reproduce-strip__links {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+  }
+
+  .reproduce-strip__link {
+    color: var(--paper);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--dur-micro) var(--ease-out);
+  }
+
+  .reproduce-strip__link:hover {
+    text-decoration-color: var(--brick);
+  }
+
+  .reproduce-strip__seed {
+    color: rgba(255, 255, 255, 0.5);
+  }
+</style>
