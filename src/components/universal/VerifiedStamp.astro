@@ -1,0 +1,64 @@
+---
+/**
+ * VerifiedStamp — Recipe-only. Date + SDK versions block.
+ */
+interface Props {
+  date: Date;
+  versions: Record<string, string>;
+}
+
+const { date, versions } = Astro.props;
+const dateStr = date.toISOString().slice(0, 10);
+const versionPairs = Object.entries(versions);
+---
+
+<aside class="verified-stamp">
+  <div class="verified-stamp__label">Verified end-to-end on {dateStr}</div>
+  <div class="verified-stamp__versions">
+    {versionPairs.map(([name, ver], i) => (
+      <>
+        {i > 0 && <span class="verified-stamp__sep">·</span>}
+        <span class="verified-stamp__pair"><span class="verified-stamp__name">{name}</span> {ver}</span>
+      </>
+    ))}
+  </div>
+</aside>
+
+<style>
+  .verified-stamp {
+    margin: var(--space-5) 0;
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--fg-faint);
+    border-left: 3px solid var(--ink);
+    border-radius: var(--radius-md);
+    background: var(--paper-recess);
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+    line-height: 1.7;
+  }
+
+  .verified-stamp__label {
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    font-size: var(--meta-2);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+  }
+
+  .verified-stamp__versions {
+    color: var(--fg-light);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .verified-stamp__name {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .verified-stamp__sep {
+    color: var(--fg-lighter);
+  }
+</style>
