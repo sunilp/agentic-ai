@@ -4,7 +4,7 @@
   /* Surfaces */
   --ink: #1a1a1a;            /* primary text, dark backgrounds */
   --paper: #fafaf8;          /* primary background */
-  --paper-recess: #f5f5f3;   /* code blocks, inset surfaces */
+  --paper-recess: #efece4;   /* code blocks, inset surfaces — warm enough to be visibly distinct from #fafaf8 paper */
   --paper-bright: #ffffff;   /* figure backgrounds */
 
   /* Type hierarchy */
