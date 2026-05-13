@@ -1,4 +1,5 @@
-/* Spacing tokens (8px base) — Section 8.3 of design spec */
+/* Spacing tokens — non-linear scale, 4px first step then 4/8/16/32px jumps.
+   Section 8.3 of design spec. */
 
 :root {
   --space-0: 0;
