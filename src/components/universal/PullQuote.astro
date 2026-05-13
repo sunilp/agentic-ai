@@ -1,0 +1,24 @@
+---
+/**
+ * PullQuote — one-line excerpted quote. Brick-red left rule, italic Fraunces.
+ */
+---
+
+<blockquote class="pull-quote">
+  <slot />
+</blockquote>
+
+<style>
+  .pull-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.4;
+    color: var(--fg);
+    margin: var(--space-7) 0;
+    padding: 0 0 0 var(--space-5);
+    border-left: 2px solid var(--ink);
+    background: transparent;
+  }
+</style>
