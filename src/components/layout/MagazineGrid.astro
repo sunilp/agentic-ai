@@ -10,9 +10,10 @@ interface Props {
 }
 
 const { cols = 3, gap = 'var(--space-5)', class: className } = Astro.props;
+const safeCols = Number.isInteger(cols) && cols > 0 ? cols : 3;
 ---
 
-<div class:list={['magazine-grid', className]} style={`--cols: ${cols}; --gap: ${gap}`}>
+<div class:list={['magazine-grid', className]} style={`--cols: ${safeCols}; --gap: ${gap}`}>
   <slot />
 </div>
 
