@@ -1,0 +1,154 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import PageLayout from './PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import Reader from '~/components/layout/Reader.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+import ProductCardHero from '~/components/universal/ProductCardHero.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+import EvalStats from '~/components/universal/EvalStats.astro';
+import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
+import { entriesToContentEntries } from '~/lib/content-helpers';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+
+const [chapters, fieldNotes, recipes, labs, evidence, projects] = await Promise.all([
+  getCollection('chapters'),
+  getCollection('fieldNotes'),
+  getCollection('recipes'),
+  getCollection('labs'),
+  getCollection('evidence'),
+  getCollection('projects'),
+]);
+const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects];
+const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
+const links = getReverseLinks(reverseIndex, d.slug);
+
+const collectionRoute: Record<string, string> = {
+  chapters: '/agentic-ai/book',
+  fieldNotes: '/agentic-ai/field-notes',
+  recipes: '/agentic-ai/recipes',
+  projects: '/agentic-ai/projects',
+  evidence: '/agentic-ai/evidence',
+  labs: '/agentic-ai/labs',
+  patterns: '/agentic-ai/patterns',
+};
+---
+
+<PageLayout
+  title={`${d.title} — Projects`}
+  description={d.description}
+  currentNav="Book"
+>
+  <Container>
+    <Tag>Project</Tag>
+    <KineticHeading level={1}>{d.title}</KineticHeading>
+    <Dek italic>{d.tagline}</Dek>
+
+    <ProductCardHero
+      runIt={d.liveDemoUrl}
+      caseStudy="#case-study"
+      failures="#failures"
+      codeRepo={d.repoUrl}
+    />
+
+    <ArchitectureDiagram
+      src={d.architecture}
+      alt={`${d.title} system architecture`}
+      caption={`Figure 1: ${d.title} architecture`}
+    />
+
+    <EvalStats stats={d.evalStats} />
+
+    <Reader>
+      <article class="project-body">
+        <slot />
+      </article>
+
+      {(links.referencedBy.length > 0 || links.citedBy.length > 0) && (
+        <section class="project-cited-by">
+          <h2>Cited by</h2>
+          <ul>
+            {[...links.referencedBy, ...links.citedBy].map((l) => (
+              <li><a href={`${collectionRoute[l.collection] ?? '/agentic-ai'}/${l.id}/`}>{l.collection}/{l.id}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </Reader>
+  </Container>
+</PageLayout>
+
+<style>
+  .project-body {
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .project-body :global(h2) {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .project-body :global(h3) {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-2);
+  }
+
+  .project-body :global(p),
+  .project-body :global(ul),
+  .project-body :global(ol) {
+    margin: 0 0 var(--space-4);
+  }
+
+  .project-body :global(li) {
+    margin-bottom: var(--space-2);
+  }
+
+  .project-body :global(a) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+  }
+
+  .project-body :global(a:hover) {
+    color: var(--brick);
+    text-decoration-color: var(--brick);
+  }
+
+  .project-cited-by {
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--fg-faint);
+  }
+
+  .project-cited-by h2 {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+
+  .project-cited-by ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .project-cited-by a {
+    font-family: var(--font-mono);
+    font-size: var(--body-3);
+    color: var(--fg);
+  }
+</style>
