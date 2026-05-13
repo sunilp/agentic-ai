@@ -1,0 +1,60 @@
+---
+/**
+ * ArchitectureDiagram — wraps an SVG architecture diagram with caption + frame.
+ * Used by ProjectLayout for the main system diagram.
+ */
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  traceIn?: boolean;
+}
+
+const { src, alt, caption, traceIn = true } = Astro.props;
+---
+
+<figure class:list={['architecture', traceIn && 'architecture--trace-in']}>
+  <img src={src} alt={alt} class="architecture__svg" loading="lazy" />
+  {caption && <figcaption class="architecture__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .architecture {
+    margin: var(--space-5) 0;
+    padding: var(--space-5);
+    background: var(--paper-bright);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+  }
+
+  .architecture__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .architecture__caption {
+    margin-top: var(--space-3);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--fg-light);
+  }
+
+  @supports (animation-timeline: view()) {
+    .architecture--trace-in .architecture__svg {
+      animation: arch-trace-in linear;
+      animation-timeline: view();
+      animation-range: cover 0% cover 30%;
+    }
+
+    @keyframes arch-trace-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .architecture--trace-in .architecture__svg { animation: none; }
+  }
+</style>
