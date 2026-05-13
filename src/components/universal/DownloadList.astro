@@ -1,0 +1,79 @@
+---
+/**
+ * DownloadList — Evidence page download artifacts (CSV / JSON / harness).
+ */
+interface Download {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: Download[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="downloads">
+  <h2 class="downloads__heading">Downloads</h2>
+  <ul class="downloads__list">
+    {items.map((d) => (
+      <li>
+        <a href={d.href} class="downloads__link" download>
+          <span class="downloads__icon" aria-hidden="true">↓</span>
+          <span>{d.label}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .downloads {
+    margin: var(--space-5) 0;
+  }
+
+  .downloads__heading {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    margin: 0 0 var(--space-3);
+    font-weight: 500;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .downloads__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .downloads__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-md);
+    color: var(--fg);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+    transition: background var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+  }
+
+  .downloads__link:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .downloads__icon {
+    font-size: var(--meta-1);
+  }
+</style>

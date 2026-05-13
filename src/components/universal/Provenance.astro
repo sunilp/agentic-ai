@@ -1,0 +1,55 @@
+---
+/**
+ * Provenance — Evidence page provenance strip: when measured, model used.
+ */
+interface Props {
+  measuredOn: Date;
+  model?: string;
+}
+
+const { measuredOn, model } = Astro.props;
+const dateStr = measuredOn.toISOString().slice(0, 10);
+---
+
+<aside class="provenance">
+  <span class="provenance__label">Measured</span>
+  <span class="provenance__date">{dateStr}</span>
+  {model && (
+    <>
+      <span class="provenance__sep">·</span>
+      <span class="provenance__model">{model}</span>
+    </>
+  )}
+</aside>
+
+<style>
+  .provenance {
+    margin: var(--space-4) 0;
+    padding: var(--space-3) var(--space-4);
+    background: var(--paper-recess);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--fg-light);
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .provenance__label {
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+    font-weight: 600;
+  }
+
+  .provenance__date,
+  .provenance__model {
+    color: var(--fg);
+  }
+
+  .provenance__sep {
+    color: var(--fg-lighter);
+  }
+</style>

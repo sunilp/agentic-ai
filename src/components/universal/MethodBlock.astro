@@ -1,0 +1,43 @@
+---
+/**
+ * MethodBlock — Evidence page methodology description.
+ */
+---
+
+<section class="method-block">
+  <h2 class="method-block__heading">Method</h2>
+  <div class="method-block__body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .method-block {
+    margin: var(--space-5) 0;
+  }
+
+  .method-block__heading {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    margin: 0 0 var(--space-3);
+    font-weight: 500;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .method-block__body {
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .method-block__body :global(p) {
+    margin: 0 0 var(--space-3);
+  }
+
+  .method-block__body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>
