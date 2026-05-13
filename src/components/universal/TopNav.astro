@@ -29,6 +29,7 @@ const items = [
         <a
           href={item.href}
           class:list={['topnav__link', current === item.label && 'topnav__link--current']}
+          aria-current={current === item.label ? 'page' : undefined}
         >
           {item.label}
         </a>
