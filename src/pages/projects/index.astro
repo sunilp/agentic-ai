@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '~/layouts/PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import MagazineGrid from '~/components/layout/MagazineGrid.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+
+const entries = (await getCollection('projects')).sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<PageLayout
+  title="Projects — Agentic AI for Serious Engineers"
+  description="Production-grade agent systems built incrementally through the book."
+  currentNav="Book"
+>
+  <Container>
+    <header style="margin: var(--space-7) 0 var(--space-6);">
+      <Tag>Projects</Tag>
+      <KineticHeading level={1}>Projects</KineticHeading>
+      <Dek italic>Production-grade agent systems built incrementally through the book.</Dek>
+    </header>
+
+    {entries.length === 0 ? (
+      <p style="color: var(--fg-light); font-style: italic;">No projects yet.</p>
+    ) : (
+      <MagazineGrid cols={3}>
+        {entries.map((e) => (
+          <a class="proj-card" href={`/agentic-ai/projects/${e.data.slug}/`}>
+            <div class="proj-card__name">{e.data.title}</div>
+            <p class="proj-card__tagline">{e.data.tagline}</p>
+            <div class="proj-card__stats">
+              <span>{e.data.evalStats.accuracy}</span>
+              <span>·</span>
+              <span>{e.data.evalStats.avgCost}</span>
+              <span>·</span>
+              <span>{e.data.evalStats.latencyP50}</span>
+            </div>
+          </a>
+        ))}
+      </MagazineGrid>
+    )}
+  </Container>
+</PageLayout>
+
+<style>
+  .proj-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: var(--paper);
+    color: var(--fg);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    transition: transform var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+  }
+
+  .proj-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--ink);
+  }
+
+  .proj-card__name {
+    font-family: var(--font-display);
+    font-size: var(--display-3);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+  }
+
+  .proj-card__tagline {
+    color: var(--fg-light);
+    font-size: var(--body-2);
+    line-height: var(--lh-snug);
+    margin: 0;
+    flex: 1;
+  }
+
+  .proj-card__stats {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--fg-light);
+    display: flex;
+    gap: var(--space-2);
+    border-top: 1px solid var(--fg-faint);
+    padding-top: var(--space-3);
+  }
+</style>

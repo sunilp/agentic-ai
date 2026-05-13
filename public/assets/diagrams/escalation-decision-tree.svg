@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="450" viewBox="0 0 700 450" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10B981"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444"/>
+    </marker>
+    <marker id="arrowhead-yellow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#F59E0B"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="450" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Escalation Decision Tree</text>
+  <line x1="60" y1="42" x2="640" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- Start node: Agent wants to act -->
+  <rect x="245" y="55" width="210" height="46" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="350" y="75" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">Agent wants to act</text>
+  <text x="350" y="92" text-anchor="middle" font-size="11" fill="#6B7280">action proposed</text>
+
+  <!-- Arrow down to Diamond 1 -->
+  <line x1="350" y1="101" x2="350" y2="128" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Diamond 1: Risk tier? center=(350,165) half-w=90 half-h=40 -->
+  <polygon points="350,128 440,168 350,208 260,168" fill="#FFF7ED" stroke="#F59E0B" stroke-width="2"/>
+  <text x="350" y="163" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400E">Risk tier?</text>
+  <text x="350" y="179" text-anchor="middle" font-size="10" fill="#6B7280">evaluate policy</text>
+
+  <!-- Critical path: right from diamond -->
+  <line x1="440" y1="168" x2="560" y2="168" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arrowhead-red)"/>
+  <text x="500" y="160" text-anchor="middle" font-size="10" fill="#EF4444">Critical</text>
+
+  <!-- Always Escalate box (right) -->
+  <rect x="560" y="148" width="120" height="40" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="620" y="165" text-anchor="middle" font-size="11" font-weight="bold" fill="#991B1B">Always</text>
+  <text x="620" y="180" text-anchor="middle" font-size="11" font-weight="bold" fill="#991B1B">Escalate</text>
+
+  <!-- Low/Medium/High path: down from diamond -->
+  <line x1="350" y1="208" x2="350" y2="244" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="365" y="232" font-size="10" fill="#6B7280">High / Med / Low</text>
+
+  <!-- Diamond 2: Confidence >= threshold? center=(350,285) half-w=95 half-h=40 -->
+  <polygon points="350,244 445,284 350,324 255,284" fill="#F9FAFB" stroke="#6B7280" stroke-width="2"/>
+  <text x="350" y="278" text-anchor="middle" font-size="12" font-weight="bold" fill="#374151">Confidence</text>
+  <text x="350" y="293" text-anchor="middle" font-size="12" font-weight="bold" fill="#374151">>= threshold?</text>
+
+  <!-- Yes path: left -->
+  <line x1="255" y1="284" x2="160" y2="284" stroke="#10B981" stroke-width="1.5" marker-end="url(#arrowhead-green)"/>
+  <text x="206" y="276" text-anchor="middle" font-size="10" fill="#10B981">Yes</text>
+
+  <!-- Proceed box -->
+  <rect x="60" y="264" width="100" height="40" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+  <text x="110" y="282" text-anchor="middle" font-size="12" font-weight="bold" fill="#065F46">Proceed</text>
+  <text x="110" y="297" text-anchor="middle" font-size="10" fill="#6B7280">auto-approve</text>
+
+  <!-- No path: right -->
+  <line x1="445" y1="284" x2="540" y2="284" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arrowhead-red)"/>
+  <text x="492" y="276" text-anchor="middle" font-size="10" fill="#EF4444">No</text>
+
+  <!-- Escalate to human box -->
+  <rect x="540" y="264" width="140" height="40" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
+  <text x="610" y="282" text-anchor="middle" font-size="11" font-weight="bold" fill="#991B1B">Escalate</text>
+  <text x="610" y="297" text-anchor="middle" font-size="10" fill="#6B7280">to human reviewer</text>
+
+  <!-- Budget check: below Proceed -->
+  <line x1="110" y1="304" x2="110" y2="348" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Diamond 3: Action budget? center=(110,380) -->
+  <polygon points="110,348 185,380 110,412 35,380" fill="#FFF7ED" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="110" y="375" text-anchor="middle" font-size="10" font-weight="bold" fill="#92400E">Actions taken</text>
+  <text x="110" y="389" text-anchor="middle" font-size="10" font-weight="bold" fill="#92400E">>= budget?</text>
+
+  <!-- Yes: Halt -->
+  <line x1="35" y1="380" x2="20" y2="380" stroke="#EF4444" stroke-width="1.5"/>
+  <line x1="20" y1="380" x2="20" y2="420" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arrowhead-red)"/>
+  <rect x="30" y="408" width="80" height="30" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="70" y="428" text-anchor="middle" font-size="12" font-weight="bold" fill="#991B1B">Halt</text>
+
+  <!-- Label on Halt path -->
+  <text x="15" y="395" text-anchor="end" font-size="10" fill="#EF4444">Yes</text>
+
+  <!-- No: continue -->
+  <line x1="185" y1="380" x2="280" y2="380" stroke="#10B981" stroke-width="1.5" marker-end="url(#arrowhead-green)"/>
+  <text x="232" y="372" text-anchor="middle" font-size="10" fill="#10B981">No</text>
+  <rect x="280" y="360" width="110" height="40" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+  <text x="335" y="378" text-anchor="middle" font-size="11" font-weight="bold" fill="#065F46">Continue</text>
+  <text x="335" y="393" text-anchor="middle" font-size="10" fill="#6B7280">autonomous</text>
+
+  <!-- Legend -->
+  <rect x="400" y="356" width="280" height="72" rx="8" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="416" y="374" font-size="11" font-weight="bold" fill="#374151">Risk Tier Thresholds</text>
+  <text x="416" y="390" font-size="10" fill="#6B7280">Low: confidence >= 0.30, max 10 actions</text>
+  <text x="416" y="405" font-size="10" fill="#6B7280">Medium: confidence >= 0.60, max 5 actions</text>
+  <text x="416" y="420" font-size="10" fill="#6B7280">High: confidence >= 0.80, max 2 actions</text>
+</svg>

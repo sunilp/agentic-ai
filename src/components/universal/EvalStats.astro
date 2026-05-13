@@ -1,0 +1,76 @@
+---
+/**
+ * EvalStats — Project page 3-stat row: accuracy / avg cost / p50 latency.
+ */
+interface Stats {
+  accuracy: string;
+  avgCost: string;
+  latencyP50: string;
+}
+
+interface Props {
+  stats: Stats;
+}
+
+const { stats } = Astro.props;
+---
+
+<section class="eval-stats" aria-label="Evaluation metrics">
+  <div class="eval-stats__inner">
+    <div class="eval-stats__stat">
+      <div class="eval-stats__value eval-stats__value--accent">{stats.accuracy}</div>
+      <div class="eval-stats__label">Accuracy</div>
+    </div>
+    <div class="eval-stats__stat">
+      <div class="eval-stats__value">{stats.avgCost}</div>
+      <div class="eval-stats__label">Avg cost</div>
+    </div>
+    <div class="eval-stats__stat">
+      <div class="eval-stats__value">{stats.latencyP50}</div>
+      <div class="eval-stats__label">Latency p50</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .eval-stats {
+    margin: var(--space-5) 0;
+  }
+
+  .eval-stats__inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-1);
+    background: var(--fg-faint);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .eval-stats__stat {
+    text-align: center;
+    padding: var(--space-5) var(--space-3);
+    background: var(--paper);
+  }
+
+  .eval-stats__value {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--fg);
+  }
+
+  .eval-stats__value--accent {
+    color: var(--brick);
+  }
+
+  .eval-stats__label {
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+</style>

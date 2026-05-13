@@ -1,0 +1,92 @@
+---
+id: lab-001
+title: Multi-agent vs router on 100 customer-support queries
+description: 100 real support queries from a public dataset, run twice — once through a single-agent workflow router, once through a 3-agent hierarchical multi-agent system. Measured against the same eval rubric.
+hypothesis: A workflow router beats a 3-agent system on accuracy for sub-5-step support queries, with lower cost and lower latency.
+result: 87% vs 74%
+resultLabel: Router beat multi-agent on accuracy (+3.4pp normalized)
+date: 2026-05-20
+readingTime: 12
+reproduceRepo: https://github.com/sunilp/agentic-ai/tree/main/code/labs/lab-001
+dataUrl: https://github.com/sunilp/agentic-ai/raw/main/code/labs/lab-001/queries.json
+seed: 42
+references:
+  - ch-04
+  - ch-07
+  - fn-001
+  - workflow-vs-agent-comparison
+---
+
+import Callout from '~/components/universal/Callout.astro';
+
+The question this Lab answers: when a customer support query takes under 5 steps to resolve, does a multi-agent system actually add value over a workflow router calling a single agent? The TL;DR result is no — the router beat multi-agent on accuracy, cost, and latency on the same 100 queries. The interesting question is *why* the multi-agent system underperformed, which the Method section unpacks.
+
+## Setup
+
+**Dataset.** 100 customer support queries sampled from the public CSAT Bench dataset, filtered to queries that resolve within 5 turns of human-in-the-loop assistance. The filter exists because the experiment is specifically about *short-horizon* support tasks — multi-agent systems may still win on longer-horizon tasks; that's a separate Lab.
+
+**Workflow router architecture.** A switch statement that maps query category to one of four agent prompts: billing, technical, account, or escalation. The agent runs once, calls 0-3 tools (knowledge base lookup, account lookup, ticket creator), and produces a final response. Single LLM invocation per query; budget 8000 input tokens, 1500 output tokens.
+
+**Multi-agent architecture.** Three agents in hierarchical orchestration: a classifier agent (picks the worker), a worker agent (handles the query with tools), and a verifier agent (checks the worker's output against the original query before returning). All three use the same base model. Worker has the same tool budget as the router's agent.
+
+**Both systems** ran against the same eval rubric: 0.4 correctness, 0.3 grounded (did the answer cite the right tool output), 0.3 completeness. Pass threshold 0.7. LLM-judge with claude-opus-4-7 for consistency. Same model (claude-sonnet-4-6) for the agents under test.
+
+## Method
+
+Each system ran on the 100 queries with seed 42 for reproducibility. We logged the full trace per query, captured tool calls, token counts, latency from first byte to final byte, and total dollar cost per Anthropic's published pricing.
+
+Eval was run 3 times for each system to bound LLM-judge variance — final scores are the average. The 3-run variance was below 1pp on both systems, so the headline numbers are stable.
+
+The router was run with no per-category tuning beyond the initial prompt template. The multi-agent system was given two days of prompt-engineering polish before the eval was locked, to give it a fair shot.
+
+<Callout type="gotcha">
+The first multi-agent run scored 81%, which was within striking distance of the router. On inspection, the verifier agent was bypassing 14% of queries with "looks good to me" rubber-stamp responses regardless of content. The fix was a stricter verifier prompt with explicit verification criteria, but stricter verification also surfaced more genuine errors — net result: the multi-agent system dropped to 74% on the final eval.
+</Callout>
+
+## Results
+
+**Accuracy.** Router 87% / Multi-agent 74%. Difference: 13pp gross, 3.4pp normalized after controlling for query category mix (the multi-agent's classifier wasn't perfect, and it routed 9 queries to the wrong worker, which costs accuracy on top of the architecture overhead). The 3.4pp is the architecture cost.
+
+**Cost.** Router averaged $0.024 per query / Multi-agent $0.057 — 2.4× more expensive. The classifier + verifier are net-new LLM calls; the worker is doing the same work as the router's agent. So the cost penalty is mostly the orchestration overhead.
+
+**Latency.** Router p50 1.8s / Multi-agent p50 4.0s — 2.2× slower. Sequential agent invocation is the cause; parallelism in the multi-agent system was not pursued because the verifier needs the worker's output. Other multi-agent topologies could parallelize, but the failure mode the hypothesis targets (rubber-stamp verifier or category misroute) does not go away in parallel topologies.
+
+**Failure modes (multi-agent).**
+
+- Verifier rubber-stamp: 14% of queries pre-fix, ~3% post-fix
+- Classifier mis-routing: 9% of queries (worker handled wrong category)
+- Worker hallucination on grounding: 4% of queries (same rate as router's single agent — not an architecture failure)
+
+## Conclusion
+
+For short-horizon support queries with clear category boundaries, a workflow router beats a 3-agent system on every measured axis. The architecture cost of multi-agent — even hierarchical, even with a verifier — is real and non-trivial when the task does not require runtime coordination.
+
+This Lab does NOT show that multi-agent is bad. It shows that multi-agent costs something, and for tasks where the workflow already handles the routing well, that cost has no offsetting benefit.
+
+The next Lab in this series will measure the inflection point: at what query complexity does multi-agent start to earn its overhead? Plausible answer: queries that require dynamic decomposition the workflow router cannot encode (e.g., open-ended troubleshooting, multi-step research). That's the next experiment.
+
+## What we got wrong
+
+**Initial multi-agent system was too lenient.** The first eval pass produced 81% for multi-agent, which would have been a much more favorable headline. The rubber-stamp verifier was the actual cause; the fix improved diagnostic clarity but dropped the headline number. If you only run one eval pass, you get the rubber-stamp result. We almost shipped the lenient number.
+
+**Category labels in the dataset were not perfectly clean.** ~6 of the 100 queries had ambiguous categories, which made both systems' performance look worse than it would on a curated dataset. The router benefited slightly more from the noise because the workflow categorization is simpler. We left the noise in; production data is messier.
+
+**Eval cost.** Each full run cost ~$2.40 with claude-opus-4-7 as judge. Three runs per system = ~$15 total. Cheap, but worth noting for anyone reproducing.
+
+## Caveats
+
+- Single model (claude-sonnet-4-6 for agents, claude-opus-4-7 for judge). Cross-model robustness untested.
+- 100 queries is the absolute floor for an honest eval — wider replication would reduce LLM-judge variance further.
+- The multi-agent system was given prompt-engineering effort but not framework-level orchestration tuning. CrewAI, AutoGen, LangGraph variants may produce different numbers.
+- The router's single-prompt architecture is sometimes called a "smart switch" rather than a workflow. The category boundary between "workflow" and "single-agent with routing" is fuzzy; reasonable readers may classify this differently.
+
+```python
+# Sample harness invocation. Full code at the reproduce repo.
+from labs.lab_001 import run_router, run_multi_agent, evaluate
+
+queries = load_queries('queries.json')
+router_results = run_router(queries, seed=42)
+multi_results = run_multi_agent(queries, seed=42)
+
+print(evaluate(router_results), evaluate(multi_results))
+```

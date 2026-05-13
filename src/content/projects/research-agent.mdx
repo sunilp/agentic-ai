@@ -1,0 +1,100 @@
+---
+slug: research-agent
+title: Research Agent
+tagline: An instrumented multi-step agent loop with per-step cost logging, exportable JSON traces, and graceful error recovery.
+description: "Companion to Section 0c of Agentic AI for Serious Engineers. Extends the minimal agent loop with per-step StepTrace objects, accumulated AgentTrace export, and error recovery that captures exceptions as trace entries rather than terminating the run. The eval harness runs five benchmark queries and scores results against expected answers."
+architecture: /agentic-ai/assets/diagrams/agent-loop-foundations.svg
+evalStats:
+  accuracy: '100%'
+  avgCost: '$0.000276'
+  latencyP50: '73.4ms'
+repoUrl: https://github.com/sunilp/agentic-ai/tree/main/project/research-agent
+chapters: [ch-00c, ch-00d]
+---
+
+An expanded agent loop with configurable budgets, step-level token and cost tracking, JSON trace export, and graceful error recovery.
+
+## What's inside
+
+- `src/agent.py` -- `ResearchAgent`: the full instrumented loop. Extends the minimal agent from `src/ch00/raw_agent.py` with per-step `StepTrace` objects, accumulated `AgentTrace` export, and error recovery that captures exceptions as trace entries rather than terminating the run.
+- `src/tools.py` -- Four research tools with Pydantic validation: `calculator`, `search`, `read_url` (simulated URL fetch), and `summarize` (LLM-powered summarisation via an injectable `ModelClient`).
+- `src/run.py` -- CLI runner that takes a query, runs the agent, and prints the annotated trace. Optional `--export PATH` writes the trace to JSON.
+- `evals/test_queries.yaml` -- Five benchmark queries with expected answers.
+- `evals/run_eval.py` -- Loads the YAML, runs the agent against each query using scripted mock responses, scores with `score_answer()`, and prints a results table.
+
+## How to run
+
+```bash
+make install
+
+# Single query
+python project/research-agent/src/run.py "What is 15 * 7?"
+
+# Single query with trace export
+python project/research-agent/src/run.py --export trace.json "What is 100 / 4 + 10?"
+
+# Full eval suite
+python project/research-agent/evals/run_eval.py
+```
+
+## What you'll see
+
+The CLI runner prints an annotated trace for each run:
+
+```
+Trace for: 'What is 15 * 7?'
+Model: claude-haiku-4-5-20251001  max_steps: 8
+------------------------------------------------------------
+[1] tool_call  calculator({'operation': 'multiply', 'a': 15, 'b': 7})
+      -> 105.0
+      tokens=55  cost=$0.000044  42.3ms
+[2] response  '15 * 7 = 105'
+      tokens=85  cost=$0.000068  31.1ms
+------------------------------------------------------------
+Summary: 2 steps  140 tokens  $0.000112  73.4ms  [COMPLETED]
+Answer:  15 * 7 = 105
+```
+
+The eval runner prints a scored results table followed by a summary:
+
+```
+Running eval harness against research_agent (MockClient)...
+
+============================================================
+Implementation: research_agent
+============================================================
+Query                                    Expected      Got                       Score
+---------------------------------------- ------------ ------------------------- -----
+What is 15 * 7?                          105          15 * 7 = 105                0.8
+...
+
+Pass rate: 5/5 (100%)
+```
+
+## The trace format
+
+The `AgentTrace` dataclass serialises cleanly to JSON for offline analysis:
+
+```json
+{
+  "query": "What is 100 / 4 + 10?",
+  "model": "claude-haiku-4-5-20251001",
+  "total_steps": 3,
+  "total_cost_usd": 0.000276,
+  "budget_exhausted": false,
+  "answer": "100 / 4 + 10 = 35",
+  "steps": [
+    {"step": 1, "type": "tool_call", "tool": "calculator", "...": "..."},
+    {"step": 2, "type": "tool_call", "tool": "calculator", "...": "..."},
+    {"step": 3, "type": "response", "content": "100 / 4 + 10 = 35", "...": "..."}
+  ]
+}
+```
+
+## Connection to the book
+
+Section 0c introduces the raw agent loop -- the simplest possible implementation where a model iterates between tool calls and text responses. This project adds the instrumentation layer that makes production agents debuggable. The three additions -- per-step cost visibility, exportable traces, and captured error recovery -- each appear again in later chapters:
+
+- Per-step cost tracking is the foundation for the cost profiler in Chapter 6.
+- Trace export feeds the failure analysis workflow in Chapter 6's hardening section.
+- Error recovery as a design pattern (capture, log, continue) is formalised in Chapter 8's reliability section.

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="360" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="360" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Three Failure Modes Every Agent Engineer Faces</text>
+  <line x1="40" y1="42" x2="680" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- ====== PANEL 1: Infinite Loop ====== -->
+  <rect x="30" y="58" width="206" height="264" rx="10" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="133" y="82" text-anchor="middle" font-size="14" font-weight="bold" fill="#B91C1C">Infinite Loop</text>
+  <line x1="50" y1="90" x2="216" y2="90" stroke="#FCA5A5" stroke-width="1"/>
+
+  <!-- Circular spinning arrows (conceptual) -->
+  <circle cx="133" cy="170" r="50" fill="none" stroke="#EF4444" stroke-width="3" stroke-dasharray="10,5"/>
+  <!-- Arrow on circle -->
+  <path d="M133,120 A50,50 0 1,1 83,170" fill="none" stroke="#EF4444" stroke-width="3"/>
+  <polygon points="78,162 83,175 93,167" fill="#EF4444"/>
+  <!-- Inner text -->
+  <text x="133" y="165" text-anchor="middle" font-size="11" font-weight="bold" fill="#B91C1C">search →</text>
+  <text x="133" y="180" text-anchor="middle" font-size="11" fill="#B91C1C">read →</text>
+  <text x="133" y="195" text-anchor="middle" font-size="11" fill="#B91C1C">search →</text>
+
+  <!-- Budget counter -->
+  <rect x="60" y="238" width="148" height="28" rx="6" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.5"/>
+  <text x="134" y="257" text-anchor="middle" font-size="12" font-weight="bold" fill="#B91C1C">Budget: 5/5 exhausted</text>
+
+  <text x="133" y="290" text-anchor="middle" font-size="11" fill="#374151">Agent never decides</text>
+  <text x="133" y="306" text-anchor="middle" font-size="11" fill="#374151">it has enough info.</text>
+  <text x="133" y="323" text-anchor="middle" font-size="10" fill="#9CA3AF">Fix: hard step limit</text>
+  <text x="133" y="337" text-anchor="middle" font-size="10" fill="#22c55e">in your orchestration code</text>
+
+  <!-- ====== PANEL 2: Hallucinated Tool ====== -->
+  <rect x="257" y="58" width="206" height="264" rx="10" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="360" y="82" text-anchor="middle" font-size="14" font-weight="bold" fill="#B91C1C">Hallucinated Tool</text>
+  <line x1="277" y1="90" x2="443" y2="90" stroke="#FCA5A5" stroke-width="1"/>
+
+  <!-- Speech bubble with fake tool call -->
+  <rect x="284" y="104" width="152" height="72" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.5"/>
+  <!-- Speech bubble tail -->
+  <polygon points="330,176 344,190 358,176" fill="#FEE2E2"/>
+  <text x="360" y="128" text-anchor="middle" font-size="11" font-weight="bold" fill="#B91C1C">Model says:</text>
+  <text x="360" y="145" text-anchor="middle" font-size="11" fill="#374151">call:</text>
+  <text x="360" y="161" text-anchor="middle" font-size="11" font-weight="bold" fill="#5B21B6">analyze_sentiment()</text>
+
+  <!-- Red X below -->
+  <circle cx="360" cy="216" r="22" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <line x1="346" y1="202" x2="374" y2="230" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+  <line x1="374" y1="202" x2="346" y2="230" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+
+  <text x="360" y="256" text-anchor="middle" font-size="11" fill="#374151">Tool doesn't exist.</text>
+  <text x="360" y="272" text-anchor="middle" font-size="11" fill="#374151">Runtime error.</text>
+  <text x="360" y="290" text-anchor="middle" font-size="11" fill="#374151">Agent halts.</text>
+  <text x="360" y="310" text-anchor="middle" font-size="10" fill="#9CA3AF">Fix: strict tool schema</text>
+  <text x="360" y="325" text-anchor="middle" font-size="10" fill="#22c55e">validation before dispatch</text>
+
+  <!-- ====== PANEL 3: Confident Wrong Answer ====== -->
+  <rect x="484" y="58" width="206" height="264" rx="10" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="587" y="82" text-anchor="middle" font-size="14" font-weight="bold" fill="#B91C1C">Confident Wrong Answer</text>
+  <line x1="504" y1="90" x2="670" y2="90" stroke="#FCA5A5" stroke-width="1"/>
+
+  <!-- Checkmark on red background - looks right but isn't -->
+  <rect x="537" y="108" width="100" height="100" rx="10" fill="#DC2626"/>
+  <!-- Big green checkmark over red -->
+  <circle cx="587" cy="158" r="36" fill="#22c55e" opacity="0.9"/>
+  <polyline points="568,158 582,172 610,144" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Ironically wrong -->
+  <text x="587" y="230" text-anchor="middle" font-size="11" fill="#374151">Model returns answer</text>
+  <text x="587" y="247" text-anchor="middle" font-size="11" fill="#374151">with full confidence.</text>
+  <text x="587" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#B91C1C">It is wrong.</text>
+  <text x="587" y="282" text-anchor="middle" font-size="11" fill="#374151">No error raised.</text>
+  <text x="587" y="300" text-anchor="middle" font-size="10" fill="#9CA3AF">Fix: output validation,</text>
+  <text x="587" y="315" text-anchor="middle" font-size="10" fill="#22c55e">evals, human review</text>
+
+  <!-- Caption -->
+  <text x="360" y="345" text-anchor="middle" font-size="11" fill="#374151">These three failure modes account for most agent production incidents. Build for all three.</text>
+  <text x="360" y="358" text-anchor="middle" font-size="11" fill="#9CA3AF">Step limits · schema validation · output verification</text>
+</svg>

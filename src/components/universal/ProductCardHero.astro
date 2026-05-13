@@ -1,0 +1,99 @@
+---
+/**
+ * ProductCardHero — Project page 4-quadrant hero.
+ * Run it / Read case study / See failures / View code as 4 cards.
+ * Each quadrant only renders if the corresponding prop is provided.
+ * Run It and View Code are external links (target=_blank); others are in-page anchors.
+ */
+interface Props {
+  runIt?: string;
+  caseStudy?: string;
+  failures?: string;
+  codeRepo?: string;
+}
+
+const { runIt, caseStudy, failures, codeRepo } = Astro.props;
+---
+
+<div class="product-card-hero">
+  {runIt && (
+    <a href={runIt} class="product-card-hero__quadrant product-card-hero__quadrant--primary" target="_blank" rel="noopener noreferrer">
+      <div class="product-card-hero__icon" aria-hidden="true">▷</div>
+      <div class="product-card-hero__label">Run it</div>
+    </a>
+  )}
+  {caseStudy && (
+    <a href={caseStudy} class="product-card-hero__quadrant">
+      <div class="product-card-hero__icon" aria-hidden="true">→</div>
+      <div class="product-card-hero__label">Read case study</div>
+    </a>
+  )}
+  {failures && (
+    <a href={failures} class="product-card-hero__quadrant">
+      <div class="product-card-hero__icon" aria-hidden="true">⚠</div>
+      <div class="product-card-hero__label">See failures</div>
+    </a>
+  )}
+  {codeRepo && (
+    <a href={codeRepo} class="product-card-hero__quadrant" target="_blank" rel="noopener noreferrer">
+      <div class="product-card-hero__icon" aria-hidden="true">{`</>`}</div>
+      <div class="product-card-hero__label">View code</div>
+    </a>
+  )}
+</div>
+
+<style>
+  .product-card-hero {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-1);
+    background: var(--fg-faint);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin: var(--space-5) 0 var(--space-6);
+  }
+
+  .product-card-hero__quadrant {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-4);
+    background: var(--paper);
+    color: var(--fg);
+    text-decoration: none;
+    transition: background var(--dur-micro) var(--ease-out);
+  }
+
+  .product-card-hero__quadrant:hover {
+    background: var(--paper-recess);
+  }
+
+  .product-card-hero__quadrant--primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .product-card-hero__quadrant--primary:hover {
+    background: var(--brick);
+  }
+
+  .product-card-hero__icon {
+    font-size: 22px;
+    line-height: 1;
+    font-family: var(--font-mono);
+  }
+
+  .product-card-hero__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+  }
+
+  @media (max-width: 600px) {
+    .product-card-hero { grid-template-columns: 1fr; }
+  }
+</style>

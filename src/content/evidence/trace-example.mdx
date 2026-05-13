@@ -1,0 +1,240 @@
+---
+id: trace-example
+title: Trace Examples
+description: Annotated traces of three Document Intelligence Agent runs showing every step with timing, tokens, and decision points. Covers a clean pass, an escalation failure, and a multi-step tool-using run. Demonstrates how to read traces to diagnose retrieval, decision, and cost issues.
+heroStats:
+  - value: '3,240'
+    label: 'Tokens — multi-step trace (Trace 3)'
+    color: 'accent'
+  - value: '4,280ms'
+    label: 'Latency — multi-step trace (Trace 3)'
+    color: 'default'
+methodology: Three representative traces selected from the baseline evaluation run. Each trace logged via src/ch06/tracer.py with full span data including retrieval scores, token counts, and per-call timing. Traces chosen to illustrate distinct execution patterns.
+measuredOn: 2026-03-26
+model: gpt-4o
+downloads:
+  - label: 'trace_TD001.json'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/traces/trace_TD001.json'
+  - label: 'trace_NA002.json'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/traces/trace_NA002.json'
+  - label: 'trace_TD002.json'
+    href: 'https://github.com/sunilp/agentic-ai/raw/main/code/ch06/traces/trace_TD002.json'
+---
+
+Three traced agent runs from the baseline evaluation. Each illustrates a different execution pattern: a clean pass, a failure, and a multi-step tool-using run.
+
+---
+
+## Trace 1: Clean Pass -- "What retry strategy does the reliability module use?"
+
+**Query:** "What retry strategy does the reliability module use?"
+**Result:** PASS (score: 0.85)
+**Total time:** 2,140ms
+**Total tokens:** 1,847
+**Steps:** 1 (no refinement needed)
+
+### Trace Waterfall
+
+| Span | Duration | Tokens | Detail |
+|------|----------|--------|--------|
+| 1. Retrieve | 45ms | 0 | Query: "retry strategy reliability module". Top 5 chunks retrieved. Best match: chapter 6, reliability section, chunk 14 (relevance: 0.87) |
+| 2. Build Context | 3ms | 0 | System prompt (142 tokens) + 5 evidence chunks (823 tokens) + query (12 tokens) = 977 tokens total context |
+| 3. Model Call #1 | 1,890ms | 1,847 | Prompt: 977 tokens. Completion: 870 tokens. Model: gpt-4o. Temperature: 0.0 |
+| 4. Parse Response | 2ms | 0 | No tool calls. Direct answer with citations. Confidence: 0.74 |
+| **Total** | **2,140ms** | **1,847** | |
+
+### What the Model Saw
+
+**System prompt (142 tokens):**
+
+```
+You are a document intelligence agent. Answer the user's question
+using ONLY the evidence provided below. Cite your sources using
+[Source: filename, chunk_id] format. If the evidence is insufficient
+to answer confidently, respond with "I don't have enough evidence
+to answer this question" and explain what information is missing.
+Do not use your training knowledge to fill gaps in the evidence.
+```
+
+**Evidence chunks (top 3 of 5 shown):**
+
+```
+[chunk_14, chapter_06.md, relevance: 0.87]
+The `with_retry` function wraps any async operation with exponential
+backoff... max_attempts: int = 3, min_wait: float = 1.0,
+max_wait: float = 30.0... This uses the tenacity library, which
+handles the exponential backoff math.
+
+[chunk_15, chapter_06.md, relevance: 0.82]
+The critical design choice is retry_on. By default, it retries on
+all exceptions. In practice, you should narrow this to retryable
+errors only. A 429 (rate limited) is retryable. A 400 (bad request)
+is not...
+
+[chunk_16, chapter_06.md, relevance: 0.71]
+Wrap the model client call, not the entire agent loop. If step 3
+of 5 hits a rate limit, you want to retry step 3, not restart
+from step 1.
+```
+
+**Query (12 tokens):** "What retry strategy does the reliability module use?"
+
+### What the Model Returned
+
+> The reliability module uses exponential backoff with configurable parameters. The `with_retry` function wraps async operations and supports three configuration options: `max_attempts` (default 3), `min_wait` (default 1.0 second), and `max_wait` (default 30.0 seconds). It is built on the tenacity library. The `retry_on` parameter controls which exceptions trigger a retry -- by default all exceptions, though in practice this should be narrowed to retryable errors like 429 (rate limited) and 500 (server error), excluding non-retryable errors like 400 (bad request). [Source: chapter_06.md]
+
+### Scoring
+
+| Criterion | Weight | Score | Notes |
+|-----------|--------|-------|-------|
+| Correctness | 0.4 | 1.0 | Answer matches expected: "exponential backoff with configurable max attempts, min wait, and max wait" |
+| Grounded | 0.3 | 0.5 | Citation present but uses "chapter_06.md" instead of the expected "reliability.py" format |
+| Completeness | 0.3 | 1.0 | Full answer addressing all parameters |
+| **Weighted** | | **0.85** | **PASS** (threshold: 0.7) |
+
+### What This Trace Teaches
+
+1. **Retrieval was fast (45ms) and accurate (0.87 relevance).** The chunking strategy works for direct questions about a specific module. The query vocabulary ("retry strategy", "reliability module") maps directly to the source text.
+2. **Context assembly is negligible (3ms).** The bottleneck is always the model call. Optimizing context assembly is not worth the engineering effort.
+3. **977 tokens of context for 870 tokens of output** -- roughly 1:1 input:output ratio. This is efficient. Compare with Trace 3 below where the ratio is 3:1.
+4. **Grounding partially failed.** The model cited the source but in a slightly different format than expected. The eval harness caught this as a partial score. This is the kind of failure that a stricter response parser would catch and retry.
+
+---
+
+## Trace 2: Failure -- "What is the system's GDPR compliance status?"
+
+**Query:** "What is the system's GDPR compliance status?"
+**Result:** FAIL (score: 0.12)
+**Total time:** 2,380ms
+**Total tokens:** 1,620
+**Steps:** 1 (should have escalated, did not)
+
+### Trace Waterfall
+
+| Span | Duration | Tokens | Detail |
+|------|----------|--------|--------|
+| 1. Retrieve | 52ms | 0 | Query: "GDPR compliance status". Top 5 chunks retrieved. Best match: chapter 06, security section, chunk 22 (relevance: 0.34) |
+| 2. Build Context | 3ms | 0 | System prompt (142 tokens) + 5 evidence chunks (780 tokens) + query (9 tokens) = 931 tokens total context |
+| 3. Model Call #1 | 2,120ms | 1,620 | Prompt: 931 tokens. Completion: 689 tokens. Model: gpt-4o. Temperature: 0.0 |
+| 4. Parse Response | 5ms | 0 | No tool calls. Direct answer (should have been escalation). Confidence: 0.41 |
+| **Total** | **2,380ms** | **1,620** | |
+
+### What the Model Saw
+
+**Evidence chunks (top 3 of 5 shown):**
+
+```
+[chunk_22, chapter_06.md, relevance: 0.34]
+The security module in src/ch06/security.py addresses two aspects:
+permission enforcement and injection detection...
+
+[chunk_23, chapter_06.md, relevance: 0.29]
+Run the injection test suite weekly. Update the payload list as new
+injection techniques emerge. Review the permission policies
+quarterly...
+
+[chunk_08, chapter_06.md, relevance: 0.26]
+Without evaluation: You cannot detect regressions when you change
+the prompt, the model, or the retrieval strategy...
+```
+
+The retrieval scores are all below 0.4. None of the retrieved chunks mention GDPR, compliance frameworks, data protection, or any related concept. The chunks are about security and evaluation -- topically adjacent but not relevant.
+
+### What the Model Returned
+
+> The system incorporates several compliance-relevant features. The permission policy enforces least-privilege access, the injection detection module provides security monitoring, and the evaluation harness enables ongoing validation. For GDPR specifically, the system's tracing and checkpointing features provide auditability, though explicit GDPR compliance documentation would need to be added based on your specific data processing requirements. [Source: chapter_06.md, security section]
+
+### Scoring
+
+| Criterion | Weight | Score | Notes |
+|-----------|--------|-------|-------|
+| Correctness | 0.4 | 0.0 | The system has no GDPR compliance features. This answer is fabricated from tangentially related content. |
+| Grounded | 0.3 | 0.0 | Claims are not supported by the cited evidence. The security section says nothing about GDPR. |
+| Completeness | 0.3 | 0.4 | Answer is substantive in length but substantively wrong |
+| **Weighted** | | **0.12** | **FAIL** (threshold: 0.7) |
+
+**Failure categories:** `escalation_missed`
+
+### What This Trace Teaches
+
+1. **Retrieval scores were a clear signal.** The best chunk scored 0.34 -- well below what a correct answer would need. But the agent had no threshold for "these results are too weak to answer." It treated 0.34 the same as 0.87.
+2. **The model confabulated a plausible but wrong answer.** It took genuinely present features (permission policies, tracing) and reframed them as "compliance-relevant." This is not hallucination in the traditional sense -- the features exist. It is misattribution: claiming those features serve a purpose (GDPR compliance) that they were never designed for.
+3. **The system prompt said "if the evidence is insufficient, escalate."** The model did not follow this instruction. Why? Because the retrieved chunks were topically adjacent (security, auditing), the model judged them as "sufficient" even though they did not address the actual question.
+4. **The fix is architectural, not prompt-based.** Adding more emphatic instructions to "please really escalate when unsure" does not work reliably. The fix is a retrieval relevance threshold (0.5 minimum) that prevents the model from seeing low-quality evidence in the first place. If the best chunk is below 0.5, the system escalates before the model call, saving both tokens and incorrect answers.
+
+---
+
+## Trace 3: Multi-Step with Tool Call -- "What fields does the EvalCase model include?"
+
+**Query:** "What fields does the EvalCase model include?"
+**Result:** PASS (score: 0.80)
+**Total time:** 4,280ms
+**Total tokens:** 3,240
+**Steps:** 3 (initial retrieval, tool call for code extraction, final answer)
+
+### Trace Waterfall
+
+| Span | Duration | Tokens | Detail |
+|------|----------|--------|--------|
+| 1. Retrieve | 48ms | 0 | Query: "EvalCase model fields". Top 5 chunks retrieved. Best match: chapter 06, evaluation section, chunk 4 (relevance: 0.78) |
+| 2. Build Context | 3ms | 0 | System prompt (142 tokens) + 5 evidence chunks (860 tokens) + query (10 tokens) = 1,012 tokens |
+| 3. Model Call #1 | 1,680ms | 1,420 | Prompt: 1,012 tokens. Completion: 408 tokens. Contains tool call: `extract_code_block("chapter_06.md", "EvalCase")` |
+| 4. Tool: extract_code_block | 12ms | 0 | Searched chapter_06.md for code block containing "EvalCase". Found Pydantic model definition. Returned 6-line code snippet. |
+| 5. Build Context #2 | 2ms | 0 | Previous context (1,012 tokens) + tool result (89 tokens) + model response (408 tokens) = 1,509 tokens |
+| 6. Model Call #2 | 2,340ms | 1,820 | Prompt: 1,509 tokens. Completion: 311 tokens. Final answer with citation. |
+| 7. Parse Response | 3ms | 0 | No further tool calls. Direct answer. Confidence: 0.82 |
+| **Total** | **4,280ms** | **3,240** | |
+
+### What Happened at Each Step
+
+**Step 1-2: Initial retrieval.** The retrieved chunks included the narrative description of EvalCase but not the actual code definition. The chunk containing the code block was ranked 3rd (relevance: 0.68) and included surrounding prose that diluted the field list.
+
+**Step 3: Model decides to use a tool.** Rather than answering from the narrative description alone, the model recognized it needed the exact field list and called `extract_code_block` to get the Pydantic model definition. This is the bounded autonomy in action -- the agent made a judgment call that the narrative evidence was insufficient for a precise answer.
+
+**Step 4: Tool execution.** The tool searched the source document for a code block containing "EvalCase" and returned:
+
+```python
+class EvalCase(BaseModel):
+    id: str
+    query: str
+    expected_answer: str
+    expected_sources: list[str]
+    category: str
+    difficulty: str
+```
+
+**Step 5-6: Second model call.** With both the narrative description and the exact code, the model produced a complete answer listing all six fields with their types and purpose.
+
+### What the Model Returned
+
+> The EvalCase model includes six fields: `id` (str) for tracking, `query` (str) for the test question, `expected_answer` (str) for the gold answer, `expected_sources` (list[str]) for expected citation sources, `category` (str) for slicing results by query type, and `difficulty` (str) for additional metadata. [Source: chapter_06.md, EvalCase class definition]
+
+### Scoring
+
+| Criterion | Weight | Score | Notes |
+|-----------|--------|-------|-------|
+| Correctness | 0.4 | 1.0 | All six fields listed with correct types |
+| Grounded | 0.3 | 1.0 | Cites the class definition directly |
+| Completeness | 0.3 | 0.4 | Listed fields but did not explain the role of `category` and `difficulty` in analysis (partial) |
+| **Weighted** | | **0.80** | **PASS** (threshold: 0.7) |
+
+### What This Trace Teaches
+
+1. **The tool call was the right decision.** Without it, the agent would have listed fields from the narrative description, likely missing `difficulty` which is only mentioned once in prose. The code extraction gave it the definitive list.
+2. **Cost of the tool call:** 12ms latency and 89 tokens of result. Negligible. The cost is in the second model call (1,820 tokens), not the tool itself.
+3. **Context grew from 1,012 to 1,509 tokens between calls.** This 50% growth is manageable for a 2-step run but would compound in a 5-step run. Context pruning between steps (Chapter 6's recommendation) would help for longer runs.
+4. **The 3,240 total tokens cost roughly $0.008.** The same query through the workflow (no tool call, single model call) would cost $0.0016 but would likely score lower on completeness. This is the single-agent tradeoff in action: better answers at higher cost.
+
+---
+
+## Reading Traces in Practice
+
+These three traces illustrate the three questions you should ask when reviewing any agent run:
+
+1. **Was retrieval accurate?** Check the relevance scores. Trace 1 had 0.87 (good). Trace 2 had 0.34 (bad -- should have triggered escalation). Retrieval quality determines the ceiling for answer quality.
+
+2. **Did the agent make good decisions?** Trace 3 shows a good decision (use a tool to get exact data). Trace 2 shows a bad decision (answer confidently from weak evidence). The agent's decision quality is what separates a bounded agent from a workflow.
+
+3. **Where did the time and tokens go?** In all three traces, model calls dominate. Retrieval and tool execution are fast. Context assembly is negligible. If you need to optimize latency, optimize the model call (shorter context, faster model, or caching).
+
+The trace format used here matches the `Tracer` output from `src/ch06/tracer.py`. In production, these traces would be stored as JSON and queryable through whatever observability stack you use. The human-readable format above is what `make trace-report` produces for review.

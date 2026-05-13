@@ -1,0 +1,82 @@
+---
+slug: llm-explorer
+title: LLM Explorer
+tagline: Hands-on experiments that make token counting, cost projection, and structured output tangible before you build agents.
+description: "Companion to Section 0a of Agentic AI for Serious Engineers. Three runnable modules -- token counter, context overflow simulator, and structured output patterns -- answer the core economics questions before you commit to an architecture. All modules run against a mock client; no API key required."
+architecture: /agentic-ai/assets/diagrams/context-window-bucket.svg
+evalStats:
+  accuracy: 'N/A'
+  avgCost: '$0.00'
+  latencyP50: 'N/A'
+repoUrl: https://github.com/sunilp/agentic-ai/tree/main/project/llm-explorer
+chapters: [ch-00a]
+---
+
+Hands-on experiments that make the mechanics of language models tangible before building agents on top of them.
+
+## What's inside
+
+- `src/token_counter.py` -- Compare the character-based token estimator from `llm_basics.py` against tiktoken (if installed). Project batch processing costs across all four model tiers from cheapest to most expensive.
+- `src/context_overflow.py` -- Progressive context fill experiment: fill a 4,096-token context window in 10% increments and observe how simulated quality degrades. Demonstrates the "lost in the middle" effect without a live model.
+- `src/structured_output.py` -- Three structured output patterns: JSON mode (model returns only JSON), schema enforcement (Pydantic validation), and extraction with fallback (safe default on failure).
+
+## How to run
+
+```bash
+make install
+
+# Token counting and cost projection
+python project/llm-explorer/src/token_counter.py
+
+# Context overflow experiment
+python project/llm-explorer/src/context_overflow.py
+
+# Structured output patterns
+python project/llm-explorer/src/structured_output.py
+```
+
+All three modules run against `MockClient` -- no API key required.
+
+## What you'll see
+
+**token_counter.py** prints a comparison table of character-based vs tiktoken counts for five sample texts ranging from a short sentence to a JSON snippet. Below the table, a batch cost projection shows the total cost to process 10,000 documents across all four model tiers, followed by a sensitivity table showing how cost scales with document length.
+
+```
+Token estimation: character-based vs tiktoken
+Sample                 chars  estimate  tiktoken  error %
+short_sentence            63        15        14    +7.1%
+medium_paragraph         367        91        83    +9.6%
+...
+
+Batch cost projection: 10,000 documents, 800 prompt tokens, 200 completion tokens each
+
+Model                               $/doc   Total cost
+gpt-4o-mini                    $0.000180       $1.80
+claude-haiku-4-5-20251001      $0.000720       $7.20
+gpt-4o                         $0.002200      $22.00
+claude-sonnet-4-20250514       $0.002800      $28.00
+```
+
+**context_overflow.py** prints a quality bar chart for each fill level from 10% to 100%:
+
+```
+Fill %  Est tokens  Utilisation   Found?  Quality  Bar
+   10%         409        10.0%      yes     1.00  [####################]
+   50%        2047        50.0%      yes     0.93  [##################  ]
+   80%        3277        80.0%      yes     0.55  [###########         ]
+  100%        4094       100.0%       no     0.22  [####                ]
+```
+
+**structured_output.py** prints pass/fail results for all three patterns, including deliberately invalid responses that exercise Pydantic validation errors.
+
+## What you'll learn
+
+Running these experiments answers three questions that determine your system's economics before you write a single agent:
+
+1. How far off is the quick token estimate? (Usually within 10%.)
+2. At what fill level does quality degrade? (Around 50% utilisation for middle-positioned content.)
+3. Which structured output pattern is safest? (Extraction with fallback -- the others silently fail on malformed model output.)
+
+## Connection to the book
+
+Section 0a covers how models process text as token sequences, why context windows are finite, and how to estimate cost before committing to an architecture. These experiments let you run the numbers yourself rather than trust the prose. The cost projections appear again in Chapter 7 when the book walks through framework selection decisions.

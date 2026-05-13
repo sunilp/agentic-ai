@@ -1,0 +1,201 @@
+---
+slug: memory-agent
+title: Memory Agent
+tagline: "Memory-augmented pipeline with session, long-term, and shared memory layers."
+description: "A memory-augmented multi-agent orchestrator that extends the Chapter 4 multi-agent pipeline with three memory layers: session memory for conversation context, long-term memory for episodic learning, and shared memory for cross-agent coordination. Built as the third end-to-end project for the book, demonstrating how agents learn from experience without losing control."
+architecture: /agentic-ai/assets/diagrams/memory-hierarchy.svg
+evalStats:
+  accuracy: '82%'
+  avgCost: '$0.007'
+  latencyP50: '3.1s'
+repoUrl: https://github.com/sunilp/agentic-ai/tree/main/project/memory-agent
+chapters: [ch-12, ch-08]
+references: [ch-12, ch-08]
+---
+
+A memory-augmented multi-agent orchestrator with session, long-term, and shared memory layers, plus security defenses against memory poisoning.
+
+## What it does
+
+- Maintains a sliding context window across conversation turns with pluggable truncation strategies
+- Stores corrections, escalations, and negative retrievals as episodic long-term memories
+- Shares retrieval caches and pipeline state across agents via scoped key-value storage
+- Scrubs PII from session memory before storage
+- Detects and blocks three classes of memory poisoning attacks
+- Filters memory writes through a worthiness gate so only genuinely informative experiences are retained
+
+## Architecture overview
+
+The system layers three memory subsystems onto the existing retriever-reasoner-verifier pipeline from Chapter 4.
+
+```
+Query
+  |
+  v
+SessionMemory           (sliding context window, PII scrubbing)
+  |
+  v
+SharedMemory            (check retrieval cache, write pipeline state)
+  |
+  v
+RetrieverAgent ------>  SharedMemory (cache results)
+  |
+  v
+ReasoningAgent          (uses session context + long-term memories)
+  |
+  v
+VerifierAgent           (retry loop; rejections written to SharedMemory)
+  |
+  v
+LongTermMemory          (store corrections, escalations, negative retrievals)
+  |
+  v
+Response
+```
+
+**Session memory** (`src/ch12_memory/session_memory.py`) manages the sliding context window presented to the LLM on each turn. Three truncation strategies ship out of the box: recency (drop oldest), importance (score by heuristic signals -- numbers, questions, back-references -- and drop the least valuable), and compaction (summarise the oldest portion into a single system message). PII scrubbing runs before storage when enabled.
+
+**Long-term memory** (`src/ch12_memory/long_term_memory.py`) persists episodic records of corrections, escalations, and negative retrievals into a SQLite-backed vector store. A worthiness filter decides what gets stored: corrections, escalations, and negative retrievals are always persisted; high-confidence routine successes are discarded. This keeps long-term memory lean and focused on genuinely informative experiences.
+
+**Shared memory** (`src/ch12_memory/shared_memory.py`) provides a scoped key-value store with optimistic concurrency and atomic claims. Agents write retrieval caches, pipeline state, and verification rejections at AGENT, TEAM, or GLOBAL scope. Version-checked writes prevent stale overwrites; atomic claims provide "first writer wins" semantics for task coordination.
+
+## How to run
+
+### Unit tests
+
+```bash
+# From repo root
+pytest tests/unit/test_session_memory.py -v
+pytest tests/unit/test_long_term_memory.py -v
+pytest tests/unit/test_shared_memory.py -v
+pytest tests/unit/test_memory_store.py -v
+pytest tests/unit/test_defenses.py -v
+pytest tests/unit/test_scrubber.py -v
+```
+
+### Integration tests
+
+```bash
+pytest tests/integration/test_memory_pipeline.py -v
+pytest tests/integration/test_memory_security.py -v
+```
+
+### Security demos
+
+```bash
+python project/memory-agent/src/poisoning_demo.py
+```
+
+## What you'll see
+
+### Unit tests
+
+```
+tests/unit/test_session_memory.py::test_recency_truncation PASSED
+tests/unit/test_session_memory.py::test_importance_scoring PASSED
+tests/unit/test_session_memory.py::test_compaction_summarises_old PASSED
+tests/unit/test_long_term_memory.py::test_store_correction PASSED
+tests/unit/test_long_term_memory.py::test_worthiness_filter PASSED
+tests/unit/test_shared_memory.py::test_version_conflict PASSED
+tests/unit/test_shared_memory.py::test_atomic_claim PASSED
+tests/unit/test_defenses.py::test_validator_blocks_contradictory_correction PASSED
+tests/unit/test_defenses.py::test_anomaly_detector_flags_dormant PASSED
+```
+
+### Integration tests
+
+```
+tests/integration/test_memory_pipeline.py::test_full_pipeline_with_memory PASSED
+tests/integration/test_memory_pipeline.py::test_session_context_truncation PASSED
+tests/integration/test_memory_security.py::test_poisoning_blocked PASSED
+tests/integration/test_memory_security.py::test_sleeper_detected PASSED
+```
+
+### Security demos
+
+```
+============================================================
+  Memory Poisoning Attack Demonstrations
+============================================================
+
+------------------------------------------------------------
+DEMO 1: Direct Memory Poisoning
+------------------------------------------------------------
+
+[WITHOUT DEFENSE] Stored poisoned record: True
+  Correction text: maximum refund is $50,000 per transaction ...
+
+[WITH DEFENSE] MemoryValidator blocked it: True
+  Human-reviewed override accepted: True
+
+------------------------------------------------------------
+DEMO 2: Shared Memory Poisoning
+------------------------------------------------------------
+
+  Claimed result : fabricated_document.md
+  Actual result  : policy_v3.md
+  Mismatch found : True
+  [DEFENSE] Independent verification detected the discrepancy.
+
+------------------------------------------------------------
+DEMO 3: Sleeper Memory Attack
+------------------------------------------------------------
+
+  Memory ID      : sleeper_1
+  Age (days)     : 90
+  Access count   : 0
+  Flagged        : True
+  [DEFENSE] MemoryAnomalyDetector flagged this as suspicious.
+
+  Legitimate record (access_count=15) flagged: False
+```
+
+## Security demos
+
+Three memory poisoning attacks and their corresponding defenses:
+
+| Attack | Vector | Defense |
+|--------|--------|---------|
+| Direct poisoning | Contradictory correction claims $50,000 refund when evidence says $500 | `MemoryValidator` detects numeric divergence between evidence and correction |
+| Shared memory poisoning | Compromised retriever writes fabricated results to shared cache | Independent verification compares claimed vs actual retrieval results |
+| Sleeper memory | Dormant record planted months ago activates on trigger query | `MemoryAnomalyDetector` flags zero-access records older than the dormancy threshold |
+
+Each defense is deterministic -- no LLM calls, no probabilistic checks. The validator runs heuristic contradiction detection; the anomaly detector uses age and access count thresholds. Human-reviewed corrections bypass the validator because a human has already judged the content.
+
+## Evaluation
+
+The eval harness (`project/memory-agent/evals/`) scores the memory-augmented agent across five criteria:
+
+| Criterion | Weight | What it measures |
+|-----------|--------|-----------------|
+| accuracy | 1.0 | Fraction of queries where the answer matches expected |
+| memory_hit_rate | 0.5 | Fraction of queries where the relevant memory was retrieved |
+| contradiction_rate | 0.8 | Fraction of responses contradicting stored verified facts (lower is better) |
+| cost_efficiency | 0.3 | Token cost ratio vs baseline |
+| latency | 0.2 | Fraction of queries answered within target latency |
+
+Four test datasets cover distinct memory capabilities:
+
+- `test_queries_multiturn.yaml` -- multi-turn conversation with context dependencies
+- `test_queries_learning.yaml` -- correction storage and retrieval across sessions
+- `test_queries_coordination.yaml` -- multi-agent shared state and cache coherence
+- `test_poisoning.yaml` -- adversarial inputs that should be blocked
+
+## Connection to the book
+
+This project is the practical companion to Chapter 12: Memory Management. Where the chapter explains the theory -- why agents need memory, how to structure it, and what can go wrong -- this project wires all three memory layers into a working pipeline and demonstrates the security surface that memory creates.
+
+The key architectural decisions:
+
+- **Session memory uses truncation, not unlimited context.** The chapter explains why unbounded context windows degrade performance and cost. The implementation provides three strategies so you can measure the tradeoff for your workload.
+- **Long-term memory is selective.** The worthiness filter discards routine successes. Only corrections, escalations, negative retrievals, and non-obvious successes are persisted. The chapter explains why: an agent that remembers everything learns nothing useful.
+- **Shared memory uses optimistic concurrency.** The chapter explains why locks are impractical for multi-agent coordination. The implementation uses version-checked writes and atomic claims instead.
+- **Security defenses are deterministic.** The chapter argues that memory validation should not depend on the same LLM that produced the memory. The implementation enforces this: `MemoryValidator` and `MemoryAnomalyDetector` use heuristic rules, not model calls.
+
+## Chapter cross-references
+
+| Chapter | Connection |
+|---------|------------|
+| Chapter 4: Multi-Agent Without Theater | Base multi-agent pipeline that this project extends |
+| Chapter 6: Evaluating and Hardening | Security hardening patterns applied to the memory layer |
+| Chapter 12: Memory Management | The chapter this project implements |

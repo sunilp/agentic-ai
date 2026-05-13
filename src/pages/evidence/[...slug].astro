@@ -1,0 +1,23 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import EvidenceLayout from '~/layouts/EvidenceLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('evidence');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'evidence'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<EvidenceLayout entry={entry}>
+  <Content />
+</EvidenceLayout>

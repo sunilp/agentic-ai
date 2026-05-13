@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="300" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="360" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">The Single-Turn Ceiling</text>
+  <line x1="40" y1="42" x2="680" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- Subtitle -->
+  <text x="360" y="62" text-anchor="middle" font-size="12" fill="#6B7280">Tool-using LLM calls are powerful. But they hit a hard limit: one turn, one result, no iteration.</text>
+
+  <!-- Flow: left to right -->
+  <!-- Step 1: User Query -->
+  <rect x="30" y="90" width="110" height="60" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="85" y="115" text-anchor="middle" font-size="12" font-weight="bold" fill="#1D4ED8">User Query</text>
+  <text x="85" y="132" text-anchor="middle" font-size="10" fill="#6B7280">"Research and</text>
+  <text x="85" y="144" text-anchor="middle" font-size="10" fill="#6B7280">summarize X"</text>
+
+  <!-- Arrow -->
+  <line x1="141" y1="120" x2="168" y2="120" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 2: Model -->
+  <rect x="170" y="90" width="100" height="60" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="220" y="118" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400E">Model</text>
+  <text x="220" y="135" text-anchor="middle" font-size="10" fill="#6B7280">picks a tool</text>
+  <text x="220" y="148" text-anchor="middle" font-size="10" fill="#6B7280">to call</text>
+
+  <!-- Arrow -->
+  <line x1="271" y1="120" x2="298" y2="120" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 3: Tool Call -->
+  <rect x="300" y="90" width="100" height="60" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/>
+  <text x="350" y="118" text-anchor="middle" font-size="12" font-weight="bold" fill="#5B21B6">Tool Call</text>
+  <text x="350" y="135" text-anchor="middle" font-size="10" fill="#6B7280">search()</text>
+  <text x="350" y="148" text-anchor="middle" font-size="10" fill="#6B7280">executed</text>
+
+  <!-- Arrow -->
+  <line x1="401" y1="120" x2="428" y2="120" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Result -->
+  <rect x="430" y="90" width="100" height="60" rx="8" fill="#F0FDF4" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="480" y="118" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803D">Result</text>
+  <text x="480" y="135" text-anchor="middle" font-size="10" fill="#6B7280">returned to</text>
+  <text x="480" y="148" text-anchor="middle" font-size="10" fill="#6B7280">model once</text>
+
+  <!-- Arrow pointing to wall -->
+  <line x1="531" y1="120" x2="556" y2="120" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arr-red)"/>
+
+  <!-- THE WALL -->
+  <rect x="558" y="72" width="18" height="114" rx="2" fill="#EF4444" opacity="0.85"/>
+  <!-- Wall hatch marks -->
+  <line x1="558" y1="82" x2="576" y2="96" stroke="#B91C1C" stroke-width="1.5"/>
+  <line x1="558" y1="100" x2="576" y2="114" stroke="#B91C1C" stroke-width="1.5"/>
+  <line x1="558" y1="118" x2="576" y2="132" stroke="#B91C1C" stroke-width="1.5"/>
+  <line x1="558" y1="136" x2="576" y2="150" stroke="#B91C1C" stroke-width="1.5"/>
+  <line x1="558" y1="154" x2="576" y2="168" stroke="#B91C1C" stroke-width="1.5"/>
+
+  <!-- Wall label -->
+  <text x="567" y="198" text-anchor="middle" font-size="10" font-weight="bold" fill="#B91C1C" transform="rotate(90, 567, 198)">CAN'T ITERATE</text>
+
+  <!-- What's blocked (faded, past the wall) -->
+  <rect x="590" y="90" width="100" height="60" rx="8" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  <text x="640" y="115" text-anchor="middle" font-size="11" fill="#9CA3AF" opacity="0.6">Another</text>
+  <text x="640" y="130" text-anchor="middle" font-size="11" fill="#9CA3AF" opacity="0.6">search?</text>
+  <text x="640" y="145" text-anchor="middle" font-size="11" fill="#9CA3AF" opacity="0.6">Retry?</text>
+  <!-- X through blocked box -->
+  <line x1="592" y1="92" x2="688" y2="148" stroke="#EF4444" stroke-width="2" opacity="0.5"/>
+  <line x1="688" y1="92" x2="592" y2="148" stroke="#EF4444" stroke-width="2" opacity="0.5"/>
+
+  <!-- Arrow pointing right past wall (agents start here) -->
+  <path d="M680,120 L700,120" stroke="#22c55e" stroke-width="2" stroke-dasharray="3,2"/>
+
+  <!-- Arrow from bottom of flow pointing forward -->
+  <text x="640" y="168" text-anchor="middle" font-size="11" font-weight="bold" fill="#22c55e">Agents start here</text>
+  <line x1="580" y1="176" x2="700" y2="176" stroke="#22c55e" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="640" y="196" text-anchor="middle" font-size="10" fill="#15803D">loop · retry · branch · decide</text>
+
+  <!-- Labels below flow -->
+  <text x="85" y="168" text-anchor="middle" font-size="10" fill="#6B7280">input</text>
+  <text x="220" y="168" text-anchor="middle" font-size="10" fill="#6B7280">reason</text>
+  <text x="350" y="168" text-anchor="middle" font-size="10" fill="#6B7280">act</text>
+  <text x="480" y="168" text-anchor="middle" font-size="10" fill="#6B7280">observe</text>
+
+  <!-- What single-turn can't do -->
+  <rect x="30" y="220" width="500" height="58" rx="6" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1"/>
+  <text x="40" y="240" font-size="11" font-weight="bold" fill="#B91C1C">Single-turn tool use cannot:</text>
+  <text x="40" y="258" font-size="11" fill="#374151">  - Search, read results, decide to search again with a refined query</text>
+  <text x="40" y="272" font-size="11" fill="#374151">  - Handle errors by retrying with different parameters</text>
+
+  <!-- Caption -->
+  <text x="360" y="292" text-anchor="middle" font-size="11" fill="#9CA3AF">Iteration is the core capability agents add. Everything else follows from that.</text>
+</svg>

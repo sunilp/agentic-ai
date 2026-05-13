@@ -1,0 +1,122 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '~/layouts/PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import MagazineGrid from '~/components/layout/MagazineGrid.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+import HeroStatGrid from '~/components/universal/HeroStatGrid.astro';
+
+const entries = await getCollection('evidence');
+const sorted = entries.sort((a, b) => b.data.measuredOn.getTime() - a.data.measuredOn.getTime());
+
+const heroStats = [
+  { value: '3.4pp', label: 'Workflow > Agent', color: 'accent' as const },
+  { value: '2.4×', label: 'Cost ratio', color: 'accent' as const },
+  { value: '2.2×', label: 'Latency', color: 'accent' as const },
+];
+---
+
+<PageLayout
+  title="Evidence — Agentic AI for Serious Engineers"
+  description="What we measured. Provenance. Downloads."
+  currentNav="Evidence"
+>
+  <Container>
+    <header style="margin: var(--space-7) 0 var(--space-5);">
+      <Tag variant="accent">Evidence</Tag>
+      <KineticHeading level={1}>Evidence</KineticHeading>
+      <Dek italic>Numbers, not narratives. Every claim on this site links back here. Every Evidence page links its own raw data, harness code, and measurement provenance.</Dek>
+    </header>
+
+    <HeroStatGrid items={heroStats} />
+
+    <h2 class="evidence-wall__heading">All Evidence</h2>
+    {sorted.length === 0 ? (
+      <p style="color: var(--fg-light); font-style: italic;">No Evidence pages yet.</p>
+    ) : (
+      <MagazineGrid cols={2}>
+        {sorted.map((e) => (
+          <a class="ev-card" href={`/agentic-ai/evidence/${e.id}/`}>
+            <div class="ev-card__title">{e.data.title}</div>
+            <p class="ev-card__desc">{e.data.description}</p>
+            <div class="ev-card__meta">
+              {e.data.heroStats.slice(0, 2).map((s) => (
+                <span class="ev-card__stat">{s.value} {s.label}</span>
+              ))}
+            </div>
+            <div class="ev-card__date">Measured {e.data.measuredOn.toISOString().slice(0, 10)}</div>
+          </a>
+        ))}
+      </MagazineGrid>
+    )}
+  </Container>
+</PageLayout>
+
+<style>
+  .evidence-wall__heading {
+    margin: var(--space-7) 0 var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .ev-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: var(--paper);
+    color: var(--fg);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  }
+
+  .ev-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--brick);
+  }
+
+  .ev-card__title {
+    font-family: var(--font-display);
+    font-size: var(--display-3);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+  }
+
+  .ev-card__desc {
+    color: var(--fg-light);
+    font-size: var(--body-2);
+    line-height: var(--lh-snug);
+    margin: 0;
+    flex: 1;
+  }
+
+  .ev-card__meta {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .ev-card__stat {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--brick);
+  }
+
+  .ev-card__date {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+    border-top: 1px solid var(--fg-faint);
+    padding-top: var(--space-2);
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+/**
+ * HypothesisBlock — Lab Report hypothesis statement with brick-red rule.
+ */
+---
+
+<aside class="hypothesis-block">
+  <div class="hypothesis-block__label">Hypothesis</div>
+  <div class="hypothesis-block__body"><slot /></div>
+</aside>
+
+<style>
+  .hypothesis-block {
+    margin: var(--space-5) 0;
+    padding: var(--space-4) var(--space-5);
+    background: var(--brick-wash);
+    border-left: 3px solid var(--brick);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .hypothesis-block__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+    margin-bottom: var(--space-2);
+    font-weight: 600;
+  }
+
+  .hypothesis-block__body {
+    font-family: var(--font-display);
+    font-size: var(--display-3);
+    line-height: var(--lh-snug);
+    color: var(--fg);
+    margin: 0;
+  }
+</style>

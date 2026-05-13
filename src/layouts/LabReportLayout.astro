@@ -1,0 +1,146 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import PageLayout from './PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import Reader from '~/components/layout/Reader.astro';
+import MetaStrip from '~/components/universal/MetaStrip.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import HypothesisBlock from '~/components/universal/HypothesisBlock.astro';
+import StatHero from '~/components/universal/StatHero.astro';
+import SectionAnchors from '~/components/universal/SectionAnchors.astro';
+import ReproduceStrip from '~/components/universal/ReproduceStrip.astro';
+import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
+import { entriesToContentEntries } from '~/lib/content-helpers';
+
+interface Props {
+  entry: CollectionEntry<'labs'>;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+
+const [chapters, fieldNotes, recipes, labs, evidence, projects] = await Promise.all([
+  getCollection('chapters'),
+  getCollection('fieldNotes'),
+  getCollection('recipes'),
+  getCollection('labs'),
+  getCollection('evidence'),
+  getCollection('projects'),
+]);
+const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects];
+const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
+const links = getReverseLinks(reverseIndex, d.id);
+
+const dateStr = d.date.toISOString().slice(0, 10);
+const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`];
+
+const sections = [
+  { label: 'Setup', anchor: 'setup' },
+  { label: 'Method', anchor: 'method' },
+  { label: 'Results', anchor: 'results' },
+  { label: 'Conclusion', anchor: 'conclusion' },
+  { label: 'What we got wrong', anchor: 'what-we-got-wrong' },
+  { label: 'Caveats', anchor: 'caveats' },
+];
+
+const collectionRoute: Record<string, string> = {
+  chapters: '/agentic-ai/book',
+  fieldNotes: '/agentic-ai/field-notes',
+  recipes: '/agentic-ai/recipes',
+  projects: '/agentic-ai/projects',
+  evidence: '/agentic-ai/evidence',
+  labs: '/agentic-ai/labs',
+  patterns: '/agentic-ai/patterns',
+};
+---
+
+<PageLayout
+  title={`${d.title} — Lab Report`}
+  description={d.description}
+  currentNav="Labs"
+>
+  <Container>
+    <MetaStrip items={metaItems} />
+    <KineticHeading level={1}>{d.title}</KineticHeading>
+    <Dek italic>{d.description}</Dek>
+
+    <HypothesisBlock>{d.hypothesis}</HypothesisBlock>
+
+    <StatHero value={d.result} label={d.resultLabel} />
+
+    <SectionAnchors items={sections} />
+
+    <Reader>
+      <article class="lab-body">
+        <slot />
+      </article>
+
+      <ReproduceStrip repo={d.reproduceRepo} data={d.dataUrl} seed={d.seed} />
+
+      {(links.referencedBy.length > 0 || links.citedBy.length > 0) && (
+        <section class="lab-cited-by">
+          <h2>Cited by</h2>
+          <ul>
+            {[...links.referencedBy, ...links.citedBy].map((l) => (
+              <li><a href={`${collectionRoute[l.collection] ?? '/agentic-ai'}/${l.id}/`}>{l.collection}/{l.id}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </Reader>
+  </Container>
+</PageLayout>
+
+<style>
+  .lab-body {
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .lab-body :global(h2) {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--fg-faint);
+    scroll-margin-top: 120px;
+  }
+
+  .lab-body :global(p),
+  .lab-body :global(ul),
+  .lab-body :global(ol) {
+    margin: 0 0 var(--space-4);
+  }
+
+  .lab-body :global(li) { margin-bottom: var(--space-2); }
+
+  .lab-body :global(a) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+  }
+
+  .lab-body :global(a:hover) {
+    color: var(--brick);
+    text-decoration-color: var(--brick);
+  }
+
+  .lab-cited-by {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--fg-faint);
+  }
+
+  .lab-cited-by h2 {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+
+  .lab-cited-by ul { list-style: none; padding: 0; }
+  .lab-cited-by a { font-family: var(--font-mono); font-size: var(--body-3); color: var(--fg); }
+</style>

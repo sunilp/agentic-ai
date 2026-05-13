@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500" style="background:#fff;font-family:system-ui,-apple-system,sans-serif;">
+
+  <!-- Background -->
+  <rect width="600" height="500" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="300" y="28" text-anchor="middle" font-size="16" font-weight="600" fill="#374151">Architecture Selection: Complexity vs. Value of Autonomy</text>
+
+  <!-- Axis boundaries: x: 80 to 530, y: 60 to 440 -->
+  <!-- Mid x = 305, mid y = 250 -->
+
+  <!-- Quadrant backgrounds -->
+  <!-- Bottom-left: Workflow (low complexity, low autonomy value) - light green -->
+  <rect x="80" y="250" width="225" height="190" rx="0" fill="#ECFDF5"/>
+  <!-- Bottom-right: Don't Build This (high complexity, low value) - light red -->
+  <rect x="305" y="250" width="225" height="190" rx="0" fill="#FEF2F2"/>
+  <!-- Top-left: Single Agent (low complexity, high value) - light blue -->
+  <rect x="80" y="60" width="225" height="190" rx="0" fill="#EFF6FF"/>
+  <!-- Top-right: Multi-Agent or HITL (high complexity, high value) - light yellow -->
+  <rect x="305" y="60" width="225" height="190" rx="0" fill="#FFFBEB"/>
+
+  <!-- Quadrant borders -->
+  <line x1="80" y1="250" x2="530" y2="250" stroke="#9CA3AF" stroke-width="1.5"/>
+  <line x1="305" y1="60" x2="305" y2="440" stroke="#9CA3AF" stroke-width="1.5"/>
+
+  <!-- Outer border -->
+  <rect x="80" y="60" width="450" height="380" fill="none" stroke="#D1D5DB" stroke-width="1.5"/>
+
+  <!-- ========== Y AXIS ========== -->
+  <!-- Arrow up -->
+  <line x1="80" y1="440" x2="80" y2="50" stroke="#374151" stroke-width="1.5" marker-end="url(#axisArrow)"/>
+  <!-- Y axis label -->
+  <text x="25" y="250" text-anchor="middle" font-size="13" font-weight="600" fill="#374151" transform="rotate(-90 25 250)">Value of Autonomy</text>
+  <!-- Y tick labels -->
+  <text x="75" y="445" text-anchor="end" font-size="11" fill="#6B7280">Low</text>
+  <text x="75" y="65" text-anchor="end" font-size="11" fill="#6B7280">High</text>
+
+  <!-- ========== X AXIS ========== -->
+  <!-- Arrow right -->
+  <line x1="80" y1="440" x2="540" y2="440" stroke="#374151" stroke-width="1.5" marker-end="url(#axisArrow)"/>
+  <!-- X axis label -->
+  <text x="310" y="478" text-anchor="middle" font-size="13" font-weight="600" fill="#374151">Task Complexity</text>
+  <!-- X tick labels -->
+  <text x="80" y="456" text-anchor="middle" font-size="11" fill="#6B7280">Low</text>
+  <text x="530" y="456" text-anchor="middle" font-size="11" fill="#6B7280">High</text>
+
+  <!-- ========== BOTTOM-LEFT: Workflow ========== -->
+  <rect x="110" y="310" width="160" height="54" rx="8" fill="#10B981" stroke="#059669" stroke-width="1.5"/>
+  <text x="190" y="333" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Workflow</text>
+  <text x="190" y="351" text-anchor="middle" font-size="11" fill="#D1FAE5">most tasks belong here</text>
+  <!-- Annotation -->
+  <text x="192" y="282" text-anchor="middle" font-size="11" fill="#065F46" font-style="italic">Fixed steps, predictable</text>
+  <text x="192" y="296" text-anchor="middle" font-size="11" fill="#065F46" font-style="italic">path, easy to audit</text>
+
+  <!-- ========== BOTTOM-RIGHT: Don't Build This ========== -->
+  <rect x="330" y="310" width="170" height="54" rx="8" fill="#EF4444" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="415" y="333" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Don't Build This</text>
+  <text x="415" y="351" text-anchor="middle" font-size="11" fill="#FEE2E2">complex but not worth it</text>
+  <!-- Annotation -->
+  <text x="415" y="282" text-anchor="middle" font-size="11" fill="#991B1B" font-style="italic">High effort, low return.</text>
+  <text x="415" y="296" text-anchor="middle" font-size="11" fill="#991B1B" font-style="italic">Simplify the problem.</text>
+
+  <!-- ========== TOP-LEFT: Single Agent ========== -->
+  <rect x="110" y="120" width="160" height="54" rx="8" fill="#3B82F6" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="190" y="143" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Single Agent</text>
+  <text x="190" y="161" text-anchor="middle" font-size="11" fill="#DBEAFE">simple autonomy, real value</text>
+  <!-- Annotation -->
+  <text x="192" y="200" text-anchor="middle" font-size="11" fill="#1E40AF" font-style="italic">Adaptive reasoning adds</text>
+  <text x="192" y="214" text-anchor="middle" font-size="11" fill="#1E40AF" font-style="italic">measurable value here</text>
+
+  <!-- ========== TOP-RIGHT: Multi-Agent or HITL ========== -->
+  <rect x="322" y="120" width="183" height="54" rx="8" fill="#F59E0B" stroke="#D97706" stroke-width="1.5"/>
+  <text x="413" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Multi-Agent</text>
+  <text x="413" y="156" text-anchor="middle" font-size="12" font-weight="600" fill="#ffffff">or HITL</text>
+  <text x="413" y="172" text-anchor="middle" font-size="11" fill="#FEF3C7">justified complexity</text>
+  <!-- Annotation -->
+  <text x="413" y="200" text-anchor="middle" font-size="11" fill="#92400E" font-style="italic">Coordination cost is</text>
+  <text x="413" y="214" text-anchor="middle" font-size="11" fill="#92400E" font-style="italic">justified by the stakes</text>
+
+  <!-- Center label -->
+  <circle cx="305" cy="250" r="5" fill="#9CA3AF"/>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="axisArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#374151"/>
+    </marker>
+  </defs>
+
+</svg>

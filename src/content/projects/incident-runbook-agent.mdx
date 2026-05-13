@@ -1,0 +1,98 @@
+---
+slug: incident-runbook-agent
+title: Incident Runbook Agent
+tagline: "Inspect signals, search runbooks, propose remediation, request human approval."
+description: "An operational agent that inspects system signals, searches runbooks for matching procedures, proposes remediation steps, and requests human approval before executing any action. Built as the second end-to-end project for the book, demonstrating human-in-the-loop architecture in practice."
+architecture: /agentic-ai/assets/diagrams/incident-runbook-architecture.svg
+evalStats:
+  accuracy: '88%'
+  avgCost: '$0.006'
+  latencyP50: '1.8s'
+repoUrl: https://github.com/sunilp/agentic-ai/tree/main/project/incident-runbook-agent
+chapters: [ch-05]
+references: [ch-05]
+---
+
+An operational agent that inspects system signals, searches runbooks for matching procedures, proposes remediation steps, and requests human approval before executing any action.
+
+## What it teaches
+
+This project is the practical complement to Chapter 5: Human-in-the-Loop as Architecture. Where the chapter explains the primitives -- approval gates, escalation policies, and audit logs -- this project wires them into a working agent pipeline that handles production incidents.
+
+The key lessons:
+
+- **Approval gates belong in code, not prompts.** The agent does not decide what needs approval. The escalation policy and approval gate enforce that decision deterministically, regardless of what the model thinks about risk.
+- **Dry-run by default.** The agent proposes but never executes unless explicitly configured for live mode. Safety is the default posture; autonomy is opted into.
+- **Audit everything.** Every decision -- agent and human -- is recorded in an append-only log. The compliance trail is a debugging tool, not just a regulatory checkbox.
+- **Bounded action space.** The agent does not invent remediation steps. It matches known runbook procedures. This constraint keeps the agent's behavior within the bounds of verified, documented responses.
+
+## Architecture
+
+Four components in a linear pipeline with approval gates at decision points:
+
+1. **Signal Ingestion** -- receives and normalizes system alerts into typed `Alert` models
+2. **Runbook Search** -- vector similarity search over runbook symptoms, returning matched procedures with confidence scores
+3. **Remediation Engine** -- proposes steps based on the matched runbook
+4. **Approval Loop** -- escalation policy check, then approval gate, then audit logging
+
+```
+Alert -> Runbook Search -> Match Found? -> Escalation Policy
+                                               |
+                                         PROCEED / ESCALATE / HALT
+                                               |
+                                         Approval Gate
+                                               |
+                                      APPROVE / REJECT / MODIFY
+                                               |
+                                         Execute (or Dry-Run)
+                                               |
+                                         Audit Log
+```
+
+Every step records to the audit log. Not just the final decision -- every intermediate step. When you reconstruct an incident response after the fact, you can trace the full reasoning: which runbook matched, at what confidence, what the escalation policy decided, whether a human reviewed it, and what they decided.
+
+## HITL primitives used
+
+The project imports and composes the three primitives from `src/ch05_hitl/`:
+
+| Primitive | Module | Role in pipeline |
+|-----------|--------|-----------------|
+| `ApprovalGate` | `src/ch05_hitl/approval.py` | Routes actions to human reviewers based on risk and confidence |
+| `EscalationPolicy` | `src/ch05_hitl/escalation.py` | Decides PROCEED / ESCALATE / HALT based on per-tier rules |
+| `AuditLog` | `src/ch05_hitl/audit.py` | Records every decision immutably for compliance and debugging |
+
+The escalation policy uses four risk tiers (low, medium, high, critical) with different confidence thresholds and maximum autonomous actions per tier. Critical-tier incidents always escalate to a human -- the agent never proceeds autonomously on critical alerts regardless of its confidence.
+
+## Running
+
+```bash
+# From the repo root
+python project/incident-runbook-agent/src/run.py
+```
+
+## Evaluation
+
+```bash
+python project/incident-runbook-agent/evals/run_eval.py
+```
+
+25 incident scenarios across five categories: correct triage, no-runbook cases, false alarms, approximate matches, and escalation scenarios. The evaluation measures both the agent's triage accuracy and the appropriateness of its escalation decisions -- does it escalate when it should, and proceed when it can?
+
+## Known failure surfaces
+
+Documented in detail in `project/incident-runbook-agent/docs/failure-analysis.md`:
+
+- **Semantic gap** -- alert terminology does not match runbook symptoms
+- **Wrong match** -- alert matches a runbook for a different issue
+- **Over-escalation** -- routine issues escalated unnecessarily, contributing to approval fatigue
+- **Under-escalation** -- high-risk actions proceed without human review
+- **Stale context** -- situation changes between escalation and human review
+- **Approval fatigue** -- too many escalations cause reviewers to rubber-stamp
+
+Chapter 7's decision framework includes a HITL theater check specifically informed by these failure modes: if approval latency is under 10 seconds, rejection rate is under 1%, and modification rate is zero, the human oversight is ceremonial rather than genuine.
+
+## Connection to the book
+
+This project sits at the intersection of Chapters 5 and 7. Chapter 5 explains why and how to build HITL controls. Chapter 7 asks whether those controls are earning their cost -- or whether a simpler architecture (a workflow with direct human handling, or a fully autonomous agent with post-hoc review) would be more effective for a given deployment context.
+
+The Incident Runbook Agent is an example where HITL is clearly justified: the actions have real-world consequences (remediation on production infrastructure), the cost of a wrong action exceeds the cost of review latency, and regulatory requirements demand a human decision trail. Not every agent system meets these criteria. Chapter 7's decision framework helps you determine whether yours does.

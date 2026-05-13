@@ -15,6 +15,13 @@ export default defineConfig({
     mdx(),
     svelte(),
   ],
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ['/agentic-ai/pagefind/pagefind.js'],
+      },
+    },
+  },
   redirects: {
     '/proof/baseline-eval-report': '/agentic-ai/evidence/baseline-eval-report/',
     '/proof/workflow-vs-agent-comparison': '/agentic-ai/evidence/workflow-vs-agent-comparison/',

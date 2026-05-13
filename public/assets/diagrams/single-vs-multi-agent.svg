@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="560" viewBox="0 0 800 560" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10B981"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="560" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Single-Agent vs. Multi-Agent Architecture</text>
+  <line x1="100" y1="48" x2="700" y2="48" stroke="#D1D5DB" stroke-width="1"/>
+
+  <!-- ===== LEFT PANEL: Single Agent ===== -->
+  <rect x="20" y="62" width="360" height="474" rx="12" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+  <text x="200" y="88" text-anchor="middle" font-size="15" font-weight="bold" fill="#374151">Single Agent</text>
+
+  <!-- Query -->
+  <rect x="110" y="104" width="180" height="44" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="200" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">Query</text>
+  <text x="200" y="138" text-anchor="middle" font-size="11" fill="#6B7280">user request</text>
+
+  <!-- Arrow -->
+  <line x1="200" y1="148" x2="200" y2="176" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Retrieve -->
+  <rect x="110" y="176" width="180" height="44" rx="8" fill="#ffffff" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="200" y="198" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">Retrieve</text>
+  <text x="200" y="213" text-anchor="middle" font-size="11" fill="#6B7280">vector search</text>
+
+  <!-- Arrow -->
+  <line x1="200" y1="220" x2="200" y2="248" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Reason -->
+  <rect x="110" y="248" width="180" height="44" rx="8" fill="#ffffff" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="200" y="270" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400E">Reason</text>
+  <text x="200" y="285" text-anchor="middle" font-size="11" fill="#6B7280">LLM chain-of-thought</text>
+
+  <!-- Arrow -->
+  <line x1="200" y1="292" x2="200" y2="320" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Answer -->
+  <rect x="110" y="320" width="180" height="44" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+  <text x="200" y="342" text-anchor="middle" font-size="13" font-weight="bold" fill="#065F46">Answer</text>
+  <text x="200" y="358" text-anchor="middle" font-size="11" fill="#6B7280">direct output</text>
+
+  <!-- Overhead label -->
+  <rect x="70" y="398" width="260" height="52" rx="8" fill="#FFF7ED" stroke="#F59E0B" stroke-width="1"/>
+  <text x="200" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400E">Overhead: Low</text>
+  <text x="200" y="437" text-anchor="middle" font-size="11" fill="#6B7280">1 model call · no coordination</text>
+  <text x="200" y="452" text-anchor="middle" font-size="11" fill="#6B7280">fast · no verification step</text>
+
+  <!-- Divider -->
+  <line x1="400" y1="68" x2="400" y2="530" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="6,4"/>
+
+  <!-- ===== RIGHT PANEL: Multi-Agent ===== -->
+  <rect x="420" y="62" width="360" height="474" rx="12" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+  <text x="600" y="88" text-anchor="middle" font-size="15" font-weight="bold" fill="#374151">Multi-Agent</text>
+
+  <!-- Query -->
+  <rect x="510" y="104" width="180" height="44" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="600" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">Query</text>
+  <text x="600" y="138" text-anchor="middle" font-size="11" fill="#6B7280">user request</text>
+
+  <!-- Arrow -->
+  <line x1="600" y1="148" x2="600" y2="176" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrowhead-blue)"/>
+
+  <!-- Coordinator -->
+  <rect x="510" y="176" width="180" height="44" rx="8" fill="#1D4ED8" stroke="#1E40AF" stroke-width="1.5"/>
+  <text x="600" y="198" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">Coordinator</text>
+  <text x="600" y="213" text-anchor="middle" font-size="11" fill="#BFDBFE">plans · dispatches</text>
+
+  <!-- Arrow -->
+  <line x1="600" y1="220" x2="600" y2="248" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Retriever -->
+  <rect x="510" y="248" width="180" height="40" rx="8" fill="#ffffff" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="600" y="267" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">RetrieverAgent</text>
+  <text x="600" y="282" text-anchor="middle" font-size="11" fill="#6B7280">fetch · rerank</text>
+
+  <!-- Arrow -->
+  <line x1="600" y1="288" x2="600" y2="312" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Reasoner -->
+  <rect x="510" y="312" width="180" height="40" rx="8" fill="#ffffff" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="600" y="331" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400E">ReasoningAgent</text>
+  <text x="600" y="346" text-anchor="middle" font-size="11" fill="#6B7280">synthesize</text>
+
+  <!-- Arrow -->
+  <line x1="600" y1="352" x2="600" y2="376" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Verifier -->
+  <rect x="510" y="376" width="180" height="40" rx="8" fill="#ffffff" stroke="#10B981" stroke-width="1.5"/>
+  <text x="600" y="395" text-anchor="middle" font-size="13" font-weight="bold" fill="#065F46">VerifierAgent</text>
+  <text x="600" y="410" text-anchor="middle" font-size="11" fill="#6B7280">fact-check · score</text>
+
+  <!-- Verify loop (dashed back to Reasoner) -->
+  <path d="M 690 396 C 730 396, 730 332, 690 332" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-red)"/>
+  <text x="745" y="368" text-anchor="middle" font-size="10" fill="#EF4444" transform="rotate(90 745 368)">re-reason</text>
+
+  <!-- Arrow: Verifier -> Answer -->
+  <line x1="600" y1="416" x2="600" y2="454" stroke="#10B981" stroke-width="1.5" marker-end="url(#arrowhead-green)"/>
+
+  <!-- Answer -->
+  <rect x="510" y="454" width="180" height="36" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+  <text x="600" y="472" text-anchor="middle" font-size="13" font-weight="bold" fill="#065F46">Verified Answer</text>
+  <text x="600" y="487" text-anchor="middle" font-size="11" fill="#6B7280">with confidence score</text>
+
+  <!-- Overhead label for multi -->
+  <!-- (placed below answer via the panel bottom section) -->
+  <!-- Bottom comparison bar -->
+  <rect x="40" y="542" width="320" height="4" rx="2" fill="#10B981"/>
+  <text x="200" y="555" text-anchor="middle" font-size="11" fill="#065F46">Lower latency · higher error rate</text>
+
+  <rect x="440" y="542" width="320" height="4" rx="2" fill="#3B82F6"/>
+  <text x="600" y="555" text-anchor="middle" font-size="11" fill="#1D4ED8">Higher overhead · lower error rate</text>
+</svg>

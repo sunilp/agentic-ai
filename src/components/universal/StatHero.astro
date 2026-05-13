@@ -1,0 +1,45 @@
+---
+/**
+ * StatHero — Lab Report hero with one giant result number.
+ * E.g. "87% vs 74%" + "router beat multi-agent".
+ */
+interface Props {
+  value: string;
+  label: string;
+}
+
+const { value, label } = Astro.props;
+---
+
+<section class="stat-hero">
+  <div class="stat-hero__value">{value}</div>
+  <div class="stat-hero__label">{label}</div>
+</section>
+
+<style>
+  .stat-hero {
+    text-align: center;
+    padding: var(--space-6) 0;
+    margin: var(--space-5) 0;
+    border-top: 1px solid var(--fg-faint);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .stat-hero__value {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--brick);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .stat-hero__label {
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg-light);
+  }
+</style>

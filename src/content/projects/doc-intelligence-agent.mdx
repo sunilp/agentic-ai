@@ -1,0 +1,217 @@
+---
+slug: doc-intelligence-agent
+title: Document Intelligence Agent
+tagline: "Ingest. Retrieve. Cite. Escalate on uncertainty."
+description: "A document question-answering system that retrieves evidence from ingested documents and answers with citations. Built incrementally across Chapters 2, 3, 4, and 6 of Agentic AI for Serious Engineers. This is the full case study -- the architecture, what we measured, what surprised us, and what we would change."
+architecture: /agentic-ai/assets/diagrams/system-architecture.svg
+evalStats:
+  accuracy: '76.7%'
+  avgCost: '$0.004'
+  latencyP50: '2.34s'
+repoUrl: https://github.com/sunilp/agentic-ai/tree/main/project/doc-intelligence-agent
+chapters: [ch-02, ch-03, ch-04, ch-06]
+references: [ch-02, ch-03, ch-04, ch-06, evidence-baseline-eval-report]
+---
+
+A document question-answering system that retrieves evidence from ingested documents and answers with citations.
+
+## What it does
+
+- Ingests PDF, markdown, and text documents
+- Chunks and indexes content using vector similarity
+- Retrieves relevant passages for a query
+- Answers with source citations
+- Escalates when evidence is insufficient (does not hallucinate)
+
+## Architecture walkthrough
+
+The system has four layers, each responsible for a distinct concern. The diagram below shows the full architecture; the narrative walks through each layer and the decisions behind it.
+
+<figure>
+  <img src="/agentic-ai/assets/diagrams/system-architecture.svg" alt="Document Intelligence Agent system architecture showing ingestion pipeline, retrieval layer, agent loop, and response pipeline" />
+  <figcaption>Figure 1: System architecture -- ingestion, retrieval, agent loop, and response pipeline</figcaption>
+</figure>
+
+**Ingestion pipeline.** Documents enter through the document loader (`src/ch02/loader.py`), which handles PDF, markdown, and plain text. The loader extracts raw text and metadata (filename, page numbers, headings). The chunker splits text into 512-token chunks with 64-token overlap. This overlap value was chosen deliberately -- shorter overlaps miss cross-sentence context, and longer overlaps waste tokens on duplication. After chunking, each chunk is embedded using a sentence-transformer model and stored in the vector index.
+
+**Retrieval layer.** Given a query, the retriever embeds it using the same model and runs a cosine similarity search against the index. It returns the top-5 chunks ranked by relevance score. After the hardening pass (Chapter 6), a neighbor boost was added: when a chunk scores above 0.7, its immediate neighbors (chunk N-1 and chunk N+1) receive a 0.15 relevance boost. This keeps related content adjacent in the context window and prevents chunk-boundary misses.
+
+**Agent loop.** The orchestration layer comes in three configurations, each built in a different chapter:
+
+1. **Workflow** (`src/ch03/workflow.py`): Fixed pipeline. Retrieve, build context, answer. One model call. Deterministic control flow.
+2. **Single agent** (`src/ch03/agent.py`): Bounded autonomy with a 5-step budget. Can refine its search query, call `extract_code_block` for precise code retrieval, and escalate when evidence is insufficient. Averages 2.8 model calls per query.
+3. **Multi-agent** (`src/ch04/multi_agent.py`): Router classifies query complexity, primary agent retrieves and reasons, verifier agent cross-checks citations and factual claims. Averages 4.6 model calls per query.
+
+**Response pipeline.** The response parser validates the agent's output against the citation contract: every factual claim must reference a document in the corpus index. After hardening, invalid citations (those referencing source code files instead of indexed documents) trigger a retry with explicit citation instructions. The response is then scored by the eval harness if running in evaluation mode.
+
+## Two implementations, one comparison
+
+This project is built twice to demonstrate the core architectural tradeoff:
+
+1. **Workflow** (`src/ch03/workflow.py`): Fixed pipeline. Retrieve, build context, answer. One model call. Deterministic.
+2. **Agent** (`src/ch03/agent.py`): Bounded autonomy. Can refine its search, plan steps, and escalate. Multiple model calls. Adaptive.
+
+Running both side by side with `make eval` shows exactly where each approach wins and loses. The comparison is not hypothetical -- it produces the data that drives the architectural decisions in Chapter 7.
+
+## What we measured
+
+### Baseline evaluation
+
+The baseline evaluation ran 30 test cases across 11 categories against the single-agent architecture. Full results are in the baseline evaluation report.
+
+| Metric | Value |
+|--------|-------|
+| Total cases | 30 |
+| Passed | 19 |
+| Failed | 11 |
+| Pass rate | 63.3% |
+| Average score | 0.68 |
+| Average latency | 2,340ms |
+| Total tokens | 47,200 |
+| Total cost | $0.118 |
+
+The failure distribution told us more than the pass rate:
+
+| Failure Category | Count | Description |
+|-----------------|-------|-------------|
+| no_citation | 5 | Answer lacked source citations or cited non-existent sources |
+| incorrect | 4 | Answer contained wrong information |
+| escalation_missed | 2 | Should have escalated but answered confidently |
+
+Seven of eleven failures traced back to the same root cause: the agent lacked a reliable mechanism for assessing its own confidence. It did not know when it did not know. The five no_citation failures and two escalation_missed failures accounted for 64% of all failures, and both categories are uncertainty calibration problems, not retrieval quality problems.
+
+### After hardening
+
+Chapter 6's hardening pass applied five targeted fixes, each addressing a different layer of the system:
+
+| Fix | Layer | What it addressed |
+|-----|-------|-------------------|
+| Retrieval relevance threshold (0.5 minimum) | System-level control | Confident wrong answers on out-of-scope queries |
+| Citation validation + retry on format mismatch | Response parsing | Citations referencing source code instead of indexed documents |
+| Neighbor boost in retrieval ranking | Retrieval pipeline | Answers missing detail that spanned chunk boundaries |
+| Constrained tool parameters (enum instead of free string) | Tool design | Agent hallucinating non-existent collection names |
+| Query decomposition + adaptive step budget | Agent architecture | Budget exhaustion on multi-hop questions |
+
+Post-hardening results:
+
+| Metric | Baseline | After Hardening | Change |
+|--------|----------|----------------|--------|
+| Pass rate | 63.3% | 76.7% | +13.4pp |
+| Average score | 0.68 | 0.79 | +0.11 |
+| no_citation failures | 5 | 1 | -4 |
+| escalation_missed failures | 2 | 0 | -2 |
+| incorrect failures | 4 | 3 | -1 |
+
+The +13.4 percentage point improvement came almost entirely from fixing uncertainty calibration and citation enforcement -- system-level controls, not model upgrades.
+
+## Architecture comparison
+
+We ran all three architectures (workflow, single agent, multi-agent) on the same 30 test cases.
+
+| Metric | Workflow | Single Agent | Multi-Agent |
+|--------|----------|-------------|-------------|
+| Pass rate | 56.7% | 63.3% | 66.7% |
+| Avg score | 0.61 | 0.68 | 0.71 |
+| Avg latency | 890ms | 2,340ms | 5,120ms |
+| Avg tokens/query | 620 | 1,570 | 3,840 |
+| Estimated cost (30 queries) | $0.047 | $0.118 | $0.288 |
+| P95 latency | 1,240ms | 3,680ms | 8,940ms |
+
+### Where each architecture wins
+
+| Category | Best Architecture | Why |
+|----------|------------------|-----|
+| simple_retrieval | Workflow (tie) | All three get these right. No reason to pay for agent overhead. |
+| technical_detail | Single Agent | Agent can refine query when first retrieval misses. Workflow cannot. Multi-agent adds no improvement. |
+| comparison | Multi-Agent | Verifier catches incorrect comparisons that single agent misses. Worth the overhead here. |
+| design_reasoning | Multi-Agent | Synthesis across sources benefits from reasoner + verifier separation. Multi-agent scores 0.72 vs single agent's 0.58. |
+| judgment / no_answer | None | All three fail. Uncertainty calibration is a model problem, not an architecture problem. |
+
+### The verdict
+
+Multi-agent improves pass rate by only 3.4 percentage points over single-agent, but costs 2.4x more and takes 2.2x longer. The improvement is concentrated in just two categories (comparison and design_reasoning). On every other category, multi-agent matches single-agent at 2.4x the cost.
+
+The hybrid approach outperforms any single architecture:
+
+- **Workflow** for simple, single-source questions (60% of real queries). Latency: sub-second. Cost: $0.0016 per query.
+- **Single agent** for multi-hop or refinement-needed queries (30%). The agent's query refinement justifies its 2.6x cost over the workflow.
+- **Multi-agent** only for explicitly flagged high-value queries where verification matters (10%). The 2.4x premium over single-agent is justified only for comparison and design reasoning queries.
+
+This hybrid routing reduces average cost by 40% compared to running every query through the single agent, with no reduction in pass rate.
+
+## What surprised us
+
+**Retrieval quality was not the bottleneck -- uncertainty calibration was.** Before building the system, we assumed we would spend most of our hardening effort improving retrieval: better embeddings, smarter chunking, more sophisticated re-ranking. In practice, retrieval worked well for 80%+ of queries. The biggest source of failures was the agent's inability to recognize when its retrieval was insufficient. It would receive chunks with relevance scores of 0.31 and answer confidently, hallucinating from training knowledge. The fix was a system-level retrieval threshold (0.5 minimum), not a better embedding model. This one change eliminated all escalation_missed failures.
+
+**Multi-agent improved accuracy by only 3.4 percentage points at 2.4x cost.** We expected the verifier agent to be more valuable. In practice, it confirmed what the primary agent already got right on 90%+ of queries. Its genuine contributions were limited to comparison and design_reasoning queries -- about 15% of the test set. For everything else, the verifier was performing a confirmation ceremony. A deterministic validation step (checking that cited documents exist in the index, checking that numbers parse correctly) would have caught most of the same errors at negligible cost.
+
+**The hybrid approach (workflow default, agent escalation) outperformed any single architecture.** This was the most important finding. No single architecture was best for all query types. But a routing layer that sends simple queries to the workflow and escalates complex ones to the agent produced better cost-adjusted results than running everything through any single architecture. The routing decision is simple: if the workflow's retrieval confidence is above threshold, use the workflow answer. If not, escalate to the agent. This is not sophisticated. It is effective.
+
+**Chunk overlap of 200 characters prevented more failures than expected.** The initial chunker used 64-token overlap. This was not enough to prevent cross-boundary misses on several technical_detail and comparison queries. Increasing overlap and adding the neighbor boost in the retrieval pipeline resolved this category of failure. Chunking is not a preprocessing detail -- it is an architectural decision that sets your retrieval ceiling.
+
+**The model's citation behavior required enforcement, not instruction.** The system prompt clearly stated the citation format. The model ignored it roughly 17% of the time -- not because it could not follow the format, but because it made reasonable inferences that violated the contract (citing source code files instead of the indexed documents that described them). The fix was citation validation in the response parser, not a stronger prompt. When correctness matters, enforce with code, not with instructions.
+
+## What we would change
+
+**Replace heuristic confidence estimation with a calibrated model.** The biggest class of failures -- confident wrong answers and missed escalations -- traces to the confidence estimation heuristic being too generous. The current system uses retrieval relevance scores as a proxy for answer confidence, with a hard threshold at 0.5. A calibrated model trained on (retrieval_score, answer_score) pairs from evaluation data would produce more nuanced escalation decisions. The data from the evaluation runs provides exactly the training signal needed.
+
+**Add query expansion for vocabulary mismatch cases.** Several technical_detail failures traced to the user's query terminology not matching the document's vocabulary. Query expansion -- generating 2-3 synonym queries before retrieval -- would bridge this gap without requiring an agent loop. This is a retrieval improvement, not an agent improvement.
+
+**Implement adaptive chunking based on document structure.** The current chunker uses a fixed 512-token window regardless of document structure. Technical documents have natural boundaries: section headings, code blocks, numbered lists. A structure-aware chunker that respects these boundaries would produce more coherent chunks and reduce cross-boundary misses.
+
+**Add an online feedback loop from user corrections.** The current system improves only through offline evaluation and manual hardening. In production, users who correct or reject the agent's answers are providing exactly the signal needed to improve retrieval and calibration. Logging user corrections, mapping them back to the query-retrieval-answer chain, and using them to update retrieval weights and escalation thresholds would create a continuous improvement loop.
+
+**Build the hybrid router from day one.** The comparison data makes it clear that no single architecture is optimal for all query types. If we were building this again, we would start with the hybrid architecture (workflow + agent escalation) rather than building the workflow first, then the agent, then comparing. The routing logic is simple enough that it does not add meaningful complexity, and it would have saved weeks of evaluation time.
+
+## Chapter cross-references
+
+| Chapter | What gets built |
+|---------|-----------------|
+| Chapter 2: Tools, Context, and the Agent Loop | Tool registry, document loader, chunker, retriever, basic agent loop |
+| Chapter 3: Workflow-First, Agent-Second | Workflow implementation, bounded agent, side-by-side comparison |
+| Chapter 4: Multi-Agent Without Theater | Multi-agent architecture with retriever, reasoner, and verifier |
+| Chapter 6: Evaluating and Hardening Agent Systems | Eval harness, tracer, reliability hardening, cost profiler, security hardening |
+| Chapter 7: When Not to Use Agents | Decision framework, honest retrospective with comparison data |
+
+## Evidence
+
+| Document | What it contains |
+|----------|-----------------|
+| Baseline Evaluation Report | 63.3% pass rate, per-category scores, failure distribution |
+| Architecture Comparison | Workflow vs single-agent vs multi-agent on same 30 queries |
+| Failure Case Studies | 5 traced failures with root cause analysis and fixes |
+| Trace Examples | 3 annotated agent runs showing step-by-step execution |
+
+## Running
+
+```bash
+make install
+python -m src.ch02.run --docs path/to/your/documents/
+python -m src.ch03.compare
+make eval
+```
+
+## Evaluation
+
+The eval harness tests 30 cases across six categories:
+
+| Category | Cases | What it tests |
+|----------|-------|---------------|
+| Simple retrieval | 5 | Direct factual questions with clear answers |
+| Technical detail | 5 | Specific implementation details in the docs |
+| Comparison | 5 | "What is the difference between X and Y" |
+| Design reasoning | 5 | Why decisions were made |
+| Error handling | 5 | Ambiguous or partially-answerable questions |
+| No-answer | 5 | Questions where the system should escalate rather than guess |
+
+See `evals/rubric.yaml` for scoring criteria and `evals/gold.json` for the gold dataset.
+
+## Critical failure surfaces
+
+These are not bugs to fix -- they are architectural constraints to understand and design around.
+
+- **Retrieval miss**: The answer exists in the documents but the query does not match the right chunks. Addressed by query expansion and neighbor boost.
+- **Context overflow**: Too many retrieved chunks degrade answer quality by diluting focus. Mitigated by chunk relevance thresholds.
+- **Hallucination on sparse evidence**: The model generates plausible-sounding but unsupported answers when retrieval is weak. Addressed by the 0.5 retrieval relevance threshold.
+- **Escalation threshold tuning**: Too conservative means unhelpful escalations; too permissive means hallucinated answers. Requires calibration against evaluation data.
+- **Chunk boundary splits**: Information spanning chunk boundaries may be retrieved but separated by unrelated content. Addressed by neighbor boost and increased overlap.
