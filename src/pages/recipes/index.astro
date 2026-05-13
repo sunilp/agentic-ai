@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '~/layouts/PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import MagazineGrid from '~/components/layout/MagazineGrid.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+import Cadence from '~/components/universal/Cadence.astro';
+
+const entries = await getCollection('recipes');
+const sorted = entries.sort((a, b) => b.data.verifiedOn.getTime() - a.data.verifiedOn.getTime());
+---
+
+<PageLayout
+  title="Recipes — Agentic AI for Serious Engineers"
+  description="Verified-on-real-systems Recipes. Build it in an afternoon."
+  currentNav="Recipes"
+>
+  <Container>
+    <header class="r-index__header">
+      <Tag variant="accent">Recipes</Tag>
+      <KineticHeading level={1}>Recipes</KineticHeading>
+      <Dek italic>Build it in an afternoon. Every Recipe verified end-to-end against a live system on a known date with explicit versions.</Dek>
+      <Cadence text="Every other Wednesday" />
+    </header>
+
+    {sorted.length === 0 ? (
+      <p class="r-index__empty">No Recipes published yet.</p>
+    ) : (
+      <MagazineGrid cols={3}>
+        {sorted.map((e) => (
+          <a class="r-index__card" href={`/agentic-ai/recipes/${e.id}/`}>
+            <img
+              src={`/agentic-ai/assets/banners/${e.data.id}.png`}
+              alt={`${e.data.title} banner`}
+              class="r-index__banner"
+              loading="lazy"
+              width="600"
+              height="315"
+            />
+            <div class="r-index__kicker">{e.data.id.toUpperCase()} · Verified {e.data.verifiedOn.toISOString().slice(0, 10)}</div>
+            <h2 class="r-index__title">{e.data.title}</h2>
+            <p class="r-index__desc">{e.data.description}</p>
+            <div class="r-index__cta">{e.data.estimatedMinutes} min →</div>
+          </a>
+        ))}
+      </MagazineGrid>
+    )}
+  </Container>
+</PageLayout>
+
+<style>
+  .r-index__header {
+    margin: var(--space-7) 0 var(--space-6);
+  }
+
+  .r-index__header :global(.tag) { margin-bottom: var(--space-3); }
+  .r-index__header :global(.kinetic-heading) { font-size: var(--display-1); }
+  .r-index__header :global(.cadence) { margin-top: var(--space-2); }
+
+  .r-index__empty {
+    color: var(--fg-light);
+    font-style: italic;
+    margin: var(--space-7) 0;
+  }
+
+  .r-index__card {
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition: transform var(--dur-micro) var(--ease-out);
+  }
+
+  .r-index__card:hover { transform: translateY(-2px); }
+
+  .r-index__banner {
+    width: 100%;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    background: var(--paper-recess);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-sm);
+  }
+
+  .r-index__kicker {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+  }
+
+  .r-index__title {
+    font-family: var(--font-display);
+    font-size: var(--display-3);
+    line-height: var(--lh-snug);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .r-index__desc {
+    color: var(--fg-light);
+    font-size: var(--body-2);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+
+  .r-index__cta {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+    margin-top: auto;
+  }
+</style>
