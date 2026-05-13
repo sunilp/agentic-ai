@@ -12,7 +12,9 @@ interface Props {
 }
 
 const { ratio = '1:1', gap = 'var(--space-6)', class: className } = Astro.props;
-const [a, b] = ratio.split(':').map(Number);
+const [rawA, rawB] = ratio.split(':').map((v) => Number(v.trim()));
+const a = Number.isFinite(rawA) && rawA > 0 ? rawA : 1;
+const b = Number.isFinite(rawB) && rawB > 0 ? rawB : 1;
 ---
 
 <div
