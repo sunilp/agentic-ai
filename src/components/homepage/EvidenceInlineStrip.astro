@@ -44,8 +44,18 @@ const { stats = defaultStats } = Astro.props;
 
 <script>
   import { observeCountUps } from '~/components/client/count-up';
-  observeCountUps();
-  document.addEventListener('astro:page-load', () => observeCountUps());
+
+  let observer: IntersectionObserver | null = observeCountUps();
+
+  document.addEventListener('astro:page-load', () => {
+    observer?.disconnect();
+    observer = observeCountUps();
+  });
+
+  document.addEventListener('astro:before-preparation', () => {
+    observer?.disconnect();
+    observer = null;
+  });
 </script>
 
 <style>

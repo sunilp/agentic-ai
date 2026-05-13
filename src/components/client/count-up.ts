@@ -33,10 +33,14 @@ export function startCountUp(el: HTMLElement, opts: CountUpOptions): void {
 /**
  * Observe a NodeList of count-up targets and trigger on viewport entry.
  * Each element must have `data-count-to`, optional `data-count-decimals`, `data-count-suffix`.
+ *
+ * Returns an IntersectionObserver so the caller can disconnect it before
+ * re-initializing on View Transition navigation. Without this, observers
+ * accumulate across navigations and leak memory.
  */
-export function observeCountUps(selector = '[data-count-to]'): void {
+export function observeCountUps(selector = '[data-count-to]'): IntersectionObserver | null {
   const targets = document.querySelectorAll<HTMLElement>(selector);
-  if (!targets.length) return;
+  if (!targets.length) return null;
 
   const observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {
@@ -51,4 +55,5 @@ export function observeCountUps(selector = '[data-count-to]'): void {
   }, { threshold: 0.5 });
 
   targets.forEach((el) => observer.observe(el));
+  return observer;
 }
