@@ -1,0 +1,37 @@
+---
+/**
+ * MagazineGrid — 12-column responsive grid for index pages.
+ * Default: 3 columns on desktop, 2 on tablet, 1 on mobile.
+ */
+interface Props {
+  cols?: number;
+  gap?: string;
+  class?: string;
+}
+
+const { cols = 3, gap = 'var(--space-5)', class: className } = Astro.props;
+---
+
+<div class:list={['magazine-grid', className]} style={`--cols: ${cols}; --gap: ${gap}`}>
+  <slot />
+</div>
+
+<style>
+  .magazine-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    gap: var(--gap);
+  }
+
+  @media (max-width: 960px) {
+    .magazine-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .magazine-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
