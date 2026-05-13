@@ -12,6 +12,13 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  markdown: {
+    shikiConfig: {
+      // Light theme to match editorial off-white brand surface.
+      // github-dark fights the warm-paper aesthetic of the rest of the site.
+      theme: 'github-light',
+    },
+  },
   integrations: [
     mdx(),
     svelte(),
