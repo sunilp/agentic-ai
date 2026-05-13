@@ -1,5 +1,8 @@
 ---
 description: "Two agents can score identically on a benchmark and fail differently in production. Failure buckets are the rubric. The aggregate is what falls out of it."
+image: assets/images/field-notes/002-banner.png
+date: "2026-05-17"
+author: Sunil Prakash
 ---
 
 <div class="fn-meta" markdown>

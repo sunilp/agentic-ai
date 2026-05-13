@@ -1,5 +1,8 @@
 ---
 description: "Three papers and one practitioner survey put multi-agent failure rates between 41 and 86.7 percent and error amplification up to 17.2x. The version that survived production looks more like a CI pipeline than a faculty meeting."
+image: assets/images/field-notes/001-banner.png
+date: "2026-05-14"
+author: Sunil Prakash
 ---
 
 <div class="fn-meta" markdown>

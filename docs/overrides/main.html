@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  {%- if page and page.url -%}
+  {%- set is_field_note = page.url.startswith("field-notes/") and page.url != "field-notes/" -%}
+  {%- set is_recipe = page.url.startswith("recipes/") and page.url != "recipes/" -%}
+  {%- if (is_field_note or is_recipe) and page.meta and page.meta.image -%}
+    {%- set abs_image = config.site_url ~ page.meta.image -%}
+    {%- set page_url = config.site_url ~ page.url -%}
+
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="{{ abs_image }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ abs_image }}">
+    {%- if page.meta.author %}
+    <meta name="author" content="{{ page.meta.author }}">
+    {%- endif %}
+    {%- if page.meta.date %}
+    <meta property="article:published_time" content="{{ page.meta.date }}">
+    {%- endif %}
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": {{ page.title | tojson }},
+      "description": {{ (page.meta.description or "") | tojson }},
+      "image": {{ abs_image | tojson }},
+      {%- if page.meta.date %}
+      "datePublished": {{ page.meta.date | tojson }},
+      "dateModified": {{ page.meta.date | tojson }},
+      {%- endif %}
+      "author": {
+        "@type": "Person",
+        "name": {{ (page.meta.author or "Sunil Prakash") | tojson }},
+        "url": "https://sunilprakash.com"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Sunil Prakash",
+        "url": "https://sunilprakash.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": {{ page_url | tojson }}
+      }
+    }
+    </script>
+  {%- endif -%}
+  {%- endif -%}
+{% endblock %}
