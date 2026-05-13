@@ -9,15 +9,16 @@ interface Props {
 
 const { type = 'tip', label } = Astro.props;
 
-const defaultLabels = {
+const defaultLabels: Record<'gotcha' | 'warn' | 'tip', string> = {
   gotcha: 'Gotcha',
   warn: 'Warning',
   tip: 'Tip',
 };
-const displayLabel = label ?? defaultLabels[type];
+const safeType = (type in defaultLabels ? type : 'tip') as keyof typeof defaultLabels;
+const displayLabel = label ?? defaultLabels[safeType];
 ---
 
-<aside class:list={['callout', `callout--${type}`]}>
+<aside class:list={['callout', `callout--${safeType}`]}>
   <div class="callout__label">{displayLabel}</div>
   <div class="callout__body"><slot /></div>
 </aside>
