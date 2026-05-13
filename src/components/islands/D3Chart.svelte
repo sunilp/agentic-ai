@@ -44,7 +44,10 @@
     if (!src || loadedData) return;
     let aborted = false;
     fetch(src)
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`D3Chart: HTTP ${r.status} for ${src}`);
+        return r.json();
+      })
       .then((d: ChartData) => {
         if (!aborted) loadedData = d;
       })
