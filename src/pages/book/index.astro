@@ -53,10 +53,23 @@ function chapterPrefix(slug: string): string {
   currentNav="Book"
 >
   <Container>
-    <header style="margin: var(--space-7) 0 var(--space-6);">
-      <Tag variant="accent">Book</Tag>
-      <KineticHeading level={1}>The Book</KineticHeading>
-      <Dek italic>A field guide to building reliable, evaluable, production-grade agent systems.</Dek>
+    <header class="book-header">
+      <div class="book-header__text">
+        <Tag variant="accent">Book</Tag>
+        <KineticHeading level={1}>The Book</KineticHeading>
+        <Dek italic>A field guide to building reliable, evaluable, production-grade agent systems.</Dek>
+        <div class="book-header__ctas">
+          <a class="book-header__cta book-header__cta--primary" href="https://www.amazon.com/dp/B0GVG6848F" target="_blank" rel="noopener noreferrer">
+            Get the book on Amazon →
+          </a>
+          <a class="book-header__cta" href="/agentic-ai/book/00a-how-llms-work/">
+            Start the Foundations
+          </a>
+        </div>
+      </div>
+      <div class="book-header__cover">
+        <img src="/agentic-ai/assets/images/book-cover.jpg" alt="Agentic AI for Serious Engineers — book cover" loading="eager" width="320" height="480" />
+      </div>
     </header>
 
     {parts.map((part) => {
@@ -85,6 +98,75 @@ function chapterPrefix(slug: string): string {
 </PageLayout>
 
 <style>
+  .book-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-7);
+    align-items: center;
+    margin: var(--space-7) 0 var(--space-7);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .book-header__text :global(.kinetic-heading) {
+    font-size: var(--display-1);
+  }
+
+  .book-header__ctas {
+    margin-top: var(--space-4);
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .book-header__cta {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--meta-1);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--fg);
+    text-decoration: none;
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-md);
+    transition: background var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+  }
+
+  .book-header__cta:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .book-header__cta--primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .book-header__cta--primary:hover {
+    background: var(--brick);
+    border-color: var(--brick);
+  }
+
+  .book-header__cover img {
+    display: block;
+    width: 240px;
+    height: auto;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (max-width: 720px) {
+    .book-header {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    .book-header__cover img {
+      width: 180px;
+      margin: 0 auto;
+    }
+  }
+
   .book-part {
     margin: var(--space-7) 0;
   }
