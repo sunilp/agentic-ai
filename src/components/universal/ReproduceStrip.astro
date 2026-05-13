@@ -14,8 +14,8 @@ const { repo, data, seed } = Astro.props;
 <aside class="reproduce-strip">
   <div class="reproduce-strip__label">↓ Reproduce</div>
   <div class="reproduce-strip__links">
-    <a href={repo} target="_blank" rel="noopener" class="reproduce-strip__link">Code</a>
-    <a href={data} target="_blank" rel="noopener" class="reproduce-strip__link">Data</a>
+    <a href={repo} target="_blank" rel="noopener noreferrer" class="reproduce-strip__link">Code</a>
+    <a href={data} target="_blank" rel="noopener noreferrer" class="reproduce-strip__link">Data</a>
     {seed !== undefined && <span class="reproduce-strip__seed">seed = {seed}</span>}
   </div>
 </aside>
