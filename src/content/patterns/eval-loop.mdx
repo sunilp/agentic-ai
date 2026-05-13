@@ -1,0 +1,11 @@
+---
+slug: eval-loop
+name: Eval Loop
+oneLine: Build the rubric and the gold dataset before you build the agent.
+whenToUse: |
+  Always. There is no agent project where this is the wrong pattern. The rubric defines what "good" means; the gold dataset is the test bench; the agent is iterated against both.
+whenNotToUse: |
+  When the rubric isn't built yet. (That's the signal to stop and build the rubric first.)
+antiPattern: |
+  Building the agent first, then evaluating it only against the demo queries you already know it handles well. That's not evaluation, it's confirmation.
+---

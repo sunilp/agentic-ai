@@ -1,0 +1,11 @@
+---
+slug: approval-gate
+name: Approval Gate
+oneLine: Side-effecting actions require explicit human approval before execution; non-side-effecting actions don't.
+whenToUse: |
+  When the agent has access to actions that cost money, modify external state, or send messages. Define the policy at design time, not after legal complains. Approval should be cheap for routine cases and require deliberation for risky ones.
+whenNotToUse: |
+  For read-only operations. Approval-everything systems get reviewer fatigue and produce rubber-stamps.
+antiPattern: |
+  No approval gates at all. Every agent failure becomes a customer-visible incident instead of a caught rejection.
+---

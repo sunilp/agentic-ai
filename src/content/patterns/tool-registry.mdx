@@ -1,0 +1,9 @@
+---
+slug: tool-registry
+name: Tool Registry
+oneLine: All tools available to the agent are declared in one schema-validated registry with explicit input/output types.
+whenToUse: |
+  Every agent that calls more than one tool. The registry is the source of truth for what tools exist, what they accept, and what they return. Schema validation rejects malformed tool calls at the boundary instead of mid-flight.
+whenNotToUse: |
+  When the agent calls only one tool. The overhead of a registry isn't worth it for trivial cases — just call the tool directly.
+---
