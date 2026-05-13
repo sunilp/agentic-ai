@@ -1,0 +1,85 @@
+---
+/**
+ * TopNav — 6-item primary navigation.
+ * Sticky on scroll. Highlights current section.
+ */
+import Brand from './Brand.astro';
+
+interface Props {
+  current?: string;
+}
+
+const { current = '' } = Astro.props;
+
+const items = [
+  { href: '/agentic-ai/start/', label: 'Start' },
+  { href: '/agentic-ai/book/', label: 'Book' },
+  { href: '/agentic-ai/labs/', label: 'Labs' },
+  { href: '/agentic-ai/field-notes/', label: 'Field Notes' },
+  { href: '/agentic-ai/recipes/', label: 'Recipes' },
+  { href: '/agentic-ai/evidence/', label: 'Evidence' },
+];
+---
+
+<header class="topnav">
+  <div class="topnav__inner">
+    <Brand size="sm" />
+    <nav class="topnav__items" aria-label="Primary">
+      {items.map((item) => (
+        <a
+          href={item.href}
+          class:list={['topnav__link', current === item.label && 'topnav__link--current']}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .topnav__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-3) var(--space-5);
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .topnav :global(.brand) { color: var(--paper); }
+  .topnav :global(.brand__subtitle) { color: rgba(255, 255, 255, 0.5); }
+  .topnav :global(.brand:hover .brand__title) { color: var(--paper); }
+
+  .topnav__items {
+    display: flex;
+    gap: var(--space-5);
+    margin-left: auto;
+  }
+
+  .topnav__link {
+    font-size: var(--meta-1);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.6);
+    padding: var(--space-2) 0;
+    border-bottom: 2px solid transparent;
+    transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+  }
+
+  .topnav__link:hover { color: var(--paper); }
+  .topnav__link--current { color: var(--paper); border-bottom-color: var(--paper); }
+
+  @media (max-width: 720px) {
+    .topnav__items { gap: var(--space-3); flex-wrap: wrap; }
+  }
+</style>
