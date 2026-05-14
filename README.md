@@ -106,7 +106,8 @@ pnpm astro check  # type check
 Content lives under `src/content/` as MDX with Zod-validated frontmatter:
 
 - **chapters/** — 5 Foundations + 13 chapters
-- **fieldNotes/** — twice-weekly observations (Thursdays + Sundays)
+- **fieldNotes/** — twice-weekly observations from inside the work (Thursdays + Sundays)
+- **signal/** — commentary on external discourse: papers, tools, marketplaces, vendor claims
 - **recipes/** — buildable-in-an-afternoon walkthroughs (Wednesdays)
 - **projects/** — case-study teardowns of 7 reference systems
 - **evidence/** — measured eval data backing the homepage stats
