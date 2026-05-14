@@ -99,6 +99,16 @@ Five questions before installing or writing a skill. Each maps to an architectur
 4. **Will Claude invoke this when you do not want it?** If the skill does anything with side effects, a deploy, a commit, a send-message, set `disable-model-invocation: true` in the frontmatter and require explicit invocation. The architecture supports this. Most of the public skills do not use it. Most should.
 5. **With 30+ skills installed, which are being budget-trimmed right now?** Run `/doctor`. If the answer is not a list you can recite from memory, the library owns your retrieval surface rather than the other way around. The diagnostic exists. Use it before the next install, not after the next miss.
 
+### Monday morning
+
+If you have a Claude Code setup with more than a handful of installed skills, five concrete moves before the next session.
+
+1. Run `/doctor`. Note which skills are budget-trimmed.
+2. Remove any skill you have not invoked in the last month.
+3. Rewrite the descriptions of skills you kept as trigger contracts, not summaries.
+4. Set `disable-model-invocation: true` on every skill with side effects (deploy, commit, send-message).
+5. Run `/doctor` again. The trimmed list should be empty or close to it.
+
 ## What to ignore
 
 Four dismissals. Each has a one-line reason.
