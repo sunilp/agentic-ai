@@ -1,0 +1,122 @@
+---
+id: sg-001
+title: The skills.md discourse is sharpening the wrong knife
+dek: The community is writing token-saving guides and building million-skill marketplaces. The actual constraint in Anthropic's Skills architecture is a 1% description budget that silently trims the labels of skills you invoke least.
+description: "Most skills.md advice in circulation is optimizing the wrong surface. Anthropic's docs name the real constraint: a 1% context-window budget for descriptions that quietly trims the labels of skills you invoke least. The marketplace economy is a retrieval anti-pattern."
+banner: /agentic-ai/assets/banners/sg-001.png
+date: 2026-05-14
+readingTime: 8
+pullQuote: The marketplace economy is not noise alone. It is a retrieval anti-pattern with the count as the selling point.
+references: []
+patterns: []
+sources:
+  - title: "Extend Claude with skills"
+    url: https://code.claude.com/docs/en/skills
+    authors: [Anthropic]
+    year: 2026
+  - title: "Skills"
+    url: https://claude.com/blog/skills
+    authors: [Anthropic]
+    year: 2025
+  - title: "anthropics/skills"
+    url: https://github.com/anthropics/skills
+    authors: [Anthropic]
+    year: 2025
+  - title: "5 Claude Code Skills That Cut Token Costs by Up to 70% — Benchmarked Across Real Sessions"
+    url: https://www.mindstudio.ai/blog/5-claude-code-skills-cut-token-costs-70-percent-benchmarked
+    authors: [MindStudio]
+    year: 2026
+  - title: "Reduce Claude Code token usage by 90%"
+    url: https://medium.com/data-science-in-your-pocket/reduce-claude-code-token-usage-by-90-baa2a27b9ca3
+    authors: [Gupta M.]
+    year: 2026
+  - title: "Agent Skills Marketplace"
+    url: https://skillsmp.com/
+    authors: [SkillsMP]
+    year: 2026
+  - title: "Awesome Skills"
+    url: https://awesomeskill.ai/
+    authors: [Awesome Skills]
+    year: 2026
+---
+
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+MindStudio published a piece in early 2026 with the headline [5 Claude Code Skills That Cut Token Costs by Up to 70%](https://www.mindstudio.ai/blog/5-claude-code-skills-cut-token-costs-70-percent-benchmarked). Inside the same article, the authors ran their own benchmark across 12 sessions and measured a 14 percent reduction. The 70 percent referred to a different tool on a different problem. The headline and the evidence are in the same document, and the headline is the one that travels. That is the genre. Other recent pieces in circulation claim [90 percent token reductions](https://medium.com/data-science-in-your-pocket/reduce-claude-code-token-usage-by-90-baa2a27b9ca3) with comparable evidentiary discipline.
+
+The second tell is the marketplace economy. [SkillsMP](https://skillsmp.com/) advertises 1,319,403 Claude Code skills scraped from public GitHub with a 2-star minimum filter. [Awesome Skills](https://awesomeskill.ai/) advertises 50,000 more. The headline number is the product. The product is the headline number.
+
+Read [Anthropic's own architectural documentation for skills](https://code.claude.com/docs/en/skills) and a different constraint comes into focus. The cost surface the discourse is optimizing is not the cost surface that bites. The discourse is sharpening the wrong knife.
+
+<PullQuote>The marketplace economy is not noise alone. It is a retrieval anti-pattern with the count as the selling point.</PullQuote>
+
+## What is actually in always-on context
+
+A Claude Code skill has two surfaces, and they cost different things. The [official docs](https://code.claude.com/docs/en/skills) state the default behavior plainly: "Description always in context, full skill loads when invoked." That sentence contains the entire cost model.
+
+The first surface is eager. Every installed skill contributes its name and its description to the system prompt on every turn of every session. This is the retrieval surface. Claude reads these descriptions to decide which skill to fire. The bytes here are not optional; they are the cost of having the skill discoverable at all.
+
+The second surface is lazy. The body of `SKILL.md` only enters the conversation when the skill is actually invoked. At that moment, the rendered body is appended as a single message and persists for the rest of the session. Claude Code does not re-read the file on later turns. Once a body is in, it stays in.
+
+There is a third state worth naming: auto-compaction. When a long session is summarized, re-attached skills get a combined budget of 25,000 tokens, with the first 5,000 of each skill body preserved. Older skill bodies can be dropped entirely if the budget overflows. The compaction step is silent. It does not warn you that a skill you invoked an hour ago is no longer in the working context.
+
+The implication is one sentence. Bytes in the description cost on every turn whether you invoke the skill or not. Bytes in the body cost only after invocation, and they cost a lot then. Different surfaces, different cost shapes, treated as one by most of the writing. The discourse aggregates both into "skills.md token cost" and optimizes the wrong half. The mechanism that actually fails first under heavy skill libraries is the one the discourse has the least to say about: the budget on the description surface itself.
+
+## The 1% rule and what it means
+
+Here is the load-bearing passage from the [Anthropic docs](https://code.claude.com/docs/en/skills), close to verbatim: all skill names are always included, but if many skills are installed, descriptions are shortened to fit the character budget, which can strip the keywords Claude needs to match your request. The budget scales at 1 percent of the model's context window. When it overflows, descriptions for the skills you invoke least are dropped first.
+
+Each description plus `when_to_use` is capped at 1,536 characters in the skill listing. That cap is the per-skill ceiling. The 1 percent budget is the aggregate ceiling. Both have to fit.
+
+Do the arithmetic for any reasonable context window and the picture is sharp. Install a few hundred skills with full-length descriptions and the budget overflows. When it overflows, the system does not refuse to load. It trims. It trims the skills you invoke least. It trims silently. The first thing the user notices is that a skill they were sure they installed does not fire when they ask for the thing it does. Because the keywords that would have triggered retrieval are gone.
+
+This is the failure mode that should organize the discourse and does not. The marketplaces are selling the precise condition that breaks the description budget. A million-skill marketplace, presented as a feature, is presenting the failure mode as the product. The selling point IS the anti-pattern.
+
+There is also a diagnostic. `/doctor` reveals whether the description budget is overflowing and which skills are being trimmed. It is not buried; it ships with the tool. The number of widely-shared skill guides that mention `/doctor` is small enough to count on one hand. The number of guides that recommend installing tens of skills from public lists without running it is large.
+
+Skill count is the variable the marketplaces optimize. Skill count is the variable that breaks retrieval. Both statements are facts. The marketplaces are selling skill count as quality. The architecture treats skill count as load on a budget. Those two framings are not compatible.
+
+## Where the real cost actually lives
+
+Sort the actual costs of a Claude Code skill library by impact and three layers emerge. Most of the discourse is on the smallest one.
+
+**1. Retrieval misses.** The right skill exists in the library, and it does not fire. The user asks for the thing it does, and Claude does the work some other way, or worse, does the wrong work. Cause: the description was trimmed, or the description was written as a summary instead of a trigger, or the keywords that would match the user's phrasing are not present. Cost: rework, sometimes a bad PR, sometimes a half-day of debugging the output instead of the input. Order of magnitude per incident: hours of engineer time, occasionally days. This is the cost the architecture is most exposed to and the discourse names least.
+
+**2. Retrieval false positives.** A skill fires that should not have. The body lands in the session context and stays there. The body is now part of every subsequent decision the agent makes for the rest of the session, even when the task moves on to something else. Cost: roughly the body length in tokens, multiplied by the number of subsequent turns, plus the subtler cost of the agent's reasoning getting steered by a body that did not need to be there. Auto-compaction will keep the first 5,000 tokens of the misfired body across summary boundaries. Order of magnitude: dollars to tens of dollars per session at current prices, more if the misfire happens early in a long session. This is the layer the cost-saving discourse half-addresses, and only conditional on misfire.
+
+**3. Body verbosity in invoked skills.** The number of bytes in the body of a skill that fired correctly. Anthropic's own guidance is direct: "Keep SKILL.md under 500 lines." Use the YAML frontmatter for triggering. Use the body for the work. Tight bodies fit comfortably under the line limit. Loose bodies waste tokens but waste them on work that needed to happen. Order of magnitude: cents per session. Real money over a quarter, but a smaller number than the layer above and a much smaller number than the layer above that.
+
+Roughly one to two orders of magnitude separate the cheapest layer from the most expensive. The cost-savings industry around skills is mostly an industry around the cheapest one. The 70 percent token-savings claim, when measured honestly, lives somewhere in the conjunction of layers 2 and 3. The retrieval-miss cost almost never appears in a benchmark because retrieval misses do not register as token usage. They register as wrong output, which the benchmarks do not score.
+
+## A practical filter
+
+Five questions before installing or writing a skill. Each maps to an architectural fact. None of them is aesthetic.
+
+1. **Does this skill exist for you, or for a catalog?** A skill from a stranger's repo that you would not install if you had to read the body yourself is a skill you should not install through an aggregator either. The aggregator does not change the contents. It changes the friction.
+2. **Is the description a contract or a summary?** "Use when the user asks to redact PII from a CSV before sharing" is a contract. "This skill is about PII redaction" is a summary. Contracts trigger retrieval because they match user phrasing. Summaries decorate the listing without doing the routing work the budget pays for.
+3. **Should this be a skill at all?** A slash command, a hook, or a line in `CLAUDE.md` have different invocation rules and different cost shapes. Slash commands are also skills in the current model, but their invocation is explicit. CLAUDE.md lines are always-on and not subject to the 1 percent budget mechanism the same way. Pick the surface the work belongs on, not the one the recent blog post used.
+4. **Will Claude invoke this when you do not want it?** If the skill does anything with side effects, a deploy, a commit, a send-message, set `disable-model-invocation: true` in the frontmatter and require explicit invocation. The architecture supports this. Most of the public skills do not use it. Most should.
+5. **With 30+ skills installed, which are being budget-trimmed right now?** Run `/doctor`. If the answer is not a list you can recite from memory, the library owns your retrieval surface rather than the other way around. The diagnostic exists. Use it before the next install, not after the next miss.
+
+## What to ignore
+
+Four dismissals. Each has a one-line reason.
+
+- **"Save X percent tokens with these skills" headlines.** Almost always conflating output verbosity, CLAUDE.md sizing, or workflow rework prevention with skills architecture. The MindStudio piece is the cleanest case study: the 70 percent in the title is a different tool on a different task than the 14 percent in their own benchmark.
+- **Marketplaces that rank by count.** The count is the precise failure condition the description budget was designed to handle. A larger marketplace is not a better marketplace at this surface; it is a more aggressive load on a budget the architecture cannot grow.
+- **Meta-skills and skill-of-skills patterns.** Solving a problem the budget already handles, and the meta-skill itself takes description budget to advertise. The mechanism it is trying to coordinate is the mechanism it is also competing with.
+- **"Awesome lists" as quality signals.** Popularity at best, and popularity lags correctness here by a wide margin. The pattern that gets stars is the pattern that looks shareable in a screenshot, not the pattern that survives `/doctor`.
+
+Most skill-organization advice sharpens a knife while the cut is somewhere else. The architecture rewards small libraries of well-described skills you actually invoke. The marketplaces and the headline-token-savings genre reward the opposite. The 1 percent budget is not a footnote in the docs; it is the surface the discourse should be organized around. Read [the spec](https://code.claude.com/docs/en/skills) first. Then read your own `/doctor` output. The gap between the two is where most of the cost lives.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 2 — Tools, context, and the agent loop", href: "/agentic-ai/book/02-tools-context-agent-loop/" },
+    { label: "Ch 12 — Memory management", href: "/agentic-ai/book/12-memory-management/" },
+  ]}
+  inCode={[
+    { label: "anthropics/skills — official reference implementations", href: "https://github.com/anthropics/skills" },
+  ]}
+  readNext={{ label: "FN-001 — The multi-agent papers nobody is citing", href: "/agentic-ai/field-notes/001-multi-agent-papers-nobody-cites/" }}
+/>

@@ -58,6 +58,30 @@ const recipes = defineCollection({
   }),
 });
 
+const signal = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/signal' }),
+  schema: z.object({
+    id: z.string(),
+    title: z.string(),
+    dek: z.string(),
+    description: z.string(),
+    primaryChapter: z.string().optional(),
+    banner: z.string(),
+    date: z.coerce.date(),
+    readingTime: z.number(),
+    pullQuote: z.string().optional(),
+    references: z.array(z.string()).optional(),
+    cites: z.array(z.string()).optional(),
+    patterns: z.array(z.string()).optional(),
+    sources: z.array(z.object({
+      title: z.string(),
+      url: z.string().url(),
+      authors: z.array(z.string()).optional(),
+      year: z.number().optional(),
+    })),
+  }),
+});
+
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
   schema: z.object({
@@ -134,4 +158,4 @@ const patterns = defineCollection({
   }),
 });
 
-export const collections = { chapters, fieldNotes, recipes, projects, evidence, labs, patterns };
+export const collections = { chapters, fieldNotes, recipes, signal, projects, evidence, labs, patterns };

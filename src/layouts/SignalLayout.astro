@@ -12,7 +12,7 @@ import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
 import { entriesToContentEntries } from '~/lib/content-helpers';
 
 interface Props {
-  entry: CollectionEntry<'fieldNotes'>;
+  entry: CollectionEntry<'signal'>;
 }
 
 const { entry } = Astro.props;
@@ -51,8 +51,6 @@ function linkHref(l: { id: string; collection: string }): string {
 }
 
 function linkLabel(l: { id: string; collection: string }): string {
-  // Use uppercase ID for ids that look like 'fn-001', 'r-001', 'lab-001', etc.
-  // For chapter slugs like '04-multi-agent-without-theater', show 'Ch 4'.
   const m = l.id.match(/^(\d+)([a-z]?)-/);
   if (m && l.collection === 'chapters') {
     return `Ch ${parseInt(m[1], 10)}${m[2].toUpperCase()}`;
@@ -61,36 +59,33 @@ function linkLabel(l: { id: string; collection: string }): string {
 }
 
 const dateStr = d.date.toISOString().slice(0, 10);
-const chapterLabel = d.primaryChapter.startsWith('ch-')
-  ? `Ch ${parseInt(d.primaryChapter.slice(3), 10)}`
-  : d.primaryChapter;
-const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterLabel];
+const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`];
 ---
 
 <PageLayout
-  title={`${d.title} — Field Notes`}
+  title={`${d.title} — Signal`}
   description={d.description}
   ogImage={d.banner}
-  currentNav="Field Notes"
+  currentNav="Signal"
 >
   <Reader>
     <MetaStrip items={metaItems} />
     <KineticHeading level={1}>{d.title}</KineticHeading>
     <Dek italic>{d.dek}</Dek>
     <Banner src={d.banner} alt={`${d.title} banner illustration`} />
-    <article class="fn-body">
+    <article class="sg-body">
       <slot />
     </article>
     <Sources items={d.sources} />
     {hasReverseLinks && (
-      <section class="fn-referenced-by">
-        <h2 class="fn-referenced-by__heading">Cited by</h2>
-        <ul class="fn-referenced-by__list">
+      <section class="sg-referenced-by">
+        <h2 class="sg-referenced-by__heading">Cited by</h2>
+        <ul class="sg-referenced-by__list">
           {[...links.referencedBy, ...links.citedBy].map((l) => (
             <li>
-              <a href={linkHref(l)} class="fn-referenced-by__link">
-                <span class="fn-referenced-by__collection">{l.collection}</span>
-                <span class="fn-referenced-by__id">{linkLabel(l)}</span>
+              <a href={linkHref(l)} class="sg-referenced-by__link">
+                <span class="sg-referenced-by__collection">{l.collection}</span>
+                <span class="sg-referenced-by__id">{linkLabel(l)}</span>
               </a>
             </li>
           ))}
@@ -101,61 +96,55 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
 </PageLayout>
 
 <style>
-  .fn-body {
+  .sg-body {
     font-size: var(--body-1);
     line-height: var(--lh-base);
   }
 
-  .fn-body :global(h2) {
+  .sg-body :global(h2) {
     margin-top: var(--space-7);
     margin-bottom: var(--space-3);
     padding-bottom: var(--space-2);
     border-bottom: 1px solid var(--fg-faint);
   }
 
-  .fn-body :global(h3) {
+  .sg-body :global(h3) {
     margin-top: var(--space-5);
     margin-bottom: var(--space-2);
   }
 
-  .fn-body :global(p) {
-    margin: 0 0 var(--space-4);
-  }
+  .sg-body :global(p) { margin: 0 0 var(--space-4); }
 
-  .fn-body :global(ul),
-  .fn-body :global(ol) {
+  .sg-body :global(ul),
+  .sg-body :global(ol) {
     margin: 0 0 var(--space-4);
     padding-left: var(--space-5);
   }
 
-  .fn-body :global(li) {
-    margin-bottom: var(--space-2);
-  }
+  .sg-body :global(li) { margin-bottom: var(--space-2); }
 
-  .fn-body :global(a) {
+  .sg-body :global(a) {
     color: var(--fg);
     text-decoration: underline;
     text-decoration-color: var(--fg-faint);
     text-underline-offset: 3px;
   }
 
-  .fn-body :global(a:hover) {
+  .sg-body :global(a:hover) {
     color: var(--brick);
     text-decoration-color: var(--brick);
   }
 
-  .fn-body :global(figure) {
-    margin: var(--space-5) 0;
-  }
+  .sg-body :global(figure) { margin: var(--space-5) 0; }
 
-  .fn-body :global(figure img) {
+  .sg-body :global(figure img) {
     width: 100%;
     height: auto;
     border-radius: var(--radius-sm);
     border: 1px solid var(--fg-faint);
   }
 
-  .fn-body :global(figcaption) {
+  .sg-body :global(figcaption) {
     font-family: var(--font-mono);
     font-size: var(--meta-2);
     color: var(--fg-light);
@@ -163,11 +152,9 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
     text-align: center;
   }
 
-  .fn-referenced-by {
-    margin-top: var(--space-6);
-  }
+  .sg-referenced-by { margin-top: var(--space-6); }
 
-  .fn-referenced-by__heading {
+  .sg-referenced-by__heading {
     font-family: var(--font-mono);
     font-size: var(--meta-2);
     text-transform: uppercase;
@@ -177,7 +164,7 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
     font-weight: 500;
   }
 
-  .fn-referenced-by__list {
+  .sg-referenced-by__list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -186,7 +173,7 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
     gap: var(--space-2);
   }
 
-  .fn-referenced-by__link {
+  .sg-referenced-by__link {
     display: inline-flex;
     align-items: baseline;
     gap: var(--space-2);
@@ -197,12 +184,12 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
     transition: color var(--dur-micro) var(--ease-out);
   }
 
-  .fn-referenced-by__link:hover {
+  .sg-referenced-by__link:hover {
     color: var(--brick);
     text-decoration-color: var(--brick);
   }
 
-  .fn-referenced-by__collection {
+  .sg-referenced-by__collection {
     font-family: var(--font-mono);
     font-size: var(--meta-3);
     text-transform: uppercase;
@@ -210,7 +197,7 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
     color: var(--fg-light);
   }
 
-  .fn-referenced-by__id {
+  .sg-referenced-by__id {
     font-family: var(--font-mono);
     font-size: var(--body-3);
   }
