@@ -61,7 +61,7 @@ The second surface is lazy. The body of `SKILL.md` only enters the conversation 
 
 There is a third state worth naming: auto-compaction. When a long session is summarized, re-attached skills get a combined budget of 25,000 tokens, with the first 5,000 of each skill body preserved. Older skill bodies can be dropped entirely if the budget overflows. The compaction step is silent. It does not warn you that a skill you invoked an hour ago is no longer in the working context.
 
-The implication is one sentence. Bytes in the description cost on every turn whether you invoke the skill or not. Bytes in the body cost only after invocation, and they cost a lot then. Different surfaces, different cost shapes, treated as one by most of the writing. The discourse aggregates both into "skills.md token cost" and optimizes the wrong half. The mechanism that actually fails first under heavy skill libraries is the one the discourse has the least to say about. Which is the budget on the description surface itself.
+The implication is one sentence. Bytes in the description cost on every turn whether you invoke the skill or not. Bytes in the body cost only after invocation, and they cost a lot then. Different surfaces, different cost shapes, treated as one by most of the writing. The discourse aggregates both into "skills.md token cost" and optimizes the wrong half. The mechanism that actually fails first under heavy skill libraries is the one the discourse has the least to say about: the budget on the description surface itself.
 
 ## The 1% rule and what it means
 
@@ -110,4 +110,13 @@ Four dismissals. Each has a one-line reason.
 
 Most skill-organization advice sharpens a knife while the cut is somewhere else. The architecture rewards small libraries of well-described skills you actually invoke. The marketplaces and the headline-token-savings genre reward the opposite. The 1 percent budget is not a footnote in the docs; it is the surface the discourse should be organized around. Read [the spec](https://code.claude.com/docs/en/skills) first. Then read your own `/doctor` output. The gap between the two is where most of the cost lives.
 
-<Footer3Col />
+<Footer3Col
+  fromBook={[
+    { label: "Ch 2 — Tools, context, and the agent loop", href: "/agentic-ai/book/02-tools-context-agent-loop/" },
+    { label: "Ch 12 — Memory management", href: "/agentic-ai/book/12-memory-management/" },
+  ]}
+  inCode={[
+    { label: "anthropics/skills — official reference implementations", href: "https://github.com/anthropics/skills" },
+  ]}
+  readNext={{ label: "FN-001 — The multi-agent papers nobody is citing", href: "/agentic-ai/field-notes/001-multi-agent-papers-nobody-cites/" }}
+/>
