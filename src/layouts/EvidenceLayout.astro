@@ -20,15 +20,16 @@ interface Props {
 const { entry } = Astro.props;
 const d = entry.data;
 
-const [chapters, fieldNotes, recipes, labs, evidence, projects] = await Promise.all([
+const [chapters, fieldNotes, recipes, labs, evidence, projects, signal] = await Promise.all([
   getCollection('chapters'),
   getCollection('fieldNotes'),
   getCollection('recipes'),
   getCollection('labs'),
   getCollection('evidence'),
   getCollection('projects'),
+  getCollection('signal'),
 ]);
-const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects];
+const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...signal];
 const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
 const links = getReverseLinks(reverseIndex, d.id);
 
@@ -40,6 +41,7 @@ const collectionRoute: Record<string, string> = {
   evidence: '/agentic-ai/evidence',
   labs: '/agentic-ai/labs',
   patterns: '/agentic-ai/patterns',
+  signal: '/agentic-ai/signal',
 };
 ---
 
