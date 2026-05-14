@@ -38,6 +38,11 @@ const ogImage = `/agentic-ai/assets/banners/${d.id}.png`;
   description={d.description}
   ogImage={ogImage}
   currentNav="Recipes"
+  articleData={{
+    publishedTime: d.verifiedOn.toISOString(),
+    section: 'Recipes',
+    headline: d.title,
+  }}
 >
   <Reader>
     <MetaStrip items={metaItems} />
