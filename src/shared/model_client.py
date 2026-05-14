@@ -205,9 +205,7 @@ def create_client(
         return AnthropicClient(api_key=api_key, model_name=model_name)
     elif provider == "local":
         url = base_url or "http://localhost:11434/v1"
-        # FIX: Resolve hardcoded 'local' key by prioritizing provided api_key.
-        actual_key = api_key if api_key else "local"
-        return OpenAIClient(api_key=actual_key, model_name=model_name, base_url=url)
+        return OpenAIClient(api_key="local", model_name=model_name, base_url=url)
     elif provider == "mock":
         return MockClient()
     else:
