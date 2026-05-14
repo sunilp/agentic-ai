@@ -67,6 +67,11 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`];
   description={d.description}
   ogImage={d.banner}
   currentNav="Signal"
+  articleData={{
+    publishedTime: d.date.toISOString(),
+    section: 'Signal',
+    headline: d.title,
+  }}
 >
   <Reader>
     <MetaStrip items={metaItems} />
