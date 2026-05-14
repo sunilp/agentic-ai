@@ -1,0 +1,23 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import SignalLayout from '~/layouts/SignalLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('signal');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'signal'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<SignalLayout entry={entry}>
+  <Content />
+</SignalLayout>
