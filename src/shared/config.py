@@ -19,12 +19,21 @@ class ModelConfig(BaseModel):
     """Configuration for the model client."""
 
     provider: str = os.getenv("MODEL_PROVIDER", "openai")
-    api_key: str = os.getenv("OPENAI_API_KEY", "") or os.getenv("ANTHROPIC_API_KEY", "")
     model_name: str = os.getenv("MODEL_NAME", "gpt-4o")
     model_name_cheap: str = os.getenv("MODEL_NAME_CHEAP", "gpt-4o-mini")
     local_url: str = os.getenv("LOCAL_MODEL_URL", "http://localhost:11434/v1")
     temperature: float = 0.0
     max_tokens: int = 4096
+
+    @property
+    def api_key(self) -> str:
+        """Dynamically fetch the correct API key based on the provider."""
+        if self.provider == "openai":
+            return os.getenv("OPENAI_API_KEY", "")
+        if self.provider == "anthropic":
+            return os.getenv("ANTHROPIC_API_KEY", "")
+        return ""
+
 
 
 class EvalConfig(BaseModel):
