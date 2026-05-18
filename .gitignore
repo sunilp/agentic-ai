@@ -18,6 +18,7 @@ dist/
 site/
 proposals/
 publish/
+drafts/
 .worktrees/
 docs/assets/prompts/
 templates/
