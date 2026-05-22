@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" style="font-family: 'IBM Plex Sans', sans-serif;">
+  <rect width="600" height="400" fill="#fafaf8"/>
+
+  <!-- Central MODEL core -->
+  <rect x="230" y="170" width="140" height="60" rx="3" fill="#1a1a1a"/>
+  <text x="300" y="205" text-anchor="middle" fill="#fafaf8" font-size="14" font-weight="600">MODEL</text>
+
+  <!-- Top-left: Context budget -->
+  <rect x="40" y="60" width="120" height="44" rx="3" fill="#9b4a3f"/>
+  <text x="100" y="87" text-anchor="middle" fill="#fafaf8" font-size="13">Context budget</text>
+
+  <!-- Top-right: Tool dispatch -->
+  <rect x="440" y="60" width="120" height="44" rx="3" fill="#9b4a3f"/>
+  <text x="500" y="87" text-anchor="middle" fill="#fafaf8" font-size="13">Tool dispatch</text>
+
+  <!-- Middle-left: Hooks -->
+  <rect x="40" y="178" width="120" height="44" rx="3" fill="#9b4a3f"/>
+  <text x="100" y="205" text-anchor="middle" fill="#fafaf8" font-size="13">Hooks</text>
+
+  <!-- Middle-right: Sub-agents -->
+  <rect x="440" y="178" width="120" height="44" rx="3" fill="#9b4a3f"/>
+  <text x="500" y="205" text-anchor="middle" fill="#fafaf8" font-size="13">Sub-agents</text>
+
+  <!-- Bottom-left: Memory -->
+  <rect x="40" y="296" width="120" height="44" rx="3" fill="#9b4a3f"/>
+  <text x="100" y="323" text-anchor="middle" fill="#fafaf8" font-size="13">Memory</text>
+
+  <!-- Bottom-right: Permissions -->
+  <rect x="440" y="296" width="120" height="44" rx="3" fill="#9b4a3f"/>
+  <text x="500" y="323" text-anchor="middle" fill="#fafaf8" font-size="13">Permissions</text>
+
+  <!-- Connection lines: each component to MODEL -->
+  <line x1="160" y1="82" x2="230" y2="185" stroke="#9b4a3f" stroke-width="1" opacity="0.5"/>
+  <line x1="440" y1="82" x2="370" y2="185" stroke="#9b4a3f" stroke-width="1" opacity="0.5"/>
+  <line x1="160" y1="200" x2="230" y2="200" stroke="#9b4a3f" stroke-width="1" opacity="0.5"/>
+  <line x1="440" y1="200" x2="370" y2="200" stroke="#9b4a3f" stroke-width="1" opacity="0.5"/>
+  <line x1="160" y1="318" x2="230" y2="215" stroke="#9b4a3f" stroke-width="1" opacity="0.5"/>
+  <line x1="440" y1="318" x2="370" y2="215" stroke="#9b4a3f" stroke-width="1" opacity="0.5"/>
+</svg>
