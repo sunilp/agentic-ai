@@ -82,6 +82,17 @@ const articleSchema = articleData ? {
       <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
     )}
 
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-4KDCBS18GZ"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4KDCBS18GZ');
+      document.addEventListener('astro:page-load', () => {
+        gtag('config', 'G-4KDCBS18GZ', { page_path: window.location.pathname + window.location.search });
+      });
+    </script>
+
     <ClientRouter />
   </head>
   <body class={bodyClass}>
