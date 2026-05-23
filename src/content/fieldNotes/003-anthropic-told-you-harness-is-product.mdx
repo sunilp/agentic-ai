@@ -1,0 +1,107 @@
+---
+id: fn-003
+title: Anthropic just told you the harness is the product
+dek: Three Anthropic posts, one independent essay, and a late-2025 preprint converge on the same point. The unit of evaluation is harness plus model plus task, not model.
+description: "Three Anthropic posts and a late-2025 preprint say the same thing. The unit of evaluation is harness plus model plus task, not model alone."
+primaryChapter: ch-02
+banner: /agentic-ai/assets/banners/fn-003.png
+date: 2026-05-26
+readingTime: 8
+pullQuote: A single-number model benchmark, read as a property of the model, is reading sales material as evidence.
+references: [ch-02, ch-10, ch-11, ch-12, ch-13]
+patterns: []
+sources:
+  - title: "Managed Agents"
+    url: https://www.anthropic.com/engineering/managed-agents
+    authors: [Anthropic]
+    year: 2026
+  - title: "An update on recent Claude Code quality reports"
+    url: https://www.anthropic.com/engineering/april-23-postmortem
+    authors: [Anthropic]
+    year: 2026
+  - title: "Anthropic is letting Claude agents 'dream' so they don't sleep on the job"
+    url: https://siliconangle.com/2026/05/06/anthropic-letting-claude-agents-dream-dont-sleep-job/
+    authors: [SiliconANGLE]
+    year: 2026
+  - title: "The importance of Agent Harness in 2026"
+    url: https://www.philschmid.de/agent-harness-2026
+    authors: [Schmid P.]
+    year: 2026
+  - title: "Stochasticity in Agentic Evaluations: Quantifying Inconsistency with Intraclass Correlation"
+    url: https://arxiv.org/pdf/2512.06710
+    authors: []
+    year: 2025
+  - title: "Evaluate Coding Agents"
+    url: https://www.promptfoo.dev/docs/guides/evaluate-coding-agents/
+    authors: [Promptfoo]
+    year: 2026
+---
+
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+The field just renamed a layer that has been there for two years. Anyone who has shipped a tool-using agent has been writing one of these: the runtime that wraps a model, decides what enters the context window, dispatches tool calls, fires hooks, spawns sub-agents, persists memory, and gates permissions. The code was always there. The word for it was not. Through 2025 the discourse called it "the agent loop" or "the scaffolding" or, in the rougher rooms, "the stuff around the model." In the first half of 2026 a single word started showing up in vendor docs, post-mortems, and independent essays at the same time: harness.
+
+Three Anthropic posts from April and May 2026, one independent essay from outside the Anthropic orbit, and a late-2025 preprint on evaluation variance converge on the same point. The unit of evaluation is harness, model, and task together. The single-number model benchmark, considered as a property of the model, is a category error. What follows is the synthesis of those five sources.
+
+## The three Anthropic posts
+
+[Managed Agents](https://www.anthropic.com/engineering/managed-agents) shipped in April 2026 carrying a phrase that did not exist in the public vocabulary three months earlier: harnesses encode assumptions that go stale as models improve. The framing is load-bearing. The vendor that trains the model is positioning itself as a harness vendor whose harness happens to ship with a first-party model. Read literally, the line is a confession that the layer between the model and the user accumulates implicit commitments, and that those commitments rot at a different rate than weights. Read commercially, it is a repositioning. The product surface is the harness. The model is interchangeable inside it. The launch material says so without qualification, and the platform docs repeat the point.
+
+[The April 23 post-mortem](https://www.anthropic.com/engineering/april-23-postmortem) traced the perceived Claude regression to harness changes rather than weights, with three concrete dates. On March 4, the default reasoning effort was lowered to reduce UI latency. On March 26, a caching change shipped with a bug that cleared older thinking every turn instead of once per idle session. On April 16, a verbosity prompt was added to the system instructions and was reverted on April 20. Affected releases included Sonnet 4.6, Opus 4.6, and Opus 4.7. Same weights, different harness, different product. This is unusually clean evidence in an industry that has spent two years arguing about model regressions without a clear causal lever, and it came from the vendor closest to the model rather than from an outside auditor.
+
+[The dreaming announcement](https://siliconangle.com/2026/05/06/anthropic-letting-claude-agents-dream-dont-sleep-job/) on May 6 added persistent memory to Managed Agents under a deliberately evocative name. The mechanism is less interesting than the framing. Memory is now positioned as a first-class component of the harness rather than as something the application layer is expected to bolt on. Three weeks earlier, persistence was a library question and a vendor pick. After May 6, in the Anthropic-shaped version of the stack, it is a runtime feature with version numbers attached. That choice is the third confirmation that the vendor sees the harness, not the model, as the surface to keep extending.
+
+## The independent voice and the academic spine
+
+Phil Schmid published [The importance of Agent Harness in 2026](https://www.philschmid.de/agent-harness-2026) from outside the Anthropic orbit. The piece argues the same point, in the same vocabulary, without a vendor incentive to do so. That matters. A term that appears only in one vendor's launch material is marketing. A term that appears in independent writing within weeks of the launch has escaped vendor vocabulary into the working language of the field. Schmid's essay reads as confirmation that the layer is now named for everyone, not just for buyers of one stack.
+
+The academic spine arrived earlier and quieter. [Stochasticity in Agentic Evaluations](https://arxiv.org/pdf/2512.06710), a preprint from late 2025, measured intraclass correlation coefficients between 0.30 and 0.77 on agentic tasks. The interpretation matters more than the headline. Low ICCs in this regime mean repeated runs of the same task on the same system produce results that disagree with each other to a degree that swamps modest differences between systems. The paper does not claim that harness configuration explains all the variance. It measures the variance directly. The implication for anyone reading benchmark numbers is unavoidable. A single-run score on an agentic benchmark, with no harness disclosed and no seed protocol reported, is a measurement no one outside the lab can reproduce. The instability is a property of the system under test, not a bug in the measurement.
+
+The three Anthropic posts name the layer and trace product behavior to it. The independent essay confirms the term is now common vocabulary. The preprint shows the variance the layer introduces is large enough to matter. Five sources, one shape.
+
+## Architectural takeaway: the harness has anatomy now
+
+A harness is a runtime that wraps a model with six components. Each one is a policy surface. Each one is a place the product can shift without the model shifting.
+
+**Context budget.** What enters the window, what gets compacted, what gets retrieved on demand, what gets dropped. Two harnesses with the same model and different compaction strategies produce two different products. Chapter 2 walks through the agent loop and the compaction decisions that sit inside it.
+
+**Tool dispatch.** Which tools the model can see, in what order, with which schemas, with which parallelism, and with which error semantics on failure. This is the most visible part of the harness and the part that shifts most often between releases. Chapter 2 covers the contract shape and the failure modes that come from sloppy dispatch.
+
+![Harness anatomy: six components surrounding a model core](/agentic-ai/assets/diagrams/harness-anatomy.svg)
+
+**Hooks.** Pre-tool and post-tool callbacks at policy boundaries. Logging, redaction, approval gates, runtime guardrails. Chapter 10 treats hooks as the audit boundary, and a harness without them is a harness no regulated environment can sign off on.
+
+**Sub-agents.** Scoped delegation, where a planner spawns a researcher and a researcher spawns a verifier, and each runs inside its own harness mini-instance with its own tool surface and its own context budget. The sub-agent layer is where most production systems silently rebuild a workflow engine, badly, because they did not realize they were doing so.
+
+**Memory.** Persistence across sessions. The dreaming announcement maps directly here. Chapter 12 treats memory as a separate subsystem with its own failure modes, including the slow accumulation of opinions the operator never inspected. Memory is the component most likely to produce surprising behavior six months after deployment.
+
+**Permissions.** What the agent is allowed to touch. Files, network destinations, credentials, downstream services, with what scope, under what conditions, with what audit. Chapter 11 treats this as a security question, not a developer experience one. It is the most under-specified component in most public harnesses, usually conflated with tool dispatch. Tool dispatch decides which tools exist. Permissions decide which calls are allowed to leave the runtime. The conflation is a defect, and it is the defect that incident reviews find first.
+
+Six components, six policy surfaces, six places a vendor can change behavior without touching weights. Chapter 13 walks through the cross-cutting production picture once the components are in place.
+
+## The unit of evaluation
+
+The point of naming the layer is to make the unit of evaluation honest. A benchmark score is a measurement of a system: a harness running a model on a task with a seed. Detach any of those four and the number means something different.
+
+The three Anthropic posts demonstrate the harness term operationally. The April 23 post-mortem proves the harness alone can swing perceived quality enough to generate weeks of community complaint. The preprint proves the run-to-run variance is large enough to swamp small differences between systems. Together they argue that a single-number model benchmark, read as a property of the model, is reading sales material as evidence. The number is real. What it measures is not the model.
+
+What disclosure should look like in research that wants to be reproducible: the harness identity and version, the configuration applied to each of the six components, the seed protocol, the number of runs, and the variance across them. What benchmarks should report and almost never do: any of the above. Promptfoo's [evaluation guidance for coding agents](https://www.promptfoo.dev/docs/guides/evaluate-coding-agents/) names the problem in the title. The framing is correct. The industry's reporting practice has not caught up.
+
+<PullQuote>A single-number benchmark, read as a property of the model, is a measurement of a system pretending to be a measurement of a component.</PullQuote>
+
+The vocabulary shift is the whole event. Until the layer was named, no benchmark could be honest about what it was measuring, because the language to describe the controlled variable did not exist. Now it does. The next move belongs to anyone publishing numbers. Report the harness, the version, the seed protocol, and the variance across runs, or accept that the number is a story rather than a measurement.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 2 — Tools, Context, and the Agent Loop", href: "/agentic-ai/book/02-tools-context-agent-loop/" },
+    { label: "Ch 10 — Governance and Auditability", href: "/agentic-ai/book/10-governance/" },
+    { label: "Ch 11 — Security Deep Dive", href: "/agentic-ai/book/11-security/" },
+    { label: "Ch 12 — Memory Management", href: "/agentic-ai/book/12-memory-management/" },
+    { label: "Ch 13 — Agent Protocols in Production", href: "/agentic-ai/book/13-agent-protocols-in-production/" },
+  ]}
+  inCode={[
+    { label: "agent loop reference (Ch 2)", href: "https://github.com/sunilp/agentic-ai/tree/main/src/ch02" },
+  ]}
+  readNext={{ label: "FN-002 — Your eval rubric needs failure buckets", href: "/agentic-ai/field-notes/002-eval-rubric-failure-buckets/" }}
+/>
