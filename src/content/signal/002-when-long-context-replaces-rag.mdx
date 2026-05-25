@@ -1,12 +1,12 @@
 ---
 id: sg-002
-title: When long context replaces RAG, and when it does not
-dek: Vendors now ship million-token windows with near-perfect needle-in-haystack recall. The decision to retire your retriever turns on a second benchmark the launch posts do not run. Here is the cleaner way to read both.
-description: "Long context replaces RAG cleanly for some workloads and complements it for others. The deciding factor is a synthesis benchmark vendors do not publish on their launch pages. This Signal lays out the two surfaces (lookup vs synthesis), the academic literature that measures the second one, and a three-way decision rule for production teams."
+title: Long context did not kill RAG. It changed what retrieval is for.
+dek: Long context made lookup cheap. The harder work, selecting evidence, citing it, governing access to it, and keeping it current, did not move. Here is the routing rule and the literature that supports it.
+description: "Long context replaced lookup, not retrieval. Production architecture turns on whether the system needs to select, cite, govern, or update evidence. This Signal gives the routing rule, the academic literature behind it, and the control-plane reframe that follows."
 banner: /agentic-ai/assets/banners/sg-002.png
 date: 2026-05-23
-readingTime: 11
-pullQuote: Long context made one half of RAG cheap. The other half is where the work still is.
+readingTime: 9
+pullQuote: Long context made one half of retrieval cheap. The other half, selection, provenance, citations, access control, freshness, is where the work still is.
 references: []
 patterns: []
 sources:
@@ -62,9 +62,15 @@ import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astr
 
 The reader has a decision in front of them. Vendors now ship million-token context windows with near-perfect needle-in-a-haystack recall, and the implication is loud: retire the retriever, paste the documents, ship the answer. Fabio Akita put the strongest version of the case in April 2026, in [Is RAG Dead? Long Context, Grep, and the End of the Mandatory Vector DB](https://akitaonrails.com/en/2026/04/06/rag-is-dead-long-context/): the model is now "big, relatively fast, and cheap," the best coding agent on the market does not use a vector database, and in most cases "a well-aimed `grep` plus a generous context window beats a full RAG stack." Akita is also honest enough to include a section, titled in his own words, that lists where the thesis does not hold: massive corpora, vocabulary mismatch in customer support, non-textual modalities, critical latency, and compliance auditing.
 
-This piece is the case for reading both halves of Akita and adding one more. The launch posts that prove the long-context capability publish one benchmark. The decision to retire your retriever turns on a second benchmark. The second benchmark is in the open literature. It is not always in the launch post.
+This piece is the case for reading both halves of Akita and adding one more. The launch posts that prove the long-context capability publish one benchmark. The architectural decision turns on a second benchmark, mostly in the open literature.
 
-<PullQuote>Long context made one half of RAG cheap. The other half is where the work still is.</PullQuote>
+<PullQuote>Long context made one half of retrieval cheap. The other half, selection, provenance, citations, access control, freshness, is where the work still is.</PullQuote>
+
+## The rule, upfront
+
+Use long context when the answer is inside a bounded object the model can read in one pass. Use retrieval when the system must choose what to read, cite where it came from, filter for what is current, or govern who can ask. The first is a model capability. The second is a control plane.
+
+The rest of this piece is the case for why that distinction holds at the benchmark level and what it changes about production architecture.
 
 ## The two surfaces
 
@@ -96,25 +102,33 @@ The [Claude Sonnet 4.6 launch post](https://www.anthropic.com/news/claude-sonnet
 
 Google's [Gemini 1.5 technical report](https://arxiv.org/abs/2403.05530) was the document that opened the era. It reports "99.7% recall up to 1M tokens" and "99.2% accuracy up to 10M tokens" on the multi-modal NIAH evaluation. Both numbers are real. Both measure lookup.
 
-This is not deception. Vendors are reporting what they have measured cleanly. The reader's job is to read what is on the page and notice what is not. NIAH and its multi-needle variants are the dominant surface on the page. Synthesis is mostly elsewhere.
+This is not deception. Vendors are reporting what they have measured cleanly. The reader's job is to notice what is on the page and what is not. NIAH and its multi-needle variants are the dominant surface on the launch page. The synthesis surface is usually less auditable from the launch page itself.
 
-## What the academic literature measures instead
+## What the literature measures instead
 
-When the vendor pages stop, the open literature continues. A synthesis benchmark, in evaluation terms, scores answer accuracy, citation faithfulness, contradiction handling, and source coverage at long context. Four results below land on that surface; a fifth remains a useful canonical reference for position effects.
+Where the vendor pages stop, the open literature continues. Three results sit squarely on the synthesis surface.
 
-**NoLiMa** (Modarressi et al., [accepted at ICML 2025](https://arxiv.org/abs/2502.05167)) measures retrieval beyond literal keyword matching: queries paraphrase the needle so the model cannot rely on lexical overlap. The paper reports that "at 32K, for instance, 11 models drop below 50% of their strong short-length baselines." It notes that "even GPT-4o, one of the top-performing exceptions, experiences a reduction from an almost-perfect baseline of 99.3% to 69.7%." The same models that score near-perfect on NIAH at 1M lose roughly a third of their baseline accuracy at 32K when the lookup is not lexical.
+**NoLiMa** (Modarressi et al., [ICML 2025](https://arxiv.org/abs/2502.05167)) paraphrases the needle so the model cannot rely on lexical overlap. At 32K, eleven of the tested models drop below 50% of their short-length baseline. GPT-4o falls from 99.3% to 69.7%. The same models score near-perfect on lexical NIAH at 1M.
 
-**RULER** (Hsieh et al., NVIDIA, [arXiv:2404.06654](https://arxiv.org/abs/2404.06654)) is blunt on the gap. The paper writes: "Despite achieving nearly perfect accuracy in the vanilla NIAH test, almost all models exhibit large performance drops as the context length increases." It adds: "While these models all claim context sizes of 32K tokens or greater, only half of them can maintain satisfactory performance at the length of 32K." Half the field cannot keep its advertised window.
+**NoCha** (Karpinska et al., [EMNLP 2024](https://arxiv.org/abs/2406.16264)) tests claim verification over full novels. No open-weight model exceeds random chance. GPT-4o reaches 55.8%. The benchmark asks one true-or-false question per claim. The best closed model is barely above a coin flip on a question a careful reader of the book would answer in seconds.
 
-**NoCha** (Karpinska et al., [EMNLP 2024](https://arxiv.org/abs/2406.16264)) tests claim verification across full novels. The paper reports: "no open-weight model performs above random chance (despite their strong performance on synthetic benchmarks), while GPT-4o achieves the highest accuracy at 55.8%." Read that twice. The benchmark asks whether a one-sentence claim about a book is true or false. The best closed model is 55.8% accurate. The open-weight field is at chance. The same models pass NIAH at the same context lengths.
+**BABILong** (Kuratov et al., [NeurIPS 2024](https://arxiv.org/abs/2406.10149)) measures multi-step reasoning embedded in long context. The headline: "popular LLMs effectively utilize only 10-20% of the context." The window is a million tokens. The effective working set is far smaller.
 
-**BABILong** (Kuratov et al., [NeurIPS 2024](https://arxiv.org/abs/2406.10149)) measures multi-step reasoning embedded in long context. The headline finding: "popular LLMs effectively utilize only 10-20% of the context." The window is a million tokens. The effective working set is far smaller.
+Two further results in the same direction are worth knowing. [RULER](https://arxiv.org/abs/2404.06654) reports that "only half" of models advertising 32K-or-greater windows maintain satisfactory performance at 32K. [Lost in the Middle](https://arxiv.org/abs/2307.03172) remains the canonical reference for position-dependent degradation: middle-of-context information is recovered less reliably than start-or-end information, and the architectures have moved without removing the effect.
 
-**Lost in the Middle** (Liu et al., TACL 2023, [arXiv:2307.03172](https://arxiv.org/abs/2307.03172)) remains the canonical reference for position-dependent degradation: information placed in the middle of a long context is recovered less reliably than information at the start or end. The paper is from 2023 and the architectures have moved, but the position-dependence has not gone away in the follow-ups.
+These results are not a takedown of long context. They are the second benchmark sitting alongside the vendor NIAH numbers, not against them. The literature keeps showing the same failure mode in different forms: models retrieve needles better than they synthesize evidence.
 
-These five results are not a takedown of long context. They are the second benchmark the reader was looking for. They sit alongside the vendor NIAH numbers, not against them.
+## Routing in practice
 
-## A clean decision rule
+The earlier upfront rule turns concrete when you put queries to it. The table below sits next to the diagram on purpose. The table is "given a query, which architecture." The diagram is "what each architecture actually looks like."
+
+| Query type | Better default | Why |
+|---|---|---|
+| "Find clause X in contract Y" | Long context | Bounded object, direct lookup |
+| "Compare clauses across 200 contracts" | Retriever + long context | Selection plus synthesis |
+| "Answer from weekly changing policies" | RAG | Freshness, citations, governance |
+| "Search codebase for usage pattern" | grep / BM25 + long context | Lexical structure matters |
+| "Explain customer exposure across systems" | RAG + tools | Access control and provenance |
 
 <ArchitectureDiagram
   src="/agentic-ai/assets/diagrams/sg-002-decision-rule.svg"
@@ -144,23 +158,27 @@ Run a small NoLiMa-style or RULER-style probe on your own corpus before retiring
 
 Diff a long-context answer against a RAG-augmented answer on ten production queries. Score for span citations and contradiction handling, not impression. Many long-context answers read well and cite nothing the reader can verify. A RAG answer that cites three chunks and a long-context answer that cites prose are different products.
 
-Measure your p95 input-token bill at the long-context tier on representative traffic. As of May 2026, the [current Sonnet 4.6 pricing page](https://platform.claude.com/docs/en/about-claude/pricing) keeps the 1M tier at standard rates, whereas the [original Sonnet 4 1M launch](https://claude.com/blog/1m-context) carried a roughly 2x surcharge above 200K tokens. The trajectory is favourable but not free; re-check the page before re-architecting. Run the numbers at your actual context-length distribution, not the marketing one.
+Measure your p95 input-token bill at the long-context tier on representative traffic. As of May 2026, the [current Sonnet 4.6 pricing page](https://platform.claude.com/docs/en/about-claude/pricing) keeps the 1M tier at standard rates, whereas the [original Sonnet 4 1M launch](https://claude.com/blog/1m-context) carried a roughly 2x surcharge above 200K tokens. The trajectory is favourable but not free; re-check the page before re-architecting. Run the numbers at your actual context-length distribution, not the marketing one. *Pricing checked: May 2026.*
 
 Keep the retriever path warm even when adopting long context for some query classes. The two paths are complementary load lines, not a single cost line. A team that fully deprecates retrieval will pay to rebuild it the first time a customer asks for citations.
 
 ## What to read past
 
-Headlines that pose the decision as binary. "RAG is dead." "RAG is back." Both compress a workload-dependent decision into a slogan. The honest version is, as Akita's own piece concedes, "where the thesis holds" plus "where the thesis doesn't hold."
+Binary headlines ("RAG is dead", "RAG is back") compress a workload-dependent decision into a slogan. Akita's own piece concedes both "where the thesis holds" and "where it doesn't."
 
-Vendor launches that lead with retrieval numbers and stop. The retrieval number is doing the work the vendor measured. The synthesis number is in the literature. A launch post is not the wrong document for the first; it is just not the full document for the second.
+Vendor launches that lead with retrieval numbers and stop. The retrieval number is doing the work the vendor measured. The synthesis number is in the literature.
 
-"Long-context prompt" marketplaces that bundle entire corpora into a single template. The strategy is not always wrong. It is usually unmeasured, and the bundle is rarely sized to the model's effective working set per BABILong's finding.
+"Long-context prompt" marketplaces that bundle entire corpora into a single template. The strategy is not always wrong. It is usually unmeasured, and the bundle is rarely sized to the model's effective working set per BABILong's 10-20% finding.
 
-## What becomes clearer
+## The reframe
 
-The choice between long context and RAG is not a generation war. It is a per-workload decision with two benchmarks behind it: one for the lookup surface that the vendors measure cleanly and publish on the launch page, and one for the synthesis surface that the open literature measures and the vendors mostly leave to chart legends. A reader who holds both in view can adopt long context where it pays, keep retrieval where it pays, and run mixed paths where the workload is mixed.
+The deeper shift is not about whether RAG dies. The deeper shift is what retrieval becomes.
 
-Akita's title is a good question. The honest answer to the question is: not yet, not for everything, and the second benchmark is how you tell.
+In 2024, retrieval was mostly a context-window workaround. The model could not hold the corpus, so you indexed, ranked, and fed it slices. The whole stack existed because the window was small.
+
+In 2026, retrieval is becoming a control plane. Selection, provenance, citations, access control, freshness, cost routing. These are not workarounds for window size. They are first-class production concerns that exist whether the window is 8K or 10M. Long context made one of them cheaper. It did not make the others go away.
+
+A reader who holds the two benchmarks in view (lookup and synthesis) can adopt long context where it pays, keep retrieval where it pays, and run mixed paths where the workload is mixed. Akita's title is a good question. The honest answer is: not yet, not for everything, and the missing question is no longer "can the model find the needle." It is "can the system produce a grounded answer when the evidence is distributed, contradictory, changing, and access-controlled."
 
 <Footer3Col
   fromBook={[
