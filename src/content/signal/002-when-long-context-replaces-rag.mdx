@@ -58,6 +58,7 @@ sources:
 
 import PullQuote from '~/components/universal/PullQuote.astro';
 import Footer3Col from '~/components/universal/Footer3Col.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 
 The reader has a decision in front of them. Vendors now ship million-token context windows with near-perfect needle-in-a-haystack recall, and the implication is loud: retire the retriever, paste the documents, ship the answer. Fabio Akita put the strongest version of the case in April 2026, in [Is RAG Dead? Long Context, Grep, and the End of the Mandatory Vector DB](https://akitaonrails.com/en/2026/04/06/rag-is-dead-long-context/): the model is now "big, relatively fast, and cheap," the best coding agent on the market does not use a vector database, and in most cases "a well-aimed `grep` plus a generous context window beats a full RAG stack." Akita is also honest enough to include a section, titled in his own words, that lists where the thesis does not hold: massive corpora, vocabulary mismatch in customer support, non-textual modalities, critical latency, and compliance auditing.
 
@@ -66,6 +67,12 @@ This piece is the case for reading both halves of Akita and adding one more. The
 <PullQuote>Long context made one half of RAG cheap. The other half is where the work still is.</PullQuote>
 
 ## The two surfaces
+
+<ArchitectureDiagram
+  src="/agentic-ai/assets/diagrams/sg-002-two-surfaces.svg"
+  alt="Two side-by-side panels. Left labeled Surface 1 Lookup: a stack of document pages with one page outlined in brick labeled the answer. Caption: measured by NIAH, MRCR, Google MRCR; vendor launch posts publish this. Right labeled Surface 2 Synthesis: four small document stacks at the corners, with curves joining each to a central node labeled join plus cite. Caption: measured by NoLiMa, RULER, NoCha, BABILong; mostly in the academic literature. Bottom note: Most production workloads mix both. The decision turns on the second one."
+  caption="Two surfaces of a long-context workload. Vendors measure the first cleanly. The decision to retire your retriever turns on the second."
+/>
 
 A long-context workload runs on one of two surfaces, or a mixture of both.
 
@@ -108,6 +115,12 @@ When the vendor pages stop, the open literature continues. A synthesis benchmark
 These five results are not a takedown of long context. They are the second benchmark the reader was looking for. They sit alongside the vendor NIAH numbers, not against them.
 
 ## A clean decision rule
+
+<ArchitectureDiagram
+  src="/agentic-ai/assets/diagrams/sg-002-decision-rule.svg"
+  alt="Three columns labeled Case 1, Case 2, Case 3, each with a brick top border. Case 1: Long context replaces RAG. Flow: query directly into a long context window. When: single-doc lookup, corpus fits in one window, low query rate, eval passes on your data. Example: pull the SLA from contract X. Case 2: Long context complements RAG. Flow: query into retriever then into long context. When: multi-hop synthesis, corpus exceeds one window, concurrent queries, citations required. Example: compare SLA across X, Y, Z and flag drift. Case 3: RAG stays load-bearing. Flow: query into retriever plus audit then into short context. When: corpus updates frequently, verifiable provenance, access control or audit, per-request cost matters. Example: support question from a policy library with weekly updates."
+  caption="The same product can route different query classes to different paths. The architecture decision is per query class, not per company."
+/>
 
 Three cases, decided by the workload, not by the headline.
 

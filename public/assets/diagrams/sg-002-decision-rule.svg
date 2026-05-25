@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="'IBM Plex Sans', system-ui, sans-serif">
+  <defs>
+    <marker id="dec-arr-ink" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6b6b6b"/>
+    </marker>
+    <marker id="dec-arr-brick" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9b4a3f"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="460" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="40" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600" letter-spacing="2" fill="#9b4a3f">THE DECISION</text>
+  <text x="40" y="72" font-family="Fraunces, Georgia, serif" font-size="22" font-weight="500" fill="#1a1a1a">Per-workload, not per-company</text>
+
+  <!-- ──── Lane 1: REPLACES ──── -->
+  <g transform="translate(20, 100)">
+    <rect x="0" y="0" width="280" height="340" rx="4" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+    <rect x="0" y="0" width="280" height="4" fill="#9b4a3f"/>
+    <text x="20" y="34" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="600" letter-spacing="1.5" fill="#9b4a3f">CASE 1</text>
+    <text x="20" y="66" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">Long context</text>
+    <text x="20" y="88" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">replaces RAG</text>
+
+    <!-- Visual: query → long context -->
+    <g transform="translate(20, 110)">
+      <rect x="0" y="0" width="44" height="20" rx="3" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="22" y="14" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">query</text>
+      <line x1="46" y1="10" x2="68" y2="10" stroke="#6b6b6b" stroke-width="1" marker-end="url(#dec-arr-ink)"/>
+      <rect x="72" y="-4" width="170" height="28" rx="4" fill="#9b4a3f" fill-opacity="0.08" stroke="#9b4a3f" stroke-width="1.5"/>
+      <text x="157" y="14" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#9b4a3f">long context window</text>
+    </g>
+
+    <text x="20" y="172" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">WHEN</text>
+    <text x="20" y="194" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— single-doc lookup</text>
+    <text x="20" y="214" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— corpus fits in one window</text>
+    <text x="20" y="234" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— low query rate</text>
+    <text x="20" y="254" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— eval passes on your data</text>
+
+    <text x="20" y="294" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">EXAMPLE</text>
+    <text x="20" y="315" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">"pull the SLA from</text>
+    <text x="20" y="330" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">contract X"</text>
+  </g>
+
+  <!-- ──── Lane 2: COMPLEMENTS ──── -->
+  <g transform="translate(310, 100)">
+    <rect x="0" y="0" width="280" height="340" rx="4" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+    <rect x="0" y="0" width="280" height="4" fill="#9b4a3f"/>
+    <text x="20" y="34" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="600" letter-spacing="1.5" fill="#9b4a3f">CASE 2</text>
+    <text x="20" y="66" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">Long context</text>
+    <text x="20" y="88" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">complements RAG</text>
+
+    <!-- Visual: query → retriever → long context -->
+    <g transform="translate(8, 110)">
+      <rect x="0" y="0" width="44" height="20" rx="3" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="22" y="14" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">query</text>
+      <line x1="46" y1="10" x2="64" y2="10" stroke="#6b6b6b" stroke-width="1" marker-end="url(#dec-arr-ink)"/>
+      <rect x="68" y="-4" width="74" height="28" rx="4" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.5"/>
+      <text x="105" y="14" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#9b4a3f">retriever</text>
+      <line x1="144" y1="10" x2="162" y2="10" stroke="#9b4a3f" stroke-width="1" marker-end="url(#dec-arr-brick)"/>
+      <rect x="166" y="-4" width="100" height="28" rx="4" fill="#9b4a3f" fill-opacity="0.08" stroke="#9b4a3f" stroke-width="1.5"/>
+      <text x="216" y="14" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#9b4a3f">long context</text>
+    </g>
+
+    <text x="20" y="172" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">WHEN</text>
+    <text x="20" y="194" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— multi-hop synthesis</text>
+    <text x="20" y="214" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— corpus exceeds one window</text>
+    <text x="20" y="234" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— concurrent queries</text>
+    <text x="20" y="254" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— citations required</text>
+
+    <text x="20" y="294" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">EXAMPLE</text>
+    <text x="20" y="315" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">"compare SLA across X, Y,</text>
+    <text x="20" y="330" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">Z and flag drift"</text>
+  </g>
+
+  <!-- ──── Lane 3: RAG STAYS ──── -->
+  <g transform="translate(600, 100)">
+    <rect x="0" y="0" width="280" height="340" rx="4" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+    <rect x="0" y="0" width="280" height="4" fill="#9b4a3f"/>
+    <text x="20" y="34" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="600" letter-spacing="1.5" fill="#9b4a3f">CASE 3</text>
+    <text x="20" y="66" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">RAG stays</text>
+    <text x="20" y="88" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">load-bearing</text>
+
+    <!-- Visual: query → retriever + audit → small context -->
+    <g transform="translate(8, 110)">
+      <rect x="0" y="0" width="44" height="20" rx="3" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="22" y="14" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">query</text>
+      <line x1="46" y1="10" x2="64" y2="10" stroke="#6b6b6b" stroke-width="1" marker-end="url(#dec-arr-ink)"/>
+      <rect x="68" y="-4" width="104" height="28" rx="4" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.5"/>
+      <text x="120" y="14" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#9b4a3f">retriever + audit</text>
+      <line x1="174" y1="10" x2="192" y2="10" stroke="#9b4a3f" stroke-width="1" marker-end="url(#dec-arr-brick)"/>
+      <rect x="196" y="-4" width="70" height="28" rx="4" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="231" y="14" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">short ctx</text>
+    </g>
+
+    <text x="20" y="172" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">WHEN</text>
+    <text x="20" y="194" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— corpus updates frequently</text>
+    <text x="20" y="214" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— verifiable provenance</text>
+    <text x="20" y="234" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— access control / audit</text>
+    <text x="20" y="254" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— per-request cost matters</text>
+
+    <text x="20" y="294" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">EXAMPLE</text>
+    <text x="20" y="315" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">"support question from a</text>
+    <text x="20" y="330" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">policy library, weekly updates"</text>
+  </g>
+</svg>
