@@ -1,8 +1,8 @@
 ---
 id: sg-003
-title: Multi-agent is not an architecture decision. It is a property of the workload.
-dek: Anthropic reported a multi-agent system beating single-agent by 90 percent. One day earlier, Cognition told you not to build multi-agents at all. They measured different workloads. Here is the variable that decides, and what it costs to get wrong, measured on 100 queries.
-description: "Anthropic and Cognition published opposite conclusions on multi-agent systems within a day of each other in June 2025. Both are right, because they measured different workloads. The decision is not multi-agent yes or no. It is whether the work requires decomposition a router cannot encode. This Signal gives the decision rule, the primary sources on both sides, and a first-party 100-query experiment measuring the cost of getting it wrong."
+title: Multi-agent is not an architecture decision. It is a workload decision.
+dek: Anthropic and Cognition were not disagreeing. One measured breadth-first research, the other warned about shared-state work. The variable is decomposability.
+description: "Anthropic and Cognition published seemingly opposite conclusions on multi-agent systems within a day of each other in June 2025. Both are right, because they measured different workload shapes. The decision is not multi-agent yes or no. It is whether the work requires decomposition a router cannot encode. This Signal gives the decision rule, the primary sources on both sides, and a first-party 100-query experiment measuring the cost of getting it wrong."
 banner: /agentic-ai/assets/banners/sg-003.png
 date: 2026-06-07
 readingTime: 10
@@ -30,11 +30,14 @@ sources:
 
 import PullQuote from '~/components/universal/PullQuote.astro';
 import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+Multi-agent systems fail when we treat the number of agents as the design choice. The real design choice is whether the work decomposes cleanly. Get that one wrong and you pay coordination overhead for nothing.
 
 In the same week of June 2025, two of the most credible agent labs in the field published essays that read as a direct contradiction. On June 12, Cognition, the team behind Devin, published [Don't Build Multi-Agents](https://cognition.ai/blog/dont-build-multi-agents). On June 13, Anthropic published [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system). The titles point in opposite directions, and [the community read them as a clash](https://news.smol.ai/issues/25-06-13-cognition-vs-anthropic).
 
-The clash is not real. Both essays are correct. They reach opposite conclusions because they measured opposite workloads, and neither title says so. The decision a reader actually has to make is not "multi-agent, yes or no." It is a property of the work in front of them, and both essays, read closely, name the same property.
+The clash is not real. Both essays are correct. They reach opposite conclusions because they measured different workload shapes, and neither title says so. The decision a reader actually has to make is not "multi-agent, yes or no." It is a property of the work in front of them, and both essays, read closely, name the same property.
 
 <PullQuote>Multi-agent is not a level you graduate to. It is a cost you pay when the work cannot be decomposed any other way.</PullQuote>
 
@@ -58,6 +61,12 @@ The cost side closes the loop. Anthropic is candid that the win is expensive: "a
 
 Strip the architecture talk away and one question decides it: **does the work decompose into branches that can run without seeing each other, or do its steps share state and depend on order?** That is a property of the task, not of any framework. The topology is downstream of the answer.
 
+<ArchitectureDiagram
+  src="/agentic-ai/assets/diagrams/sg-003-decision.svg"
+  alt="Three columns, each with a brick top border, keyed to one answer. Column 1 Decomposes: a lead node fanning out to three independent agent nodes, headed Multi-agent earns the overhead. When: independent directions, breadth-first search, exceeds one context window, many complex tools. Best fit: open-ended research. Column 2 Shares state: three ordered steps inside one continuous context box, headed Single continuous context. When: later steps depend on earlier, shared assumptions, a wrong branch poisons the merge. Best fit: most coding. Column 3 Knowable and short: query into a switch into one agent, headed Workflow router to one agent. When: category known up front, few steps with clear boundaries, cost and latency matter. Best fit: support triage from Lab-001."
+  caption="The decision is a property of the work, not a maturity level. Decompose, go multi-agent. Share state, keep one continuous context. Knowable and short, route to one agent."
+/>
+
 When the branches are genuinely independent, multi-agent earns its overhead, and the markers are the ones Anthropic lists: the work pursues multiple independent directions at once, the information exceeds a single context window, or the task interfaces with many complex tools that one agent would thrash on. Open-ended research is the clean case. The subproblems do not depend on each other, so parallel subagents do not need to see each other to be correct.
 
 When the steps share state, one decision-maker wins, and the markers are Cognition's: later actions depend on earlier ones, and a wrong assumption in one branch poisons the merge. The right answer here is a single continuous context. A workflow router is the same shape with a switch in front: it still hands the work to one agent, it just picks which one first. Router and single agent are one decision-maker, multi-agent is many. Most coding sits on this side. So does most transactional work where the path is short and the category is knowable up front.
@@ -72,8 +81,10 @@ Anthropic measured the upside on a workload built for multi-agent. The other hal
 
 It did, on every axis measured.
 
-<Callout type="gotcha">
-Router 87 percent vs multi-agent 74 percent on accuracy. After controlling for the multi-agent classifier's own misroutes, the pure architecture cost is 3.4 points. Cost: $0.024 vs $0.057 per query, 2.4 times more expensive. Latency: 1.8s vs 4.0s at p50, 2.2 times slower. The classifier and verifier are net-new model calls; the worker does the same job the router's single agent already did.
+### The expensive part was not the worker. It was the coordination.
+
+<Callout type="tip" label="Lab-001 result">
+Router 87 percent vs multi-agent 74 percent on accuracy, 13 points gross. Even after separating the classifier's own misroutes from worker quality, a residual architecture penalty of about 3 points remained. Cost: $0.024 vs $0.057 per query, 2.4 times more expensive. Latency: 1.8s vs 4.0s at p50, 2.2 times slower. The classifier and verifier are net-new model calls; the worker does the same job the router's single agent already did.
 </Callout>
 
 The failure modes matter more than the headline. The verifier rubber-stamped 14 percent of queries with "looks good to me" before a stricter prompt brought that to roughly 3 percent. The classifier misrouted 9 percent to the wrong worker. Worker hallucination on grounding ran at 4 percent, the same rate as the router's single agent, which tells you that failure is not an architecture problem. The two failures that are architecture problems, rubber-stamp verification and misrouting, are precisely the "conflicting decisions" Cognition warned about and the "dependencies between agents" Anthropic flagged. The overhead is not just tokens and latency. It is new, architecture-specific ways to be wrong.

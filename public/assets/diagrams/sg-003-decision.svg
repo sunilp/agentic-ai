@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="'IBM Plex Sans', system-ui, sans-serif">
+  <defs>
+    <marker id="d3-arr-ink" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6b6b6b"/>
+    </marker>
+    <marker id="d3-arr-brick" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9b4a3f"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="480" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="40" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600" letter-spacing="2" fill="#9b4a3f">THE DECISION VARIABLE</text>
+  <text x="40" y="72" font-family="Fraunces, Georgia, serif" font-size="22" font-weight="500" fill="#1a1a1a">Does the work decompose, or do the steps share state?</text>
+
+  <!-- ──── Lane 1: DECOMPOSES → MULTI-AGENT ──── -->
+  <g transform="translate(20, 100)">
+    <rect x="0" y="0" width="280" height="360" rx="4" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+    <rect x="0" y="0" width="280" height="4" fill="#9b4a3f"/>
+    <text x="20" y="34" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="600" letter-spacing="1.5" fill="#9b4a3f">DECOMPOSES</text>
+    <text x="20" y="64" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">Multi-agent</text>
+    <text x="20" y="86" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">earns the overhead</text>
+
+    <!-- Glyph: one lead fans out to three independent branches -->
+    <g transform="translate(20, 108)">
+      <rect x="0" y="14" width="46" height="22" rx="3" fill="#9b4a3f" fill-opacity="0.08" stroke="#9b4a3f" stroke-width="1.5"/>
+      <text x="23" y="29" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#9b4a3f">lead</text>
+      <line x1="48" y1="25" x2="104" y2="9"  stroke="#9b4a3f" stroke-width="1" marker-end="url(#d3-arr-brick)"/>
+      <line x1="48" y1="25" x2="104" y2="25" stroke="#9b4a3f" stroke-width="1" marker-end="url(#d3-arr-brick)"/>
+      <line x1="48" y1="25" x2="104" y2="41" stroke="#9b4a3f" stroke-width="1" marker-end="url(#d3-arr-brick)"/>
+      <rect x="108" y="0"  width="120" height="18" rx="3" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="168" y="13" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">agent</text>
+      <rect x="108" y="22" width="120" height="18" rx="3" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="168" y="35" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">agent</text>
+      <rect x="108" y="44" width="120" height="18" rx="3" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="168" y="57" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">agent</text>
+    </g>
+
+    <text x="20" y="206" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">WHEN</text>
+    <text x="20" y="228" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— independent directions</text>
+    <text x="20" y="248" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— breadth-first search</text>
+    <text x="20" y="268" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— exceeds one context window</text>
+    <text x="20" y="288" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— many complex tools</text>
+
+    <text x="20" y="324" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">BEST FIT</text>
+    <text x="20" y="345" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">open-ended research</text>
+  </g>
+
+  <!-- ──── Lane 2: SHARES STATE → SINGLE CONTEXT ──── -->
+  <g transform="translate(310, 100)">
+    <rect x="0" y="0" width="280" height="360" rx="4" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+    <rect x="0" y="0" width="280" height="4" fill="#9b4a3f"/>
+    <text x="20" y="34" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="600" letter-spacing="1.5" fill="#9b4a3f">SHARES STATE</text>
+    <text x="20" y="64" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">Single continuous</text>
+    <text x="20" y="86" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">context</text>
+
+    <!-- Glyph: ordered steps inside one continuous context -->
+    <g transform="translate(20, 108)">
+      <rect x="0" y="6" width="228" height="38" rx="5" fill="#9b4a3f" fill-opacity="0.08" stroke="#9b4a3f" stroke-width="1.5"/>
+      <line x1="34" y1="25" x2="194" y2="25" stroke="#9b4a3f" stroke-width="1"/>
+      <circle cx="34"  cy="25" r="6" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.5"/>
+      <circle cx="114" cy="25" r="6" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.5"/>
+      <circle cx="194" cy="25" r="6" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.5"/>
+      <text x="34"  y="62" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#6b6b6b">step 1</text>
+      <text x="114" y="62" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#6b6b6b">step 2</text>
+      <text x="194" y="62" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#6b6b6b">step 3</text>
+    </g>
+
+    <text x="20" y="206" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">WHEN</text>
+    <text x="20" y="228" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— later steps depend on earlier</text>
+    <text x="20" y="248" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— shared assumptions</text>
+    <text x="20" y="268" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— a wrong branch poisons</text>
+    <text x="20" y="288" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">   the merge</text>
+
+    <text x="20" y="324" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">BEST FIT</text>
+    <text x="20" y="345" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">most coding</text>
+  </g>
+
+  <!-- ──── Lane 3: KNOWABLE & SHORT → ROUTER ──── -->
+  <g transform="translate(600, 100)">
+    <rect x="0" y="0" width="280" height="360" rx="4" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+    <rect x="0" y="0" width="280" height="4" fill="#9b4a3f"/>
+    <text x="20" y="34" font-family="'IBM Plex Mono', monospace" font-size="10" font-weight="600" letter-spacing="1.5" fill="#9b4a3f">KNOWABLE &amp; SHORT</text>
+    <text x="20" y="64" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">Workflow router</text>
+    <text x="20" y="86" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" fill="#1a1a1a">to one agent</text>
+
+    <!-- Glyph: query → switch → one agent -->
+    <g transform="translate(20, 108)">
+      <rect x="0" y="14" width="44" height="22" rx="3" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="22" y="29" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">query</text>
+      <line x1="46" y1="25" x2="74" y2="25" stroke="#6b6b6b" stroke-width="1" marker-end="url(#d3-arr-ink)"/>
+      <polygon points="98,11 120,25 98,39 76,25" fill="#9b4a3f" fill-opacity="0.08" stroke="#9b4a3f" stroke-width="1.5"/>
+      <text x="98" y="28" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#9b4a3f">switch</text>
+      <line x1="122" y1="25" x2="150" y2="25" stroke="#9b4a3f" stroke-width="1" marker-end="url(#d3-arr-brick)"/>
+      <rect x="154" y="14" width="74" height="22" rx="3" fill="#ffffff" stroke="#6b6b6b" stroke-width="1"/>
+      <text x="191" y="29" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#6b6b6b">1 agent</text>
+    </g>
+
+    <text x="20" y="206" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">WHEN</text>
+    <text x="20" y="228" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— category known up front</text>
+    <text x="20" y="248" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— few steps, clear boundaries</text>
+    <text x="20" y="268" font-family="'IBM Plex Sans', sans-serif" font-size="12" fill="#1a1a1a">— cost and latency matter</text>
+
+    <text x="20" y="324" font-family="'IBM Plex Mono', monospace" font-size="9" font-weight="600" letter-spacing="1" fill="#6b6b6b">BEST FIT</text>
+    <text x="20" y="345" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-style="italic" fill="#6b6b6b">support triage (Lab-001)</text>
+  </g>
+</svg>
