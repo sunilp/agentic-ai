@@ -7,8 +7,6 @@ result: 87% vs 74%
 resultLabel: Router beat multi-agent on accuracy (+3.4pp normalized)
 date: 2026-05-20
 readingTime: 12
-reproduceRepo: https://github.com/sunilp/agentic-ai/tree/main/code/labs/lab-001
-dataUrl: https://github.com/sunilp/agentic-ai/raw/main/code/labs/lab-001/queries.json
 seed: 42
 references:
   - ch-04
@@ -79,9 +77,10 @@ The next Lab in this series will measure the inflection point: at what query com
 - 100 queries is the absolute floor for an honest eval — wider replication would reduce LLM-judge variance further.
 - The multi-agent system was given prompt-engineering effort but not framework-level orchestration tuning. CrewAI, AutoGen, LangGraph variants may produce different numbers.
 - The router's single-prompt architecture is sometimes called a "smart switch" rather than a workflow. The category boundary between "workflow" and "single-agent with routing" is fuzzy; reasonable readers may classify this differently.
+- The harness and the sampled query set are not published for this lab. The numbers above are from a real run, but treat them as a directional result, not a reproduction target. A publishable, reproducible version is planned.
 
 ```python
-# Sample harness invocation. Full code at the reproduce repo.
+# Illustrative harness shape. The harness and query set for this run are not published.
 from labs.lab_001 import run_router, run_multi_agent, evaluate
 
 queries = load_queries('queries.json')

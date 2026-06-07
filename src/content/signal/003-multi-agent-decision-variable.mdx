@@ -22,8 +22,8 @@ sources:
     url: https://news.smol.ai/issues/25-06-13-cognition-vs-anthropic
     authors: [AINews]
     year: 2025
-  - title: "Multi-agent vs router on 100 customer-support queries"
-    url: https://github.com/sunilp/agentic-ai/tree/main/code/labs/lab-001
+  - title: "Lab-001: Multi-agent vs router on 100 customer-support queries"
+    url: https://sunilprakash.com/agentic-ai/labs/multi-agent-vs-router-100-queries/
     authors: [Prakash S.]
     year: 2026
 ---
@@ -93,7 +93,7 @@ The two cost figures use different baselines and do not stack. Anthropic's full 
 
 ## What this Lab does not claim
 
-The honest scope. This is one model family, 100 queries, and one short-horizon domain. It does not show multi-agent is bad. It shows multi-agent costs something real, and that on a workload the router already handles, the cost buys nothing. The first eval pass actually scored the multi-agent system at 81 percent, close to the router, until the rubber-stamp verifier was caught and fixed; the more honest number is lower. The inflection point, the query complexity at which decomposition starts to earn the overhead, is the next experiment, not this one. The full harness and data are in the [reproduce repo](https://github.com/sunilp/agentic-ai/tree/main/code/labs/lab-001).
+The honest scope. This is one model family, 100 queries, and one short-horizon domain. It does not show multi-agent is bad. It shows multi-agent costs something real, and that on a workload the router already handles, the cost buys nothing. The first eval pass actually scored the multi-agent system at 81 percent, close to the router, until the rubber-stamp verifier was caught and fixed; the more honest number is lower. The inflection point, the query complexity at which decomposition starts to earn the overhead, is the next experiment, not this one. The harness and query set for this run are not published, so read these numbers as a directional result rather than a reproduction target.
 
 ## The rule, Monday morning
 
@@ -117,9 +117,6 @@ Two labs, opposite titles, the same underlying claim. The decision was never abo
   fromBook={[
     { label: "Ch 3: Workflow First, Agent Second", href: "/agentic-ai/book/03-workflow-first-agent-second/" },
     { label: "Ch 4: Multi-Agent Systems Without Theater", href: "/agentic-ai/book/04-multi-agent-without-theater/" },
-  ]}
-  inCode={[
-    { label: "Lab-001: multi-agent vs router, full harness and data", href: "https://github.com/sunilp/agentic-ai/tree/main/code/labs/lab-001" },
   ]}
   readNext={{ label: "Lab-001: the 100-query experiment behind this piece", href: "/agentic-ai/labs/multi-agent-vs-router-100-queries/" }}
 />

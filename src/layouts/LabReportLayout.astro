@@ -79,7 +79,7 @@ const collectionRoute: Record<string, string> = {
         <slot />
       </article>
 
-      <ReproduceStrip repo={d.reproduceRepo} data={d.dataUrl} seed={d.seed} />
+      {d.reproduceRepo && d.dataUrl && <ReproduceStrip repo={d.reproduceRepo} data={d.dataUrl} seed={d.seed} />}
 
       {(links.referencedBy.length > 0 || links.citedBy.length > 0) && (
         <section class="lab-cited-by">
