@@ -10,6 +10,11 @@ docs/superpowers/
 .superpowers/
 __pycache__/
 *.pyc
+
+# Lab-001: harness + dataset are committed; specific run outputs are held local
+labs/lab_001/runs/
+labs/lab_001/results.json
+labs/lab_001/RESULTS.md
 .env
 .venv/
 venv/

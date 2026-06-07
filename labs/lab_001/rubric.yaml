@@ -1,0 +1,21 @@
+# Scoring rubric for Lab-001. Same shape as the documented original:
+# correctness 0.4, grounding 0.3, completeness 0.3, pass at 0.7.
+# An LLM judge (qwen2.5:14b) scores each criterion 0..1 against the query and a
+# reference answer from the dataset.
+criteria:
+  - name: correctness
+    description: >
+      Does the answer correctly address the customer's question and align with the
+      reference answer's policy, without stating anything contradictory?
+    weight: 0.4
+  - name: grounded
+    description: >
+      Is the answer consistent with the reference answer and free of invented
+      policy, numbers, or commitments not supported by it?
+    weight: 0.3
+  - name: completeness
+    description: >
+      Does the answer give the customer enough to act on, rather than a partial or
+      evasive reply?
+    weight: 0.3
+pass_threshold: 0.7
