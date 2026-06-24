@@ -1,0 +1,111 @@
+---
+id: fn-004
+title: Loop engineering is a 30-year-old loop with a new hashtag
+dek: A two-sentence post got 8.4 million views and the field spent the next week defining it. The definition is a control loop computer science named in 1995, and it quietly hands you back the one part that was always hard.
+description: "Loop engineering renamed a three-decade-old idea. The stop condition it treats as a detail was named unsolved in 1995, the self-verification it assumes is contradicted by the evidence, and nobody connects loops that run while you sleep to the credential gap that deletes production databases."
+primaryChapter: ch-02
+banner: /agentic-ai/assets/banners/fn-004.png
+date: 2026-06-25
+readingTime: 9
+pullQuote: The stop condition is the whole problem, and it is the one decision the model cannot be trusted to make about itself.
+references: [ch-02, ch-06, ch-08, ch-11, ch-13]
+patterns: []
+sources:
+  - title: "You should be designing loops that prompt your agents (post)"
+    url: https://x.com/steipete/status/2063697162748260627
+    authors: [Steinberger P.]
+    year: 2026
+  - title: "Loop Engineering"
+    url: https://addyosmani.com/blog/loop-engineering/
+    authors: [Osmani A.]
+    year: 2026
+  - title: "BDI Agents: From Theory to Practice"
+    url: https://cdn.aaai.org/ICMAS/1995/ICMAS95-042.pdf
+    authors: [Rao A.S., Georgeff M.P.]
+    year: 1995
+  - title: "ReAct: Synergizing Reasoning and Acting in Language Models"
+    url: https://arxiv.org/abs/2210.03629
+    authors: [Yao S., et al.]
+    year: 2022
+  - title: "Reflexion: Language Agents with Verbal Reinforcement Learning"
+    url: https://proceedings.neurips.cc/paper_files/paper/2023/file/1b44b878bb782e6954cd888628510e90-Paper-Conference.pdf
+    authors: [Shinn N., et al.]
+    year: 2023
+  - title: "Large Language Models Cannot Self-Correct Reasoning Yet"
+    url: https://arxiv.org/abs/2310.01798
+    authors: [Huang J., et al.]
+    year: 2024
+  - title: "LLMs Cannot Find Reasoning Errors, But Can Correct Them Given the Error Location"
+    url: https://arxiv.org/abs/2311.08516
+    authors: [Tyen G., et al.]
+    year: 2024
+  - title: "Measuring AI Ability to Complete Long Tasks"
+    url: https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/
+    authors: [METR]
+    year: 2025
+---
+
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+On June 7, 2026, Peter Steinberger [posted two sentences](https://x.com/steipete/status/2063697162748260627): you should not be prompting coding agents anymore, you should be designing loops that prompt your agents. The post did 8.4 million views. It contained no definition, no building blocks, and no specification. The field spent the following week supplying all three. Addy Osmani's [essay](https://addyosmani.com/blog/loop-engineering/) gave it the canonical line, loop engineering is replacing yourself as the person who prompts the agent, and the lineage was complete: prompt engineering, then context engineering, then harness engineering, and now, the fourth floor, loop engineering.
+
+The harness was a layer worth naming. The word was overdue, and naming it made the unit of evaluation honest. Loop engineering, pitched as the floor above it, is a different case. Underneath the new vocabulary is a thirty-year-old control loop with a 2026 hashtag, and a quiet handoff of the only part that was ever hard.
+
+## The claim, steelmanned
+
+Take the strongest version first. Osmani draws the one clean line anyone has drawn between a harness and a loop. A harness is the environment one agent runs inside. A loop is that environment, but it runs on a timer, it spawns helpers, and it feeds itself. The shift is from you holding the agent like a tool to a system holding it like a process: scheduled, self-spawning, self-supplying its own next instruction. That is a real description of how serious people now run coding agents, and the practice is worth describing.
+
+But strip the framing and look at the mechanism. A goal, an action, a check on the result, an update to state, and a decision to continue, retry, stop, or escalate, repeating on a clock without a human typing each turn. That is not a new primitive. That is the oldest control structure in autonomous agents, and we can date it precisely.
+
+## The loop is older than most of the people writing about it
+
+In 1995, Rao and Georgeff published the [BDI agent architecture](https://cdn.aaai.org/ICMAS/1995/ICMAS95-042.pdf) with a concrete "main interpreter loop": initialize, then repeat, generate options, deliberate, update intentions, execute, take in new events, drop the goals that are now achieved or impossible. Read that list again next to the 2026 definition. It is the same loop. The 2026 version runs a language model where the 1995 version ran symbolic deliberation, but the control structure is identical, down to the step where the loop decides which goals to abandon.
+
+The discourse treats the hard question of the loop, when to stop and when to reconsider, as a fresh engineering frontier. It is not. Rao and Georgeff named that exact problem in 1995 and called it the horns of a dilemma. Reconsider your plan at every step and you pay a deliberation cost so high the action may be stale by the time you commit. Commit unconditionally and you keep marching after the goal has become unreachable. Their proposed fix was not a solution. It was to bound the frequency of reconsideration, and even that remedy they credited to a 1991 paper. The stop condition has been an open, named problem for three decades. A whole literature is built on it. Loop engineering rediscovered it and printed it on a T-shirt.
+
+The line continues unbroken. [ReAct, in 2022,](https://arxiv.org/abs/2210.03629) interleaved a reasoning step and an acting step into the thought-action-observation cycle every modern agent runs, three and a half years before the term. [Reflexion](https://proceedings.neurips.cc/paper_files/paper/2023/file/1b44b878bb782e6954cd888628510e90-Paper-Conference.pdf), the canonical self-reflecting agent loop, landed at NeurIPS in 2023. And here is the detail that matters: Reflexion was not unbounded autonomy. It was hard-capped by a maximum trial count and by a memory of one to three stored experiences, truncated to fit the context window. Its stop was external, an evaluator's pass-or-fail or the trial limit, never the agent's own say-so. The most celebrated self-improving loop in the literature only worked because someone put a fence around it. That is the part the 2026 framing leaves out.
+
+## The part it quietly hands back to you
+
+Here is where the rebrand stops being harmless. The loop-engineering pitch rests on a verifier. A second agent, the story goes, checks the first agent's work, and that check is the stop condition. Osmani is honest about why you need it: the model that wrote the code is too nice grading its own homework. He is right that you need an external check. The discourse is wrong about how hard that is, and about whether a model can be the check at all.
+
+The evidence is not ambiguous. Models cannot reliably find their own reasoning errors. On a [benchmark built for exactly this](https://arxiv.org/abs/2311.08516), GPT-4 identified mistakes at 52.87 percent, which on a near-binary task is a coin flip; GPT-3.5 managed 14.78 percent, against human raters who agreed with each other above 97 percent. And without an external signal, asking a model to review its own answer does not just fail to help, it actively hurts: a [DeepMind team found](https://arxiv.org/abs/2310.01798) intrinsic self-correction dropped GPT-4 from 95.5 to 91.5 percent on grade-school math, because the model talks itself out of correct answers as readily as wrong ones. The reported successes in the literature quietly used the ground-truth label to decide when to stop. Take the oracle away and the loop has no reliable way to know it is done. Even the agent's own unit tests are unsound as a gate: Reflexion's authors measured a 16.3 percent false-positive rate on one benchmark, which means a loop can pass every test it wrote for itself and still be wrong.
+
+So the verifier is not a component you bolt on at the end. It is the whole problem, and the discourse's own slogan, the verifier is the bottleneck, is more true than the people repeating it seem to realize. A loop with a self-graded stop condition is not autonomy. It is a confident machine with no brakes.
+
+There is a constructive way out, and it is worth stating because it tells you what to actually build. The same research that shows models cannot find their own errors shows they can fix errors once the location is supplied from outside: given the mistake's position by an external checker, the backtracking method recovered 43.92 percent of previously wrong answers while losing under 7 percent of the right ones. The fixing capability is real. The self-detection is not. That asymmetry is the design rule. The verifier must be external to the maker. A code executor, a type checker, a test suite the agent did not author, a schema validator, a second model with a different objective and no stake in the first one's answer. Ground the stop in something the loop cannot talk itself past, or do not run it unattended.
+
+## The sentence nobody in the discourse writes
+
+The loop-engineering conversation reaches the edge of the real problem and stops. Osmani gets one sentence from it: a loop running unattended is also a loop making mistakes unattended. True. But that sentence is about correctness, and the next sentence, the one nobody writes, is about authority.
+
+A loop that runs while you sleep, holds a broad production credential, and stops only when it decides it is finished is not a productivity pattern. It is the exact architecture that deleted a production database in nine seconds this past April, and the one that wiped a database under an explicit code freeze the previous July. I traced both of those incidents in detail [elsewhere](https://sunilprakash.com/writing/the-same-database-twice/). The shape is always the same: the credential was wider than the task, and the stop was a sentence the model agreed to rather than a gate the system enforced. Loop engineering, as it is being evangelized, is that shape with better branding and a scheduler attached.
+
+This is the gap the discourse leaves open. The guides talk about verification at length and almost never about blast radius. They do not ask the question an incident review asks first: when this loop acts against something that matters, what is it allowed to touch, and who can prove afterward that it was allowed. The stop condition the evidence says the model cannot self-enforce is the same boundary that, left to a prompt, ends with a destroyed database. The answer is not a better prompt. It is authority that is scoped and enforced outside the model: a credential narrowed to the task, a destructive action the agent cannot call without an out-of-band approval it does not hold, a verifiable record of who delegated what. That is the layer an open protocol like AIP exists to provide: a verifiable agent identity whose authority can only narrow as it passes down a chain of delegations, enforced outside the model. It is the missing floor under everything the loop discourse is excited about. Build the loop all you want. Put an enforced gate between it and anything you cannot undo.
+
+<PullQuote>The stop condition is the whole problem, and it is the one decision the model cannot be trusted to make about itself.</PullQuote>
+
+## Where this fails
+
+Two honest limits. First, this is not an argument against loops. Loops grounded in external verification, a code executor, a test harness, a compiler, genuinely work, and they are how the best agent systems ship today. The target here is the prompted stop and the self-graded check, not the practice of designing the loop. Second, the reliability numbers have a clock on them. [METR measured](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) that in early 2025, frontier agents reliably handled only a few minutes of expert work, with a fifty-percent success horizon near an hour, which on its face undercuts "runs while you sleep." But that horizon has been doubling roughly every seven months, so by the time you read this it is longer, and METR itself cautions that the metric is not a literal measure of how long an agent can run alone. The point that survives the caveats is the direction, not the number: reliability decays as the chain of actions grows, and the longer a loop runs unattended the more certain it is to need a brake it cannot supply itself.
+
+And naming things does have value, even old things. Harness engineering was a good name for a real layer. Loop engineering is a worse case, a name for a structure that was already named, applied to a problem that was already known to be unsolved, with the unsolved part presented as a detail. The name is not the issue. The amnesia is.
+
+## In code
+
+The companion to this note is a single loop you can run two ways. In the first, the agent decides when it is done and the stop condition is its own claim of completion; the destructive step is a normal function call. In the second, the same loop runs against three external fences: an iteration cap, a no-progress detector that hashes each tool call and its arguments and halts when the same call repeats, and a destructive action that cannot execute without an approval token the agent never possesses. Same model, same goal, same prompt. One of them can delete the database on a hallucinated "done." The other cannot, by construction. The diff between those two versions is the entire content of this field note.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 2 — Tools, Context, and the Agent Loop", href: "/agentic-ai/book/02-tools-context-agent-loop/" },
+    { label: "Ch 6 — Evaluating and Hardening", href: "/agentic-ai/book/06-evaluating-and-hardening/" },
+    { label: "Ch 8 — Metacognition and Self-Reflection", href: "/agentic-ai/book/08-metacognition/" },
+    { label: "Ch 11 — Security Deep Dive", href: "/agentic-ai/book/11-security/" },
+    { label: "Ch 13 — Agent Protocols in Production", href: "/agentic-ai/book/13-agent-protocols-in-production/" },
+  ]}
+  inCode={[
+    { label: "prompted-stop vs enforced-stop loop (FN-004)", href: "https://github.com/sunilp/agentic-ai/tree/main/src/fn04" },
+  ]}
+  readNext={{ label: "FN-003 — Anthropic just told you the harness is the product", href: "/agentic-ai/field-notes/003-anthropic-told-you-harness-is-product/" }}
+/>

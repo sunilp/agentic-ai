@@ -1,0 +1,7 @@
+Create a wide editorial banner illustration for Field Note 004, titled "Loop engineering is a 30-year-old loop with a new hashtag." Format exactly 1200x630 px, composed so the central object still reads clearly when cropped to a 1000x420 social banner and at small thumbnail size. No text, no letters, no numerals, no labels, no UI panels, no logos, no border.
+
+Subject: a single antique centrifugal flyball governor, the 19th-century mechanical feedback device that regulates a steam engine. Two heavy spinning balls on hinged arms mounted to a vertical spindle, with a sliding collar and linkage at the base. Render it as one clean iconic object, centered, with generous negative space around it. It should read as old, precise, mechanical engineering: the original control loop, the device that throttles the machine when it runs too fast.
+
+Style: hand-pressed ink stamp / linocut, a single brick-red ink (#9b4a3f) printed on warm off-white paper (#fafaf8). Slight ink bleed, uneven density, small voids and broken edges where the block did not fully ink, the texture of a real letterpress impression. No charcoal, no second color, brick red only on paper. Vintage technical-plate feeling, restrained and editorial, in the spirit of an old patent drawing pressed as a woodcut.
+
+Avoid: glowing robots, neural-net motifs, blue circuits, holograms, dashboards, charts, gauges with readable numbers, stock-photo realism, glossy 3D renders, cyberpunk lighting, sci-fi imagery, speech bubbles, visible text or letters, watermarks, gradients, neon, decorative borders.
