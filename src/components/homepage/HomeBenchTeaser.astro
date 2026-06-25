@@ -1,0 +1,60 @@
+---
+/**
+ * HomeBenchTeaser — homepage band pointing to the interactive Bench.
+ */
+---
+
+<section class="bench-teaser">
+  <div class="bench-teaser__inner">
+    <div>
+      <p class="bench-teaser__label">The Bench</p>
+      <p class="bench-teaser__copy">Read the argument, then run it. Interactive experiments in the browser, no setup. Start with Loop Lab: toggle the fences and watch an agent either delete production or get stopped.</p>
+    </div>
+    <a class="bench-teaser__cta" href="/bench/">Open the Bench →</a>
+  </div>
+</section>
+
+<style>
+  .bench-teaser { margin: var(--space-9) 0; }
+  .bench-teaser__inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-5);
+    border: 1px solid var(--rule, rgba(26, 26, 26, 0.1));
+    border-radius: var(--radius-md, 4px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+  .bench-teaser__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+    margin: 0 0 var(--space-2);
+  }
+  .bench-teaser__copy {
+    margin: 0;
+    color: var(--fg-light);
+    font-size: var(--body-2);
+    line-height: var(--lh-base);
+    max-width: 52ch;
+  }
+  .bench-teaser__cta {
+    flex-shrink: 0;
+    font-size: var(--body-2);
+    font-weight: 500;
+    color: var(--paper);
+    background: var(--ink);
+    padding: var(--space-2) var(--space-4);
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .bench-teaser__cta:hover { background: var(--brick); }
+
+  @media (max-width: 600px) {
+    .bench-teaser__inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

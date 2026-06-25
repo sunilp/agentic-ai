@@ -1,0 +1,69 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+import LoopLab from '~/components/islands/LoopLab.svelte';
+---
+
+<PageLayout
+  title="The Bench — Agent Engineering Lab"
+  description="The Bench is the Lab's playground: interactive, in-browser experiments that let you manipulate the concepts the Field Notes argue. No setup, no keys."
+  currentNav="Bench"
+>
+  <Container>
+    <header class="bench__header">
+      <Tag variant="accent">The Bench · Playground</Tag>
+      <KineticHeading level={1}>The Bench</KineticHeading>
+      <Dek italic>Interactive experiments you can run in the browser. Read the Field Note, then come break it here.</Dek>
+    </header>
+
+    <section class="bench__demo">
+      <h2 class="bench__demo-title">Loop Lab</h2>
+      <p class="bench__demo-dek">
+        The companion to <a href="/field-notes/004-loop-engineering-30-year-old-loop/">FN-004</a>. A loop engineering
+        agent that wants to "clean up" a database. Toggle the three external fences and watch the same agent either
+        delete production or get stopped. The brake is not in the model; it is the layer you switch on here.
+      </p>
+      <LoopLab client:visible />
+      <p class="bench__src">
+        Deterministic, no API keys, same logic as the Python tests. Source:
+        <a href="https://github.com/sunilp/agentic-ai/tree/master/src/fn04" target="_blank" rel="noopener">src/fn04</a>.
+      </p>
+    </section>
+
+    <section class="bench__more">
+      <h2 class="bench__more-title">More on the Bench</h2>
+      <p>
+        Every Field Note and Lab Note with an interactive piece lands here. Next up: the eval-rubric failure-bucket
+        explorer from <a href="/field-notes/002-eval-rubric-failure-buckets/">FN-002</a>, and the multi-agent versus
+        router comparison from <a href="/signal/003-multi-agent-decision-variable/">SG-003</a> and the
+        <a href="/labs/multi-agent-vs-router-100-queries/">Lab Note</a>.
+      </p>
+    </section>
+  </Container>
+</PageLayout>
+
+<style>
+  .bench__header { padding: var(--space-7) 0 var(--space-6); }
+  .bench__demo { margin-bottom: var(--space-9); }
+  .bench__demo-title,
+  .bench__more-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--display-3);
+    margin: 0 0 var(--space-2);
+  }
+  .bench__demo-dek,
+  .bench__more p {
+    color: var(--fg-light);
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+    max-width: 60ch;
+    margin: 0 0 var(--space-3);
+  }
+  .bench__src { font-family: var(--font-mono); font-size: var(--meta-2); color: var(--fg-light); }
+  .bench__demo a, .bench__more a, .bench__src a { color: var(--brick); border-bottom: 1px solid var(--brick); }
+  .bench__demo a:hover, .bench__more a:hover, .bench__src a:hover { color: var(--fg); border-color: var(--fg); }
+</style>

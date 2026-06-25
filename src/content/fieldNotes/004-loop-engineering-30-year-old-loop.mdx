@@ -96,7 +96,7 @@ And naming things has value. Loop engineering names a real layer, the orchestrat
 
 The companion code is the whole argument, in two forms. First a deterministic version you can read in a sitting: one loop, run two ways. In the first the agent decides when it is done and the destructive step is a normal function call; in the second the same loop runs against three external fences, an iteration cap, a no-progress detector that hashes each call and halts on a repeat, and a destructive action that cannot execute without an approval the agent never holds. One can delete the database on a hallucinated "done." The other cannot, by construction.
 
-Then the same contrast with a real LLM agent on LangGraph, because the abstraction is easy to wave away and a running agent is not. Told to clean up a staging table, the ungated agent reaches for the destructive tool and nothing stops it; the enforced agent runs the identical model and tools, but the destructive call is gated and the loop is capped, so it cannot delete whatever it decides. The brake is not in the prompt and not in the model. It is the layer the orchestration is missing.
+Then the same contrast with a real LLM agent on LangGraph, because the abstraction is easy to wave away and a running agent is not. Told to clean up a staging table, the ungated agent reaches for the destructive tool and nothing stops it; the enforced agent runs the identical model and tools, but the destructive call is gated and the loop is capped, so it cannot delete whatever it decides. The brake is not in the prompt and not in the model. It is the layer the orchestration is missing. You can run the contrast in the browser on [the Bench](/bench/).
 
 <Footer3Col
   fromBook={[
