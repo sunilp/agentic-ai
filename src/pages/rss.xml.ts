@@ -42,7 +42,7 @@ export async function GET(context: APIContext) {
   ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
   return rss({
-    title: 'Agentic AI for Serious Engineers',
+    title: 'Agent Engineering Lab',
     description: 'Field Notes, Signal, Recipes, and Lab Reports from the agentic AI publication by Sunil Prakash.',
     site: context.site!,
     items,

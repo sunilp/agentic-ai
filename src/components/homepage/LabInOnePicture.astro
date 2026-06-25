@@ -1,0 +1,95 @@
+---
+/**
+ * LabInOnePicture — homepage band: a hand-crafted letterpress diagram of the
+ * editorial system. The book is the canonical core; four streams orbit it;
+ * the Bench is where the ideas get tested.
+ */
+---
+
+<section class="lab-pic">
+  <div class="lab-pic__inner">
+    <p class="lab-pic__label">The Lab, in one picture</p>
+
+    <svg
+      class="lab-pic__svg"
+      viewBox="0 0 920 470"
+      role="img"
+      aria-label="The book is the canonical reference. Four streams orbit it: Field Notes, Signals, Recipes, and Lab Notes. The Bench is where the ideas get tested."
+    >
+      <!-- connectors (drawn first, sit under the nodes) -->
+      <g stroke="#1a1a1a" stroke-opacity="0.18" stroke-width="1">
+        <line x1="175" y1="84" x2="385" y2="192" />
+        <line x1="745" y1="84" x2="535" y2="192" />
+        <line x1="175" y1="349" x2="385" y2="264" />
+        <line x1="745" y1="349" x2="535" y2="264" />
+        <line x1="460" y1="268" x2="460" y2="406" />
+      </g>
+
+      <!-- the book: canonical core -->
+      <rect x="380" y="188" width="160" height="80" rx="3" fill="#fafaf8" stroke="#9b4a3f" stroke-width="1.5" />
+      <text x="460" y="223" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="21" font-weight="500" fill="#9b4a3f">The Book</text>
+      <text x="460" y="244" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="1.5" fill="#6b6b6b">CANONICAL REFERENCE</text>
+
+      <!-- four streams -->
+      <g>
+        <circle cx="175" cy="80" r="4" fill="#9b4a3f" />
+        <text x="175" y="104" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="17" fill="#1a1a1a">Field Notes</text>
+        <text x="175" y="121" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="1.5" fill="#6b6b6b">OBSERVATIONS</text>
+
+        <circle cx="745" cy="80" r="4" fill="#9b4a3f" />
+        <text x="745" y="104" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="17" fill="#1a1a1a">Signals</text>
+        <text x="745" y="121" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="1.5" fill="#6b6b6b">DISCOURSE</text>
+
+        <circle cx="175" cy="345" r="4" fill="#9b4a3f" />
+        <text x="175" y="369" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="17" fill="#1a1a1a">Recipes</text>
+        <text x="175" y="386" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="1.5" fill="#6b6b6b">BUILD IT</text>
+
+        <circle cx="745" cy="345" r="4" fill="#9b4a3f" />
+        <text x="745" y="369" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="17" fill="#1a1a1a">Lab Notes</text>
+        <text x="745" y="386" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="1.5" fill="#6b6b6b">EXPERIMENTS</text>
+      </g>
+
+      <!-- the bench -->
+      <circle cx="460" cy="406" r="4" fill="#9b4a3f" />
+      <text x="460" y="431" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="17" font-weight="500" fill="#9b4a3f">The Bench</text>
+      <text x="460" y="448" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="1.5" fill="#6b6b6b">TEST THE IDEAS</text>
+    </svg>
+
+    <p class="lab-pic__caption">Evidence, Patterns, and Projects are the reference shelf the streams draw on.</p>
+  </div>
+</section>
+
+<style>
+  .lab-pic {
+    margin: var(--space-9) 0;
+  }
+
+  .lab-pic__inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 var(--space-5);
+  }
+
+  .lab-pic__label {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-loose);
+    color: var(--brick);
+    margin-bottom: var(--space-5);
+  }
+
+  .lab-pic__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .lab-pic__caption {
+    margin-top: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--fg-light);
+    text-align: center;
+  }
+</style>

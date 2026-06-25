@@ -1,0 +1,33 @@
+---
+/**
+ * HomeFrontispiece — artistic copperplate-engraving centerpiece on the home page.
+ * Encodes the Creed: a thinking core on a loop, a verifier, and an enforced gate.
+ */
+---
+
+<figure class="frontispiece">
+  <img
+    src="/assets/home-frontispiece.png"
+    alt="An engraved emblem of accountable autonomy: a thinking core on an orbital loop, a verifier balance on one side, and a sealed, padlocked gate on the other"
+    width="1600"
+    height="1000"
+    loading="eager"
+  />
+</figure>
+
+<style>
+  .frontispiece {
+    margin: var(--space-6) auto var(--space-9);
+    max-width: 720px;
+    padding: 0 var(--space-5);
+  }
+
+  .frontispiece img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* the plate's warm-paper ground blends into the site paper so the
+       engraving sits on the page without a hard rectangular edge */
+    mix-blend-mode: multiply;
+  }
+</style>

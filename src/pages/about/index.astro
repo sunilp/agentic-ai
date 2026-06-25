@@ -1,0 +1,126 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+import Stamp from '~/components/universal/Stamp.astro';
+---
+
+<PageLayout
+  title="About — Agent Engineering Lab"
+  description="Agent Engineering Lab is a working publication on building agent systems that survive contact with reality. Field Notes, Signals, Recipes, Lab Notes, and an interactive Bench, grounded in evidence."
+  currentNav="About"
+>
+  <Reader>
+    <div class="about__hero">
+      <Stamp class="about__stamp" width="42px" height="56px" rotation={3} />
+      <Tag variant="accent">About</Tag>
+      <KineticHeading level={1}>Agent Engineering Lab</KineticHeading>
+      <Dek italic>A working publication on building agent systems that survive contact with reality.</Dek>
+    </div>
+
+    <div class="about__body">
+      <p>
+        Agent Engineering Lab is where the practice of building production agents gets written down,
+        argued about, and tested. The premise is plain: most agents are workflows in costume, and the
+        reliability that matters lives in the harness, the loop, and the gate, not in the model. The
+        Lab takes that seriously and earns the complexity.
+      </p>
+
+      <h2>The streams</h2>
+      <p>Four ongoing streams, each with a different job.</p>
+      <ul>
+        <li><strong>Field Notes</strong> are observations from inside the work, grounded in recent papers, tools, and incidents.</li>
+        <li><strong>Signals</strong> read the discourse around agent engineering and say what to keep and what to skip.</li>
+        <li><strong>Recipes</strong> are buildable-in-an-afternoon walkthroughs with verified, runnable code.</li>
+        <li><strong>Lab Notes</strong> are empirical experiments with measured comparisons and honest caveats.</li>
+      </ul>
+      <p>
+        Behind them sits the reference shelf: <strong>Evidence</strong> (the measured data behind the claims),
+        <strong>Patterns</strong> (reusable architectures named across the work), and <strong>Projects</strong>
+        (teardowns of reference systems).
+      </p>
+
+      <h2>The Bench</h2>
+      <p>
+        The Bench is the Lab's playground: interactive, runnable experiments that let you manipulate the
+        concepts the pieces argue, in the browser, with no setup. Read the Field Note, then go break it on
+        the Bench.
+      </p>
+
+      <h2>Cadence</h2>
+      <p>Field Notes twice a week, Recipes on Wednesdays, Lab Notes every two to three weeks, Signals as the discourse warrants.</p>
+
+      <h2>Who runs it</h2>
+      <p>
+        The Lab is written by Sunil Prakash, an engineering leader and researcher working on enterprise AI
+        systems, agent identity, and production agent architecture. The book
+        <a href="/book/">Agentic AI for Serious Engineers</a> is the canonical reference the streams draw on,
+        and the <a href="https://sunilprakash.com/aip/" target="_blank" rel="noopener">Agent Identity Protocol</a>
+        is the related work on verifiable, delegable agent authority. Both are companions to the Lab, not its parent.
+      </p>
+
+      <h2>Read along</h2>
+      <p>
+        New work lands here first. Follow on
+        <a href="https://agenticlab.substack.com" target="_blank" rel="noopener">Substack</a>,
+        the <a href="https://www.linkedin.com/newsletters/building-ai-systems-7310391508670377984/" target="_blank" rel="noopener">LinkedIn newsletter</a>,
+        or the <a href="/rss.xml">RSS feed</a>.
+      </p>
+    </div>
+  </Reader>
+</PageLayout>
+
+<style>
+  .about__hero {
+    position: relative;
+    padding-top: var(--space-7);
+  }
+
+  .about__stamp {
+    position: absolute;
+    top: var(--space-3);
+    right: 0;
+  }
+
+  .about__body {
+    margin-top: var(--space-6);
+  }
+
+  .about__body h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--display-3);
+    line-height: var(--lh-snug);
+    margin: var(--space-6) 0 var(--space-3);
+    color: var(--fg);
+  }
+
+  .about__body p {
+    margin: 0 0 var(--space-4);
+    color: var(--fg-light);
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .about__body ul {
+    margin: 0 0 var(--space-4);
+    padding-left: var(--space-5);
+    color: var(--fg-light);
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .about__body li { margin-bottom: var(--space-2); }
+
+  .about__body strong { color: var(--fg); font-weight: 500; }
+
+  .about__body a {
+    color: var(--brick);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brick);
+  }
+
+  .about__body a:hover { color: var(--fg); border-color: var(--fg); }
+</style>

@@ -36,6 +36,7 @@ const items = [
         </a>
       ))}
     </nav>
+    <a class="topnav__subscribe" href="https://agenticlab.substack.com" target="_blank" rel="noopener">Subscribe</a>
   </div>
 </header>
 
@@ -81,7 +82,23 @@ const items = [
   .topnav__link:hover { color: var(--paper); }
   .topnav__link--current { color: var(--paper); border-bottom-color: var(--paper); }
 
+  .topnav__subscribe {
+    font-size: var(--meta-1);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--paper);
+    background: var(--brick);
+    padding: var(--space-2) var(--space-4);
+    border-radius: 2px;
+    white-space: nowrap;
+    transition: background var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+  }
+
+  .topnav__subscribe:hover { background: var(--paper); color: var(--ink); }
+  .topnav__subscribe:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+
   @media (max-width: 720px) {
     .topnav__items { gap: var(--space-3); flex-wrap: wrap; }
+    .topnav__subscribe { margin-left: auto; }
   }
 </style>

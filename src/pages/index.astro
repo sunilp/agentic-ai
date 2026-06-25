@@ -2,6 +2,9 @@
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
 import HeroEditorial from '~/components/homepage/HeroEditorial.astro';
+import HomeFrontispiece from '~/components/homepage/HomeFrontispiece.astro';
+import Creed from '~/components/homepage/Creed.astro';
+import LabInOnePicture from '~/components/homepage/LabInOnePicture.astro';
 import EvidenceInlineStrip from '~/components/homepage/EvidenceInlineStrip.astro';
 import BuildJudgeOperateCards from '~/components/homepage/BuildJudgeOperateCards.astro';
 import WhatsNewStrip from '~/components/homepage/WhatsNewStrip.astro';
@@ -10,12 +13,15 @@ import TraceReplay from '~/components/islands/TraceReplay.svelte';
 ---
 
 <PageLayout
-  title="Agentic AI for Serious Engineers — Build agents that survive contact with reality"
+  title="Agent Engineering Lab — Build agents that survive contact with reality"
   description="A field guide to building reliable, evaluable, production-grade agent systems. Book + Lab Reports + Field Notes + Recipes."
   ogImage="/og-default.png"
 >
   <Container>
     <HeroEditorial />
+    <HomeFrontispiece />
+    <Creed />
+    <LabInOnePicture />
     <EvidenceInlineStrip />
     <BuildJudgeOperateCards />
     <WhatsNewStrip />
