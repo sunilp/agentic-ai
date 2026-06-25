@@ -5,6 +5,7 @@ run two ways. The prompted loop deletes the database on a hallucinated
 "done"; the enforced loop cannot, by construction.
 """
 
+from src.fn04.langgraph_agent import build_tools, delete_all_impl, read_rows_impl
 from src.fn04.loop import (
     ApprovalGate,
     Database,
@@ -101,3 +102,40 @@ def test_loop_result_shape():
     )
     assert result.stop_reason is StopReason.AGENT_DONE
     assert result.blocked_calls == []
+
+
+# --- real-agent example (LangGraph): the enforcement-aware tool behavior is
+# deterministic and tested here without the framework or an LLM. ---
+
+
+def test_prompted_tool_deletes_freely_without_a_gate():
+    db = Database()
+    result = delete_all_impl(db, None)
+    assert db.deleted is True
+    assert "deleted" in result.lower()
+
+
+def test_gated_tool_refuses_without_approval():
+    db = Database()
+    result = delete_all_impl(db, ApprovalGate())
+    assert db.deleted is False
+    assert "refused" in result.lower()
+
+
+def test_gated_tool_allows_with_out_of_band_approval():
+    db = Database()
+    gate = ApprovalGate()
+    gate.grant(ToolCall("delete_all"))
+    result = delete_all_impl(db, gate)
+    assert db.deleted is True
+    assert "deleted" in result.lower()
+
+
+def test_read_rows_impl_reports_state():
+    db = Database()
+    assert "row-1" in read_rows_impl(db)
+
+
+def test_build_tools_exposes_read_and_delete():
+    tools = build_tools(Database(), gate=None)
+    assert len(tools) == 2
