@@ -11,6 +11,7 @@ import '~/styles/global.css';
 
 interface ArticleData {
   publishedTime: string;   // ISO 8601 date string
+  modifiedTime?: string;   // ISO 8601; falls back to publishedTime
   section: string;         // e.g. "Field Notes", "Signal", "Recipes"
   headline?: string;       // overrides title for schema.org headline if title includes section suffix
 }
@@ -28,6 +29,21 @@ const { title, description, ogImage, currentNav, bodyClass, articleData } = Astr
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 const absoluteOgImage = ogImage ? new URL(ogImage, Astro.site).toString() : undefined;
 
+const SITE_NAME = 'Agent Engineering Lab';
+const siteOrigin = new URL('/', Astro.site).toString();
+
+const publisherOrg = {
+  '@type': 'Organization',
+  name: SITE_NAME,
+  url: siteOrigin,
+  logo: {
+    '@type': 'ImageObject',
+    url: new URL('/assets/logo.png', Astro.site).toString(),
+    width: 512,
+    height: 512,
+  },
+};
+
 const articleSchema = articleData ? {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -35,6 +51,7 @@ const articleSchema = articleData ? {
   description: description,
   image: absoluteOgImage,
   datePublished: articleData.publishedTime,
+  dateModified: articleData.modifiedTime ?? articleData.publishedTime,
   articleSection: articleData.section,
   author: {
     '@type': 'Person',
@@ -48,14 +65,53 @@ const articleSchema = articleData ? {
       'https://orcid.org/0000-0002-6670-1155',
     ],
   },
-  publisher: {
-    '@type': 'Person',
-    name: 'Sunil Prakash',
-  },
+  publisher: publisherOrg,
   mainEntityOfPage: {
     '@type': 'WebPage',
     '@id': canonicalURL,
   },
+} : null;
+
+const SECTION_LABELS: Record<string, string> = {
+  'field-notes': 'Field Notes',
+  signal: 'Signal',
+  recipes: 'Recipes',
+  labs: 'Lab Notes',
+  book: 'The Book',
+  evidence: 'Evidence',
+  patterns: 'Patterns',
+  projects: 'Projects',
+  bench: 'The Bench',
+};
+
+const segments = Astro.url.pathname.split('/').filter(Boolean);
+let breadcrumbSchema: Record<string, unknown> | null = null;
+if (articleData && segments.length >= 1) {
+  const crumbs = [{ name: 'Home', item: siteOrigin }];
+  const sectionSlug = segments[0];
+  if (SECTION_LABELS[sectionSlug]) {
+    crumbs.push({ name: SECTION_LABELS[sectionSlug], item: new URL(`/${sectionSlug}/`, Astro.site).toString() });
+  }
+  crumbs.push({ name: articleData.headline ?? title, item: canonicalURL });
+  breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: c.item,
+    })),
+  };
+}
+
+const websiteSchema = Astro.url.pathname === '/' ? {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE_NAME,
+  url: siteOrigin,
+  description: 'Building agents that survive contact with reality. Field Notes, Signals, Recipes, and Lab Notes.',
+  publisher: publisherOrg,
 } : null;
 ---
 
@@ -87,6 +143,12 @@ const articleSchema = articleData ? {
 
     {articleSchema && (
       <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    )}
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
+    {websiteSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
     )}
 
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-4KDCBS18GZ"></script>

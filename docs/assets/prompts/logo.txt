@@ -1,0 +1,7 @@
+Create a square logo mark for "Agent Engineering Lab", a publication on building reliable AI agent systems. Format exactly 512x512 px. No text, no letters, no wordmark, just the mark. It must read clearly at very small sizes (favicon and search-result logo).
+
+Subject: a single bold emblem that fuses a loop and a gate, the publication's core idea. A clean closed ring (the agent loop) with one deliberate gap or bar across it (the enforced stop), centered, confident, geometric. Think a letterpress maker's mark or a foundry stamp: simple, weighty, instantly recognizable.
+
+Style: a hand-pressed letterpress / ink-stamp in a single brick-red ink (#9b4a3f) on a warm off-white paper ground (#fafaf8). Slight ink bleed and uneven density like a real impression, but the silhouette stays bold and legible. Brick red only on paper, no second color, no gradient, no fine cross-hatch detail that would disappear when shrunk.
+
+Avoid: text, letters, numerals, robots, circuit motifs, gradients, neon, 3D renders, drop shadows, thin wispy lines, busy detail, decorative borders.
