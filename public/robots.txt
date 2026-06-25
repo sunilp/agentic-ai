@@ -1,4 +1,48 @@
 User-agent: *
 Allow: /
 
+# AI and answer-engine crawlers are explicitly welcome to read and cite the Lab.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
 Sitemap: https://agenticlab.sunilprakash.com/sitemap-index.xml
+
+# For LLMs: a curated index and the full text are published at
+# https://agenticlab.sunilprakash.com/llms.txt
+# https://agenticlab.sunilprakash.com/llms-full.txt
