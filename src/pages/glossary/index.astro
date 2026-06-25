@@ -1,0 +1,170 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+
+interface Term {
+  term: string;
+  def: string;
+  href?: string;
+}
+
+const terms: Term[] = [
+  {
+    term: 'Loop engineering',
+    def: 'The 2026 practice of building the system that operates an agent instead of prompting it turn by turn: schedules and automations, parallel runs, maker-checker sub-agents, durable state. The orchestration is genuinely new. The loop it drives, and that loop’s stop problem, are not.',
+    href: '/field-notes/004-loop-engineering-30-year-old-loop/',
+  },
+  {
+    term: 'Agent loop',
+    def: 'The inner cycle a single agent runs: reason, act, observe, decide whether to continue, retry, stop, or escalate. Formalized as a control loop since the 1990s; ReAct is the modern language-model version.',
+    href: '/field-notes/004-loop-engineering-30-year-old-loop/',
+  },
+  {
+    term: 'Harness',
+    def: 'The runtime around a model: what enters the context window, how tools are dispatched, which hooks fire, how sub-agents, memory, and permissions work. The unit of evaluation is harness plus model plus task, not the model alone.',
+    href: '/field-notes/003-anthropic-told-you-harness-is-product/',
+  },
+  {
+    term: 'Context engineering',
+    def: 'Managing everything the model sees on a given call: what to include, compact, retrieve on demand, or drop. The discipline that replaced prompt engineering once context windows got large.',
+  },
+  {
+    term: 'Maker-checker (verifier)',
+    def: 'A second agent that reviews the first agent’s work and acts as the loop’s stop condition. The evidence shows a model is a weak judge of its own kind of output, so the checker has to be external to the maker, a code executor, a test suite it did not write, or a model with a different objective.',
+    href: '/field-notes/004-loop-engineering-30-year-old-loop/',
+  },
+  {
+    term: 'Stop condition',
+    def: 'How a loop decides it is finished. The oldest unsolved problem in agent loops, named the horns of a dilemma in 1995. A stop condition the model self-grades is not a brake.',
+    href: '/field-notes/004-loop-engineering-30-year-old-loop/',
+  },
+  {
+    term: 'Capability gate',
+    def: 'An enforced limit on what an agent may do, checked outside the model: a destructive action that cannot run without an out-of-band approval the agent does not hold. The fix for a credential that was wider than the task.',
+  },
+  {
+    term: 'Blast radius',
+    def: 'How much damage one agent action can do. The question an incident review asks first: when this loop acts against something that matters, what is it allowed to touch, and who can prove afterward that it was allowed.',
+  },
+  {
+    term: 'No-progress detection',
+    def: 'Halting a loop when it repeats the same call without new information. A cheap, reliable fence against a stuck agent.',
+  },
+  {
+    term: 'Iteration cap',
+    def: 'A hard ceiling on loop turns so a runaway cannot burn unbounded budget. A safety net, not a primary stop condition.',
+  },
+  {
+    term: 'Failure buckets',
+    def: 'Categorizing evaluation failures by mode instead of collapsing them into one accuracy number. Two agents at the same aggregate score can fail in completely different, production-relevant ways.',
+    href: '/field-notes/002-eval-rubric-failure-buckets/',
+  },
+  {
+    term: 'Workflow versus agent',
+    def: 'Most agents are workflows in costume. Reach for an agent only when the task needs judgment a workflow cannot encode; the win condition is dynamic decision-making, not raw capability.',
+    href: '/manifesto/',
+  },
+  {
+    term: 'Multi-agent versus router',
+    def: 'Whether to split work across agents is a workload question, not an architecture preference. If the work decomposes into branches that do not see each other, multi-agent can help; otherwise a single agent or a router is cheaper and more reliable.',
+    href: '/signal/003-multi-agent-decision-variable/',
+  },
+  {
+    term: 'Trace',
+    def: 'The recorded sequence of what an agent did and why. If you cannot inspect the trace, you cannot debug, audit, or govern the agent. The trace is the truth.',
+  },
+  {
+    term: 'Human-in-the-loop',
+    def: 'Approval gates, escalation paths, and audit trails treated as first-class architecture, designed up front, not bolted on after legal complains.',
+  },
+  {
+    term: 'Lethal trifecta',
+    def: 'The security shape behind most agent incidents: access to private data, exposure to untrusted input, and the ability to act externally. Hold all three and a prompt injection becomes an exfiltration or a destructive call.',
+    href: '/book/11-security/',
+  },
+  {
+    term: 'Delegated authority',
+    def: 'Authority an agent carries as a verifiable token that can only narrow as it passes down a chain of delegations, enforced outside the model. The missing layer under autonomous loops.',
+    href: 'https://sunilprakash.com/aip/',
+  },
+];
+
+const definedTermSet = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  name: 'Agent Engineering Lab Glossary',
+  url: new URL('/glossary/', Astro.site).toString(),
+  hasDefinedTerm: terms.map((t) => ({
+    '@type': 'DefinedTerm',
+    name: t.term,
+    description: t.def,
+    ...(t.href && !t.href.startsWith('http') ? { url: new URL(t.href, Astro.site).toString() } : {}),
+    ...(t.href && t.href.startsWith('http') ? { url: t.href } : {}),
+  })),
+};
+---
+
+<PageLayout
+  title="Glossary — Agent Engineering Lab"
+  description="Plain, opinionated definitions of the terms the Lab uses: loop engineering, the harness, the stop condition, maker-checker verifiers, blast radius, and more."
+  currentNav="Glossary"
+>
+  <Reader>
+    <div class="glossary__hero">
+      <Tag variant="accent">Glossary</Tag>
+      <KineticHeading level={1}>Glossary</KineticHeading>
+      <Dek italic>Plain, opinionated definitions of the terms the Lab keeps using.</Dek>
+    </div>
+
+    <dl class="glossary__list">
+      {terms.map((t) => (
+        <div class="glossary__item" id={t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>
+          <dt class="glossary__term">{t.term}</dt>
+          <dd class="glossary__def">
+            {t.def}
+            {t.href && (
+              <>
+                {' '}
+                <a class="glossary__see" href={t.href}>See more →</a>
+              </>
+            )}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </Reader>
+
+  <script type="application/ld+json" set:html={JSON.stringify(definedTermSet)} />
+</PageLayout>
+
+<style>
+  .glossary__hero { padding-top: var(--space-7); }
+  .glossary__list { margin: var(--space-6) 0 0; padding: 0; }
+  .glossary__item {
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--fg-faint);
+  }
+  .glossary__term {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--display-3);
+    color: var(--fg);
+    margin: 0 0 var(--space-2);
+  }
+  .glossary__def {
+    margin: 0;
+    color: var(--fg-light);
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+  .glossary__see {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    color: var(--brick);
+    white-space: nowrap;
+  }
+  .glossary__see:hover { color: var(--fg); }
+</style>

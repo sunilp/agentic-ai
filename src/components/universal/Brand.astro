@@ -1,6 +1,6 @@
 ---
 /**
- * Brand — site logotype, links to homepage.
+ * Brand — site logotype (mark + wordmark), links to homepage.
  */
 interface Props {
   size?: 'sm' | 'md' | 'lg';
@@ -10,17 +10,33 @@ const { size = 'md' } = Astro.props;
 ---
 
 <a href="/" class:list={['brand', `brand--${size}`]}>
-  <span class="brand__title">Agent Engineering Lab</span>
-  <span class="brand__subtitle">earn the complexity</span>
+  <img src="/assets/logo.png" class="brand__mark" alt="" width="512" height="512" />
+  <span class="brand__text">
+    <span class="brand__title">Agent Engineering Lab</span>
+    <span class="brand__subtitle">earn the complexity</span>
+  </span>
 </a>
 
 <style>
   .brand {
     display: inline-flex;
-    flex-direction: column;
-    line-height: 1.1;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
     color: var(--fg);
     text-decoration: none;
+  }
+
+  .brand__mark {
+    display: block;
+    flex-shrink: 0;
+    border-radius: 3px;
+  }
+
+  .brand__text {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1.1;
   }
 
   .brand__title {
@@ -36,10 +52,13 @@ const { size = 'md' } = Astro.props;
     color: var(--fg-light);
   }
 
+  .brand--sm .brand__mark { width: 22px; height: 22px; }
   .brand--sm .brand__title { font-size: 14px; }
   .brand--sm .brand__subtitle { font-size: 9px; margin-top: 1px; }
+  .brand--md .brand__mark { width: 30px; height: 30px; }
   .brand--md .brand__title { font-size: 18px; }
   .brand--md .brand__subtitle { font-size: 10px; margin-top: 2px; }
+  .brand--lg .brand__mark { width: 38px; height: 38px; }
   .brand--lg .brand__title { font-size: 24px; }
   .brand--lg .brand__subtitle { font-size: 11px; margin-top: 3px; }
 

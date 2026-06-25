@@ -124,6 +124,7 @@ const websiteSchema = Astro.url.pathname === '/' ? {
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="alternate" type="application/rss+xml" title="Agent Engineering Lab" href="/rss.xml" />
 
     <meta property="og:type" content={articleData ? "article" : "website"} />

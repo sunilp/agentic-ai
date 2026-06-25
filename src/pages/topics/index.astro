@@ -1,0 +1,123 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import KineticHeading from '~/components/universal/KineticHeading.astro';
+import Dek from '~/components/universal/Dek.astro';
+import Tag from '~/components/universal/Tag.astro';
+
+interface Link {
+  label: string;
+  href: string;
+}
+interface Topic {
+  title: string;
+  blurb: string;
+  links: Link[];
+}
+
+const topics: Topic[] = [
+  {
+    title: 'Loop engineering and the agent loop',
+    blurb: 'What the loop actually is, why its stop condition is the hard part, and what an enforced brake looks like in code.',
+    links: [
+      { label: 'FN-004: Loop engineering is a 30-year-old loop with a new hashtag', href: '/field-notes/004-loop-engineering-30-year-old-loop/' },
+      { label: 'Loop Lab (interactive)', href: '/bench/' },
+      { label: 'Glossary: stop condition, capability gate, maker-checker', href: '/glossary/' },
+    ],
+  },
+  {
+    title: 'The harness',
+    blurb: 'The runtime around the model, and why the unit of evaluation is harness plus model plus task.',
+    links: [
+      { label: 'FN-003: Anthropic just told you the harness is the product', href: '/field-notes/003-anthropic-told-you-harness-is-product/' },
+      { label: 'Glossary: harness, context engineering', href: '/glossary/' },
+    ],
+  },
+  {
+    title: 'Evaluation and reliability',
+    blurb: 'Why an aggregate score hides what kills you in production, and how to bucket failures instead.',
+    links: [
+      { label: 'FN-002: Your eval rubric needs failure buckets, not just scores', href: '/field-notes/002-eval-rubric-failure-buckets/' },
+      { label: 'Evidence: measured eval data', href: '/evidence/' },
+    ],
+  },
+  {
+    title: 'Multi-agent systems',
+    blurb: 'When splitting work across agents helps, when it is theater, and what the measured comparisons show.',
+    links: [
+      { label: 'FN-001: The multi-agent papers nobody is citing', href: '/field-notes/001-multi-agent-papers-nobody-cites/' },
+      { label: 'SG-003: Multi-agent is a workload decision, not an architecture decision', href: '/signal/003-multi-agent-decision-variable/' },
+      { label: 'Lab Note: multi-agent vs router on 100 queries', href: '/labs/multi-agent-vs-router-100-queries/' },
+    ],
+  },
+  {
+    title: 'Retrieval and context',
+    blurb: 'What long context changed about retrieval, and what it did not.',
+    links: [
+      { label: 'SG-002: Long context did not kill RAG', href: '/signal/002-when-long-context-replaces-rag/' },
+      { label: 'Glossary: context engineering', href: '/glossary/' },
+    ],
+  },
+  {
+    title: 'Skills and tooling',
+    blurb: 'The constraints that actually bind when you wire capability into an agent.',
+    links: [
+      { label: 'SG-001: The skills.md discourse is sharpening the wrong knife', href: '/signal/001-skills-md-wrong-knife/' },
+    ],
+  },
+  {
+    title: 'Authority, security, and governance',
+    blurb: 'Blast radius, the lethal trifecta, and authority that is scoped and enforced outside the model.',
+    links: [
+      { label: 'Ch 11: Security Deep Dive', href: '/book/11-security/' },
+      { label: 'Ch 13: Agent Protocols in Production', href: '/book/13-agent-protocols-in-production/' },
+      { label: 'Glossary: blast radius, lethal trifecta, delegated authority', href: '/glossary/' },
+    ],
+  },
+];
+---
+
+<PageLayout
+  title="Topics — Agent Engineering Lab"
+  description="The Lab by theme: loop engineering, the harness, evaluation, multi-agent systems, retrieval, tooling, and agent governance. Start here to go deep on one thread."
+  currentNav="Topics"
+>
+  <Reader>
+    <div class="topics__hero">
+      <Tag variant="accent">Topics</Tag>
+      <KineticHeading level={1}>Topics</KineticHeading>
+      <Dek italic>The Lab by theme. Pick a thread and follow it across the streams.</Dek>
+    </div>
+
+    <div class="topics__list">
+      {topics.map((t) => (
+        <section class="topics__item">
+          <h2 class="topics__title">{t.title}</h2>
+          <p class="topics__blurb">{t.blurb}</p>
+          <ul class="topics__links">
+            {t.links.map((l) => (
+              <li><a href={l.href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </Reader>
+</PageLayout>
+
+<style>
+  .topics__hero { padding-top: var(--space-7); }
+  .topics__list { margin-top: var(--space-6); }
+  .topics__item { padding: var(--space-5) 0; border-bottom: 1px solid var(--fg-faint); }
+  .topics__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--display-3);
+    margin: 0 0 var(--space-2);
+    color: var(--fg);
+  }
+  .topics__blurb { margin: 0 0 var(--space-3); color: var(--fg-light); font-size: var(--body-1); line-height: var(--lh-base); }
+  .topics__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+  .topics__links a { color: var(--brick); border-bottom: 1px solid transparent; }
+  .topics__links a:hover { border-bottom-color: var(--brick); }
+</style>
