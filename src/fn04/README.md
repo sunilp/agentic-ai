@@ -1,6 +1,6 @@
 # FN-004: prompted-stop vs enforced-stop loop
 
-Companion code for the Field Note [Loop engineering is a 30-year-old loop with a new hashtag](https://sunilprakash.com/agentic-ai/field-notes/004-loop-engineering-30-year-old-loop/).
+Companion code for the Field Note [Loop engineering is a 30-year-old loop with a new hashtag](https://agenticlab.sunilprakash.com/field-notes/004-loop-engineering-30-year-old-loop/).
 
 The same agent runs two ways. The script is identical in both: call a destructive tool, then claim the task is done.
 

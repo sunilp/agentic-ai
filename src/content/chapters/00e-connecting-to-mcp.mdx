@@ -25,7 +25,7 @@ MCP solves this problem.
 The analogy: MCP is USB-C for AI. Before USB-C, every phone had a different charger. You needed a drawer full of cables. USB-C standardized the connector so one cable works with everything. MCP does the same for agent tools: each tool implements the server once, each agent implements the client once, and they all work together.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/mcp-before-after.svg" alt="Before MCP: 5 apps times 4 tools equals 20 custom integrations. After MCP: 5 plus 4 equals 9 standard integrations." />
+  <img src="/assets/diagrams/mcp-before-after.svg" alt="Before MCP: 5 apps times 4 tools equals 20 custom integrations. After MCP: 5 plus 4 equals 9 standard integrations." />
   <figcaption>Without MCP, every app writes custom code for every tool. With MCP, each side implements the standard once.</figcaption>
 </figure>
 
@@ -34,7 +34,7 @@ The analogy: MCP is USB-C for AI. Before USB-C, every phone had a different char
 Every MCP interaction has three participants:
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/mcp-architecture.svg" alt="MCP architecture showing three roles: Host (your AI application with LLM and MCP client), MCP Servers (exposing tools), and two transport options (stdio for local, HTTP for remote)." />
+  <img src="/assets/diagrams/mcp-architecture.svg" alt="MCP architecture showing three roles: Host (your AI application with LLM and MCP client), MCP Servers (exposing tools), and two transport options (stdio for local, HTTP for remote)." />
   <figcaption>MCP architecture: the host contains the LLM and one or more MCP clients, each connected to a server.</figcaption>
 </figure>
 
@@ -49,7 +49,7 @@ Every MCP interaction has three participants:
 When your agent connects to an MCP server, four things happen in sequence:
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/mcp-lifecycle.svg" alt="MCP protocol lifecycle: 1) Initialize (handshake), 2) Discover (tools/list), 3) Invoke (tools/call), 4) Loop (result goes back to LLM for next decision)." />
+  <img src="/assets/diagrams/mcp-lifecycle.svg" alt="MCP protocol lifecycle: 1) Initialize (handshake), 2) Discover (tools/list), 3) Invoke (tools/call), 4) Loop (result goes back to LLM for next decision)." />
   <figcaption>The MCP lifecycle: initialize, discover available tools, invoke them as the LLM decides, and loop.</figcaption>
 </figure>
 

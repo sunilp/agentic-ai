@@ -3,7 +3,7 @@ id: sg-002
 title: Long context did not kill RAG. It changed what retrieval is for.
 dek: Long context made lookup cheap. The harder work, selecting evidence, citing it, governing access to it, and keeping it current, did not move. Here is the routing rule and the literature that supports it.
 description: "Long context replaced lookup, not retrieval. Production architecture turns on whether the system needs to select, cite, govern, or update evidence. This Signal gives the routing rule, the academic literature behind it, and the control-plane reframe that follows."
-banner: /agentic-ai/assets/banners/sg-002.png
+banner: /assets/banners/sg-002.png
 date: 2026-05-23
 readingTime: 9
 pullQuote: Long context made one half of retrieval cheap. The other half, selection, provenance, citations, access control, freshness, is where the work still is.
@@ -75,7 +75,7 @@ The rest of this piece is the case for why that distinction holds at the benchma
 ## The two surfaces
 
 <ArchitectureDiagram
-  src="/agentic-ai/assets/diagrams/sg-002-two-surfaces.svg"
+  src="/assets/diagrams/sg-002-two-surfaces.svg"
   alt="Two side-by-side panels. Left labeled Surface 1 Lookup: a stack of document pages with one page outlined in brick labeled the answer. Caption: measured by NIAH, MRCR, Google MRCR; vendor launch posts publish this. Right labeled Surface 2 Synthesis: four small document stacks at the corners, with curves joining each to a central node labeled join plus cite. Caption: measured by NoLiMa, RULER, NoCha, BABILong; mostly in the academic literature. Bottom note: Most production workloads mix both. The decision turns on the second one."
   caption="Two surfaces of a long-context workload. Vendors measure the first cleanly. The decision to retire your retriever turns on the second."
 />
@@ -131,7 +131,7 @@ The earlier upfront rule turns concrete when you put queries to it. The table be
 | "Explain customer exposure across systems" | RAG + tools | Access control and provenance |
 
 <ArchitectureDiagram
-  src="/agentic-ai/assets/diagrams/sg-002-decision-rule.svg"
+  src="/assets/diagrams/sg-002-decision-rule.svg"
   alt="Three columns labeled Case 1, Case 2, Case 3, each with a brick top border. Case 1: Long context replaces RAG. Flow: query directly into a long context window. When: single-doc lookup, corpus fits in one window, low query rate, eval passes on your data. Example: pull the SLA from contract X. Case 2: Long context complements RAG. Flow: query into retriever then into long context. When: multi-hop synthesis, corpus exceeds one window, concurrent queries, citations required. Example: compare SLA across X, Y, Z and flag drift. Case 3: RAG stays load-bearing. Flow: query into retriever plus audit then into short context. When: corpus updates frequently, verifiable provenance, access control or audit, per-request cost matters. Example: support question from a policy library with weekly updates."
   caption="The same product can route different query classes to different paths. The architecture decision is per query class, not per company."
 />
@@ -182,12 +182,12 @@ A reader who holds the two benchmarks in view (lookup and synthesis) can adopt l
 
 <Footer3Col
   fromBook={[
-    { label: "Ch 2 — Tools, context, and the agent loop", href: "/agentic-ai/book/02-tools-context-agent-loop/" },
-    { label: "Ch 12 — Memory management", href: "/agentic-ai/book/12-memory-management/" },
+    { label: "Ch 2 — Tools, context, and the agent loop", href: "/book/02-tools-context-agent-loop/" },
+    { label: "Ch 12 — Memory management", href: "/book/12-memory-management/" },
   ]}
   inCode={[
     { label: "NoLiMa — long-context evaluation beyond literal matching", href: "https://github.com/adobe-research/NoLiMa" },
     { label: "RULER — NVIDIA's long-context benchmark suite", href: "https://github.com/NVIDIA/RULER" },
   ]}
-  readNext={{ label: "SG-001 — The skills.md discourse is sharpening the wrong knife", href: "/agentic-ai/signal/001-skills-md-wrong-knife/" }}
+  readNext={{ label: "SG-001 — The skills.md discourse is sharpening the wrong knife", href: "/signal/001-skills-md-wrong-knife/" }}
 />

@@ -3,7 +3,7 @@ id: sg-003
 title: Multi-agent is not an architecture decision. It is a workload decision.
 dek: Anthropic and Cognition were not disagreeing. One measured breadth-first research, the other warned about shared-state work. The variable is decomposability.
 description: "Anthropic and Cognition published seemingly opposite conclusions on multi-agent systems within a day of each other in June 2025. Both are right, because they measured different workload shapes. The decision is not multi-agent yes or no. It is whether the work requires decomposition a router cannot encode. This Signal gives the decision rule, the primary sources on both sides, and a first-party 100-query experiment measuring the cost of getting it wrong."
-banner: /agentic-ai/assets/banners/sg-003.png
+banner: /assets/banners/sg-003.png
 date: 2026-06-07
 readingTime: 10
 pullQuote: Multi-agent is not a level you graduate to. It is a cost you pay when the work cannot be decomposed any other way.
@@ -23,7 +23,7 @@ sources:
     authors: [AINews]
     year: 2025
   - title: "Lab-001: Multi-agent vs router on 100 customer-support queries"
-    url: https://sunilprakash.com/agentic-ai/labs/multi-agent-vs-router-100-queries/
+    url: https://agenticlab.sunilprakash.com/labs/multi-agent-vs-router-100-queries/
     authors: [Prakash S.]
     year: 2026
 ---
@@ -62,7 +62,7 @@ The cost side closes the loop. Anthropic is candid that the win is expensive: "a
 Strip the architecture talk away and one question decides it: **does the work decompose into branches that can run without seeing each other, or do its steps share state and depend on order?** That is a property of the task, not of any framework. The topology is downstream of the answer.
 
 <ArchitectureDiagram
-  src="/agentic-ai/assets/diagrams/sg-003-decision.svg"
+  src="/assets/diagrams/sg-003-decision.svg"
   alt="Three columns, each with a brick top border, keyed to one answer. Column 1 Decomposes: a lead node fanning out to three independent agent nodes, headed Multi-agent earns the overhead. When: independent directions, breadth-first search, exceeds one context window, many complex tools. Best fit: open-ended research. Column 2 Shares state: three ordered steps inside one continuous context box, headed Single continuous context. When: later steps depend on earlier, shared assumptions, a wrong branch poisons the merge. Best fit: most coding. Column 3 Knowable and short: query into a switch into one agent, headed Workflow router to one agent. When: category known up front, few steps with clear boundaries, cost and latency matter. Best fit: support triage from Lab-001."
   caption="The decision is a property of the work, not a maturity level. Decompose, go multi-agent. Share state, keep one continuous context. Knowable and short, route to one agent."
 />
@@ -71,13 +71,13 @@ When the branches are genuinely independent, multi-agent earns its overhead, and
 
 When the steps share state, one decision-maker wins, and the markers are Cognition's: later actions depend on earlier ones, and a wrong assumption in one branch poisons the merge. The right answer here is a single continuous context. A workflow router is the same shape with a switch in front: it still hands the work to one agent, it just picks which one first. Router and single agent are one decision-maker, multi-agent is many. Most coding sits on this side. So does most transactional work where the path is short and the category is knowable up front.
 
-This is the framing the book uses in [Workflow First, Agent Second](/agentic-ai/book/03-workflow-first-agent-second/) and [Multi-Agent Systems Without Theater](/agentic-ai/book/04-multi-agent-without-theater/). The default is the simplest topology that the workload's dependency structure allows. You move up the ladder only when a dependency cannot be encoded any other way, not because the next rung is more advanced.
+This is the framing the book uses in [Workflow First, Agent Second](/book/03-workflow-first-agent-second/) and [Multi-Agent Systems Without Theater](/book/04-multi-agent-without-theater/). The default is the simplest topology that the workload's dependency structure allows. You move up the ladder only when a dependency cannot be encoded any other way, not because the next rung is more advanced.
 
 ## What it costs to get it wrong
 
 Anthropic measured the upside on a workload built for multi-agent. The other half of the decision is what the overhead costs on a workload that is not. Lab-001 measures that half.
 
-[Lab-001](/agentic-ai/labs/multi-agent-vs-router-100-queries/) takes 100 customer-support queries from a public dataset, filtered to ones that resolve within five turns, and runs each twice on the same rubric: correctness weighted 0.4, grounding 0.3, completeness 0.3, with a 0.7 pass threshold. One path is a workflow router that maps category to one of four single-agent prompts. The other is a three-agent hierarchy of classifier, worker, and verifier. Both used Claude Sonnet 4.6 for the agents under test and Claude Opus 4.7 as the judge, and each system was scored three times to bound judge variance, which stayed under one point on both. Short-horizon support is squarely a no-decomposition workload, the side where the theory predicts the router should win.
+[Lab-001](/labs/multi-agent-vs-router-100-queries/) takes 100 customer-support queries from a public dataset, filtered to ones that resolve within five turns, and runs each twice on the same rubric: correctness weighted 0.4, grounding 0.3, completeness 0.3, with a 0.7 pass threshold. One path is a workflow router that maps category to one of four single-agent prompts. The other is a three-agent hierarchy of classifier, worker, and verifier. Both used Claude Sonnet 4.6 for the agents under test and Claude Opus 4.7 as the judge, and each system was scored three times to bound judge variance, which stayed under one point on both. Short-horizon support is squarely a no-decomposition workload, the side where the theory predicts the router should win.
 
 It did, on every axis measured.
 
@@ -115,8 +115,8 @@ Two labs, opposite titles, the same underlying claim. The decision was never abo
 
 <Footer3Col
   fromBook={[
-    { label: "Ch 3: Workflow First, Agent Second", href: "/agentic-ai/book/03-workflow-first-agent-second/" },
-    { label: "Ch 4: Multi-Agent Systems Without Theater", href: "/agentic-ai/book/04-multi-agent-without-theater/" },
+    { label: "Ch 3: Workflow First, Agent Second", href: "/book/03-workflow-first-agent-second/" },
+    { label: "Ch 4: Multi-Agent Systems Without Theater", href: "/book/04-multi-agent-without-theater/" },
   ]}
-  readNext={{ label: "Lab-001: the 100-query experiment behind this piece", href: "/agentic-ai/labs/multi-agent-vs-router-100-queries/" }}
+  readNext={{ label: "Lab-001: the 100-query experiment behind this piece", href: "/labs/multi-agent-vs-router-100-queries/" }}
 />

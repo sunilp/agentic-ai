@@ -8,7 +8,7 @@
    * metadata). Svelte 5 runes API.
    *
    * Usage in MDX:
-   *   <TraceViewer src="/agentic-ai/trace-replay/should-i-use-an-agent.json" client:visible />
+   *   <TraceViewer src="/trace-replay/should-i-use-an-agent.json" client:visible />
    */
 
   type Actor = 'user' | 'model' | 'tool';

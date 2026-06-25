@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sunilprakash.com/agentic-ai/sitemap-index.xml
+Sitemap: https://agenticlab.sunilprakash.com/sitemap-index.xml

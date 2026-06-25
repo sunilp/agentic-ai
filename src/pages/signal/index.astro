@@ -28,7 +28,7 @@ const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
     ) : (
       <MagazineGrid cols={3}>
         {sorted.map((e) => (
-          <a class="sg-index__card" href={`/agentic-ai/signal/${e.id}/`}>
+          <a class="sg-index__card" href={`/signal/${e.id}/`}>
             <img
               src={e.data.banner}
               alt={`${e.data.title} banner`}

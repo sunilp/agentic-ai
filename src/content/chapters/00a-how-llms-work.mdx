@@ -78,7 +78,7 @@ So which should you use? Use the raw SDK call to understand the mechanics. Use t
 This is the foundation. If you understand this, you understand 80% of what frameworks are doing. The other 20% is prompt management, tool routing, and retry logic. All useful. None of it magic.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/api-contract.svg" alt="The LLM API contract: text in, text out, with token counting and cost on both sides" />
+  <img src="/assets/diagrams/api-contract.svg" alt="The LLM API contract: text in, text out, with token counting and cost on both sides" />
   <figcaption>Figure 0a.1: The API contract. Text in, text out. Everything else is built on top.</figcaption>
 </figure>
 
@@ -144,7 +144,7 @@ A single API call costs fractions of a cent. But agents make multiple calls per 
 Notice that completion tokens are 3-5x more expensive than prompt tokens across every provider. This is not arbitrary. Generating tokens requires sequential computation, while reading prompt tokens can be partially parallelized. The practical implication: an agent that generates long, verbose reasoning is more expensive than one that generates concise answers, even if they read the same context.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/token-cost-calculator.svg" alt="Token cost breakdown showing prompt tokens, completion tokens, and total cost across models" />
+  <img src="/assets/diagrams/token-cost-calculator.svg" alt="Token cost breakdown showing prompt tokens, completion tokens, and total cost across models" />
   <figcaption>Figure 0a.2: Token costs per model. Completion tokens always cost more than prompt tokens.</figcaption>
 </figure>
 
@@ -186,7 +186,7 @@ A document-analysis agent had a system prompt that began with "Always respond in
 This is why context management is engineering, not just prompt writing. The decisions about what goes into the context, in what order, and what gets dropped when space is tight, these are architectural decisions with direct impact on system quality.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/context-window-bucket.svg" alt="The context window as a bucket being filled with system prompt, history, documents, and tool results" />
+  <img src="/assets/diagrams/context-window-bucket.svg" alt="The context window as a bucket being filled with system prompt, history, documents, and tool results" />
   <figcaption>Figure 0a.3: The context window. Everything competes for one fixed-size bucket. Overflow is silent.</figcaption>
 </figure>
 
@@ -215,7 +215,7 @@ Every reliable mitigation for hallucination is engineering, not prompting.
 These are code solutions, not prompt solutions. Prompting helps at the margins, but you cannot prompt your way to production reliability. You can engineer your way there.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/hallucination-mental-model.svg" alt="Mental model showing that LLMs predict likely tokens, not verified facts" />
+  <img src="/assets/diagrams/hallucination-mental-model.svg" alt="Mental model showing that LLMs predict likely tokens, not verified facts" />
   <figcaption>Figure 0a.4: The hallucination mental model. The model predicts likely tokens, not verified facts. Mitigation happens in code, not in prompts.</figcaption>
 </figure>
 
@@ -424,4 +424,4 @@ Now that you know the model is probabilistic, bounded by context, vulnerable to 
 
 The next three sections build these answers. Section 0b gives the model hands. Section 0c gives it a loop. Section 0d shows you what frameworks do with both.
 
-For hands-on experiments with everything in this section, see the [LLM Explorer](/agentic-ai/book/projects/llm-explorer/) project.
+For hands-on experiments with everything in this section, see the [LLM Explorer](/book/projects/llm-explorer/) project.

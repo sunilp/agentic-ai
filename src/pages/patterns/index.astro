@@ -27,7 +27,7 @@ const entries = (await getCollection('patterns')).sort((a, b) => a.data.name.loc
     ) : (
       <MagazineGrid cols={3}>
         {entries.map((e) => (
-          <a class="pat-card" href={`/agentic-ai/patterns/${e.data.slug}/`}>
+          <a class="pat-card" href={`/patterns/${e.data.slug}/`}>
             <div class="pat-card__name">{e.data.name}</div>
             <p class="pat-card__one-line">{e.data.oneLine}</p>
           </a>

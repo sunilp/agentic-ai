@@ -26,7 +26,7 @@
     }>;
   }
 
-  let { manifestUrl = '/agentic-ai/trace-replay/manifest.json' }: { manifestUrl?: string } = $props();
+  let { manifestUrl = '/trace-replay/manifest.json' }: { manifestUrl?: string } = $props();
 
   // Resolve session files relative to the manifest's directory so a caller can
   // override manifestUrl to point at a different trace-replay folder and have

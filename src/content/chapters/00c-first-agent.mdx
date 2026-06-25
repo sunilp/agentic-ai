@@ -51,7 +51,7 @@ Read it line by line:
 The loop implements observe-think-act-repeat. This cycle has a name in the literature (ReAct, for Reason + Act), but the pattern predates the paper. It's a control loop with a language model in the middle.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/agent-loop-foundations.svg" alt="The agent loop: observe, think, act, repeat until answer or budget exhaustion" />
+  <img src="/assets/diagrams/agent-loop-foundations.svg" alt="The agent loop: observe, think, act, repeat until answer or budget exhaustion" />
   <figcaption>Figure 0c.1: The agent loop. Observe, think, act, repeat. The model decides when to stop.</figcaption>
 </figure>
 
@@ -248,7 +248,7 @@ Budget exhausted: False
 Three steps, three model calls, three decisions. The agent multiplied first, used that result to set up the addition, then synthesized the final answer. Each step, the model saw everything that came before and chose what to do next.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/agent-trace-waterfall.svg" alt="Waterfall trace of a multi-step agent run showing three model calls, two tool executions, and a final answer" />
+  <img src="/assets/diagrams/agent-trace-waterfall.svg" alt="Waterfall trace of a multi-step agent run showing three model calls, two tool executions, and a final answer" />
   <figcaption>Figure 0c.2: A multi-step agent trace. Each row is a model call. The model sees accumulated context and decides whether to call a tool or answer.</figcaption>
 </figure>
 
@@ -348,7 +348,7 @@ A fact-checking agent was asked "Is Company X still publicly traded?" It searche
 </Callout>
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/three-failure-modes.svg" alt="Three failure modes: infinite loop (budget exhaustion), hallucinated tool (error recovery), confident wrong answer (silent failure)" />
+  <img src="/assets/diagrams/three-failure-modes.svg" alt="Three failure modes: infinite loop (budget exhaustion), hallucinated tool (error recovery), confident wrong answer (silent failure)" />
   <figcaption>Figure 0c.3: Three failure modes. The first two are loud. The third is silent. Silent failures are the ones that reach production.</figcaption>
 </figure>
 
@@ -412,7 +412,7 @@ for step in range(self.max_steps):
 In production, replace `print` with structured logging. But `print` is infinitely better than nothing. When the agent does something unexpected at 2am, these logs are the difference between a five-minute diagnosis and a blind debugging session.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/before-after-guardrails.svg" alt="Before: raw loop with no protections. After: budget, validation, and logging added in 10 lines." />
+  <img src="/assets/diagrams/before-after-guardrails.svg" alt="Before: raw loop with no protections. After: budget, validation, and logging added in 10 lines." />
   <figcaption>Figure 0c.4: Before and after guardrails. Ten lines of code. Budget caps the loop. Validation rejects bad input. Logging shows you what happened.</figcaption>
 </figure>
 
@@ -560,4 +560,4 @@ This is the agent you will compare against every framework you evaluate. You wro
 
 You just built an agent. It works. It also breaks in predictable ways. You added basic guardrails that help, but you made a dozen judgment calls by instinct: how big the budget, when to stop searching, what to do when confidence is low, whether this task even needed an agent or could have been a simple tool call. Those instincts were sometimes right. But instincts do not scale to a team of five engineers building agent systems. Chapter 1 gives you the precise vocabulary to make these decisions explicit. It defines five system types, from single LLM calls through multi-agent orchestrations, and gives you a decision framework for choosing when a task needs the loop you just built and when a deterministic workflow is the better call. The rest of the book gives you the engineering to build whichever one you choose, for production.
 
-For an expanded version with more tools, proper error handling, and example queries, see the [Research Agent](/agentic-ai/projects/research-agent/) project.
+For an expanded version with more tools, proper error handling, and example queries, see the [Research Agent](/projects/research-agent/) project.

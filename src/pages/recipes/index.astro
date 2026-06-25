@@ -30,9 +30,9 @@ const sorted = entries.sort((a, b) => b.data.verifiedOn.getTime() - a.data.verif
     ) : (
       <MagazineGrid cols={3}>
         {sorted.map((e) => (
-          <a class="r-index__card" href={`/agentic-ai/recipes/${e.id}/`}>
+          <a class="r-index__card" href={`/recipes/${e.id}/`}>
             <img
-              src={`/agentic-ai/assets/banners/${e.data.id}.png`}
+              src={`/assets/banners/${e.data.id}.png`}
               alt={`${e.data.title} banner`}
               class="r-index__banner"
               loading="lazy"

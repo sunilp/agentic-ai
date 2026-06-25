@@ -109,7 +109,7 @@ The cycle has four steps:
 4. Your code validates the arguments, executes the function, and returns the result
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/function-calling-cycle.svg" alt="The four-step function calling cycle: define schema, send with message, model returns tool call JSON, your code executes" />
+  <img src="/assets/diagrams/function-calling-cycle.svg" alt="The four-step function calling cycle: define schema, send with message, model returns tool call JSON, your code executes" />
   <figcaption>Figure 0b.1: The function calling cycle. The model never executes anything. It writes JSON. You do the work.</figcaption>
 </figure>
 
@@ -392,7 +392,7 @@ A data pipeline agent had a `write_record` tool that accepted a `priority` field
 </Callout>
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/tool-selection-comparison.svg" alt="Comparison of tool calls with and without schema validation, showing clean errors vs runtime crashes" />
+  <img src="/assets/diagrams/tool-selection-comparison.svg" alt="Comparison of tool calls with and without schema validation, showing clean errors vs runtime crashes" />
   <figcaption>Figure 0b.2: Schema validation turns runtime crashes into structured errors that the model can learn from.</figcaption>
 </figure>
 
@@ -476,7 +476,7 @@ This is the single-turn ceiling. It's useful. Single-turn tool use handles a sur
 An agent can observe the result of its action, decide it's insufficient, and take another action. An agent can plan a sequence of steps, adjust the plan based on intermediate results, and know when to stop. The difference is a loop: observe, think, act, repeat.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/single-turn-ceiling.svg" alt="Single-turn tool use stops after one action. The agent loop continues: observe, think, act, repeat." />
+  <img src="/assets/diagrams/single-turn-ceiling.svg" alt="Single-turn tool use stops after one action. The agent loop continues: observe, think, act, repeat." />
   <figcaption>Figure 0b.3: The single-turn ceiling. Tool use without a loop handles one action. The agent loop adds iteration, and that changes everything.</figcaption>
 </figure>
 
@@ -506,4 +506,4 @@ And the limitation: all of this operates in a single turn. One tool call, one re
 
 The next section adds the loop that removes that ceiling. You will build, in about 100 lines of Python, a system that can observe the result of its action, decide whether it is sufficient, and take another action if it is not. The mechanism is a while loop with an LLM inside it. The engineering challenge is knowing when that loop should stop.
 
-For a fully built tool-using assistant with proper error handling and logging, see the [Tool-Using Assistant](/agentic-ai/projects/tool-using-assistant/) project.
+For a fully built tool-using assistant with proper error handling and logging, see the [Tool-Using Assistant](/projects/tool-using-assistant/) project.

@@ -25,7 +25,7 @@ const items: CardItem[] = [
   ...fns.map((e) => ({
     kicker: `${e.data.id.toUpperCase()} · Field Note`,
     title: e.data.title,
-    href: `/agentic-ai/field-notes/${e.id}/`,
+    href: `/field-notes/${e.id}/`,
     banner: e.data.banner,
     bannerAlt: `${e.data.title} banner`,
     date: e.data.date,
@@ -33,16 +33,16 @@ const items: CardItem[] = [
   ...recipes.map((e) => ({
     kicker: `${e.data.id.toUpperCase()} · Recipe`,
     title: e.data.title,
-    href: `/agentic-ai/recipes/${e.id}/`,
-    banner: `/agentic-ai/assets/banners/${e.data.id}.png`,
+    href: `/recipes/${e.id}/`,
+    banner: `/assets/banners/${e.data.id}.png`,
     bannerAlt: `${e.data.title} banner`,
     date: e.data.verifiedOn,
   })),
   ...labs.map((e) => ({
     kicker: `${e.data.id.toUpperCase()} · Lab`,
     title: e.data.title,
-    href: `/agentic-ai/labs/${e.id}/`,
-    banner: `/agentic-ai/assets/banners/${e.data.id}.png`,
+    href: `/labs/${e.id}/`,
+    banner: `/assets/banners/${e.data.id}.png`,
     bannerAlt: `${e.data.title} banner`,
     date: e.data.date,
   })),
@@ -54,7 +54,7 @@ const top3 = items.sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 
 <section class="whats-new">
   <header class="whats-new__header">
     <div class="whats-new__label">What's new</div>
-    <a class="whats-new__see-all" href="/agentic-ai/field-notes/">See all →</a>
+    <a class="whats-new__see-all" href="/field-notes/">See all →</a>
   </header>
 
   {top3.length === 0 ? (

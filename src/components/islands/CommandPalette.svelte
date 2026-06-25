@@ -23,7 +23,7 @@
   async function loadPagefind() {
     if (pagefindLoaded) return;
     try {
-      pagefind = await import(/* @vite-ignore */ '/agentic-ai/pagefind/pagefind.js');
+      pagefind = await import(/* @vite-ignore */ '/pagefind/pagefind.js');
       pagefindLoaded = true;
     } catch (e) {
       console.error('CommandPalette: Pagefind load failed', e);

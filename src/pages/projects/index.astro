@@ -27,7 +27,7 @@ const entries = (await getCollection('projects')).sort((a, b) => a.data.title.lo
     ) : (
       <MagazineGrid cols={3}>
         {entries.map((e) => (
-          <a class="proj-card" href={`/agentic-ai/projects/${e.data.slug}/`}>
+          <a class="proj-card" href={`/projects/${e.data.slug}/`}>
             <div class="proj-card__name">{e.data.title}</div>
             <p class="proj-card__tagline">{e.data.tagline}</p>
             <div class="proj-card__stats">

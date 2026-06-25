@@ -62,13 +62,13 @@ function chapterPrefix(slug: string): string {
           <a class="book-header__cta book-header__cta--primary" href="https://www.amazon.com/dp/B0GVG6848F" target="_blank" rel="noopener noreferrer">
             Get the book on Amazon →
           </a>
-          <a class="book-header__cta" href="/agentic-ai/book/00a-how-llms-work/">
+          <a class="book-header__cta" href="/book/00a-how-llms-work/">
             Start the Foundations
           </a>
         </div>
       </div>
       <div class="book-header__cover">
-        <img src="/agentic-ai/assets/images/book-cover.jpg" alt="Agentic AI for Serious Engineers — book cover" loading="eager" width="320" height="480" />
+        <img src="/assets/images/book-cover.jpg" alt="Agentic AI for Serious Engineers — book cover" loading="eager" width="320" height="480" />
       </div>
     </header>
 
@@ -83,7 +83,7 @@ function chapterPrefix(slug: string): string {
           <ol class="book-part__chapters">
             {partChapters.map((c) => (
               <li class="book-part__chapter">
-                <a href={`/agentic-ai/book/${c.id}/`}>
+                <a href={`/book/${c.id}/`}>
                   <span class="book-part__chapter-num">{chapterPrefix(c.id).toUpperCase()}</span>
                   <span class="book-part__chapter-title">{c.data.title}</span>
                   <span class="book-part__chapter-meta">{c.data.readingTime} min</span>

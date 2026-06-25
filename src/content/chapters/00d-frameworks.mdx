@@ -220,7 +220,7 @@ Here is what the same agent looks like across all three approaches, measured on 
 | Best for | Learning, unusual needs | Production, need tracing | Prototyping, need integrations |
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/three-way-comparison.svg" alt="Three-way comparison showing raw agent, ADK, and LangChain across lines of code, debuggability, and production readiness" />
+  <img src="/assets/diagrams/three-way-comparison.svg" alt="Three-way comparison showing raw agent, ADK, and LangChain across lines of code, debuggability, and production readiness" />
   <figcaption>Figure 0d.1: The same agent, three ways. Each approach trades something for something else. The code gets shorter. The debugging gets harder. The features get richer.</figcaption>
 </figure>
 
@@ -247,7 +247,7 @@ If you're starting fresh, I'd reach for ADK. It's opinionated about the right th
 None of this is religious. Use what works. But "what works" includes debuggability, maintainability, and the ability to answer "what happened?" when things go wrong. Not just "does it run?"
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/framework-decision-tree.svg" alt="Decision tree for choosing between raw agent, ADK, and LangChain based on team experience, production needs, and ecosystem requirements" />
+  <img src="/assets/diagrams/framework-decision-tree.svg" alt="Decision tree for choosing between raw agent, ADK, and LangChain based on team experience, production needs, and ecosystem requirements" />
   <figcaption>Figure 0d.2: Framework decision tree. Start with what you need (visibility, ecosystem, control), not what has the most GitHub stars.</figcaption>
 </figure>
 
@@ -322,7 +322,7 @@ All three implementations score the same. The tools are the same. The logic is t
 The numbers don't lie. This is how you make framework decisions: with data, not blog posts. Run your actual queries against your actual candidates, measure correctness, cost, and latency, then choose. This is also how you make every agent decision going forward. Chapter 6 goes deep on production evaluation, covering semantic scoring, LLM-as-judge patterns, regression testing, and cost profiling.
 
 <figure>
-  <img src="/agentic-ai/assets/diagrams/framework-layers.svg" alt="Layered view showing tool logic at the bottom, framework in the middle, and eval on top, with the key insight that eval sits above all frameworks" />
+  <img src="/assets/diagrams/framework-layers.svg" alt="Layered view showing tool logic at the bottom, framework in the middle, and eval on top, with the key insight that eval sits above all frameworks" />
   <figcaption>Figure 0d.3: Eval sits above the framework layer. Your tools and your evaluation suite are yours. The framework is the replaceable part in the middle.</figcaption>
 </figure>
 
@@ -338,6 +338,6 @@ The raw agent taught you the mechanism. The framework agents taught you the trad
 
 You also made a lot of decisions by feel. You picked a budget of 5 without measuring whether 3 was enough. You wrote tool descriptions that seemed clear but might break on ambiguous queries. You chose a system prompt by instinct. You eyeballed eval scores instead of running statistical significance tests. All of that worked for a three-tool demo agent. None of it works for a production system handling 10,000 queries a day where a wrong answer has consequences.
 
-[Chapter 1](/agentic-ai/book/01-what-agentic-means/) replaces instinct with engineering vocabulary. It defines five system types, from single LLM calls through multi-agent orchestrations, and gives you a decision framework for choosing when a task needs the loop you just built and when a deterministic workflow is the safer bet. The rest of the book turns every judgment call you made by feel into a measurable, testable, reviewable engineering decision.
+[Chapter 1](/book/01-what-agentic-means/) replaces instinct with engineering vocabulary. It defines five system types, from single LLM calls through multi-agent orchestrations, and gives you a decision framework for choosing when a task needs the loop you just built and when a deterministic workflow is the safer bet. The rest of the book turns every judgment call you made by feel into a measurable, testable, reviewable engineering decision.
 
-For all three implementations with shared eval and comparison scripts, see the [Framework Comparison](/agentic-ai/projects/framework-comparison/) project.
+For all three implementations with shared eval and comparison scripts, see the [Framework Comparison](/projects/framework-comparison/) project.

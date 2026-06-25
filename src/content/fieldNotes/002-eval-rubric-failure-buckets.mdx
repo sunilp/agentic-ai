@@ -4,7 +4,7 @@ title: Your eval rubric needs failure buckets, not just scores
 dek: Two agents can score identically on a benchmark and fail differently in production. The aggregate is not a rubric. It is what falls out of one.
 description: "Two agents can score identically on a benchmark and fail differently in production. Failure buckets are the rubric. The aggregate is what falls out of it."
 primaryChapter: ch-06
-banner: /agentic-ai/assets/banners/fn-002.png
+banner: /assets/banners/fn-002.png
 date: 2026-05-17
 readingTime: 7
 pullQuote: An aggregate score is the average of the failure modes you did not catalog.
@@ -44,7 +44,7 @@ Failure buckets are the rubric. The aggregate score is downstream of it. Chapter
 2. **Score by bucket distribution, not by aggregate accuracy.** A system at 0.85 accuracy with failures distributed evenly across eight buckets is a different system from one at 0.85 with all the failures concentrated in hallucination and cost runaway. The aggregate hides the difference. The distribution exposes it.
 3. **Re-bucket on every model upgrade.** Buckets ossify. New models surface failure modes that did not exist on the prior model, and silence ones that did. If your bucket list has not changed in six months and you have changed models, the rubric is measuring a system you no longer run.
 
-![Two agents at 0.85 accuracy with different failure bucket distributions, showing why the aggregate hides what matters](/agentic-ai/assets/diagrams/eval-bucket-distribution.svg)
+![Two agents at 0.85 accuracy with different failure bucket distributions, showing why the aggregate hides what matters](/assets/diagrams/eval-bucket-distribution.svg)
 
 *Same aggregate. Different consequences. The agent on the right is unshippable, and the aggregate hides it.*
 
@@ -61,7 +61,7 @@ A working starting set of buckets, pulled from the book and refined across three
 
 Eight buckets is a starting point, not a target. A clinical agent needs an "unsafe recommendation" bucket. A code agent needs a "fabricated symbol" bucket. A retrieval agent needs a "stale citation" bucket. The general principle is the same. Name the failures. Write the detection rules. Score the distribution.
 
-![Illustration of a building cross-section with a calm thermostat in the central hallway while rooms behind the walls show very different conditions, including an overheated room with a red radiator and a frozen room with a leaking pipe](/agentic-ai/assets/illustrations/fn-002.png)
+![Illustration of a building cross-section with a calm thermostat in the central hallway while rooms behind the walls show very different conditions, including an overheated room with a red radiator and a frozen room with a leaking pipe](/assets/illustrations/fn-002.png)
 
 *The dial reads "average." Each room is failing in a different direction.*
 
@@ -88,10 +88,10 @@ Run `python -m ch06.harness --gold gold.jsonl --bucket-report` to reproduce the 
 
 <Footer3Col
   fromBook={[
-    { label: "Ch 6 — Evaluating and Hardening Agents", href: "/agentic-ai/book/06-evaluating-and-hardening/" },
+    { label: "Ch 6 — Evaluating and Hardening Agents", href: "/book/06-evaluating-and-hardening/" },
   ]}
   inCode={[
     { label: "eval harness + rubric repo", href: "https://github.com/sunilp/agentic-ai/tree/main/code/eval" },
   ]}
-  readNext={{ label: "FN-001 — The multi-agent papers nobody is citing", href: "/agentic-ai/field-notes/001-multi-agent-papers-nobody-cites/" }}
+  readNext={{ label: "FN-001 — The multi-agent papers nobody is citing", href: "/field-notes/001-multi-agent-papers-nobody-cites/" }}
 />

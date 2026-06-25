@@ -44,7 +44,7 @@ function chapterLabel(slug: string): string {
       <div class="chapter-map__chips">
         {part.chapters.map((slug) => (
           <a
-            href={`/agentic-ai/book/${slug}/`}
+            href={`/book/${slug}/`}
             class:list={['chapter-map__chip', slug === currentSlug && 'chapter-map__chip--current']}
             aria-label={`Chapter ${chapterLabel(slug)}`}
             aria-current={slug === currentSlug ? 'page' : undefined}

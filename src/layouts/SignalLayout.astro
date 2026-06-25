@@ -35,18 +35,18 @@ const links = getReverseLinks(reverseIndex, d.id);
 const hasReverseLinks = links.referencedBy.length > 0 || links.citedBy.length > 0;
 
 const collectionRoute: Record<string, string> = {
-  chapters: '/agentic-ai/book',
-  fieldNotes: '/agentic-ai/field-notes',
-  recipes: '/agentic-ai/recipes',
-  projects: '/agentic-ai/projects',
-  evidence: '/agentic-ai/evidence',
-  labs: '/agentic-ai/labs',
-  patterns: '/agentic-ai/patterns',
-  signal: '/agentic-ai/signal',
+  chapters: '/book',
+  fieldNotes: '/field-notes',
+  recipes: '/recipes',
+  projects: '/projects',
+  evidence: '/evidence',
+  labs: '/labs',
+  patterns: '/patterns',
+  signal: '/signal',
 };
 
 function linkHref(l: { id: string; collection: string }): string {
-  const base = collectionRoute[l.collection] ?? `/agentic-ai/${l.collection}`;
+  const base = collectionRoute[l.collection] ?? `/${l.collection}`;
   return `${base}/${l.id}/`;
 }
 

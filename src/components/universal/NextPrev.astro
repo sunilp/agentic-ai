@@ -13,7 +13,7 @@ const { prev, next } = Astro.props;
 
 <nav class="next-prev" aria-label="Chapter navigation">
   {prev ? (
-    <a href={`/agentic-ai/book/${prev.slug}/`} class="next-prev__link next-prev__link--prev">
+    <a href={`/book/${prev.slug}/`} class="next-prev__link next-prev__link--prev">
       <div class="next-prev__label">← Previous</div>
       <div class="next-prev__title">{prev.title}</div>
     </a>
@@ -21,7 +21,7 @@ const { prev, next } = Astro.props;
     <span class="next-prev__placeholder"></span>
   )}
   {next ? (
-    <a href={`/agentic-ai/book/${next.slug}/`} class="next-prev__link next-prev__link--next">
+    <a href={`/book/${next.slug}/`} class="next-prev__link next-prev__link--next">
       <div class="next-prev__label">Next →</div>
       <div class="next-prev__title">{next.title}</div>
     </a>

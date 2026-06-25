@@ -34,14 +34,14 @@ const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any
 const links = getReverseLinks(reverseIndex, d.slug);
 
 const collectionRoute: Record<string, string> = {
-  chapters: '/agentic-ai/book',
-  fieldNotes: '/agentic-ai/field-notes',
-  recipes: '/agentic-ai/recipes',
-  projects: '/agentic-ai/projects',
-  evidence: '/agentic-ai/evidence',
-  labs: '/agentic-ai/labs',
-  patterns: '/agentic-ai/patterns',
-  signal: '/agentic-ai/signal',
+  chapters: '/book',
+  fieldNotes: '/field-notes',
+  recipes: '/recipes',
+  projects: '/projects',
+  evidence: '/evidence',
+  labs: '/labs',
+  patterns: '/patterns',
+  signal: '/signal',
 };
 ---
 
@@ -80,7 +80,7 @@ const collectionRoute: Record<string, string> = {
           <h2>Cited by</h2>
           <ul>
             {[...links.referencedBy, ...links.citedBy].map((l) => (
-              <li><a href={`${collectionRoute[l.collection] ?? '/agentic-ai'}/${l.id}/`}>{l.collection}/{l.id}</a></li>
+              <li><a href={`${collectionRoute[l.collection] ?? ''}/${l.id}/`}>{l.collection}/{l.id}</a></li>
             ))}
           </ul>
         </section>

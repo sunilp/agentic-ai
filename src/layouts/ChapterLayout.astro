@@ -56,14 +56,14 @@ const dateStr = d.date.toISOString().slice(0, 10);
 const metaItems = [chapterPrefix, dateStr, `${d.readingTime} min`];
 
 const collectionRoute: Record<string, string> = {
-  chapters: '/agentic-ai/book',
-  fieldNotes: '/agentic-ai/field-notes',
-  recipes: '/agentic-ai/recipes',
-  projects: '/agentic-ai/projects',
-  evidence: '/agentic-ai/evidence',
-  labs: '/agentic-ai/labs',
-  patterns: '/agentic-ai/patterns',
-  signal: '/agentic-ai/signal',
+  chapters: '/book',
+  fieldNotes: '/field-notes',
+  recipes: '/recipes',
+  projects: '/projects',
+  evidence: '/evidence',
+  labs: '/labs',
+  patterns: '/patterns',
+  signal: '/signal',
 };
 ---
 
@@ -77,8 +77,8 @@ const collectionRoute: Record<string, string> = {
   <Container>
     <Breadcrumb
       items={[
-        { label: 'Book', href: '/agentic-ai/book/' },
-        { label: partLabel, href: `/agentic-ai/book/#${d.part}` },
+        { label: 'Book', href: '/book/' },
+        { label: partLabel, href: `/book/#${d.part}` },
         { label: chapterPrefix },
       ]}
     />
@@ -104,7 +104,7 @@ const collectionRoute: Record<string, string> = {
             <h2>Referenced by</h2>
             <ul>
               {[...links.referencedBy, ...links.citedBy].map((l) => (
-                <li><a href={`${collectionRoute[l.collection] ?? '/agentic-ai'}/${l.id}/`}>{l.collection}/{l.id}</a></li>
+                <li><a href={`${collectionRoute[l.collection] ?? ''}/${l.id}/`}>{l.collection}/{l.id}</a></li>
               ))}
             </ul>
           </section>

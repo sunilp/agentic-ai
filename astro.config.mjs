@@ -6,8 +6,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://sunilprakash.com',
-  base: '/agentic-ai',
+  site: 'https://agenticlab.sunilprakash.com',
+  base: '/',
   trailingSlash: 'always',
   build: {
     format: 'directory',
@@ -27,15 +27,15 @@ export default defineConfig({
   vite: {
     build: {
       rollupOptions: {
-        external: ['/agentic-ai/pagefind/pagefind.js'],
+        external: ['/pagefind/pagefind.js'],
       },
     },
   },
   redirects: {
-    '/proof/baseline-eval-report': '/agentic-ai/evidence/baseline-eval-report/',
-    '/proof/workflow-vs-agent-comparison': '/agentic-ai/evidence/workflow-vs-agent-comparison/',
-    '/proof/trace-example': '/agentic-ai/evidence/trace-example/',
-    '/proof/failure-cases': '/agentic-ai/evidence/failure-cases/',
-    '/principles/': '/agentic-ai/manifesto/',
+    '/proof/baseline-eval-report': '/evidence/baseline-eval-report/',
+    '/proof/workflow-vs-agent-comparison': '/evidence/workflow-vs-agent-comparison/',
+    '/proof/trace-example': '/evidence/trace-example/',
+    '/proof/failure-cases': '/evidence/failure-cases/',
+    '/principles/': '/manifesto/',
   },
 });
