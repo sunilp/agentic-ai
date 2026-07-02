@@ -14,7 +14,7 @@ import Callout from '~/components/universal/Callout.astro';
 
 You don't need to understand attention heads to build with LLMs. You need to understand five things. Here they are.
 
-This is not a book about how LLMs are built internally. There are excellent resources for that (Raschka's *Build a Large Language Model (From Scratch)* is the best). This is about how to build production systems with LLMs as components. You don't need to understand transformers. You need to understand what breaks when you give a language model access to your tools.
+This is not a book about how LLMs are built internally. There are excellent resources for that ([Raschka's *Build a Large Language Model (From Scratch)*](https://www.manning.com/books/build-a-large-language-model-from-scratch) is the best). This is about how to build production systems with LLMs as components. You don't need to understand transformers. You need to understand what breaks when you give a language model access to your tools.
 
 ## The API contract
 
@@ -30,7 +30,7 @@ import anthropic
 client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from env
 
 message = client.messages.create(
-    model="claude-sonnet-4-20250514",
+    model="claude-sonnet-5",
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "What is the capital of France?"}
@@ -42,7 +42,7 @@ print(message.content[0].text)
 ```
 
 <Callout type="tip" label="What just happened">
-You sent a string to an API. You got a string back. You paid for both strings, measured in tokens. That's the entire contract. For this query, that is roughly 30 tokens in and 10 tokens out. At current pricing, about $0.0003. Cheap for one call. Less cheap when your agent makes fifty calls per user request.
+You sent a string to an API. You got a string back. You paid for both strings, measured in tokens. That's the entire contract. For this query, that is roughly 30 tokens in and 10 tokens out. At current pricing (checked 2026-07-02), about $0.0003. Cheap for one call. Less cheap when your agent makes fifty calls per user request.
 </Callout>
 
 That raw SDK call is the simplest way to understand what is happening. It is useful for experiments and first contact. But it becomes painful in real systems: provider-specific code leaks into every file, testing requires live API calls, swapping models means rewriting imports, and cost tracking gets scattered.
@@ -54,7 +54,7 @@ The companion code wraps this single operation in a provider-neutral client. Sam
 from src.shared.model_client import create_client
 from src.shared.types import CompletionRequest, Message, Role
 
-client = create_client(provider="anthropic", api_key="...", model_name="claude-sonnet-4-20250514")
+client = create_client(provider="anthropic", api_key="...", model_name="claude-sonnet-5")
 
 request = CompletionRequest(
     messages=[
@@ -73,7 +73,7 @@ print(response.content)
 The model client wraps the raw API with typed inputs and outputs. Your agent code never imports `anthropic` or `openai` directly. You can swap providers, add cost tracking, or switch to a mock for testing, all without changing the code that calls it.
 </Callout>
 
-So which should you use? Use the raw SDK call to understand the mechanics. Use the wrapper when the model becomes part of a larger system. The rest of this book uses the wrapper because agents call the model hundreds of times per day, and you will want to track costs, swap between a fast cheap model and a slow expensive one depending on the task, and run tests without hitting a real API. The wrapper makes all of that possible by centralizing the one operation that matters.
+The rest of this book uses the wrapper because agents call the model hundreds of times per day, and you will want to track costs, swap between a fast cheap model and a slow expensive one depending on the task, and run tests without hitting a real API. The wrapper makes all of that possible by centralizing the one operation that matters.
 
 This is the foundation. If you understand this, you understand 80% of what frameworks are doing. The other 20% is prompt management, tool routing, and retry logic. All useful. None of it magic.
 
@@ -86,7 +86,7 @@ This is the foundation. If you understand this, you understand 80% of what frame
 
 LLMs don't process words. They process tokens, which are chunks of text that roughly correspond to word fragments. The word "understanding" might be two tokens ("understand" + "ing"). A space before a word is often part of the token. A number like "42" is one token. The string "1234567890" might be three tokens.
 
-Why does this matter? Because everything about LLMs is priced and bounded in tokens. Context windows are measured in tokens. API costs are per-token. Rate limits count tokens. When someone says a model has a "128K context window," they mean 128,000 tokens, which is roughly 96,000 words, or about 300 pages of prose. That sounds like a lot. It's less than you think once you start filling it with system prompts, conversation history, retrieved documents, and tool results.
+Why does this matter? Because everything about LLMs is priced and bounded in tokens. Context windows are measured in tokens. API costs are per-token. Rate limits count tokens. Frontier models today ship 200K-to-1M-token context windows -- a 1M window is roughly 750,000 words, or about 2,500 pages of prose. That sounds enormous. It's still less than you think once you start filling it with system prompts, conversation history, retrieved documents, and tool results, and -- as the next section covers -- a big window doesn't mean the model reads all of it equally well.
 
 Here's a quick estimator:
 
@@ -110,15 +110,15 @@ print(f"Estimated tokens: {tokens}")
 The 4-characters-per-token rule is a rough approximation. It's wrong for individual strings, but accurate enough in aggregate for cost planning and context budgeting. Use `tiktoken` when you need precision.
 </Callout>
 
-Now the cost math. This is where engineers need to pay attention because costs sneak up on you:
+Now the cost math. This is where engineers need to pay attention because costs sneak up on you. The table below is Anthropic-only -- for other providers, check their pricing pages directly (OpenAI's is at [developers.openai.com/api/docs/pricing](https://developers.openai.com/api/docs/pricing)):
 
 ```python
 # Pricing per 1M tokens: (prompt_price, completion_price)
+# Anthropic only. Pricing checked: 2026-07-02, via
+# https://platform.claude.com/docs/en/about-claude/pricing
 MODEL_PRICING = {
-    "gpt-4o":                     (2.50, 10.00),
-    "gpt-4o-mini":                (0.15,  0.60),
-    "claude-sonnet-4-20250514":   (3.00, 15.00),
-    "claude-haiku-4-5-20251001":  (0.80,  4.00),
+    "claude-sonnet-5":            (3.00, 15.00),
+    "claude-haiku-4-5-20251001":  (1.00,  5.00),
 }
 
 def estimate_cost(prompt_tokens: int, completion_tokens: int, model: str) -> float:
@@ -127,7 +127,7 @@ def estimate_cost(prompt_tokens: int, completion_tokens: int, model: str) -> flo
            (completion_tokens / 1_000_000) * completion_price
 
 # One call: cheap
-cost_one = estimate_cost(prompt_tokens=1000, completion_tokens=500, model="claude-sonnet-4-20250514")
+cost_one = estimate_cost(prompt_tokens=1000, completion_tokens=500, model="claude-sonnet-5")
 print(f"One call: ${cost_one:.4f}")
 # One call: $0.0105
 
@@ -137,11 +137,15 @@ print(f"10,000 calls: ${cost_day:.2f}")
 # 10,000 calls: $105.00
 ```
 
+Sonnet's sticker price above is the standard rate. As of this check, Anthropic is also running introductory pricing on Sonnet ($2.00/$10.00 per million tokens) through 2026-08-31 -- re-check the [pricing page](https://platform.claude.com/docs/en/about-claude/pricing) before you budget against it, since promotional rates expire and standard rates don't.
+
 <Callout type="tip" label="What just happened">
 A single API call costs fractions of a cent. But agents make multiple calls per request, and production systems handle thousands of requests per day. The arithmetic compounds fast. An agent that averages 5 model calls per request at $0.01 each, serving 10,000 requests a day, costs $500/day. Know this number before you ship.
 </Callout>
 
-Notice that completion tokens are 3-5x more expensive than prompt tokens across every provider. This is not arbitrary. Generating tokens requires sequential computation, while reading prompt tokens can be partially parallelized. The practical implication: an agent that generates long, verbose reasoning is more expensive than one that generates concise answers, even if they read the same context.
+Notice that completion tokens are 3-5x more expensive than prompt tokens across every major provider. This is not arbitrary. Generating tokens requires sequential computation, while reading prompt tokens can be partially parallelized. The practical implication: an agent that generates long, verbose reasoning is more expensive than one that generates concise answers, even if they read the same context.
+
+One more variable belongs in this math: prompt caching. If your agent resends the same system prompt, tool definitions, or reference documents across calls -- and most agents do -- the repeated portion can be cached instead of reprocessed at full price. A cache write costs a little more than a normal read (roughly 1.25x for a short-lived cache, 2x for a longer-lived one), but a cache hit costs roughly 10% of the standard input price -- a discount of roughly 90% on the tokens you didn't have to re-process from scratch. That changes the arithmetic above: an agent resending 6,000 tokens of retrieved context on every tool-use round looks expensive until that context is a cache hit rather than a fresh read. Cache pricing checked: 2026-07-02, same [pricing page](https://platform.claude.com/docs/en/about-claude/pricing).
 
 <figure>
   <img src="/assets/diagrams/token-cost-calculator.svg" alt="Token cost breakdown showing prompt tokens, completion tokens, and total cost across models" />
@@ -150,13 +154,13 @@ Notice that completion tokens are 3-5x more expensive than prompt tokens across 
 
 ## The context window is your entire working memory
 
-Think of the context window as RAM for the conversation. Everything the model knows about your current request has to fit inside it. The system prompt, the user's message, the full conversation history, any documents you retrieved, the results from tool calls, all of it competes for one fixed-size bucket.
+Think of the context window as RAM for the conversation. Everything the model knows about your current request has to fit inside it. The system prompt, the user's message, the full conversation history, any documents you retrieved, the results from tool calls, all of it competes for one fixed-size bucket -- and, as this section covers, not every part of that bucket gets read with equal attention.
 
 This is the constraint that shapes every architectural decision in this book.
 
 When you build a RAG system, you're deciding what to put in the context window. When you design a multi-turn agent, you're managing what stays in the context window across steps. When you pick a chunking strategy for documents, you're optimizing for what fits in the context window.
 
-Here's what a typical context window looks like for an agent request:
+Here's what a typical context window looks like for an agent request, sized against a 200K-token window -- the low end of what frontier models ship today, with several offering up to 1M:
 
 ```
 ┌─────────────────────────────────────────┐
@@ -168,26 +172,25 @@ Here's what a typical context window looks like for an agent request:
 │ Current user message       ~200 tokens  │
 │─────────────────────────────────────────│
 │ TOTAL                   ~11,000 tokens  │
-│ Remaining (128K model)  ~117,000 tokens │
-│ Remaining (8K model)      OVERFLOW      │
+│ Remaining (200K model)  ~189,000 tokens │
 └─────────────────────────────────────────┘
 ```
 
-That 117,000 token remainder looks comfortable. But add a 50-page document (roughly 37,000 tokens) and three rounds of agent tool use (each round adds the tool call, the result, and the model's analysis), and you're burning through context fast.
+That much headroom looks like the overflow problem is solved, and it mostly is: five years ago, a model with an 8K-token window would have hit OVERFLOW on that same request before you added a single document -- crashing outright used to be this section's headline failure mode. Today's larger windows genuinely fixed that. But headroom is not the same as reliability, and a bigger bucket introduced a subtler failure in its place.
 
-The dangerous part: when context overflows, the model doesn't crash. It degrades silently. Quality drops. The model starts ignoring instructions, especially the ones at the beginning of the context (your system prompt). It misses relevant information buried in the middle. You won't get an error. You'll get a worse answer with no indication that anything went wrong.
+The dangerous part: when the model reads a large context, it doesn't attend to every token equally. Quality degrades on information buried in the middle of a long context, even when that information comfortably fits. The model starts ignoring instructions, especially ones sandwiched between a long system prompt and a large retrieved document. You won't get an error. You'll get a worse answer with no indication that anything went wrong -- the same silent-degradation problem overflow used to cause, just triggered by position instead of size.
 
-"Lost in the middle" is a well-documented phenomenon. Models pay the most attention to the beginning and end of the context, and less attention to the middle. When you add a 50-page document to the context, something gets pushed out or ignored. Usually it's the instructions you put at the beginning.
+"Lost in the middle" is the name for this, and it's not a vague observation. Liu et al.'s ["Lost in the Middle: How Language Models Use Long Contexts"](https://arxiv.org/abs/2307.03172) (arXiv:2307.03172) measured it directly: models retrieve information from the start and end of a context reliably, and retrieval degrades for information placed in the middle, a pattern that has persisted across model generations even as windows grew from thousands of tokens to hundreds of thousands. A vendor's needle-in-a-haystack benchmark at launch is not the same guarantee as your production prompt structure avoiding this effect -- see [/signal/002-when-long-context-replaces-rag/](/signal/002-when-long-context-replaces-rag/) for the fuller argument and the literature behind it.
 
 <Callout type="warn" label="Failure case study: the instruction that vanished">
-A document-analysis agent had a system prompt that began with "Always respond in JSON format." It worked perfectly in testing with short documents. In production, users started uploading 50-page contracts, roughly 40,000 tokens of retrieved text. The model began responding in prose, ignoring the JSON instruction entirely. No error. No warning. The system prompt was still there, just buried under so much context that the model stopped attending to it. The fix was two-fold: put critical formatting instructions both at the start AND end of the context (bracketing), and switch to provider-level structured output enforcement so the format constraint was not dependent on the model's attention.
+Picture a document-analysis agent whose system prompt begins with "Always respond in JSON format." It works perfectly in testing with short documents. In production, users upload long contracts, and the retrieved text sits between the system prompt and the user's question. The model starts responding in prose, ignoring the JSON instruction, with no error and no warning -- the instruction is still in the context, just positioned somewhere the model attends to less. Two fixes address this: put critical formatting instructions both at the start AND end of the context (bracketing), and use provider-level structured output enforcement so the format constraint doesn't depend on the model's attention at all.
 </Callout>
 
 This is why context management is engineering, not just prompt writing. The decisions about what goes into the context, in what order, and what gets dropped when space is tight, these are architectural decisions with direct impact on system quality.
 
 <figure>
-  <img src="/assets/diagrams/context-window-bucket.svg" alt="The context window as a bucket being filled with system prompt, history, documents, and tool results" />
-  <figcaption>Figure 0a.3: The context window. Everything competes for one fixed-size bucket. Overflow is silent.</figcaption>
+  <img src="/assets/diagrams/context-window-bucket.svg" alt="The context window as a bucket being filled with system prompt, history, documents, and tool results, with attention fading toward the middle" />
+  <figcaption>Figure 0a.3: The context window. Everything competes for one fixed-size bucket, and the model doesn't read all of it equally.</figcaption>
 </figure>
 
 ## Why it hallucinates (and why you can't prompt it away)
@@ -199,7 +202,7 @@ This is not a bug to fix. It is a fundamental property of how these models work.
 You will read advice telling you to add "only answer based on the provided context" to your system prompt. This helps. It reduces the rate of hallucination. It does not solve the problem. The model can and will still generate plausible-sounding text that isn't supported by the context. I've seen models cite specific paragraph numbers from documents that don't have paragraph numbers. I've seen them invent API endpoints with correct-looking URL structures and reasonable-sounding parameter names. The text looks right because the model is very good at producing text that looks right.
 
 <Callout type="warn" label="Failure case study: the citation that looked right">
-A research assistant agent was asked to summarize findings from a set of uploaded documents and cite its sources. It returned: "According to Document 3, Section 4.2, page 17, the failure rate exceeds 12%." The response looked credible. But Document 3 had no numbered sections, was only 5 pages long, and never mentioned failure rates. The model generated a citation that matched the structural pattern of academic references without any grounding in the actual content. The fix: every citation the model produces must be verified in code. Extract the claimed source, look up the actual text, and confirm the claim appears there. If it does not, flag it or drop it. Never pass model-generated citations through to users without programmatic verification.
+Picture a research assistant agent asked to summarize findings from a set of uploaded documents and cite its sources. It returns: "According to Document 3, Section 4.2, page 17, the failure rate exceeds 12%." The response looks credible. But Document 3 has no numbered sections, is a few pages long, and never mentions failure rates. The model generated a citation that matched the structural pattern of academic references without any grounding in the actual content. The fix: every citation the model produces must be verified in code. Extract the claimed source, look up the actual text, and confirm the claim appears there. If it does not, flag it or drop it. Never pass model-generated citations through to users without programmatic verification.
 </Callout>
 
 Every reliable mitigation for hallucination is engineering, not prompting.
@@ -229,13 +232,11 @@ When the model generates the next token, it doesn't pick one deterministically (
 
 **Temperature above 1.0:** The distribution is nearly flat and output becomes increasingly incoherent. In production agent systems, there is almost no reason to go above 1.0. In research or creative applications, controlled high temperature paired with top-p sampling can be useful for exploring the edges of a distribution. For everything in this book, stay at or below 0.3.
 
-For agents, default to temperature 0 for decision-making steps. Tool selection, routing, structured extraction, and any step where you need predictable, testable behavior. When your agent is deciding whether to call the search tool or the calculator, you want it to make the same decision every time for the same input. For generative sub-steps where variety helps, bring temperature up slightly, but keep it bounded.
-
 ```python
 from src.shared.model_client import create_client
 from src.shared.types import CompletionRequest, Message, Role
 
-client = create_client(provider="anthropic", api_key="...", model_name="claude-sonnet-4-20250514")
+client = create_client(provider="anthropic", api_key="...", model_name="claude-sonnet-5")
 
 # Temperature 0: deterministic, same answer every time
 request_deterministic = CompletionRequest(
@@ -348,6 +349,8 @@ I think the right default is to use provider-level schema enforcement whenever i
 
 Parsing is step one. But "valid JSON" is not the same as "data I can trust." Production systems need three layers of validation after parsing: schema validation, semantic validation, and a clear failure policy.
 
+This snippet is illustrative -- unlike the other code samples in this chapter, it isn't backed by a file in the companion repo. Adapt the pattern to your own validation needs rather than importing it directly.
+
 ```python
 from pydantic import BaseModel, Field, ValidationError
 from datetime import date
@@ -358,6 +361,10 @@ class ExtractionResult(BaseModel):
     confidence: float = Field(ge=0.0, le=1.0)
     source_document: str
     extracted_date: date
+
+
+class ExtractionError(Exception):
+    """Raised when structured extraction exhausts its retry budget."""
 
 # Layer 2: Semantic validation
 def validate_semantics(result: ExtractionResult, available_docs: list[str]) -> list[str]:
@@ -413,7 +420,7 @@ async def extract_with_validation(
 The key principle: if structured output fails after your retry budget, return a typed error, not a raw string. Your downstream code should never have to guess whether it received valid data. Either it gets a validated `ExtractionResult`, or it gets an `ExtractionError` it can handle explicitly.
 
 <Callout type="warn" label="Failure case study: valid JSON, invalid data">
-A classification agent returned `{"confidence": 1.5, "category": "high_risk", "review_date": "next Tuesday"}`. The JSON parsed without errors. The downstream routing logic treated 1.5 as a valid confidence score, escalated the case as ultra-high-confidence, and logged "next Tuesday" as a date string that broke the reporting pipeline three hours later when a batch job tried to parse it. Schema validation (Pydantic) would have caught the confidence value immediately. Semantic validation would have caught the non-ISO date. Without the validation ladder, syntactically correct garbage flows downstream and breaks things far from the source.
+Picture a classification agent that returns `{"confidence": 1.5, "category": "high_risk", "review_date": "next Tuesday"}`. The JSON parses without errors. Without a validation layer, downstream routing logic would treat 1.5 as a valid confidence score, escalate the case as ultra-high-confidence, and pass "next Tuesday" along as a date string that breaks the first batch job that tries to parse it. Schema validation (Pydantic) catches the confidence value immediately. Semantic validation catches the non-ISO date. Without the validation ladder, syntactically correct garbage flows downstream and breaks things far from the source.
 </Callout>
 
 ## Putting it together
@@ -422,6 +429,13 @@ You now have a mental model of the machine you are building with. It takes text,
 
 Now that you know the model is probabilistic, bounded by context, vulnerable to unsupported confident text, and unreliable at structure by default, the next engineering problems are concrete: How do you give it tools with contracts it cannot violate? How do you assemble context that fits the window without losing critical instructions? How do you evaluate whether the system actually works, not just looks like it works? And how do you bound its autonomy so it fails gracefully instead of confidently?
 
-The next three sections build these answers. Section 0b gives the model hands. Section 0c gives it a loop. Section 0d shows you what frameworks do with both.
+The next three sections build these answers. Section 0b gives the model hands. Section 0c gives it a loop -- [FN-004](/field-notes/004-loop-engineering-30-year-old-loop/) has more on why the stop condition inside that loop is the hard, still-unsolved part. Section 0d shows you what frameworks do with both.
 
-For hands-on experiments with everything in this section, see the [LLM Explorer](/book/projects/llm-explorer/) project.
+For hands-on experiments with everything in this section, see the [LLM Explorer](/projects/llm-explorer/) project.
+
+## Further reading
+
+- **[Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)** -- Liu et al., 2023 (arXiv:2307.03172). The paper behind the position-dependent degradation this chapter's context-window section describes.
+- **[Build a Large Language Model (From Scratch)](https://www.manning.com/books/build-a-large-language-model-from-scratch)** -- Raschka, 2024. The internals this chapter deliberately skips.
+- **[Pricing](https://platform.claude.com/docs/en/about-claude/pricing)** -- Anthropic. Official per-model, per-feature pricing, including the prompt-caching multipliers used in this chapter's cost math. Checked 2026-07-02.
+- **[API pricing](https://developers.openai.com/api/docs/pricing)** -- OpenAI. For comparing costs across providers.
