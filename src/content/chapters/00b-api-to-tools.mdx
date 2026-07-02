@@ -16,7 +16,7 @@ import Callout from '~/components/universal/Callout.astro';
 
 In the last section, the model could only talk. In this one, it learns to do things. The difference is smaller than you think: about 15 lines of code.
 
-Here is what actually happens when a model "uses a tool": your code sends a list of function signatures to the API. The model reads those signatures and, instead of returning a text response, returns a JSON blob that says "call this function with these arguments." Your code calls the function. You send the result back to the model. The model uses the result to generate a text response. That's the entire mechanism. No remote procedure calls. No plugin system. No runtime loaded from the model's side. The model writes JSON. You do the work.
+Here is what actually happens when a model "uses a tool": your code sends a list of function signatures to the API. The model reads those signatures and, instead of returning a text response, returns a JSON blob that says "call this function with these arguments." Your code calls the function. You send the result back to the model. The model uses the result to generate a text response. That's the entire mechanism. No remote procedure calls. No plugin system. No runtime loaded from the model's side. The model writes JSON. You do the work. [Anthropic's tool-use guide](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) documents this same request/response contract from one provider's side; every other major API follows the same shape.
 
 Before we get to function calling, though, we need to talk about the two techniques that make it actually work in production: structured prompting and few-shot examples. These aren't optional. They're the difference between a system that works in demos and one that works at 2am when you're asleep.
 
@@ -46,10 +46,10 @@ Rules:
 ```
 
 <Callout type="tip" label="What just happened">
-The second prompt specifies the domain, the input format, the output schema, the calculation method, the edge case handling, and what to omit. Every one of those constraints reduces variance in the output. Each constraint is testable. You can write an assertion that checks whether the output matches the JSON schema. You can verify the growth calculation is correct. You can confirm there's no commentary outside the JSON. You can't test "be helpful."
+The second prompt specifies the domain, the input format, the output schema, the calculation method, the edge case handling, and what to omit. Each constraint is testable: you can assert the output matches the JSON schema, verify the growth calculation, confirm there's no commentary outside the JSON. You can't test "be helpful."
 </Callout>
 
-The principle is straightforward: every ambiguity in your prompt is a degree of freedom the model will use in ways you didn't intend. Remove them. Specify the format. Specify the edge cases. Specify what not to do. Treat your system prompt as a contract, the same way you'd treat a function signature or an API spec.
+The principle: every ambiguity in a prompt is a degree of freedom the model will use in ways you didn't intend. Treat your system prompt as a contract, the same way you'd treat a function signature or an API spec.
 
 Version your prompts in source control. When output quality degrades, `git diff` the prompt. When you swap models, run your prompt test suite. This is not overhead. This is the minimum viable engineering practice for systems that depend on natural language interfaces.
 
@@ -90,7 +90,7 @@ Return only the category name, lowercase, no punctuation."""},
 ```
 
 <Callout type="tip" label="What just happened">
-Two examples did more than a paragraph of instructions. The model saw the pattern: one word, lowercase, no explanation. It follows that pattern. Few-shot examples are like type annotations for natural language. They constrain the output space by demonstration rather than description.
+Two examples did more than a paragraph of instructions. The model saw the pattern -- one word, lowercase, no explanation -- and followed it. That's the mechanism: demonstration constrains the output space more reliably than description.
 </Callout>
 
 Two to three examples is the sweet spot for most tasks. One example can be dismissed as coincidence. Four or more starts eating context budget without proportional improvement. Pick examples that cover your edge cases: one straightforward case, one boundary case, and one that's easy to get wrong.
@@ -101,21 +101,22 @@ Few-shot examples are particularly powerful for tool-using systems. When the mod
 
 This is the core mechanism. Every agent framework wraps it. Every tool-using system depends on it. And there is no magic. The model outputs JSON that says "call this function with these arguments." Your code does the calling.
 
-The cycle has four steps:
+The cycle has five steps:
 
 1. You define tool schemas (JSON that tells the model what tools exist)
 2. You send those schemas alongside the user's message
 3. The model responds with a structured tool call (not text, but a JSON object naming the function and its arguments)
 4. Your code validates the arguments, executes the function, and returns the result
+5. You send that result back to the model, which reads it and generates a final text response
 
 <figure>
-  <img src="/assets/diagrams/function-calling-cycle.svg" alt="The four-step function calling cycle: define schema, send with message, model returns tool call JSON, your code executes" />
+  <img src="/assets/diagrams/function-calling-cycle.svg" alt="The five-step function calling cycle: define schema, send with message, model returns tool call JSON, your code executes, then sends the result back for the model's final answer" />
   <figcaption>Figure 0b.1: The function calling cycle. The model never executes anything. It writes JSON. You do the work.</figcaption>
 </figure>
 
 Let's build this from scratch. First, we need a way to define tools.
 
-The code below uses Pydantic, a Python library for data validation using type annotations. If you have used dataclasses, think of Pydantic as dataclasses with built-in validation: you declare fields with types, and Pydantic rejects any input that does not match. `BaseModel` is the base class. `Field` adds constraints like minimum values or defaults. `model_validate()` checks a dictionary against the type annotations and raises `ValidationError` if anything is wrong. We use it here because the model will send us JSON arguments, and we need to validate those arguments before running any code.
+The code below uses [Pydantic](https://pydantic.dev/docs/validation/latest/concepts/models/), a Python library for data validation using type annotations. If you have used dataclasses, think of Pydantic as dataclasses with built-in validation: you declare fields with types, and Pydantic rejects any input that does not match. `BaseModel` is the base class. `Field` adds constraints like minimum values or defaults. `model_validate()` checks a dictionary against the type annotations and raises `ValidationError` if anything is wrong. We use it here because the model will send us JSON arguments, and we need to validate those arguments before running any code.
 
 Here is the `Tool` class and `ToolRegistry` from this book's companion code:
 
@@ -209,6 +210,8 @@ def calculator(operation: str, a: float, b: float) -> str:
 And a search tool:
 
 ```python
+import json
+
 class SearchInput(BaseModel):
     """Input schema for the fake search tool."""
     query: str
@@ -277,6 +280,8 @@ Now let's see what happens on the other side. When the model decides to use a to
 Your code receives this, looks up the tool in the registry, validates the arguments, and executes the function:
 
 ```python
+from pydantic import ValidationError
+
 def execute_tool_call(
     registry: ToolRegistry, tool_name: str, arguments: dict[str, Any]
 ) -> str:
@@ -300,7 +305,7 @@ def execute_tool_call(
 Three things happen in `execute_tool_call`: lookup, validation, execution. The lookup catches hallucinated tool names. The validation (via Pydantic's `model_validate`) catches malformed arguments before they reach your function. The try/except around execution catches runtime errors. Each layer returns a string error instead of crashing, because this error message gets sent back to the model as the tool result. The model can then apologize, retry with different arguments, or try a different tool. Crashing would end the conversation.
 </Callout>
 
-Here's the full flow wired together:
+Called directly, `execute_tool_call()` demonstrates steps 3 and 4 in isolation -- a hardcoded call standing in for what the model would send, then validation and dispatch:
 
 ```python
 registry = create_default_registry()
@@ -322,7 +327,74 @@ print(result)
 # "Error: division by zero"
 ```
 
-That is the entire mechanism behind function calling. You defined a Pydantic model, wrote `to_schema()` to generate the JSON schema, built `execute_tool_call()` to validate and dispatch. Every major framework automates exactly these three steps. LangChain's `@tool` decorator reads your type hints and generates the schema. Google ADK's `FunctionTool` reads the docstring. CrewAI's tool registration does the same. The pattern is identical; only the syntax changes. You built it by hand so you understand what the framework is doing when it hides these lines from you. Section 0d will show you the same tools wrapped in ADK and LangChain, and you will see that the 30 lines of schema and validation machinery you just wrote collapse into a single decorator.
+That covers steps 3 and 4 with a hardcoded stand-in for the model's request. To see all five steps run together -- schema out, tool call back, execute, result back, final answer -- wire in a client. `MockClient` is this book's provider-neutral stand-in for a real API: it returns canned responses in order, so the example runs with no API key and no network call, but the request/response shapes (`CompletionRequest`, `CompletionResponse`, `Message`, `ToolCall`, `ToolResult`) are the same ones a real `AnthropicClient` or `OpenAIClient` would produce:
+
+```python
+import asyncio
+
+from src.shared.model_client import MockClient
+from src.shared.types import (
+    CompletionRequest,
+    CompletionResponse,
+    Message,
+    Role,
+    TokenUsage,
+    ToolCall,
+    ToolResult,
+)
+
+
+async def ask(question: str) -> str:
+    registry = create_default_registry()
+    messages = [Message(role=Role.USER, content=question)]
+
+    # Canned responses in order: the tool call, then the final text answer --
+    # the same two round trips a live model makes.
+    client = MockClient(
+        responses=[
+            CompletionResponse(
+                tool_calls=[
+                    ToolCall(id="call_001", name="calculator",
+                              arguments={"operation": "multiply", "a": 6, "b": 7}),
+                ],
+                model="mock",
+                usage=TokenUsage(prompt_tokens=42, completion_tokens=18, total_tokens=60),
+            ),
+            CompletionResponse(content="6 times 7 is 42.", model="mock"),
+        ]
+    )
+
+    # Steps 1-2: schemas travel alongside the message list.
+    request = CompletionRequest(messages=messages, tools=registry.get_schemas())
+
+    # Step 3: the model returns a tool call instead of text.
+    response = await client.complete(request)
+    tool_call = response.tool_calls[0]
+
+    # Step 4: your code validates and executes.
+    result = execute_tool_call(registry, tool_call.name, tool_call.arguments)
+
+    # Step 5: append the call and its result, then ask again.
+    messages.append(Message(role=Role.ASSISTANT, content="", tool_calls=[tool_call]))
+    messages.append(Message(
+        role=Role.TOOL,
+        content="",
+        tool_results=[ToolResult(tool_call_id=tool_call.id, name=tool_call.name, content=result)],
+    ))
+    final_request = CompletionRequest(messages=messages, tools=registry.get_schemas())
+    final_response = await client.complete(final_request)
+    return final_response.content
+
+
+print(asyncio.run(ask("What is 6 times 7?")))
+# "6 times 7 is 42."
+```
+
+<Callout type="tip" label="What just happened">
+The assistant message carries the tool call structurally, in `tool_calls`, not encoded into `content` -- that's what lets a real provider client serialize a proper tool-call block instead of a plain-text stand-in it can't reconcile with the result that follows. The tool message carries the result the same way, in `tool_results`. Both messages get appended to the list before the second `client.complete()` call, so the model sees the full exchange: what it asked for, and what came back.
+</Callout>
+
+That is the entire mechanism behind function calling. You defined a Pydantic model, wrote `to_schema()` to generate the JSON schema, built `execute_tool_call()` to validate and dispatch, and appended the result so the model could close the loop with a final answer. Every major framework automates exactly these steps: LangChain's `@tool` decorator and Google ADK's `FunctionTool` both read your type hints for the schema and your docstring for the description; only the syntax differs. CrewAI's tool registration follows the same pattern. You built it by hand so you understand what the framework is doing when it hides these lines from you. Section 0d covers the framework-specific syntax.
 
 ## Schema validation is your safety net
 
@@ -388,13 +460,10 @@ print(result)
 ```
 
 <Callout type="warn" label="Failure case study: the hallucinated argument that almost caused silent corruption">
-A data pipeline agent had a `write_record` tool that accepted a `priority` field: an integer from 1 (low) to 5 (critical). Without Pydantic validation, the model passed `priority: 10` for a routine log entry. The write succeeded. No error. The record was stored with priority 10, which was outside the application's expected range. Downstream alerting logic treated anything above 5 as a system emergency and paged the on-call team at 3am. With `Field(ge=1, le=5)` on the Pydantic model, the validation error would have been caught before the write, the model would have received "Input should be less than or equal to 5," and it would have retried with a valid value. The gap between "the function accepts an int" and "the function accepts an int between 1 and 5" is where silent data corruption lives.
+A representative failure, composited from patterns seen across data pipeline agents: a `write_record` tool accepts a `priority` field, an integer from 1 (low) to 5 (critical). Without Pydantic validation, the model passes `priority: 10` for a routine log entry. The write succeeds. No error. Downstream alerting logic treats anything above 5 as a system emergency and fires an unnecessary incident page. With `Field(ge=1, le=5)` on the Pydantic model, the validation error is caught before the write, the model receives "Input should be less than or equal to 5," and it retries with a valid value. The gap between "the function accepts an int" and "the function accepts an int between 1 and 5" is where silent data corruption lives.
 </Callout>
 
-<figure>
-  <img src="/assets/diagrams/tool-selection-comparison.svg" alt="Comparison of tool calls with and without schema validation, showing clean errors vs runtime crashes" />
-  <figcaption>Figure 0b.2: Schema validation turns runtime crashes into structured errors that the model can learn from.</figcaption>
-</figure>
+{/* diagram slot: schema validation -- see FR Task 7 */}
 
 Validation isn't just about preventing crashes. It's about giving the model enough information to self-correct. A model that receives "Validation error: Input should be 'add', 'subtract', 'multiply' or 'divide'" will fix its next attempt. A model that receives "Error: unhandled exception in tool execution" will guess, and guess wrong.
 
@@ -414,7 +483,7 @@ When you send a message like "What is 42 times 17?" along with all three tool sc
 
 This works because the tool descriptions are clear and distinct. The model selects tools by matching the user's intent to the tool descriptions. This is not semantic search. It is not embeddings. It is the model reading your descriptions and making a judgment call, the same way a person would read an API catalog and pick the right endpoint.
 
-Tool descriptions are your API documentation for the model. Write them like you'd write docs for a junior developer who takes everything literally. Because that is exactly what the model is doing: reading your description literally and picking the tool that sounds most relevant.
+Tool descriptions are your API documentation for the model. Write them like you'd write docs for a junior developer who takes everything literally -- because that's exactly what's happening on the other side.
 
 Here are the descriptions from the companion code:
 
@@ -442,7 +511,7 @@ registry.register(
 ```
 
 <Callout type="tip" label="What just happened">
-Each description is one sentence that says what the tool does, not how it works. The model doesn't need to know that the calculator uses Python's arithmetic operators or that the search function returns mock data. It needs to know when to use each tool. "Perform basic arithmetic" tells it to use this tool for math. "Count the number of words" tells it to use this tool for word counting. Descriptions are selection criteria, not implementation details.
+Each description says what the tool does, not how it works -- the model doesn't need to know the calculator uses Python's arithmetic operators or that search returns mock data, only when to reach for each one. "Perform basic arithmetic" routes math queries here; "Count the number of words" routes word-counting queries there.
 </Callout>
 
 When does the model choose wrong? When the descriptions overlap or when the query is ambiguous. Consider this message: "What's the word count of 'four score and seven years ago'?"
@@ -461,9 +530,16 @@ A few practical guidelines for tool descriptions:
 
 **Don't describe the implementation.** "Uses a PostgreSQL full-text search index with ts_vector" is irrelevant to the model. "Search the knowledge base for documents matching a query" is what it needs.
 
+One more lever, borrowed from the few-shot technique earlier in this section: if descriptions alone leave the model picking the wrong tool, show it two or three examples of query-to-tool selection in the message history, the same way you'd show it examples of a classification format. The model generalizes a selection pattern the same way it generalizes an output format.
+
 <Callout type="warn" label="Failure case study: the vague description">
-A customer support agent had two tools: `get_order` ("Get order information") and `get_account` ("Get account information"). When users asked "Where's my package?", the model picked `get_account` about 40% of the time. Both descriptions mentioned "information" without saying what kind. The fix: change `get_order` to "Look up shipping status, delivery date, and tracking number for a specific order ID" and `get_account` to "Retrieve account profile, billing address, and payment methods for a customer." After that change, routing accuracy on order-tracking queries went from ~60% to over 95%. The model was not confused about the task. It was confused about which tool matched the task. Specific descriptions fixed it.
+A pattern common enough to be worth a composite example: a customer support agent has two tools, `get_order` ("Get order information") and `get_account` ("Get account information"). When users ask "Where's my package?", the model frequently picks `get_account` instead. Both descriptions mention "information" without saying what kind. The fix: change `get_order` to "Look up shipping status, delivery date, and tracking number for a specific order ID" and `get_account` to "Retrieve account profile, billing address, and payment methods for a customer." Routing accuracy on order-tracking queries improves markedly. The model was not confused about the task. It was confused about which tool matched the task. Specific descriptions fixed it.
 </Callout>
+
+<figure>
+  <img src="/assets/diagrams/tool-selection-comparison.svg" alt="Side-by-side comparison: a precise tool description leads the model to correctly select the calculator tool for an arithmetic query, while a vague description leads it to select the wrong tool for the same query" />
+  <figcaption>Figure 0b.2: Tool descriptions drive selection accuracy. A vague description sends the model to the wrong tool; a precise one does not.</figcaption>
+</figure>
 
 When you have more than five or six tools, the model's selection accuracy starts to degrade. Not because it can't read six descriptions, but because the probability of description overlap increases. If you find yourself registering fifteen tools, that's an architectural signal. Split them into groups. Use a routing step where one model call picks the category, then a second call picks the specific tool within that category. Chapter 4 covers this pattern in depth.
 
@@ -488,22 +564,23 @@ That loop is the subject of the next section.
 
 ## Putting it together
 
-You've gone from text-in-text-out to a system that can act. It can calculate, search, and analyze. The model reads tool schemas, decides which tool to call, and returns structured JSON with the function name and arguments. Your code validates those arguments with Pydantic, executes the function, and returns the result. Every tool-using system you'll encounter, from simple chatbot plugins to complex agent frameworks, is built on this cycle.
+You've gone from text-in-text-out to a system that can act: read schemas, decide, call, validate, execute, close the loop with a final answer. Every tool-using system you'll encounter, from chatbot plugins to agent frameworks, is built on this cycle.
 
-The key insights from this section:
+Key takeaways:
 
-System prompts are code. Version them, test them, specify them precisely. Every ambiguity is a bug waiting to happen.
+- **System prompts are code.** Version them, test them, specify precisely.
+- **Few-shot beats prose.** Two examples constrain output more reliably than two paragraphs of instructions.
+- **Function calling is JSON in, JSON out.** The model requests, your code fulfills. No magic on either side.
+- **Schema validation isn't optional.** The model will hallucinate arguments; Pydantic catches them and hands back an error the model can act on.
+- **Tool descriptions are selection criteria**, not documentation -- write for a literal reader.
+- **The limit is single-turn.** One tool call, one result, then stop -- the gap the next section closes.
 
-Few-shot examples are the most effective technique for consistent output. Two examples beat two paragraphs of instructions.
-
-Function calling is JSON in, JSON out. The model writes a request. Your code fulfills it. There is no magic on either side.
-
-Schema validation isn't optional. The model will hallucinate arguments. Pydantic catches the bad ones before they reach your functions, and the structured error messages give the model enough information to self-correct.
-
-Tool descriptions are selection criteria. Write them for a literal reader who will pick the tool that sounds most relevant to the query.
-
-And the limitation: all of this operates in a single turn. One tool call, one result. The model cannot look at a search result and decide "that's not what I needed, let me refine my query." It cannot chain a search, a calculation on the search results, and a summary together. It does one thing, and stops.
-
-The next section adds the loop that removes that ceiling. You will build, in about 100 lines of Python, a system that can observe the result of its action, decide whether it is sufficient, and take another action if it is not. The mechanism is a while loop with an LLM inside it. The engineering challenge is knowing when that loop should stop.
+The next section adds the loop that removes that ceiling: about 100 lines of Python, a while loop with an LLM inside it, and the engineering challenge of knowing when it should stop.
 
 For a fully built tool-using assistant with proper error handling and logging, see the [Tool-Using Assistant](/projects/tool-using-assistant/) project.
+
+## Further reading
+
+- **[Anthropic tool-use guide](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)** -- How one provider documents the request/response contract this chapter builds by hand.
+- **[Pydantic: Models](https://pydantic.dev/docs/validation/latest/concepts/models/)** -- BaseModel, type-annotated fields, and how validation works.
+- **[Pydantic: Error Handling](https://pydantic.dev/docs/validation/latest/errors/errors/)** -- ValidationError structure and how to read it.
