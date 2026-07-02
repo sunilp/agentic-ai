@@ -26,7 +26,7 @@ The analogy: MCP is USB-C for AI. Before USB-C, every phone had a different char
 
 <figure>
   <img src="/assets/diagrams/mcp-before-after.svg" alt="Before MCP: 5 apps times 4 tools equals 20 custom integrations. After MCP: 5 plus 4 equals 9 standard integrations." />
-  <figcaption>Without MCP, every app writes custom code for every tool. With MCP, each side implements the standard once.</figcaption>
+  <figcaption>Figure 0e.1: Without MCP, every app writes custom code for every tool. With MCP, each side implements the standard once.</figcaption>
 </figure>
 
 ## The three roles
@@ -35,7 +35,7 @@ Every MCP interaction has three participants:
 
 <figure>
   <img src="/assets/diagrams/mcp-architecture.svg" alt="MCP architecture showing three roles: the Host (your AI application containing the LLM and two MCP clients, one per server), two MCP Servers exposing tools, and the two transports (stdio for local, Streamable HTTP for remote)." />
-  <figcaption>MCP architecture: the host contains the LLM and one or more MCP clients, each connected to a server.</figcaption>
+  <figcaption>Figure 0e.2: MCP architecture. The host contains the LLM and one or more MCP clients, each connected to a server.</figcaption>
 </figure>
 
 **Host.** Your AI application. Claude Desktop, Claude Code, ChatGPT, Gemini, and Windows Copilot are all hosts -- so is the custom agent you built in Section 0c. The host contains the LLM and one or more MCP clients.
@@ -50,7 +50,7 @@ When your agent connects to an MCP server, four things happen in sequence:
 
 <figure>
   <img src="/assets/diagrams/mcp-lifecycle.svg" alt="MCP protocol lifecycle: 1) Initialize (handshake), 2) Discover (tools/list), 3) Invoke (tools/call), 4) Loop (result goes back to LLM for next decision)." />
-  <figcaption>The MCP lifecycle: initialize, discover available tools, invoke them as the LLM decides, and loop.</figcaption>
+  <figcaption>Figure 0e.3: The MCP lifecycle. Initialize, discover available tools, invoke them as the LLM decides, and loop.</figcaption>
 </figure>
 
 **Step 1: Initialize.** The client and server perform a handshake. Each side declares what protocol version it supports and what capabilities it offers. This happens once when the connection starts.
