@@ -14,13 +14,13 @@ import Callout from '~/components/universal/Callout.astro';
 
 In Section 0c, we built an agent with three tools: `search`, `calculator`, and `word_count`. Those tools lived in the same Python file as the agent. The agent imported them directly. This works fine when you control everything.
 
-But what happens when your agent needs to use a tool maintained by another team? Or a database that lives on a different server? Or a third-party service that updates its API every quarter? You could write custom integration code for each one. If you have 5 agents and 10 tools, that is 50 integrations to build and maintain.
+But what happens when your agent needs to use a tool maintained by another team? Or a database that lives on a different server? Or a third-party service that updates its API every quarter? You could write custom integration code for each one. If you have 5 agents and 4 tools, that is 20 integrations to build and maintain.
 
 MCP solves this problem.
 
 ## What is MCP?
 
-**MCP** (Model Context Protocol) is an open standard for connecting AI applications to tools, data sources, and services. It was created by Anthropic and is now the most widely adopted protocol for agent-to-tool communication.
+**MCP** (Model Context Protocol) is an open standard for connecting AI applications to tools, data sources, and services. Anthropic created it in 2024; in December 2025, Anthropic [donated MCP to the Agentic AI Foundation](https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation), a Linux Foundation project co-founded with Block and OpenAI, and it is now one of the most widely adopted protocols for agent-to-tool communication.
 
 The analogy: MCP is USB-C for AI. Before USB-C, every phone had a different charger. You needed a drawer full of cables. USB-C standardized the connector so one cable works with everything. MCP does the same for agent tools: each tool implements the server once, each agent implements the client once, and they all work together.
 
@@ -61,10 +61,10 @@ When your agent connects to an MCP server, four things happen in sequence:
 
 **Step 4: Loop.** The result goes back to the LLM's context. The LLM decides whether it has enough information to answer or needs to call another tool. This is the same agent loop from Section 0c -- MCP does not change the loop. It changes where the tools live.
 
-The protocol runs on **JSON-RPC 2.0** -- a simple request/response format over two transports:
+The protocol runs on **JSON-RPC 2.0** -- a simple request/response format over two transports (current spec version 2025-11-25; see the [spec changelog](https://modelcontextprotocol.io/specification/2025-11-25/changelog) for how the transport layer got here -- checked 2026-07-02):
 
 - **stdio** -- for local servers running as subprocesses on the same machine. Fast, no network. This is what you use during development and for tools that access local files.
-- **Streamable HTTP** -- for remote servers accessible over the network. Supports authentication, streaming, and session management. This is what you use in production.
+- **Streamable HTTP** -- for remote servers accessible over the network. [Supports authentication](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization), streaming, and session management. This is what you use in production.
 
 ## Building your first MCP server
 
@@ -73,7 +73,7 @@ Let's build a simple MCP server that exposes three tools: a unit converter, a wo
 ### Install the SDK
 
 ```bash
-pip install mcp
+pip install "mcp[cli]"
 ```
 
 ### The server code
@@ -105,6 +105,10 @@ def word_count(text: str) -> str:
 def reverse_text(text: str) -> str:
     """Reverse a string of text."""
     return text[::-1]
+
+
+if __name__ == "__main__":
+    mcp.run()
 ```
 
 That is the entire server. Three things to notice:
@@ -123,11 +127,13 @@ For local development, run it with stdio transport:
 python my_server.py
 ```
 
-Or for HTTP transport (accessible over the network):
+Or run it over Streamable HTTP (accessible over the network) with the `mcp` CLI:
 
 ```bash
-mcp run my_server.py --transport http --port 8080
+mcp run my_server.py --transport streamable-http
 ```
+
+The CLI takes a transport flag, not a port flag -- there is no `--port` option. Host and port are server configuration, set on the `FastMCP` constructor instead: `FastMCP("My First MCP Server", host="127.0.0.1", port=8080)`.
 
 ### Test it with the MCP Inspector
 
@@ -137,7 +143,7 @@ The MCP Inspector is a browser-based tool that lets you test your server without
 npx @modelcontextprotocol/inspector
 ```
 
-This opens a web UI where you can connect to your server, see the available tools, and call them interactively. Use this to verify your server works before connecting an agent to it.
+This opens a web UI where you can connect to your server, see the available tools, and call them interactively. Use this to verify your server works before connecting an agent to it. If you use [uv](https://docs.astral.sh/uv/), `uv run mcp dev my_server.py` launches the same Inspector in one step and handles the dependency install for you.
 
 ## Connecting Claude Desktop to your server
 
@@ -163,7 +169,7 @@ The fastest way to see your MCP server in action with a real LLM is Claude Deskt
 
 **Step 3.** Restart Claude Desktop. You should see a hammer icon indicating MCP tools are available. Ask Claude: "Convert 37 degrees Celsius to Fahrenheit" and it will call your `convert_temperature` tool.
 
-That is MCP working end to end: Claude discovers your tools, the LLM decides to call one, your Python function executes, and the result flows back into the conversation.
+That is MCP working end to end: discovery, decision, execution, and the result flowing back into the conversation.
 
 ## A more realistic server: document search
 
@@ -225,7 +231,7 @@ def search_documents(query: str) -> str:
 
 Three design decisions worth understanding:
 
-**Path traversal protection.** The `is_relative_to` check prevents a malicious tool call from reading files outside the documents directory. Without this, a prompt injection could trick the LLM into calling `read_document("../../etc/passwd")`. This is not theoretical -- it is one of the most common MCP vulnerabilities. Always validate paths.
+**Path traversal protection.** The `is_relative_to` check prevents a malicious tool call from reading files outside the documents directory. Without this, a prompt injection could trick the LLM into calling `read_document("../../etc/passwd")`. This is not theoretical: unvalidated tool inputs are a [documented MCP prompt-injection vector](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/), and a server without input validation is an easy target. Always validate paths.
 
 **Content truncation.** The `[:5000]` limit prevents a single document from consuming the LLM's entire context window. In production, you would use chunking and retrieval (Chapter 2) instead of reading full files.
 
@@ -241,7 +247,7 @@ tools = [search, calculator, word_count]
 agent = Agent(tools=tools)
 ```
 
-With MCP, tools live on a server. The agent discovers them at runtime:
+With MCP, tools live on a server. The agent discovers them at runtime. This snippet is illustrative, not runnable -- `transport` stands in for a configured stdio or Streamable HTTP transport object; see the [Python SDK](https://github.com/modelcontextprotocol/python-sdk) for a complete client example:
 
 ```python
 # With MCP: tools are discovered from a server
@@ -251,7 +257,7 @@ async with ClientSession(transport) as session:
     # These tool schemas go to the LLM -- same format as before
 ```
 
-The agent loop does not change. The LLM still generates tool calls. The difference is where the tool executes: locally (Section 0c) or on an MCP server (this section). From the LLM's perspective, it is identical. It sees the same JSON Schema for parameters and gets the same text results back.
+As in Step 4 above, the loop itself does not change -- only where the tool executes: locally (Section 0c) or on an MCP server (this section).
 
 ## When to use MCP (and when not to)
 
@@ -260,13 +266,13 @@ The agent loop does not change. The LLM still generates tool calls. The differen
 - Your tools are maintained by a different team. MCP gives you a clean interface without importing their code.
 - You want to share tools across multiple agents. Build the server once, connect any MCP-compatible agent.
 - You want to use third-party tools (database connectors, API wrappers, cloud services) that already have MCP servers published.
-- You are using Claude Desktop, VS Code Copilot, or another MCP-compatible host and want to extend it with custom tools.
+- You are using Claude Desktop, Claude Code, ChatGPT, Gemini, Windows Copilot, or another MCP-compatible host and want to extend it with custom tools.
 
 **Skip MCP when:**
 
 - All your tools are local functions in the same codebase. Direct function calls are simpler and faster.
 - You are building a prototype and do not need cross-team tool sharing yet.
-- You need sub-millisecond tool invocation. MCP adds protocol overhead (~5-20ms for stdio, more for HTTP).
+- You need sub-millisecond tool invocation. MCP adds protocol overhead a direct function call does not pay: serialization always, and for HTTP transports, a network round trip on top.
 
 The guidance from the book: start without MCP. Get your agent logic right with direct function calls. Add MCP when tool integrations multiply or when tools need to be shared across agents. Earn the complexity.
 
@@ -296,4 +302,4 @@ From here, the book takes you into the engineering decisions that determine whet
 - **[MCP specification](https://modelcontextprotocol.io)** -- The full protocol spec, SDK documentation, and quickstart guides.
 - **[MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)** -- The official Python SDK with `FastMCP` for building servers.
 - **[MCP Inspector](https://github.com/modelcontextprotocol/inspector)** -- Browser-based testing tool for MCP servers.
-- **[MCP Server Registry](https://registry.modelcontextprotocol.io)** -- Community registry of published MCP servers.
+- **[MCP Server Registry](https://registry.modelcontextprotocol.io)** -- Community registry of published MCP servers, currently in preview: expect breaking changes before general availability.
