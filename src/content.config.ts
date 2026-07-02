@@ -31,6 +31,8 @@ const fieldNotes = defineCollection({
     references: z.array(z.string()).optional(),
     cites: z.array(z.string()).optional(),
     patterns: z.array(z.string()).optional(),
+    spot: z.string().optional(),
+    spotCaption: z.string().optional(),
     sources: z.array(z.object({
       title: z.string(),
       url: z.string().url(),
@@ -55,6 +57,8 @@ const recipes = defineCollection({
     gotchas: z.array(z.string()),
     references: z.array(z.string()).optional(),
     patterns: z.array(z.string()).optional(),
+    spot: z.string().optional(),
+    spotCaption: z.string().optional(),
   }),
 });
 
@@ -142,6 +146,8 @@ const labs = defineCollection({
     dataUrl: z.string().url().optional(),
     seed: z.number().optional(),
     references: z.array(z.string()).optional(),
+    spot: z.string().optional(),
+    spotCaption: z.string().optional(),
   }),
 });
 
