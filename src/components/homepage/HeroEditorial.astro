@@ -2,7 +2,7 @@
 /**
  * HeroEditorial — Gallery homepage hero. Poster Fraunces + dek with drop cap + spot.
  */
-import HomeHeroSpot from '~/components/spots/HomeHeroSpot.astro';
+import Spot from '~/components/universal/Spot.astro';
 ---
 
 <section class="hero">
@@ -15,7 +15,7 @@ import HomeHeroSpot from '~/components/spots/HomeHeroSpot.astro';
       <a href="/evidence/" class="hero__cta">The evidence</a>
     </div>
   </div>
-  <div class="hero__art"><HomeHeroSpot /></div>
+  <div class="hero__art"><Spot src="/assets/spots/home-hero.png" alt="An engraved tightrope walker heading toward a brick-red sun" size="article" /></div>
 </section>
 
 <style>
