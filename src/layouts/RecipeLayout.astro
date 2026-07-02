@@ -1,14 +1,13 @@
 ---
 /**
  * RecipeLayout — verified, code-block-heavy treatment for Recipes.
- * Anatomy: MetaStrip → KineticHeading → Dek → VerifiedStamp → Prerequisites → RunItCTA → MDX body → Footer3Col (added in MDX).
+ * Anatomy: ArticleHeader → Spot → VerifiedStamp → Prerequisites → RunItCTA → MDX body → Footer3Col (added in MDX).
  */
 import type { CollectionEntry } from 'astro:content';
 import PageLayout from './PageLayout.astro';
 import Reader from '~/components/layout/Reader.astro';
-import MetaStrip from '~/components/universal/MetaStrip.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
+import Spot from '~/components/universal/Spot.astro';
 import VerifiedStamp from '~/components/universal/VerifiedStamp.astro';
 import Prerequisites from '~/components/universal/Prerequisites.astro';
 import RunItCTA from '~/components/universal/RunItCTA.astro';
@@ -20,16 +19,11 @@ interface Props {
 const { entry } = Astro.props;
 const d = entry.data;
 
-const verifiedDateStr = d.verifiedOn.toISOString().slice(0, 10);
 const chapterLabel = d.chapter.startsWith('ch-')
   ? `Ch ${parseInt(d.chapter.slice(3), 10)}`
   : d.chapter;
-const metaItems = [
-  d.id.toUpperCase(),
-  verifiedDateStr,
-  `${d.estimatedMinutes} min`,
-  chapterLabel,
-];
+const dateLong = d.verifiedOn.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+const byline = ['SUNIL PRAKASH', dateLong, `${d.estimatedMinutes} MIN`, chapterLabel.toUpperCase()];
 const ogImage = `/assets/banners/${d.id}.png`;
 ---
 
@@ -45,9 +39,8 @@ const ogImage = `/assets/banners/${d.id}.png`;
   }}
 >
   <Reader>
-    <MetaStrip items={metaItems} />
-    <KineticHeading level={1}>{d.title}</KineticHeading>
-    <Dek italic>{d.description}</Dek>
+    <ArticleHeader rubric={`RECIPE · ${d.id.toUpperCase()}`} title={d.title} dek={d.description} byline={byline} />
+    {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
     <VerifiedStamp date={d.verifiedOn} versions={d.verifiedVersions} />
     <Prerequisites items={d.prerequisites} />
     <RunItCTA repo={d.runItRepo} />

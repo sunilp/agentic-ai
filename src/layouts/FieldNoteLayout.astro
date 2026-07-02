@@ -3,10 +3,8 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import PageLayout from './PageLayout.astro';
 import Reader from '~/components/layout/Reader.astro';
-import MetaStrip from '~/components/universal/MetaStrip.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
-import Banner from '~/components/universal/Banner.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
+import Spot from '~/components/universal/Spot.astro';
 import Sources from '~/components/universal/Sources.astro';
 import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
 import { entriesToContentEntries } from '~/lib/content-helpers';
@@ -60,11 +58,11 @@ function linkLabel(l: { id: string; collection: string }): string {
   return l.id.toUpperCase();
 }
 
-const dateStr = d.date.toISOString().slice(0, 10);
 const chapterLabel = d.primaryChapter.startsWith('ch-')
   ? `Ch ${parseInt(d.primaryChapter.slice(3), 10)}`
   : d.primaryChapter;
-const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterLabel];
+const dateLong = d.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+const byline = ['SUNIL PRAKASH', dateLong, `${d.readingTime} MIN`, chapterLabel.toUpperCase()];
 ---
 
 <PageLayout
@@ -79,10 +77,8 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`, chapterL
   }}
 >
   <Reader>
-    <MetaStrip items={metaItems} />
-    <KineticHeading level={1}>{d.title}</KineticHeading>
-    <Dek italic>{d.dek}</Dek>
-    <Banner src={d.banner} alt={`${d.title} banner illustration`} />
+    <ArticleHeader rubric={`FIELD NOTE · ${d.id.toUpperCase()}`} title={d.title} dek={d.dek} byline={byline} />
+    {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
     <article class="fn-body prose prose--dropcap">
       <slot />
     </article>

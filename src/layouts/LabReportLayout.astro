@@ -4,9 +4,8 @@ import { getCollection } from 'astro:content';
 import PageLayout from './PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
 import Reader from '~/components/layout/Reader.astro';
-import MetaStrip from '~/components/universal/MetaStrip.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
+import Spot from '~/components/universal/Spot.astro';
 import HypothesisBlock from '~/components/universal/HypothesisBlock.astro';
 import StatHero from '~/components/universal/StatHero.astro';
 import SectionAnchors from '~/components/universal/SectionAnchors.astro';
@@ -34,8 +33,8 @@ const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence
 const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
 const links = getReverseLinks(reverseIndex, d.id);
 
-const dateStr = d.date.toISOString().slice(0, 10);
-const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`];
+const dateLong = d.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+const byline = ['SUNIL PRAKASH', dateLong, `${d.readingTime} MIN`];
 
 const sections = [
   { label: 'Setup', anchor: 'setup' },
@@ -64,9 +63,8 @@ const collectionRoute: Record<string, string> = {
   currentNav="Labs"
 >
   <Container>
-    <MetaStrip items={metaItems} />
-    <KineticHeading level={1}>{d.title}</KineticHeading>
-    <Dek italic>{d.description}</Dek>
+    <ArticleHeader rubric={`LAB NOTE · ${d.id.toUpperCase()}`} title={d.title} dek={d.description} byline={byline} />
+    {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
 
     <HypothesisBlock>{d.hypothesis}</HypothesisBlock>
 
