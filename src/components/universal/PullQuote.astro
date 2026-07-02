@@ -1,8 +1,7 @@
 ---
 /**
- * PullQuote — one-line excerpted quote. Ink left rule, italic Fraunces.
- * Use this for in-article pullquotes. For homepage-band pullquotes with brick-red
- * accent, use the dedicated <ManifestoPullquote> component instead.
+ * PullQuote — centered Gallery pull quote between brick rules.
+ * Fraunces italic. One per article.
  */
 ---
 
@@ -12,15 +11,30 @@
 
 <style>
   .pull-quote {
+    margin: var(--space-8) auto;
+    max-width: 780px;
+    text-align: center;
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(20px, 2.4vw, 26px);
-    line-height: 1.4;
+    font-size: clamp(23px, 3vw, 29px);
+    line-height: 1.45;
     color: var(--fg);
-    margin: var(--space-7) 0;
-    padding: 0 0 0 var(--space-5);
-    border-left: 2px solid var(--ink);
-    background: transparent;
+    padding: var(--space-5) 0;
+    border: 0;
+    position: relative;
   }
+
+  .pull-quote::before,
+  .pull-quote::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 3px;
+    background: var(--brick);
+    margin: 0 auto;
+  }
+
+  .pull-quote::before { margin-bottom: var(--space-5); }
+  .pull-quote::after { margin-top: var(--space-5); }
 </style>

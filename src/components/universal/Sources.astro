@@ -34,24 +34,33 @@ const { items } = Astro.props;
 <style>
   .sources {
     margin-top: var(--space-7);
-    font-size: var(--body-2);
-    line-height: 1.65;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--ink);
   }
 
   .sources__heading {
     font-family: var(--font-mono);
     font-size: var(--meta-2);
+    letter-spacing: var(--tracking-rubric);
     text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
     color: var(--fg-light);
-    margin: 0 0 var(--space-3);
+    margin: 0 0 var(--space-4);
     font-weight: 500;
   }
 
   .sources__list {
-    list-style: decimal;
+    font-family: var(--font-body);
+    font-size: var(--body-2);
+    line-height: 1.7;
+    color: #444;
     padding-left: var(--space-5);
     margin: 0;
+  }
+
+  .sources__list li::marker {
+    color: var(--brick);
+    font-family: var(--font-display);
+    font-weight: 600;
   }
 
   .sources__item {
