@@ -86,6 +86,31 @@ class _FakeAnthropicHTTP:
         return _FakeResponse()
 
 
+class _FakeOpenAIResponse:
+    """Stands in for an httpx.Response for OpenAI API format."""
+
+    def raise_for_status(self) -> None:
+        return None
+
+    def json(self) -> dict:
+        return {
+            "choices": [{"message": {"content": "ok"}}],
+            "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+            "model": "fake",
+        }
+
+
+class _FakeOpenAIHTTP:
+    """Stands in for httpx.AsyncClient for OpenAI, capturing the JSON payload posted."""
+
+    def __init__(self) -> None:
+        self.last_payload: dict | None = None
+
+    async def post(self, url: str, json: dict) -> _FakeOpenAIResponse:
+        self.last_payload = json
+        return _FakeOpenAIResponse()
+
+
 def check_tool_use_serialization() -> None:
     """(a) tool_use block id matches the following tool_result's tool_use_id."""
     tc = ToolCall(id="tc_1", name="calculator", arguments={"operation": "add", "a": 1, "b": 2})
@@ -175,6 +200,28 @@ async def check_temperature_omitted() -> None:
         CompletionRequest(messages=[Message(role=Role.USER, content="hi")], temperature=0.7)
     )
     assert fake_http.last_payload["temperature"] == 0.7, fake_http.last_payload
+
+    # Also verify OpenAI client omits temperature when None
+    from src.shared.model_client import OpenAIClient
+
+    fake_openai_http = _FakeOpenAIHTTP()
+    openai_client = OpenAIClient(api_key="fake-key", model_name="gpt-4")
+    openai_client._client = fake_openai_http  # type: ignore[assignment]
+
+    await openai_client.complete(
+        CompletionRequest(messages=[Message(role=Role.USER, content="hi")], temperature=None)
+    )
+    assert fake_openai_http.last_payload is not None
+    assert (
+        "temperature" not in fake_openai_http.last_payload
+    ), f"OpenAI should omit temperature when None, got: {fake_openai_http.last_payload}"
+
+    await openai_client.complete(
+        CompletionRequest(messages=[Message(role=Role.USER, content="hi")], temperature=0.7)
+    )
+    assert (
+        fake_openai_http.last_payload["temperature"] == 0.7
+    ), f"OpenAI should include temperature when set, got: {fake_openai_http.last_payload}"
 
 
 def check_gated_tool() -> None:

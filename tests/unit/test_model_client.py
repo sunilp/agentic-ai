@@ -35,6 +35,6 @@ def test_build_tool_schema_openai_format():
 def test_completion_request_defaults():
     """CompletionRequest should have sensible defaults."""
     req = CompletionRequest(messages=[Message(role=Role.USER, content="hello")])
-    assert req.temperature == 0.0
+    assert req.temperature is None
     assert req.max_tokens == 4096
     assert req.tools is None

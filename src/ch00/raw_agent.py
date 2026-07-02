@@ -315,6 +315,7 @@ if __name__ == "__main__":
                 (demo_client for demo_query, demo_client in _demo_examples() if demo_query == query),
                 MockClient(),
             )
+        # max_steps=5 for real queries; demo suite uses max_steps=3 to trigger budget exhaustion
         agent = Agent(client=client, registry=registry, max_steps=5)
         result = await agent.run(query)
         _print_result(query, result)
