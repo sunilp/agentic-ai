@@ -2,15 +2,12 @@
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
 import HeroEditorial from '~/components/homepage/HeroEditorial.astro';
-import HomeFrontispiece from '~/components/homepage/HomeFrontispiece.astro';
 import Creed from '~/components/homepage/Creed.astro';
-import LabInOnePicture from '~/components/homepage/LabInOnePicture.astro';
 import EvidenceInlineStrip from '~/components/homepage/EvidenceInlineStrip.astro';
 import BuildJudgeOperateCards from '~/components/homepage/BuildJudgeOperateCards.astro';
 import WhatsNewStrip from '~/components/homepage/WhatsNewStrip.astro';
 import HomeBenchTeaser from '~/components/homepage/HomeBenchTeaser.astro';
 import ManifestoPullquote from '~/components/homepage/ManifestoPullquote.astro';
-import TraceReplay from '~/components/islands/TraceReplay.svelte';
 ---
 
 <PageLayout
@@ -20,18 +17,12 @@ import TraceReplay from '~/components/islands/TraceReplay.svelte';
 >
   <Container>
     <HeroEditorial />
-    <HomeFrontispiece />
     <Creed />
-    <LabInOnePicture />
     <EvidenceInlineStrip />
-    <BuildJudgeOperateCards />
     <WhatsNewStrip />
+    <BuildJudgeOperateCards />
     <HomeBenchTeaser />
   </Container>
 
   <ManifestoPullquote />
-
-  <Container>
-    <TraceReplay client:visible />
-  </Container>
 </PageLayout>
