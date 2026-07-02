@@ -1,78 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" font-family="IBM Plex Mono, monospace">
   <defs>
-    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
-    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.18"/>
+    </pattern>
   </defs>
+  <rect width="700" height="500" fill="#fafaf8"/>
 
-  <!-- Background -->
-  <rect width="700" height="500" fill="#ffffff"/>
+  <!-- Lanes -->
+  <text x="180" y="36" text-anchor="middle" font-size="12" letter-spacing="2" font-weight="500" fill="#1a1a1a">YOUR CODE</text>
+  <text x="520" y="36" text-anchor="middle" font-size="12" letter-spacing="2" font-weight="500" fill="#1a1a1a">THE MODEL</text>
+  <text x="520" y="54" text-anchor="middle" font-size="11" fill="#6b6b6b">writes JSON · never executes</text>
+  <line x1="350" y1="64" x2="350" y2="464" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="4,4"/>
 
-  <!-- Title -->
-  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Function Calling: The Full Cycle</text>
-  <line x1="40" y1="42" x2="660" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+  <!-- 1: define schemas (code) -->
+  <rect x="55" y="64" width="250" height="56" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="180" y="88" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">1 · DEFINE TOOL SCHEMAS</text>
+  <text x="180" y="106" text-anchor="middle" font-size="11" fill="#6b6b6b">what exists, what args it takes</text>
 
-  <!-- Node 1: Your Code (top-left) -->
-  <rect x="40" y="70" width="180" height="72" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
-  <text x="130" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#1D4ED8">1. Your Code</text>
-  <text x="130" y="112" text-anchor="middle" font-size="10" fill="#6B7280">send schema + prompt</text>
-  <text x="130" y="128" text-anchor="middle" font-size="10" fill="#3B82F6">{"tools": [...], "messages": [...]}</text>
+  <!-- 2: send (arrow across) -->
+  <path d="M180,120 L180,146 L520,146 L520,162" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="350" y="138" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">2 · SEND SCHEMAS + USER MESSAGE</text>
 
-  <!-- Arrow 1 → 2 -->
-  <line x1="221" y1="106" x2="278" y2="106" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="249" y="98" text-anchor="middle" font-size="9" fill="#374151">HTTP POST</text>
+  <!-- 3: tool call returned (model) -->
+  <rect x="395" y="166" width="250" height="88" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="2"/>
+  <text x="520" y="188" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#9b4a3f">3 · A TOOL CALL, AS JSON</text>
+  <text x="410" y="210" font-size="11" fill="#1a1a1a">{"name": "calculator",</text>
+  <text x="410" y="226" font-size="11" fill="#1a1a1a"> "args": {"operation":</text>
+  <text x="410" y="242" font-size="11" fill="#1a1a1a">  "multiply", "a": 6, "b": 7}}</text>
 
-  <!-- Node 2: API (top-right) -->
-  <rect x="480" y="70" width="180" height="72" rx="8" fill="#F0FDF4" stroke="#22c55e" stroke-width="2"/>
-  <text x="570" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803D">2. LLM API</text>
-  <text x="570" y="112" text-anchor="middle" font-size="10" fill="#6B7280">model sees schema</text>
-  <text x="570" y="128" text-anchor="middle" font-size="10" fill="#6B7280">decides to call a tool</text>
+  <!-- hand-off back to code -->
+  <path d="M520,254 L520,280 L180,280 L180,296" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="350" y="272" text-anchor="middle" font-size="11" fill="#6b6b6b">your code receives the JSON</text>
 
-  <!-- Arrow 2 → 3 (right side going down) -->
-  <line x1="570" y1="143" x2="570" y2="198" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="600" y="175" font-size="9" fill="#374151">tool_call JSON</text>
+  <!-- 4: validate + execute (code) -->
+  <rect x="55" y="300" width="250" height="60" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="180" y="324" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">4 · VALIDATE + EXECUTE</text>
+  <text x="180" y="344" text-anchor="middle" font-size="11" fill="#6b6b6b">calculator(6 x 7) &#8594; 42</text>
 
-  <!-- Node 3: Model Response (bottom-right) -->
-  <rect x="480" y="200" width="180" height="80" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
-  <text x="570" y="222" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400E">3. Model Response</text>
-  <text x="570" y="240" text-anchor="middle" font-size="10" fill="#6B7280">{"tool_calls": [{</text>
-  <text x="570" y="255" text-anchor="middle" font-size="10" fill="#6B7280">  "name": "get_weather",</text>
-  <text x="570" y="270" text-anchor="middle" font-size="10" fill="#6B7280">  "args": {"city": "NYC"}}]}</text>
+  <!-- 5: send result back (arrow across) -->
+  <path d="M180,360 L180,386 L520,386 L520,402" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="350" y="378" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">5 · SEND THE RESULT BACK</text>
 
-  <!-- Arrow 3 → 4 (bottom going left) -->
-  <line x1="479" y1="240" x2="221" y2="240" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="350" y="232" text-anchor="middle" font-size="9" fill="#374151">your code receives this</text>
+  <!-- model writes the final text -->
+  <rect x="395" y="406" width="250" height="58" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="520" y="430" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">MODEL WRITES THE ANSWER</text>
+  <text x="520" y="450" text-anchor="middle" font-size="11" fill="#6b6b6b">"6 times 7 is 42."</text>
 
-  <!-- Node 4: Execute Function (bottom-left) -->
-  <rect x="40" y="200" width="180" height="80" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
-  <text x="130" y="222" text-anchor="middle" font-size="13" font-weight="bold" fill="#5B21B6">4. Execute Function</text>
-  <text x="130" y="240" text-anchor="middle" font-size="10" fill="#6B7280">your code runs:</text>
-  <text x="130" y="255" text-anchor="middle" font-size="10" fill="#5B21B6">get_weather("NYC")</text>
-  <text x="130" y="270" text-anchor="middle" font-size="10" fill="#6B7280">→ "72°F, sunny"</text>
-
-  <!-- Arrow 4 → 5 (left side going down) -->
-  <line x1="130" y1="281" x2="130" y2="338" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="90" y="314" font-size="9" fill="#374151">function</text>
-  <text x="90" y="326" font-size="9" fill="#374151">result</text>
-
-  <!-- Node 5: Back to API (bottom center) -->
-  <rect x="40" y="340" width="180" height="72" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
-  <text x="130" y="364" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">5. Send Result to API</text>
-  <text x="130" y="381" text-anchor="middle" font-size="10" fill="#6B7280">{"role": "tool",</text>
-  <text x="130" y="396" text-anchor="middle" font-size="10" fill="#6B7280"> "content": "72°F, sunny"}</text>
-
-  <!-- Arrow 5 → 1 (loop back, curved) -->
-  <path d="M220,376 Q350,430 350,130 Q350,106 281,106" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
-  <text x="410" y="420" text-anchor="middle" font-size="10" fill="#9CA3AF">model now writes</text>
-  <text x="410" y="436" text-anchor="middle" font-size="10" fill="#9CA3AF">final answer or</text>
-  <text x="410" y="452" text-anchor="middle" font-size="10" fill="#9CA3AF">calls another tool</text>
-
-  <!-- Loop label in center -->
-  <rect x="268" y="290" width="164" height="32" rx="6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1"/>
-  <text x="350" y="307" text-anchor="middle" font-size="11" font-weight="bold" fill="#374151">Repeats until</text>
-  <text x="350" y="320" text-anchor="middle" font-size="11" fill="#6B7280">final answer returned</text>
-
-  <!-- Caption -->
-  <text x="350" y="480" text-anchor="middle" font-size="11" fill="#9CA3AF">The model never runs code. It only describes the call. Your code executes it.</text>
+  <text x="350" y="490" text-anchor="middle" font-size="11" fill="#6b6b6b">one pass, then done · the next section adds the loop</text>
 </svg>

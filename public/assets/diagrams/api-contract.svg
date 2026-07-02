@@ -1,74 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" viewBox="0 0 700 380" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380" font-family="IBM Plex Mono, monospace">
   <defs>
-    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
-    <marker id="arr-right" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
-    <marker id="arr-left" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
-      <polygon points="10 0, 0 3.5, 10 7" fill="#6B7280"/>
-    </marker>
-    <marker id="arr-down" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto">
-      <polygon points="0 0, 3.5 10, 7 0" fill="#9CA3AF"/>
-    </marker>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.22"/>
+    </pattern>
   </defs>
+  <rect width="700" height="380" fill="#fafaf8"/>
 
-  <!-- Background -->
-  <rect width="700" height="380" fill="#ffffff"/>
+  <!-- The contract: two parties, two arrows -->
+  <rect x="60" y="52" width="180" height="72" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="150" y="84" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">YOUR CODE</text>
+  <text x="150" y="104" text-anchor="middle" font-size="11" fill="#6b6b6b">the application</text>
 
-  <!-- Title -->
-  <text x="350" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">The API Contract: Everything Starts Here</text>
-  <line x1="40" y1="44" x2="660" y2="44" stroke="#D1D5DB" stroke-width="1"/>
+  <rect x="460" y="52" width="180" height="72" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="550" y="84" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">FRONTIER MODEL API</text>
+  <text x="550" y="104" text-anchor="middle" font-size="11" fill="#6b6b6b">a service endpoint</text>
 
-  <!-- Your Code box -->
-  <rect x="40" y="70" width="140" height="70" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
-  <text x="110" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#1D4ED8">Your Code</text>
-  <text x="110" y="118" text-anchor="middle" font-size="11" fill="#6B7280">Python / JS</text>
-  <text x="110" y="132" text-anchor="middle" font-size="11" fill="#6B7280">application</text>
+  <line x1="244" y1="74" x2="452" y2="74" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="350" y="66" text-anchor="middle" font-size="11" fill="#6b6b6b">text in · counted in tokens</text>
 
-  <!-- LLM API box -->
-  <rect x="280" y="70" width="140" height="70" rx="8" fill="#F0FDF4" stroke="#22c55e" stroke-width="2"/>
-  <text x="350" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803D">LLM API</text>
-  <text x="350" y="118" text-anchor="middle" font-size="11" fill="#6B7280">GPT-4 / Claude</text>
-  <text x="350" y="132" text-anchor="middle" font-size="11" fill="#6B7280">Gemini / etc.</text>
+  <line x1="456" y1="104" x2="248" y2="104" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="350" y="126" text-anchor="middle" font-size="11" fill="#6b6b6b">text out · counted in tokens</text>
 
-  <!-- Response box -->
-  <rect x="520" y="70" width="140" height="70" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
-  <text x="590" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#92400E">Response</text>
-  <text x="590" y="118" text-anchor="middle" font-size="11" fill="#6B7280">Structured</text>
-  <text x="590" y="132" text-anchor="middle" font-size="11" fill="#6B7280">JSON object</text>
-
-  <!-- Arrow: Code → API (top, going right) -->
-  <line x1="181" y1="95" x2="278" y2="95" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr-right)"/>
-  <text x="229" y="88" text-anchor="middle" font-size="10" fill="#374151">text + tokens</text>
-
-  <!-- Arrow: API → Response (top, going right) -->
-  <line x1="421" y1="95" x2="518" y2="95" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr-right)"/>
-
-  <!-- Arrow: Response → API → Code (bottom, going left) -->
-  <line x1="518" y1="125" x2="421" y2="125" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr-left)"/>
-  <line x1="278" y1="125" x2="181" y2="125" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr-left)"/>
-  <text x="350" y="145" text-anchor="middle" font-size="10" fill="#374151">text + tokens used + cost</text>
+  <text x="350" y="150" text-anchor="middle" font-size="11" fill="#6b6b6b">you pay for both strings, per token</text>
 
   <!-- Divider -->
-  <line x1="40" y1="175" x2="660" y2="175" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="350" y="168" text-anchor="middle" font-size="10" fill="#9CA3AF">BUILT ON TOP OF THIS BASE</text>
+  <line x1="60" y1="172" x2="640" y2="172" stroke="#e8e8e8" stroke-width="1"/>
+  <rect x="240" y="164" width="220" height="16" fill="#fafaf8"/>
+  <text x="350" y="176" text-anchor="middle" font-size="11" letter-spacing="2" font-weight="500" fill="#6b6b6b">WHAT GETS BUILT ON IT</text>
 
-  <!-- Stack layers -->
-  <!-- Layer 3: Top -->
-  <rect x="180" y="190" width="340" height="46" rx="6" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/>
-  <text x="350" y="208" text-anchor="middle" font-size="13" font-weight="bold" fill="#5B21B6">Agents</text>
-  <text x="350" y="228" text-anchor="middle" font-size="11" fill="#6B7280">Multi-step autonomous loops with tool use and iteration</text>
+  <!-- The stack, widest at the base -->
+  <rect x="210" y="194" width="280" height="46" rx="2" fill="none" stroke="#6b6b6b" stroke-width="1.5"/>
+  <text x="350" y="213" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">AGENTS</text>
+  <text x="350" y="231" text-anchor="middle" font-size="11" fill="#6b6b6b">multi-step loops · tool use</text>
 
-  <!-- Layer 2: Middle -->
-  <rect x="150" y="244" width="400" height="46" rx="6" fill="#ECFDF5" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="350" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803D">RAG / Chains</text>
-  <text x="350" y="282" text-anchor="middle" font-size="11" fill="#6B7280">Retrieval-augmented pipelines and prompt chaining</text>
+  <rect x="160" y="248" width="380" height="46" rx="2" fill="none" stroke="#6b6b6b" stroke-width="1.5"/>
+  <text x="350" y="267" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">RAG · CHAINS</text>
+  <text x="350" y="285" text-anchor="middle" font-size="11" fill="#6b6b6b">retrieval pipelines · prompt chaining</text>
 
-  <!-- Layer 1: Bottom (base) -->
-  <rect x="120" y="298" width="460" height="46" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
-  <text x="350" y="316" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">LLM API Call</text>
-  <text x="350" y="336" text-anchor="middle" font-size="11" fill="#6B7280">text in → text out  ·  everything else is code around this</text>
-
-  <!-- Caption -->
-  <text x="350" y="368" text-anchor="middle" font-size="11" fill="#9CA3AF">Core insight: no matter how complex your system, it all reduces to text-in, text-out.</text>
+  <rect x="110" y="302" width="480" height="56" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="2"/>
+  <text x="350" y="325" text-anchor="middle" font-size="12" letter-spacing="1" font-weight="500" fill="#9b4a3f">THE API CALL · TEXT IN, TEXT OUT</text>
+  <text x="350" y="345" text-anchor="middle" font-size="11" fill="#1a1a1a">everything above is code around this one call</text>
 </svg>

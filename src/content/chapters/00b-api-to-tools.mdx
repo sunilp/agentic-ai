@@ -463,7 +463,10 @@ print(result)
 A representative failure, composited from patterns seen across data pipeline agents: a `write_record` tool accepts a `priority` field, an integer from 1 (low) to 5 (critical). Without Pydantic validation, the model passes `priority: 10` for a routine log entry. The write succeeds. No error. Downstream alerting logic treats anything above 5 as a system emergency and fires an unnecessary incident page. With `Field(ge=1, le=5)` on the Pydantic model, the validation error is caught before the write, the model receives "Input should be less than or equal to 5," and it retries with a valid value. The gap between "the function accepts an int" and "the function accepts an int between 1 and 5" is where silent data corruption lives.
 </Callout>
 
-{/* diagram slot: schema validation -- see FR Task 7 */}
+<figure>
+  <img src="/assets/diagrams/schema-validation.svg" alt="Schema validation as a gate: the model's arguments either pass through to normal execution or fail into a structured error that is sent back to the model as the tool result, so it can correct and retry" />
+  <figcaption>Figure 0b.2: The validation gate. A bad argument becomes a structured error the model can read and retry on, not a crash.</figcaption>
+</figure>
 
 Validation isn't just about preventing crashes. It's about giving the model enough information to self-correct. A model that receives "Validation error: Input should be 'add', 'subtract', 'multiply' or 'divide'" will fix its next attempt. A model that receives "Error: unhandled exception in tool execution" will guess, and guess wrong.
 
@@ -540,7 +543,7 @@ A pattern common enough to be worth a composite example: a customer support agen
 
 <figure>
   <img src="/assets/diagrams/tool-selection-comparison.svg" alt="Side-by-side comparison: a precise tool description leads the model to correctly select the calculator tool for an arithmetic query, while a vague description leads it to select the wrong tool for the same query" />
-  <figcaption>Figure 0b.2: Tool descriptions drive selection accuracy. A vague description sends the model to the wrong tool; a precise one does not.</figcaption>
+  <figcaption>Figure 0b.3: Tool descriptions drive selection accuracy. A vague description sends the model to the wrong tool; a precise one does not.</figcaption>
 </figure>
 
 When you have more than five or six tools, the model's selection accuracy starts to degrade. Not because it can't read six descriptions, but because the probability of description overlap increases. If you find yourself registering fifteen tools, that's an architectural signal. Split them into groups. Use a routing step where one model call picks the category, then a second call picks the specific tool within that category. Chapter 4 covers this pattern in depth.
@@ -555,7 +558,7 @@ An agent can observe the result of its action, decide it's insufficient, and tak
 
 <figure>
   <img src="/assets/diagrams/single-turn-ceiling.svg" alt="Single-turn tool use stops after one action. The agent loop continues: observe, think, act, repeat." />
-  <figcaption>Figure 0b.3: The single-turn ceiling. Tool use without a loop handles one action. The agent loop adds iteration, and that changes everything.</figcaption>
+  <figcaption>Figure 0b.4: The single-turn ceiling. Tool use without a loop handles one action. The agent loop adds iteration, and that changes everything.</figcaption>
 </figure>
 
 Consider a concrete example. A user asks: "What's the population density of the country with the tallest building in the world?"

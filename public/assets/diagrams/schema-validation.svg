@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 320" font-family="IBM Plex Mono, monospace">
+  <defs>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="ab" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#9b4a3f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.18"/>
+    </pattern>
+  </defs>
+  <rect width="660" height="320" fill="#fafaf8"/>
+
+  <!-- The counterfactual -->
+  <text x="330" y="32" text-anchor="middle" font-size="11" fill="#6b6b6b">without the gate: a raw ValueError crashes the loop · the model learns nothing</text>
+
+  <!-- The model emits args -->
+  <rect x="28" y="104" width="130" height="64" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="93" y="130" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">THE MODEL</text>
+  <text x="93" y="150" text-anchor="middle" font-size="11" fill="#6b6b6b">emits args</text>
+
+  <text x="212" y="114" text-anchor="middle" font-size="11" fill="#6b6b6b">{"operation":</text>
+  <text x="212" y="128" text-anchor="middle" font-size="11" fill="#6b6b6b">"modulo", ...}</text>
+  <line x1="158" y1="136" x2="266" y2="136" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+
+  <!-- The gate -->
+  <rect x="270" y="84" width="120" height="104" rx="2" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  <text x="330" y="118" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">VALIDATION</text>
+  <text x="330" y="134" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">GATE</text>
+  <text x="330" y="158" text-anchor="middle" font-size="11" fill="#6b6b6b">schema check</text>
+
+  <!-- Valid path -->
+  <path d="M390,112 L450,112 L450,86 L466,86" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="420" y="104" text-anchor="middle" font-size="11" fill="#6b6b6b">valid</text>
+  <rect x="470" y="56" width="160" height="58" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="550" y="80" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">RUN THE FUNCTION</text>
+  <text x="550" y="100" text-anchor="middle" font-size="11" fill="#6b6b6b">normal execution</text>
+
+  <!-- Invalid path -->
+  <path d="M390,160 L428,160 L428,196 L444,196" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="416" y="152" text-anchor="middle" font-size="11" fill="#6b6b6b">invalid</text>
+  <rect x="448" y="164" width="196" height="92" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="2"/>
+  <text x="546" y="186" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#9b4a3f">STRUCTURED ERROR</text>
+  <text x="460" y="208" font-size="11" fill="#1a1a1a">input should be 'add',</text>
+  <text x="460" y="224" font-size="11" fill="#1a1a1a">'subtract', 'multiply'</text>
+  <text x="460" y="240" font-size="11" fill="#1a1a1a">or 'divide'</text>
+
+  <!-- Feedback: the error goes back as the tool result -->
+  <path d="M546,256 C500,290 200,290 100,176" fill="none" stroke="#9b4a3f" stroke-width="1.5" marker-end="url(#ab)"/>
+  <text x="330" y="308" text-anchor="middle" font-size="11" fill="#9b4a3f">sent back as the tool result · the model corrects and retries</text>
+</svg>

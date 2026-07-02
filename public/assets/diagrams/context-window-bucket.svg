@@ -1,63 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="480" viewBox="0 0 500 480" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 480" font-family="IBM Plex Mono, monospace">
   <defs>
-    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.28"/>
+    </pattern>
   </defs>
+  <rect width="500" height="480" fill="#fafaf8"/>
 
-  <!-- Background -->
-  <rect width="500" height="480" fill="#ffffff"/>
+  <!-- Section header -->
+  <text x="100" y="34" font-size="11" letter-spacing="2" font-weight="500" fill="#6b6b6b">ONE FIXED-SIZE WINDOW</text>
 
-  <!-- Title -->
-  <text x="250" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">The Context Window Bucket</text>
-  <line x1="40" y1="42" x2="460" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+  <!-- Bucket walls, open at the top -->
+  <path d="M100,56 L100,424 L320,424 L320,56" fill="none" stroke="#1a1a1a" stroke-width="2"/>
 
-  <!-- Capacity label -->
-  <text x="250" y="62" text-anchor="middle" font-size="13" fill="#374151">Fixed capacity: <tspan font-weight="bold" fill="#111827">128,000 tokens</tspan> — once full, oldest content is dropped</text>
+  <!-- Capacity limit (the old failure mode, secondary) -->
+  <line x1="96" y1="56" x2="324" y2="56" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="336" y="60" font-size="11" fill="#6b6b6b">capacity limit</text>
+  <text x="336" y="78" font-size="11" fill="#6b6b6b">overflow: content beyond</text>
+  <text x="336" y="94" font-size="11" fill="#6b6b6b">the limit is dropped --</text>
+  <text x="336" y="110" font-size="11" fill="#6b6b6b">the old failure mode,</text>
+  <text x="336" y="126" font-size="11" fill="#6b6b6b">rarely hit today</text>
 
-  <!-- Bucket outline -->
-  <rect x="130" y="78" width="240" height="320" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="2"/>
+  <!-- Headroom -->
+  <text x="210" y="120" text-anchor="middle" font-size="11" fill="#6b6b6b">headroom</text>
+  <text x="210" y="138" text-anchor="middle" font-size="11" fill="#6b6b6b">(windows are big now)</text>
 
-  <!-- Overflow zone (red, top) -->
-  <rect x="130" y="78" width="240" height="38" rx="4" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
-  <text x="250" y="96" text-anchor="middle" font-size="11" font-weight="bold" fill="#B91C1C">OVERFLOW — CONTENT LOST</text>
-  <text x="250" y="110" text-anchor="middle" font-size="10" fill="#EF4444">tokens above limit are truncated</text>
+  <!-- Content segments, oldest at the base -->
+  <rect x="102" y="190" width="216" height="26" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="210" y="207" text-anchor="middle" font-size="11" fill="#1a1a1a">user message</text>
 
-  <!-- Segment 5: Tool Results (purple) — from top of content area -->
-  <rect x="130" y="116" width="240" height="56" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1"/>
-  <text x="250" y="138" text-anchor="middle" font-size="12" font-weight="bold" fill="#5B21B6">Tool Results</text>
-  <text x="250" y="155" text-anchor="middle" font-size="10" fill="#6B7280">Function outputs, API responses</text>
-  <text x="388" y="147" text-anchor="middle" font-size="10" fill="#8B5CF6">~25K tokens</text>
+  <rect x="102" y="216" width="216" height="36" fill="#e8e8e8" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="210" y="238" text-anchor="middle" font-size="11" fill="#1a1a1a">tool results</text>
 
-  <!-- Segment 4: Conversation History (amber) -->
-  <rect x="130" y="172" width="240" height="68" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
-  <text x="250" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400E">Conversation History</text>
-  <text x="250" y="213" text-anchor="middle" font-size="10" fill="#6B7280">Prior turns, user messages</text>
-  <text x="388" y="207" text-anchor="middle" font-size="10" fill="#F59E0B">~30K tokens</text>
+  <rect x="102" y="252" width="216" height="66" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="210" y="289" text-anchor="middle" font-size="11" fill="#1a1a1a">retrieved documents</text>
 
-  <!-- Segment 3: Retrieved Documents (green) — large -->
-  <rect x="130" y="240" width="240" height="88" fill="#F0FDF4" stroke="#22c55e" stroke-width="1"/>
-  <text x="250" y="268" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803D">Retrieved Documents</text>
-  <text x="250" y="286" text-anchor="middle" font-size="10" fill="#6B7280">RAG chunks, search results</text>
-  <text x="250" y="303" text-anchor="middle" font-size="10" fill="#6B7280">knowledge base content</text>
-  <text x="388" y="285" text-anchor="middle" font-size="10" fill="#22c55e">~50K tokens</text>
+  <rect x="102" y="318" width="216" height="42" fill="#e8e8e8" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="210" y="352" text-anchor="middle" font-size="11" fill="#1a1a1a">conversation history</text>
 
-  <!-- Segment 2: Few-shot Examples (light blue) -->
-  <rect x="130" y="328" width="240" height="42" fill="#DBEAFE" stroke="#93C5FD" stroke-width="1"/>
-  <text x="250" y="346" text-anchor="middle" font-size="12" font-weight="bold" fill="#1E40AF">Few-shot Examples</text>
-  <text x="250" y="362" text-anchor="middle" font-size="10" fill="#6B7280">Input/output demonstrations</text>
-  <text x="388" y="352" text-anchor="middle" font-size="10" fill="#3B82F6">~15K tokens</text>
+  <rect x="102" y="360" width="216" height="30" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="210" y="379" text-anchor="middle" font-size="11" fill="#1a1a1a">tool definitions</text>
 
-  <!-- Segment 1: System Prompt (blue, bottom) -->
-  <rect x="130" y="370" width="240" height="28" rx="0" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1"/>
-  <rect x="130" y="384" width="240" height="14" rx="0" fill="#EFF6FF"/>
-  <rect x="130" y="370" width="240" height="28" rx="0" fill="none" stroke="#3B82F6" stroke-width="1"/>
-  <text x="250" y="382" text-anchor="middle" font-size="12" font-weight="bold" fill="#1D4ED8">System Prompt</text>
-  <text x="388" y="385" text-anchor="middle" font-size="10" fill="#3B82F6">~8K tokens</text>
+  <rect x="102" y="390" width="216" height="32" fill="#e8e8e8" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="210" y="410" text-anchor="middle" font-size="11" fill="#1a1a1a">system prompt</text>
 
-  <!-- Bottom of bucket (floor) -->
-  <rect x="128" y="396" width="244" height="4" rx="2" fill="#D1D5DB"/>
+  <!-- The modern failure: attention decays in the middle -->
+  <rect x="102" y="252" width="216" height="84" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="1.5"/>
+  <line x1="318" y1="300" x2="334" y2="300" stroke="#9b4a3f" stroke-width="1.5"/>
+  <text x="340" y="296" font-size="11" letter-spacing="1.5" font-weight="500" fill="#9b4a3f">WEAK ATTENTION</text>
+  <text x="340" y="314" font-size="11" fill="#6b6b6b">the middle of a long</text>
+  <text x="340" y="330" font-size="11" fill="#6b6b6b">context is read less</text>
+  <text x="340" y="346" font-size="11" fill="#6b6b6b">reliably: "lost in</text>
+  <text x="340" y="362" font-size="11" fill="#6b6b6b">the middle"</text>
 
-  <!-- Legend / caption -->
-  <text x="250" y="428" text-anchor="middle" font-size="11" fill="#374151">Fill order: system prompt first, examples, documents, history, tool results</text>
-  <text x="250" y="448" text-anchor="middle" font-size="11" fill="#9CA3AF">Engineer's job: decide what fills the bucket and in what order.</text>
-  <text x="250" y="466" text-anchor="middle" font-size="11" fill="#EF4444">What overflows gets forgotten.</text>
+  <!-- The reliable ends -->
+  <line x1="70" y1="203" x2="98" y2="203" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="64" y="196" text-anchor="end" font-size="11" fill="#6b6b6b">read</text>
+  <text x="64" y="210" text-anchor="end" font-size="11" fill="#6b6b6b">well</text>
+  <line x1="70" y1="406" x2="98" y2="406" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="64" y="399" text-anchor="end" font-size="11" fill="#6b6b6b">read</text>
+  <text x="64" y="413" text-anchor="end" font-size="11" fill="#6b6b6b">well</text>
+
+  <!-- Fill order -->
+  <text x="250" y="454" text-anchor="middle" font-size="11" fill="#6b6b6b">fills bottom-up: start of context at the base, newest on top</text>
 </svg>

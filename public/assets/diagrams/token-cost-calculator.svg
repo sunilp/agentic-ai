@@ -1,70 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="620" height="400" viewBox="0 0 620 400" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="IBM Plex Mono, monospace">
   <defs>
-    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
-    <marker id="arr-down" markerWidth="7" markerHeight="10" refX="3.5" refY="9" orient="auto">
-      <polygon points="0 0, 3.5 10, 7 0" fill="#9CA3AF"/>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.22"/>
+    </pattern>
   </defs>
+  <rect width="620" height="400" fill="#fafaf8"/>
 
-  <!-- Background -->
-  <rect width="620" height="400" fill="#ffffff"/>
+  <!-- Section: one call -->
+  <text x="40" y="42" font-size="11" letter-spacing="2" font-weight="500" fill="#6b6b6b">ONE CALL</text>
+  <text x="580" y="42" text-anchor="end" font-size="11" fill="#6b6b6b">illustrative rates: $3 in / $15 out per 1M tk</text>
 
-  <!-- Title -->
-  <text x="310" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Token Cost: From One Call to Production Scale</text>
-  <line x1="40" y1="42" x2="580" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="40" y="80" font-size="12" fill="#1a1a1a">prompt (input)</text>
+  <text x="262" y="80" text-anchor="end" font-size="11" fill="#6b6b6b">1,000 tk</text>
+  <rect x="280" y="66" width="80" height="18" fill="#e8e8e8" stroke="#6b6b6b" stroke-width="1"/>
+  <text x="580" y="80" text-anchor="end" font-size="12" fill="#1a1a1a">$0.0030</text>
 
-  <!-- Section header: Single Call -->
-  <text x="60" y="68" font-size="12" font-weight="bold" fill="#6B7280">SINGLE API CALL</text>
+  <text x="40" y="114" font-size="12" fill="#1a1a1a">completion (output)</text>
+  <text x="262" y="114" text-anchor="end" font-size="11" fill="#6b6b6b">500 tk</text>
+  <rect x="280" y="100" width="200" height="18" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="1.5"/>
+  <text x="580" y="114" text-anchor="end" font-size="12" font-weight="500" fill="#9b4a3f">$0.0075</text>
 
-  <!-- Table header -->
-  <rect x="40" y="74" width="540" height="28" rx="4" fill="#F3F4F6"/>
-  <text x="80" y="93" font-size="11" font-weight="bold" fill="#374151">Component</text>
-  <text x="290" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#374151">Tokens</text>
-  <text x="440" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#374151">Cost (GPT-4o est.)</text>
+  <text x="280" y="142" font-size="11" fill="#6b6b6b">half the tokens · 2.5x the cost</text>
 
-  <!-- Row 1: Prompt -->
-  <rect x="40" y="102" width="540" height="36" rx="0" fill="#EFF6FF"/>
-  <line x1="40" y1="138" x2="580" y2="138" stroke="#E5E7EB" stroke-width="1"/>
-  <text x="80" y="126" font-size="13" fill="#374151">Prompt (input)</text>
-  <text x="290" y="126" text-anchor="middle" font-size="13" fill="#374151">1,200</text>
-  <text x="440" y="126" text-anchor="middle" font-size="13" font-weight="bold" fill="#3B82F6">$0.003</text>
+  <line x1="40" y1="158" x2="580" y2="158" stroke="#e8e8e8" stroke-width="1"/>
+  <text x="40" y="182" font-size="12" font-weight="500" fill="#1a1a1a">total per call</text>
+  <text x="580" y="182" text-anchor="end" font-size="12" font-weight="500" fill="#1a1a1a">~ $0.0105</text>
 
-  <!-- Row 2: Completion -->
-  <rect x="40" y="138" width="540" height="36" rx="0" fill="#ffffff"/>
-  <line x1="40" y1="174" x2="580" y2="174" stroke="#E5E7EB" stroke-width="1"/>
-  <text x="80" y="162" font-size="13" fill="#374151">Completion (output)</text>
-  <text x="290" y="162" text-anchor="middle" font-size="13" fill="#374151">400</text>
-  <text x="440" y="162" text-anchor="middle" font-size="13" font-weight="bold" fill="#3B82F6">$0.004</text>
+  <!-- Arrow to scale section -->
+  <line x1="310" y1="200" x2="310" y2="228" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
 
-  <!-- Total per call row -->
-  <rect x="40" y="174" width="540" height="36" rx="0" fill="#F0FDF4"/>
-  <line x1="40" y1="210" x2="580" y2="210" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="80" y="198" font-size="13" font-weight="bold" fill="#15803D">Total per call</text>
-  <text x="290" y="198" text-anchor="middle" font-size="13" font-weight="bold" fill="#374151">1,600</text>
-  <text x="440" y="198" text-anchor="middle" font-size="15" font-weight="bold" fill="#15803D">$0.007</text>
+  <!-- Section: production volume -->
+  <text x="40" y="256" font-size="11" letter-spacing="2" font-weight="500" fill="#6b6b6b">AT PRODUCTION VOLUME</text>
 
-  <!-- Border around table -->
-  <rect x="40" y="74" width="540" height="136" rx="4" fill="none" stroke="#D1D5DB" stroke-width="1.5"/>
+  <text x="40" y="290" font-size="12" fill="#1a1a1a">x 5 model calls per request</text>
+  <text x="580" y="290" text-anchor="end" font-size="12" fill="#1a1a1a">$0.05 / request</text>
 
-  <!-- Arrow down -->
-  <line x1="310" y1="216" x2="310" y2="234" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr-down)"/>
+  <text x="40" y="328" font-size="12" fill="#1a1a1a">x 10,000 requests per day</text>
+  <rect x="464" y="308" width="120" height="30" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="1.5"/>
+  <text x="524" y="328" text-anchor="middle" font-size="13" font-weight="600" fill="#9b4a3f">$500 / day</text>
 
-  <!-- Section header: Scale -->
-  <text x="60" y="260" font-size="12" font-weight="bold" fill="#6B7280">SCALE UP TO PRODUCTION</text>
-
-  <!-- Scale rows -->
-  <rect x="40" y="266" width="540" height="32" rx="4" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
-  <text x="80" y="287" font-size="13" fill="#374151">x 5 calls per task</text>
-  <text x="440" y="287" text-anchor="middle" font-size="14" font-weight="bold" fill="#92400E">$0.035 per task</text>
-
-  <rect x="40" y="306" width="540" height="32" rx="4" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
-  <text x="80" y="327" font-size="13" fill="#374151">x 1,000 tasks per day</text>
-  <text x="440" y="327" text-anchor="middle" font-size="14" font-weight="bold" fill="#92400E">$35 / day</text>
-
-  <rect x="40" y="346" width="540" height="32" rx="4" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
-  <text x="80" y="367" font-size="13" fill="#374151">x 30 days</text>
-  <text x="440" y="367" text-anchor="middle" font-size="16" font-weight="bold" fill="#B91C1C">$1,050 / month</text>
-
-  <!-- Caption -->
-  <text x="310" y="394" text-anchor="middle" font-size="11" fill="#9CA3AF">Token costs compound. Measure on day one — not after you deploy.</text>
+  <text x="40" y="368" font-size="11" fill="#6b6b6b">know this number before you ship</text>
 </svg>
