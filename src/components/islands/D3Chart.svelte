@@ -131,9 +131,9 @@
   .d3-chart {
     margin: var(--space-5, 24px) 0;
     padding: 16px;
-    border: 1px solid var(--fg-faint, #e8e8e8);
+    border: 1px solid var(--ink);
     border-radius: var(--radius-md, 4px);
-    background: var(--paper-bright, #fff);
+    background: var(--paper);
   }
 
   .d3-chart--loading {
@@ -169,6 +169,6 @@
     vertical-align: middle;
   }
 
-  .d3-chart__legend-dot--a { background: #1a1a1a; }
-  .d3-chart__legend-dot--b { background: #9b4a3f; }
+  .d3-chart__legend-dot--a { background: var(--ink); }
+  .d3-chart__legend-dot--b { background: var(--brick); }
 </style>
