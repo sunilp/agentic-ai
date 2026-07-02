@@ -114,7 +114,7 @@ def create_adk_agent():  # type: ignore[return]
 
     return _ADKAgent(
         name="foundations_agent",
-        model="gemini-2.0-flash",
+        model="gemini-3.5-flash",
         instruction=(
             "You are a helpful assistant. Use the available tools to answer "
             "the user's question accurately. Stop as soon as you have a good answer."

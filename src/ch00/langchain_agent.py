@@ -2,14 +2,14 @@
 
 Demonstrates how to wrap the same calculator/word_count/search tools in
 LangChain conventions. This file is a STUB -- actual execution requires
-langchain-core, langchain-anthropic, and langgraph to be installed.
+langchain-core, langchain-anthropic, langchain, and langgraph to be installed.
 
 When the dependencies are absent, LANGCHAIN_AVAILABLE is False and
 create_langchain_agent() returns None, allowing the rest of the codebase
 to import this module without hard-failing on missing optional packages.
 
 Install the real packages with:
-    pip install langchain-core langchain-anthropic langgraph
+    pip install langchain-core langchain-anthropic langchain langgraph
 """
 
 from __future__ import annotations
@@ -105,10 +105,11 @@ def search(query: str, max_results: int = 3) -> str:
 
 
 def create_langchain_agent():  # type: ignore[return]
-    """Create and return a LangChain ReAct agent if dependencies are available.
+    """Create and return a LangChain agent if dependencies are available.
 
     Builds a ChatAnthropic model bound to the three demo tools and wraps it
-    in a langgraph create_react_agent executor.
+    with langchain.agents.create_agent, the LangChain v1 agent factory
+    (replaces the deprecated langgraph.prebuilt.create_react_agent).
 
     Returns:
         A compiled LangGraph agent, or None if langchain deps are not installed.
@@ -118,13 +119,13 @@ def create_langchain_agent():  # type: ignore[return]
 
     try:
         from langchain_anthropic import ChatAnthropic
-        from langgraph.prebuilt import create_react_agent
+        from langchain.agents import create_agent
     except ImportError:
         return None
 
     model = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0)
     tools = [calculator, word_count, search]
-    return create_react_agent(model, tools)
+    return create_agent(model, tools)
 
 
 # ---------------------------------------------------------------------------
@@ -139,12 +140,12 @@ if __name__ == "__main__":
             print(f"LangChain available. Agent created: {agent}")
         else:
             print(
-                "langchain_core is present but langchain-anthropic or langgraph is missing.\n"
-                "Install with: pip install langchain-anthropic langgraph"
+                "langchain_core is present but langchain-anthropic or langchain/langgraph is missing.\n"
+                "Install with: pip install langchain-anthropic langchain langgraph"
             )
     else:
         print(
             "langchain-core is not installed. This is a stub file.\n"
-            "Install with: pip install langchain-core langchain-anthropic langgraph\n"
+            "Install with: pip install langchain-core langchain-anthropic langchain langgraph\n"
             "The create_langchain_agent() function returns None when packages are absent."
         )
