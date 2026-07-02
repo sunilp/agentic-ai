@@ -13,15 +13,15 @@
 
   <!-- Apps -->
   <rect x="40" y="70" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="85" y="87" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 1</text>
+  <text x="85" y="87" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 1</text>
   <rect x="40" y="110" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="85" y="127" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 2</text>
+  <text x="85" y="127" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 2</text>
   <rect x="40" y="150" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="85" y="167" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 3</text>
+  <text x="85" y="167" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 3</text>
   <rect x="40" y="190" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="85" y="207" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 4</text>
+  <text x="85" y="207" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 4</text>
   <rect x="40" y="230" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="85" y="247" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 5</text>
+  <text x="85" y="247" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 5</text>
 
   <!-- Tools -->
   <rect x="250" y="80" width="100" height="26" rx="2" fill="none" stroke="#6b6b6b" stroke-width="1.5"/>
@@ -47,22 +47,22 @@
     <line x1="130" y1="243" x2="250" y2="183"/><line x1="130" y1="243" x2="250" y2="228"/>
   </g>
 
-  <text x="195" y="290" text-anchor="middle" font-size="11" fill="#6b6b6b">every app writes custom code for every tool</text>
+  <text x="195" y="290" text-anchor="middle" font-size="11" fill="#6b6b6b">every agent writes custom code for every tool</text>
 
   <!-- RIGHT: with MCP -->
   <text x="585" y="42" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">WITH MCP · 5 + 4 = 9</text>
 
   <!-- Apps -->
   <rect x="430" y="70" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="475" y="87" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 1</text>
+  <text x="475" y="87" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 1</text>
   <rect x="430" y="110" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="475" y="127" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 2</text>
+  <text x="475" y="127" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 2</text>
   <rect x="430" y="150" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="475" y="167" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 3</text>
+  <text x="475" y="167" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 3</text>
   <rect x="430" y="190" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="475" y="207" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 4</text>
+  <text x="475" y="207" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 4</text>
   <rect x="430" y="230" width="90" height="26" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="475" y="247" text-anchor="middle" font-size="10.5" fill="#1a1a1a">app 5</text>
+  <text x="475" y="247" text-anchor="middle" font-size="10.5" fill="#1a1a1a">agent 5</text>
 
   <!-- MCP standard (accent) -->
   <rect x="560" y="66" width="46" height="194" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="2"/>
