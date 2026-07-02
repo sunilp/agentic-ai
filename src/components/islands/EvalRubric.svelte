@@ -79,9 +79,9 @@
 <style>
   .eval-rubric {
     margin: var(--space-5, 24px) 0;
-    border: 1px solid var(--fg-faint, #e8e8e8);
+    border: 1px solid var(--ink);
     border-radius: var(--radius-md, 4px);
-    background: var(--paper-bright, #fff);
+    background: var(--paper);
   }
 
   .eval-rubric__header {
@@ -168,13 +168,14 @@
     left: 0;
     right: 0;
     z-index: 10;
-    background: var(--ink, #1a1a1a);
-    color: var(--paper, #fafaf8);
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--ink);
     padding: 12px;
     border-radius: 4px;
     font-size: 12px;
     line-height: 1.5;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-card-hover, 0 4px 12px rgba(0, 0, 0, 0.08));
   }
 
   .eval-rubric__criterion {
@@ -189,17 +190,17 @@
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--fg-light, #6b6b6b);
   }
 
   .eval-rubric__criterion-score {
     font-family: var(--font-mono, monospace);
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--ink);
   }
 
   .eval-rubric__criterion-detail {
     grid-column: 1 / -1;
     margin-top: 2px;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--fg-light, #6b6b6b);
   }
 </style>

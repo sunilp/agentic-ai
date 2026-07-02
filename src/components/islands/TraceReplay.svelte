@@ -129,8 +129,9 @@
 <style>
   .trace-replay {
     margin: var(--space-7, 48px) 0;
-    background: var(--ink, #1a1a1a);
-    color: var(--paper, #fafaf8);
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--ink);
     padding: 32px 28px 28px;
     border-radius: var(--radius-md, 4px);
   }
@@ -147,13 +148,13 @@
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--fg-light, #6b6b6b);
   }
 
   .trace-replay__reset {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--code-border);
+    color: var(--fg-light, #6b6b6b);
     padding: 4px 10px;
     border-radius: 2px;
     cursor: pointer;
@@ -163,8 +164,8 @@
   }
 
   .trace-replay__reset:hover {
-    border-color: rgba(255, 255, 255, 0.5);
-    color: var(--paper, #fafaf8);
+    border-color: var(--ink);
+    color: var(--ink);
   }
 
   .trace-replay__chips {
@@ -175,9 +176,9 @@
 
   .trace-replay__chip {
     text-align: left;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--paper, #fafaf8);
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    color: var(--ink);
     padding: 12px 16px;
     border-radius: var(--radius-sm, 2px);
     cursor: pointer;
@@ -188,7 +189,7 @@
   }
 
   .trace-replay__chip:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--paper);
     border-color: var(--brick, #9b4a3f);
   }
 
@@ -198,7 +199,7 @@
   }
 
   .trace-replay__chips-empty {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--fg-light, #6b6b6b);
     font-style: italic;
     font-family: var(--font-mono, monospace);
   }
@@ -208,7 +209,7 @@
     font-style: italic;
     font-size: 18px;
     line-height: 1.35;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--ink);
     margin-bottom: 16px;
     padding-left: 12px;
     border-left: 2px solid var(--brick, #9b4a3f);
@@ -217,13 +218,13 @@
   .trace-replay__loading {
     font-family: var(--font-mono, monospace);
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--fg-light, #6b6b6b);
     letter-spacing: 0.2em;
   }
 
   .trace-replay__response {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
     border-radius: var(--radius-sm, 2px);
     padding: 16px;
     margin: 0;
@@ -232,7 +233,7 @@
     line-height: 1.65;
     white-space: pre-wrap;
     word-break: break-word;
-    color: var(--paper, #fafaf8);
+    color: var(--ink);
     min-height: 100px;
   }
 
@@ -260,7 +261,7 @@
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--fg-light, #6b6b6b);
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,30 +1,32 @@
 /* Typography tokens — Section 8.2 of design spec */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 :root {
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'EB Garamond', Georgia, serif;
   --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+  --font-ui: system-ui, -apple-system, 'Segoe UI', sans-serif; /* islands/controls only */
 
-  --display-1: clamp(28px, 4vw, 44px);
-  --display-2: clamp(22px, 3vw, 32px);
-  --display-3: clamp(18px, 2.2vw, 23px);
-  --display-4: 16px;
+  --display-poster: clamp(34px, 5vw, 54px);  /* article + page titles */
+  --display-1: clamp(30px, 4.2vw, 46px);
+  --display-2: clamp(22px, 3vw, 30px);
+  --display-3: clamp(19px, 2.4vw, 23px);
+  --display-4: 17px;
+  --dek-size: clamp(19px, 2.2vw, 21px);
 
-  --body-1: 17px;
-  --body-2: 15px;
-  --body-3: 13px;
+  --body-1: 19.5px;   /* Garamond prose */
+  --body-2: 16px;
+  --body-3: 13.5px;
 
   --meta-1: 12px;
   --meta-2: 11px;
   --meta-3: 10px;
 
-  --lh-tight: 1.18;
+  --lh-tight: 1.12;
   --lh-snug: 1.35;
-  --lh-base: 1.65;
+  --lh-base: 1.68;
   --lh-mono: 1.6;
 
   --tracking-tight: -0.01em;
   --tracking-loose: 0.08em;
+  --tracking-rubric: 0.26em;
 }

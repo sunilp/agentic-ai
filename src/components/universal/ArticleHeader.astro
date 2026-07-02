@@ -1,0 +1,62 @@
+---
+/**
+ * ArticleHeader — centered Gallery article header: rubric, poster title, dek, byline.
+ */
+interface Props {
+  rubric: string;          // 'FIELD NOTE · FN-004'
+  title: string;
+  dek?: string;
+  byline?: string[];       // ['SUNIL PRAKASH', 'JUNE 25, 2026', '9 MIN', 'CH 2']; omit on index pages
+}
+const { rubric, title, dek, byline } = Astro.props;
+---
+
+<header class="article-header">
+  <p class="article-header__rubric">{rubric}</p>
+  <h1 class="article-header__title">{title}</h1>
+  {dek && <p class="article-header__dek">{dek}</p>}
+  {byline && byline.length > 0 && <p class="article-header__byline">{byline.join(' · ')}</p>}
+</header>
+
+<style>
+  .article-header { text-align: center; padding: var(--space-7) 0 var(--space-3); }
+
+  .article-header__rubric {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    letter-spacing: var(--tracking-rubric);
+    text-transform: uppercase;
+    color: var(--brick);
+    margin: 0;
+  }
+
+  .article-header__title {
+    font-family: var(--font-display);
+    font-weight: 340;
+    font-size: var(--display-poster);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    max-width: 24ch;
+    margin: var(--space-4) auto 0;
+    text-wrap: balance;
+  }
+
+  .article-header__dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--dek-size);
+    line-height: 1.5;
+    color: #4a4a48;
+    max-width: 56ch;
+    margin: var(--space-4) auto 0;
+  }
+
+  .article-header__byline {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-light);
+    margin: var(--space-5) 0 0;
+  }
+</style>

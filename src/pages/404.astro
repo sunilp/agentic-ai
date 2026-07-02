@@ -1,0 +1,29 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Container from '~/components/layout/Container.astro';
+---
+
+<PageLayout title="Page not found — Agent Engineering Lab" description="This page does not exist.">
+  <Container>
+    <section class="nf" data-pagefind-ignore="all">
+      <p class="nf__rubric">404 · NOT FOUND</p>
+      <h1 class="nf__title">This page never survived contact with reality.</h1>
+      <p class="nf__copy">The address may have moved when the Lab was reorganized. Start over from the front page, or head for the field notes.</p>
+      <div class="nf__ctas">
+        <a href="/" class="nf__cta nf__cta--primary">Front page</a>
+        <a href="/field-notes/" class="nf__cta">Field Notes</a>
+      </div>
+    </section>
+  </Container>
+</PageLayout>
+
+<style>
+  .nf { text-align: center; padding: var(--space-10) 0; }
+  .nf__rubric { font-family: var(--font-mono); font-size: var(--meta-2); letter-spacing: var(--tracking-rubric); color: var(--brick); text-transform: uppercase; }
+  .nf__title { font-family: var(--font-display); font-weight: 340; font-size: var(--display-1); max-width: 24ch; margin: var(--space-4) auto 0; text-wrap: balance; }
+  .nf__copy { font-family: var(--font-body); font-size: var(--dek-size); font-style: italic; color: #4a4a48; max-width: 48ch; margin: var(--space-4) auto 0; }
+  .nf__ctas { margin-top: var(--space-6); display: flex; gap: var(--space-5); justify-content: center; align-items: baseline; }
+  .nf__cta { font-family: var(--font-display); font-weight: 600; font-size: var(--display-4); color: var(--fg); border-bottom: 2px solid var(--brick); padding-bottom: 3px; }
+  .nf__cta--primary { background: var(--ink); color: var(--paper); border-bottom: 0; padding: var(--space-3) var(--space-5); }
+  .nf__cta--primary:hover { background: var(--brick); }
+</style>

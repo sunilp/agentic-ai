@@ -1,82 +1,28 @@
 ---
 /**
- * Creed — homepage band stating the publication's worldview as four tenets.
+ * Creed — homepage band stating the publication's worldview as a centered meditation.
  * The "deep meaning" surface: what the Lab believes, not what it published.
  */
-const tenets = [
-  { n: '01', text: 'Most agents are workflows in costume.' },
-  { n: '02', text: 'Reliability lives in the harness, the loop, and the gate, not the model.' },
-  { n: '03', text: 'Earn the complexity.' },
-  { n: '04', text: 'Evidence over hype.' },
-];
 ---
 
-<section class="creed">
-  <div class="creed__inner">
-    <p class="creed__label">The Creed</p>
-    <ol class="creed__list">
-      {tenets.map((t) => (
-        <li class="creed__item">
-          <span class="creed__num">{t.n}</span>
-          <span class="creed__text">{t.text}</span>
-        </li>
-      ))}
-    </ol>
-  </div>
+<section class="creed" aria-label="The Creed">
+  <div class="creed__orn" aria-hidden="true">❧ ❧ ❧</div>
+  <blockquote class="creed__text">
+    Most agents are workflows in costume. Reliability lives in the harness, the loop, and the gate, not the model. <b>Earn the complexity. Evidence over hype.</b>
+  </blockquote>
 </section>
 
 <style>
-  .creed {
-    border-top: 1px solid var(--rule, rgba(26, 26, 26, 0.1));
-    border-bottom: 1px solid var(--rule, rgba(26, 26, 26, 0.1));
-    margin: var(--space-9) 0;
-  }
-
-  .creed__inner {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: var(--space-7) var(--space-5);
-  }
-
-  .creed__label {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--brick);
-    margin-bottom: var(--space-6);
-  }
-
-  .creed__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-5);
-  }
-
-  .creed__item {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-4);
-    align-items: baseline;
-  }
-
-  .creed__num {
-    font-family: var(--font-mono);
-    font-size: var(--meta-1);
-    color: var(--brick);
-    letter-spacing: var(--tracking-loose);
-  }
-
+  .creed { text-align: center; padding: var(--space-7) 0 var(--space-6); }
+  .creed__orn { color: var(--brick); font-size: 20px; letter-spacing: 0.6em; margin-bottom: var(--space-4); }
   .creed__text {
     font-family: var(--font-display);
-    font-size: clamp(20px, 2.4vw, 28px);
-    line-height: 1.3;
-    color: var(--fg);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(21px, 2.6vw, 25px);
+    line-height: 1.55;
+    max-width: 34ch;
+    margin: 0 auto;
   }
-
-  @media (max-width: 600px) {
-    .creed__item { gap: var(--space-3); }
-  }
+  .creed__text b { color: var(--brick); font-style: normal; font-weight: 600; }
 </style>

@@ -4,9 +4,8 @@ import { getCollection } from 'astro:content';
 import PageLayout from './PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
 import Reader from '~/components/layout/Reader.astro';
-import MetaStrip from '~/components/universal/MetaStrip.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
+import Spot from '~/components/universal/Spot.astro';
 import HypothesisBlock from '~/components/universal/HypothesisBlock.astro';
 import StatHero from '~/components/universal/StatHero.astro';
 import SectionAnchors from '~/components/universal/SectionAnchors.astro';
@@ -34,8 +33,8 @@ const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence
 const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
 const links = getReverseLinks(reverseIndex, d.id);
 
-const dateStr = d.date.toISOString().slice(0, 10);
-const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`];
+const dateLong = d.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+const byline = ['SUNIL PRAKASH', dateLong, `${d.readingTime} MIN`];
 
 const sections = [
   { label: 'Setup', anchor: 'setup' },
@@ -64,9 +63,8 @@ const collectionRoute: Record<string, string> = {
   currentNav="Labs"
 >
   <Container>
-    <MetaStrip items={metaItems} />
-    <KineticHeading level={1}>{d.title}</KineticHeading>
-    <Dek italic>{d.description}</Dek>
+    <ArticleHeader rubric={`LAB NOTE · ${d.id.toUpperCase()}`} title={d.title} dek={d.description} byline={byline} />
+    {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
 
     <HypothesisBlock>{d.hypothesis}</HypothesisBlock>
 
@@ -75,7 +73,7 @@ const collectionRoute: Record<string, string> = {
     <SectionAnchors items={sections} />
 
     <Reader>
-      <article class="lab-body">
+      <article class="lab-body prose prose--dropcap">
         <slot />
       </article>
 
@@ -96,37 +94,10 @@ const collectionRoute: Record<string, string> = {
 </PageLayout>
 
 <style>
-  .lab-body {
-    font-size: var(--body-1);
-    line-height: var(--lh-base);
-  }
-
+  /* Section headings are scroll-spy targets for SectionAnchors; keep the
+     offset so the sticky TopNav + anchors bar don't cover the heading. */
   .lab-body :global(h2) {
-    margin-top: var(--space-7);
-    margin-bottom: var(--space-3);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--fg-faint);
     scroll-margin-top: 120px;
-  }
-
-  .lab-body :global(p),
-  .lab-body :global(ul),
-  .lab-body :global(ol) {
-    margin: 0 0 var(--space-4);
-  }
-
-  .lab-body :global(li) { margin-bottom: var(--space-2); }
-
-  .lab-body :global(a) {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--fg-faint);
-    text-underline-offset: 3px;
-  }
-
-  .lab-body :global(a:hover) {
-    color: var(--brick);
-    text-decoration-color: var(--brick);
   }
 
   .lab-cited-by {

@@ -15,6 +15,6 @@
   --space-10: 128px;
 
   /* Reading column + container */
-  --reader-max: 720px;
+  --reader-max: 660px;
   --container-max: 1200px;
 }

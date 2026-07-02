@@ -156,9 +156,9 @@
 <style>
   .lab {
     margin: var(--space-6, 32px) 0;
-    border: 1px solid var(--fg-faint, #e8e8e8);
+    border: 1px solid var(--ink);
     border-radius: var(--radius-md, 4px);
-    background: var(--paper-bright, #fff);
+    background: var(--paper);
     overflow: hidden;
   }
   .lab__head {
@@ -166,14 +166,16 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: var(--ink, #1a1a1a);
-    color: var(--paper, #fafaf8);
+    background: var(--paper);
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
   }
   .lab__eyebrow {
     font-family: var(--font-mono, monospace);
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    color: var(--fg-light, #6b6b6b);
   }
   .lab__mode {
     font-family: var(--font-mono, monospace);
@@ -182,10 +184,12 @@
     text-transform: uppercase;
     padding: 2px 8px;
     border-radius: 2px;
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    color: var(--ink);
   }
-  .lab__mode--enforced { background: var(--brick, #9b4a3f); color: #fff; }
-  .lab__mode--prompted { background: #6b6b6b; color: #fff; }
+  .lab__mode--enforced { background: var(--brick, #9b4a3f); color: var(--paper); border-color: var(--brick, #9b4a3f); }
+  .lab__mode--prompted { background: var(--fg-light, #6b6b6b); color: var(--paper); border-color: var(--fg-light, #6b6b6b); }
 
   .lab__grid {
     display: grid;
@@ -208,11 +212,12 @@
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--brick, #9b4a3f);
+    color: var(--fg-light, #6b6b6b);
     margin-bottom: 8px;
   }
   .lab__radio, .lab__check {
     display: block;
+    font-family: var(--font-ui);
     font-size: 14px;
     color: var(--fg, #1a1a1a);
     margin-bottom: 6px;
@@ -234,6 +239,7 @@
 
   .lab__run {
     align-self: flex-start;
+    font-family: var(--font-ui);
     font-size: 14px;
     font-weight: 500;
     color: var(--paper, #fafaf8);
@@ -256,7 +262,7 @@
     border-radius: 4px;
     margin-bottom: var(--space-3, 12px);
   }
-  .lab__db--gone { border-color: var(--brick, #9b4a3f); background: rgba(155, 74, 63, 0.06); }
+  .lab__db--gone { border-color: var(--brick, #9b4a3f); background: var(--brick-wash, rgba(155, 74, 63, 0.06)); }
   .lab__db-label { font-family: var(--font-mono, monospace); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-light, #6b6b6b); }
   .lab__db-state { font-family: var(--font-mono, monospace); font-weight: 600; }
   .lab__db--gone .lab__db-state { color: var(--brick, #9b4a3f); }

@@ -1,0 +1,45 @@
+---
+/**
+ * Spot — artistic spot illustration (codex-generated) for article headers and cards.
+ * `src` is a PNG under /assets/spots/; a sibling .webp is served when present.
+ */
+interface Props {
+  src: string;
+  alt?: string;
+  caption?: string;
+  size?: 'card' | 'article';
+  eager?: boolean;
+}
+const { src, alt = '', caption, size = 'article', eager = false } = Astro.props;
+---
+
+<figure class:list={['spot', `spot--${size}`]}>
+  <picture>
+    <source srcset={src.replace(/\.png$/, '.webp')} type="image/webp" />
+    <img
+      src={src}
+      alt={alt}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      decoding="async"
+      class="spot__img"
+      width="1024"
+      height="768"
+    />
+  </picture>
+  {caption && <figcaption class="spot__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .spot { margin: var(--space-5) auto var(--space-2); text-align: center; }
+  .spot__img { max-width: min(420px, 82%); height: auto; }
+  .spot--card { margin: 0 auto; }
+  .spot--card .spot__img { max-width: none; height: 120px; width: auto; }
+  .spot__caption {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--body-2);
+    color: var(--fg-light);
+    margin-top: var(--space-2);
+  }
+</style>

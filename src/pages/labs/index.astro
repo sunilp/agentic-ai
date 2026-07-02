@@ -3,10 +3,9 @@ import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
 import MagazineGrid from '~/components/layout/MagazineGrid.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
-import Tag from '~/components/universal/Tag.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
 import Cadence from '~/components/universal/Cadence.astro';
+import EntryCard from '~/components/universal/EntryCard.astro';
 
 const entries = await getCollection('labs');
 const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -18,25 +17,28 @@ const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   currentNav="Labs"
 >
   <Container>
-    <header style="margin: var(--space-7) 0 var(--space-6);">
-      <Tag variant="accent">Labs</Tag>
-      <KineticHeading level={1}>Labs</KineticHeading>
-      <Dek italic>Empirical Lab Reports on agent architecture. Hypothesis, method, results, what we got wrong. Repo + data + seed published with every report.</Dek>
+    <div class="labs-index__header">
+      <ArticleHeader
+        rubric="LAB NOTES"
+        title="Labs"
+        dek="Empirical Lab Reports on agent architecture. Hypothesis, method, results, what we got wrong. Repo + data + seed published with every report."
+      />
       <Cadence text="Every 2-3 weeks" />
-    </header>
+    </div>
 
     {sorted.length === 0 ? (
       <p style="color: var(--fg-light); font-style: italic;">No Labs yet.</p>
     ) : (
       <MagazineGrid cols={2}>
         {sorted.map((e) => (
-          <a class="lab-card" href={`/labs/${e.id}/`}>
-            <div class="lab-card__kicker">{e.data.id.toUpperCase()} · {e.data.date.toISOString().slice(0, 10)}</div>
-            <h2 class="lab-card__title">{e.data.title}</h2>
-            <div class="lab-card__result">{e.data.result}</div>
-            <div class="lab-card__result-label">{e.data.resultLabel}</div>
-            <p class="lab-card__hypothesis"><em>{e.data.hypothesis}</em></p>
-          </a>
+          <EntryCard
+            href={`/labs/${e.id}/`}
+            rubric={`LAB · ${e.data.id.toUpperCase()} · ${e.data.date.toISOString().slice(0, 10)}`}
+            title={e.data.title}
+            line={e.data.hypothesis}
+            image={e.data.spot}
+            imageKind="spot"
+          />
         ))}
       </MagazineGrid>
     )}
@@ -44,58 +46,10 @@ const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 </PageLayout>
 
 <style>
-  .lab-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-5);
-    background: var(--paper);
-    color: var(--fg);
-    border: 1px solid var(--fg-faint);
-    border-left: 3px solid var(--brick);
-    border-radius: var(--radius-md);
-    transition: transform var(--dur-micro) var(--ease-out);
+  .labs-index__header {
+    margin: 0 0 var(--space-6);
+    text-align: center;
   }
 
-  .lab-card:hover { transform: translateY(-2px); }
-
-  .lab-card__kicker {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--brick);
-  }
-
-  .lab-card__title {
-    font-family: var(--font-display);
-    font-size: var(--display-3);
-    font-weight: 500;
-    line-height: var(--lh-snug);
-    margin: 0;
-  }
-
-  .lab-card__result {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 500;
-    line-height: 1;
-    color: var(--brick);
-  }
-
-  .lab-card__result-label {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--fg-light);
-  }
-
-  .lab-card__hypothesis {
-    color: var(--fg-light);
-    font-size: var(--body-2);
-    line-height: var(--lh-snug);
-    margin: 0;
-    font-family: var(--font-display);
-  }
+  .labs-index__header :global(.cadence) { margin-top: var(--space-2); }
 </style>

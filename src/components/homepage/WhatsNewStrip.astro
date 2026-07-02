@@ -5,13 +5,13 @@
  * and shows the 3 most recent by date.
  */
 import { getCollection } from 'astro:content';
+import EntryCard from '~/components/universal/EntryCard.astro';
 
 interface CardItem {
   kicker: string;
   title: string;
   href: string;
-  banner: string;
-  bannerAlt: string;
+  image?: string;
   date: Date;
 }
 
@@ -26,24 +26,21 @@ const items: CardItem[] = [
     kicker: `${e.data.id.toUpperCase()} · Field Note`,
     title: e.data.title,
     href: `/field-notes/${e.id}/`,
-    banner: e.data.banner,
-    bannerAlt: `${e.data.title} banner`,
+    image: e.data.spot,
     date: e.data.date,
   })),
   ...recipes.map((e) => ({
     kicker: `${e.data.id.toUpperCase()} · Recipe`,
     title: e.data.title,
     href: `/recipes/${e.id}/`,
-    banner: `/assets/banners/${e.data.id}.png`,
-    bannerAlt: `${e.data.title} banner`,
+    image: e.data.spot,
     date: e.data.verifiedOn,
   })),
   ...labs.map((e) => ({
     kicker: `${e.data.id.toUpperCase()} · Lab`,
     title: e.data.title,
     href: `/labs/${e.id}/`,
-    banner: `/assets/banners/${e.data.id}.png`,
-    bannerAlt: `${e.data.title} banner`,
+    image: e.data.spot,
     date: e.data.date,
   })),
 ];
@@ -62,11 +59,13 @@ const top3 = items.sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 
   ) : (
     <div class="whats-new__grid">
       {top3.map((item) => (
-        <a class="whats-new__card" href={item.href}>
-          <img src={item.banner} alt={item.bannerAlt} class="whats-new__banner" loading="lazy" width="600" height="315" />
-          <div class="whats-new__kicker">{item.kicker}</div>
-          <h3 class="whats-new__title">{item.title}</h3>
-        </a>
+        <EntryCard
+          href={item.href}
+          rubric={item.kicker.toUpperCase()}
+          title={item.title}
+          image={item.image}
+          imageKind="spot"
+        />
       ))}
     </div>
   )}
@@ -84,19 +83,20 @@ const top3 = items.sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 
 
   .whats-new__label {
     font-family: var(--font-mono);
-    font-size: var(--meta-2);
+    font-size: var(--meta-3);
+    letter-spacing: var(--tracking-rubric);
     text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--fg-light);
+    color: var(--brick);
   }
 
   .whats-new__see-all {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--brick);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--body-2);
+    color: var(--fg);
   }
+
+  .whats-new__see-all:hover { color: var(--brick); }
 
   .whats-new__empty {
     color: var(--fg-light);
@@ -107,42 +107,6 @@ const top3 = items.sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-5);
-  }
-
-  .whats-new__card {
-    color: var(--fg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    transition: transform var(--dur-micro) var(--ease-out);
-  }
-
-  .whats-new__card:hover { transform: translateY(-2px); }
-
-  .whats-new__banner {
-    width: 100%;
-    aspect-ratio: 1200 / 630;
-    object-fit: cover;
-    background: var(--paper-recess);
-    border: 1px solid var(--fg-faint);
-    border-radius: var(--radius-sm);
-  }
-
-  .whats-new__kicker {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--brick);
-  }
-
-  .whats-new__title {
-    font-family: var(--font-display);
-    font-size: var(--display-3);
-    line-height: var(--lh-snug);
-    font-weight: 500;
-    margin: 0;
-    color: var(--fg);
   }
 
   @media (max-width: 720px) {

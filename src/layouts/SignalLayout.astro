@@ -3,9 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import PageLayout from './PageLayout.astro';
 import Reader from '~/components/layout/Reader.astro';
-import MetaStrip from '~/components/universal/MetaStrip.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
 import Banner from '~/components/universal/Banner.astro';
 import Sources from '~/components/universal/Sources.astro';
 import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
@@ -58,8 +56,8 @@ function linkLabel(l: { id: string; collection: string }): string {
   return l.id.toUpperCase();
 }
 
-const dateStr = d.date.toISOString().slice(0, 10);
-const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`];
+const dateLong = d.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+const byline = ['SUNIL PRAKASH', dateLong, `${d.readingTime} MIN`];
 ---
 
 <PageLayout
@@ -74,11 +72,9 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`];
   }}
 >
   <Reader>
-    <MetaStrip items={metaItems} />
-    <KineticHeading level={1}>{d.title}</KineticHeading>
-    <Dek italic>{d.dek}</Dek>
+    <ArticleHeader rubric={`SIGNAL · ${d.id.toUpperCase()}`} title={d.title} dek={d.dek} byline={byline} />
     <Banner src={d.banner} alt={`${d.title} banner illustration`} />
-    <article class="sg-body">
+    <article class="sg-body prose prose--dropcap">
       <slot />
     </article>
     <Sources items={d.sources} />
@@ -101,62 +97,6 @@ const metaItems = [d.id.toUpperCase(), dateStr, `${d.readingTime} min`];
 </PageLayout>
 
 <style>
-  .sg-body {
-    font-size: var(--body-1);
-    line-height: var(--lh-base);
-  }
-
-  .sg-body :global(h2) {
-    margin-top: var(--space-7);
-    margin-bottom: var(--space-3);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--fg-faint);
-  }
-
-  .sg-body :global(h3) {
-    margin-top: var(--space-5);
-    margin-bottom: var(--space-2);
-  }
-
-  .sg-body :global(p) { margin: 0 0 var(--space-4); }
-
-  .sg-body :global(ul),
-  .sg-body :global(ol) {
-    margin: 0 0 var(--space-4);
-    padding-left: var(--space-5);
-  }
-
-  .sg-body :global(li) { margin-bottom: var(--space-2); }
-
-  .sg-body :global(a) {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--fg-faint);
-    text-underline-offset: 3px;
-  }
-
-  .sg-body :global(a:hover) {
-    color: var(--brick);
-    text-decoration-color: var(--brick);
-  }
-
-  .sg-body :global(figure) { margin: var(--space-5) 0; }
-
-  .sg-body :global(figure img) {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--fg-faint);
-  }
-
-  .sg-body :global(figcaption) {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    color: var(--fg-light);
-    margin-top: var(--space-2);
-    text-align: center;
-  }
-
   .sg-referenced-by { margin-top: var(--space-6); }
 
   .sg-referenced-by__heading {

@@ -1,7 +1,7 @@
 ---
 /**
  * SiteFooter — bottom of every page.
- * Cadence strip, secondary nav, social, copyright.
+ * Light paper footer with ring-gate mark and type colophon.
  */
 ---
 
@@ -44,6 +44,11 @@
       </div>
     </div>
 
+    <div class="site-footer__colophon">
+      <img src="/assets/logo.png" alt="" width="28" height="28" class="site-footer__mark" />
+      <span>Set in Fraunces and EB Garamond. Brick <span class="site-footer__swatch"></span> #9b4a3f, the only accent.</span>
+    </div>
+
     <div class="site-footer__base">
       <span>&copy; 2026 Sunil Prakash · MIT license · Book on <a href="https://www.amazon.com/dp/B0GVG6848F">Amazon</a></span>
       <a href="https://sunilprakash.com" class="site-footer__home">sunilprakash.com</a>
@@ -52,78 +57,33 @@
 </footer>
 
 <style>
-  .site-footer {
-    background: var(--ink);
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: var(--space-9);
-  }
-
-  .site-footer__inner {
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: var(--space-7) var(--space-5) var(--space-5);
-  }
-
+  .site-footer { background: var(--paper); border-top: 3px double var(--ink); margin-top: var(--space-9); color: var(--fg-light); }
+  .site-footer__inner { max-width: var(--container-max); margin: 0 auto; padding: var(--space-6) var(--space-5) var(--space-5); }
   .site-footer__cadence {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    letter-spacing: var(--tracking-loose);
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
-    padding-bottom: var(--space-5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    align-items: center;
+    font-family: var(--font-mono); font-size: var(--meta-2); letter-spacing: var(--tracking-loose);
+    text-transform: uppercase; color: var(--fg-light); padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--fg-faint); display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center;
   }
-
-  .site-footer__cadence-label {
-    color: var(--brick);
-    margin-right: var(--space-3);
-  }
-
-  .site-footer__columns {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-6);
-    padding: var(--space-6) 0;
-  }
-
+  .site-footer__cadence-label { color: var(--brick); margin-right: var(--space-3); }
+  .site-footer__columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); padding: var(--space-6) 0; }
   .site-footer__col { display: flex; flex-direction: column; gap: var(--space-2); }
-
   .site-footer__col-label {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    letter-spacing: var(--tracking-loose);
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4);
-    margin-bottom: var(--space-2);
+    font-family: var(--font-mono); font-size: var(--meta-3); letter-spacing: var(--tracking-loose);
+    text-transform: uppercase; color: var(--fg-light); margin-bottom: var(--space-2);
   }
-
-  .site-footer__col a {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: var(--body-2);
-    transition: color var(--dur-micro) var(--ease-out);
+  .site-footer__col a { color: var(--fg); font-family: var(--font-body); font-size: var(--display-4); }
+  .site-footer__col a:hover { color: var(--brick); }
+  .site-footer__colophon {
+    display: flex; align-items: center; gap: var(--space-3);
+    font-family: var(--font-body); font-style: italic; font-size: var(--body-2);
+    padding: var(--space-4) 0; border-top: 1px solid var(--fg-faint);
   }
-
-  .site-footer__col a:hover { color: var(--paper); }
-
+  .site-footer__mark { border-radius: 4px; }
+  .site-footer__swatch { display: inline-block; width: 10px; height: 10px; background: var(--brick); border-radius: 2px; vertical-align: baseline; }
   .site-footer__base {
-    padding-top: var(--space-5);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    font-size: var(--body-3);
-    color: rgba(255, 255, 255, 0.5);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--space-3);
+    padding-top: var(--space-4); border-top: 1px solid var(--fg-faint); font-size: var(--body-3);
+    font-family: var(--font-mono); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);
   }
-
-  .site-footer__base a { color: rgba(255, 255, 255, 0.75); }
-
-  @media (max-width: 720px) {
-    .site-footer__columns { grid-template-columns: 1fr; gap: var(--space-4); }
-  }
+  .site-footer__base a { color: var(--fg); }
+  @media (max-width: 720px) { .site-footer__columns { grid-template-columns: 1fr; gap: var(--space-4); } }
 </style>

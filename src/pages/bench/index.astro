@@ -5,6 +5,7 @@ import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Tag from '~/components/universal/Tag.astro';
 import LoopLab from '~/components/islands/LoopLab.svelte';
+import TraceReplay from '~/components/islands/TraceReplay.svelte';
 ---
 
 <PageLayout
@@ -31,6 +32,15 @@ import LoopLab from '~/components/islands/LoopLab.svelte';
         Deterministic, no API keys, same logic as the Python tests. Source:
         <a href="https://github.com/sunilp/agentic-ai/tree/master/src/fn04" target="_blank" rel="noopener">src/fn04</a>.
       </p>
+    </section>
+
+    <section class="bench__trace">
+      <Tag variant="accent">Trace Replay</Tag>
+      <p class="bench__trace-dek">
+        Pick a sample query and replay a real pre-recorded agent trace, token by token: tool calls, reasoning
+        steps, and the final response. No live model calls.
+      </p>
+      <TraceReplay client:visible />
     </section>
 
     <section class="bench__more">
@@ -64,6 +74,15 @@ import LoopLab from '~/components/islands/LoopLab.svelte';
     margin: 0 0 var(--space-3);
   }
   .bench__src { font-family: var(--font-mono); font-size: var(--meta-2); color: var(--fg-light); }
+  .bench__trace { margin-bottom: var(--space-9); }
+  .bench__trace-dek {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-3);
+    color: var(--fg-light);
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+    max-width: 60ch;
+  }
   .bench__demo a, .bench__more a, .bench__src a { color: var(--brick); border-bottom: 1px solid var(--brick); }
   .bench__demo a:hover, .bench__more a:hover, .bench__src a:hover { color: var(--fg); border-color: var(--fg); }
 </style>

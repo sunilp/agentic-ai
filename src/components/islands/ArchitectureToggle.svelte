@@ -54,10 +54,10 @@
 <style>
   .arch-toggle {
     margin: var(--space-5, 24px) 0;
-    border: 1px solid var(--fg-faint, #e8e8e8);
+    border: 1px solid var(--ink);
     border-radius: var(--radius-md, 4px);
     overflow: hidden;
-    background: var(--paper-bright, #fff);
+    background: var(--paper);
   }
 
   .arch-toggle__tabs {

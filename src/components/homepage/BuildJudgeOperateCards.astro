@@ -42,61 +42,27 @@ const parts = [
 </section>
 
 <style>
-  .bjo { margin: var(--space-7) 0; }
-
-  .bjo__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-4);
-  }
-
+  .bjo { margin: var(--space-7) 0; border-top: 3px solid var(--ink); }
+  .bjo__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
   .bjo__card {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-5);
-    border: 1px solid var(--ink);
-    background: var(--paper);
-    color: var(--fg);
-    transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    display: flex; flex-direction: column; padding: var(--space-5) var(--space-5) var(--space-5) 0;
+    border: 0; border-right: 1px solid var(--fg-faint); color: var(--fg); background: transparent;
   }
-
-  .bjo__card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-card-hover);
-  }
-
+  .bjo__card:last-child { border-right: 0; }
+  .bjo__card + .bjo__card { padding-left: var(--space-5); }
   .bjo__label {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--brick);
+    font-family: var(--font-mono); font-size: var(--meta-3);
+    text-transform: uppercase; letter-spacing: var(--tracking-loose); color: var(--brick);
   }
-
   .bjo__title {
-    font-family: var(--font-display);
-    font-size: clamp(22px, 2.5vw, 32px);
-    font-weight: 500;
-    margin: var(--space-2) 0;
-    letter-spacing: var(--tracking-tight);
+    font-family: var(--font-display); font-weight: 900; font-size: clamp(24px, 2.6vw, 32px);
+    margin: var(--space-2) 0; letter-spacing: var(--tracking-tight);
   }
-
-  .bjo__desc {
-    color: var(--fg-light);
-    font-size: var(--body-2);
-    line-height: var(--lh-snug);
-    margin: 0 0 var(--space-4);
-    flex: 1;
-  }
-
-  .bjo__cta {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    color: var(--brick);
-    letter-spacing: 0.02em;
-  }
-
+  .bjo__card:hover .bjo__title { color: var(--brick); }
+  .bjo__desc { font-family: var(--font-body); color: #3c3c3a; font-size: var(--display-4); line-height: var(--lh-snug); margin: 0 0 var(--space-4); flex: 1; }
+  .bjo__cta { font-family: var(--font-body); font-style: italic; font-size: var(--body-2); color: var(--brick); }
   @media (max-width: 720px) {
     .bjo__grid { grid-template-columns: 1fr; }
+    .bjo__card { border-right: 0; border-bottom: 1px solid var(--fg-faint); padding-left: 0; }
   }
 </style>
