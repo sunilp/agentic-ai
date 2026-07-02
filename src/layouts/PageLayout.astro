@@ -9,6 +9,7 @@ import SiteFooter from '~/components/universal/SiteFooter.astro';
 import CommandPalette from '~/components/islands/CommandPalette.svelte';
 import '~/styles/global.css';
 import frauncesWoff2 from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
+import frauncesItalicWoff2 from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2?url';
 import garamondWoff2 from '@fontsource/eb-garamond/files/eb-garamond-latin-400-normal.woff2?url';
 
 interface ArticleData {
@@ -125,6 +126,7 @@ const websiteSchema = Astro.url.pathname === '/' ? {
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="preload" as="font" type="font/woff2" href={frauncesWoff2} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={frauncesItalicWoff2} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={garamondWoff2} crossorigin />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" href="/favicon.png" type="image/png" />
