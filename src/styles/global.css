@@ -49,13 +49,17 @@ code, pre {
   background: var(--paper-recess);
 }
 
-/* inline code — runs alongside body prose, needs to read as part of a sentence */
+/* inline code — runs alongside body prose, needs to read as part of a sentence.
+   overflow-wrap lets long unbroken runs (file paths, env vars) break instead of
+   pushing the page into horizontal scroll on narrow viewports; pre's own
+   white-space: pre keeps multi-line blocks on their internal scrollbar. */
 code {
   font-size: 0.92em;
   padding: 1px 6px;
   border-radius: var(--radius-sm);
   border: 1px solid #e6e2d6;
   color: var(--ink);
+  overflow-wrap: break-word;
 }
 
 /* shiki applies its own background + foreground via inline style; suppress our base bg
