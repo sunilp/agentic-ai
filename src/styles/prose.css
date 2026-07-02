@@ -1,0 +1,84 @@
+/* Gallery prose — shared long-form typography. Apply class="prose" to the
+   article body wrapper; add "prose--dropcap" for the opener drop cap. */
+
+.prose {
+  font-family: var(--font-body);
+  font-size: var(--body-1);
+  line-height: var(--lh-base);
+  color: #222220;
+}
+
+.prose p { margin: 0 0 var(--space-4); }
+
+.prose--dropcap > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 3.4em;
+  line-height: 0.8;
+  color: var(--brick);
+  float: left;
+  padding: 0.06em 0.12em 0 0;
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(23px, 2.8vw, 27px);
+  margin: var(--space-7) 0 var(--space-3);
+}
+
+.prose h2::before {
+  content: '\2767\00a0\00a0'; /* ❧ fleuron */
+  color: var(--brick);
+  font-style: normal;
+  font-size: 0.75em;
+}
+
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--display-4);
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+.prose a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--brick);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover { color: var(--brick); }
+
+.prose ul, .prose ol { margin: 0 0 var(--space-4); padding-left: var(--space-5); }
+.prose li { margin-bottom: var(--space-2); }
+.prose li::marker { color: var(--brick); }
+
+.prose figure { margin: var(--space-6) 0; }
+.prose figure img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--fg-faint);
+}
+.prose figcaption {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: var(--body-2);
+  color: var(--fg-light);
+  margin-top: var(--space-2);
+  text-align: center;
+}
+
+.prose blockquote:not([class]) {
+  margin: var(--space-5) 0;
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--brick);
+  font-style: italic;
+}
+
+.prose table { font-size: var(--body-2); border-collapse: collapse; margin: 0 0 var(--space-4); }
+.prose th, .prose td { border: 1px solid var(--fg-faint); padding: var(--space-2) var(--space-3); }
+.prose th { font-family: var(--font-mono); font-size: var(--meta-2); text-transform: uppercase; letter-spacing: var(--tracking-loose); }

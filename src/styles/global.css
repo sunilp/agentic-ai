@@ -15,6 +15,7 @@
 @import './tokens/motion.css';
 @import './tokens/surfaces.css';
 @import './reset.css';
+@import './prose.css';
 
 /* Baseline element styles */
 

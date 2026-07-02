@@ -90,7 +90,7 @@ const collectionRoute: Record<string, string> = {
         <KineticHeading level={1}>{d.title}</KineticHeading>
         <Dek italic>{d.description}</Dek>
 
-        <div class="chapter-body">
+        <div class="chapter-body prose prose--dropcap">
           <slot />
         </div>
 
@@ -123,44 +123,10 @@ const collectionRoute: Record<string, string> = {
     max-width: 720px;
   }
 
-  .chapter-body {
-    font-size: var(--body-1);
-    line-height: var(--lh-base);
-  }
-
+  /* Headings are potential hash-link targets (footnotes, cross-refs); keep
+     the offset so the sticky TopNav doesn't cover them. */
   .chapter-body :global(h2) {
-    margin-top: var(--space-7);
-    margin-bottom: var(--space-3);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--fg-faint);
     scroll-margin-top: 80px;
-  }
-
-  .chapter-body :global(h3) {
-    margin-top: var(--space-5);
-    margin-bottom: var(--space-2);
-  }
-
-  .chapter-body :global(p),
-  .chapter-body :global(ul),
-  .chapter-body :global(ol) {
-    margin: 0 0 var(--space-4);
-  }
-
-  .chapter-body :global(li) {
-    margin-bottom: var(--space-2);
-  }
-
-  .chapter-body :global(a) {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--fg-faint);
-    text-underline-offset: 3px;
-  }
-
-  .chapter-body :global(a:hover) {
-    color: var(--brick);
-    text-decoration-color: var(--brick);
   }
 
   .chapter-body :global(blockquote) {
@@ -196,26 +162,6 @@ const collectionRoute: Record<string, string> = {
     font-size: var(--meta-2);
     text-transform: uppercase;
     letter-spacing: var(--tracking-loose);
-  }
-
-  .chapter-body :global(figure) {
-    margin: var(--space-5) 0;
-  }
-
-  .chapter-body :global(figure img) {
-    width: 100%;
-    height: auto;
-    border: 1px solid var(--fg-faint);
-    border-radius: var(--radius-sm);
-    background: var(--paper-bright);
-  }
-
-  .chapter-body :global(figcaption) {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    color: var(--fg-light);
-    text-align: center;
-    margin-top: var(--space-2);
   }
 
   .chapter-sidebar {

@@ -75,7 +75,7 @@ const collectionRoute: Record<string, string> = {
     <SectionAnchors items={sections} />
 
     <Reader>
-      <article class="lab-body">
+      <article class="lab-body prose prose--dropcap">
         <slot />
       </article>
 
@@ -96,37 +96,10 @@ const collectionRoute: Record<string, string> = {
 </PageLayout>
 
 <style>
-  .lab-body {
-    font-size: var(--body-1);
-    line-height: var(--lh-base);
-  }
-
+  /* Section headings are scroll-spy targets for SectionAnchors; keep the
+     offset so the sticky TopNav + anchors bar don't cover the heading. */
   .lab-body :global(h2) {
-    margin-top: var(--space-7);
-    margin-bottom: var(--space-3);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--fg-faint);
     scroll-margin-top: 120px;
-  }
-
-  .lab-body :global(p),
-  .lab-body :global(ul),
-  .lab-body :global(ol) {
-    margin: 0 0 var(--space-4);
-  }
-
-  .lab-body :global(li) { margin-bottom: var(--space-2); }
-
-  .lab-body :global(a) {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--fg-faint);
-    text-underline-offset: 3px;
-  }
-
-  .lab-body :global(a:hover) {
-    color: var(--brick);
-    text-decoration-color: var(--brick);
   }
 
   .lab-cited-by {
