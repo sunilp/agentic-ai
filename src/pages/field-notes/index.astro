@@ -3,10 +3,9 @@ import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
 import MagazineGrid from '~/components/layout/MagazineGrid.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
-import Tag from '~/components/universal/Tag.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
 import Cadence from '~/components/universal/Cadence.astro';
+import EntryCard from '~/components/universal/EntryCard.astro';
 
 const entries = await getCollection('fieldNotes');
 const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -18,32 +17,28 @@ const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   currentNav="Field Notes"
 >
   <Container>
-    <header class="fn-index__header">
-      <Tag variant="accent">Field Notes</Tag>
-      <KineticHeading level={1}>Field Notes</KineticHeading>
-      <Dek italic>Twice-weekly observations on building agents that survive contact with reality.</Dek>
+    <div class="fn-index__header">
+      <ArticleHeader
+        rubric="FIELD NOTES"
+        title="Field Notes"
+        dek="Twice-weekly observations on building agents that survive contact with reality."
+      />
       <Cadence text="Thursdays · Sundays" />
-    </header>
+    </div>
 
     {sorted.length === 0 ? (
       <p class="fn-index__empty">No Field Notes published yet.</p>
     ) : (
       <MagazineGrid cols={3}>
         {sorted.map((e) => (
-          <a class="fn-index__card" href={`/field-notes/${e.id}/`}>
-            <img
-              src={e.data.banner}
-              alt={`${e.data.title} banner`}
-              class="fn-index__banner"
-              loading="lazy"
-              width="600"
-              height="315"
-            />
-            <div class="fn-index__kicker">{e.data.id.toUpperCase()} · {e.data.date.toISOString().slice(0, 10)}</div>
-            <h2 class="fn-index__title">{e.data.title}</h2>
-            <p class="fn-index__dek">{e.data.dek}</p>
-            <div class="fn-index__cta">{e.data.readingTime} min read →</div>
-          </a>
+          <EntryCard
+            href={`/field-notes/${e.id}/`}
+            rubric={`FIELD NOTE · ${e.data.id.toUpperCase()} · ${e.data.date.toISOString().slice(0, 10)}`}
+            title={e.data.title}
+            line={e.data.dek}
+            image={e.data.spot}
+            imageKind="spot"
+          />
         ))}
       </MagazineGrid>
     )}
@@ -53,14 +48,7 @@ const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 <style>
   .fn-index__header {
     margin: var(--space-7) 0 var(--space-6);
-  }
-
-  .fn-index__header :global(.tag) {
-    margin-bottom: var(--space-3);
-  }
-
-  .fn-index__header :global(.kinetic-heading) {
-    font-size: var(--display-1);
+    text-align: center;
   }
 
   .fn-index__header :global(.cadence) {
@@ -71,56 +59,5 @@ const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
     color: var(--fg-light);
     font-style: italic;
     margin: var(--space-7) 0;
-  }
-
-  .fn-index__card {
-    color: var(--fg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    transition: transform var(--dur-micro) var(--ease-out);
-  }
-
-  .fn-index__card:hover { transform: translateY(-2px); }
-
-  .fn-index__banner {
-    width: 100%;
-    aspect-ratio: 1200 / 630;
-    object-fit: cover;
-    background: var(--paper-recess);
-    border: 1px solid var(--fg-faint);
-    border-radius: var(--radius-sm);
-  }
-
-  .fn-index__kicker {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--brick);
-  }
-
-  .fn-index__title {
-    font-family: var(--font-display);
-    font-size: var(--display-3);
-    line-height: var(--lh-snug);
-    font-weight: 500;
-    margin: 0;
-  }
-
-  .fn-index__dek {
-    color: var(--fg-light);
-    font-size: var(--body-2);
-    line-height: var(--lh-snug);
-    margin: 0;
-  }
-
-  .fn-index__cta {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--brick);
-    margin-top: auto;
   }
 </style>
