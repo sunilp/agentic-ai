@@ -129,7 +129,8 @@ const collectionRoute: Record<string, string> = {
     scroll-margin-top: 80px;
   }
 
-  .chapter-body :global(blockquote) {
+  /* `.prose` in selector provides deterministic specificity headroom over prose.css */
+  .chapter-body.prose :global(blockquote) {
     border-left: 2px solid var(--ink);
     padding-left: var(--space-4);
     margin: var(--space-5) 0;
@@ -141,22 +142,25 @@ const collectionRoute: Record<string, string> = {
     margin: var(--space-4) 0;
   }
 
-  .chapter-body :global(table) {
+  /* `.prose` in selector provides deterministic specificity headroom over prose.css */
+  .chapter-body.prose :global(table) {
     border-collapse: collapse;
     margin: var(--space-4) 0;
     font-size: var(--body-2);
     width: 100%;
   }
 
-  .chapter-body :global(th),
-  .chapter-body :global(td) {
+  /* `.prose` in selector provides deterministic specificity headroom over prose.css */
+  .chapter-body.prose :global(th),
+  .chapter-body.prose :global(td) {
     padding: var(--space-2) var(--space-3);
     border-bottom: 1px solid var(--fg-faint);
     text-align: left;
     vertical-align: top;
   }
 
-  .chapter-body :global(th) {
+  /* `.prose` in selector provides deterministic specificity headroom over prose.css */
+  .chapter-body.prose :global(th) {
     background: var(--paper-recess);
     font-family: var(--font-mono);
     font-size: var(--meta-2);

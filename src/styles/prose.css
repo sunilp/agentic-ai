@@ -5,7 +5,7 @@
   font-family: var(--font-body);
   font-size: var(--body-1);
   line-height: var(--lh-base);
-  color: #222220;
+  color: var(--ink);
 }
 
 .prose p { margin: 0 0 var(--space-4); }
