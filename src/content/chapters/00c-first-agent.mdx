@@ -388,6 +388,7 @@ for step in range(self.max_steps):
     print(f"[Step {steps}] tokens={tokens_this_step} total={total_tokens}")
 
     if response.tool_calls:
+        # simplified to a single call for brevity -- the real loop above iterates all tool calls
         tc = response.tool_calls[0]
         print(f"  -> tool_call: {tc.name}({tc.arguments})")
         tool_result = execute_tool_call(self.registry, tc.name, tc.arguments)
@@ -439,5 +440,5 @@ For an expanded version with more tools, proper error handling, and example quer
 ## Further reading
 
 - **[ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)** -- Yao et al., 2022. Named the observe-think-act cycle this chapter's loop implements.
-- **["BDI Agents: From Theory to Practice"](https://cdn.aaai.org/ICMAS/1995/ICMAS95-042.pdf)** -- Rao and Georgeff, 1995. The original belief-desire-intention loop, and the paper that first named the stop-and-reconsider problem.
+- **["BDI Agents: From Theory to Practice"](https://cdn.aaai.org/ICMAS/1995/ICMAS95-042.pdf)** -- Rao and Georgeff, 1995. The original belief-desire-intention loop, and the paper that framed the stop-and-reconsider problem.
 - **[FN-004: Loop engineering is a 30-year-old loop with a new hashtag](/field-notes/004-loop-engineering-30-year-old-loop/)** -- Why the stop condition is still unsolved, and what an enforced gate looks like against a real agent, not a toy loop.
