@@ -1,66 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" width="780" height="300" style="background:#fff;font-family:system-ui,-apple-system,sans-serif;">
-
-  <rect width="780" height="300" fill="#ffffff"/>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" font-family="IBM Plex Mono, monospace">
   <defs>
-    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#3d7ab5"/>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
-    <marker id="ar-back" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#7eb3d8"/>
+    <marker id="aiG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#6b6b6b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
+    <marker id="aiB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#9b4a3f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.18"/>
+    </pattern>
   </defs>
+  <rect width="780" height="300" fill="#fafaf8"/>
 
-  <!-- Title -->
-  <text x="390" y="28" text-anchor="middle" font-size="16" font-weight="600" fill="#1a1a1a">MCP Protocol Lifecycle</text>
-  <text x="390" y="48" text-anchor="middle" font-size="11" fill="#999">What happens when your agent connects to an MCP server</text>
+  <!-- Client -->
+  <rect x="40" y="44" width="170" height="202" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="125" y="70" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">YOUR AGENT</text>
+  <text x="125" y="88" text-anchor="middle" font-size="10.5" fill="#6b6b6b">the MCP client</text>
 
-  <!-- Client box -->
-  <rect x="40" y="80" width="160" height="180" rx="8" fill="#e8f0f7" stroke="#3d7ab5" stroke-width="1.5"/>
-  <text x="120" y="105" text-anchor="middle" font-size="13" font-weight="600" fill="#1a3a5c">Your Agent</text>
-  <text x="120" y="122" text-anchor="middle" font-size="9" fill="#6B7280">(MCP Client)</text>
+  <!-- Server -->
+  <rect x="570" y="44" width="170" height="202" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="655" y="70" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">MCP SERVER</text>
+  <text x="655" y="88" text-anchor="middle" font-size="10.5" fill="#6b6b6b">tools + data</text>
 
-  <!-- Server box -->
-  <rect x="580" y="80" width="160" height="180" rx="8" fill="#c5d5e4" stroke="#7eb3d8" stroke-width="1.5"/>
-  <text x="660" y="105" text-anchor="middle" font-size="13" font-weight="600" fill="#1a3a5c">MCP Server</text>
-  <text x="660" y="122" text-anchor="middle" font-size="9" fill="#6B7280">(Tools + Data)</text>
+  <!-- Step 1: initialize -->
+  <rect x="250" y="44" width="280" height="38" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="266" y="60" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">1 · INITIALIZE</text>
+  <text x="266" y="75" font-size="10" fill="#6b6b6b">handshake: versions + capabilities</text>
+  <line x1="214" y1="63" x2="246" y2="63" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <line x1="534" y1="63" x2="566" y2="63" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
 
-  <!-- Step 1: Initialize -->
-  <rect x="260" y="72" width="260" height="36" rx="6" fill="#fff" stroke="#3d7ab5" stroke-width="1"/>
-  <circle cx="278" cy="90" r="11" fill="#3d7ab5"/>
-  <text x="278" y="94" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">1</text>
-  <text x="310" y="86" font-size="10" font-weight="600" fill="#1a3a5c">Initialize</text>
-  <text x="310" y="100" font-size="8.5" fill="#6B7280">Handshake: agree on capabilities</text>
-  <line x1="200" y1="90" x2="258" y2="90" stroke="#3d7ab5" stroke-width="1.5" marker-end="url(#ar)"/>
-  <line x1="522" y1="90" x2="580" y2="90" stroke="#3d7ab5" stroke-width="1.5" marker-end="url(#ar)"/>
+  <!-- Step 2: discover -->
+  <rect x="250" y="94" width="280" height="38" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="266" y="110" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">2 · DISCOVER</text>
+  <text x="266" y="125" font-size="10" fill="#6b6b6b">tools/list &#8594; names, schemas</text>
+  <line x1="214" y1="107" x2="246" y2="107" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <line x1="534" y1="107" x2="566" y2="107" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <line x1="566" y1="121" x2="534" y2="121" stroke="#6b6b6b" stroke-width="1.5" marker-end="url(#aiG)"/>
+  <line x1="246" y1="121" x2="214" y2="121" stroke="#6b6b6b" stroke-width="1.5" marker-end="url(#aiG)"/>
 
-  <!-- Step 2: Discover -->
-  <rect x="260" y="120" width="260" height="36" rx="6" fill="#fff" stroke="#3d7ab5" stroke-width="1"/>
-  <circle cx="278" cy="138" r="11" fill="#3d7ab5"/>
-  <text x="278" y="142" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">2</text>
-  <text x="310" y="134" font-size="10" font-weight="600" fill="#1a3a5c">Discover</text>
-  <text x="310" y="148" font-size="8.5" fill="#6B7280">Client calls tools/list, gets available tools</text>
-  <line x1="200" y1="133" x2="258" y2="133" stroke="#3d7ab5" stroke-width="1.2" marker-end="url(#ar)"/>
-  <line x1="580" y1="143" x2="522" y2="143" stroke="#7eb3d8" stroke-width="1.2" marker-end="url(#ar-back)"/>
+  <!-- Step 3: invoke -->
+  <rect x="250" y="144" width="280" height="38" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="266" y="160" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">3 · INVOKE</text>
+  <text x="266" y="175" font-size="10" fill="#6b6b6b">tools/call &#8594; tool runs, result returns</text>
+  <line x1="214" y1="157" x2="246" y2="157" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <line x1="534" y1="157" x2="566" y2="157" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <line x1="566" y1="171" x2="534" y2="171" stroke="#6b6b6b" stroke-width="1.5" marker-end="url(#aiG)"/>
+  <line x1="246" y1="171" x2="214" y2="171" stroke="#6b6b6b" stroke-width="1.5" marker-end="url(#aiG)"/>
 
-  <!-- Step 3: Invoke -->
-  <rect x="260" y="168" width="260" height="36" rx="6" fill="#fff" stroke="#3d7ab5" stroke-width="1"/>
-  <circle cx="278" cy="186" r="11" fill="#3d7ab5"/>
-  <text x="278" y="190" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">3</text>
-  <text x="310" y="182" font-size="10" font-weight="600" fill="#1a3a5c">Invoke</text>
-  <text x="310" y="196" font-size="8.5" fill="#6B7280">LLM picks a tool, client sends tools/call</text>
-  <line x1="200" y1="181" x2="258" y2="181" stroke="#3d7ab5" stroke-width="1.2" marker-end="url(#ar)"/>
-  <line x1="580" y1="191" x2="522" y2="191" stroke="#7eb3d8" stroke-width="1.2" marker-end="url(#ar-back)"/>
+  <!-- Step 4: loop (accent) -->
+  <rect x="250" y="194" width="280" height="38" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="2"/>
+  <text x="266" y="210" font-size="11" letter-spacing="1" font-weight="500" fill="#9b4a3f">4 · LOOP</text>
+  <text x="266" y="225" font-size="10" fill="#1a1a1a">result &#8594; model &#8594; next call or answer</text>
 
-  <!-- Step 4: Repeat -->
-  <rect x="260" y="216" width="260" height="36" rx="6" fill="#fff" stroke="#3d7ab5" stroke-width="1"/>
-  <circle cx="278" cy="234" r="11" fill="#3d7ab5"/>
-  <text x="278" y="238" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">4</text>
-  <text x="310" y="230" font-size="10" font-weight="600" fill="#1a3a5c">Loop</text>
-  <text x="310" y="244" font-size="8.5" fill="#6B7280">Result goes back to LLM, which decides next step</text>
+  <!-- Loop-back path -->
+  <path d="M390,232 L390,266 L125,266 L125,250" fill="none" stroke="#9b4a3f" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#aiB)"/>
 
-  <!-- Loop arrow -->
-  <path d="M 390 252 L 390 270 L 180 270 L 180 175 L 200 175" fill="none" stroke="#3d7ab5" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ar)"/>
-  <text x="280" y="283" text-anchor="middle" font-size="8.5" fill="#3d7ab5" font-style="italic">Agent loop continues until the LLM has enough info to answer</text>
-
+  <!-- Footnote -->
+  <text x="390" y="290" text-anchor="middle" font-size="11" fill="#6b6b6b">same agent loop as section 0c · only where the tools live has changed</text>
 </svg>

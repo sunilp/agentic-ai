@@ -148,8 +148,8 @@ Notice that completion tokens are 3-5x more expensive than prompt tokens across 
 One more variable belongs in this math: prompt caching. If your agent resends the same system prompt, tool definitions, or reference documents across calls -- and most agents do -- the repeated portion can be cached instead of reprocessed at full price. A cache write costs a little more than a normal read (roughly 1.25x for a short-lived cache, 2x for a longer-lived one), but a cache hit costs roughly 10% of the standard input price -- a discount of roughly 90% on the tokens you didn't have to re-process from scratch. That changes the arithmetic above: an agent resending 6,000 tokens of retrieved context on every tool-use round looks expensive until that context is a cache hit rather than a fresh read. Cache pricing checked: 2026-07-02, same [pricing page](https://platform.claude.com/docs/en/about-claude/pricing).
 
 <figure>
-  <img src="/assets/diagrams/token-cost-calculator.svg" alt="Token cost breakdown showing prompt tokens, completion tokens, and total cost across models" />
-  <figcaption>Figure 0a.2: Token costs per model. Completion tokens always cost more than prompt tokens.</figcaption>
+  <img src="/assets/diagrams/token-cost-calculator.svg" alt="Token cost breakdown at illustrative rates: prompt and completion tokens for one call, then the cost compounding at production volume" />
+  <figcaption>Figure 0a.2: Token costs at illustrative rates ($3 in, $15 out per million tokens). Completion tokens cost more than prompt tokens, and production volume compounds the difference.</figcaption>
 </figure>
 
 ## The context window is your entire working memory

@@ -34,11 +34,11 @@ The analogy: MCP is USB-C for AI. Before USB-C, every phone had a different char
 Every MCP interaction has three participants:
 
 <figure>
-  <img src="/assets/diagrams/mcp-architecture.svg" alt="MCP architecture showing three roles: Host (your AI application with LLM and MCP client), MCP Servers (exposing tools), and two transport options (stdio for local, HTTP for remote)." />
+  <img src="/assets/diagrams/mcp-architecture.svg" alt="MCP architecture showing three roles: the Host (your AI application containing the LLM and two MCP clients, one per server), two MCP Servers exposing tools, and the two transports (stdio for local, Streamable HTTP for remote)." />
   <figcaption>MCP architecture: the host contains the LLM and one or more MCP clients, each connected to a server.</figcaption>
 </figure>
 
-**Host.** Your AI application. Claude Desktop, VS Code with Copilot, or the custom agent you built in Section 0c. The host contains the LLM and one or more MCP clients.
+**Host.** Your AI application. Claude Desktop, Claude Code, ChatGPT, Gemini, and Windows Copilot are all hosts -- so is the custom agent you built in Section 0c. The host contains the LLM and one or more MCP clients.
 
 **Client.** A connector that maintains a session with one MCP server. The client handles the protocol: initialization, tool discovery, and tool invocation. Most of the time, you use a library for this (the MCP Python SDK or TypeScript SDK). You do not write the client from scratch.
 
