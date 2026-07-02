@@ -1,5 +1,14 @@
 /* Global stylesheet — imports tokens + reset, sets baseline element styles. */
 
+/* Self-hosted fonts (fontsource). Fraunces carries opsz+wght axes. */
+@import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/fraunces/opsz-italic.css';
+@import '@fontsource/eb-garamond/400.css';
+@import '@fontsource/eb-garamond/500.css';
+@import '@fontsource/eb-garamond/400-italic.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+
 @import './tokens/colors.css';
 @import './tokens/typography.css';
 @import './tokens/spacing.css';

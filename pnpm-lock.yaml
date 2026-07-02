@@ -20,6 +20,15 @@ importers:
       '@astrojs/svelte':
         specifier: ^7.2.0
         version: 7.2.5(@types/node@22.19.19)(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0))(svelte@5.55.5)(typescript@5.9.3)(yaml@2.9.0)
+      '@fontsource-variable/fraunces':
+        specifier: ^5.2.9
+        version: 5.2.9
+      '@fontsource/eb-garamond':
+        specifier: ^5.2.7
+        version: 5.2.7
+      '@fontsource/ibm-plex-mono':
+        specifier: ^5.2.7
+        version: 5.2.7
       astro:
         specifier: ^5.7.0
         version: 5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0)
@@ -612,6 +621,15 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource-variable/fraunces@5.2.9':
+    resolution: {integrity: sha512-Y6IjunlN9Ni723np+GIgAaKzCDBrPRrqNi01TZxHs5wtHYROWFM9W6yiT+/gGwSjWIRD18oX17kD/BRWekc/Lw==}
+
+  '@fontsource/eb-garamond@5.2.7':
+    resolution: {integrity: sha512-V42tTlHDbnDo0+lENnXKWMx63Llq6Gfl2l7ozkoeRQN60S0jm6hEgCLlOT/5YyKAN9QZ0e2ofpy0rGKlz9jBrw==}
+
+  '@fontsource/ibm-plex-mono@5.2.7':
+    resolution: {integrity: sha512-MKAb8qV+CaiMQn2B0dIi1OV3565NYzp3WN5b4oT6LTkk+F0jR6j0ZN+5BKJiIhffDC3rtBULsYZE65+0018z9w==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -3297,6 +3315,12 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.7':
     optional: true
+
+  '@fontsource-variable/fraunces@5.2.9': {}
+
+  '@fontsource/eb-garamond@5.2.7': {}
+
+  '@fontsource/ibm-plex-mono@5.2.7': {}
 
   '@img/colour@1.1.0':
     optional: true
