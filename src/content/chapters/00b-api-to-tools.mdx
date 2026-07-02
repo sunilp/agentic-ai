@@ -474,12 +474,14 @@ Give the model three tools and a question. Watch what happens.
 ```python
 registry = create_default_registry()
 
-# Three tools registered:
+# Four tools registered:
 print(registry.list_tools())
-# ['calculator', 'word_count', 'search']
+# ['calculator', 'word_count', 'search', 'delete_record']
 ```
 
-When you send a message like "What is 42 times 17?" along with all three tool schemas, the model reads the descriptions and picks `calculator`. When you send "How many words are in the Gettysburg Address?", it picks `word_count`. When you send "Find me information about Rust async patterns," it picks `search`.
+The fourth tool is deliberately gated; Section 0c shows what happens when an agent tries to call it.
+
+When you send a message like "What is 42 times 17?" along with all four tool schemas, the model reads the descriptions and picks `calculator`. When you send "How many words are in the Gettysburg Address?", it picks `word_count`. When you send "Find me information about Rust async patterns," it picks `search`.
 
 This works because the tool descriptions are clear and distinct. The model selects tools by matching the user's intent to the tool descriptions. This is not semantic search. It is not embeddings. It is the model reading your descriptions and making a judgment call, the same way a person would read an API catalog and pick the right endpoint.
 
