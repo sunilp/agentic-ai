@@ -1,66 +1,34 @@
 ---
 /**
- * Brand — site logotype (mark + wordmark), links to homepage.
+ * Brand — typographic wordmark, Fraunces 900 italic, "Lab" in brick.
+ * The ring-gate logo mark lives in the favicon + footer colophon, not here.
  */
 interface Props {
   size?: 'sm' | 'md' | 'lg';
 }
-
 const { size = 'md' } = Astro.props;
 ---
 
 <a href="/" class:list={['brand', `brand--${size}`]}>
-  <img src="/assets/logo.png" class="brand__mark" alt="" width="512" height="512" />
-  <span class="brand__text">
-    <span class="brand__title">Agent Engineering Lab</span>
-    <span class="brand__subtitle">earn the complexity</span>
-  </span>
+  <span class="brand__title">Agent Engineering&nbsp;<span class="brand__accent">Lab</span></span>
 </a>
 
 <style>
-  .brand {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    color: var(--fg);
-    text-decoration: none;
-  }
-
-  .brand__mark {
-    display: block;
-    flex-shrink: 0;
-    border-radius: 3px;
-  }
-
-  .brand__text {
-    display: inline-flex;
-    flex-direction: column;
-    line-height: 1.1;
-  }
+  .brand { display: inline-flex; align-items: baseline; color: var(--fg); text-decoration: none; }
 
   .brand__title {
     font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: var(--tracking-tight);
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 1;
   }
 
-  .brand__subtitle {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--fg-light);
-  }
+  .brand__accent { color: var(--brick); }
 
-  .brand--sm .brand__mark { width: 22px; height: 22px; }
-  .brand--sm .brand__title { font-size: 14px; }
-  .brand--sm .brand__subtitle { font-size: 9px; margin-top: 1px; }
-  .brand--md .brand__mark { width: 30px; height: 30px; }
-  .brand--md .brand__title { font-size: 18px; }
-  .brand--md .brand__subtitle { font-size: 10px; margin-top: 2px; }
-  .brand--lg .brand__mark { width: 38px; height: 38px; }
-  .brand--lg .brand__title { font-size: 24px; }
-  .brand--lg .brand__subtitle { font-size: 11px; margin-top: 3px; }
+  .brand--sm .brand__title { font-size: 19px; }
+  .brand--md .brand__title { font-size: 24px; }
+  .brand--lg .brand__title { font-size: 32px; }
 
-  .brand:hover .brand__title { color: var(--brick); }
+  .brand:hover .brand__accent { color: var(--ink); }
 </style>

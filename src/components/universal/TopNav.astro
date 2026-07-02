@@ -46,9 +46,8 @@ const items = [
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--ink);
-    color: var(--paper);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink);
   }
 
   .topnav__inner {
@@ -56,47 +55,38 @@ const items = [
     margin: 0 auto;
     padding: var(--space-3) var(--space-5);
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: var(--space-6);
   }
 
-  .topnav :global(.brand) { color: var(--paper); }
-  .topnav :global(.brand__subtitle) { color: rgba(255, 255, 255, 0.5); }
-  .topnav :global(.brand:hover .brand__title) { color: var(--paper); }
-
-  .topnav__items {
-    display: flex;
-    gap: var(--space-5);
-    margin-left: auto;
-  }
+  .topnav__items { display: flex; gap: var(--space-5); margin-left: auto; }
 
   .topnav__link {
-    font-size: var(--meta-1);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--display-4);
+    color: #444;
     padding: var(--space-2) 0;
     border-bottom: 2px solid transparent;
     transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
   }
 
-  .topnav__link:hover { color: var(--paper); }
-  .topnav__link--current { color: var(--paper); border-bottom-color: var(--paper); }
+  .topnav__link:hover { color: var(--brick); }
+  .topnav__link--current { color: var(--fg); border-bottom-color: var(--brick); }
 
   .topnav__subscribe {
-    font-size: var(--meta-1);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: var(--paper);
-    background: var(--brick);
-    padding: var(--space-2) var(--space-4);
-    border-radius: 2px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--display-4);
+    color: var(--brick);
+    border-bottom: 1.5px solid var(--brick);
+    padding-bottom: 2px;
     white-space: nowrap;
-    transition: background var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    transition: color var(--dur-micro) var(--ease-out);
   }
 
-  .topnav__subscribe:hover { background: var(--paper); color: var(--ink); }
-  .topnav__subscribe:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+  .topnav__subscribe:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .topnav__subscribe:focus-visible { outline: 2px solid var(--brick); outline-offset: 3px; }
 
   @media (max-width: 720px) {
     .topnav__items { gap: var(--space-3); flex-wrap: wrap; }
