@@ -16,7 +16,7 @@ const { stats = defaultStats } = Astro.props;
 ---
 
 <section class="evidence-strip" aria-label="Evidence at a glance">
-  <a class="evidence-strip__inner" href="/evidence/">
+  <a class="evidence-strip__inner" href="/evidence/" aria-label="Evidence at a glance: workflow beat the agent by 3.4 points, at 2.4 times the cost and 2.2 times the latency. See the evidence.">
     {stats.map((stat) => (
       <span class="evidence-strip__stat">
         <span class="evidence-strip__value">{stat.value}</span>
