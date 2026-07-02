@@ -37,7 +37,7 @@ class DocumentWorkflow:
 
         citations = self._index.retrieve(query, top_k=top_k)
         messages = self._context.build(query=query, citations=citations)
-        request = CompletionRequest(messages=messages)
+        request = CompletionRequest(messages=messages, temperature=0.0)
         response = await self._client.complete(request)
 
         elapsed = (time.monotonic() - start) * 1000
