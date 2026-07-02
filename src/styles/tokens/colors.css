@@ -17,6 +17,10 @@
   --brick: #9b4a3f;
   --brick-wash: rgba(155, 74, 63, 0.06);
   --brick-rule: #9b4a3f;
+
+  /* Code frame (Gallery): warm recess + brick spine */
+  --code-bg: #f4f3ef;
+  --code-border: #ddd8ce;
 }
 
 /* No dark scheme custom palette — basic auto via CSS color-scheme; light-only is fine for W1. */

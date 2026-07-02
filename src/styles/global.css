@@ -20,7 +20,7 @@
 
 h1 {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 340;
   font-size: var(--display-1);
   line-height: var(--lh-tight);
   letter-spacing: var(--tracking-tight);
@@ -35,7 +35,7 @@ h2 {
 }
 
 h3 {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--display-4);
   line-height: var(--lh-snug);
@@ -63,7 +63,9 @@ pre {
   font-size: var(--body-3);
   padding: var(--space-4);
   border-radius: var(--radius-md);
-  border: 1px solid var(--fg-faint);
+  border: 1px solid var(--code-border);
+  border-left: 3px solid var(--brick);
+  background: var(--code-bg);
   overflow-x: auto;
 }
 
@@ -80,3 +82,5 @@ a {
 }
 
 a:hover { color: var(--brick); }
+
+:focus-visible { outline: 2px solid var(--brick); outline-offset: 3px; }
