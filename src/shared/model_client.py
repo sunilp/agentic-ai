@@ -59,10 +59,11 @@ class OpenAIClient(ModelClient):
         start = time.monotonic()
         payload: dict[str, Any] = {
             "model": self.model_name,
-            "messages": [_to_openai_message(m) for m in request.messages],
-            "temperature": request.temperature,
+            "messages": _to_openai_messages(request.messages),
             "max_tokens": request.max_tokens,
         }
+        if request.temperature is not None:
+            payload["temperature"] = request.temperature
         if request.tools:
             payload["tools"] = [_to_openai_tool(t) for t in request.tools]
         if request.response_format:
@@ -132,8 +133,9 @@ class AnthropicClient(ModelClient):
             "model": self.model_name,
             "messages": messages,
             "max_tokens": request.max_tokens,
-            "temperature": request.temperature,
         }
+        if request.temperature is not None:
+            payload["temperature"] = request.temperature
         if system_msg:
             payload["system"] = system_msg
         if request.tools:
@@ -217,7 +219,40 @@ def create_client(
 # --- Format converters (internal) ---
 
 
+def _to_openai_messages(messages: list[Message]) -> list[dict[str, Any]]:
+    """Convert a full message list to OpenAI's shape.
+
+    A `tool_results` message expands into one `role: "tool"` message per
+    result -- unlike Anthropic, OpenAI does not batch multiple tool results
+    into one message.
+    """
+    out: list[dict[str, Any]] = []
+    for msg in messages:
+        if msg.role == Role.TOOL and msg.tool_results:
+            for tr in msg.tool_results:
+                out.append({"role": "tool", "tool_call_id": tr.tool_call_id, "content": tr.content})
+        else:
+            out.append(_to_openai_message(msg))
+    return out
+
+
 def _to_openai_message(msg: Message) -> dict[str, Any]:
+    if msg.tool_calls:
+        # Same structural requirement as the Anthropic path: an assistant
+        # tool-call turn needs a `tool_calls` array the API can match the
+        # following tool-result messages against by id.
+        return {
+            "role": "assistant",
+            "content": None,
+            "tool_calls": [
+                {
+                    "id": tc.id,
+                    "type": "function",
+                    "function": {"name": tc.name, "arguments": json.dumps(tc.arguments)},
+                }
+                for tc in msg.tool_calls
+            ],
+        }
     d: dict[str, Any] = {"role": msg.role.value, "content": msg.content}
     if msg.name:
         d["name"] = msg.name
@@ -252,14 +287,38 @@ def _to_openai_tool(schema: ToolSchema) -> dict[str, Any]:
 
 
 def _to_anthropic_message(msg: Message) -> dict[str, Any]:
-    role = "user" if msg.role in (Role.USER, Role.TOOL) else "assistant"
     if msg.role == Role.TOOL:
+        if msg.tool_results:
+            # All of a turn's tool results travel together in one user
+            # message -- the API expects every tool_result for a turn's
+            # tool_use blocks to arrive in the immediately following turn.
+            return {
+                "role": "user",
+                "content": [
+                    {"type": "tool_result", "tool_use_id": tr.tool_call_id, "content": tr.content}
+                    for tr in msg.tool_results
+                ],
+            }
         return {
             "role": "user",
             "content": [
                 {"type": "tool_result", "tool_use_id": msg.tool_call_id, "content": msg.content}
             ],
         }
+    if msg.tool_calls:
+        # An assistant turn that called tools must carry them as structural
+        # `tool_use` blocks with the original id/name/input -- the API
+        # rejects a plain-text stand-in here because the `tool_result` that
+        # follows references a `tool_use_id` with no matching `tool_use`
+        # block otherwise.
+        return {
+            "role": "assistant",
+            "content": [
+                {"type": "tool_use", "id": tc.id, "name": tc.name, "input": tc.arguments}
+                for tc in msg.tool_calls
+            ],
+        }
+    role = "user" if msg.role == Role.USER else "assistant"
     return {"role": role, "content": msg.content}
 
 

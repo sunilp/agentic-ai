@@ -31,13 +31,43 @@ class SideEffect(StrEnum):
     DELETE = "delete"
 
 
+class ToolCall(BaseModel):
+    """A request from the model to execute a tool."""
+
+    id: str
+    name: str
+    arguments: dict[str, Any]
+
+
+class ToolResult(BaseModel):
+    """The result of executing a tool."""
+
+    tool_call_id: str
+    name: str
+    content: str
+    success: bool = True
+    error: str | None = None
+
+
 class Message(BaseModel):
-    """A single message in a conversation."""
+    """A single message in a conversation.
+
+    An assistant turn that calls tools carries them structurally in
+    `tool_calls` rather than encoding them into `content` -- this is what
+    lets the model client serialize a proper `tool_use` content block
+    instead of a plain-text stand-in the API can't reconcile with the
+    `tool_result` that follows it. Symmetrically, `tool_results` carries
+    every result from a turn's tool calls (there may be more than one --
+    the API executes them in parallel) so they can be returned together in
+    a single following message, as the API requires.
+    """
 
     role: Role
     content: str
     name: str | None = None
     tool_call_id: str | None = None
+    tool_calls: list[ToolCall] | None = None
+    tool_results: list[ToolResult] | None = None
 
 
 class ToolParameter(BaseModel):
@@ -60,30 +90,12 @@ class ToolSchema(BaseModel):
     requires_approval: bool = False
 
 
-class ToolCall(BaseModel):
-    """A request from the model to execute a tool."""
-
-    id: str
-    name: str
-    arguments: dict[str, Any]
-
-
-class ToolResult(BaseModel):
-    """The result of executing a tool."""
-
-    tool_call_id: str
-    name: str
-    content: str
-    success: bool = True
-    error: str | None = None
-
-
 class CompletionRequest(BaseModel):
     """A request to a language model."""
 
     messages: list[Message]
     tools: list[ToolSchema] | None = None
-    temperature: float = 0.0
+    temperature: float | None = None
     max_tokens: int = 4096
     response_format: dict[str, Any] | None = None
 
