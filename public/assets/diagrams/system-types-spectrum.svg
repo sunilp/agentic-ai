@@ -1,109 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300" font-family="Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 350" font-family="IBM Plex Mono, monospace">
   <defs>
-    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#9CA3AF"/>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
-    <linearGradient id="spectrumGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#93C5FD;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#EF4444;stop-opacity:0.7"/>
-    </linearGradient>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.18"/>
+    </pattern>
   </defs>
+  <rect width="760" height="350" fill="#fafaf8"/>
 
-  <!-- Background -->
-  <rect width="800" height="300" fill="#ffffff"/>
+  <!-- Spectrum direction -->
+  <text x="380" y="22" text-anchor="middle" font-size="11" fill="#6b6b6b">increasing autonomy, capability, and risk</text>
+  <line x1="46" y1="34" x2="708" y2="34" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
 
-  <!-- Title -->
-  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Five System Types: The Autonomy Spectrum</text>
-  <line x1="60" y1="42" x2="740" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+  <!-- 1: LLM APP -->
+  <rect x="46" y="56" width="124" height="82" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="108" y="80" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">LLM APP</text>
+  <text x="108" y="100" text-anchor="middle" font-size="11" fill="#6b6b6b">single response</text>
+  <text x="108" y="116" text-anchor="middle" font-size="11" fill="#6b6b6b">one call, done</text>
 
-  <!-- Gradient bar -->
-  <rect x="60" y="56" width="680" height="10" rx="5" fill="url(#spectrumGrad)"/>
+  <!-- 2: WORKFLOW -->
+  <rect x="182" y="56" width="124" height="82" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="244" y="80" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">WORKFLOW</text>
+  <text x="244" y="100" text-anchor="middle" font-size="11" fill="#6b6b6b">fixed pipeline</text>
+  <text x="244" y="116" text-anchor="middle" font-size="11" fill="#6b6b6b">code decides</text>
 
-  <!-- Spectrum endpoints -->
-  <text x="60" y="82" text-anchor="middle" font-size="11" fill="#6B7280">Least autonomous</text>
-  <text x="740" y="82" text-anchor="middle" font-size="11" fill="#6B7280">Most autonomous</text>
+  <!-- 3: TOOL-USING -->
+  <rect x="318" y="56" width="124" height="82" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="380" y="80" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">TOOL-USING</text>
+  <text x="380" y="100" text-anchor="middle" font-size="11" fill="#6b6b6b">picks the tool</text>
+  <text x="380" y="116" text-anchor="middle" font-size="11" fill="#6b6b6b">a single turn</text>
 
-  <!-- Box 1: LLM App -->
-  <rect x="28" y="92" width="128" height="72" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
-  <text x="92" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">LLM App</text>
-  <text x="92" y="130" text-anchor="middle" font-size="10" fill="#6B7280">Single call</text>
-  <text x="92" y="148" text-anchor="middle" font-size="10" fill="#6B7280">No autonomy —</text>
-  <text x="92" y="160" text-anchor="middle" font-size="10" fill="#6B7280">code controls all</text>
+  <!-- 4: AGENT; brick accent: single loop -->
+  <rect x="454" y="56" width="124" height="82" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="2"/>
+  <text x="516" y="80" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#9b4a3f">AGENT</text>
+  <text x="516" y="100" text-anchor="middle" font-size="11" fill="#1a1a1a">runs the loop</text>
+  <text x="516" y="116" text-anchor="middle" font-size="11" fill="#1a1a1a">model-directed</text>
 
-  <!-- Arrow 1→2 -->
-  <line x1="157" y1="128" x2="183" y2="128" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <!-- 5: MULTI-AGENT; position accent: stacked loops, not one box -->
+  <rect x="616" y="76" width="124" height="82" rx="2" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1.5"/>
+  <rect x="606" y="66" width="124" height="82" rx="2" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1.5"/>
+  <rect x="596" y="56" width="124" height="82" rx="2" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="658" y="80" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">MULTI-AGENT</text>
+  <text x="658" y="100" text-anchor="middle" font-size="11" fill="#6b6b6b">several loops</text>
+  <text x="658" y="116" text-anchor="middle" font-size="11" fill="#6b6b6b">delegate tasks</text>
 
-  <!-- Box 2: Workflow -->
-  <rect x="184" y="92" width="128" height="72" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
-  <text x="248" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#1D4ED8">Workflow</text>
-  <text x="248" y="130" text-anchor="middle" font-size="10" fill="#6B7280">Fixed pipeline</text>
-  <text x="248" y="148" text-anchor="middle" font-size="10" fill="#6B7280">Code routes steps —</text>
-  <text x="248" y="160" text-anchor="middle" font-size="10" fill="#6B7280">model executes each</text>
+  <!-- Property table -->
+  <line x1="46" y1="182" x2="714" y2="182" stroke="#e8e8e8" stroke-width="1"/>
 
-  <!-- Arrow 2→3 -->
-  <line x1="313" y1="128" x2="339" y2="128" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <text x="46" y="202" font-size="10" letter-spacing="1" fill="#6b6b6b">AUTONOMY</text>
+  <text x="108" y="220" text-anchor="middle" font-size="11" fill="#1a1a1a">None</text>
+  <text x="244" y="220" text-anchor="middle" font-size="11" fill="#1a1a1a">None</text>
+  <text x="380" y="220" text-anchor="middle" font-size="11" fill="#1a1a1a">Single-turn</text>
+  <text x="516" y="220" text-anchor="middle" font-size="11" fill="#1a1a1a">Multi-turn loop</text>
+  <text x="658" y="213" text-anchor="middle" font-size="11" fill="#1a1a1a">Multi-loop,</text>
+  <text x="658" y="227" text-anchor="middle" font-size="11" fill="#1a1a1a">multi-actor</text>
 
-  <!-- Box 3: Tool-Using -->
-  <rect x="340" y="92" width="128" height="72" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
-  <text x="404" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400E">Tool-Using</text>
-  <text x="404" y="130" text-anchor="middle" font-size="10" fill="#6B7280">Model picks tools</text>
-  <text x="404" y="148" text-anchor="middle" font-size="10" fill="#6B7280">Model selects actions —</text>
-  <text x="404" y="160" text-anchor="middle" font-size="10" fill="#6B7280">one turn only</text>
+  <line x1="46" y1="238" x2="714" y2="238" stroke="#e8e8e8" stroke-width="1"/>
 
-  <!-- Arrow 3→4 -->
-  <line x1="469" y1="128" x2="495" y2="128" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <text x="46" y="258" font-size="10" letter-spacing="1" fill="#6b6b6b">TESTABILITY</text>
+  <text x="108" y="276" text-anchor="middle" font-size="11" fill="#1a1a1a">Easy</text>
+  <text x="244" y="276" text-anchor="middle" font-size="11" fill="#1a1a1a">Easy</text>
+  <text x="380" y="276" text-anchor="middle" font-size="11" fill="#1a1a1a">Moderate</text>
+  <text x="516" y="276" text-anchor="middle" font-size="11" fill="#1a1a1a">Hard</text>
+  <text x="658" y="276" text-anchor="middle" font-size="11" fill="#1a1a1a">Very hard</text>
 
-  <!-- Box 4: Agent -->
-  <rect x="496" y="92" width="128" height="72" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
-  <text x="560" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#B91C1C">Agent</text>
-  <text x="560" y="130" text-anchor="middle" font-size="10" fill="#6B7280">Autonomous loop</text>
-  <text x="560" y="148" text-anchor="middle" font-size="10" fill="#6B7280">Model directs loop —</text>
-  <text x="560" y="160" text-anchor="middle" font-size="10" fill="#6B7280">multi-step decisions</text>
+  <line x1="46" y1="288" x2="714" y2="288" stroke="#e8e8e8" stroke-width="1"/>
 
-  <!-- Arrow 4→5 -->
-  <line x1="625" y1="128" x2="651" y2="128" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr-gray)"/>
-
-  <!-- Box 5: Multi-Agent -->
-  <rect x="652" y="92" width="128" height="72" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
-  <text x="716" y="114" text-anchor="middle" font-size="13" font-weight="bold" fill="#B91C1C">Multi-Agent</text>
-  <text x="716" y="130" text-anchor="middle" font-size="10" fill="#6B7280">Coordinated agents</text>
-  <text x="716" y="148" text-anchor="middle" font-size="10" fill="#6B7280">Multiple loops —</text>
-  <text x="716" y="160" text-anchor="middle" font-size="10" fill="#6B7280">distributed decisions</text>
-
-  <!-- Bottom properties row label -->
-  <text x="400" y="196" text-anchor="middle" font-size="11" font-weight="bold" fill="#9CA3AF">KEY PROPERTIES</text>
-
-  <!-- Property row: Autonomy -->
-  <text x="92"  y="218" text-anchor="middle" font-size="11" fill="#374151">None</text>
-  <text x="248" y="218" text-anchor="middle" font-size="11" fill="#374151">None</text>
-  <text x="404" y="218" text-anchor="middle" font-size="11" fill="#374151">Single-turn</text>
-  <text x="560" y="218" text-anchor="middle" font-size="11" fill="#374151">Multi-turn</text>
-  <text x="716" y="218" text-anchor="middle" font-size="11" fill="#374151">Multi-loop</text>
-
-  <text x="14" y="218" font-size="10" font-weight="bold" fill="#6B7280">Autonomy</text>
-
-  <!-- Property row: Testability -->
-  <text x="92"  y="238" text-anchor="middle" font-size="11" fill="#10B981">Easy</text>
-  <text x="248" y="238" text-anchor="middle" font-size="11" fill="#10B981">Easy</text>
-  <text x="404" y="238" text-anchor="middle" font-size="11" fill="#F59E0B">Moderate</text>
-  <text x="560" y="238" text-anchor="middle" font-size="11" fill="#EF4444">Hard</text>
-  <text x="716" y="238" text-anchor="middle" font-size="11" fill="#EF4444">Very hard</text>
-
-  <text x="14" y="238" font-size="10" font-weight="bold" fill="#6B7280">Testability</text>
-
-  <!-- Property row: Cost -->
-  <text x="92"  y="258" text-anchor="middle" font-size="11" fill="#10B981">High</text>
-  <text x="248" y="258" text-anchor="middle" font-size="11" fill="#10B981">High</text>
-  <text x="404" y="258" text-anchor="middle" font-size="11" fill="#F59E0B">Moderate</text>
-  <text x="560" y="258" text-anchor="middle" font-size="11" fill="#EF4444">Low</text>
-  <text x="716" y="258" text-anchor="middle" font-size="11" fill="#EF4444">Very low</text>
-
-  <text x="5" y="258" font-size="10" font-weight="bold" fill="#6B7280">Predictability</text>
-
-  <!-- Horizontal separator -->
-  <line x1="28" y1="206" x2="780" y2="206" stroke="#E5E7EB" stroke-width="1"/>
-  <line x1="28" y1="270" x2="780" y2="270" stroke="#E5E7EB" stroke-width="1"/>
-
-  <!-- Bottom guidance -->
-  <text x="400" y="290" text-anchor="middle" font-size="11" fill="#6B7280">Engineering principle: start at the left. Move right only when the simpler pattern cannot solve your problem.</text>
+  <text x="46" y="308" font-size="10" letter-spacing="1" fill="#6b6b6b">COST PREDICTABILITY</text>
+  <text x="108" y="326" text-anchor="middle" font-size="11" fill="#1a1a1a">High</text>
+  <text x="244" y="326" text-anchor="middle" font-size="11" fill="#1a1a1a">High</text>
+  <text x="380" y="326" text-anchor="middle" font-size="11" fill="#1a1a1a">Moderate</text>
+  <text x="516" y="326" text-anchor="middle" font-size="11" fill="#1a1a1a">Low</text>
+  <text x="658" y="326" text-anchor="middle" font-size="11" fill="#1a1a1a">Very low</text>
 </svg>
