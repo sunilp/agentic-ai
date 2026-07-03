@@ -9,6 +9,11 @@ references:
   - 03-workflow-first-agent-second
   - 04-multi-agent-without-theater
   - fn-001
+  - fn-003
+  - fn-004
+  - sg-002
+  - sg-003
+  - lab-001
 patterns:
   - workflow-first
   - agent-loop
@@ -17,13 +22,13 @@ status: published
 
 import Callout from '~/components/universal/Callout.astro';
 
-A team spent four months building what they called an agent. It had tools, a system prompt, and an API endpoint. It processed customer queries, looked up account information, searched a knowledge base, and generated responses. The architecture diagram showed an agent loop with dynamic tool selection.
+A composite, drawn from a pattern that recurs across support and account-lookup agents: a team spent months building what they called an agent. It had tools, a system prompt, and an API endpoint. It processed customer queries, looked up account information, searched a knowledge base, and generated responses. The architecture diagram showed an agent loop with dynamic tool selection.
 
-When we instrumented it, the data told a different story. The system called the same three tools in the same order on every query. It never skipped a step. It never went back to re-retrieve after seeing the account. It never decided that a different approach was needed. It was a workflow wearing an agent costume. The agent loop added 3x latency, 2.5x token cost, and occasional random skipping behavior where the model decided to drop the account lookup step entirely, producing generic responses for customers with specific billing problems.
+When the team instrumented it, the data told a different story. The system called the same three tools in the same order on every query. It never skipped a step. It never went back to re-retrieve after seeing the account. It never decided that a different approach was needed. It was a workflow wearing an agent costume -- the same mislabeling [FN-003](/field-notes/003-anthropic-told-you-harness-is-product/) documents from the other direction, where credit for what a harness does gets attributed to the model instead. The agent loop added real latency and token cost over a fixed pipeline, plus something worse: occasional random skipping, where the model decided to drop the account lookup step entirely, producing generic responses for customers with specific billing problems.
 
-Replacing the agent with a fixed three-step pipeline improved response time, reduced cost, and eliminated the skipping behavior. Four months of engineering, rebuilt in a week, because nobody had asked the question this chapter answers: what kind of system are we actually building?
+Replacing the agent with a fixed three-step pipeline improved response time, reduced cost, and eliminated the skipping behavior. Months of engineering, rebuilt in a fraction of the time, because nobody had asked the question this chapter answers: what kind of system are we actually building?
 
-The word "agent" is used to describe everything from a chatbot with a system prompt to a multi-model orchestration system that autonomously manages infrastructure. When a term means everything, it means nothing, and engineering decisions based on ambiguous terminology produce ambiguous systems. Teams build agents when they need workflows. They add autonomy to systems that need predictability. Not because they lack skill, but because the vocabulary they are working with does not help them distinguish between fundamentally different system shapes.
+The word "agent" describes everything from a chatbot with a system prompt to a multi-model orchestration system that autonomously manages infrastructure. When a term means everything, it means nothing, and ambiguous terminology produces ambiguous engineering decisions. Teams build agents when they need workflows and add autonomy to systems that need predictability -- not for lack of skill, but because the vocabulary does not distinguish between fundamentally different system shapes.
 
 ## The five system types
 
@@ -43,7 +48,7 @@ The model's role is generation. The system's control flow is entirely in your co
 
 A workflow is a deterministic sequence of steps where some steps involve LLM calls. The key property: the control flow is fixed. Step A always happens before Step B. The code decides what happens next, never the model.
 
-Examples: a RAG pipeline (retrieve, then generate), an extraction pipeline (parse, then extract, then validate), a content pipeline (draft, then review, then format).
+Examples: a RAG pipeline (retrieve, then generate -- see [SG-002](/signal/002-when-long-context-replaces-rag/) for when long context changes that architecture), an extraction pipeline (parse, then extract, then validate), a content pipeline (draft, then review, then format).
 
 The model's role is execution within each step. Between steps, your code handles routing, error checking, and data transformation.
 
@@ -61,7 +66,7 @@ The model's role expands to include action selection. It is no longer just gener
 
 ### 4. Agent
 
-An agent is a system where the model participates in a loop, making decisions at each iteration about what to do next based on what it has observed so far. The defining characteristic is the loop: observe the current state, decide on an action, execute it, observe the result, and repeat.
+An agent is a system where the model participates in a loop, making decisions at each iteration about what to do next based on what it has observed so far. The defining characteristic is the loop: observe the current state, decide on an action, execute it, observe the result, and repeat -- the same shape Rao and Georgeff described for belief-desire-intention agents in 1995, decades before a language model sat inside it.
 
 This is where autonomy enters the picture. The model is not just executing a fixed plan. It is deciding, at each step, whether to gather more information, call a tool, refine its approach, or produce a final answer. The control flow is no longer fully in your code.
 
@@ -70,7 +75,7 @@ Examples: a research agent that searches, reads, searches again based on what it
 **Failure surface:** Everything from tool-using systems, plus: unbounded loops (the agent keeps going without converging), budget exhaustion (the agent runs out of steps before reaching an answer), compounding errors (each step's mistakes feed into the next step's context), and the fundamental unpredictability of having a probabilistic system make control-flow decisions.
 
 <figure>
-  <img src="/assets/diagrams/agent-anatomy.svg" alt="The four components of the agent loop: observe, think, act, and the iteration budget" />
+  <img src="/assets/diagrams/agent-anatomy.svg" alt="The four components of the agent loop: observe, reason, act, and state" />
   <figcaption>Figure 1.1: Agent Anatomy -- the four components of the agent loop</figcaption>
 </figure>
 
@@ -81,6 +86,8 @@ A multi-agent system involves multiple agents that communicate, delegate, or coo
 Examples: a system where a planning agent breaks down a task and delegates subtasks to specialist agents, a peer review system where one agent drafts and another critiques.
 
 **Failure surface:** Everything from single agents, multiplied by the number of agents, plus: coordination failures (agents work at cross purposes), delegation errors (the wrong agent gets the wrong subtask), communication overhead (agents spend tokens talking to each other rather than solving the problem), and emergent behaviors that no individual agent was designed to produce.
+
+Whether that failure surface is worth taking on is a property of the task, not a maturity level to graduate to -- [SG-003](/signal/003-multi-agent-decision-variable/) gives the decision rule (does the work decompose into branches that do not need to see each other, or does it share state), and [Lab-001](/labs/multi-agent-vs-router-100-queries/) measures what it costs to get that call wrong.
 
 ## Comparison table
 
@@ -106,9 +113,9 @@ Read this table from left to right as a spectrum of increasing autonomy, increas
 
 The concept that makes agents practical in production is bounded autonomy. Unbounded autonomy -- "do whatever you think is best until you are done" -- is not an engineering pattern. It is a hope. And in production, hope is not a strategy.
 
-Consider what happens without bounds. You deploy an agent that can search documents, call APIs, and generate reports. A user sends a tricky query. The agent searches, finds partial results, searches again with a refined query, finds more partial results, tries a third approach, calls an extraction tool, gets an error, retries, searches yet again. Twenty model calls later, it produces an answer that is no better than what it had after the second call. It burned $0.15 in tokens, took 45 seconds, and the user has already given up and called a human.
+Consider what happens without bounds. A representative case, composited from agents built without stop conditions: you deploy an agent that can search documents, call APIs, and generate reports. A user sends a tricky query. The agent searches, finds partial results, searches again with a refined query, finds more partial results, tries a third approach, calls an extraction tool, gets an error, retries, searches yet again. Many model calls later, it produces an answer no better than what it had several steps earlier -- burning tokens and time the user does not have, until the user gives up and calls a human.
 
-This is not a theoretical failure mode. It is the default behavior of an agent without bounds. Language models do not have an inherent sense of diminishing returns. They will keep working -- keep consuming tokens, keep adding latency -- because their training rewarded being thorough, not being efficient.
+This is not a theoretical failure mode. It is the default behavior of an agent without bounds. Language models do not have a built-in sense of diminishing returns, and knowing when to stop turns out to be a harder problem than it looks: [FN-004](/field-notes/004-loop-engineering-30-year-old-loop/) traces the stop condition back to a thirty-year-old problem in the agent literature that predates language models entirely and remains unsolved. Run a bounded agent against one without a stop condition yourself on [the Bench](/bench/).
 
 Bounded autonomy means the agent operates within explicit constraints:
 
@@ -118,13 +125,11 @@ Bounded autonomy means the agent operates within explicit constraints:
 
 A larger action space is not always better. Each additional tool increases the probability that the model picks the wrong one. It also increases the surface area for tool-argument hallucination. Design the action space to include exactly what the agent needs and nothing more.
 
-**Stop conditions.** The agent has explicit criteria for when to stop: confidence above a threshold, all required fields extracted, or budget exhausted. "I think I am done" is not a stop condition. Stop conditions are checked in code, not left to the model's judgment. The model can signal that it wants to stop (by producing text instead of tool calls), but the system verifies that the stopping criteria are met.
+**Stop conditions.** The agent has explicit criteria for when to stop: confidence above a threshold, all required fields extracted, or budget exhausted. "I think I am done" is not a stop condition. Stop conditions are checked in code, not left to the model's judgment. The model can signal that it wants to stop (by producing text instead of tool calls), but the system verifies that the stopping criteria are met. This split matters because a model grading its own stopping criteria is not a stop condition at all -- [FN-004](/field-notes/004-loop-engineering-30-year-old-loop/) traces the evidence that models cannot reliably find their own errors, which is why the check has to live outside the model being checked.
 
 **Escalation policy.** When the agent cannot meet its confidence threshold within its budget, it escalates rather than guesses. This is the difference between a system that fails gracefully and one that fails silently. Escalation means the system says: "I was unable to answer this confidently. Here is what I found, and here is what is missing." This is vastly more useful than a confident wrong answer, which the downstream consumer has no reason to question.
 
-The interplay between these bounds matters. The budget prevents runaway execution. The action space prevents unexpected behavior. Stop conditions prevent premature or late termination. Escalation handles the cases that fall outside the system's capability. Together, they create a bounded region of autonomous operation that is predictable enough to trust and capable enough to be useful.
-
-These bounds are not restrictions on intelligence. They are the engineering controls that make intelligence useful. A system without bounds is not more capable -- it is less trustworthy. The engineering challenge is calibrating the bounds: tight enough to prevent waste, loose enough to let the agent do its job.
+The interplay matters: budget prevents runaway execution, action space prevents unexpected behavior, stop conditions prevent premature or late termination, and escalation handles what falls outside the system's capability. Together, they form a bounded, trustworthy, useful region of autonomy -- not a restriction on intelligence but the engineering control that makes it usable. Calibrating the bounds is the real challenge: tight enough to prevent waste, loose enough to let the agent do its job.
 
 ## What is not an agent
 
@@ -203,11 +208,9 @@ The key phrase is "not known in advance." If you can write an if/else chain that
 - The coordination overhead is justified by the specialization benefit
 - Example: large-scale research with synthesis, systems with distinct review/approval stages
 
-Multi-agent systems are the most complex and least predictable option. Before choosing this pattern, ask: can I achieve the same decomposition with multiple tools inside a single agent? Usually the answer is yes. Multi-agent systems are justified only when the subtasks require truly different system prompts, different model configurations, or parallel execution with independent state.
+Multi-agent systems are the most complex and least predictable option. Before choosing this pattern, ask: can I achieve the same decomposition with multiple tools inside a single agent? Usually the answer is yes. On a 100-query customer-support benchmark filtered to tasks resolvable in under five turns, a workflow router beat a three-agent hierarchy 87% to 74% on accuracy, at less than half the cost and latency ([Lab-001](/labs/multi-agent-vs-router-100-queries/); the decision rule behind the number is in [SG-003](/signal/003-multi-agent-decision-variable/)). Multi-agent systems are justified only when the subtasks require truly different system prompts, different model configurations, or parallel execution with independent state -- when the work genuinely does not decompose into tools one agent can call.
 
-At each step to the right, you gain capability and lose predictability. The engineering question is always: does the next level of autonomy buy me enough capability to justify what I lose in control?
-
-For most production systems today, the answer lands on "workflow" or "tool-using system." Agents are appropriate less often than the current discourse suggests. Multi-agent systems are appropriate rarely. This is not a criticism of the technology. It is a recognition that simpler architectures are easier to build, test, operate, and trust.
+For most production systems today, the answer lands on "workflow" or "tool-using system." Agents are appropriate less often than the June 2026 loop-engineering discourse suggests ([FN-004](/field-notes/004-loop-engineering-30-year-old-loop/) traces where that discourse overreaches). Multi-agent systems are appropriate rarely. This is not a criticism of the technology. It is a recognition that simpler architectures are easier to build, test, operate, and trust.
 
 ## Core concepts: a precise vocabulary
 
@@ -216,6 +219,8 @@ Before we move to building, a few terms that will recur throughout the book.
 **Action space.** The set of actions available to an agent at any given step. In our system, this is the set of registered tools plus the action of producing a final answer. A smaller action space is almost always better -- it reduces the model's decision burden and the system's failure surface.
 
 **Observation.** The information available to the agent at the start of a step. This includes the original query, retrieved evidence, tool results from previous steps, and any state the system maintains. What you include in the observation is a design decision with direct impact on quality and cost.
+
+**State.** What the loop carries forward between steps: results already retrieved, decisions already made, tools already called. State is what makes step three different from a fresh start -- the agent remembers what came before, and how much of that memory feeds back into the next observation is itself a design decision.
 
 **Step.** One iteration of the observe-think-act loop. The agent observes the current state, decides on an action, and executes it. Each step consumes tokens and adds latency. Steps are the unit of budget.
 
@@ -250,3 +255,12 @@ You now have a vocabulary and a decision framework. You know what an agent is, w
 But understanding the taxonomy is not enough to build anything. The next step is concrete: what does an LLM actually need to know and do to become useful inside a system? How do you give it tools, assemble its context, and structure the loop that turns a language model into a component that can reason and act?
 
 Chapter 2 answers these questions with working code.
+
+## Further reading
+
+- **["BDI Agents: From Theory to Practice"](https://cdn.aaai.org/ICMAS/1995/ICMAS95-042.pdf)** -- Rao and Georgeff, 1995. The observe-decide-execute loop behind this chapter's agent definition, three decades before "agent loop" was a term anyone used.
+- **[FN-003: Anthropic just told you the harness is the product](/field-notes/003-anthropic-told-you-harness-is-product/)** -- Why crediting a model for what its harness did is the same category error as calling a workflow an agent.
+- **[FN-004: Loop engineering is a 30-year-old loop with a new hashtag](/field-notes/004-loop-engineering-30-year-old-loop/)** -- Why the stop condition this chapter treats as a design requirement is still an open problem, and what an enforced gate looks like against a real agent.
+- **[SG-002: Long context did not kill RAG. It changed what retrieval is for.](/signal/002-when-long-context-replaces-rag/)** -- The routing rule for when a RAG workflow can be replaced by a long context window, and when it cannot.
+- **[SG-003: Multi-agent is not an architecture decision. It is a workload decision.](/signal/003-multi-agent-decision-variable/)** -- The decision rule behind this chapter's multi-agent guidance: decomposability, not maturity, decides.
+- **[Lab-001: Multi-agent vs router on 100 customer-support queries](/labs/multi-agent-vs-router-100-queries/)** -- The experiment behind the 87% vs 74% figure in the decision map above.
