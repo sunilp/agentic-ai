@@ -1,62 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" font-family="Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 560" font-family="IBM Plex Mono, monospace">
   <defs>
-    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
-    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
-    </marker>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.18"/>
+    </pattern>
   </defs>
+  <rect width="560" height="560" fill="#fafaf8"/>
 
-  <!-- Background -->
-  <rect width="500" height="500" fill="#ffffff"/>
+  <!-- OBSERVATION (top) -->
+  <rect x="185" y="40" width="190" height="80" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="280" y="66" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">OBSERVATION</text>
+  <text x="280" y="88" text-anchor="middle" font-size="11" fill="#6b6b6b">query &#183; evidence &#183;</text>
+  <text x="280" y="104" text-anchor="middle" font-size="11" fill="#6b6b6b">prior state</text>
 
-  <!-- Title -->
-  <text x="250" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Agent Anatomy: The Four Components</text>
-  <line x1="40" y1="44" x2="460" y2="44" stroke="#D1D5DB" stroke-width="1"/>
+  <!-- REASONING (right); brick accent: the decision point -->
+  <rect x="382" y="234" width="158" height="96" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="2"/>
+  <text x="461" y="262" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#9b4a3f">REASONING</text>
+  <text x="461" y="283" text-anchor="middle" font-size="11" fill="#1a1a1a">decide: act, refine,</text>
+  <text x="461" y="299" text-anchor="middle" font-size="11" fill="#1a1a1a">or answer</text>
+  <text x="461" y="318" text-anchor="middle" font-size="11" fill="#9b4a3f">the decision point</text>
 
-  <!-- Center circle: Agent Loop label -->
-  <circle cx="250" cy="272" r="58" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="2"/>
-  <text x="250" y="267" text-anchor="middle" font-size="14" font-weight="bold" fill="#374151">Agent</text>
-  <text x="250" y="284" text-anchor="middle" font-size="14" font-weight="bold" fill="#374151">Loop</text>
+  <!-- ACTION (bottom) -->
+  <rect x="185" y="440" width="190" height="80" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="280" y="466" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">ACTION</text>
+  <text x="280" y="488" text-anchor="middle" font-size="11" fill="#6b6b6b">execute the tool call</text>
+  <text x="280" y="504" text-anchor="middle" font-size="11" fill="#6b6b6b">or produce an answer</text>
 
-  <!-- TOP: Observation -->
-  <rect x="155" y="62" width="190" height="72" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
-  <text x="250" y="90" text-anchor="middle" font-size="15" font-weight="bold" fill="#1D4ED8">Observation</text>
-  <text x="250" y="108" text-anchor="middle" font-size="11" fill="#6B7280">Perceive current state</text>
-  <text x="250" y="124" text-anchor="middle" font-size="11" fill="#6B7280">query · tool results · history</text>
+  <!-- STATE (left) -->
+  <rect x="20" y="234" width="158" height="96" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="99" y="262" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">STATE</text>
+  <text x="99" y="283" text-anchor="middle" font-size="11" fill="#6b6b6b">what carries forward</text>
+  <text x="99" y="299" text-anchor="middle" font-size="11" fill="#6b6b6b">to the next step</text>
 
-  <!-- RIGHT: Reasoning -->
-  <rect x="322" y="234" width="150" height="72" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
-  <text x="397" y="262" text-anchor="middle" font-size="15" font-weight="bold" fill="#92400E">Reasoning</text>
-  <text x="397" y="280" text-anchor="middle" font-size="11" fill="#6B7280">Decide what to do</text>
-  <text x="397" y="296" text-anchor="middle" font-size="11" fill="#6B7280">next · LLM call</text>
+  <!-- Arrows, clockwise: Observation -> Reasoning -> Action -> State -> Observation -->
+  <path d="M368,120 Q460,152 461,232" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="478" y="172" text-anchor="middle" font-size="11" fill="#6b6b6b">the model</text>
+  <text x="478" y="186" text-anchor="middle" font-size="11" fill="#6b6b6b">decides</text>
 
-  <!-- BOTTOM: Action -->
-  <rect x="155" y="378" width="190" height="72" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
-  <text x="250" y="406" text-anchor="middle" font-size="15" font-weight="bold" fill="#B91C1C">Action</text>
-  <text x="250" y="424" text-anchor="middle" font-size="11" fill="#6B7280">Execute via tools</text>
-  <text x="250" y="440" text-anchor="middle" font-size="11" fill="#6B7280">or return answer</text>
+  <path d="M461,332 Q461,398 380,440" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="478" y="382" text-anchor="middle" font-size="11" fill="#6b6b6b">chosen</text>
+  <text x="478" y="396" text-anchor="middle" font-size="11" fill="#6b6b6b">action</text>
 
-  <!-- LEFT: State -->
-  <rect x="28" y="234" width="150" height="72" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
-  <text x="103" y="262" text-anchor="middle" font-size="15" font-weight="bold" fill="#065F46">State</text>
-  <text x="103" y="280" text-anchor="middle" font-size="11" fill="#6B7280">Memory of what</text>
-  <text x="103" y="296" text-anchor="middle" font-size="11" fill="#6B7280">happened so far</text>
+  <path d="M185,440 Q99,398 99,332" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="82" y="382" text-anchor="middle" font-size="11" fill="#6b6b6b">result</text>
+  <text x="82" y="396" text-anchor="middle" font-size="11" fill="#6b6b6b">recorded</text>
 
-  <!-- Arrow: Observation → Reasoning (top to right, clockwise) -->
-  <!-- From bottom-right of Observation box toward Reasoning -->
-  <path d="M345,134 Q420,134 420,232" fill="none" stroke="#6B7280" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M99,232 Q99,152 192,120" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="82" y="172" text-anchor="middle" font-size="11" fill="#6b6b6b">carried into</text>
+  <text x="82" y="186" text-anchor="middle" font-size="11" fill="#6b6b6b">next step</text>
 
-  <!-- Arrow: Reasoning → Action (right to bottom, clockwise) -->
-  <path d="M420,308 Q420,378 345,414" fill="none" stroke="#6B7280" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- Arrow: Action → State (bottom to left, clockwise) -->
-  <path d="M155,414 Q80,378 80,308" fill="none" stroke="#6B7280" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- Arrow: State → Observation (left to top, clockwise) -->
-  <path d="M80,232 Q80,134 155,134" fill="none" stroke="#6B7280" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- Small clockwise rotation hint -->
-  <text x="250" y="466" text-anchor="middle" font-size="11" fill="#9CA3AF">Each step: observe → reason → act → update state → repeat</text>
+  <!-- Center -->
+  <text x="280" y="272" text-anchor="middle" font-size="12" font-weight="500" fill="#1a1a1a">ONE ITERATION = ONE STEP</text>
+  <text x="280" y="293" text-anchor="middle" font-size="11" fill="#6b6b6b">repeats until a stop</text>
+  <text x="280" y="308" text-anchor="middle" font-size="11" fill="#6b6b6b">condition ends it</text>
 </svg>
