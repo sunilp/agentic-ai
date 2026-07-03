@@ -1,0 +1,11 @@
+# Scoring rubric for Lab-002. An LLM judge (qwen2.5:14b, local) re-scores each
+# recorded finding against the incident's ground truth root cause and
+# remediation, plus whether the proposed action was the sanctioned one.
+weights:
+  root_cause_match: 0.5
+  remediation_match: 0.3
+  action_correct: 0.2
+pass_threshold: 0.6
+judge:
+  provider: local
+  model: qwen2.5:14b
