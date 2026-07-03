@@ -8,6 +8,10 @@ from google.adk import Agent, Context, Event, Workflow
 from google.adk.events import RequestInput
 from google.adk.runners import Runner
 from google.adk.workflow import node
+
+# Private ADK module: no public re-export exists for the resume-response helper in
+# 2.3.0. Verified against google-adk 2.3.0; pyproject pins ~=2.3.0 to keep this path
+# stable. If a later ADK release relocates it, update this import.
 from google.adk.workflow.utils._workflow_hitl_utils import create_request_input_response
 from google.genai import types
 
