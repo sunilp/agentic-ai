@@ -89,7 +89,36 @@ const items = [
   .topnav__subscribe:focus-visible { outline: 2px solid var(--brick); outline-offset: 3px; }
 
   @media (max-width: 720px) {
-    .topnav__items { gap: var(--space-3); flex-wrap: wrap; }
-    .topnav__subscribe { margin-left: auto; }
+    .topnav__inner {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      row-gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+    }
+
+    .topnav__inner :global(.brand) { order: 1; }
+
+    .topnav__subscribe { order: 2; margin-left: 0; }
+
+    .topnav__items {
+      order: 3;
+      width: 100%;
+      margin-left: 0;
+      flex-wrap: nowrap;
+      gap: var(--space-4);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+    }
+
+    .topnav__items::-webkit-scrollbar { display: none; }
+
+    .topnav__link {
+      font-size: 16px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
   }
 </style>

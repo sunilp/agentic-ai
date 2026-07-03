@@ -1,65 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 260" width="780" height="260" style="background:#fff;font-family:system-ui,-apple-system,sans-serif;">
-
-  <rect width="780" height="260" fill="#ffffff"/>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" font-family="IBM Plex Mono, monospace">
   <defs>
-    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#3d7ab5"/>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
   </defs>
-
-  <!-- Title -->
-  <text x="390" y="28" text-anchor="middle" font-size="16" font-weight="600" fill="#1a1a1a">MCP Architecture: Three Roles</text>
+  <rect width="780" height="300" fill="#fafaf8"/>
 
   <!-- Host -->
-  <rect x="30" y="60" width="200" height="160" rx="10" fill="#1a3a5c" stroke="none"/>
-  <text x="130" y="88" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">Host</text>
-  <text x="130" y="106" text-anchor="middle" font-size="9" fill="#c5d5e4">Your AI application</text>
-  <line x1="50" y1="114" x2="210" y2="114" stroke="#3d7ab5" stroke-width="0.5"/>
+  <rect x="40" y="40" width="290" height="224" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="60" y="66" font-size="11" letter-spacing="2" font-weight="500" fill="#1a1a1a">HOST</text>
+  <text x="120" y="66" font-size="11" fill="#6b6b6b">your AI application</text>
+  <line x1="60" y1="78" x2="310" y2="78" stroke="#e8e8e8" stroke-width="1"/>
 
-  <!-- LLM inside host -->
-  <rect x="55" y="124" width="150" height="30" rx="5" fill="#3d7ab5"/>
-  <text x="130" y="143" text-anchor="middle" font-size="10" fill="#fff">LLM (Claude, GPT, etc.)</text>
+  <!-- Model inside host -->
+  <rect x="64" y="92" width="242" height="46" rx="2" fill="none" stroke="#6b6b6b" stroke-width="1.5"/>
+  <text x="185" y="111" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">THE MODEL</text>
+  <text x="185" y="129" text-anchor="middle" font-size="10.5" fill="#6b6b6b">sees tools from both servers</text>
 
-  <!-- Client inside host -->
-  <rect x="55" y="164" width="150" height="30" rx="5" fill="#7eb3d8"/>
-  <text x="130" y="183" text-anchor="middle" font-size="10" fill="#1a3a5c" font-weight="500">MCP Client</text>
+  <!-- Client A -->
+  <rect x="64" y="152" width="242" height="44" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="185" y="170" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">MCP CLIENT A</text>
+  <text x="185" y="188" text-anchor="middle" font-size="10.5" fill="#6b6b6b">one session · server 1</text>
 
-  <!-- Arrow from client to server 1 -->
-  <line x1="230" y1="140" x2="310" y2="100" stroke="#3d7ab5" stroke-width="1.5" marker-end="url(#ar)"/>
-  <line x1="230" y1="179" x2="310" y2="179" stroke="#3d7ab5" stroke-width="1.5" marker-end="url(#ar)"/>
-
-  <!-- Protocol label -->
-  <text x="270" y="132" text-anchor="middle" font-size="8" fill="#3d7ab5" transform="rotate(-20,270,132)">JSON-RPC</text>
-  <text x="270" y="172" text-anchor="middle" font-size="8" fill="#3d7ab5">JSON-RPC</text>
+  <!-- Client B -->
+  <rect x="64" y="208" width="242" height="44" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="185" y="226" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">MCP CLIENT B</text>
+  <text x="185" y="244" text-anchor="middle" font-size="10.5" fill="#6b6b6b">one session · server 2</text>
 
   <!-- Server 1 -->
-  <rect x="315" y="60" width="190" height="80" rx="8" fill="#e8f0f7" stroke="#7eb3d8" stroke-width="1.5"/>
-  <text x="410" y="85" text-anchor="middle" font-size="12" font-weight="600" fill="#1a3a5c">MCP Server 1</text>
-  <text x="410" y="102" text-anchor="middle" font-size="9" fill="#6B7280">e.g. Database tools</text>
-  <rect x="335" y="112" width="60" height="18" rx="3" fill="#c5d5e4"/>
-  <text x="365" y="124" text-anchor="middle" font-size="8" fill="#1a3a5c">query</text>
-  <rect x="405" y="112" width="60" height="18" rx="3" fill="#c5d5e4"/>
-  <text x="435" y="124" text-anchor="middle" font-size="8" fill="#1a3a5c">insert</text>
+  <rect x="540" y="52" width="210" height="84" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="645" y="74" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">MCP SERVER 1</text>
+  <text x="645" y="92" text-anchor="middle" font-size="10.5" fill="#6b6b6b">document tools</text>
+  <rect x="558" y="102" width="48" height="20" rx="2" fill="#e8e8e8"/>
+  <text x="582" y="116" text-anchor="middle" font-size="10" fill="#1a1a1a">list</text>
+  <rect x="614" y="102" width="48" height="20" rx="2" fill="#e8e8e8"/>
+  <text x="638" y="116" text-anchor="middle" font-size="10" fill="#1a1a1a">read</text>
+  <rect x="670" y="102" width="62" height="20" rx="2" fill="#e8e8e8"/>
+  <text x="701" y="116" text-anchor="middle" font-size="10" fill="#1a1a1a">search</text>
 
   <!-- Server 2 -->
-  <rect x="315" y="155" width="190" height="80" rx="8" fill="#e8f0f7" stroke="#7eb3d8" stroke-width="1.5"/>
-  <text x="410" y="180" text-anchor="middle" font-size="12" font-weight="600" fill="#1a3a5c">MCP Server 2</text>
-  <text x="410" y="197" text-anchor="middle" font-size="9" fill="#6B7280">e.g. Search tools</text>
-  <rect x="335" y="207" width="60" height="18" rx="3" fill="#c5d5e4"/>
-  <text x="365" y="219" text-anchor="middle" font-size="8" fill="#1a3a5c">search</text>
-  <rect x="405" y="207" width="60" height="18" rx="3" fill="#c5d5e4"/>
-  <text x="435" y="219" text-anchor="middle" font-size="8" fill="#1a3a5c">fetch</text>
+  <rect x="540" y="168" width="210" height="84" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="645" y="190" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">MCP SERVER 2</text>
+  <text x="645" y="208" text-anchor="middle" font-size="10.5" fill="#6b6b6b">database tools</text>
+  <rect x="576" y="218" width="58" height="20" rx="2" fill="#e8e8e8"/>
+  <text x="605" y="232" text-anchor="middle" font-size="10" fill="#1a1a1a">query</text>
+  <rect x="642" y="218" width="66" height="20" rx="2" fill="#e8e8e8"/>
+  <text x="675" y="232" text-anchor="middle" font-size="10" fill="#1a1a1a">insert</text>
 
-  <!-- Transport labels -->
-  <rect x="560" y="70" width="190" height="80" rx="8" fill="#f8f9fa" stroke="#c5d5e4" stroke-width="1"/>
-  <text x="655" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#1a3a5c">Transports</text>
-  <text x="580" y="114" font-size="10" fill="#3d7ab5" font-weight="500">stdio</text>
-  <text x="620" y="114" font-size="9" fill="#6B7280">Local process (fast)</text>
-  <text x="580" y="134" font-size="10" fill="#3d7ab5" font-weight="500">HTTP</text>
-  <text x="620" y="134" font-size="9" fill="#6B7280">Remote server (flexible)</text>
+  <!-- Sessions -->
+  <line x1="306" y1="174" x2="534" y2="98" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="422" y="104" text-anchor="middle" font-size="10.5" fill="#1a1a1a">stdio · local subprocess</text>
 
-  <line x1="507" y1="100" x2="558" y2="100" stroke="#c5d5e4" stroke-width="1" stroke-dasharray="4,2"/>
-  <line x1="507" y1="195" x2="558" y2="130" stroke="#c5d5e4" stroke-width="1" stroke-dasharray="4,2"/>
+  <line x1="306" y1="230" x2="534" y2="216" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="420" y="212" text-anchor="middle" font-size="10.5" fill="#1a1a1a">Streamable HTTP · remote</text>
 
+  <text x="420" y="164" text-anchor="middle" font-size="10.5" font-weight="500" fill="#9b4a3f">one client &#8596; one server</text>
+
+  <!-- Footnote -->
+  <text x="390" y="290" text-anchor="middle" font-size="11" fill="#6b6b6b">JSON-RPC 2.0 over both transports · the host runs one client per server it connects to</text>
 </svg>

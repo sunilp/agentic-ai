@@ -1,71 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400" viewBox="0 0 700 400" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" font-family="IBM Plex Mono, monospace">
   <defs>
-    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
-    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L7,4.5 L1,8" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
+    <pattern id="hatchBrick" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#9b4a3f" stroke-width="1" opacity="0.18"/>
+    </pattern>
   </defs>
+  <rect width="700" height="400" fill="#fafaf8"/>
 
-  <!-- Background -->
-  <rect width="700" height="400" fill="#ffffff"/>
+  <!-- Root -->
+  <rect x="230" y="36" width="240" height="56" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="350" y="60" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#1a1a1a">WHAT ARE YOU BUILDING?</text>
+  <text x="350" y="80" text-anchor="middle" font-size="11" fill="#6b6b6b">before choosing a framework</text>
 
-  <!-- Title -->
-  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Framework Decision Tree</text>
-  <line x1="40" y1="42" x2="660" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+  <!-- Branch: learning -->
+  <line x1="282" y1="92" x2="168" y2="140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="176" y="110" text-anchor="middle" font-size="11" fill="#6b6b6b">learning ·</text>
+  <text x="176" y="124" text-anchor="middle" font-size="11" fill="#6b6b6b">exploring</text>
 
-  <!-- ROOT: What are you building? -->
-  <rect x="220" y="60" width="260" height="56" rx="10" fill="#F3F4F6" stroke="#6B7280" stroke-width="2"/>
-  <text x="350" y="84" text-anchor="middle" font-size="14" font-weight="bold" fill="#111827">What are you building?</text>
-  <text x="350" y="102" text-anchor="middle" font-size="11" fill="#6B7280">Start here before choosing a framework</text>
+  <!-- Branch: production -->
+  <line x1="418" y1="92" x2="532" y2="140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="522" y="110" text-anchor="middle" font-size="11" fill="#6b6b6b">production</text>
+  <text x="522" y="124" text-anchor="middle" font-size="11" fill="#6b6b6b">system</text>
 
-  <!-- Arrow left: Learning/exploring -->
-  <line x1="280" y1="116" x2="155" y2="168" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="185" y="147" text-anchor="middle" font-size="11" fill="#374151">Learning /</text>
-  <text x="185" y="160" text-anchor="middle" font-size="11" fill="#374151">exploring</text>
+  <!-- Leaf: build raw first (accent) -->
+  <rect x="50" y="144" width="220" height="64" rx="2" fill="url(#hatchBrick)" stroke="#9b4a3f" stroke-width="2"/>
+  <text x="160" y="166" text-anchor="middle" font-size="11" letter-spacing="1" font-weight="500" fill="#9b4a3f">BUILD RAW FIRST</text>
+  <text x="160" y="184" text-anchor="middle" font-size="11" fill="#1a1a1a">pure python, direct API calls</text>
+  <text x="160" y="200" text-anchor="middle" font-size="11" fill="#6b6b6b">learn the mechanics first</text>
 
-  <!-- Arrow right: Production system -->
-  <line x1="420" y1="116" x2="545" y2="168" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="510" y="147" text-anchor="middle" font-size="11" fill="#374151">Production</text>
-  <text x="510" y="160" text-anchor="middle" font-size="11" fill="#374151">system</text>
+  <!-- Node: tracing question -->
+  <rect x="440" y="144" width="230" height="56" rx="2" fill="none" stroke="#6b6b6b" stroke-width="1.5"/>
+  <text x="555" y="168" text-anchor="middle" font-size="11" font-weight="500" fill="#1a1a1a">need built-in tracing</text>
+  <text x="555" y="186" text-anchor="middle" font-size="11" font-weight="500" fill="#1a1a1a">and eval?</text>
 
-  <!-- LEFT LEAF: Build raw first -->
-  <rect x="50" y="170" width="210" height="60" rx="10" fill="#F0FDF4" stroke="#22c55e" stroke-width="2.5"/>
-  <text x="155" y="195" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803D">Build raw first</text>
-  <text x="155" y="213" text-anchor="middle" font-size="11" fill="#374151">Pure Python, direct API calls</text>
-  <text x="155" y="228" text-anchor="middle" font-size="10" fill="#6B7280">Learn the mechanics, not the abstraction</text>
+  <!-- Branch: not critical -->
+  <line x1="480" y1="200" x2="368" y2="264" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="372" y="224" text-anchor="middle" font-size="11" fill="#6b6b6b">not critical</text>
+  <text x="372" y="238" text-anchor="middle" font-size="11" fill="#6b6b6b">right now</text>
 
-  <!-- RIGHT BRANCH: Production sub-question -->
-  <rect x="420" y="170" width="250" height="56" rx="10" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="2"/>
-  <text x="545" y="194" text-anchor="middle" font-size="13" font-weight="bold" fill="#374151">Need built-in tracing</text>
-  <text x="545" y="210" text-anchor="middle" font-size="13" font-weight="bold" fill="#374151">and eval pipeline?</text>
+  <!-- Branch: yes -->
+  <line x1="625" y1="200" x2="625" y2="264" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ai)"/>
+  <text x="640" y="228" font-size="11" fill="#6b6b6b">yes,</text>
+  <text x="640" y="242" font-size="11" fill="#6b6b6b">critical</text>
 
-  <!-- Arrow left from production branch: Not critical -->
-  <line x1="460" y1="226" x2="345" y2="286" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="368" y="257" text-anchor="middle" font-size="11" fill="#374151">Not critical</text>
-  <text x="368" y="270" text-anchor="middle" font-size="11" fill="#374151">right now</text>
+  <!-- Leaf: langchain -->
+  <rect x="250" y="268" width="220" height="64" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="360" y="290" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">LANGCHAIN</text>
+  <text x="360" y="308" text-anchor="middle" font-size="11" fill="#1a1a1a">ecosystem · integrations</text>
+  <text x="360" y="324" text-anchor="middle" font-size="11" fill="#6b6b6b">watch: churn, opaque layers</text>
 
-  <!-- Arrow right from production branch: Yes -->
-  <line x1="630" y1="226" x2="630" y2="286" stroke="#6B7280" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="650" y="262" font-size="11" fill="#374151">Yes,</text>
-  <text x="648" y="275" font-size="11" fill="#374151">critical</text>
+  <!-- Leaf: google adk -->
+  <rect x="500" y="268" width="180" height="64" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="590" y="290" text-anchor="middle" font-size="11" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">GOOGLE ADK</text>
+  <text x="590" y="308" text-anchor="middle" font-size="11" fill="#1a1a1a">tracing + eval built in</text>
+  <text x="590" y="324" text-anchor="middle" font-size="11" fill="#6b6b6b">google ecosystem</text>
 
-  <!-- Left leaf: LangChain -->
-  <rect x="230" y="288" width="230" height="60" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2.5"/>
-  <text x="345" y="312" text-anchor="middle" font-size="14" font-weight="bold" fill="#5B21B6">LangChain</text>
-  <text x="345" y="330" text-anchor="middle" font-size="11" fill="#374151">Rich ecosystem, many integrations</text>
-  <text x="345" y="345" text-anchor="middle" font-size="10" fill="#F59E0B">Watch out: version churn, opaque chains</text>
+  <!-- Upgrade path -->
+  <path d="M270,176 Q355,178 436,172" fill="none" stroke="#6b6b6b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="353" y="162" text-anchor="middle" font-size="10" fill="#6b6b6b">start raw, upgrade later</text>
 
-  <!-- Right leaf: Google ADK -->
-  <rect x="495" y="288" width="175" height="60" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2.5"/>
-  <text x="582" y="312" text-anchor="middle" font-size="14" font-weight="bold" fill="#1D4ED8">Google ADK</text>
-  <text x="582" y="330" text-anchor="middle" font-size="11" fill="#374151">Tracing, evals, structured</text>
-  <text x="582" y="345" text-anchor="middle" font-size="10" fill="#F59E0B">Google Cloud ecosystem</text>
-
-  <!-- Dotted line from raw to right side (upgrade path) -->
-  <path d="M260,200 Q340,200 420,185" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <text x="340" y="194" text-anchor="middle" font-size="9" fill="#22c55e">start here, upgrade later</text>
-
-  <!-- Caption -->
-  <text x="350" y="374" text-anchor="middle" font-size="11" fill="#374151">No framework is a permanent commitment. Start raw, add structure when you feel the pain of not having it.</text>
-  <text x="350" y="390" text-anchor="middle" font-size="11" fill="#9CA3AF">The right time to add a framework is when you keep re-solving the same problem.</text>
+  <!-- Footnote -->
+  <text x="350" y="376" text-anchor="middle" font-size="11" fill="#6b6b6b">no framework is permanent · add structure when you keep re-solving the same problem</text>
 </svg>

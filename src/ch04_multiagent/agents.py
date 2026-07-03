@@ -79,7 +79,7 @@ Rules:
             ),
         ]
 
-        response = await self._client.complete(CompletionRequest(messages=messages))
+        response = await self._client.complete(CompletionRequest(messages=messages, temperature=0.0))
         self.total_usage = _merge_usage(self.total_usage, response.usage)
 
         cited = [c.source for c in request.citations if c.source in (response.content or "")]
@@ -131,7 +131,7 @@ Return valid JSON only."""
         ]
 
         response = await self._client.complete(
-            CompletionRequest(messages=messages, response_format={"type": "json_object"})
+            CompletionRequest(messages=messages, response_format={"type": "json_object"}, temperature=0.0)
         )
         self.total_usage = _merge_usage(self.total_usage, response.usage)
 

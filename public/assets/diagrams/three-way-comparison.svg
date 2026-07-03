@@ -1,91 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="380" viewBox="0 0 720 380" font-family="'IBM Plex Sans', Arial, Helvetica, sans-serif">
-  <defs>
-    <style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap');</style>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="IBM Plex Mono, monospace">
+  <rect width="720" height="380" fill="#fafaf8"/>
 
-  <!-- Background -->
-  <rect width="720" height="380" fill="#ffffff"/>
+  <!-- Card 1: raw python -->
+  <rect x="30" y="40" width="210" height="300" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="135" y="66" text-anchor="middle" font-size="12" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">RAW PYTHON</text>
+  <text x="135" y="84" text-anchor="middle" font-size="11" fill="#6b6b6b">direct API calls</text>
+  <line x1="48" y1="96" x2="222" y2="96" stroke="#e8e8e8" stroke-width="1"/>
 
-  <!-- Title -->
-  <text x="360" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#111827">Framework Comparison: Raw vs. ADK vs. LangChain</text>
-  <line x1="40" y1="42" x2="680" y2="42" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="54" y="122" font-size="10" letter-spacing="1" fill="#6b6b6b">LINES OF CODE</text>
+  <text x="54" y="140" font-size="11" font-weight="500" fill="#1a1a1a">~100</text>
 
-  <!-- ====== CARD 1: Raw Python ====== -->
-  <rect x="30" y="58" width="200" height="288" rx="10" fill="#F9FAFB" stroke="#6B7280" stroke-width="2"/>
-  <!-- Header -->
-  <rect x="30" y="58" width="200" height="52" rx="10" fill="#374151"/>
-  <rect x="30" y="90" width="200" height="20" fill="#374151"/>
-  <text x="130" y="84" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">Raw Python</text>
-  <text x="130" y="100" text-anchor="middle" font-size="11" fill="#9CA3AF">Direct API calls</text>
+  <text x="54" y="168" font-size="10" letter-spacing="1" font-weight="500" fill="#9b4a3f">DEBUG A FAILURE</text>
+  <text x="54" y="186" font-size="11" font-weight="500" fill="#1a1a1a">read your code</text>
 
-  <!-- Metrics -->
-  <text x="48" y="132" font-size="11" font-weight="bold" fill="#6B7280">CODE VOLUME</text>
-  <rect x="46" y="140" width="168" height="32" rx="4" fill="#ffffff" stroke="#E5E7EB" stroke-width="1"/>
-  <text x="130" y="162" text-anchor="middle" font-size="15" font-weight="bold" fill="#374151">~100 lines</text>
+  <text x="54" y="214" font-size="10" letter-spacing="1" fill="#6b6b6b">EVAL INTEGRATION</text>
+  <text x="54" y="232" font-size="11" fill="#1a1a1a">build it yourself</text>
 
-  <text x="48" y="192" font-size="11" font-weight="bold" fill="#6B7280">DEBUGGABILITY</text>
-  <rect x="46" y="200" width="168" height="32" rx="4" fill="#DCFCE7" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="130" y="222" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803D">High</text>
+  <text x="54" y="260" font-size="10" letter-spacing="1" fill="#6b6b6b">LOCK-IN</text>
+  <text x="54" y="278" font-size="11" fill="#1a1a1a">none</text>
 
-  <text x="48" y="252" font-size="11" font-weight="bold" fill="#6B7280">VENDOR LOCK-IN</text>
-  <rect x="46" y="260" width="168" height="32" rx="4" fill="#DCFCE7" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="130" y="282" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803D">None</text>
+  <text x="54" y="306" font-size="10" letter-spacing="1" fill="#6b6b6b">BEST FOR</text>
+  <text x="54" y="324" font-size="11" fill="#1a1a1a">learning · unusual needs</text>
 
-  <text x="48" y="312" font-size="11" font-weight="bold" fill="#6B7280">BUILT-IN TRACING</text>
-  <rect x="46" y="320" width="168" height="20" rx="4" fill="#FEE2E2" stroke="#EF4444" stroke-width="1"/>
-  <text x="130" y="335" text-anchor="middle" font-size="12" fill="#B91C1C">You build it yourself</text>
+  <!-- Card 2: google adk -->
+  <rect x="255" y="40" width="210" height="300" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="360" y="66" text-anchor="middle" font-size="12" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">GOOGLE ADK</text>
+  <text x="360" y="84" text-anchor="middle" font-size="11" fill="#6b6b6b">structured, traced</text>
+  <line x1="273" y1="96" x2="447" y2="96" stroke="#e8e8e8" stroke-width="1"/>
 
-  <!-- ====== CARD 2: ADK ====== -->
-  <rect x="260" y="58" width="200" height="288" rx="10" fill="#F9FAFB" stroke="#3B82F6" stroke-width="2"/>
-  <!-- Header -->
-  <rect x="260" y="58" width="200" height="52" rx="10" fill="#1D4ED8"/>
-  <rect x="260" y="90" width="200" height="20" fill="#1D4ED8"/>
-  <text x="360" y="84" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">Google ADK</text>
-  <text x="360" y="100" text-anchor="middle" font-size="11" fill="#BFDBFE">Structured agent framework</text>
+  <text x="279" y="122" font-size="10" letter-spacing="1" fill="#6b6b6b">LINES OF CODE</text>
+  <text x="279" y="140" font-size="11" font-weight="500" fill="#1a1a1a">~40</text>
 
-  <!-- Metrics -->
-  <text x="278" y="132" font-size="11" font-weight="bold" fill="#6B7280">CODE VOLUME</text>
-  <rect x="276" y="140" width="168" height="32" rx="4" fill="#ffffff" stroke="#E5E7EB" stroke-width="1"/>
-  <text x="360" y="162" text-anchor="middle" font-size="15" font-weight="bold" fill="#374151">~40 lines</text>
+  <text x="279" y="168" font-size="10" letter-spacing="1" font-weight="500" fill="#9b4a3f">DEBUG A FAILURE</text>
+  <text x="279" y="186" font-size="11" font-weight="500" fill="#1a1a1a">read traces</text>
 
-  <text x="278" y="192" font-size="11" font-weight="bold" fill="#6B7280">DEBUGGABILITY</text>
-  <rect x="276" y="200" width="168" height="32" rx="4" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
-  <text x="360" y="222" text-anchor="middle" font-size="14" font-weight="bold" fill="#92400E">Medium</text>
+  <text x="279" y="214" font-size="10" letter-spacing="1" fill="#6b6b6b">EVAL INTEGRATION</text>
+  <text x="279" y="232" font-size="11" fill="#1a1a1a">built in</text>
 
-  <text x="278" y="252" font-size="11" font-weight="bold" fill="#6B7280">VENDOR LOCK-IN</text>
-  <rect x="276" y="260" width="168" height="32" rx="4" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
-  <text x="360" y="282" text-anchor="middle" font-size="14" font-weight="bold" fill="#92400E">Google ecosystem</text>
+  <text x="279" y="260" font-size="10" letter-spacing="1" fill="#6b6b6b">LOCK-IN</text>
+  <text x="279" y="278" font-size="11" fill="#1a1a1a">Google ecosystem</text>
 
-  <text x="278" y="312" font-size="11" font-weight="bold" fill="#6B7280">BUILT-IN TRACING</text>
-  <rect x="276" y="320" width="168" height="20" rx="4" fill="#DCFCE7" stroke="#22c55e" stroke-width="1"/>
-  <text x="360" y="335" text-anchor="middle" font-size="12" fill="#15803D">Yes — full traces + evals</text>
+  <text x="279" y="306" font-size="10" letter-spacing="1" fill="#6b6b6b">BEST FOR</text>
+  <text x="279" y="324" font-size="11" fill="#1a1a1a">production · tracing</text>
 
-  <!-- ====== CARD 3: LangChain ====== -->
-  <rect x="490" y="58" width="200" height="288" rx="10" fill="#F9FAFB" stroke="#8B5CF6" stroke-width="2"/>
-  <!-- Header -->
-  <rect x="490" y="58" width="200" height="52" rx="10" fill="#5B21B6"/>
-  <rect x="490" y="90" width="200" height="20" fill="#5B21B6"/>
-  <text x="590" y="84" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">LangChain</text>
-  <text x="590" y="100" text-anchor="middle" font-size="11" fill="#DDD6FE">Ecosystem framework</text>
+  <!-- Card 3: langchain -->
+  <rect x="480" y="40" width="210" height="300" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="585" y="66" text-anchor="middle" font-size="12" letter-spacing="1.5" font-weight="500" fill="#1a1a1a">LANGCHAIN</text>
+  <text x="585" y="84" text-anchor="middle" font-size="11" fill="#6b6b6b">largest ecosystem</text>
+  <line x1="498" y1="96" x2="672" y2="96" stroke="#e8e8e8" stroke-width="1"/>
 
-  <!-- Metrics -->
-  <text x="508" y="132" font-size="11" font-weight="bold" fill="#6B7280">CODE VOLUME</text>
-  <rect x="506" y="140" width="168" height="32" rx="4" fill="#ffffff" stroke="#E5E7EB" stroke-width="1"/>
-  <text x="590" y="162" text-anchor="middle" font-size="15" font-weight="bold" fill="#374151">~35 lines</text>
+  <text x="504" y="122" font-size="10" letter-spacing="1" fill="#6b6b6b">LINES OF CODE</text>
+  <text x="504" y="140" font-size="11" font-weight="500" fill="#1a1a1a">~35</text>
 
-  <text x="508" y="192" font-size="11" font-weight="bold" fill="#6B7280">DEBUGGABILITY</text>
-  <rect x="506" y="200" width="168" height="32" rx="4" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.5"/>
-  <text x="590" y="222" text-anchor="middle" font-size="14" font-weight="bold" fill="#B91C1C">Low</text>
+  <text x="504" y="168" font-size="10" letter-spacing="1" font-weight="500" fill="#9b4a3f">DEBUG A FAILURE</text>
+  <text x="504" y="186" font-size="11" font-weight="500" fill="#1a1a1a">read chains + source</text>
 
-  <text x="508" y="252" font-size="11" font-weight="bold" fill="#6B7280">VENDOR LOCK-IN</text>
-  <rect x="506" y="260" width="168" height="32" rx="4" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
-  <text x="590" y="282" text-anchor="middle" font-size="14" font-weight="bold" fill="#92400E">LangChain abstractions</text>
+  <text x="504" y="214" font-size="10" letter-spacing="1" fill="#6b6b6b">EVAL INTEGRATION</text>
+  <text x="504" y="232" font-size="11" fill="#1a1a1a">LangSmith · separate</text>
 
-  <text x="508" y="312" font-size="11" font-weight="bold" fill="#6B7280">BUILT-IN TRACING</text>
-  <rect x="506" y="320" width="168" height="20" rx="4" fill="#DCFCE7" stroke="#22c55e" stroke-width="1"/>
-  <text x="590" y="335" text-anchor="middle" font-size="12" fill="#15803D">LangSmith (separate)</text>
+  <text x="504" y="260" font-size="10" letter-spacing="1" fill="#6b6b6b">LOCK-IN</text>
+  <text x="504" y="278" font-size="11" fill="#1a1a1a">LangChain ecosystem</text>
 
-  <!-- Caption -->
-  <text x="360" y="364" text-anchor="middle" font-size="11" fill="#374151">Fewer lines of code is not the goal. Fewer lines of code you understand is better than fewer total lines.</text>
-  <text x="360" y="378" text-anchor="middle" font-size="11" fill="#9CA3AF">Optimize for debuggability, not brevity.</text>
+  <text x="504" y="306" font-size="10" letter-spacing="1" fill="#6b6b6b">BEST FOR</text>
+  <text x="504" y="324" font-size="11" fill="#1a1a1a">prototyping · integrations</text>
+
+  <!-- Footnote -->
+  <text x="360" y="368" text-anchor="middle" font-size="11" fill="#6b6b6b">same tools, same prompt, same failure modes · optimize for debuggability, not brevity</text>
 </svg>

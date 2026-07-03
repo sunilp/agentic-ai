@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 
 from src.ch00.tool_use import ToolRegistry, execute_tool_call
 from src.shared.model_client import ModelClient
-from src.shared.types import CompletionRequest, Message, Role
+from src.shared.types import CompletionRequest, Message, Role, ToolResult
 
 # ---------------------------------------------------------------------------
 # System prompt
@@ -107,34 +107,46 @@ class Agent:
             if response.usage:
                 total_tokens += response.usage.total_tokens
 
-            # Model wants to call a tool.
+            # Model wants to call one or more tools. The API allows multiple
+            # tool_use blocks per assistant turn (parallel tool calls); every
+            # one of them needs to be executed, and every result needs to
+            # come back in a single following message.
             if response.tool_calls:
-                tc = response.tool_calls[0]
-                tool_result = execute_tool_call(self.registry, tc.name, tc.arguments)
+                results: list[ToolResult] = []
+                for tc in response.tool_calls:
+                    tool_result = execute_tool_call(self.registry, tc.name, tc.arguments)
+                    results.append(ToolResult(tool_call_id=tc.id, name=tc.name, content=tool_result))
 
-                trace.append(
-                    {
-                        "type": "tool_call",
-                        "step": steps,
-                        "tool": tc.name,
-                        "arguments": tc.arguments,
-                        "result": tool_result,
-                    }
-                )
+                    # One trace entry per tool call, sharing this turn's step
+                    # number -- keeps the single-call trace shape (and the
+                    # chapter's printed example) unchanged when a turn makes
+                    # only one call, and makes parallel calls visible as
+                    # sibling entries under the same step otherwise.
+                    trace.append(
+                        {
+                            "type": "tool_call",
+                            "step": steps,
+                            "tool": tc.name,
+                            "arguments": tc.arguments,
+                            "result": tool_result,
+                        }
+                    )
 
-                # Append the assistant's tool-call turn and the tool result.
+                # Append the assistant's tool-call turn -- with the actual
+                # ToolCall objects, not a text stand-in -- and every result
+                # from this turn in a single following message.
                 messages.append(
                     Message(
                         role=Role.ASSISTANT,
-                        content=f"[tool_call: {tc.name}({tc.arguments})]",
+                        content="",
+                        tool_calls=list(response.tool_calls),
                     )
                 )
                 messages.append(
                     Message(
                         role=Role.TOOL,
-                        content=tool_result,
-                        name=tc.name,
-                        tool_call_id=tc.id,
+                        content="",
+                        tool_results=results,
                     )
                 )
                 continue
@@ -178,9 +190,18 @@ class Agent:
 
 
 if __name__ == "__main__":
-    from src.ch00.tool_use import create_default_registry
-    from src.shared.model_client import MockClient
+    import os
+    import sys
+
+    from src.ch00.tool_use import ToolRegistry, create_default_registry
+    from src.shared.model_client import MockClient, create_client
     from src.shared.types import CompletionResponse, TokenUsage, ToolCall
+
+    # Real API calls use this model. Key-free by default: only reached when
+    # ANTHROPIC_API_KEY is set. See src/ch00/llm_basics.py and
+    # src/ch00/langchain_agent.py for the same model choice elsewhere in the
+    # companion code.
+    LIVE_MODEL_NAME = "claude-haiku-4-5-20251001"
 
     def _make_tool_response(name: str, args: dict) -> CompletionResponse:
         return CompletionResponse(
@@ -197,10 +218,14 @@ if __name__ == "__main__":
             usage=TokenUsage(prompt_tokens=60, completion_tokens=25, total_tokens=85),
         )
 
-    async def _demo() -> None:
-        registry = create_default_registry()
+    def _demo_examples() -> list[tuple[str, MockClient]]:
+        """The canned (query, MockClient) pairs used by both the demo suite
 
-        examples = [
+        and, key-free, an argv question that matches the demo suite exactly.
+        Called fresh each time so MockClient's internal call counter always
+        starts at zero.
+        """
+        return [
             # 1. Direct text answer -- no tools needed.
             (
                 "What is the capital of France?",
@@ -218,7 +243,22 @@ if __name__ == "__main__":
                     ]
                 ),
             ),
-            # 3. Budget exhaustion (only tool calls, no final answer).
+            # 3. Two-step arithmetic -- the chapter's worked example
+            # ("What is 15 * 7 + 3?"): multiply, then add, then answer.
+            # 55 + 55 + 85 = 195 total tokens, matching the chapter's trace.
+            (
+                "What is 15 * 7 + 3?",
+                MockClient(
+                    responses=[
+                        _make_tool_response(
+                            "calculator", {"operation": "multiply", "a": 15, "b": 7}
+                        ),
+                        _make_tool_response("calculator", {"operation": "add", "a": 105, "b": 3}),
+                        _make_text_response("15 * 7 + 3 = 108.0"),
+                    ]
+                ),
+            ),
+            # 4. Budget exhaustion (only tool calls, no final answer).
             (
                 "Search for everything ever written about AI.",
                 MockClient(
@@ -231,22 +271,56 @@ if __name__ == "__main__":
             ),
         ]
 
-        for query, client in examples:
+    def _print_result(query: str, result: AgentResult) -> None:
+        print(f"Query:           {query}")
+        print(f"Answer:          {result.answer!r}")
+        print(f"Steps:           {result.steps}")
+        print(f"Total tokens:    {result.total_tokens}")
+        print(f"Budget exhausted:{result.budget_exhausted}")
+        print(f"Trace ({len(result.trace)} entries):")
+        for entry in result.trace:
+            if entry["type"] == "tool_call":
+                print(
+                    f"  [{entry['step']}] tool_call  {entry['tool']}({entry['arguments']}) -> {entry['result'][:60]!r}"
+                )
+            else:
+                print(f"  [{entry['step']}] response   {entry['content'][:60]!r}")
+        print()
+
+    async def _demo() -> None:
+        registry = create_default_registry()
+        for query, client in _demo_examples():
+            # max_steps=3 matches every example's canned response count
+            # exactly, so the budget-exhaustion example (search x3) still
+            # exhausts instead of falling through to MockClient's default
+            # "Mock response" text on a 4th call.
             agent = Agent(client=client, registry=registry, max_steps=3)
             result = await agent.run(query)
-            print(f"Query:           {query}")
-            print(f"Answer:          {result.answer!r}")
-            print(f"Steps:           {result.steps}")
-            print(f"Total tokens:    {result.total_tokens}")
-            print(f"Budget exhausted:{result.budget_exhausted}")
-            print(f"Trace ({len(result.trace)} entries):")
-            for entry in result.trace:
-                if entry["type"] == "tool_call":
-                    print(
-                        f"  [{entry['step']}] tool_call  {entry['tool']}({entry['arguments']}) -> {entry['result'][:60]!r}"
-                    )
-                else:
-                    print(f"  [{entry['step']}] response   {entry['content'][:60]!r}")
-            print()
+            _print_result(query, result)
 
-    asyncio.run(_demo())
+    async def _run_query(query: str, registry: ToolRegistry) -> None:
+        """Run a single question through the agent.
+
+        Uses the real Anthropic API when ANTHROPIC_API_KEY is set (as the
+        chapter's run instructions do); otherwise stays key-free: replays
+        the matching canned example if the question matches the demo suite
+        exactly, or falls back to a plain MockClient (a one-step "Mock
+        response" answer) so the script always exits 0 without a key.
+        """
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key:
+            client = create_client(provider="anthropic", api_key=api_key, model_name=LIVE_MODEL_NAME)
+        else:
+            client = next(
+                (demo_client for demo_query, demo_client in _demo_examples() if demo_query == query),
+                MockClient(),
+            )
+        # max_steps=5 for real queries; demo suite uses max_steps=3 to trigger budget exhaustion
+        agent = Agent(client=client, registry=registry, max_steps=5)
+        result = await agent.run(query)
+        _print_result(query, result)
+
+    if len(sys.argv) > 1:
+        asyncio.run(_run_query(sys.argv[1], create_default_registry()))
+    else:
+        asyncio.run(_demo())

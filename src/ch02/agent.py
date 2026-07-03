@@ -53,6 +53,7 @@ class DocumentAgent:
         request = CompletionRequest(
             messages=messages,
             tools=tools if tools else None,
+            temperature=0.0,
         )
         response = await self._client.complete(request)
         total_usage = _merge_usage(total_usage, response.usage)
@@ -75,7 +76,7 @@ class DocumentAgent:
                     )
                 )
 
-            request = CompletionRequest(messages=messages, tools=tools if tools else None)
+            request = CompletionRequest(messages=messages, tools=tools if tools else None, temperature=0.0)
             response = await self._client.complete(request)
             total_usage = _merge_usage(total_usage, response.usage)
             steps += 1

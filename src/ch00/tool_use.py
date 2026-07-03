@@ -22,6 +22,7 @@ from src.shared.types import (
     CompletionResponse,
     Message,
     Role,
+    SideEffect,
     TokenUsage,
     ToolCall,
     ToolParameter,
@@ -59,6 +60,12 @@ class SearchInput(BaseModel):
 
     query: str
     max_results: int = Field(default=3, ge=1, le=10)
+
+
+class DeleteRecordInput(BaseModel):
+    """Input schema for the (gated) delete_record tool."""
+
+    record_id: str
 
 
 # ---------------------------------------------------------------------------
@@ -105,6 +112,22 @@ def word_count(text: str) -> str:
     return f"Word count: {count}"
 
 
+def delete_record(record_id: str) -> str:
+    """Delete a record permanently. Gated -- requires approval before execution.
+
+    This body should never run in the demo. `execute_tool_call()` checks
+    `requires_approval` on the tool's schema before dispatch and returns a
+    structured refusal for any gated tool, so this function is never called.
+
+    Args:
+        record_id: The identifier of the record to delete.
+
+    Returns:
+        Confirmation text. Unreachable while the tool stays gated.
+    """
+    return f"Deleted record {record_id}"  # pragma: no cover -- gated, never reached
+
+
 def fake_search(query: str, max_results: int = 3) -> str:
     """Return fake search results for demonstration purposes.
 
@@ -140,11 +163,15 @@ class Tool:
         description: str,
         fn: Callable[..., str],
         input_model: type[BaseModel],
+        side_effect: SideEffect = SideEffect.READ,
+        requires_approval: bool = False,
     ) -> None:
         self.name = name
         self.description = description
         self.fn = fn
         self.input_model = input_model
+        self.side_effect = side_effect
+        self.requires_approval = requires_approval
 
     def to_schema(self) -> ToolSchema:
         """Derive a ToolSchema from the Pydantic model's field definitions."""
@@ -163,8 +190,7 @@ class Tool:
             if origin is None and isinstance(annotation, type) and issubclass(annotation, StrEnum):
                 enum_values = [e.value for e in annotation]  # type: ignore[attr-defined]
 
-            is_required = field_info.default is field_info.default_factory is None  # type: ignore[comparison-overlap]
-            # Simpler: a field is required when it has no default value.
+            # A field is required when it has no default value.
             is_required = field_info.is_required()
 
             parameters.append(
@@ -177,7 +203,13 @@ class Tool:
                 )
             )
 
-        return ToolSchema(name=self.name, description=self.description, parameters=parameters)
+        return ToolSchema(
+            name=self.name,
+            description=self.description,
+            parameters=parameters,
+            side_effect=self.side_effect,
+            requires_approval=self.requires_approval,
+        )
 
 
 def _python_type_to_json_type(annotation: Any) -> str:
@@ -227,16 +259,28 @@ class ToolRegistry:
         description: str,
         fn: Callable[..., str],
         input_model: type[BaseModel],
+        side_effect: SideEffect = SideEffect.READ,
+        requires_approval: bool = False,
     ) -> None:
         """Register a tool under *name*.
 
         Args:
-            name:        Unique tool name (used by the model to invoke it).
-            description: Short description of what the tool does.
-            fn:          The callable to execute.
-            input_model: Pydantic BaseModel class used for argument validation.
+            name:              Unique tool name (used by the model to invoke it).
+            description:       Short description of what the tool does.
+            fn:                The callable to execute.
+            input_model:       Pydantic BaseModel class used for argument validation.
+            side_effect:       What the tool does to the world (READ/WRITE/DELETE).
+            requires_approval: If True, execute_tool_call() refuses to dispatch this
+                                tool and returns a structured approval-required error.
         """
-        self._tools[name] = Tool(name=name, description=description, fn=fn, input_model=input_model)
+        self._tools[name] = Tool(
+            name=name,
+            description=description,
+            fn=fn,
+            input_model=input_model,
+            side_effect=side_effect,
+            requires_approval=requires_approval,
+        )
 
     def list_tools(self) -> list[str]:
         """Return a list of registered tool names."""
@@ -274,6 +318,9 @@ def execute_tool_call(registry: ToolRegistry, tool_name: str, arguments: dict[st
     if entry is None:
         return f"Error: unknown tool '{tool_name}'"
 
+    if entry.requires_approval:
+        return f"approval_required: {tool_name} is gated; a human or policy must approve this call"
+
     try:
         validated = entry.input_model.model_validate(arguments)
     except ValidationError as exc:
@@ -294,7 +341,9 @@ def create_default_registry() -> ToolRegistry:
     """Create a ToolRegistry pre-populated with the standard demo tools.
 
     Returns:
-        A ToolRegistry with calculator, word_count, and fake_search registered.
+        A ToolRegistry with calculator, word_count, and fake_search registered
+        as READ tools, plus one gated DELETE tool (delete_record) to show what
+        a real approval boundary looks like.
     """
     registry = ToolRegistry()
     registry.register(
@@ -302,18 +351,29 @@ def create_default_registry() -> ToolRegistry:
         description="Perform basic arithmetic: add, subtract, multiply, or divide two numbers.",
         fn=calculator,
         input_model=CalculatorInput,
+        side_effect=SideEffect.READ,
     )
     registry.register(
         name="word_count",
         description="Count the number of words in a piece of text.",
         fn=word_count,
         input_model=WordCountInput,
+        side_effect=SideEffect.READ,
     )
     registry.register(
         name="search",
         description="Search for information on a topic and return the top results.",
         fn=fake_search,
         input_model=SearchInput,
+        side_effect=SideEffect.READ,
+    )
+    registry.register(
+        name="delete_record",
+        description="Permanently delete a record by ID. Destructive -- gated behind approval.",
+        fn=delete_record,
+        input_model=DeleteRecordInput,
+        side_effect=SideEffect.DELETE,
+        requires_approval=True,
     )
     return registry
 

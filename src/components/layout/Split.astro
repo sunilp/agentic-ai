@@ -31,6 +31,15 @@ const b = Number.isFinite(rawB) && rawB > 0 ? rawB : 1;
     gap: var(--gap);
   }
 
+  /* Grid items default to min-width: auto, which floors their track at the
+     content's min-content size (e.g. a figure's natural width) instead of
+     shrinking with the viewport. min-width: 0 lets tracks -- and everything
+     in them, including chapter figures -- actually respect max-width: 100%
+     below the stack breakpoint. */
+  .split > :global(*) {
+    min-width: 0;
+  }
+
   @media (max-width: 720px) {
     .split {
       grid-template-columns: 1fr;
