@@ -36,6 +36,10 @@ foundations = [
     "langchain-anthropic>=0.3",
     "langgraph>=0.2",
 ]
+lab002 = [
+    "google-adk>=2.3.0",
+    "litellm>=1.40",
+]
 
 [build-system]
 requires = ["hatchling"]

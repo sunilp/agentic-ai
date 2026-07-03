@@ -1,4 +1,4 @@
-.PHONY: install test lint eval run clean serve build-site deploy compare-multiagent foundations foundations-compare
+.PHONY: install test lint eval run clean serve build-site deploy compare-multiagent foundations foundations-compare lab-002-data lab-002-run lab-002-eval
 
 install:
 	pip install -e ".[dev]"
@@ -56,3 +56,12 @@ foundations:
 
 foundations-compare:
 	python src/ch00/eval_compare.py
+
+lab-002-data:
+	python -m labs.lab_002.dataset 30
+
+lab-002-run:
+	python -m labs.lab_002.run
+
+lab-002-eval:
+	python -m labs.lab_002.evaluate
