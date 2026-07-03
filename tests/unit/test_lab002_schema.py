@@ -1,10 +1,14 @@
+from labs.lab_002.schema import (
+    FaultFamily,
+    Finding,
+    Incident,
+    IncidentBundle,
+    RunRecord,
+)
+
+
 def test_package_imports():
     import labs.lab_002  # noqa: F401
-
-
-from labs.lab_002.schema import (
-    Finding, Incident, IncidentBundle, FaultFamily, RunRecord,
-)
 
 
 def test_incident_roundtrips():

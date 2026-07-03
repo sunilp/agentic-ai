@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
-class FaultFamily(str, Enum):
+class FaultFamily(StrEnum):
     BAD_DEPLOY = "bad_deploy"
     CONFIG_DRIFT = "config_drift"
     DEPENDENCY_FAILURE = "dependency_failure"
