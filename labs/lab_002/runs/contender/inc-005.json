@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-005",
+  "finding": {
+    "incident_id": "inc-005",
+    "root_cause": "The deployment of version 1.6.4 of the svc-auth service likely caused a spike in errors and high latency issues, leading to a temporary disruption in service availability.",
+    "proposed_remediation": "Revert the configuration to use a previous version of the svc-auth service, such as v1.4.1, to address the performance issue and communication problems with other services.",
+    "proposed_action": "revert_config:svc-auth@v1.6.4"
+  },
+  "prompt_tokens": 4177,
+  "completion_tokens": 2391,
+  "model_calls": 17,
+  "latency_ms": 58906.103290995816,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

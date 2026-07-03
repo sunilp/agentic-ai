@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-016",
+  "finding": {
+    "incident_id": "inc-016",
+    "root_cause": "Potential service discovery issue due to inconsistent configuration",
+    "proposed_remediation": "Verify service discovery configuration and reconcile differences between v1.1.5 and v1.0.3",
+    "proposed_action": "rollback_deploy:svc-checkout@v1.1.5"
+  },
+  "prompt_tokens": 4101,
+  "completion_tokens": 2045,
+  "model_calls": 17,
+  "latency_ms": 45614.63383400405,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

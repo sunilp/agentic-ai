@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-021",
+  "finding": {
+    "incident_id": "inc-021",
+    "root_cause": "Inconsistent configuration and potential version mismatch between the expected v1.8.0 of svc-auth and the deployed v1.0.2, leading to unexpected spike in errors.",
+    "proposed_remediation": "Revert the configuration to a consistent version, for example by reverting to v1.8.0 of svc-auth",
+    "proposed_action": "revert_config:svc-auth@v1.8.0"
+  },
+  "prompt_tokens": 4107,
+  "completion_tokens": 2038,
+  "model_calls": 17,
+  "latency_ms": 46943.65562500025,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

@@ -1,0 +1,43 @@
+{
+  "incident_id": "inc-001",
+  "pre": {
+    "system": "contender",
+    "incident_id": "inc-001",
+    "finding": {
+      "incident_id": "inc-001",
+      "root_cause": "The high latency in the Redis service led to a spike in errors for the svc-auth service.",
+      "proposed_remediation": "Optimize the Redis service to improve its performance and reduce latency.",
+      "proposed_action": "revert_config:svc-auth@v1.0.1"
+    },
+    "prompt_tokens": 4001,
+    "completion_tokens": 1945,
+    "model_calls": 17,
+    "latency_ms": 43854.71458299435,
+    "remediation_applied": false,
+    "approved": false,
+    "resumed": false
+  },
+  "post": {
+    "system": "contender",
+    "incident_id": "inc-001",
+    "finding": {
+      "incident_id": "inc-001",
+      "root_cause": "The high latency in the Redis service led to a spike in errors for the svc-auth service.",
+      "proposed_remediation": "Optimize the Redis service to improve its performance and reduce latency.",
+      "proposed_action": "revert_config:svc-auth@v1.0.1"
+    },
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "model_calls": 0,
+    "latency_ms": 5.342959004337899,
+    "remediation_applied": true,
+    "approved": true,
+    "resumed": true
+  },
+  "savings": {
+    "tokens_saved": 5946.0,
+    "model_calls_saved": 17.0,
+    "latency_ms_saved": 43854.71458299435,
+    "frontier_calls": 0.0
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-023",
+  "finding": {
+    "incident_id": "inc-023",
+    "root_cause": "The spike in errors (err_rate=0.65) and latency high warning ([warn] kafka latency high) on svc-pricing suggest a potential issue with the new version v1.9.7, which may be causing errors or performance degradation.",
+    "proposed_remediation": "Investigate the changes between versions v1.3.0 and v1.9.7 of svc-pricing to identify the cause of the issues.",
+    "proposed_action": "Purge_cache:svc-pricing@v1.3.0"
+  },
+  "prompt_tokens": 4345,
+  "completion_tokens": 2258,
+  "model_calls": 17,
+  "latency_ms": 53811.824499993236,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

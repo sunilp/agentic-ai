@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-000",
+  "finding": {
+    "incident_id": "inc-000",
+    "root_cause": "Incompatible version of `svc-search` causing high latency and errors due to spike in service usage.",
+    "proposed_remediation": "Upgrade `svc-search` to the latest available version (v1.9.6) and verify its functionality.",
+    "proposed_action": "Rollback deploy of `svc-search` to v1.1.0 and wait for further analysis."
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 100,
+  "model_calls": 1,
+  "latency_ms": 3569.6121670043794,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

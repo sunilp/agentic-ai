@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-003",
+  "finding": {
+    "incident_id": "inc-003",
+    "root_cause": "Inconsistent configuration between service version and cached versions",
+    "proposed_remediation": "Verify and update the configuration to match the latest version of svc-pricing (v1.6.1) and consider rebuilding or purging caches for the old version (v1.1.5)",
+    "proposed_action": "Rebuild service cache with latest version (v1.6.1)"
+  },
+  "prompt_tokens": 180,
+  "completion_tokens": 102,
+  "model_calls": 1,
+  "latency_ms": 2235.5022499978077,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

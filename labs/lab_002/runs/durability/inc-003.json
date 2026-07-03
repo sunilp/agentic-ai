@@ -1,0 +1,43 @@
+{
+  "incident_id": "inc-003",
+  "pre": {
+    "system": "contender",
+    "incident_id": "inc-003",
+    "finding": {
+      "incident_id": "inc-003",
+      "root_cause": "Possible cache overflow due to service upgrade, leading to increased latency and errors.",
+      "proposed_remediation": "Upgrade to the latest version of svc-pricing (v1.6.1) to mitigate potential issues with cache overflow.",
+      "proposed_action": "Purge_cache:svc-pricing@v1.1.5"
+    },
+    "prompt_tokens": 4123,
+    "completion_tokens": 2003,
+    "model_calls": 17,
+    "latency_ms": 46987.40908400214,
+    "remediation_applied": false,
+    "approved": false,
+    "resumed": false
+  },
+  "post": {
+    "system": "contender",
+    "incident_id": "inc-003",
+    "finding": {
+      "incident_id": "inc-003",
+      "root_cause": "Possible cache overflow due to service upgrade, leading to increased latency and errors.",
+      "proposed_remediation": "Upgrade to the latest version of svc-pricing (v1.6.1) to mitigate potential issues with cache overflow.",
+      "proposed_action": "Purge_cache:svc-pricing@v1.1.5"
+    },
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "model_calls": 0,
+    "latency_ms": 5.103208008222282,
+    "remediation_applied": true,
+    "approved": true,
+    "resumed": true
+  },
+  "savings": {
+    "tokens_saved": 6126.0,
+    "model_calls_saved": 17.0,
+    "latency_ms_saved": 46987.40908400214,
+    "frontier_calls": 0.0
+  }
+}

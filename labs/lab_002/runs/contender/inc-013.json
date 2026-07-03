@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-013",
+  "finding": {
+    "incident_id": "inc-013",
+    "root_cause": "The spike in errors for the 'svc-orders' service resulted from an upgrade to version v1.7.1, which may have introduced unintended changes that are causing latency issues with the PostgreSQL database.",
+    "proposed_remediation": "Roll back the update to version v1.0.1 of the 'svc-orders' service to address the spike in errors and improve overall performance.",
+    "proposed_action": "revert_config:svc-orders@v1.0.1"
+  },
+  "prompt_tokens": 4048,
+  "completion_tokens": 2157,
+  "model_calls": 17,
+  "latency_ms": 48135.88137499755,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

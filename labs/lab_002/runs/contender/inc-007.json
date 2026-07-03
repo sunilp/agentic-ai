@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-007",
+  "finding": {
+    "incident_id": "inc-007",
+    "root_cause": "The spike in errors and high latency on the service profile is likely due to changes made during the upgrade from v1.0.5 to v1.7.6, which may have introduced compatibility issues or performance regressions.",
+    "proposed_remediation": "Thoroughly review the changelog for version 1.7.6 of the service profile to identify potential causes of the spike and high latency, and apply any necessary fixes or updates.",
+    "proposed_action": "Purge cache:svc-profile@v1.0.5"
+  },
+  "prompt_tokens": 4083,
+  "completion_tokens": 2275,
+  "model_calls": 17,
+  "latency_ms": 52435.217249993,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

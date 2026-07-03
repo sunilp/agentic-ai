@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-029",
+  "finding": {
+    "incident_id": "inc-029",
+    "root_cause": "Inconsistent version of the service inventory, likely causing a 5xx spike in svc-inventory",
+    "proposed_remediation": "Update the service inventory to a consistent version (v1.1.2) or investigate why v1.4.9 is being used",
+    "proposed_action": "revert_config:svc-inventory@v1.1.2"
+  },
+  "prompt_tokens": 4061,
+  "completion_tokens": 1987,
+  "model_calls": 17,
+  "latency_ms": 45817.81158299418,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

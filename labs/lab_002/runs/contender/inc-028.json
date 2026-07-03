@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-028",
+  "finding": {
+    "incident_id": "inc-028",
+    "root_cause": "A spike in errors for the svc-payments service, leading to a high error rate and prolonged latency in the Kafka cluster.",
+    "proposed_remediation": "Investigate the root cause of the issues with the updated svc-payments version v1.8.4.",
+    "proposed_action": "rollback_deploy:svc-payments@v1.4.2"
+  },
+  "prompt_tokens": 4227,
+  "completion_tokens": 2077,
+  "model_calls": 17,
+  "latency_ms": 48076.08183300181,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

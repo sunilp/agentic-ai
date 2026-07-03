@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-010",
+  "finding": {
+    "incident_id": "inc-010",
+    "root_cause": "Upgrade to a newer version of the service catalog may have caused compatibility issues, leading to errors and spikes.",
+    "proposed_remediation": "Rollback the upgrade to svc-catalog:v1.1.6 as soon as possible to prevent further issues.",
+    "proposed_action": "Irreversible Action: Remove the latest patch version of svc-catalog (v1.1.8) from all nodes in the region, leaving only v1.1.6 intact."
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 120,
+  "model_calls": 1,
+  "latency_ms": 2588.203124993015,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-006",
+  "finding": {
+    "incident_id": "inc-006",
+    "root_cause": "Incompatible service version update leading to service unavailability and latency issues",
+    "proposed_remediation": "Roll back the service catalog to its previous stable version (v1.2.8) and investigate the cause of the incompatible version update.",
+    "proposed_action": "Run `baseline_responder restart_service:svc-catalog@v1.5.0`"
+  },
+  "prompt_tokens": 182,
+  "completion_tokens": 99,
+  "model_calls": 1,
+  "latency_ms": 2366.9324170041364,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

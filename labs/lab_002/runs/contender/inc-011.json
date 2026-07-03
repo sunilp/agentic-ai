@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-011",
+  "finding": {
+    "incident_id": "inc-011",
+    "root_cause": "A spike in 5xx errors from the svc-pricing service, combined with high latency and poor performance metrics, suggests a potential issue with the new version of svc-pricing (v1.8.1) that was recently deployed.",
+    "proposed_remediation": "Revert to the previous version of svc-pricing (v1.5.1) by running the purge_cache action.",
+    "proposed_action": "Purge cache:svc-pricing@v1.5.1"
+  },
+  "prompt_tokens": 4031,
+  "completion_tokens": 1787,
+  "model_calls": 17,
+  "latency_ms": 40324.7560000018,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

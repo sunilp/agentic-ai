@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-020",
+  "finding": {
+    "incident_id": "inc-020",
+    "root_cause": "Recently deployed version of `svc-search` (v1.8.1) may be causing the 5xx spike and high latency issues.",
+    "proposed_remediation": "Rollback to the previous known good version (`v1.7.2`) and re-deploy",
+    "proposed_action": "{'type': 'rollBack', 'resourceId': '/services/v1/search', 'revision': 'v1.7.2'}"
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 115,
+  "model_calls": 1,
+  "latency_ms": 2485.424291007803,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

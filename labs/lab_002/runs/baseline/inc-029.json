@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-029",
+  "finding": {
+    "incident_id": "inc-029",
+    "root_cause": "Unexpected spike in service inventory error rate and latency, potentially due to incompatible configuration update.",
+    "proposed_remediation": "Review the changelog for svc-inventory v1.4.9 to identify the cause of the issues and revert the configuration to a known good version (v1.1.2) as indicated by the candidate action.",
+    "proposed_action": "Revert configuration to svc-inventory: v1.1.2"
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 113,
+  "model_calls": 1,
+  "latency_ms": 2450.1857080031186,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

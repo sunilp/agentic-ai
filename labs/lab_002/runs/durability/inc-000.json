@@ -1,0 +1,43 @@
+{
+  "incident_id": "inc-000",
+  "pre": {
+    "system": "contender",
+    "incident_id": "inc-000",
+    "finding": {
+      "incident_id": "inc-000",
+      "root_cause": "The service search component experienced a 5xx spike in errors, leading to high latency on the PostgreSQL database, which may be caused by the updated version of the service search module.",
+      "proposed_remediation": "Update the service search module to a previous version (v1.1.0) that has been proven stable and reduce the risk of further issues.",
+      "proposed_action": "rollback_deploy:svc-search@v1.1.0"
+    },
+    "prompt_tokens": 4169,
+    "completion_tokens": 2347,
+    "model_calls": 17,
+    "latency_ms": 51953.365791996475,
+    "remediation_applied": false,
+    "approved": false,
+    "resumed": false
+  },
+  "post": {
+    "system": "contender",
+    "incident_id": "inc-000",
+    "finding": {
+      "incident_id": "inc-000",
+      "root_cause": "The service search component experienced a 5xx spike in errors, leading to high latency on the PostgreSQL database, which may be caused by the updated version of the service search module.",
+      "proposed_remediation": "Update the service search module to a previous version (v1.1.0) that has been proven stable and reduce the risk of further issues.",
+      "proposed_action": "rollback_deploy:svc-search@v1.1.0"
+    },
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "model_calls": 0,
+    "latency_ms": 4.943124993587844,
+    "remediation_applied": true,
+    "approved": true,
+    "resumed": true
+  },
+  "savings": {
+    "tokens_saved": 6516.0,
+    "model_calls_saved": 17.0,
+    "latency_ms_saved": 51953.365791996475,
+    "frontier_calls": 0.0
+  }
+}

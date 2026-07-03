@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-012",
+  "finding": {
+    "incident_id": "inc-012",
+    "root_cause": "Inconsistent versioning of the svc-search service, with a more recent version (v1.9.5) being deployed while an older version (v1.4.8) is still active.",
+    "proposed_remediation": "Deploy a newer version of the svc-search service to ensure consistent and up-to-date functionality",
+    "proposed_action": "rollback_deploy:svc-search@v1.4.8"
+  },
+  "prompt_tokens": 4068,
+  "completion_tokens": 2036,
+  "model_calls": 17,
+  "latency_ms": 45580.98566599074,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

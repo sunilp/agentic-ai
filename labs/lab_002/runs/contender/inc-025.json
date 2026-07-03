@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-025",
+  "finding": {
+    "incident_id": "inc-025",
+    "root_cause": "The high performance of the updated version of service inventory (v1.4.3) is causing a spike in errors, leading to a 70% error rate.",
+    "proposed_remediation": "Gradually roll out a version of the service inventory that is closer to the current update to reduce the impact on the system.",
+    "proposed_action": "revert_config:svc-inventory@v1.3.9"
+  },
+  "prompt_tokens": 4065,
+  "completion_tokens": 1874,
+  "model_calls": 17,
+  "latency_ms": 53224.88062499906,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-021",
+  "finding": {
+    "incident_id": "inc-021",
+    "root_cause": "Unexpected changes to the service auth configuration, potentially causing spikes in errors and high latency.",
+    "proposed_remediation": "Revert the service auth configuration to its previous version (v1.8.0) to stabilize the system and reduce errors.",
+    "proposed_action": "Revert config: svc-auth@v1.8.0"
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 93,
+  "model_calls": 1,
+  "latency_ms": 2026.9941250007832,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

@@ -1,0 +1,662 @@
+[
+  {
+    "id": "inc-000",
+    "fault_family": "bad_deploy",
+    "bundle": {
+      "logs": [
+        "[error] svc-search 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.46,
+        "p99_ms": 730.2
+      },
+      "config": {
+        "max_conns": "2",
+        "region": "eu"
+      },
+      "diff": "- svc-search:v1.1.0\n+ svc-search:v1.9.6"
+    },
+    "ground_truth_root_cause": "bad deploy of svc-search v1.1.0",
+    "ground_truth_remediation": "rollback svc-search to previous version",
+    "irreversible_action": "rollback_deploy:svc-search@v1.1.0"
+  },
+  {
+    "id": "inc-001",
+    "fault_family": "config_drift",
+    "bundle": {
+      "logs": [
+        "[error] svc-auth 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.63,
+        "p99_ms": 300.8
+      },
+      "config": {
+        "replicas": "4",
+        "region": "us"
+      },
+      "diff": "- svc-auth:v1.0.1\n+ svc-auth:v1.3.7"
+    },
+    "ground_truth_root_cause": "config drift on svc-auth: replicas changed",
+    "ground_truth_remediation": "revert replicas on svc-auth",
+    "irreversible_action": "revert_config:svc-auth@v1.0.1"
+  },
+  {
+    "id": "inc-002",
+    "fault_family": "dependency_failure",
+    "bundle": {
+      "logs": [
+        "[error] svc-catalog 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.57,
+        "p99_ms": 1255.9
+      },
+      "config": {
+        "replicas": "4",
+        "region": "us"
+      },
+      "diff": "- svc-catalog:v1.4.0\n+ svc-catalog:v1.1.1"
+    },
+    "ground_truth_root_cause": "svc-catalog dependency kafka timing out",
+    "ground_truth_remediation": "restart svc-catalog and fail over kafka",
+    "irreversible_action": "restart_service:svc-catalog@v1.4.0"
+  },
+  {
+    "id": "inc-003",
+    "fault_family": "data_issue",
+    "bundle": {
+      "logs": [
+        "[error] svc-pricing 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.47,
+        "p99_ms": 365.1
+      },
+      "config": {
+        "timeout_ms": "8",
+        "region": "eu"
+      },
+      "diff": "- svc-pricing:v1.1.5\n+ svc-pricing:v1.6.1"
+    },
+    "ground_truth_root_cause": "stale cache serving bad data on svc-pricing",
+    "ground_truth_remediation": "purge cache for svc-pricing",
+    "irreversible_action": "purge_cache:svc-pricing@v1.1.5"
+  },
+  {
+    "id": "inc-004",
+    "fault_family": "bad_deploy",
+    "bundle": {
+      "logs": [
+        "[error] svc-search 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.42,
+        "p99_ms": 464.3
+      },
+      "config": {
+        "timeout_ms": "4",
+        "region": "us"
+      },
+      "diff": "- svc-search:v1.4.9\n+ svc-search:v1.1.3"
+    },
+    "ground_truth_root_cause": "bad deploy of svc-search v1.4.9",
+    "ground_truth_remediation": "rollback svc-search to previous version",
+    "irreversible_action": "rollback_deploy:svc-search@v1.4.9"
+  },
+  {
+    "id": "inc-005",
+    "fault_family": "config_drift",
+    "bundle": {
+      "logs": [
+        "[error] svc-auth 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.84,
+        "p99_ms": 818.1
+      },
+      "config": {
+        "timeout_ms": "6",
+        "region": "eu"
+      },
+      "diff": "- svc-auth:v1.6.4\n+ svc-auth:v1.4.1"
+    },
+    "ground_truth_root_cause": "config drift on svc-auth: timeout_ms changed",
+    "ground_truth_remediation": "revert timeout_ms on svc-auth",
+    "irreversible_action": "revert_config:svc-auth@v1.6.4"
+  },
+  {
+    "id": "inc-006",
+    "fault_family": "dependency_failure",
+    "bundle": {
+      "logs": [
+        "[error] svc-catalog 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.41,
+        "p99_ms": 1641.9
+      },
+      "config": {
+        "max_conns": "9",
+        "region": "eu"
+      },
+      "diff": "- svc-catalog:v1.2.8\n+ svc-catalog:v1.5.0"
+    },
+    "ground_truth_root_cause": "svc-catalog dependency redis timing out",
+    "ground_truth_remediation": "restart svc-catalog and fail over redis",
+    "irreversible_action": "restart_service:svc-catalog@v1.2.8"
+  },
+  {
+    "id": "inc-007",
+    "fault_family": "data_issue",
+    "bundle": {
+      "logs": [
+        "[error] svc-profile 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.34,
+        "p99_ms": 3669.9
+      },
+      "config": {
+        "timeout_ms": "6",
+        "region": "eu"
+      },
+      "diff": "- svc-profile:v1.0.5\n+ svc-profile:v1.7.6"
+    },
+    "ground_truth_root_cause": "stale cache serving bad data on svc-profile",
+    "ground_truth_remediation": "purge cache for svc-profile",
+    "irreversible_action": "purge_cache:svc-profile@v1.0.5"
+  },
+  {
+    "id": "inc-008",
+    "fault_family": "bad_deploy",
+    "bundle": {
+      "logs": [
+        "[error] svc-search 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.46,
+        "p99_ms": 2333.2
+      },
+      "config": {
+        "timeout_ms": "5",
+        "region": "us"
+      },
+      "diff": "- svc-search:v1.7.2\n+ svc-search:v1.9.6"
+    },
+    "ground_truth_root_cause": "bad deploy of svc-search v1.7.2",
+    "ground_truth_remediation": "rollback svc-search to previous version",
+    "irreversible_action": "rollback_deploy:svc-search@v1.7.2"
+  },
+  {
+    "id": "inc-009",
+    "fault_family": "config_drift",
+    "bundle": {
+      "logs": [
+        "[error] svc-orders 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.36,
+        "p99_ms": 379.0
+      },
+      "config": {
+        "max_conns": "2",
+        "region": "eu"
+      },
+      "diff": "- svc-orders:v1.3.2\n+ svc-orders:v1.2.6"
+    },
+    "ground_truth_root_cause": "config drift on svc-orders: max_conns changed",
+    "ground_truth_remediation": "revert max_conns on svc-orders",
+    "irreversible_action": "revert_config:svc-orders@v1.3.2"
+  },
+  {
+    "id": "inc-010",
+    "fault_family": "dependency_failure",
+    "bundle": {
+      "logs": [
+        "[error] svc-catalog 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.95,
+        "p99_ms": 2210.6
+      },
+      "config": {
+        "timeout_ms": "9",
+        "region": "eu"
+      },
+      "diff": "- svc-catalog:v1.1.6\n+ svc-catalog:v1.1.8"
+    },
+    "ground_truth_root_cause": "svc-catalog dependency kafka timing out",
+    "ground_truth_remediation": "restart svc-catalog and fail over kafka",
+    "irreversible_action": "restart_service:svc-catalog@v1.1.6"
+  },
+  {
+    "id": "inc-011",
+    "fault_family": "data_issue",
+    "bundle": {
+      "logs": [
+        "[error] svc-pricing 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.4,
+        "p99_ms": 212.3
+      },
+      "config": {
+        "timeout_ms": "5",
+        "region": "eu"
+      },
+      "diff": "- svc-pricing:v1.5.1\n+ svc-pricing:v1.8.1"
+    },
+    "ground_truth_root_cause": "stale cache serving bad data on svc-pricing",
+    "ground_truth_remediation": "purge cache for svc-pricing",
+    "irreversible_action": "purge_cache:svc-pricing@v1.5.1"
+  },
+  {
+    "id": "inc-012",
+    "fault_family": "bad_deploy",
+    "bundle": {
+      "logs": [
+        "[error] svc-search 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.4,
+        "p99_ms": 3097.5
+      },
+      "config": {
+        "max_conns": "9",
+        "region": "eu"
+      },
+      "diff": "- svc-search:v1.4.8\n+ svc-search:v1.9.5"
+    },
+    "ground_truth_root_cause": "bad deploy of svc-search v1.4.8",
+    "ground_truth_remediation": "rollback svc-search to previous version",
+    "irreversible_action": "rollback_deploy:svc-search@v1.4.8"
+  },
+  {
+    "id": "inc-013",
+    "fault_family": "config_drift",
+    "bundle": {
+      "logs": [
+        "[error] svc-orders 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.46,
+        "p99_ms": 1115.3
+      },
+      "config": {
+        "timeout_ms": "2",
+        "region": "eu"
+      },
+      "diff": "- svc-orders:v1.0.1\n+ svc-orders:v1.7.1"
+    },
+    "ground_truth_root_cause": "config drift on svc-orders: timeout_ms changed",
+    "ground_truth_remediation": "revert timeout_ms on svc-orders",
+    "irreversible_action": "revert_config:svc-orders@v1.0.1"
+  },
+  {
+    "id": "inc-014",
+    "fault_family": "dependency_failure",
+    "bundle": {
+      "logs": [
+        "[error] svc-catalog 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.92,
+        "p99_ms": 827.5
+      },
+      "config": {
+        "max_conns": "9",
+        "region": "us"
+      },
+      "diff": "- svc-catalog:v1.2.2\n+ svc-catalog:v1.3.8"
+    },
+    "ground_truth_root_cause": "svc-catalog dependency postgres timing out",
+    "ground_truth_remediation": "restart svc-catalog and fail over postgres",
+    "irreversible_action": "restart_service:svc-catalog@v1.2.2"
+  },
+  {
+    "id": "inc-015",
+    "fault_family": "data_issue",
+    "bundle": {
+      "logs": [
+        "[error] svc-feed 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.72,
+        "p99_ms": 1864.8
+      },
+      "config": {
+        "timeout_ms": "9",
+        "region": "us"
+      },
+      "diff": "- svc-feed:v1.3.4\n+ svc-feed:v1.1.3"
+    },
+    "ground_truth_root_cause": "stale cache serving bad data on svc-feed",
+    "ground_truth_remediation": "purge cache for svc-feed",
+    "irreversible_action": "purge_cache:svc-feed@v1.3.4"
+  },
+  {
+    "id": "inc-016",
+    "fault_family": "bad_deploy",
+    "bundle": {
+      "logs": [
+        "[error] svc-checkout 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.66,
+        "p99_ms": 2436.1
+      },
+      "config": {
+        "replicas": "1",
+        "region": "eu"
+      },
+      "diff": "- svc-checkout:v1.1.5\n+ svc-checkout:v1.0.3"
+    },
+    "ground_truth_root_cause": "bad deploy of svc-checkout v1.1.5",
+    "ground_truth_remediation": "rollback svc-checkout to previous version",
+    "irreversible_action": "rollback_deploy:svc-checkout@v1.1.5"
+  },
+  {
+    "id": "inc-017",
+    "fault_family": "config_drift",
+    "bundle": {
+      "logs": [
+        "[error] svc-auth 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.45,
+        "p99_ms": 2742.1
+      },
+      "config": {
+        "replicas": "4",
+        "region": "eu"
+      },
+      "diff": "- svc-auth:v1.0.5\n+ svc-auth:v1.9.9"
+    },
+    "ground_truth_root_cause": "config drift on svc-auth: replicas changed",
+    "ground_truth_remediation": "revert replicas on svc-auth",
+    "irreversible_action": "revert_config:svc-auth@v1.0.5"
+  },
+  {
+    "id": "inc-018",
+    "fault_family": "dependency_failure",
+    "bundle": {
+      "logs": [
+        "[error] svc-ledger 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.36,
+        "p99_ms": 2704.1
+      },
+      "config": {
+        "timeout_ms": "6",
+        "region": "us"
+      },
+      "diff": "- svc-ledger:v1.3.7\n+ svc-ledger:v1.6.7"
+    },
+    "ground_truth_root_cause": "svc-ledger dependency redis timing out",
+    "ground_truth_remediation": "restart svc-ledger and fail over redis",
+    "irreversible_action": "restart_service:svc-ledger@v1.3.7"
+  },
+  {
+    "id": "inc-019",
+    "fault_family": "data_issue",
+    "bundle": {
+      "logs": [
+        "[error] svc-feed 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.77,
+        "p99_ms": 3242.3
+      },
+      "config": {
+        "replicas": "2",
+        "region": "eu"
+      },
+      "diff": "- svc-feed:v1.0.1\n+ svc-feed:v1.3.3"
+    },
+    "ground_truth_root_cause": "stale cache serving bad data on svc-feed",
+    "ground_truth_remediation": "purge cache for svc-feed",
+    "irreversible_action": "purge_cache:svc-feed@v1.0.1"
+  },
+  {
+    "id": "inc-020",
+    "fault_family": "bad_deploy",
+    "bundle": {
+      "logs": [
+        "[error] svc-search 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.48,
+        "p99_ms": 1149.3
+      },
+      "config": {
+        "timeout_ms": "2",
+        "region": "us"
+      },
+      "diff": "- svc-search:v1.7.2\n+ svc-search:v1.8.1"
+    },
+    "ground_truth_root_cause": "bad deploy of svc-search v1.7.2",
+    "ground_truth_remediation": "rollback svc-search to previous version",
+    "irreversible_action": "rollback_deploy:svc-search@v1.7.2"
+  },
+  {
+    "id": "inc-021",
+    "fault_family": "config_drift",
+    "bundle": {
+      "logs": [
+        "[error] svc-auth 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.41,
+        "p99_ms": 2045.4
+      },
+      "config": {
+        "replicas": "4",
+        "region": "us"
+      },
+      "diff": "- svc-auth:v1.8.0\n+ svc-auth:v1.0.2"
+    },
+    "ground_truth_root_cause": "config drift on svc-auth: replicas changed",
+    "ground_truth_remediation": "revert replicas on svc-auth",
+    "irreversible_action": "revert_config:svc-auth@v1.8.0"
+  },
+  {
+    "id": "inc-022",
+    "fault_family": "dependency_failure",
+    "bundle": {
+      "logs": [
+        "[error] svc-ledger 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.49,
+        "p99_ms": 2847.0
+      },
+      "config": {
+        "timeout_ms": "9",
+        "region": "us"
+      },
+      "diff": "- svc-ledger:v1.0.6\n+ svc-ledger:v1.2.3"
+    },
+    "ground_truth_root_cause": "svc-ledger dependency postgres timing out",
+    "ground_truth_remediation": "restart svc-ledger and fail over postgres",
+    "irreversible_action": "restart_service:svc-ledger@v1.0.6"
+  },
+  {
+    "id": "inc-023",
+    "fault_family": "data_issue",
+    "bundle": {
+      "logs": [
+        "[error] svc-pricing 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.65,
+        "p99_ms": 3042.3
+      },
+      "config": {
+        "max_conns": "1",
+        "region": "eu"
+      },
+      "diff": "- svc-pricing:v1.3.0\n+ svc-pricing:v1.9.7"
+    },
+    "ground_truth_root_cause": "stale cache serving bad data on svc-pricing",
+    "ground_truth_remediation": "purge cache for svc-pricing",
+    "irreversible_action": "purge_cache:svc-pricing@v1.3.0"
+  },
+  {
+    "id": "inc-024",
+    "fault_family": "bad_deploy",
+    "bundle": {
+      "logs": [
+        "[error] svc-search 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.35,
+        "p99_ms": 906.1
+      },
+      "config": {
+        "replicas": "2",
+        "region": "eu"
+      },
+      "diff": "- svc-search:v1.8.2\n+ svc-search:v1.6.1"
+    },
+    "ground_truth_root_cause": "bad deploy of svc-search v1.8.2",
+    "ground_truth_remediation": "rollback svc-search to previous version",
+    "irreversible_action": "rollback_deploy:svc-search@v1.8.2"
+  },
+  {
+    "id": "inc-025",
+    "fault_family": "config_drift",
+    "bundle": {
+      "logs": [
+        "[error] svc-inventory 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.7,
+        "p99_ms": 1793.1
+      },
+      "config": {
+        "max_conns": "9",
+        "region": "us"
+      },
+      "diff": "- svc-inventory:v1.3.9\n+ svc-inventory:v1.4.3"
+    },
+    "ground_truth_root_cause": "config drift on svc-inventory: max_conns changed",
+    "ground_truth_remediation": "revert max_conns on svc-inventory",
+    "irreversible_action": "revert_config:svc-inventory@v1.3.9"
+  },
+  {
+    "id": "inc-026",
+    "fault_family": "dependency_failure",
+    "bundle": {
+      "logs": [
+        "[error] svc-catalog 5xx spike",
+        "[warn] postgres latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.39,
+        "p99_ms": 2652.9
+      },
+      "config": {
+        "timeout_ms": "8",
+        "region": "us"
+      },
+      "diff": "- svc-catalog:v1.5.3\n+ svc-catalog:v1.1.0"
+    },
+    "ground_truth_root_cause": "svc-catalog dependency postgres timing out",
+    "ground_truth_remediation": "restart svc-catalog and fail over postgres",
+    "irreversible_action": "restart_service:svc-catalog@v1.5.3"
+  },
+  {
+    "id": "inc-027",
+    "fault_family": "data_issue",
+    "bundle": {
+      "logs": [
+        "[error] svc-pricing 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.65,
+        "p99_ms": 2122.4
+      },
+      "config": {
+        "replicas": "3",
+        "region": "us"
+      },
+      "diff": "- svc-pricing:v1.9.9\n+ svc-pricing:v1.1.3"
+    },
+    "ground_truth_root_cause": "stale cache serving bad data on svc-pricing",
+    "ground_truth_remediation": "purge cache for svc-pricing",
+    "irreversible_action": "purge_cache:svc-pricing@v1.9.9"
+  },
+  {
+    "id": "inc-028",
+    "fault_family": "bad_deploy",
+    "bundle": {
+      "logs": [
+        "[error] svc-payments 5xx spike",
+        "[warn] kafka latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.76,
+        "p99_ms": 2524.4
+      },
+      "config": {
+        "timeout_ms": "9",
+        "region": "eu"
+      },
+      "diff": "- svc-payments:v1.4.2\n+ svc-payments:v1.8.4"
+    },
+    "ground_truth_root_cause": "bad deploy of svc-payments v1.4.2",
+    "ground_truth_remediation": "rollback svc-payments to previous version",
+    "irreversible_action": "rollback_deploy:svc-payments@v1.4.2"
+  },
+  {
+    "id": "inc-029",
+    "fault_family": "config_drift",
+    "bundle": {
+      "logs": [
+        "[error] svc-inventory 5xx spike",
+        "[warn] redis latency high"
+      ],
+      "metrics": {
+        "err_rate": 0.88,
+        "p99_ms": 3021.2
+      },
+      "config": {
+        "timeout_ms": "3",
+        "region": "us"
+      },
+      "diff": "- svc-inventory:v1.1.2\n+ svc-inventory:v1.4.9"
+    },
+    "ground_truth_root_cause": "config drift on svc-inventory: timeout_ms changed",
+    "ground_truth_remediation": "revert timeout_ms on svc-inventory",
+    "irreversible_action": "revert_config:svc-inventory@v1.1.2"
+  }
+]

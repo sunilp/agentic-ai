@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-000",
+  "finding": {
+    "incident_id": "inc-000",
+    "root_cause": "A spike in svc-search service errors, high latency on postgres, and increased error rate may be caused by the recent deployment of v1.9.6, which could have introduced compatibility or performance issues.",
+    "proposed_remediation": "Investigate the changes made between v1.1.0 and v1.9.6 in the svc-search service to identify potential causes of the errors and high latency.",
+    "proposed_action": "Roll back the deployment to v1.1.0"
+  },
+  "prompt_tokens": 4079,
+  "completion_tokens": 2168,
+  "model_calls": 17,
+  "latency_ms": 48813.57716600178,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

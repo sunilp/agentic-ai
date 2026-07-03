@@ -1,0 +1,96 @@
+---
+id: lab-002
+title: The durable agent, and whether ADK 2.0's crash-resilient runtime earns its overhead
+description: A static router and a dynamic, human-gated ADK 2.0 Workflow graph run over 30 synthetic incidents on a local model. The multi-agent graph loses on accuracy at 21x the cost, but its durable runtime recovers every crashed run for free.
+hypothesis: A dynamic, human-gated multi-agent graph earns its overhead on a complex incident-triage task a static router cannot decompose, and its durable runtime recovers crashed work on resume instead of re-paying for it.
+result: 17 calls, 0 re-run
+resultLabel: Dynamic multi-agent lost on accuracy at 21x cost; the durable runtime recovered a crashed run for free
+date: 2026-07-03
+readingTime: 12
+seed: 42
+references:
+  - ch-04
+  - ch-07
+  - fn-004
+---
+
+import Callout from '~/components/universal/Callout.astro';
+
+The question this Lab answers: when an incident needs more than one clean step to resolve, does a dynamic multi-agent system built on Google's [ADK 2.0](https://google.github.io/adk-docs/) Workflow Runtime earn its overhead over a static router, and does its headline feature, a durable runtime that survives a crash, actually deliver? The short version is a split verdict. On a weak local model the multi-agent graph did not win on accuracy, and it cost 21 times the tokens to lose. But its durable runtime did exactly what it claims: a run that crashed at the human approval gate resumed without re-running a single one of its 17 prior model calls. The accuracy verdict is capability-dependent and it is the same story [Lab-001](/labs/multi-agent-vs-router-100-queries/) told. The durability result is not capability-dependent, and it is the reason to read this.
+
+## Setup
+
+**Dataset.** 30 synthetic incidents, generated from a seeded deterministic script (seed 42), balanced across four fault families: a bad deploy, config drift, a dependency failure, and a data issue. Each incident carries a bundle (logs, metrics, a config snapshot, a code diff), a known ground-truth root cause, a known correct remediation, and one irreversible action that a fix would have to take. The generator and the exact 30-incident set are committed under `labs/lab_002/`, so this run reproduces. That is the first thing Lab-001 got wrong and this Lab fixes.
+
+**Baseline (static router).** A single ADK agent that receives the whole incident context in one pass and returns a structured finding: root cause, remediation, and the exact action id. One model call per incident. It applies the remediation only when its named action matches the sanctioned action id verbatim.
+
+**Contender (dynamic Workflow graph).** An ADK 2.0 `Workflow` whose orchestrator node fans out at runtime into four investigation branches, runs each through an investigator and an external verifier with a retry loop, synthesizes the confirmed hypotheses into one finding, and then pauses at a human approval gate before any remediation touches the incident. The gate is a real interrupt, not a prompt: the workflow returns a `RequestInput` and stops until a decision comes back.
+
+**Both** run on the same local model (llama3.2:3b) for the agents. Findings are scored two ways: a cheap keyword-overlap heuristic, and an independent LLM judge (qwen2.5:14b, three passes, weighted rubric, pass threshold 0.6). The judge variance across passes was 0.000, so the judge numbers are stable.
+
+## Method
+
+Every incident ran through both systems. Each system logged its full record: the finding, token counts, model calls, latency, whether remediation was applied, and whether the run was resumed after a crash. The durability harness ran a fixed subset of 5 incidents through a genuine crash: the contender ran to the approval gate on a persisted SQLite session, then the runner and the session service were destroyed to simulate a process death, and a fresh runner reopened the same database and resumed. What we measured on resume is how much of the pre-crash work re-ran.
+
+<Callout type="gotcha">
+ADK 2.0's own test suite marks broad workflow resumability as expected-to-fail: "Resumability broken in V2" and "Checkpoint/resume not yet in new Workflow" appear across the workflow HITL tests. Those cover a different scenario (an LLM agent driving a long-running tool under an app-level resumability config). The pattern this Lab uses, a node that returns a `RequestInput` and a resume driven off a persisted `SqliteSessionService`, does work in 2.3.0. We only trusted that after building a crash-and-resume harness and watching it recover. On a runtime this young, verify the exact path you depend on rather than the feature name.
+</Callout>
+
+## Results
+
+**Accuracy.** The heuristic keyword-overlap success rate was 20.0% for the baseline and 10.0% for the contender. The LLM judge pass rate (weighted score at or above 0.6) was 16.7% for the baseline and 10.0% for the contender. So on the metric that matters, clearing the bar, the dynamic graph did worse. The one number that leans the other way is the average judge weighted score: 0.273 for the baseline against 0.326 for the contender. The multi-branch investigation produced findings that were marginally better on average, but not better often enough to pass more often. Neither system is good here. A 3B model is weak for open-ended root-cause work, and that weakness is most of the story.
+
+**Cost.** The baseline averaged 290 tokens and one model call per incident. The contender averaged 6,256 tokens and 16.93 model calls. That is a 21.56x token multiple to produce a lower pass rate.
+
+**Latency.** Baseline p50 was 2.55 seconds. Contender p50 was 48.1 seconds, an 18.85x multiple, because the investigation runs its branches and verifier retries in sequence.
+
+**Remediation reached.** The baseline applied a remediation on 3.3% of incidents; the contender on 100%. This is not the contender being reckless. The baseline's rigid rule requires the weak model to echo the exact action id string, which it almost never does because it paraphrases. The contender's synthesizer is told to copy the action id, and every remediation it applied went through the approval gate first. So the contender is the system that actually reaches a gated, approved action, and the baseline mostly stalls before doing anything.
+
+**Durability.** This is where the runtime earns its keep. Across all 5 crash tests, the contender resumed after the simulated process death and re-ran nothing: an average of 6,265 tokens, 17 model calls, and 48.6 seconds of work per incident were recovered from the persisted event log rather than repeated. Frontier calls after resume averaged 0. A naive harness that lost its state on the crash would have re-paid every token and every second of that pre-gate investigation. ADK's durable runtime re-paid none of it.
+
+## Conclusion
+
+On a weak local model, dynamic multi-agent decomposition does not earn its 21x overhead for incident triage. Findings get slightly better on average and pass the bar less often, at 21 times the tokens and 19 times the latency. That is the same shape as Lab-001: the value of orchestration is a decision, not a maturity level, and here the decision does not pay. The obvious next run is the same experiment on a frontier model, where a stronger agent might convert the marginal quality edge into a real pass-rate win. That run needs a paid model and is deferred, so this Lab does not claim it either way. It names it as the open question.
+
+The result that does not depend on model strength is durability. When a long, expensive, human-gated agent run crashes, ADK 2.0's durable Workflow Runtime brought it back and recovered 100% of the work already done. If you are going to run agents that pause for a human and hold that pause across minutes or a restart, that property is the thing worth building on, independent of whether the multi-agent topology wins on accuracy.
+
+And the gate held. The irreversible remediation never fired before an approval came back. That is the enforced stop from [Field Note 004](/field-notes/004-loop-engineering-30-year-old-loop/), now measured rather than argued. It also raises the question that a durable pause makes unavoidable: the runtime gives you the pause, but it does not tell you who is allowed to resolve it. That authority has to live outside the model, and it is the layer a durable, human-gated agent still needs.
+
+## What we got wrong
+
+**We expected the contender to win on accuracy and it did not.** The pre-registered hypothesis was that a task the router cannot decompose would reward the multi-agent graph. On a 3B model it did not. The honest read is that base-model capability is the dominant variable, and 30 incidents on a weak model is not the regime where decomposition pays. We are reporting the loss rather than reaching for a model that would flip it.
+
+**The baseline's low remediation rate is a metric artifact, not a safety win.** The baseline applied almost nothing because it could not echo an exact action id, not because it was being careful. We left the rigid rule in because it is the honest static baseline, but it means the 3.3% versus 100% remediation numbers are about string matching, not judgment.
+
+## Caveats
+
+- Local open models only. Agents on llama3.2:3b, judge on qwen2.5:14b. No frontier-model run was done, so nothing here speaks to what a stronger agent would do.
+- Local inference has no dollar cost, so the cost axis is tokens and model calls, not dollars.
+- 30 incidents is a small set. The direction is clear but the exact percentages carry the noise of a small-N run on a weak model. Per-incident detail, including every judge pass, is in `labs/lab_002/results.json`.
+- The durability result is the strongest claim here, and it is the one built on a runtime whose broader resumability its own maintainers still mark as unfinished. It holds for the specific gate-and-resume path measured, not for ADK resumability in general.
+
+## In code
+
+The contender's whole shape is the fan-out, the external verifier, and the gate. The investigation node must be marked to re-run on resume, which is what lets the runtime replay it from the event log and hand back the cached child results instead of calling the model again.
+
+```python
+# Illustrative. Full harness, dataset, and run outputs are committed under labs/lab_002/.
+@node(rerun_on_resume=True)
+async def investigate(ctx, node_input):
+    confirmed = []
+    for branch in BRANCHES:                    # dynamic fan-out at runtime
+        for _ in range(MAX_RETRY):
+            h = await ctx.run_node(investigator, node_input=branch_prompt(branch, node_input))
+            v = await ctx.run_node(verifier, node_input=verify_prompt(h, node_input))
+            if v.grounded:
+                confirmed.append(h)
+                break
+    yield await ctx.run_node(synthesizer, node_input=synth_prompt(confirmed, node_input))
+
+def gate(finding):
+    # Returning RequestInput pauses the run until a human resolves it.
+    return RequestInput(interrupt_id="remediation_approval",
+                        payload=finding, response_schema=RemediationDecision)
+```
+
+The crash test is the reproducible part worth running yourself. Take the contender to the gate on a `SqliteSessionService`, drop the runner, reopen the same database in a fresh runner, and resume. Count the model calls before and after. In this run it was 17 before and 0 after.

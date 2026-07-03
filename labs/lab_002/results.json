@@ -1,0 +1,2048 @@
+{
+  "agent_model": "ollama_chat/llama3.2:3b",
+  "n_incidents": 30,
+  "limit": null,
+  "errors": 0,
+  "durability_subset": [
+    "inc-000",
+    "inc-001",
+    "inc-002",
+    "inc-003",
+    "inc-004"
+  ],
+  "durability_skipped": 0,
+  "started": 1783079773.445128,
+  "finished": 1783084604.1704352,
+  "duration_s": 4830.7,
+  "systems": {
+    "baseline": {
+      "n": 30,
+      "success_rate": 0.2,
+      "avg_prompt_tokens": 178.9,
+      "avg_completion_tokens": 111.3,
+      "avg_total_tokens": 290.2,
+      "avg_model_calls": 1,
+      "p50_latency_ms": 2552.4,
+      "remediation_rate": 0.0333,
+      "records": [
+        {
+          "incident_id": "inc-000",
+          "finding": {
+            "incident_id": "inc-000",
+            "root_cause": "Incompatible version of `svc-search` causing high latency and errors due to spike in service usage.",
+            "proposed_remediation": "Upgrade `svc-search` to the latest available version (v1.9.6) and verify its functionality.",
+            "proposed_action": "Rollback deploy of `svc-search` to v1.1.0 and wait for further analysis."
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 100,
+          "model_calls": 1,
+          "latency_ms": 3569.6,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.5
+        },
+        {
+          "incident_id": "inc-001",
+          "finding": {
+            "incident_id": "inc-001",
+            "root_cause": "Incompatible service version change",
+            "proposed_remediation": "Roll back the svc-auth service to a known good version (v1.0.1) and verify the application functionality.",
+            "proposed_action": "Revert config:svc-auth@v1.3.7"
+          },
+          "prompt_tokens": 176,
+          "completion_tokens": 81,
+          "model_calls": 1,
+          "latency_ms": 1789.5,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.25
+        },
+        {
+          "incident_id": "inc-002",
+          "finding": {
+            "incident_id": "inc-002",
+            "root_cause": "Inconsistent service version update causing data consistency issues and high latency",
+            "proposed_remediation": "Immediately roll back the update to svc-catalog:v1.4.0 using a previous backup or snapshot",
+            "proposed_action": "Rollback update: svc-catalog service reverted to v1.4.0 using most recent available backup, as of 10 minutes ago"
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 101,
+          "model_calls": 1,
+          "latency_ms": 2220.6,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-003",
+          "finding": {
+            "incident_id": "inc-003",
+            "root_cause": "Inconsistent configuration between service version and cached versions",
+            "proposed_remediation": "Verify and update the configuration to match the latest version of svc-pricing (v1.6.1) and consider rebuilding or purging caches for the old version (v1.1.5)",
+            "proposed_action": "Rebuild service cache with latest version (v1.6.1)"
+          },
+          "prompt_tokens": 180,
+          "completion_tokens": 102,
+          "model_calls": 1,
+          "latency_ms": 2235.5,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-004",
+          "finding": {
+            "incident_id": "inc-004",
+            "root_cause": "Incompatible version of the service search component leading to unexpected behavior",
+            "proposed_remediation": "Rollback the deployment to the previously deployed stable version (v1.4.9) of the service search component",
+            "proposed_action": "Irreversible action: Immediately cancel any pending deployment of the new service search version (v1.1.3)"
+          },
+          "prompt_tokens": 176,
+          "completion_tokens": 97,
+          "model_calls": 1,
+          "latency_ms": 2133.5,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.6
+        },
+        {
+          "incident_id": "inc-005",
+          "finding": {
+            "incident_id": "inc-005",
+            "root_cause": "The root cause of the incident is likely due to a change in the service auth version, which has caused inconsistencies and errors leading to the spike in errors.",
+            "proposed_remediation": "Revert the service auth configuration to its previous version (v1.6.4) to restore stability and fix the error spike.",
+            "proposed_action": "Revert config:svc-auth@v1.6.4"
+          },
+          "prompt_tokens": 176,
+          "completion_tokens": 108,
+          "model_calls": 1,
+          "latency_ms": 2701.8,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.2222
+        },
+        {
+          "incident_id": "inc-006",
+          "finding": {
+            "incident_id": "inc-006",
+            "root_cause": "Incompatible service version update leading to service unavailability and latency issues",
+            "proposed_remediation": "Roll back the service catalog to its previous stable version (v1.2.8) and investigate the cause of the incompatible version update.",
+            "proposed_action": "Run `baseline_responder restart_service:svc-catalog@v1.5.0`"
+          },
+          "prompt_tokens": 182,
+          "completion_tokens": 99,
+          "model_calls": 1,
+          "latency_ms": 2366.9,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.2
+        },
+        {
+          "incident_id": "inc-007",
+          "finding": {
+            "incident_id": "inc-007",
+            "root_cause": "Inconsistent service profile version",
+            "proposed_remediation": "Update the service profile to v1.7.6 using a canonical deployment process",
+            "proposed_action": "Purge cache for svc-profile@v1.0.5"
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 73,
+          "model_calls": 1,
+          "latency_ms": 1675.2,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.1
+        },
+        {
+          "incident_id": "inc-008",
+          "finding": {
+            "incident_id": "inc-008",
+            "root_cause": "Incompatible service version upgrade causing spike in errors and latency",
+            "proposed_remediation": "Upgrade the service to a compatible version, such as v1.8.0, or roll back to the previous stable version (v1.7.2)",
+            "proposed_action": "rollback_deploy:svc-search@v1.7.2"
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 94,
+          "model_calls": 1,
+          "latency_ms": 2071.9,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": false,
+          "heuristic_score": 0.4
+        },
+        {
+          "incident_id": "inc-009",
+          "finding": {
+            "incident_id": "inc-009",
+            "root_cause": "Inconsistent service version between expected and deployed versions of 'svc-orders', likely causing the 5xx spike.",
+            "proposed_remediation": "Revert to previously deployed version of 'svc-orders' (v1.3.2) using the candidate action ID 'revert_config:svc-orders@v1.3.2'.",
+            "proposed_action": "Apply irreversible change by reverting configuration to previous state. This will involve rolling back the deployment to v1.3.2 and re-running any necessary upgrades or configurations."
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 133,
+          "model_calls": 1,
+          "latency_ms": 2844.5,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.4444
+        },
+        {
+          "incident_id": "inc-010",
+          "finding": {
+            "incident_id": "inc-010",
+            "root_cause": "Upgrade to a newer version of the service catalog may have caused compatibility issues, leading to errors and spikes.",
+            "proposed_remediation": "Rollback the upgrade to svc-catalog:v1.1.6 as soon as possible to prevent further issues.",
+            "proposed_action": "Irreversible Action: Remove the latest patch version of svc-catalog (v1.1.8) from all nodes in the region, leaving only v1.1.6 intact."
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 120,
+          "model_calls": 1,
+          "latency_ms": 2588.2,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-011",
+          "finding": {
+            "incident_id": "inc-011",
+            "root_cause": "Unexpected upgrade to v1.8.1 of the 'svc-pricing' service, potentially introducing performance regressions.",
+            "proposed_remediation": "Immediately roll back to the previous version (v1.5.1) of the 'svc-pricing' service and monitor for improvements in error rates and latency.",
+            "proposed_action": "Revert to v1.5.1 on svc-pricing: Run `purge_cache:svc-pricing@v1.8.1`"
+          },
+          "prompt_tokens": 180,
+          "completion_tokens": 127,
+          "model_calls": 1,
+          "latency_ms": 2724.0,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-012",
+          "finding": {
+            "incident_id": "inc-012",
+            "root_cause": "Incompatible changes in the service search version from v1.4.8 to v1.9.5 may be causing intermittent 5xx errors.",
+            "proposed_remediation": "Deploy the latest version of service search (v1.9.5) and monitor for error rates to ensure they are within a healthy threshold.",
+            "proposed_action": "Perform an irreversible action: Remove all existing deployments of v1.4.8 from the system, including any related configuration files or database schema changes."
+          },
+          "prompt_tokens": 178,
+          "completion_tokens": 126,
+          "model_calls": 1,
+          "latency_ms": 2712.9,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.6
+        },
+        {
+          "incident_id": "inc-013",
+          "finding": {
+            "incident_id": "inc-013",
+            "root_cause": "Incompatible version upgrade of service 'svc-orders' from v1.0.1 to v1.7.1, causing latency issues and 5xx errors.",
+            "proposed_remediation": "Update the service 'svc-orders' to a compatible version, such as v1.6.2 or earlier",
+            "proposed_action": "Revert configuration of service 'svc-orders' to v1.0.1 using the candidate action 'revert_config:svc-orders@v1.0.1'"
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 128,
+          "model_calls": 1,
+          "latency_ms": 2760.2,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.2222
+        },
+        {
+          "incident_id": "inc-014",
+          "finding": {
+            "incident_id": "inc-014",
+            "root_cause": "Incompatible service catalog version update causing latency and errors",
+            "proposed_remediation": "Apply the latest stable version of service catalog (version v1.3.8) to minimize latency and errors.",
+            "proposed_action": "Apply the latest stable version of service catalog (version v1.3.0, not v1.3.8), then restart the service catalog. Note: this is an irreversible action as it will update the configuration and restart the service without reverting to the previous version."
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 126,
+          "model_calls": 1,
+          "latency_ms": 2708.6,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.2
+        },
+        {
+          "incident_id": "inc-015",
+          "finding": {
+            "incident_id": "inc-015",
+            "root_cause": "Inconsistent service version in the configuration and codebase, leading to a cache mismatch that caused the 5xx spike.",
+            "proposed_remediation": "Update the service feed version in the configuration to match the version in the codebase.",
+            "proposed_action": "Purge cache for svc-feed@v1.3.4"
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 91,
+          "model_calls": 1,
+          "latency_ms": 1975.1,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.2
+        },
+        {
+          "incident_id": "inc-016",
+          "finding": {
+            "incident_id": "inc-016",
+            "root_cause": "Service level agreement (SLA) breach due to high error rate and latency in Kafka cluster.",
+            "proposed_remediation": "Perform a full rollback of the svc-checkout deployment from v1.1.5 to v1.0.3",
+            "proposed_action": "Execute the candidate action 'rollback_deploy:svc-checkout@v1.1.5' with caution and monitoring to ensure successful roll back"
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 109,
+          "model_calls": 1,
+          "latency_ms": 2356.6,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.6
+        },
+        {
+          "incident_id": "inc-017",
+          "finding": {
+            "incident_id": "inc-017",
+            "root_cause": "Incompatible version of the `svc-auth` service between the current configuration and the previously deployed version (v1.0.5). The new version (v1.9.9) is not backwards compatible.",
+            "proposed_remediation": "Revert the configuration to use the previous version of the `svc-auth` service (v1.0.5) until a more compatible version can be found and implemented.",
+            "proposed_action": "Revert the `svc-auth` configuration to v1.0.5, which is the previously deployed version."
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 137,
+          "model_calls": 1,
+          "latency_ms": 2950.6,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.375
+        },
+        {
+          "incident_id": "inc-018",
+          "finding": {
+            "incident_id": "inc-018",
+            "root_cause": "Incompatible version change in 'svc-ledger': Upgrade from v1.3.7 to v1.6.7 may have introduced new or changed configurations that are causing the observed errors.",
+            "proposed_remediation": "Manually inspect the application code and configuration files for any changes related to the 'svc-ledger' service and verify that all updates were properly tested and validated before deployment.",
+            "proposed_action": "irreversible-action: Run a recovery rollbacks of the container group for 'svc-ledger', and then initiate a partial upgrade to v1.6.7, ensuring to update dependent services and applications accordingly."
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 152,
+          "model_calls": 1,
+          "latency_ms": 3264.8,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-019",
+          "finding": {
+            "incident_id": "inc-019",
+            "root_cause": "Upgrade to new version of service (svc-feed) without proper testing or validation, leading to a spike in errors and latency.",
+            "proposed_remediation": "Immediately roll back the upgrade to svc-feed v1.0.1 using the 'purge_cache:svc-feed@v1.0.1' action",
+            "proposed_action": "Revert service to previous version (v1.0.1) by purging cache and restarting the service"
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 117,
+          "model_calls": 1,
+          "latency_ms": 2535.7,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.4
+        },
+        {
+          "incident_id": "inc-020",
+          "finding": {
+            "incident_id": "inc-020",
+            "root_cause": "Recently deployed version of `svc-search` (v1.8.1) may be causing the 5xx spike and high latency issues.",
+            "proposed_remediation": "Rollback to the previous known good version (`v1.7.2`) and re-deploy",
+            "proposed_action": "{'type': 'rollBack', 'resourceId': '/services/v1/search', 'revision': 'v1.7.2'}"
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 115,
+          "model_calls": 1,
+          "latency_ms": 2485.4,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.9
+        },
+        {
+          "incident_id": "inc-021",
+          "finding": {
+            "incident_id": "inc-021",
+            "root_cause": "Unexpected changes to the service auth configuration, potentially causing spikes in errors and high latency.",
+            "proposed_remediation": "Revert the service auth configuration to its previous version (v1.8.0) to stabilize the system and reduce errors.",
+            "proposed_action": "Revert config: svc-auth@v1.8.0"
+          },
+          "prompt_tokens": 177,
+          "completion_tokens": 93,
+          "model_calls": 1,
+          "latency_ms": 2027.0,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.25
+        },
+        {
+          "incident_id": "inc-022",
+          "finding": {
+            "incident_id": "inc-022",
+            "root_cause": "Incompatible version upgrade of service 'svc-ledger' to v1.2.3, causing a spike in errors and increased latency.",
+            "proposed_remediation": "Roll back the service to version v1.0.6 immediately to prevent further issues.",
+            "proposed_action": "Irreversible action: Delete the latest patch from the container registry for 'svc-ledger'."
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 102,
+          "model_calls": 1,
+          "latency_ms": 2224.0,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-023",
+          "finding": {
+            "incident_id": "inc-023",
+            "root_cause": "Inconsistent service version between the current deployment and expected version, potentially causing unexpected behavior or errors.",
+            "proposed_remediation": "Update the service to the latest version (v1.9.7) of svc-pricing to ensure consistency with other components.",
+            "proposed_action": "Revert to a previous known good state by purging the cache for the 'svc-pricing' service at version v1.3.0."
+          },
+          "prompt_tokens": 182,
+          "completion_tokens": 112,
+          "model_calls": 1,
+          "latency_ms": 2429.3,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.2
+        },
+        {
+          "incident_id": "inc-024",
+          "finding": {
+            "incident_id": "inc-024",
+            "root_cause": "The incorrect deployment of service 'svc-search' at version 'v1.6.1' likely caused a spike in errors and increased latency, as the newer version may have introduced bugs or compatibility issues.",
+            "proposed_remediation": "Redeploy service 'svc-search' to version 'v1.8.2' using the most recent available version.",
+            "proposed_action": "Roll back deployment of 'svc-search' to its previous version ('v1.8.2') immediately."
+          },
+          "prompt_tokens": 176,
+          "completion_tokens": 123,
+          "model_calls": 1,
+          "latency_ms": 2944.3,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.6
+        },
+        {
+          "incident_id": "inc-025",
+          "finding": {
+            "incident_id": "inc-025",
+            "root_cause": "Upgrade to a newer version of the service inventory component may have introduced an unexpected change that is causing high latency and spike in errors.",
+            "proposed_remediation": "Roll back to the previous version of the service inventory component to revert to known good configuration.",
+            "proposed_action": "Revert config:svc-inventory@v1.3.9"
+          },
+          "prompt_tokens": 182,
+          "completion_tokens": 95,
+          "model_calls": 1,
+          "latency_ms": 3707.2,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.2222
+        },
+        {
+          "incident_id": "inc-026",
+          "finding": {
+            "incident_id": "inc-026",
+            "root_cause": "Inconsistent service version mismatch between expected and actual versions of the 'svc-catalog' service, leading to unexpected behavior.",
+            "proposed_remediation": "Update the service version in the configuration to match the expected version (v1.5.3) of the 'svc-catalog' service.",
+            "proposed_action": "Revert changes made to the 'svc-catalog' service from v1.1.0 to v1.5.3 and restore to the latest stable version."
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 123,
+          "model_calls": 1,
+          "latency_ms": 2641.3,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-027",
+          "finding": {
+            "incident_id": "inc-027",
+            "root_cause": "Inconsistent or outdated cache causing a spike in errors for the svc-pricing service.",
+            "proposed_remediation": "Clear the cache for the svc-pricing service to resolve the issue, and verify the new version (v1.1.3) is being used.",
+            "proposed_action": "Clear the svc-pricing service cache using the candidate action 'purge_cache:svc-pricing@v1.9.9' in place of the proposed action."
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 119,
+          "model_calls": 1,
+          "latency_ms": 2569.1,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.4
+        },
+        {
+          "incident_id": "inc-028",
+          "finding": {
+            "incident_id": "inc-028",
+            "root_cause": "Unintended changes to the `svc-payments` service, causing a spike in errors and high latency on Kafka.",
+            "proposed_remediation": "Roll back the deployment of `svc-payments` to version v1.4.2 from v1.8.4 using the candidate action: rollback_deploy:svc-payments@v1.4.2",
+            "proposed_action": "Rollback the `svc-payments` service to version v1.4.2"
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 122,
+          "model_calls": 1,
+          "latency_ms": 2642.4,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.8
+        },
+        {
+          "incident_id": "inc-029",
+          "finding": {
+            "incident_id": "inc-029",
+            "root_cause": "Unexpected spike in service inventory error rate and latency, potentially due to incompatible configuration update.",
+            "proposed_remediation": "Review the changelog for svc-inventory v1.4.9 to identify the cause of the issues and revert the configuration to a known good version (v1.1.2) as indicated by the candidate action.",
+            "proposed_action": "Revert configuration to svc-inventory: v1.1.2"
+          },
+          "prompt_tokens": 181,
+          "completion_tokens": 113,
+          "model_calls": 1,
+          "latency_ms": 2450.2,
+          "remediation_applied": false,
+          "approved": false,
+          "resumed": false,
+          "heuristic_score": 0.3333
+        }
+      ]
+    },
+    "contender": {
+      "n": 30,
+      "success_rate": 0.1,
+      "avg_prompt_tokens": 4139.0,
+      "avg_completion_tokens": 2117.0,
+      "avg_total_tokens": 6256,
+      "avg_model_calls": 16.93,
+      "p50_latency_ms": 48106.0,
+      "remediation_rate": 1.0,
+      "records": [
+        {
+          "incident_id": "inc-000",
+          "finding": {
+            "incident_id": "inc-000",
+            "root_cause": "A spike in svc-search service errors, high latency on postgres, and increased error rate may be caused by the recent deployment of v1.9.6, which could have introduced compatibility or performance issues.",
+            "proposed_remediation": "Investigate the changes made between v1.1.0 and v1.9.6 in the svc-search service to identify potential causes of the errors and high latency.",
+            "proposed_action": "Roll back the deployment to v1.1.0"
+          },
+          "prompt_tokens": 4079,
+          "completion_tokens": 2168,
+          "model_calls": 17,
+          "latency_ms": 48813.6,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.5
+        },
+        {
+          "incident_id": "inc-001",
+          "finding": {
+            "incident_id": "inc-001",
+            "root_cause": "Inconsistent service version leading to a spike in errors and increased latency.",
+            "proposed_remediation": "Revert the configuration to a known good version (svc-auth:v1.0.1) to mitigate the effects of the service version mismatch.",
+            "proposed_action": "revert_config:svc-auth@v1.0.1"
+          },
+          "prompt_tokens": 4078,
+          "completion_tokens": 2279,
+          "model_calls": 17,
+          "latency_ms": 51194.4,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.375
+        },
+        {
+          "incident_id": "inc-002",
+          "finding": {
+            "incident_id": "inc-002",
+            "root_cause": "A recent configuration change to v1.1.1 may have caused instability leading to the need for restarting the service.",
+            "proposed_remediation": "Restarting the svc-catalog service to address potential instability caused by the version change.",
+            "proposed_action": "restart_service:svc-catalog@v1.4.0"
+          },
+          "prompt_tokens": 4313,
+          "completion_tokens": 1922,
+          "model_calls": 17,
+          "latency_ms": 43622.4,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.2
+        },
+        {
+          "incident_id": "inc-003",
+          "finding": {
+            "incident_id": "inc-003",
+            "root_cause": "Potential upgrade to svc-pricing v1.6.1 caused a spike in errors and high latency.",
+            "proposed_remediation": "Investigate the cause of the spike, gather logs and metrics data to understand the impact of the upgrade.",
+            "proposed_action": "Purge_cache:svc-pricing@v1.1.5"
+          },
+          "prompt_tokens": 4235,
+          "completion_tokens": 2357,
+          "model_calls": 17,
+          "latency_ms": 52478.3,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-004",
+          "finding": {
+            "incident_id": "inc-004",
+            "root_cause": "Spike in error rate for svc-search service, with p99 latency of 464ms, potentially due to changes from v1.4.9 to v1.1.3.",
+            "proposed_remediation": "Investigate and analyze the cause of the spike in error rate and latency, and consider applying a patch or update to restore stability.",
+            "proposed_action": "rollback_deploy:svc-search@v1.4.9"
+          },
+          "prompt_tokens": 3997,
+          "completion_tokens": 1917,
+          "model_calls": 17,
+          "latency_ms": 43934.1,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.5
+        },
+        {
+          "incident_id": "inc-005",
+          "finding": {
+            "incident_id": "inc-005",
+            "root_cause": "The deployment of version 1.6.4 of the svc-auth service likely caused a spike in errors and high latency issues, leading to a temporary disruption in service availability.",
+            "proposed_remediation": "Revert the configuration to use a previous version of the svc-auth service, such as v1.4.1, to address the performance issue and communication problems with other services.",
+            "proposed_action": "revert_config:svc-auth@v1.6.4"
+          },
+          "prompt_tokens": 4177,
+          "completion_tokens": 2391,
+          "model_calls": 17,
+          "latency_ms": 58906.1,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.3333
+        },
+        {
+          "incident_id": "inc-006",
+          "finding": {
+            "incident_id": "inc-006",
+            "root_cause": "The sudden spike in service catalog errors is likely caused by an issue with the redis latency, which may be related to the upgrade from svc-catalog v1.2.8 to v1.5.0.",
+            "proposed_remediation": "Upgrade svc-catalog to a newer version (e.g., v1.4.0) or investigate and address any issues with the redis configuration.",
+            "proposed_action": "restart_service:svc-catalog@v1.2.8"
+          },
+          "prompt_tokens": 4224,
+          "completion_tokens": 2352,
+          "model_calls": 17,
+          "latency_ms": 54990.2,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.4
+        },
+        {
+          "incident_id": "inc-007",
+          "finding": {
+            "incident_id": "inc-007",
+            "root_cause": "The spike in errors and high latency on the service profile is likely due to changes made during the upgrade from v1.0.5 to v1.7.6, which may have introduced compatibility issues or performance regressions.",
+            "proposed_remediation": "Thoroughly review the changelog for version 1.7.6 of the service profile to identify potential causes of the spike and high latency, and apply any necessary fixes or updates.",
+            "proposed_action": "Purge cache:svc-profile@v1.0.5"
+          },
+          "prompt_tokens": 4083,
+          "completion_tokens": 2275,
+          "model_calls": 17,
+          "latency_ms": 52435.2,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-008",
+          "finding": {
+            "incident_id": "inc-008",
+            "root_cause": "A performance spike in the svc-search service, with an error rate of 0.46 and a p99 latency of 2333.2ms, which was caused by a deployment of version v1.9.6, is affecting the application.",
+            "proposed_remediation": "Roll back to a previous version of the svc-search service, such as v1.7.2, to reduce performance issues and stabilize the system.",
+            "proposed_action": "rollback_deploy:svc-search@v1.7.2"
+          },
+          "prompt_tokens": 4200,
+          "completion_tokens": 2258,
+          "model_calls": 17,
+          "latency_ms": 50517.5,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.7
+        },
+        {
+          "incident_id": "inc-009",
+          "finding": {
+            "incident_id": "inc-009",
+            "root_cause": "The root cause of the incident is unclear, but it is likely related to a configuration change or an unexpected spike in service usage.",
+            "proposed_remediation": "Investigate and analyze logs and metrics to identify the root cause of the issue and implement corrective actions.",
+            "proposed_action": "revert_config:svc-orders@v1.3.2"
+          },
+          "prompt_tokens": 4264,
+          "completion_tokens": 2449,
+          "model_calls": 17,
+          "latency_ms": 54406.3,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.0
+        },
+        {
+          "incident_id": "inc-010",
+          "finding": {
+            "incident_id": "inc-010",
+            "root_cause": "The high error rate (95%) and latency spike in the service catalog may be related to a version mismatch between the expected v1.1.6 and the deployed v1.1.8, which could be causing issues with the Kafka latency.",
+            "proposed_remediation": "Try updating the service catalog to the latest version (v1.1.8) to resolve the potential issue.",
+            "proposed_action": "restart_service:svc-catalog@v1.1.6"
+          },
+          "prompt_tokens": 4300,
+          "completion_tokens": 2137,
+          "model_calls": 17,
+          "latency_ms": 47905.1,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-011",
+          "finding": {
+            "incident_id": "inc-011",
+            "root_cause": "A spike in 5xx errors from the svc-pricing service, combined with high latency and poor performance metrics, suggests a potential issue with the new version of svc-pricing (v1.8.1) that was recently deployed.",
+            "proposed_remediation": "Revert to the previous version of svc-pricing (v1.5.1) by running the purge_cache action.",
+            "proposed_action": "Purge cache:svc-pricing@v1.5.1"
+          },
+          "prompt_tokens": 4031,
+          "completion_tokens": 1787,
+          "model_calls": 17,
+          "latency_ms": 40324.8,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.4
+        },
+        {
+          "incident_id": "inc-012",
+          "finding": {
+            "incident_id": "inc-012",
+            "root_cause": "Inconsistent versioning of the svc-search service, with a more recent version (v1.9.5) being deployed while an older version (v1.4.8) is still active.",
+            "proposed_remediation": "Deploy a newer version of the svc-search service to ensure consistent and up-to-date functionality",
+            "proposed_action": "rollback_deploy:svc-search@v1.4.8"
+          },
+          "prompt_tokens": 4068,
+          "completion_tokens": 2036,
+          "model_calls": 17,
+          "latency_ms": 45581.0,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.7
+        },
+        {
+          "incident_id": "inc-013",
+          "finding": {
+            "incident_id": "inc-013",
+            "root_cause": "The spike in errors for the 'svc-orders' service resulted from an upgrade to version v1.7.1, which may have introduced unintended changes that are causing latency issues with the PostgreSQL database.",
+            "proposed_remediation": "Roll back the update to version v1.0.1 of the 'svc-orders' service to address the spike in errors and improve overall performance.",
+            "proposed_action": "revert_config:svc-orders@v1.0.1"
+          },
+          "prompt_tokens": 4048,
+          "completion_tokens": 2157,
+          "model_calls": 17,
+          "latency_ms": 48135.9,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.2222
+        },
+        {
+          "incident_id": "inc-014",
+          "finding": {
+            "incident_id": "inc-014",
+            "root_cause": "The data service experienced high error rates and slow response times potentially due to the version upgrade from v1.2.2 to v1.3.8, which may be causing performance issues.",
+            "proposed_remediation": "Review and refine configuration settings, such as max_conns, to mitigate potential oversubscription leading to performance issues.",
+            "proposed_action": "restart_service:svc-catalog@v1.2.2"
+          },
+          "prompt_tokens": 3934,
+          "completion_tokens": 1940,
+          "model_calls": 15,
+          "latency_ms": 43394.5,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.1
+        },
+        {
+          "incident_id": "inc-015",
+          "finding": {
+            "incident_id": "inc-015",
+            "root_cause": "Potential issue with service feed version upgrade causing increased errors and latency.",
+            "proposed_remediation": "Verify that the new service feed version v1.1.3 is properly deployed and functioning correctly.",
+            "proposed_action": "Purge cache:svc-feed@v1.3.4"
+          },
+          "prompt_tokens": 3942,
+          "completion_tokens": 1899,
+          "model_calls": 17,
+          "latency_ms": 42621.8,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.1
+        },
+        {
+          "incident_id": "inc-016",
+          "finding": {
+            "incident_id": "inc-016",
+            "root_cause": "Potential service discovery issue due to inconsistent configuration",
+            "proposed_remediation": "Verify service discovery configuration and reconcile differences between v1.1.5 and v1.0.3",
+            "proposed_action": "rollback_deploy:svc-checkout@v1.1.5"
+          },
+          "prompt_tokens": 4101,
+          "completion_tokens": 2045,
+          "model_calls": 17,
+          "latency_ms": 45614.6,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.2
+        },
+        {
+          "incident_id": "inc-017",
+          "finding": {
+            "incident_id": "inc-017",
+            "root_cause": "The high latency on the Kafka service may be related to a discrepancy in the replica count, as the new version of svc-auth has increased the number of replicas from 4 to an unspecified amount.",
+            "proposed_remediation": "Verify the current number of replicas and adjust them according to the specified value (4) to reduce latency on the Kafka service.",
+            "proposed_action": "revert_config:svc-auth@v1.0.5"
+          },
+          "prompt_tokens": 4310,
+          "completion_tokens": 2304,
+          "model_calls": 17,
+          "latency_ms": 51209.4,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.5
+        },
+        {
+          "incident_id": "inc-018",
+          "finding": {
+            "incident_id": "inc-018",
+            "root_cause": "Inconsistent service version leading to unexpected behavior and errors in the 'svc-ledger' service.",
+            "proposed_remediation": "Update the service version of 'svc-ledger' to a consistent version, such as v1.6.7, to prevent similar issues in the future.",
+            "proposed_action": "restart_service:svc-ledger@v1.3.7"
+          },
+          "prompt_tokens": 4136,
+          "completion_tokens": 1997,
+          "model_calls": 17,
+          "latency_ms": 44713.6,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-019",
+          "finding": {
+            "incident_id": "inc-019",
+            "root_cause": "A change in the svc-feed service to version v1.3.3 resulted in a high error rate (77%) and latency issues, causing a 5xx spike.",
+            "proposed_remediation": "Investigate and identify the root cause of the issue, and consider rolling back the svc-feed service to a previous stable version if necessary.",
+            "proposed_action": "Purge_cache:svc-feed@v1.0.1"
+          },
+          "prompt_tokens": 4144,
+          "completion_tokens": 2272,
+          "model_calls": 17,
+          "latency_ms": 50509.8,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.2
+        },
+        {
+          "incident_id": "inc-020",
+          "finding": {
+            "incident_id": "inc-020",
+            "root_cause": "Unconfirmed hypotheses, but high error rate (0.48) and long response time (p99_ms=1149.3) suggest issues with the updated svc-search service version v1.8.1.",
+            "proposed_remediation": "Investigate and verify the updates to svc-search, and consider rolling back to a known good version (v1.7.2) if necessary.",
+            "proposed_action": "rollback_deploy:svc-search@v1.7.2"
+          },
+          "prompt_tokens": 4053,
+          "completion_tokens": 1911,
+          "model_calls": 17,
+          "latency_ms": 42796.8,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.5
+        },
+        {
+          "incident_id": "inc-021",
+          "finding": {
+            "incident_id": "inc-021",
+            "root_cause": "Inconsistent configuration and potential version mismatch between the expected v1.8.0 of svc-auth and the deployed v1.0.2, leading to unexpected spike in errors.",
+            "proposed_remediation": "Revert the configuration to a consistent version, for example by reverting to v1.8.0 of svc-auth",
+            "proposed_action": "revert_config:svc-auth@v1.8.0"
+          },
+          "prompt_tokens": 4107,
+          "completion_tokens": 2038,
+          "model_calls": 17,
+          "latency_ms": 46943.7,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.375
+        },
+        {
+          "incident_id": "inc-022",
+          "finding": {
+            "incident_id": "inc-022",
+            "root_cause": "Inconsistent service version upgrade may have introduced instability in the system.",
+            "proposed_remediation": "Verify and validate all service upgrades to prevent future issues.",
+            "proposed_action": "restart_service:svc-ledger@v1.0.6"
+          },
+          "prompt_tokens": 4182,
+          "completion_tokens": 1855,
+          "model_calls": 17,
+          "latency_ms": 43636.0,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.1
+        },
+        {
+          "incident_id": "inc-023",
+          "finding": {
+            "incident_id": "inc-023",
+            "root_cause": "The spike in errors (err_rate=0.65) and latency high warning ([warn] kafka latency high) on svc-pricing suggest a potential issue with the new version v1.9.7, which may be causing errors or performance degradation.",
+            "proposed_remediation": "Investigate the changes between versions v1.3.0 and v1.9.7 of svc-pricing to identify the cause of the issues.",
+            "proposed_action": "Purge_cache:svc-pricing@v1.3.0"
+          },
+          "prompt_tokens": 4345,
+          "completion_tokens": 2258,
+          "model_calls": 17,
+          "latency_ms": 53811.8,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-024",
+          "finding": {
+            "incident_id": "inc-024",
+            "root_cause": "The recent deployment of service search v1.6.1 has resulted in a spike of errors (err_rate=0.35) and high latency issues (p99_ms=906.1), indicating potential performance degradation.",
+            "proposed_remediation": "Revert the affected deployment to the previous version, v1.8.2, to restore expected service performance.",
+            "proposed_action": "rollback_deploy:svc-search@v1.8.2"
+          },
+          "prompt_tokens": 4198,
+          "completion_tokens": 2422,
+          "model_calls": 17,
+          "latency_ms": 71353.3,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.6
+        },
+        {
+          "incident_id": "inc-025",
+          "finding": {
+            "incident_id": "inc-025",
+            "root_cause": "The high performance of the updated version of service inventory (v1.4.3) is causing a spike in errors, leading to a 70% error rate.",
+            "proposed_remediation": "Gradually roll out a version of the service inventory that is closer to the current update to reduce the impact on the system.",
+            "proposed_action": "revert_config:svc-inventory@v1.3.9"
+          },
+          "prompt_tokens": 4065,
+          "completion_tokens": 1874,
+          "model_calls": 17,
+          "latency_ms": 53224.9,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.2222
+        },
+        {
+          "incident_id": "inc-026",
+          "finding": {
+            "incident_id": "inc-026",
+            "root_cause": "The service catalog is experiencing a 5xx spike and high latency issues due to an incompatible update.",
+            "proposed_remediation": "Apply the latest stable version of svc-catalog (v1.1.0) to resolve compatibility issues and improve performance.",
+            "proposed_action": "restart_service:svc-catalog@v1.1.0"
+          },
+          "prompt_tokens": 4092,
+          "completion_tokens": 2208,
+          "model_calls": 17,
+          "latency_ms": 48886.6,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.3
+        },
+        {
+          "incident_id": "inc-027",
+          "finding": {
+            "incident_id": "inc-027",
+            "root_cause": "Unexpected spike in service-level error rate and high latency issues with Redis, likely caused by changes to the svc-pricing service.",
+            "proposed_remediation": "Investigate and address the root cause of the changes to the svc-pricing service that led to the spike in errors and latency issues.",
+            "proposed_action": "Purge_cache:svc-pricing@v1.9.9"
+          },
+          "prompt_tokens": 4177,
+          "completion_tokens": 1937,
+          "model_calls": 17,
+          "latency_ms": 43805.6,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.2
+        },
+        {
+          "incident_id": "inc-028",
+          "finding": {
+            "incident_id": "inc-028",
+            "root_cause": "A spike in errors for the svc-payments service, leading to a high error rate and prolonged latency in the Kafka cluster.",
+            "proposed_remediation": "Investigate the root cause of the issues with the updated svc-payments version v1.8.4.",
+            "proposed_action": "rollback_deploy:svc-payments@v1.4.2"
+          },
+          "prompt_tokens": 4227,
+          "completion_tokens": 2077,
+          "model_calls": 17,
+          "latency_ms": 48076.1,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.5
+        },
+        {
+          "incident_id": "inc-029",
+          "finding": {
+            "incident_id": "inc-029",
+            "root_cause": "Inconsistent version of the service inventory, likely causing a 5xx spike in svc-inventory",
+            "proposed_remediation": "Update the service inventory to a consistent version (v1.1.2) or investigate why v1.4.9 is being used",
+            "proposed_action": "revert_config:svc-inventory@v1.1.2"
+          },
+          "prompt_tokens": 4061,
+          "completion_tokens": 1987,
+          "model_calls": 17,
+          "latency_ms": 45817.8,
+          "remediation_applied": true,
+          "approved": true,
+          "resumed": true,
+          "heuristic_score": 0.2222
+        }
+      ]
+    }
+  },
+  "cost_multiple": 21.56,
+  "latency_multiple": 18.85,
+  "durability": {
+    "n": 5,
+    "avg_tokens_saved": 6265.0,
+    "avg_model_calls_saved": 17.0,
+    "avg_latency_ms_saved": 48590.3,
+    "avg_frontier_calls": 0.0,
+    "records": [
+      {
+        "incident_id": "inc-000",
+        "savings": {
+          "tokens_saved": 6516.0,
+          "model_calls_saved": 17.0,
+          "latency_ms_saved": 51953.365791996475,
+          "frontier_calls": 0.0
+        }
+      },
+      {
+        "incident_id": "inc-001",
+        "savings": {
+          "tokens_saved": 5946.0,
+          "model_calls_saved": 17.0,
+          "latency_ms_saved": 43854.71458299435,
+          "frontier_calls": 0.0
+        }
+      },
+      {
+        "incident_id": "inc-002",
+        "savings": {
+          "tokens_saved": 6654.0,
+          "model_calls_saved": 17.0,
+          "latency_ms_saved": 53183.23570799839,
+          "frontier_calls": 0.0
+        }
+      },
+      {
+        "incident_id": "inc-003",
+        "savings": {
+          "tokens_saved": 6126.0,
+          "model_calls_saved": 17.0,
+          "latency_ms_saved": 46987.40908400214,
+          "frontier_calls": 0.0
+        }
+      },
+      {
+        "incident_id": "inc-004",
+        "savings": {
+          "tokens_saved": 6083.0,
+          "model_calls_saved": 17.0,
+          "latency_ms_saved": 46972.64162500505,
+          "frontier_calls": 0.0
+        }
+      }
+    ]
+  },
+  "judge": {
+    "model": "qwen2.5:14b",
+    "runs": 3,
+    "pass_threshold": 0.6,
+    "weights": {
+      "root_cause_match": 0.5,
+      "remediation_match": 0.3,
+      "action_correct": 0.2
+    },
+    "duration_s": 294.9,
+    "systems": {
+      "baseline": {
+        "n": 30,
+        "accuracy": 0.1667,
+        "avg_weighted": 0.2733,
+        "judge_variance": 0.0,
+        "records": [
+          {
+            "incident_id": "inc-000",
+            "judge_passed": false,
+            "judge_weighted": 0.1,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.1,
+              0.1,
+              0.1
+            ]
+          },
+          {
+            "incident_id": "inc-001",
+            "judge_passed": false,
+            "judge_weighted": 0.34,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.8,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.34,
+              0.34,
+              0.34
+            ]
+          },
+          {
+            "incident_id": "inc-002",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-003",
+            "judge_passed": false,
+            "judge_weighted": 0.31,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.7,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.31,
+              0.31,
+              0.31
+            ]
+          },
+          {
+            "incident_id": "inc-004",
+            "judge_passed": false,
+            "judge_weighted": 0.55,
+            "judge_scores": {
+              "root_cause_match": 0.8,
+              "remediation_match": 0.5,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.55,
+              0.55,
+              0.55
+            ]
+          },
+          {
+            "incident_id": "inc-005",
+            "judge_passed": false,
+            "judge_weighted": 0.49,
+            "judge_scores": {
+              "root_cause_match": 0.5,
+              "remediation_match": 0.8,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.49,
+              0.49,
+              0.49
+            ]
+          },
+          {
+            "incident_id": "inc-006",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-007",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-008",
+            "judge_passed": true,
+            "judge_weighted": 0.95,
+            "judge_scores": {
+              "root_cause_match": 0.9,
+              "remediation_match": 1.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.95,
+              0.95,
+              0.95
+            ]
+          },
+          {
+            "incident_id": "inc-009",
+            "judge_passed": false,
+            "judge_weighted": 0.59,
+            "judge_scores": {
+              "root_cause_match": 0.7,
+              "remediation_match": 0.8,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.59,
+              0.59,
+              0.59
+            ]
+          },
+          {
+            "incident_id": "inc-010",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-011",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-012",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-013",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-014",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-015",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-016",
+            "judge_passed": false,
+            "judge_weighted": 0.3,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 1.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "incident_id": "inc-017",
+            "judge_passed": false,
+            "judge_weighted": 0.21,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.7,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.21,
+              0.21,
+              0.21
+            ]
+          },
+          {
+            "incident_id": "inc-018",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-019",
+            "judge_passed": false,
+            "judge_weighted": 0.15,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.5,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.15,
+              0.15,
+              0.15
+            ]
+          },
+          {
+            "incident_id": "inc-020",
+            "judge_passed": true,
+            "judge_weighted": 0.69,
+            "judge_scores": {
+              "root_cause_match": 0.9,
+              "remediation_match": 0.8,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.69,
+              0.69,
+              0.69
+            ]
+          },
+          {
+            "incident_id": "inc-021",
+            "judge_passed": true,
+            "judge_weighted": 0.62,
+            "judge_scores": {
+              "root_cause_match": 0.7,
+              "remediation_match": 0.9,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.62,
+              0.62,
+              0.62
+            ]
+          },
+          {
+            "incident_id": "inc-022",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-023",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-024",
+            "judge_passed": false,
+            "judge_weighted": 0.15,
+            "judge_scores": {
+              "root_cause_match": 0.3,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.15,
+              0.15,
+              0.15
+            ]
+          },
+          {
+            "incident_id": "inc-025",
+            "judge_passed": false,
+            "judge_weighted": 0.34,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.8,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.34,
+              0.34,
+              0.34
+            ]
+          },
+          {
+            "incident_id": "inc-026",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-027",
+            "judge_passed": true,
+            "judge_weighted": 0.69,
+            "judge_scores": {
+              "root_cause_match": 0.9,
+              "remediation_match": 0.8,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.69,
+              0.69,
+              0.69
+            ]
+          },
+          {
+            "incident_id": "inc-028",
+            "judge_passed": true,
+            "judge_weighted": 0.66,
+            "judge_scores": {
+              "root_cause_match": 0.9,
+              "remediation_match": 0.7,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.66,
+              0.66,
+              0.66
+            ]
+          },
+          {
+            "incident_id": "inc-029",
+            "judge_passed": false,
+            "judge_weighted": 0.54,
+            "judge_scores": {
+              "root_cause_match": 0.6,
+              "remediation_match": 0.8,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.54,
+              0.54,
+              0.54
+            ]
+          }
+        ]
+      },
+      "contender": {
+        "n": 30,
+        "accuracy": 0.1,
+        "avg_weighted": 0.326,
+        "judge_variance": 0.0,
+        "records": [
+          {
+            "incident_id": "inc-000",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-001",
+            "judge_passed": false,
+            "judge_weighted": 0.48,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.6,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.48,
+              0.48,
+              0.48
+            ]
+          },
+          {
+            "incident_id": "inc-002",
+            "judge_passed": false,
+            "judge_weighted": 0.54,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.8,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.54,
+              0.54,
+              0.54
+            ]
+          },
+          {
+            "incident_id": "inc-003",
+            "judge_passed": false,
+            "judge_weighted": 0.0,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "incident_id": "inc-004",
+            "judge_passed": false,
+            "judge_weighted": 0.33,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.33,
+              0.33,
+              0.33
+            ]
+          },
+          {
+            "incident_id": "inc-005",
+            "judge_passed": false,
+            "judge_weighted": 0.48,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.6,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.48,
+              0.48,
+              0.48
+            ]
+          },
+          {
+            "incident_id": "inc-006",
+            "judge_passed": true,
+            "judge_weighted": 0.64,
+            "judge_scores": {
+              "root_cause_match": 0.7,
+              "remediation_match": 0.3,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.64,
+              0.64,
+              0.64
+            ]
+          },
+          {
+            "incident_id": "inc-007",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-008",
+            "judge_passed": true,
+            "judge_weighted": 0.87,
+            "judge_scores": {
+              "root_cause_match": 0.8,
+              "remediation_match": 0.9,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.87,
+              0.87,
+              0.87
+            ]
+          },
+          {
+            "incident_id": "inc-009",
+            "judge_passed": false,
+            "judge_weighted": 0.33,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.33,
+              0.33,
+              0.33
+            ]
+          },
+          {
+            "incident_id": "inc-010",
+            "judge_passed": false,
+            "judge_weighted": 0.33,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.33,
+              0.33,
+              0.33
+            ]
+          },
+          {
+            "incident_id": "inc-011",
+            "judge_passed": false,
+            "judge_weighted": 0.28,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.6,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.28,
+              0.28,
+              0.28
+            ]
+          },
+          {
+            "incident_id": "inc-012",
+            "judge_passed": false,
+            "judge_weighted": 0.2,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "incident_id": "inc-013",
+            "judge_passed": false,
+            "judge_weighted": 0.42,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.4,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.42,
+              0.42,
+              0.42
+            ]
+          },
+          {
+            "incident_id": "inc-014",
+            "judge_passed": false,
+            "judge_weighted": 0.2,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "incident_id": "inc-015",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-016",
+            "judge_passed": false,
+            "judge_weighted": 0.2,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "incident_id": "inc-017",
+            "judge_passed": true,
+            "judge_weighted": 0.9,
+            "judge_scores": {
+              "root_cause_match": 0.8,
+              "remediation_match": 1.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.9,
+              0.9,
+              0.9
+            ]
+          },
+          {
+            "incident_id": "inc-018",
+            "judge_passed": false,
+            "judge_weighted": 0.2,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "incident_id": "inc-019",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-020",
+            "judge_passed": false,
+            "judge_weighted": 0.59,
+            "judge_scores": {
+              "root_cause_match": 0.3,
+              "remediation_match": 0.8,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.59,
+              0.59,
+              0.59
+            ]
+          },
+          {
+            "incident_id": "inc-021",
+            "judge_passed": false,
+            "judge_weighted": 0.39,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.3,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.39,
+              0.39,
+              0.39
+            ]
+          },
+          {
+            "incident_id": "inc-022",
+            "judge_passed": false,
+            "judge_weighted": 0.2,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "incident_id": "inc-023",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-024",
+            "judge_passed": false,
+            "judge_weighted": 0.5,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 1.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "incident_id": "inc-025",
+            "judge_passed": false,
+            "judge_weighted": 0.2,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "incident_id": "inc-026",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-027",
+            "judge_passed": false,
+            "judge_weighted": 0.13,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.1,
+              "action_correct": 0.0
+            },
+            "run_weighted": [
+              0.13,
+              0.13,
+              0.13
+            ]
+          },
+          {
+            "incident_id": "inc-028",
+            "judge_passed": false,
+            "judge_weighted": 0.2,
+            "judge_scores": {
+              "root_cause_match": 0.0,
+              "remediation_match": 0.0,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          },
+          {
+            "incident_id": "inc-029",
+            "judge_passed": false,
+            "judge_weighted": 0.39,
+            "judge_scores": {
+              "root_cause_match": 0.2,
+              "remediation_match": 0.3,
+              "action_correct": 1.0
+            },
+            "run_weighted": [
+              0.39,
+              0.39,
+              0.39
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-026",
+  "finding": {
+    "incident_id": "inc-026",
+    "root_cause": "The service catalog is experiencing a 5xx spike and high latency issues due to an incompatible update.",
+    "proposed_remediation": "Apply the latest stable version of svc-catalog (v1.1.0) to resolve compatibility issues and improve performance.",
+    "proposed_action": "restart_service:svc-catalog@v1.1.0"
+  },
+  "prompt_tokens": 4092,
+  "completion_tokens": 2208,
+  "model_calls": 17,
+  "latency_ms": 48886.58183399821,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

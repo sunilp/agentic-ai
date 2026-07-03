@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-014",
+  "finding": {
+    "incident_id": "inc-014",
+    "root_cause": "Incompatible service catalog version update causing latency and errors",
+    "proposed_remediation": "Apply the latest stable version of service catalog (version v1.3.8) to minimize latency and errors.",
+    "proposed_action": "Apply the latest stable version of service catalog (version v1.3.0, not v1.3.8), then restart the service catalog. Note: this is an irreversible action as it will update the configuration and restart the service without reverting to the previous version."
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 126,
+  "model_calls": 1,
+  "latency_ms": 2708.5700839961646,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

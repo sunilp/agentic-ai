@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-015",
+  "finding": {
+    "incident_id": "inc-015",
+    "root_cause": "Inconsistent service version in the configuration and codebase, leading to a cache mismatch that caused the 5xx spike.",
+    "proposed_remediation": "Update the service feed version in the configuration to match the version in the codebase.",
+    "proposed_action": "Purge cache for svc-feed@v1.3.4"
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 91,
+  "model_calls": 1,
+  "latency_ms": 1975.1398750086082,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

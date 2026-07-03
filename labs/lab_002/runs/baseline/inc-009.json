@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-009",
+  "finding": {
+    "incident_id": "inc-009",
+    "root_cause": "Inconsistent service version between expected and deployed versions of 'svc-orders', likely causing the 5xx spike.",
+    "proposed_remediation": "Revert to previously deployed version of 'svc-orders' (v1.3.2) using the candidate action ID 'revert_config:svc-orders@v1.3.2'.",
+    "proposed_action": "Apply irreversible change by reverting configuration to previous state. This will involve rolling back the deployment to v1.3.2 and re-running any necessary upgrades or configurations."
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 133,
+  "model_calls": 1,
+  "latency_ms": 2844.4632080063457,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

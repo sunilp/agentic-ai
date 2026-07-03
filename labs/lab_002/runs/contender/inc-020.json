@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-020",
+  "finding": {
+    "incident_id": "inc-020",
+    "root_cause": "Unconfirmed hypotheses, but high error rate (0.48) and long response time (p99_ms=1149.3) suggest issues with the updated svc-search service version v1.8.1.",
+    "proposed_remediation": "Investigate and verify the updates to svc-search, and consider rolling back to a known good version (v1.7.2) if necessary.",
+    "proposed_action": "rollback_deploy:svc-search@v1.7.2"
+  },
+  "prompt_tokens": 4053,
+  "completion_tokens": 1911,
+  "model_calls": 17,
+  "latency_ms": 42796.78420900018,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

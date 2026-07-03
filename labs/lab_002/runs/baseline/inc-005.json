@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-005",
+  "finding": {
+    "incident_id": "inc-005",
+    "root_cause": "The root cause of the incident is likely due to a change in the service auth version, which has caused inconsistencies and errors leading to the spike in errors.",
+    "proposed_remediation": "Revert the service auth configuration to its previous version (v1.6.4) to restore stability and fix the error spike.",
+    "proposed_action": "Revert config:svc-auth@v1.6.4"
+  },
+  "prompt_tokens": 176,
+  "completion_tokens": 108,
+  "model_calls": 1,
+  "latency_ms": 2701.8316250032512,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}
