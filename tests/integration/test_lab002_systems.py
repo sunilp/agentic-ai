@@ -26,3 +26,31 @@ async def test_baseline_produces_a_finding():
     assert rec.system == "baseline"
     assert rec.finding is not None
     assert rec.model_calls >= 1
+
+
+@pytest.mark.asyncio
+async def test_contender_pauses_before_remediation():
+    from google.adk.models.lite_llm import LiteLlm
+    from google.adk.sessions.in_memory_session_service import InMemorySessionService
+
+    from labs.lab_002.systems import build_contender, run_contender
+    inc = generate(4, seed=42)[0]
+    wf = build_contender(LiteLlm(model="ollama_chat/llama3.2:3b"))
+    # auto_approve=False: run only up to the human gate
+    rec = await run_contender(wf, inc, InMemorySessionService(), auto_approve=False)
+    assert rec.remediation_applied is False  # gate not resolved -> nothing applied
+    assert rec.finding is not None           # investigation completed to a finding
+
+
+@pytest.mark.asyncio
+async def test_contender_resumes_and_applies_remediation():
+    from google.adk.models.lite_llm import LiteLlm
+    from google.adk.sessions.in_memory_session_service import InMemorySessionService
+
+    from labs.lab_002.systems import build_contender, run_contender
+    inc = generate(4, seed=42)[1]
+    wf = build_contender(LiteLlm(model="ollama_chat/llama3.2:3b"))
+    rec = await run_contender(wf, inc, InMemorySessionService(), auto_approve=True)
+    assert rec.finding is not None
+    assert rec.remediation_applied is True
+    assert rec.approved is True
