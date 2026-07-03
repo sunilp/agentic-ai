@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-004",
+  "finding": {
+    "incident_id": "inc-004",
+    "root_cause": "Spike in error rate for svc-search service, with p99 latency of 464ms, potentially due to changes from v1.4.9 to v1.1.3.",
+    "proposed_remediation": "Investigate and analyze the cause of the spike in error rate and latency, and consider applying a patch or update to restore stability.",
+    "proposed_action": "rollback_deploy:svc-search@v1.4.9"
+  },
+  "prompt_tokens": 3997,
+  "completion_tokens": 1917,
+  "model_calls": 17,
+  "latency_ms": 43934.13712500478,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

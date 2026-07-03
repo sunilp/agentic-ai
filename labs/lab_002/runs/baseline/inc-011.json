@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-011",
+  "finding": {
+    "incident_id": "inc-011",
+    "root_cause": "Unexpected upgrade to v1.8.1 of the 'svc-pricing' service, potentially introducing performance regressions.",
+    "proposed_remediation": "Immediately roll back to the previous version (v1.5.1) of the 'svc-pricing' service and monitor for improvements in error rates and latency.",
+    "proposed_action": "Revert to v1.5.1 on svc-pricing: Run `purge_cache:svc-pricing@v1.8.1`"
+  },
+  "prompt_tokens": 180,
+  "completion_tokens": 127,
+  "model_calls": 1,
+  "latency_ms": 2724.0214999910677,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

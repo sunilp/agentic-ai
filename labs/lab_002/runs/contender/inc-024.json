@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-024",
+  "finding": {
+    "incident_id": "inc-024",
+    "root_cause": "The recent deployment of service search v1.6.1 has resulted in a spike of errors (err_rate=0.35) and high latency issues (p99_ms=906.1), indicating potential performance degradation.",
+    "proposed_remediation": "Revert the affected deployment to the previous version, v1.8.2, to restore expected service performance.",
+    "proposed_action": "rollback_deploy:svc-search@v1.8.2"
+  },
+  "prompt_tokens": 4198,
+  "completion_tokens": 2422,
+  "model_calls": 17,
+  "latency_ms": 71353.32112500328,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

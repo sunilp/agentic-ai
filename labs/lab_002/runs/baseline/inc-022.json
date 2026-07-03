@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-022",
+  "finding": {
+    "incident_id": "inc-022",
+    "root_cause": "Incompatible version upgrade of service 'svc-ledger' to v1.2.3, causing a spike in errors and increased latency.",
+    "proposed_remediation": "Roll back the service to version v1.0.6 immediately to prevent further issues.",
+    "proposed_action": "Irreversible action: Delete the latest patch from the container registry for 'svc-ledger'."
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 102,
+  "model_calls": 1,
+  "latency_ms": 2223.968042002525,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

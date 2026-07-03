@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-007",
+  "finding": {
+    "incident_id": "inc-007",
+    "root_cause": "Inconsistent service profile version",
+    "proposed_remediation": "Update the service profile to v1.7.6 using a canonical deployment process",
+    "proposed_action": "Purge cache for svc-profile@v1.0.5"
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 73,
+  "model_calls": 1,
+  "latency_ms": 1675.1835409959313,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

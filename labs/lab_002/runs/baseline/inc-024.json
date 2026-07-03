@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-024",
+  "finding": {
+    "incident_id": "inc-024",
+    "root_cause": "The incorrect deployment of service 'svc-search' at version 'v1.6.1' likely caused a spike in errors and increased latency, as the newer version may have introduced bugs or compatibility issues.",
+    "proposed_remediation": "Redeploy service 'svc-search' to version 'v1.8.2' using the most recent available version.",
+    "proposed_action": "Roll back deployment of 'svc-search' to its previous version ('v1.8.2') immediately."
+  },
+  "prompt_tokens": 176,
+  "completion_tokens": 123,
+  "model_calls": 1,
+  "latency_ms": 2944.250166998245,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

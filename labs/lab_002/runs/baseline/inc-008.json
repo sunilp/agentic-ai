@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-008",
+  "finding": {
+    "incident_id": "inc-008",
+    "root_cause": "Incompatible service version upgrade causing spike in errors and latency",
+    "proposed_remediation": "Upgrade the service to a compatible version, such as v1.8.0, or roll back to the previous stable version (v1.7.2)",
+    "proposed_action": "rollback_deploy:svc-search@v1.7.2"
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 94,
+  "model_calls": 1,
+  "latency_ms": 2071.923457988305,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": false
+}

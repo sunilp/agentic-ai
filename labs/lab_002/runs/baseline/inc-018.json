@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-018",
+  "finding": {
+    "incident_id": "inc-018",
+    "root_cause": "Incompatible version change in 'svc-ledger': Upgrade from v1.3.7 to v1.6.7 may have introduced new or changed configurations that are causing the observed errors.",
+    "proposed_remediation": "Manually inspect the application code and configuration files for any changes related to the 'svc-ledger' service and verify that all updates were properly tested and validated before deployment.",
+    "proposed_action": "irreversible-action: Run a recovery rollbacks of the container group for 'svc-ledger', and then initiate a partial upgrade to v1.6.7, ensuring to update dependent services and applications accordingly."
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 152,
+  "model_calls": 1,
+  "latency_ms": 3264.8350420058705,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

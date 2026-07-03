@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-014",
+  "finding": {
+    "incident_id": "inc-014",
+    "root_cause": "The data service experienced high error rates and slow response times potentially due to the version upgrade from v1.2.2 to v1.3.8, which may be causing performance issues.",
+    "proposed_remediation": "Review and refine configuration settings, such as max_conns, to mitigate potential oversubscription leading to performance issues.",
+    "proposed_action": "restart_service:svc-catalog@v1.2.2"
+  },
+  "prompt_tokens": 3934,
+  "completion_tokens": 1940,
+  "model_calls": 15,
+  "latency_ms": 43394.50704200135,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

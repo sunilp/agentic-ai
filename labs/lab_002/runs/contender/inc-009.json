@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-009",
+  "finding": {
+    "incident_id": "inc-009",
+    "root_cause": "The root cause of the incident is unclear, but it is likely related to a configuration change or an unexpected spike in service usage.",
+    "proposed_remediation": "Investigate and analyze logs and metrics to identify the root cause of the issue and implement corrective actions.",
+    "proposed_action": "revert_config:svc-orders@v1.3.2"
+  },
+  "prompt_tokens": 4264,
+  "completion_tokens": 2449,
+  "model_calls": 17,
+  "latency_ms": 54406.34687501006,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

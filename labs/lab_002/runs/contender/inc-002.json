@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-002",
+  "finding": {
+    "incident_id": "inc-002",
+    "root_cause": "A recent configuration change to v1.1.1 may have caused instability leading to the need for restarting the service.",
+    "proposed_remediation": "Restarting the svc-catalog service to address potential instability caused by the version change.",
+    "proposed_action": "restart_service:svc-catalog@v1.4.0"
+  },
+  "prompt_tokens": 4313,
+  "completion_tokens": 1922,
+  "model_calls": 17,
+  "latency_ms": 43622.41791699489,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

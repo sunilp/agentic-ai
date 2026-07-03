@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-027",
+  "finding": {
+    "incident_id": "inc-027",
+    "root_cause": "Unexpected spike in service-level error rate and high latency issues with Redis, likely caused by changes to the svc-pricing service.",
+    "proposed_remediation": "Investigate and address the root cause of the changes to the svc-pricing service that led to the spike in errors and latency issues.",
+    "proposed_action": "Purge_cache:svc-pricing@v1.9.9"
+  },
+  "prompt_tokens": 4177,
+  "completion_tokens": 1937,
+  "model_calls": 17,
+  "latency_ms": 43805.56074999913,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

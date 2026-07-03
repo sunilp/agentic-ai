@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-027",
+  "finding": {
+    "incident_id": "inc-027",
+    "root_cause": "Inconsistent or outdated cache causing a spike in errors for the svc-pricing service.",
+    "proposed_remediation": "Clear the cache for the svc-pricing service to resolve the issue, and verify the new version (v1.1.3) is being used.",
+    "proposed_action": "Clear the svc-pricing service cache using the candidate action 'purge_cache:svc-pricing@v1.9.9' in place of the proposed action."
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 119,
+  "model_calls": 1,
+  "latency_ms": 2569.1205830080435,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-019",
+  "finding": {
+    "incident_id": "inc-019",
+    "root_cause": "Upgrade to new version of service (svc-feed) without proper testing or validation, leading to a spike in errors and latency.",
+    "proposed_remediation": "Immediately roll back the upgrade to svc-feed v1.0.1 using the 'purge_cache:svc-feed@v1.0.1' action",
+    "proposed_action": "Revert service to previous version (v1.0.1) by purging cache and restarting the service"
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 117,
+  "model_calls": 1,
+  "latency_ms": 2535.6948749977164,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

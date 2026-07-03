@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-003",
+  "finding": {
+    "incident_id": "inc-003",
+    "root_cause": "Potential upgrade to svc-pricing v1.6.1 caused a spike in errors and high latency.",
+    "proposed_remediation": "Investigate the cause of the spike, gather logs and metrics data to understand the impact of the upgrade.",
+    "proposed_action": "Purge_cache:svc-pricing@v1.1.5"
+  },
+  "prompt_tokens": 4235,
+  "completion_tokens": 2357,
+  "model_calls": 17,
+  "latency_ms": 52478.342208007234,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

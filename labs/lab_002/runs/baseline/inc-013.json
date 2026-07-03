@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-013",
+  "finding": {
+    "incident_id": "inc-013",
+    "root_cause": "Incompatible version upgrade of service 'svc-orders' from v1.0.1 to v1.7.1, causing latency issues and 5xx errors.",
+    "proposed_remediation": "Update the service 'svc-orders' to a compatible version, such as v1.6.2 or earlier",
+    "proposed_action": "Revert configuration of service 'svc-orders' to v1.0.1 using the candidate action 'revert_config:svc-orders@v1.0.1'"
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 128,
+  "model_calls": 1,
+  "latency_ms": 2760.155209005461,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

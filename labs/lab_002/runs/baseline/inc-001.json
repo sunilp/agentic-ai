@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-001",
+  "finding": {
+    "incident_id": "inc-001",
+    "root_cause": "Incompatible service version change",
+    "proposed_remediation": "Roll back the svc-auth service to a known good version (v1.0.1) and verify the application functionality.",
+    "proposed_action": "Revert config:svc-auth@v1.3.7"
+  },
+  "prompt_tokens": 176,
+  "completion_tokens": 81,
+  "model_calls": 1,
+  "latency_ms": 1789.501042003394,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

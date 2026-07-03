@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-022",
+  "finding": {
+    "incident_id": "inc-022",
+    "root_cause": "Inconsistent service version upgrade may have introduced instability in the system.",
+    "proposed_remediation": "Verify and validate all service upgrades to prevent future issues.",
+    "proposed_action": "restart_service:svc-ledger@v1.0.6"
+  },
+  "prompt_tokens": 4182,
+  "completion_tokens": 1855,
+  "model_calls": 17,
+  "latency_ms": 43635.99279199843,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

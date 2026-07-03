@@ -1,0 +1,43 @@
+{
+  "incident_id": "inc-002",
+  "pre": {
+    "system": "contender",
+    "incident_id": "inc-002",
+    "finding": {
+      "incident_id": "inc-002",
+      "root_cause": "The service catalog is experiencing a spike in errors, with an error rate of 57% and high latency in Kafka, likely due to a version upgrade from v1.4.0 to v1.1.1.",
+      "proposed_remediation": "Revert the recent version upgrade of the service catalog back to v1.4.0",
+      "proposed_action": "restart_service:svc-catalog@v1.4.0"
+    },
+    "prompt_tokens": 4328,
+    "completion_tokens": 2326,
+    "model_calls": 17,
+    "latency_ms": 53183.23570799839,
+    "remediation_applied": false,
+    "approved": false,
+    "resumed": false
+  },
+  "post": {
+    "system": "contender",
+    "incident_id": "inc-002",
+    "finding": {
+      "incident_id": "inc-002",
+      "root_cause": "The service catalog is experiencing a spike in errors, with an error rate of 57% and high latency in Kafka, likely due to a version upgrade from v1.4.0 to v1.1.1.",
+      "proposed_remediation": "Revert the recent version upgrade of the service catalog back to v1.4.0",
+      "proposed_action": "restart_service:svc-catalog@v1.4.0"
+    },
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "model_calls": 0,
+    "latency_ms": 6.0485419962788,
+    "remediation_applied": true,
+    "approved": true,
+    "resumed": true
+  },
+  "savings": {
+    "tokens_saved": 6654.0,
+    "model_calls_saved": 17.0,
+    "latency_ms_saved": 53183.23570799839,
+    "frontier_calls": 0.0
+  }
+}

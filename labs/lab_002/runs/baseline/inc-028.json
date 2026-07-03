@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-028",
+  "finding": {
+    "incident_id": "inc-028",
+    "root_cause": "Unintended changes to the `svc-payments` service, causing a spike in errors and high latency on Kafka.",
+    "proposed_remediation": "Roll back the deployment of `svc-payments` to version v1.4.2 from v1.8.4 using the candidate action: rollback_deploy:svc-payments@v1.4.2",
+    "proposed_action": "Rollback the `svc-payments` service to version v1.4.2"
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 122,
+  "model_calls": 1,
+  "latency_ms": 2642.3510829918087,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

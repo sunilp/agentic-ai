@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-008",
+  "finding": {
+    "incident_id": "inc-008",
+    "root_cause": "A performance spike in the svc-search service, with an error rate of 0.46 and a p99 latency of 2333.2ms, which was caused by a deployment of version v1.9.6, is affecting the application.",
+    "proposed_remediation": "Roll back to a previous version of the svc-search service, such as v1.7.2, to reduce performance issues and stabilize the system.",
+    "proposed_action": "rollback_deploy:svc-search@v1.7.2"
+  },
+  "prompt_tokens": 4200,
+  "completion_tokens": 2258,
+  "model_calls": 17,
+  "latency_ms": 50517.47712500219,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}

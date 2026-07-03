@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-025",
+  "finding": {
+    "incident_id": "inc-025",
+    "root_cause": "Upgrade to a newer version of the service inventory component may have introduced an unexpected change that is causing high latency and spike in errors.",
+    "proposed_remediation": "Roll back to the previous version of the service inventory component to revert to known good configuration.",
+    "proposed_action": "Revert config:svc-inventory@v1.3.9"
+  },
+  "prompt_tokens": 182,
+  "completion_tokens": 95,
+  "model_calls": 1,
+  "latency_ms": 3707.243707991438,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

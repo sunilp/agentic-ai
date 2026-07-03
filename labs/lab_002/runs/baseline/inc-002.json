@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-002",
+  "finding": {
+    "incident_id": "inc-002",
+    "root_cause": "Inconsistent service version update causing data consistency issues and high latency",
+    "proposed_remediation": "Immediately roll back the update to svc-catalog:v1.4.0 using a previous backup or snapshot",
+    "proposed_action": "Rollback update: svc-catalog service reverted to v1.4.0 using most recent available backup, as of 10 minutes ago"
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 101,
+  "model_calls": 1,
+  "latency_ms": 2220.5996249977034,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

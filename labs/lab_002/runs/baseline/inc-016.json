@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-016",
+  "finding": {
+    "incident_id": "inc-016",
+    "root_cause": "Service level agreement (SLA) breach due to high error rate and latency in Kafka cluster.",
+    "proposed_remediation": "Perform a full rollback of the svc-checkout deployment from v1.1.5 to v1.0.3",
+    "proposed_action": "Execute the candidate action 'rollback_deploy:svc-checkout@v1.1.5' with caution and monitoring to ensure successful roll back"
+  },
+  "prompt_tokens": 181,
+  "completion_tokens": 109,
+  "model_calls": 1,
+  "latency_ms": 2356.5894580096938,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

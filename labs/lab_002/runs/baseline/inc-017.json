@@ -1,0 +1,17 @@
+{
+  "system": "baseline",
+  "incident_id": "inc-017",
+  "finding": {
+    "incident_id": "inc-017",
+    "root_cause": "Incompatible version of the `svc-auth` service between the current configuration and the previously deployed version (v1.0.5). The new version (v1.9.9) is not backwards compatible.",
+    "proposed_remediation": "Revert the configuration to use the previous version of the `svc-auth` service (v1.0.5) until a more compatible version can be found and implemented.",
+    "proposed_action": "Revert the `svc-auth` configuration to v1.0.5, which is the previously deployed version."
+  },
+  "prompt_tokens": 177,
+  "completion_tokens": 137,
+  "model_calls": 1,
+  "latency_ms": 2950.6054170051357,
+  "remediation_applied": false,
+  "approved": false,
+  "resumed": false
+}

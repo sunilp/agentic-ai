@@ -1,0 +1,17 @@
+{
+  "system": "contender",
+  "incident_id": "inc-017",
+  "finding": {
+    "incident_id": "inc-017",
+    "root_cause": "The high latency on the Kafka service may be related to a discrepancy in the replica count, as the new version of svc-auth has increased the number of replicas from 4 to an unspecified amount.",
+    "proposed_remediation": "Verify the current number of replicas and adjust them according to the specified value (4) to reduce latency on the Kafka service.",
+    "proposed_action": "revert_config:svc-auth@v1.0.5"
+  },
+  "prompt_tokens": 4310,
+  "completion_tokens": 2304,
+  "model_calls": 17,
+  "latency_ms": 51209.446915992885,
+  "remediation_applied": true,
+  "approved": true,
+  "resumed": true
+}
