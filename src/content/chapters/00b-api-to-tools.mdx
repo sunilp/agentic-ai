@@ -470,6 +470,23 @@ A representative failure, composited from patterns seen across data pipeline age
 
 Validation isn't just about preventing crashes. It's about giving the model enough information to self-correct. A model that receives "Validation error: Input should be 'add', 'subtract', 'multiply' or 'divide'" will fix its next attempt. A model that receives "Error: unhandled exception in tool execution" will guess, and guess wrong.
 
+## Validation is not authorization
+
+Everything above proves the arguments are well-formed: the type is right, the required fields are present, the values sit inside their range. None of that proves the action itself is allowed.
+
+Run the calculator's arguments and a send-money tool's arguments through the same kind of Pydantic model and they can both pass: right types, required fields present, values in range. Pydantic has no opinion about what happens after it returns. It checks the shape of the argument, not the shape of the consequence. Real tools send email, move money, and delete records, and a validator that only checks shape will wave all three through with the same confidence it waves through a calculator call.
+
+That's why every tool needs a second classification, separate from its input schema: read-only or side-effecting. A read-only tool looks something up and leaves the world exactly as it found it: search a knowledge base, check a weather API, read a customer record. Get it wrong and you've shown someone the wrong answer. A side-effecting tool changes something outside the model's context window. Get it wrong and something happened that you now have to notice, undo, or apologize for, and some of the time you can't undo it at all.
+
+Schema validation treats both kinds of tool identically, because to a validator they are identical: a name and an object of arguments. The check that tells them apart sits after validation, right before execution:
+
+```python
+if not policy.allowed(user, tool_name, args):
+    return ToolResult(error="not authorized")
+```
+
+A call that clears every check in the section above, right type, all fields present, values in range, can still fail this one. Valid is not the same as allowed. Section 0f turns that single check into five separate questions you ask before every tool call.
+
 ## Multiple tools and selection
 
 Give the model three tools and a question. Watch what happens.
@@ -583,6 +600,10 @@ Key takeaways:
 The next section adds the loop that removes that ceiling: about 100 lines of Python, a while loop with an LLM inside it, and the engineering challenge of knowing when it should stop.
 
 For a fully built tool-using assistant with proper error handling and logging, see the [Tool-Using Assistant](/projects/tool-using-assistant/) project.
+
+<Callout type="tip" label="How you know this worked">
+Test that the agent: rejects malformed tool arguments; handles missing fields; does not call a tool that is not registered; and reports a tool error instead of hiding it.
+</Callout>
 
 ## Further reading
 
