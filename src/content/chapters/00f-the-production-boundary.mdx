@@ -1,0 +1,157 @@
+---
+title: The Production Boundary
+part: foundations
+description: "An LLM gets dangerous not when it speaks but when it acts. What every tool call really asks for, and the boundary that turns an agent into a system component you can trust."
+readingTime: 20
+date: 2026-07-05
+references:
+  - 00e-connecting-to-mcp
+cites: []
+patterns: []
+status: published
+---
+
+A chatbot that gets something wrong is annoying. An agent that gets something wrong has already sent the email, deleted the record, or booked the flight.
+
+Sections 0a through 0e taught you how an agent works: messages, tokens, tool calls, the loop, frameworks, MCP. Every tool call in that story, going back to 0b, looked like a JSON object: a name and some arguments. It is not just data. It is a request to exercise power over something outside the model.
+
+This chapter is about what changes the moment that request is granted. It is not the mechanics of building a tool call, Section 0b already covered that. And it is not any single production concern done in depth, chapters 5, 6, 10, 11, 12, and 13 each own one of those. This is the mental model that sits between them: what a tool call actually asks for, what has to be true before you let it run, and the shape of what can still go wrong once you do. A set of checks you carry into the next tool you wire up, not a rehearsal of chapters still to come.
+
+## Tools are capabilities
+
+Every tool schema from Section 0b has the same shape: a name, a description, a JSON object of arguments. Nothing in that shape tells you how dangerous the tool is. `search_docs` and `delete_record` look identical to a schema validator. The difference isn't in the JSON. It's in what happens on the other side of the call.
+
+| Tool type | Example | Risk |
+|-----------|---------|------|
+| Read-only | search docs, check weather | low |
+| Internal read | read a customer profile, search internal email | privacy |
+| Internal write | create a ticket, update a record | business |
+| External side effect | send an email, call a partner API, book a meeting | reputation |
+| Privileged | deploy, approve a payment, delete a record | high |
+
+The same agent loop from 0c is safe wired to the top row and dangerous wired to the bottom, and the code you've written so far treats every tool identically: validate the schema, execute, return the result. That's the gap this chapter closes.
+
+## Five questions before every tool call
+
+A tool call that passes schema validation has cleared exactly one bar. Before you let it run, five separate questions need an answer:
+
+1. Can the agent call this tool at all?
+2. Can it call it for this user?
+3. Can it call it on this resource?
+4. Can it call it with these arguments?
+5. Should a human approve first?
+
+Five questions, one shape: actor, action, resource, scope, approval. Every access-control system you'll ever wire into an agent is some arrangement of those five fields.
+
+```python
+def before_tool_call(actor, tool, resource, args):
+    # Schema validation already passed (chapter 00b). That is not enough.
+    if not policy.allowed(actor, tool.name, resource, args):
+        return ToolResult(error=f"{actor} may not call {tool.name} on {resource}")
+    if tool.risk == "privileged":
+        approval = require_human_approval(actor, tool, resource, args)
+        if not approval.granted:
+            return ToolResult(error="awaiting human approval")
+    return None  # authorized: proceed to execute
+```
+
+A valid tool call, one that passed 00b's schema check, can still be forbidden. Validation is not authorization.
+
+Chapter 10 builds the policy engine `policy.allowed` stands in for here. Chapter 5 covers the human-approval step in depth: where it fits in the loop and how to design it so it isn't just a rubber stamp.
+
+## A message list is not memory
+
+The message array from Section 0c, the one `messages.append()` grows every turn, looks like memory because it persists across the run. It isn't the same thing, and treating it as such is one of the more expensive mistakes in early agent systems. A production agent is carrying at least seven distinct kinds of state, and a message list is only one of them:
+
+| State | What it is |
+|-------|-----------|
+| Prompt state | what is in the current request |
+| Conversation state | prior messages replayed into context |
+| Scratchpad state | intermediate reasoning or notes |
+| Tool state | results returned from an API or database |
+| Durable state | persisted memory, records, workflow state |
+| User-visible state | what the user can inspect |
+| Hidden system state | policies, secrets, credentials, internal traces |
+
+A message list is not memory. A vector database is not memory either, it's a retrieval mechanism sitting in front of some other store. Durable state, the record that survives after the conversation and the process both end, is a product decision made deliberately. It is not a side effect of using an LLM with a big context window. Chapter 12 goes deep on how to design and govern it.
+
+## Agents must survive duplicate actions
+
+An agent repeats a tool call for reasons that have nothing to do with malice: the first result was ambiguous, so it tries again. A network call times out and retry logic fires. A user double-taps a button that maps to the same request twice. None of this is unusual, it's the default behavior of any distributed system, and an agent calling external tools is a distributed system with an LLM making the retry decisions. A calculator tolerates being called twice with identical input. `send_email`, `charge_card`, and `delete_record` do not.
+
+| Concept | Why it matters |
+|---------|----------------|
+| Timeout budget | a slow tool must not hang the whole loop |
+| Retry | transient failures are normal |
+| Idempotency key | a repeated call must not repeat the side effect |
+| Cancellation | the user may stop the task |
+| Compensation | a partial side effect may need undoing |
+| Dry run | show the intended action before doing it |
+
+```python
+def call_tool_once(tool, args, *, user_id):
+    key = idempotency_key(user_id, tool.name, normalize(args))
+    cached = results_store.get(key)
+    if cached is not None:
+        return cached  # repeated call, do not repeat the side effect
+    result = run_with_timeout(tool, args, seconds=tool.timeout_budget)
+    if tool.side_effecting:
+        results_store.put(key, result)
+    return result
+```
+
+## If you cannot replay it, it is a demo
+
+Every failure mode in this chapter eventually reaches someone asking what actually happened. Answering that needs more than server logs or a print statement. It needs a trace: a structured record of the run.
+
+```json
+{
+  "run_id": "run_123", "user_id": "u_456", "agent": "support_agent",
+  "model": "the model under test", "input": "the user request",
+  "tool_calls": [
+    {"tool": "search_docs", "arguments": {"q": "refund policy"},
+     "authorized": true, "latency_ms": 280, "result_summary": "3 documents"}
+  ],
+  "final_answer": "the response returned to the user",
+  "cost": {"input_tokens": 4210, "output_tokens": 780},
+  "stop_reason": "completed"
+}
+```
+
+If you cannot replay, inspect, and evaluate a run from its trace, you do not have a production agent. You have a demo that happened to work the last time someone was watching. This is the same trace shape Chapter 6's evaluation suites score, field for field.
+
+## A failure taxonomy
+
+Ten kinds of failure, not one. Knowing which one you're looking at determines the fix, which is why this table is worth returning to any time an agent misbehaves in a way you haven't diagnosed before:
+
+| Failure | Example | Mitigation |
+|---------|---------|-----------|
+| Model | hallucinated answer | grounding, evals |
+| Format | invalid JSON from the model | schema validation, retry |
+| Tool selection | wrong tool chosen | better tool descriptions, evals |
+| Tool execution | API timeout or error | timeout, retry, fallback |
+| Authorization | agent attempts a forbidden action | policy gate |
+| State | stale context drives a wrong step | state refresh |
+| Memory | a wrong remembered fact | memory governance |
+| Loop | repeats the same step | step budget, repetition detection |
+| Security | prompt injection via tool output | input isolation, tool policy |
+| Product | user cannot trust the result | trace, explanation, handoff |
+
+Model and format failures are 0a and 0b's territory, tool selection and execution are 0c's. The rest, authorization, state, memory, loop, security, product, are what the sections above named and what chapters 5 through 13 build the real defenses for.
+
+## How you know the boundary holds
+
+Every claim made above, that a tool call was authorized, that a retry was idempotent, that a trace is complete, is testable, and none of it is verified by code review alone. Four layers of evaluation catch what review misses:
+
+- **Unit tests for tools.** Does the tool do what its schema promises, on valid input and on the edge cases.
+- **Scenario tests for loops.** Does the full agent, run end to end on a realistic task, make the right sequence of calls and land on the right answer.
+- **Regression tests for prompts.** Does a change to the system prompt or the model version break a case that used to pass.
+- **Adversarial tests for injection.** Does the agent hold its authorization boundary when a tool result tries to talk it into something else.
+
+This is the same eval habit flagged by the eval callouts placed throughout the rest of the book's chapters. Chapter 6 builds the harness that runs all four layers against a real agent, with the metrics that tell you whether a change made things better or worse.
+
+## Where this goes
+
+Six chapters build out pieces of this boundary in depth. Chapter 5 covers human-in-the-loop as architecture: where approval fits in the loop and how to keep it from becoming theater. Chapter 6 builds the evaluation and hardening harness that scores the trace from the section above. Chapter 10 covers governance and auditability: the policy engine behind `before_tool_call`, and what an audit needs beyond a log line. Chapter 11 is the security deep dive: prompt injection through tool output, the confused-deputy problem, and what changes when the tool itself is compromised, not just the model. Chapter 12 covers memory management: designing the durable-state row from the state section as an actual product decision instead of an accident of context-window size. Chapter 13 covers agent protocols in production, including what a protocol like MCP leaves unsolved: who is calling, on whose authority, and how you prove it after the fact.
+
+That last question, who is allowed to act and how you prove it after the fact, is the subject of the author's ongoing work on agent identity and authorization, including the piece "Who Authorized That?", and readers who want to follow it further can start at [sunilprakash.com/writing](https://sunilprakash.com/writing/).

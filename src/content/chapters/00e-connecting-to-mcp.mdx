@@ -286,6 +286,15 @@ MCP standardizes how agents discover and call tools. It does not solve:
 
 These gaps matter in production. Chapter 13 of the book covers how to address them with governance, access control, and the identity layer (AIP).
 
+MCP solves tool interoperability. It does not solve tool authority. The path-traversal risk from earlier in this chapter is one instance of a wider category: the [OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html) documents tool poisoning, prompt injection through tool descriptions or return values, supply-chain risk from unreviewed registry packages, data exfiltration through ordinary-looking tool calls, and cross-system privilege escalation.
+
+Before you connect an MCP server, ask:
+
+- Who maintains it, and where does it run?
+- What files, network, and credentials does it receive?
+- What tools does it expose, and can their descriptions steer the model?
+- Are its calls logged, and can they be policy-checked before they execute?
+
 ## What to build next
 
 You now have the building blocks:
@@ -296,6 +305,10 @@ You now have the building blocks:
 - **Section 0e**: Connecting to tools via MCP
 
 From here, the book takes you into the engineering decisions that determine whether your agent survives production: when to use an agent versus a workflow (Chapter 3), how to evaluate and harden it (Chapter 6), when not to use an agent at all (Chapter 7), and how to govern, secure, and scale it (Chapters 10-13).
+
+<Callout type="tip" label="How you know this worked">
+Test that your MCP integration: discovers only the tools you approved; rejects unsafe paths and arguments; does not leak secrets in tool results; and logs every invocation.
+</Callout>
 
 ## Further reading
 

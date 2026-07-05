@@ -423,6 +423,22 @@ The key principle: if structured output fails after your retry budget, return a 
 Picture a classification agent that returns `{"confidence": 1.5, "category": "high_risk", "review_date": "next Tuesday"}`. The JSON parses without errors. Without a validation layer, downstream routing logic would treat 1.5 as a valid confidence score, escalate the case as ultra-high-confidence, and pass "next Tuesday" along as a date string that breaks the first batch job that tries to parse it. Schema validation (Pydantic) catches the confidence value immediately. Semantic validation catches the non-ISO date. Without the validation ladder, syntactically correct garbage flows downstream and breaks things far from the source.
 </Callout>
 
+## Provider behavior leaks through the abstraction
+
+A provider-neutral client is worth building, but provider behavior still leaks through it.
+
+| Area | How it varies across providers |
+|------|--------------------------------|
+| Tool-call format | message shape and tool-choice control differ |
+| Structured output | strict schema enforcement is not universal |
+| Streaming | different event formats |
+| Context caching | not portable across providers |
+| Refusal behavior | different safety thresholds and phrasing |
+| Token accounting | counted and priced differently per model |
+| Parallel tool calls | supported unevenly |
+
+The abstraction is worth keeping, but write tests against the provider you actually ship on.
+
 ## Putting it together
 
 You now have a mental model of the machine you are building with. It takes text, returns text, costs money per token, has a fixed memory, and confidently makes things up. Every engineering decision from here forward is about working within and around these constraints.
@@ -432,6 +448,10 @@ Now that you know the model is probabilistic, bounded by context, vulnerable to 
 The next three sections build these answers. Section 0b gives the model hands. Section 0c gives it a loop -- [FN-004](/field-notes/004-loop-engineering-30-year-old-loop/) has more on why the stop condition inside that loop is the hard, still-unsolved part. Section 0d shows you what frameworks do with both.
 
 For hands-on experiments with everything in this section, see the [LLM Explorer](/projects/llm-explorer/) project.
+
+<Callout type="tip" label="How you know this worked">
+Test that the model: respects the output format you asked for; stays inside its token budget; refuses claims it cannot support; and admits uncertainty rather than inventing an answer.
+</Callout>
 
 ## Further reading
 

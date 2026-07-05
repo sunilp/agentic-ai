@@ -405,6 +405,26 @@ In production, replace `print` with structured logging -- but `print` beats noth
 
 This is 10% of production hardening. Chapter 6 gives you the other 90%: evaluation suites, cost tracking, retry policies, circuit breakers, structured observability. These three guardrails are the ones you add on day one.
 
+### Guardrail 4: Survive duplicate and slow calls
+
+The loop sometimes calls the same tool twice after an unclear result -- a truncated response or a timeout reads to the model like nothing happened, so it tries again. A tool can also hang: no exception, no result, just silence. Two more guardrails cover both.
+
+First, a timeout budget per call. Give every tool call a deadline; if it doesn't return in time, the loop treats it as a failed step instead of waiting on it forever.
+
+Second, an idempotency key. Before running a tool, check whether this exact call already ran, keyed on the user, the tool name, and its normalized arguments:
+
+```python
+key = (user_id, tool_name, normalized_args)
+if key in already_done:
+    return already_done[key]   # do not send the email twice
+```
+
+A repeat lookup returns the prior result instead of repeating the side effect. For `search`, a duplicate call is harmless. For `send_email` or `charge_card`, it's the difference between one email and three.
+
+The third rule isn't code, it's policy: if a repeat looks risky and no cached result exists to return, confirm before running it again instead of guessing.
+
+Read-only tools can retry freely; side-effecting tools cannot. Section 0f goes deeper on execution safety.
+
 ## The stop condition and the gate
 
 The loop stops in exactly one place: `if response.content:`, when the model returns text instead of a tool call. Nobody verifies the answer or asks permission -- it stops because the model said it's done, and none of this chapter's guardrails touch that decision. `max_steps` bounds how long it runs, validation bounds what comes in, logging tells you what happened after the fact. Nothing checks whether the model was right to stop or right to act, in the moment it mattered.
@@ -436,6 +456,10 @@ This is the agent you compare against every framework you evaluate. In Section 0
 You just built an agent. It works. It also breaks in predictable ways. Guardrails and a gate help, but you still made judgment calls on gut feel: how big the budget, when to stop searching, whether this task needed an agent at all. Fine solo; it doesn't scale to a team building agent systems on a shared codebase. Chapter 1 gives you the vocabulary to make these calls explicit -- five system types, from single LLM calls through multi-agent orchestrations, and a decision framework for when a task needs the loop you just built versus a deterministic workflow. The rest of the book gives you the engineering to build whichever one you pick, for production.
 
 For an expanded version with more tools, proper error handling, and example queries, see the [Research Agent](/projects/research-agent/) project.
+
+<Callout type="tip" label="How you know this worked">
+Test that the loop: stops within its step budget; does not repeat the same action forever; handles a tool failure without crashing; and produces a trace you can read afterward.
+</Callout>
 
 ## Further reading
 

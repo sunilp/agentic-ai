@@ -38,6 +38,20 @@ The tool logic (the actual `calculator`, `search`, `word_count` functions) stays
 
 With that in mind, let's see how two frameworks handle the same agent.
 
+## What frameworks hide that you must re-expose
+
+Automation is the point, but production debugging needs the things the framework does by default.
+
+| What you lose sight of | Why you need it back |
+|------------------------|----------------------|
+| The exact tool schema sent to the model | tool-selection bugs live here |
+| Retry count and backoff | to tell a flake from a real failure |
+| The hidden system prompt | it shapes every answer |
+| Per-step token usage | cost and context budgeting |
+| Tool latency | to find the slow step |
+| The final stop reason | to know why the loop ended |
+| A raw trace export | to replay and evaluate the run |
+
 ## Google ADK: the primary walkthrough
 
 Google's [Agent Development Kit](https://google.github.io/adk-docs/) is opinionated about the things that matter in production: tracing, evaluation, and tool registration. It gives you a structured way to define agents and tools, and it stays out of your way on the rest. Let's rebuild the research agent.
