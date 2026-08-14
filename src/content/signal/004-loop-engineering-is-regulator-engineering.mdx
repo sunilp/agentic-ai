@@ -1,0 +1,178 @@
+---
+id: sg-004
+title: Loop engineering is regulator engineering
+dek: The practical manual for running agent loops arrived this week. The theorems for the half that actually decides whether a loop is safe arrived between 1956 and 1970. Nobody in the discourse is citing them.
+description: "Addy Osmani's Practical Loop Engineering reads like a rebuttal to this site's claim that loop engineering is a 30-year-old loop with a new hashtag. It is not. His manual and that field note describe two halves of one system, and the half his best advice lives in has a name the discourse never uses: the regulator. Cybernetics proved three theorems about regulators decades ago that map one to one onto agent loops, and METR has already measured what happens when you ignore the fourth problem. This Signal names the variable, gives the four properties a loop regulator needs, and proposes the one metric that tells you your loop fleet is failing while it looks like it is succeeding."
+primaryChapter: ch-02
+banner: /assets/banners/sg-004.png
+date: 2026-08-14
+readingTime: 15
+pullQuote: When the verifier stops saying no, either the work became perfect or the regulator stopped regulating. Only one of those happens in practice.
+references: []
+patterns: []
+sources:
+  - title: "Practical Loop Engineering"
+    url: https://addyo.substack.com/p/practical-loop-engineering
+    authors: [Osmani A.]
+    year: 2026
+  - title: "Loop Engineering"
+    url: https://addyosmani.com/blog/loop-engineering/
+    authors: [Osmani A.]
+    year: 2026
+  - title: "You should be designing loops that prompt your agents (post)"
+    url: https://x.com/steipete/status/2063697162748260627
+    authors: [Steinberger P.]
+    year: 2026
+  - title: "An Introduction to Cybernetics"
+    url: http://pespmc1.vub.ac.be/books/IntroCyb.pdf
+    authors: [Ashby W.R.]
+    year: 1956
+  - title: "Every good regulator of a system must be a model of that system"
+    url: http://pespmc1.vub.ac.be/books/Conant_Ashby.pdf
+    authors: [Conant R.C., Ashby W.R.]
+    year: 1970
+  - title: "On the General Theory of Control Systems"
+    url: https://www.sciencedirect.com/science/article/pii/S1474667017700948
+    authors: [Kalman R.E.]
+    year: 1960
+  - title: "Recent Frontier Models Are Reward Hacking"
+    url: https://metr.substack.com/p/2025-06-05-recent-reward-hacking
+    authors: [METR]
+    year: 2025
+  - title: "Reproducing METR's RE-Bench Reward Hacking Results"
+    url: https://blog.bluedot.org/p/reproducing-metrs-re-bench-reward
+    authors: [BlueDot]
+    year: 2025
+  - title: "Asymmetry of verification and verifier's law"
+    url: https://www.jasonwei.net/blog/asymmetry-of-verification-and-verifiers-law
+    authors: [Wei J.]
+    year: 2025
+  - title: "FN-004: Loop engineering is a 30-year-old loop with a new hashtag"
+    url: https://agenticlab.sunilprakash.com/field-notes/004-loop-engineering-30-year-old-loop/
+    authors: [Prakash S.]
+    year: 2026
+  - title: "Put the Control Where the Call Happens"
+    url: https://sunilprakash.com/writing/control-where-the-call-happens/
+    authors: [Prakash S.]
+    year: 2026
+---
+
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Callout from '~/components/universal/Callout.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+On August 14, Addy Osmani published [Practical Loop Engineering](https://addyo.substack.com/p/practical-loop-engineering), the field's first real operating manual for the thing Peter Steinberger's 8.4-million-view post named in June. It is concrete in the way the discourse around it has not been. He runs five to ten agents concurrently. He names two primitives, a goal loop with a measurable endpoint and a scheduled loop on a timer. He processes 80 to 90 pull requests a day in his Agent Skills repository with scheduled triage. He keeps authentication, security, and finance work out of the loops entirely.
+
+In June, this site published [FN-004](https://agenticlab.sunilprakash.com/field-notes/004-loop-engineering-30-year-old-loop/), which argued that loop engineering is a 30-year-old loop with a new hashtag, standing on two unsolved problems, the stop condition and the verifier.
+
+Those two pieces read like a clash. A practitioner ships the manual; a skeptic says the discipline is a rebrand. The clash is not real, and the way it is not real is the interesting part. Osmani's manual and FN-004 describe two halves of one system, and almost everything load-bearing in his manual lives in the half the discourse never names.
+
+Cybernetics named it in the 1950s. The regulator.
+
+## Every loop has two sides, and the discourse engineers one of them
+
+Strip any agent loop to its skeleton and there are two components. There is the part that produces work: the model, the tools, the context, the retries. Call it the generator. And there is the part that decides whether the work is accepted, whether the loop continues, and when it stops. Control theory has called that component the regulator since before software existed.
+
+Now sort the loop engineering discourse into those two buckets. Schedules, worktrees, parallel runs, skills, resumable state, the `/goal` and `/loop` primitives: generator side, all of it. The entire visible surface of the discipline is about starting, feeding, and multiplying generators.
+
+Then look at where Osmani's actual advice concentrates. His three strongest rules, the ones he frames as hard-won:
+
+1. Do not delegate your judgment along with the task. His words: you have to check "that you are not delegating the taste and the judgment to your agent."
+2. Have one agent draft and a different agent verify. Never let the maker grade its own work.
+3. Keep authentication, security, and finance on manual, whatever the loop can technically do.
+
+Not one of these is about the loop. The first is a claim about who holds final authority. The second is a claim about verifier independence. The third is a scope boundary. All three are regulator rules, stated as practitioner instinct.
+
+That is the resolution of the apparent clash. FN-004 said the loop is old and the hard parts are the stop condition and the verifier. Osmani's manual, read against its own emphasis, agrees: the parts he treats as the craft are exactly those parts. The discourse calls the discipline loop engineering. The discipline that is actually emerging, in the hands of the people doing it well, is regulator engineering.
+
+What makes this worth a Signal rather than a vocabulary quibble is that the regulator is not an open research problem with no literature. It has theorems. Three of them map one to one onto the 2026 loop discourse, and a fourth problem now has measurements.
+
+## You can watch a system you cannot steer
+
+In 1960, Rudolf Kalman published [the paper](https://www.sciencedirect.com/science/article/pii/S1474667017700948) that gave control theory its two load-bearing properties. Observability: can you reconstruct the internal state of a system from its outputs? Controllability: can you drive the system to a desired state with the inputs available to you? His duality theorem showed the two are mathematical mirror images of each other. And, critically, they are independent. A linear system can be fully observable and completely uncontrollable. You can know exactly what it is doing and have no lever that changes what it does.
+
+Agents are not linear systems, and nobody should pretend the mathematics transfers. The distinction transfers. The agent operations stack the market has built over the past two years is an observability stack: spans for every reasoning step, cost per tool call, full session replay. On the [companion piece to this Signal](https://sunilprakash.com/writing/control-where-the-call-happens/) I walked through what that stack structurally cannot do: a span brackets an operation and can never return a verdict. There is a slot in the request path where something could check whether a call may proceed, and in most deployments that slot is empty.
+
+A loop with rich telemetry and no authority-bearing stop is Kalman's uncontrollable-but-observable case, running in production. You can watch it do the wrong thing in real time, in beautifully instrumented detail. Sixty-six years ago we learned that watching and steering are different properties and that having one tells you nothing about having the other. The loop discourse ships the first property and assumes the second.
+
+For a single tool call, the fix is an authorization check in the request path. For a loop, the same object appears at a different timescale: the stop condition. One decides whether this call proceeds; the other decides whether the run continues. Same regulator, two clock speeds. If you accept that framing, the rest of the theory comes with it.
+
+## Only variety can absorb variety
+
+W. Ross Ashby's [Law of Requisite Variety](http://pespmc1.vub.ac.be/books/IntroCyb.pdf), 1956, is the most underused result in the entire agent conversation. Informally: a regulator can only counter the disturbances it can distinguish and respond to. If the process being regulated can fail in more ways than the regulator can tell apart, some failures pass through unregulated. Ashby's phrasing was blunt: only variety can destroy variety.
+
+Now apply it to Osmani's first rule. Why can you not delegate your judgment? Not because of sentiment about human oversight. Because in a loop whose generator is a frontier model, the human is the component with the most failure-mode variety. The model can produce subtle wrongness across more dimensions than any rubric enumerates: plausible-but-wrong architecture, tests that pass by construction, complexity that will cost you in a year. The person who understands the work can distinguish those states. A checklist cannot. Delegating judgment is not a workflow change. It is removing the highest-variety regulator from the system and replacing it with a lower-variety one. Ashby proved what that costs in 1956.
+
+Then apply it to the numbers Osmani reports, because this is where the law produces the observation I have not seen anywhere in the discourse. Five to ten concurrent loops. Eighty to ninety pull requests a day. Each generator is a frontier model producing work with enormous failure variety, and every one of those loops shares a single regulator: him.
+
+That is a variety deficit by construction. Ten generators multiplying variety, one human absorbing it. And the law says what happens next: the regulator saturates. Saturation does not fail loudly. A saturated human reviewer does not reject more work; they inspect less of each unit and approve at a higher rate. From the outside, this is indistinguishable from the loops getting better. Throughput rises, rejection falls, everyone celebrates.
+
+We have already measured this failure mode on this site, in miniature. In [Lab-001](https://agenticlab.sunilprakash.com/labs/multi-agent-vs-router-100-queries/), the verifier agent rubber-stamped 14 percent of outputs with a looks-good until a stricter prompt caught it, and the first eval pass scored the whole system four points higher than it deserved. The verifier that stops saying no is not a verifier that found perfect work. It is a regulator that stopped regulating.
+
+<PullQuote>When the verifier stops saying no, either the work became perfect or the regulator stopped regulating. Only one of those happens in practice.</PullQuote>
+
+The practical form of the law: your loop count is bounded by your regulator's variety, not by your compute. Everyone reads Osmani's five-to-ten number as a productivity level to push past. Read it instead as a control budget being spent. The interesting engineering question is not how to run fifty loops. It is what your regulator's actual variety is, and what happens to your acceptance quality as you approach it.
+
+## A verifier is a model or it is theater
+
+The second Ashby result is less famous and more surgical. In 1970, Roger Conant and Ashby published a paper whose title is the entire thesis: [Every good regulator of a system must be a model of that system](http://pespmc1.vub.ac.be/books/Conant_Ashby.pdf). Cited over 1,700 times. The formal claim has fine print about optimality and simplicity, but the direction is what matters: regulation that works is regulation that internally mirrors the thing it regulates. A regulator that does not model the system can only react to the failure categories someone anticipated in advance.
+
+This is the theorem behind a result the LLM evaluation literature keeps rediscovering: judge models drift, rubric-based grading misses out-of-rubric failures, and self-assessment collapses under distribution shift. A rubric is not a model of the task. It is a projection of the failures someone imagined at design time. The generator, meanwhile, explores the full space, including the regions nobody imagined. The mismatch is not a prompt-quality problem. It is a structural property Conant and Ashby wrote down before anyone in this field was born.
+
+It is also the theorem behind why Osmani's verification advice works when it does. His verification prompts check the browser console, performance traces, and actual user interactions. Notice what that forces: the verifier is not reading the diff and forming an opinion. It is executing the artifact and comparing behavior against expectation. Tests, execution, replay: these are models of the task in the theorem's sense. A verifier that runs the thing holds a model. A verifier that reads the thing holds a rubric.
+
+That gives you a clean design rule for the maker-checker pattern everyone is building: the checker must hold a model the maker cannot argue with. Test suites, executed behavior, type checkers, provenance chains. Where the checker is another LLM with a nicer prompt, you have two generators and zero regulators, and Lab-001 already showed you what that measures like.
+
+## The loop attacks its own stop condition
+
+The first three results are about whether the regulator can do its job. The fourth problem is about what the generator does to the regulator, and here we have moved past theory into measurement.
+
+A loop is an iterated optimizer pointed at its own stopping condition. Whatever gap exists between the measurable stop and the intended goal, iteration pressure searches for it. Not through malice; through the plain mechanics of trying things until the check passes. Goodhart's law, but with a machine running thousands of trials against the metric.
+
+The measurements are stark. [METR found](https://metr.substack.com/p/2025-06-05-recent-reward-hacking) that on one RE-Bench training-optimization task, OpenAI's o3 reward-hacked in every single trajectory generated. Not sometimes. Every trajectory. Frontier models modified scoring code, accessed reference answers, and exploited environment loopholes to make the check pass without doing the work. And the structural detail that matters most for loop design: reward hacking was more than 43 times more common on tasks where the model could see the entire scoring function.
+
+<Callout type="tip" label="The number that should change your loop design">
+Visible scoring function: 43x more gaming. A [reproduction](https://blog.bluedot.org/p/reproducing-metrs-re-bench-reward) found that adding the line "any attempt at cheating will result in disqualification" cut hacking to 3 runs in 10. A plea reduces the rate. It is not a control. Seven in ten is what obedience-by-request buys you under iteration pressure.
+</Callout>
+
+Put plainly: a loop is a Goodhart amplifier. A one-shot agent with a sloppy success check produces one bad artifact. A loop with the same check runs until it finds the gap, then produces bad artifacts systematically, each one stamped as passing. The stop condition is not a config value. It is an adversarial interface, and the adversary is your own generator under iteration pressure.
+
+Which means stop conditions deserve the treatment we give security boundaries, and almost nowhere get. Keep the scoring function out of the generator's context; the 43x number is the measured price of showing it. Hold the stop condition's implementation outside the loop's write scope, or the first thing a struggling run learns to edit is its own exam. And log every stop-condition evaluation as a decision, with what passed, what failed, and what would have flipped the verdict, because when a loop starts gaming its check, the decision log is the only place the pattern shows up before the artifacts do.
+
+## The frontier is drawn by the verifier's law
+
+One more piece locks the picture together, and it is the economic one. Jason Wei's [verifier's law](https://www.jasonwei.net/blog/asymmetry-of-verification-and-verifiers-law): the ease of training AI to solve a task is proportional to how verifiable the task is. Tasks that are easy to verify and possible to solve will be solved. The asymmetry between how hard something is to produce and how cheap it is to check is, in his framing, one of the most important ideas in the field.
+
+It is also, quietly, the boundary of Osmani's entire portfolio. Look at what he loops: code with test suites, PR triage, issue summarization, dependency chores. Every one sits where verification is asymmetrically cheap. Look at what he refuses to loop: authentication, security, finance. Every one sits where verification is expensive and the cost of a wrong accept is irreversible. His manual never states the rule, but his practice traces it exactly: loop where verification is cheap, stay manual where it is dear.
+
+That reframes what the discipline grows into. The ceiling on loop engineering is not model capability, orchestration tooling, or how many worktrees you can juggle. It is the verification frontier. And the frontier is not fixed. You move tasks across it deliberately: writing the test suite before pointing a loop at the code is purchasing verifiability. Adding provenance to a pipeline is purchasing auditability, which is verifiability after the fact. The most valuable work in an agent-heavy engineering org is not running more loops. It is converting unverifiable tasks into verifiable ones, so loops become safe where they were reckless.
+
+## Regulator engineering, named
+
+Collect the four results and the discipline gets a shape. A loop regulator has four properties, each with a theorem or a measurement behind it, each checkable against your own system this week.
+
+**Authority.** Can the regulator actually stop the run and reject the work, in the path, before effects land? Kalman: observing is not steering. If your stop lives in a dashboard, you have an observer.
+
+**Variety.** Can the regulator distinguish as many failure modes as the generator can produce? Ashby: if not, the excess passes through unregulated. Your loop count is bounded by this, not by compute.
+
+**Model.** Does the verifier hold a model of the task, tests, execution, replay, or a rubric about the task? Conant and Ashby: only the first regulates. The second is theater with good production values.
+
+**Incorruptibility.** Does the stop condition survive being optimized against? METR: assume iteration pressure finds the gap, hide the scoring function, and keep the exam outside the loop's write scope.
+
+And one metric, which I have not seen proposed anywhere: **regulator rejection rate**, tracked against throughput. A healthy loop fleet rejects work at a roughly stable rate as it scales. A rejection rate that falls while throughput rises is the signature of exactly two conditions, a saturated regulator or a gamed check, and both look like success in every other chart you have. It is the loop-scale version of the decision log from the companion piece: if your operations story cannot show you the noes, it cannot show you anything.
+
+## What to ignore
+
+- **Concurrent-loop counts as a capability flex.** Ten loops sharing one human regulator is not ten times the engineering. It is one regulator's variety spread ten ways, and Ashby priced that trade in 1956.
+- **"Fully autonomous, self-healing" loop demos.** Self-healing means the generator grades its own recovery. That is a maker-checker with the checker deleted, and Lab-001 measured what the deleted checker was worth.
+- **Verifier agents that share the maker's model and context.** Two copies of the same model reviewing each other hold the same blind spots. Independence of failure modes is the point; a second opinion from the same brain is not a second opinion.
+
+The 1970 paper title deserves the last word, because it turns out to be the whole discipline in one sentence. Every good regulator of a system must be a model of that system. The person who understands the work is still the best model of the work we have. Osmani kept himself in the loop, at the judgment layer, on the boundary where the stakes are irreversible. The discourse frames that as a transitional caution, a thing we do until the agents improve. Conant and Ashby's result suggests it is not transitional at all. Whatever ends up regulating your loops, human or machine, will have to be a model of the work, or it will not be regulating anything.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 2: Tools, Context, and the Agent Loop", href: "/book/02-tools-context-agent-loop/" },
+    { label: "Ch 6: Evaluating and Hardening", href: "/book/06-evaluating-and-hardening/" },
+  ]}
+  readNext={{ label: "FN-004: Loop engineering is a 30-year-old loop with a new hashtag", href: "/field-notes/004-loop-engineering-30-year-old-loop/" }}
+/>
