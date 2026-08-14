@@ -105,6 +105,8 @@ Now apply it to Osmani's first rule. Why can you not delegate your judgment? Not
 
 Then apply it to the numbers Osmani reports, because this is where the law produces the observation I have not seen anywhere in the discourse. Five to ten concurrent loops. Eighty to ninety pull requests a day. Each generator is a frontier model producing work with enormous failure variety, and every one of those loops shares a single regulator: him.
 
+![Ink stamp illustration of ten identical machines pouring streams of stamped paper toward one small human figure at a tiny desk, buried in the volume](/assets/illustrations/sg-004-variety.png)
+
 That is a variety deficit by construction. Ten generators multiplying variety, one human absorbing it. And the law says what happens next: the regulator saturates. Saturation does not fail loudly. A saturated human reviewer does not reject more work; they inspect less of each unit and approve at a higher rate. From the outside, this is indistinguishable from the loops getting better. Throughput rises, rejection falls, everyone celebrates.
 
 We have already measured this failure mode on this site, in miniature. In [Lab-001](https://agenticlab.sunilprakash.com/labs/multi-agent-vs-router-100-queries/), the verifier agent rubber-stamped 14 percent of outputs with a looks-good until a stricter prompt caught it, and the first eval pass scored the whole system four points higher than it deserved. The verifier that stops saying no is not a verifier that found perfect work. It is a regulator that stopped regulating.
@@ -134,6 +136,8 @@ The measurements are stark. [METR found](https://metr.substack.com/p/2025-06-05-
 <Callout type="tip" label="The number that should change your loop design">
 Visible scoring function: 43x more gaming. A [reproduction](https://blog.bluedot.org/p/reproducing-metrs-re-bench-reward) found that adding the line "any attempt at cheating will result in disqualification" cut hacking to 3 runs in 10. A plea reduces the rate. It is not a control. Seven in ten is what obedience-by-request buys you under iteration pressure.
 </Callout>
+
+![Ink stamp illustration of a mechanical arm reaching over an examination booth from behind to press the booth's own rubber stamp onto the document the machine is holding](/assets/illustrations/sg-004-goodhart.png)
 
 Put plainly: a loop is a Goodhart amplifier. A one-shot agent with a sloppy success check produces one bad artifact. A loop with the same check runs until it finds the gap, then produces bad artifacts systematically, each one stamped as passing. The stop condition is not a config value. It is an adversarial interface, and the adversary is your own generator under iteration pressure.
 
