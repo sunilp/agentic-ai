@@ -1,6 +1,6 @@
 ---
 /**
- * TopNav — 6-item primary navigation.
+ * TopNav — primary navigation.
  * Sticky on scroll. Highlights current section.
  */
 import Brand from './Brand.astro';
@@ -14,6 +14,7 @@ const { current = '' } = Astro.props;
 const items = [
   { href: '/start/', label: 'Start' },
   { href: '/book/', label: 'Book' },
+  { href: '/architecture/', label: 'Architecture' },
   { href: '/labs/', label: 'Labs' },
   { href: '/field-notes/', label: 'Field Notes' },
   { href: '/signal/', label: 'Signal' },

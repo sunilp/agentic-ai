@@ -1,0 +1,182 @@
+---
+id: arch-001
+title: The Control Plane
+dek: A single-pass AI request has six places where a control can sit, and each one can see a different amount of the truth. Placement sets the accuracy ceiling before you pick a single model.
+description: "The six chokepoints in an enterprise AI request path, what each one can and cannot observe, and why placing a detector at the wrong chokepoint caps its accuracy no matter how good the classifier is."
+layer: control
+order: 1
+readingTime: 12
+updated: 2026-08-18
+specifies: The chokepoints in an AI request path and the observability each one has
+appliesTo: [RAG platform, Coding assistant, Agent system]
+decisions:
+  - Which chokepoints you instrument, and which you accept as blind
+  - Whether a control blocks information harm or action harm
+  - Where the latency budget for detection is spent
+anchors:
+  - label: The request path
+    anchor: the-request-path
+  - label: Six chokepoints
+    anchor: six-chokepoints
+  - label: What each one can see
+    anchor: what-each-chokepoint-can-see
+  - label: Information harm and action harm
+    anchor: information-harm-and-action-harm
+  - label: The coverage table
+    anchor: the-coverage-table
+  - label: Where it breaks
+    anchor: where-this-blueprint-stops-working
+references: [ch-11, ch-06]
+patterns: [approval-gate, tool-registry]
+sources:
+  - title: "OWASP Top 10 for LLM Applications 2025"
+    url: https://genai.owasp.org/llm-top-10/
+    year: 2025
+  - title: "The Lethal Trifecta for AI agents"
+    url: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+    authors: [Willison S.]
+    year: 2025
+---
+
+import Callout from '~/components/universal/Callout.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+Ask an engineering team where their AI guardrails live and you will usually get one answer: in front of the model. A classifier reads the user's prompt, decides whether it looks like an attack, and passes it through or blocks it. Some teams add a second pass on the way out.
+
+That design has a ceiling, and the ceiling has nothing to do with the quality of the classifier. A prompt-layer detector cannot see the document that the retriever is about to fetch. If the attack arrives inside that document, the detector is being asked to classify text that does not contain the attack. No amount of fine-tuning fixes an input that is missing the evidence.
+
+This is the first thing to get right, and it is an architecture decision rather than a model decision. Before you choose detectors, you choose where they sit. Placement determines what each detector can observe, and observability sets the accuracy ceiling.
+
+## The request path
+
+Strip an enterprise AI system down to the path a single request takes. Whether the product is a RAG assistant, a coding copilot, or a multi-step agent, the same stages appear:
+
+```
+  ingest              a document enters the corpus
+    |
+  retrieve            the system selects context for this request
+    |
+  assemble            system prompt + context + input become one payload
+    |
+  infer               the model produces tokens
+    |
+  act                 the model's output triggers a tool call
+    |
+  respond             text reaches the user
+    |
+  record              the exchange is written down
+```
+
+Two of these stages are commonly missed in threat modelling. `ingest` happens long before the request, sometimes months before, and the person who uploaded the document is not the person now being attacked by it. `act` happens after the model has already decided, and it is the only stage where the system touches something outside itself.
+
+## Six chokepoints
+
+A chokepoint is a stage where the request is fully materialised and execution can be suspended. Take a single pass through the path above and there are six. Memory reads and writes, model-provider egress, and agent-to-agent messages are deliberately not separate entries: each one resolves to a tool execution, a retrieval, or a nested request path with its own six, which is the case the last section returns to.
+
+```
+ 1  UPLOAD          document enters the corpus
+ 2  RETRIEVAL       context is selected for this request
+ 3  PROMPT          the assembled payload, before inference
+ 4  RESPONSE        model output, before it is used
+ 5  TOOL EXECUTION  a requested action, before it happens
+ 6  LOGGING         what gets written down, and who can read it
+```
+
+Everything in the control layer is a choice about which of these you instrument, what you put there, and what you do when it fires. A system with controls only at 3 and 4 is a common starting configuration, and it is the one that leaves both retrieval-borne injection and tool-mediated harm uninstrumented.
+
+<Callout type="tip" label="The placement test">
+For any control you are about to build, ask: is the evidence this detector needs actually present in the input it receives at this chokepoint? If the answer is no, you are not building a detector. You are building a source of false confidence.
+</Callout>
+
+## What each chokepoint can see
+
+This is the part that decides your architecture. Each chokepoint has a different view of the truth, and the differences are not subtle.
+
+**Upload** sees the full document, unhurried. This is the only chokepoint with no latency pressure, because ingestion is asynchronous. It is therefore the correct home for anything expensive: full-document classification, entity extraction across the whole text, structural analysis, a slow model. What it cannot see is who will eventually retrieve this document, or in what context. A document that is harmless for the team that uploaded it may be a leak the moment it is retrievable by another business unit.
+
+**Retrieval** sees which chunks were selected and, critically, the requester's identity. This is the only chokepoint that can answer "is this person allowed to see this content", because it is the only one that has both the content and the principal at the same time. It is also where injected instructions inside a retrieved document first become visible to the system. In systems whose controls sit only at the prompt and response layers, this is the largest uninstrumented surface.
+
+**Prompt** sees the assembled payload: system prompt, retrieved context, conversation history, and the user's input, concatenated. It sees everything, and unless you have deliberately preserved structure it can distinguish nothing. Provenance survives only if the assembly step records it. The detector cannot otherwise tell whether "ignore prior instructions" arrived from the user, from a retrieved PDF, or from a previous turn, unless you deliberately preserve that structure. Most frameworks flatten it.
+
+<PullQuote>By the prompt layer, everything is visible and nothing is attributable. That trade is the reason prompt-layer detection underperforms its benchmarks in production.</PullQuote>
+
+**Response** sees what the model produced. It can catch leaked system prompts, PII in output, unsafe content, and claims that contradict the retrieved context. It cannot see intent, and it cannot undo anything, because in a tool-calling system the action has often already been requested by the time text is being generated.
+
+**Tool execution** sees the concrete action: the function, the arguments, the target, and the identity under which it will run. This is the only chokepoint that can prevent an irreversible act, and the only one where the decision is about a specific operation on a specific resource rather than about text. That makes the decision auditable rather than infallible: it is only as good as the identity, the resource metadata, and the policy behind it, and stale identity or mislabelled resources will produce a confident wrong answer here as readily as anywhere else.
+
+**Logging** sees the whole exchange after the fact. It cannot prevent anything. It is what makes everything else auditable, and it is itself a leak surface, because prompts and responses in a log are the same sensitive data that the other five chokepoints were defending.
+
+## Information harm and action harm
+
+Split the harms you are defending against into two families, because the chokepoints that address them are different.
+
+**Information harm** is data reaching someone who should not have it. Leaked PII, a disclosed system prompt, a retrieved document outside the requester's entitlement, sensitive content in a log. These harms happen at the moment information moves, so they are addressable at upload, retrieval, response, and logging.
+
+**Action harm** is the system doing something in the world that should not have happened. A row deleted, a payment issued, a ticket closed, a pull request merged. Tool execution is the only chokepoint that can prevent these, because it is the only one that sees the act before it happens.
+
+Tool execution belongs to both families, and this is the case worth stating plainly rather than tidying away. A tool call is also an egress path: an email send, an outbound webhook, a search query, a write to a shared document all move information out of the system. Willison's lethal trifecta names this directly, and it is why treating tool execution as purely an action control leaves the exfiltration route uninstrumented.
+
+```
+ information harm  -->  upload, retrieval, response, logging,
+                        and tool execution (egress)
+ action harm       -->  tool execution  (only)
+```
+
+Text-in-text-out classification is the tractable, sellable shape for a guardrail product, and the commercial guardrail category reflects that. As a system moves from answering questions to taking actions, more of its risk lands on the one chokepoint that text classification cannot reach.
+
+If your roadmap says the assistant will start taking actions next quarter, and your guardrail budget is entirely allocated to prompt and response filtering, you have a stated plan to be undefended against the harm class that will matter.
+
+## The coverage table
+
+Mapping the OWASP Top 10 for LLM Applications 2025 onto the chokepoints turns an abstract risk list into a placement argument. All ten entries are listed, because the ones that do not resolve to a request-path chokepoint are as informative as the ones that do.
+
+| Risk | Best chokepoint | Why not the prompt layer |
+|---|---|---|
+| LLM01 Prompt Injection | Retrieval, then prompt | Injected text usually arrives inside retrieved content, which the prompt layer sees but cannot attribute |
+| LLM02 Sensitive Information Disclosure | Upload and retrieval for input, response and tool execution for output | Entitlement is only knowable where content and principal meet; egress includes tool calls |
+| LLM05 Improper Output Handling | Response and tool execution | The harm is in what the output is used for, not what it says |
+| LLM06 Excessive Agency | Tool execution | Nothing in the text tells you whether this actor may perform this act |
+| LLM07 System Prompt Leakage | Response | The only stage where the leak is observable |
+| LLM08 Vector and Embedding Weaknesses | Upload and retrieval | Invisible downstream; by the prompt layer the poisoned chunk looks like context |
+| LLM10 Unbounded Consumption | Tool execution and the loop governor | A budget is a runtime property, not a text property |
+| LLM03 Supply Chain | Outside the request path | A build-time and procurement control; no runtime chokepoint sees it |
+| LLM04 Data and Model Poisoning | Upload, and outside the path for model weights | Corpus poisoning is an upload control; weight poisoning is a supply-chain problem |
+| LLM09 Misinformation | Response, weakly | Grounding against retrieved context is checkable; general truth is not |
+
+Three of those ten have no runtime chokepoint at all, which is worth saying out loud in a design review: a control plane does not address supply chain or model poisoning, and anyone presenting one as complete coverage of the OWASP list is overselling it. Separately, content safety and harmful content do not appear in the OWASP list at all. That list is a security taxonomy; content safety is a trust and safety concern with a different owner, a different review workflow, and usually a different regulator. Keep them as separate detector families with separate thresholds. Merging them produces a single opaque "safety score" that no reviewer can act on.
+
+## What good placement looks like
+
+A defensible default for an enterprise RAG system, ordered by value per unit of effort:
+
+1. **Retrieval-layer entitlement check.** Filter candidate chunks against the requester's permissions before they reach the payload. This is access control, not machine learning, and it eliminates a whole class of disclosure incidents deterministically.
+2. **Tool-execution policy.** Every tool call passes a policy decision that knows the actor, the action, and the resource. Deterministic, auditable, and the only defence against action harm.
+3. **Upload-time classification.** Expensive detectors run here, once per document, off the request path. Label sensitivity, extract entities, flag instruction-like content in documents that should contain none.
+4. **Response-layer output checks.** System prompt leakage, PII in output, grounding against retrieved context.
+5. **Prompt-layer detection.** Useful, cheap, and the weakest of the five for the reasons above. Worth having. Not worth being your only control.
+6. **Logging controls.** Redaction and access control on the audit trail itself.
+
+Notice that the two highest-value items are not detectors. They are policy decisions with deterministic answers. Work that gets handed to a classifier is often an authorization question in disguise. Authorization fails differently: it does not have a false positive rate in the statistical sense, but it does fail through stale entitlements, mislabelled resources, and policy that no longer matches the org chart. Those failures are findable and fixable, which a classifier's error surface is not.
+
+<Callout type="warn" label="The order this list is usually built in">
+The reverse order is the tempting one: prompt filtering first because it is the easiest to demo, then response filtering, then the rest "when we have time". That order front-loads the weakest control and defers the two deterministic ones, which is how a system ends up well defended against the attacks in the tutorial and undefended against the ones in the incident report.
+</Callout>
+
+## Where this blueprint stops working
+
+Three honest limits.
+
+**The chokepoint model assumes a request path.** Batch pipelines, streaming ingestion, and background agents that run on a schedule do not have a clean request boundary, and the "principal" in whose name the work happens is often a service account with no meaningful entitlement. Those systems need the authority question answered at design time instead, because there is no runtime moment where a user's permissions are available to check against.
+
+**Six chokepoints is a simplification of multi-agent systems.** When one agent calls another, the second agent has its own full path, and the calling agent's output is the called agent's input. The chokepoints nest. A single-pass mental model will miss the case where agent A is authorized for an action, agent B is not, and B accomplishes it by asking A. That is the delegation problem, and it needs identity that survives the hop rather than a detector.
+
+**Placement improves the ceiling, not the floor.** Putting a detector at the right chokepoint means the evidence is present in its input. It does not mean the detector is any good. That is a measurement question, and measurement is where most guardrail programmes actually fail.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 6: Evaluating and Hardening Agents", href: "/book/06-evaluating-and-hardening/" },
+    { label: "Ch 11: Security Deep Dive", href: "/book/11-security/" },
+  ]}
+  readNext={{ label: "ARCH-002: Detector Architecture", href: "/architecture/002-detector-architecture/" }}
+/>

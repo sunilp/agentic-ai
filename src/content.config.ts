@@ -164,4 +164,38 @@ const patterns = defineCollection({
   }),
 });
 
-export const collections = { chapters, fieldNotes, recipes, signal, projects, evidence, labs, patterns };
+const architecture = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/architecture' }),
+  schema: z.object({
+    id: z.string(),                 // arch-001
+    title: z.string(),
+    dek: z.string(),
+    description: z.string(),
+    // The three-layer spine of the section.
+    layer: z.enum(['capability', 'control', 'evidence']),
+    order: z.number(),              // sequence position; the section reads in order, not by date
+    readingTime: z.number(),
+    updated: z.coerce.date(),       // blueprints are revised, not published once
+    specifies: z.string(),          // one line: what this blueprint pins down
+    appliesTo: z.array(z.string()), // RAG platform, coding assistant, agent system, ...
+    decisions: z.array(z.string()).optional(),          // decisions this blueprint forces
+    anchors: z.array(z.object({                          // in-page nav
+      label: z.string(),
+      anchor: z.string(),
+    })).optional(),
+    spot: z.string().optional(),
+    spotCaption: z.string().optional(),
+    references: z.array(z.string()).optional(),
+    cites: z.array(z.string()).optional(),
+    patterns: z.array(z.string()).optional(),
+    sources: z.array(z.object({
+      title: z.string(),
+      url: z.string().url(),
+      authors: z.array(z.string()).optional(),
+      year: z.number().optional(),
+    })).optional(),
+    status: z.enum(['draft', 'published']).default('published'),
+  }),
+});
+
+export const collections = { chapters, fieldNotes, recipes, signal, projects, evidence, labs, patterns, architecture };

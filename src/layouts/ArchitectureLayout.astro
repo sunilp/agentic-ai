@@ -1,0 +1,212 @@
+---
+/**
+ * ArchitectureLayout — blueprint treatment for the Architecture section.
+ *
+ * Blueprints are reference material, not a feed: they read in `order`, they carry an
+ * `updated` date rather than a publication date, and they lead with the contract
+ * (what this blueprint specifies, what it applies to, what it forces you to decide).
+ *
+ * Anatomy: ArticleHeader → Spot → BlueprintCard → SectionAnchors → MDX body → Sources → PrevNext.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import PageLayout from './PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
+import Spot from '~/components/universal/Spot.astro';
+import SectionAnchors from '~/components/universal/SectionAnchors.astro';
+import Sources from '~/components/universal/Sources.astro';
+
+interface Props {
+  entry: CollectionEntry<'architecture'>;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+
+const LAYER_LABEL: Record<string, string> = {
+  capability: 'Capability',
+  control: 'Control',
+  evidence: 'Evidence',
+};
+
+// Sequence neighbours, by `order` across the whole section.
+const all = (await getCollection('architecture'))
+  .filter((e) => e.data.status !== 'draft')
+  .sort((a, b) => a.data.order - b.data.order);
+const pos = all.findIndex((e) => e.id === entry.id);
+const prev = pos > 0 ? all[pos - 1] : undefined;
+const next = pos >= 0 && pos < all.length - 1 ? all[pos + 1] : undefined;
+
+const updatedLong = d.updated
+  .toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  .toUpperCase();
+const byline = ['SUNIL PRAKASH', `UPDATED ${updatedLong}`, `${d.readingTime} MIN`];
+const ogImage = `/assets/banners/${d.id}.png`;
+---
+
+<PageLayout
+  title={`${d.title} — Architecture`}
+  description={d.description}
+  ogImage={ogImage}
+  currentNav="Architecture"
+  articleData={{
+    publishedTime: d.updated.toISOString(),
+    section: 'Architecture',
+    headline: d.title,
+  }}
+>
+  <Reader>
+    <ArticleHeader
+      rubric={`BLUEPRINT · ${d.id.toUpperCase()} · ${LAYER_LABEL[d.layer].toUpperCase()}`}
+      title={d.title}
+      dek={d.dek}
+      byline={byline}
+    />
+
+    {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
+
+    <section class="blueprint-card" aria-label="Blueprint summary">
+      <dl class="blueprint-card__list">
+        <div class="blueprint-card__row">
+          <dt>Specifies</dt>
+          <dd>{d.specifies}</dd>
+        </div>
+        <div class="blueprint-card__row">
+          <dt>Applies to</dt>
+          <dd>{d.appliesTo.join(' · ')}</dd>
+        </div>
+        {d.decisions && d.decisions.length > 0 && (
+          <div class="blueprint-card__row">
+            <dt>Forces a decision on</dt>
+            <dd>
+              <ul class="blueprint-card__decisions">
+                {d.decisions.map((x) => <li>{x}</li>)}
+              </ul>
+            </dd>
+          </div>
+        )}
+      </dl>
+    </section>
+
+    {d.anchors && d.anchors.length > 0 && <SectionAnchors items={d.anchors} label="In this blueprint" />}
+
+    <article class="blueprint-body prose prose--dropcap">
+      <slot />
+    </article>
+
+    {d.sources && d.sources.length > 0 && <Sources items={d.sources} />}
+
+    <nav class="blueprint-nav" aria-label="Blueprint navigation">
+      {prev ? (
+        <a href={`/architecture/${prev.id}/`} class="blueprint-nav__link blueprint-nav__link--prev">
+          <span class="blueprint-nav__label">← Previous</span>
+          <span class="blueprint-nav__title">{prev.data.title}</span>
+        </a>
+      ) : (
+        <span class="blueprint-nav__placeholder"></span>
+      )}
+      {next ? (
+        <a href={`/architecture/${next.id}/`} class="blueprint-nav__link blueprint-nav__link--next">
+          <span class="blueprint-nav__label">Next →</span>
+          <span class="blueprint-nav__title">{next.data.title}</span>
+        </a>
+      ) : (
+        <span class="blueprint-nav__placeholder"></span>
+      )}
+    </nav>
+  </Reader>
+</PageLayout>
+
+<style>
+  .blueprint-card {
+    margin: var(--space-5) 0 var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    background: var(--brick-wash);
+    border-left: 3px solid var(--brick);
+  }
+
+  .blueprint-card__list { margin: 0; }
+
+  .blueprint-card__row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+  }
+
+  .blueprint-card__row + .blueprint-card__row {
+    border-top: 1px solid rgba(155, 74, 63, 0.18);
+  }
+
+  .blueprint-card__row dt {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brick);
+    padding-top: 3px;
+  }
+
+  .blueprint-card__row dd {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--body-2);
+    line-height: var(--lh-snug);
+    color: var(--fg);
+  }
+
+  .blueprint-card__decisions {
+    margin: 0;
+    padding-left: 1.1em;
+    list-style: disc;
+  }
+
+  .blueprint-card__decisions li { margin: 0 0 2px; }
+  .blueprint-card__decisions li::marker { color: var(--brick); }
+
+  .blueprint-body :global(pre) { margin: var(--space-4) 0; }
+
+  /* Structural diagrams read better slightly tighter than prose code. */
+  .blueprint-body :global(pre code) { line-height: 1.45; }
+
+  .blueprint-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin: var(--space-7) 0 var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--fg-faint);
+  }
+
+  .blueprint-nav__link { display: block; }
+  .blueprint-nav__link--next { text-align: right; }
+
+  .blueprint-nav__label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-light);
+    margin-bottom: 4px;
+  }
+
+  .blueprint-nav__title {
+    display: block;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--body-2);
+    color: var(--fg);
+    border-bottom: 1.5px solid var(--brick);
+    padding-bottom: 2px;
+  }
+
+  .blueprint-nav__link:hover .blueprint-nav__title { color: var(--brick); }
+
+  @media (max-width: 720px) {
+    .blueprint-card__row { grid-template-columns: 1fr; gap: 2px; }
+    .blueprint-nav { grid-template-columns: 1fr; }
+    .blueprint-nav__link--next { text-align: left; }
+  }
+</style>

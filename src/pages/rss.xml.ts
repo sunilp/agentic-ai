@@ -3,11 +3,12 @@ import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-  const [fieldNotes, signal, recipes, labs] = await Promise.all([
+  const [fieldNotes, signal, recipes, labs, architecture] = await Promise.all([
     getCollection('fieldNotes'),
     getCollection('signal'),
     getCollection('recipes'),
     getCollection('labs'),
+    getCollection('architecture'),
   ]);
 
   const items = [
@@ -39,11 +40,20 @@ export async function GET(context: APIContext) {
       link: `/labs/${e.id}/`,
       categories: ['Labs'],
     })),
+    ...architecture
+      .filter((e) => e.data.status !== 'draft')
+      .map((e) => ({
+        title: `${e.data.id.toUpperCase()}: ${e.data.title}`,
+        pubDate: e.data.updated,
+        description: e.data.description,
+        link: `/architecture/${e.id}/`,
+        categories: ['Architecture'],
+      })),
   ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
   return rss({
     title: 'Agent Engineering Lab',
-    description: 'Field Notes, Signal, Recipes, and Lab Reports from the agentic AI publication by Sunil Prakash.',
+    description: 'Field Notes, Signal, Recipes, Lab Reports, and Architecture blueprints from the agentic AI publication by Sunil Prakash.',
     site: context.site!,
     items,
     customData: `<language>en-us</language>`,
