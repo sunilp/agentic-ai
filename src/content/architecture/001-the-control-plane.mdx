@@ -41,6 +41,7 @@ sources:
 ---
 
 import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 import PullQuote from '~/components/universal/PullQuote.astro';
 import Footer3Col from '~/components/universal/Footer3Col.astro';
 
@@ -84,7 +85,6 @@ A chokepoint is a stage where the request is fully materialised and execution ca
  5  TOOL EXECUTION  a requested action, before it happens
  6  LOGGING         what gets written down, and who can read it
 ```
-
 Everything in the control layer is a choice about which of these you instrument, what you put there, and what you do when it fires. A system with controls only at 3 and 4 is a common starting configuration, and it is the one that leaves both retrieval-borne injection and tool-mediated harm uninstrumented.
 
 <Callout type="tip" label="The placement test">
@@ -94,6 +94,13 @@ For any control you are about to build, ask: is the evidence this detector needs
 ## What each chokepoint can see
 
 This is the part that decides your architecture. Each chokepoint has a different view of the truth, and the differences are not subtle.
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-001-chokepoints.svg"
+  alt="Six chokepoints down a single request path. Each row gives what that chokepoint can see and what it is blind to, with markers for whether it addresses information harm, action harm, both, or neither."
+  caption="Tool execution is the only chokepoint in both harm families. The prompt layer is in neither."
+/>
 
 **Upload** sees the full document, unhurried. This is the only chokepoint with no latency pressure, because ingestion is asynchronous. It is therefore the correct home for anything expensive: full-document classification, entity extraction across the whole text, structural analysis, a slow model. What it cannot see is who will eventually retrieve this document, or in what context. A document that is harmless for the team that uploaded it may be a leak the moment it is retrievable by another business unit.
 
@@ -172,6 +179,14 @@ Three honest limits.
 **The chokepoint model assumes a request path.** Batch pipelines, streaming ingestion, and background agents that run on a schedule do not have a clean request boundary, and the "principal" in whose name the work happens is often a service account with no meaningful entitlement. Those systems need the authority question answered at design time instead, because there is no runtime moment where a user's permissions are available to check against.
 
 **Six chokepoints is a simplification of multi-agent systems.** When one agent calls another, the second agent has its own full path, and the calling agent's output is the called agent's input. The chokepoints nest. A single-pass mental model will miss the case where agent A is authorized for an action, agent B is not, and B accomplishes it by asking A. That is the delegation problem, and it needs identity that survives the hop rather than a detector.
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-001-nested-paths.svg"
+  alt="An unauthorized agent's tool call opens an authorized agent's own six-chokepoint path, so the two sets of checks nest and each passes on its own."
+  caption="Each agent's six checks pass. The composition is what fails."
+/>
+
 
 **Placement improves the ceiling, not the floor.** Putting a detector at the right chokepoint means the evidence is present in its input. It does not mean the detector is any good. That is a measurement question, and measurement is where most guardrail programmes actually fail.
 

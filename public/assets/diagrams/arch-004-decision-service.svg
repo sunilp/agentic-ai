@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440" role="img" aria-label="The decision service: verdicts in, versioned policy loaded as data, one action out, one decision record written">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="440" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Policy is data the service loads, not conditionals compiled into it</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">It changes more often than the code, is reviewed by people who do not read code, and needs an audit history.</text>
+<text x="0" y="90" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">VERDICTS IN</text>
+<rect x="0" y="100" width="140" height="30" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="12" y="120" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">rules</text>
+<rect x="0" y="140" width="140" height="30" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="12" y="160" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">classifier</text>
+<rect x="0" y="180" width="140" height="30" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="12" y="200" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">judge</text>
+<line x1="146" y1="155" x2="192" y2="155" stroke="#6b6b6b" stroke-width="1.3" marker-end="url(#arg)"/>
+<rect x="200" y="94" width="300" height="142" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"/>
+<rect x="200" y="94" width="300" height="28" fill="#1a1a1a"/>
+<text x="214" y="113" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#fafaf8" letter-spacing="1">DECISION SERVICE</text>
+<text x="214" y="144" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">category + band + tool properties</text>
+<text x="214" y="164" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">resolved against the loaded policy</text>
+<text x="214" y="192" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">most specific rule wins</text>
+<text x="214" y="212" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">ties are an error at validation time</text>
+<rect x="540" y="94" width="340" height="142" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="554" y="114" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">POLICY AS VERSIONED DATA</text>
+<text x="554" y="138" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">validate</text>
+<text x="626" y="138" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#1a1a1a">schema + conflicts, in CI</text>
+<text x="554" y="162" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">rollout</text>
+<text x="626" y="162" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#1a1a1a">atomic, one version per request</text>
+<text x="554" y="186" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">rollback</text>
+<text x="626" y="186" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#1a1a1a">a pointer change, not an edit</text>
+<text x="554" y="210" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">on failure</text>
+<text x="626" y="210" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#1a1a1a">last-known-good, never empty</text>
+<line x1="534" y1="164" x2="508" y2="164" stroke="#9b4a3f" stroke-width="1.3" marker-end="url(#arb)"/>
+<text x="0" y="260" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">ONE ACTION OUT</text>
+<rect x="0.0" y="272" width="138.33333333333334" height="34" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="69.16666666666667" y="294" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a" text-anchor="middle">allow</text>
+<rect x="148.33333333333334" y="272" width="138.33333333333334" height="34" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="217.5" y="294" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a" text-anchor="middle">block</text>
+<rect x="296.6666666666667" y="272" width="138.33333333333334" height="34" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="365.83333333333337" y="294" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a" text-anchor="middle">redact</text>
+<rect x="445.0" y="272" width="138.33333333333334" height="34" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="514.1666666666666" y="294" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a" text-anchor="middle">mask</text>
+<rect x="593.3333333333334" y="272" width="138.33333333333334" height="34" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="662.5" y="294" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a" text-anchor="middle">escalate</text>
+<rect x="741.6666666666667" y="272" width="138.33333333333334" height="34" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="810.8333333333334" y="294" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a" text-anchor="middle">require approval</text>
+<text x="0" y="324" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Allow and block get built first because they need no product design. The middle four are the ones that repay it.</text>
+<rect x="0" y="344" width="880" height="66" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.2"/>
+<text x="16" y="364" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">AND ONE DECISION RECORD, ALWAYS</text>
+<text x="16" y="384" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">request_id  ·  chokepoint  ·  principal  ·  detectors_run and versions  ·  verdicts  ·  policy_version</text>
+<text x="16" y="400" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">action  ·  degraded  ·  latency_ms  ·  outcome  ·  override: who, when, stated reason</text>
+<line x1="0" y1="416" x2="880" y2="416" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="434" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">A service that starts with no policy because the config store was unreachable is an open gate that reports itself healthy.</text>
+</svg>

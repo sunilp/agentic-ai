@@ -33,6 +33,7 @@ patterns: [approval-gate, escalation-path]
 ---
 
 import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 import PullQuote from '~/components/universal/PullQuote.astro';
 import Footer3Col from '~/components/universal/Footer3Col.astro';
 
@@ -85,6 +86,14 @@ The action grid is keyed on reversal cost and confidence band, and exposure then
   impossible         require approval            block
   (payment, delete)  human in the path         refuse, escalate
 ```
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-004-action-grid.svg"
+  alt="A three by two grid of reversal cost against confidence band, each cell naming an action, with a rail on the right showing that exposure promotes a cell downward."
+  caption="The action belongs to the consequence, not to the detector."
+/>
+
 
 **Exposure promotes.** Any operation with external exposure is evaluated one row lower than its reversal cost alone would place it. A `send_email` call is free to reverse in the sense that the draft can be deleted, and impossible to reverse in the sense that matters. Blast radius promotes on the same rule once it crosses a threshold you set per environment.
 
@@ -176,6 +185,14 @@ Policy is data, so it needs the operational discipline of data that gates produc
 ```
 
 The load-failure line is the one that gets written last and matters most. A decision service that starts with no policy because the config store was unreachable is an open gate that reports itself healthy.
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-004-decision-service.svg"
+  alt="Detector verdicts entering a decision service that loads versioned policy as data, emitting one of six actions and always writing a decision record."
+  caption="Policy is data the service loads. Every decision leaves a record."
+/>
+
 
 <Callout type="tip" label="Test the policy, not just the detectors">
 Policy files need their own test suite: a set of synthetic verdicts with expected actions, run in CI. A policy edit that accidentally widens a default from redact to allow is invisible in review and obvious in a test.

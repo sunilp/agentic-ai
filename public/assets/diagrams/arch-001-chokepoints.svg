@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="632" viewBox="0 0 880 632" role="img" aria-label="The six chokepoints in an AI request path, what each can see, and which harm family it addresses">
+<defs><marker id="a1" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker></defs>
+<rect width="880" height="632" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">The six chokepoints, and what each one can see</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Placement sets the accuracy ceiling before a single detector is chosen.</text>
+<text x="84" y="78" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">CHOKEPOINT</text>
+<text x="286" y="78" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">WHAT IT CAN SEE  /  WHAT IT CANNOT</text>
+<text x="678" y="78" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.4" fill="#6b6b6b">INFO</text>
+<text x="792" y="78" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.4" fill="#6b6b6b">ACTION</text>
+<line x1="84" y1="86" x2="880" y2="86" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="0" y="92" width="40" height="428" fill="#1a1a1a"/>
+<text x="20.0" y="314.0" text-anchor="middle" transform="rotate(-90 20.0 314.0)" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" letter-spacing="3" fill="#fafaf8">ONE REQUEST PATH</text>
+<line x1="20.0" y1="522" x2="20.0" y2="546" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#a1)"/>
+<rect x="44" y="94" width="836" height="68" fill="#fafaf8"/>
+<text x="58" y="122" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">1</text>
+<text x="84" y="122" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">UPLOAD</text>
+<text x="286" y="118" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">the whole document, unhurried, off the request path</text>
+<text x="286" y="139" font-family="Georgia,'EB Garamond',serif" font-size="12.5" font-style="italic" fill="#6b6b6b">blind to who will retrieve it later, or in what context</text>
+<circle cx="678" cy="118" r="6" fill="#9b4a3f"/>
+<circle cx="792" cy="118" r="6" fill="none" stroke="#e8e8e8" stroke-width="1.4"/>
+<line x1="44" y1="164" x2="880" y2="164" stroke="#e8e8e8" stroke-width="1"/>
+<text x="58" y="196" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">2</text>
+<text x="84" y="196" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">RETRIEVAL</text>
+<text x="286" y="192" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">the selected chunks and the requester's identity</text>
+<text x="286" y="213" font-family="Georgia,'EB Garamond',serif" font-size="12.5" font-style="italic" fill="#6b6b6b">blind to what the model will go on to do with them</text>
+<circle cx="678" cy="192" r="6" fill="#9b4a3f"/>
+<circle cx="792" cy="192" r="6" fill="none" stroke="#e8e8e8" stroke-width="1.4"/>
+<line x1="44" y1="238" x2="880" y2="238" stroke="#e8e8e8" stroke-width="1"/>
+<rect x="44" y="242" width="836" height="68" fill="#fafaf8"/>
+<text x="58" y="270" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">3</text>
+<text x="84" y="270" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">PROMPT</text>
+<text x="286" y="266" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">the assembled payload: everything, all at once</text>
+<text x="286" y="287" font-family="Georgia,'EB Garamond',serif" font-size="12.5" font-style="italic" fill="#6b6b6b">blind to provenance, unless the assembly step preserved it</text>
+<circle cx="678" cy="266" r="6" fill="none" stroke="#e8e8e8" stroke-width="1.4"/>
+<circle cx="792" cy="266" r="6" fill="none" stroke="#e8e8e8" stroke-width="1.4"/>
+<line x1="44" y1="312" x2="880" y2="312" stroke="#e8e8e8" stroke-width="1"/>
+<text x="58" y="344" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">4</text>
+<text x="84" y="344" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">RESPONSE</text>
+<text x="286" y="340" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">what the model produced</text>
+<text x="286" y="361" font-family="Georgia,'EB Garamond',serif" font-size="12.5" font-style="italic" fill="#6b6b6b">blind to intent, and it cannot undo an action already requested</text>
+<circle cx="678" cy="340" r="6" fill="#9b4a3f"/>
+<circle cx="792" cy="340" r="6" fill="none" stroke="#e8e8e8" stroke-width="1.4"/>
+<line x1="44" y1="386" x2="880" y2="386" stroke="#e8e8e8" stroke-width="1"/>
+<rect x="44" y="390" width="836" height="68" fill="#f5ece9"/>
+<rect x="44" y="390" width="3" height="68" fill="#9b4a3f"/>
+<text x="58" y="418" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#9b4a3f">5</text>
+<text x="84" y="418" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#9b4a3f">TOOL EXECUTION</text>
+<text x="286" y="414" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">the function, arguments, target and identity</text>
+<text x="286" y="435" font-family="Georgia,'EB Garamond',serif" font-size="12.5" font-style="italic" fill="#6b6b6b">blind to nothing in the text; only as good as the policy behind it</text>
+<circle cx="678" cy="414" r="6" fill="#9b4a3f"/>
+<circle cx="792" cy="414" r="6" fill="#9b4a3f"/>
+<line x1="44" y1="460" x2="880" y2="460" stroke="#e8e8e8" stroke-width="1"/>
+<text x="58" y="492" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">6</text>
+<text x="84" y="492" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">LOGGING</text>
+<text x="286" y="488" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">the whole exchange, after the fact</text>
+<text x="286" y="509" font-family="Georgia,'EB Garamond',serif" font-size="12.5" font-style="italic" fill="#6b6b6b">blind to nothing, and it prevents nothing. a leak surface itself</text>
+<circle cx="678" cy="488" r="6" fill="#9b4a3f"/>
+<circle cx="792" cy="488" r="6" fill="none" stroke="#e8e8e8" stroke-width="1.4"/>
+<line x1="44" y1="534" x2="880" y2="534" stroke="#e8e8e8" stroke-width="1"/>
+<line x1="44" y1="546" x2="880" y2="546" stroke="#1a1a1a" stroke-width="1"/>
+<circle cx="60" cy="563" r="5" fill="#9b4a3f"/>
+<text x="74" y="567" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">addresses this harm family</text>
+<circle cx="290" cy="563" r="5" fill="none" stroke="#e8e8e8" stroke-width="1.4"/>
+<text x="304" y="567" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">does not</text>
+<text x="58" y="592" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Tool execution is the only chokepoint that can stop an act, and it is an egress path too, so it sits in both families.</text>
+<text x="58" y="612" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">The prompt layer sits in neither: it sees everything and attributes nothing.</text>
+</svg>

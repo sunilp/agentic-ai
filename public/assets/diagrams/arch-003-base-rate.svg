@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="450" viewBox="0 0 880 450" role="img" aria-label="Base rate arithmetic: a 95 percent recall detector with a 1 percent false positive rate is 8.7 percent precise against a rare attack">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="450" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Why a good detector is wrong nine times out of ten</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">95% recall, 1% false positive rate, one attack per thousand requests. Figures stipulated, not measured.</text>
+<text x="0" y="78" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">100,000 REQUESTS</text>
+<rect x="0" y="88" width="880" height="34" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<rect x="0" y="88" width="4" height="34" fill="#9b4a3f"/>
+<text x="14" y="110" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">99,900 benign</text>
+<line x1="2.0" y1="122" x2="2.0" y2="138" stroke="#9b4a3f" stroke-width="1.2"/>
+<text x="4" y="152" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#9b4a3f">100 actual attacks  (0.1% base rate)</text>
+<text x="0" y="180" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">caught</text>
+<text x="120" y="180" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#6b6b6b">100 x 0.95</text>
+<text x="250" y="180" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#9b4a3f">= 95</text>
+<text x="320" y="180" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b" font-style="italic">true positives</text>
+<text x="0" y="214" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">false alarms</text>
+<text x="120" y="214" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#6b6b6b">99,900 x 0.01</text>
+<text x="250" y="214" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">= 999</text>
+<text x="320" y="214" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b" font-style="italic">false positives</text>
+<text x="0" y="246" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">WHAT REACHES THE REVIEW QUEUE  ·  1,094 ALERTS</text>
+<rect x="0" y="258" width="880" height="46" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<rect x="0" y="258" width="76.41681901279708" height="46" fill="#9b4a3f"/>
+<text x="90.41681901279708" y="278" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">999 false positives</text>
+<text x="90.41681901279708" y="296" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b" font-style="italic">91% of everything this detector flags is wrong</text>
+<line x1="38.20840950639854" y1="304" x2="38.20840950639854" y2="318" stroke="#9b4a3f" stroke-width="1.2"/>
+<text x="0" y="332" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#9b4a3f">95 real</text>
+<rect x="0" y="356" width="880" height="52" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.2"/>
+<text x="18" y="378" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#9b4a3f">precision = 95 / (95 + 999) = 8.7%</text>
+<text x="18" y="398" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">About 33 hours of review work per 100,000 requests to find 95 real events.</text>
+<line x1="0" y1="420" x2="880" y2="420" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="440" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Precision is not a property of the detector. It is a property of the detector meeting your traffic.</text>
+</svg>

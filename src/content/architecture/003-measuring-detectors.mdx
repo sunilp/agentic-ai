@@ -35,6 +35,7 @@ patterns: [eval-loop, failure-buckets]
 ---
 
 import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 import PullQuote from '~/components/universal/PullQuote.astro';
 import Footer3Col from '~/components/universal/Footer3Col.astro';
 
@@ -67,6 +68,14 @@ Take a hypothetical detector with numbers most teams would be pleased with: 95 p
 
   precision = 95 / (95 + 999) = 8.7%
 ```
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-003-base-rate.svg"
+  alt="A population bar where actual attacks are a sliver against benign traffic, and a review queue bar where 95 true positives sit against 999 false ones."
+  caption="The sliver is the attacks. The queue is what a reviewer actually sees."
+/>
+
 
 Ninety-one percent of everything this detector flags is wrong. If each alert costs a reviewer two minutes, this detector generates about 33 hours of review work per 100,000 requests to find 95 real events.
 
@@ -104,7 +113,15 @@ Write it down in that form:
                          never the only control
 ```
 
-Both ratios above are illustrative, not benchmarks; the numbers that belong there are your own, and writing them down is the exercise. The ratio on its own does not give you a threshold. It gives you the objective. Turning it into a number needs two more things: the prevalence in the population the detector will run against, and a measured precision-recall curve for that detector on that population. With all three you can pick the operating point that minimises expected cost, and revisit it when the business context changes rather than when someone complains.
+Both ratios above are illustrative, not benchmarks; the numbers that belong there are your own, and writing them down is the exercise.
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-003-threshold.svg"
+  alt="Two categories side by side with their cost of a miss, cost of a false alarm, ratio, and a threshold slider set at opposite ends of its range."
+  caption="Two categories, ratios four orders of magnitude apart, thresholds at opposite ends."
+/>
+ The ratio on its own does not give you a threshold. It gives you the objective. Turning it into a number needs two more things: the prevalence in the population the detector will run against, and a measured precision-recall curve for that detector on that population. With all three you can pick the operating point that minimises expected cost, and revisit it when the business context changes rather than when someone complains.
 
 <Callout type="tip" label="One threshold per category, never one per system">
 A single global sensitivity setting forces the same cost ratio onto a PII redaction and a hard block. Those two decisions have ratios that differ by four orders of magnitude. Systems with one dial end up tuned for whichever category complained most recently.

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-label="A threshold is a statement of how much worse a missed attack is than a false alarm, and it differs per category">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="470" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">The threshold is a cost decision, not a tuning parameter</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Two categories, cost ratios four orders of magnitude apart. Ratios illustrative; yours are the ones that count.</text>
+<rect x="0.0" y="92" width="420.0" height="266" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<rect x="0.0" y="92" width="420.0" height="28" fill="#1a1a1a"/>
+<text x="14.0" y="111" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#fafaf8">pii_in_response</text>
+<text x="14.0" y="142" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">COST OF A MISS</text>
+<text x="14.0" y="158" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">regulatory disclosure,</text>
+<text x="14.0" y="174" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">reportable</text>
+<text x="14.0" y="198" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">COST OF A FALSE ALARM</text>
+<text x="14.0" y="214" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">one redacted field,</text>
+<text x="14.0" y="230" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">user re-asks</text>
+<text x="14.0" y="260" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">ratio</text>
+<text x="64.0" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#9b4a3f">~500:1</text>
+<line x1="14.0" y1="284" x2="406.0" y2="284" stroke="#e8e8e8" stroke-width="3"/>
+<line x1="100.24" y1="273" x2="100.24" y2="295" stroke="#9b4a3f" stroke-width="2.4"/>
+<text x="14.0" y="308" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">low threshold</text>
+<text x="406.0" y="308" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="end">high threshold</text>
+<text x="14.0" y="342" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#9b4a3f">tune for RECALL</text>
+<rect x="460.0" y="92" width="420.0" height="266" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<rect x="460.0" y="92" width="420.0" height="28" fill="#1a1a1a"/>
+<text x="474.0" y="111" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#fafaf8">block_user_request</text>
+<text x="474.0" y="142" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">COST OF A MISS</text>
+<text x="474.0" y="158" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">one attack proceeds</text>
+<text x="474.0" y="174" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">to the next control</text>
+<text x="474.0" y="198" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">COST OF A FALSE ALARM</text>
+<text x="474.0" y="214" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">legitimate user blocked,</text>
+<text x="474.0" y="230" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">trust damage</text>
+<text x="474.0" y="260" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">ratio</text>
+<text x="524.0" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#9b4a3f">~1:20</text>
+<line x1="474.0" y1="284" x2="866.0" y2="284" stroke="#e8e8e8" stroke-width="3"/>
+<line x1="787.6" y1="273" x2="787.6" y2="295" stroke="#9b4a3f" stroke-width="2.4"/>
+<text x="474.0" y="308" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">low threshold</text>
+<text x="866.0" y="308" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="end">high threshold</text>
+<text x="474.0" y="342" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#9b4a3f">tune for PRECISION</text>
+<rect x="0" y="378" width="880" height="44" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="16" y="396" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">ONE THRESHOLD PER CATEGORY, NEVER ONE PER SYSTEM</text>
+<text x="16" y="414" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">A single global dial forces the same cost ratio onto a redaction and a hard block. Such systems end up tuned for whoever complained last.</text>
+<line x1="0" y1="440" x2="880" y2="440" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="460" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">The ratio gives you the objective. Turning it into a number needs the prevalence and a measured precision-recall curve on that population.</text>
+</svg>
