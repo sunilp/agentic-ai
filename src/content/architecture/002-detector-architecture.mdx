@@ -37,6 +37,7 @@ sources:
 ---
 
 import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 import PullQuote from '~/components/universal/PullQuote.astro';
 import Footer3Col from '~/components/universal/Footer3Col.astro';
 
@@ -59,6 +60,14 @@ Four techniques, each with a distinct cost profile and a distinct failure mode.
 **LLM-as-judge.** A model prompted to evaluate the input against a written policy. The slowest and most expensive per call, and the most flexible in one specific sense: you can express a nuanced policy in a paragraph and change it without retraining. Three weaknesses that matter. It is non-deterministic, so the same input can produce different verdicts. It is itself susceptible to injection, because you are feeding attacker-controlled text to a model and asking it a question. And it is expensive enough that you cannot run it on every request at the prompt layer without a latency conversation.
 
 Then the sourcing axis. **Managed safety services** from cloud and model vendors package one or more of the four techniques behind an API: good coverage of the commodity categories, maintained by someone else, and a real reduction in work. The costs are a network hop in the request path, a data-residency question that is not optional in a regulated environment, a model you cannot audit or tune, and a version that can change underneath you. The technique inside is usually undisclosed, which means you inherit its failure mode without being able to name it. Treat a managed service as a technique you did not choose rather than as a category of its own.
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-002-techniques.svg"
+  alt="Four detection techniques as columns with what each is right for, how each fails, and its cost, above a sourcing band that crosses all four."
+  caption="Technique and sourcing are independent. A managed service is one of the four with the sourcing decision already taken."
+/>
+
 
 <Callout type="tip" label="Matching technique to question">
 Structured and format-defined, use rules. Unstructured entities, use NLP. High volume with labelled data, train a classifier. Nuanced policy that changes often, use a judge. Then decide sourcing separately, on residency, auditability, and whether the category is one you need to differentiate on. The judge is the easiest to prototype and the most expensive to run on every request, so it is worth pricing at the design stage rather than after the first month's bill.
@@ -123,6 +132,14 @@ Two ways out, and you should pick one deliberately.
 **Verdict composition.** Do not combine scores at all. Give each detector its own threshold, tuned on its own data, and let it emit a verdict. Combine verdicts with explicit logic. This is weaker statistically and much easier to reason about, audit, and explain to a risk function.
 
 Verdict composition is the correct default. Score fusion is an optimisation to reach for once you have the labelled data to justify it, and never before.
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-002-composition.svg"
+  alt="Three detectors each scoring 0.90 where the number means something different in each case, contrasted with the same three emitting verdicts against their own thresholds."
+  caption="Three 0.90s that do not mean the same thing average to a number with no empirical meaning."
+/>
+
 
 ## Composing detectors
 

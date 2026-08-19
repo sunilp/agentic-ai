@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="506" viewBox="0 0 880 506" role="img" aria-label="The action grid: reversal cost against confidence band, with exposure promoting a cell downward">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="506" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Choosing the action by consequence, not by detector</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">The same verdict on a chat response and on a funds transfer are different decisions.</text>
+<text x="0" y="74" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">REVERSAL COST</text>
+<text x="214" y="74" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">CONFIDENCE BAND</text>
+<text x="367.0" y="96" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b" text-anchor="middle">near threshold</text>
+<text x="673.0" y="96" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b" text-anchor="middle">above threshold</text>
+<line x1="214" y1="104" x2="826" y2="104" stroke="#1a1a1a"/>
+<text x="0" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#1a1a1a">free</text>
+<text x="0" y="166" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b" font-style="italic">chat response</text>
+<rect x="214.0" y="120" width="296.0" height="74" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="230.0" y="150" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#1a1a1a">allow + record</text>
+<text x="230.0" y="170" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">monitor, do not interrupt</text>
+<rect x="520.0" y="120" width="296.0" height="74" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="536.0" y="150" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#1a1a1a">redact or mask</text>
+<text x="536.0" y="170" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">fix it silently, log it</text>
+<text x="0" y="242" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#1a1a1a">expensive</text>
+<text x="0" y="262" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b" font-style="italic">shared doc, downstream sync</text>
+<rect x="214.0" y="216" width="296.0" height="74" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="230.0" y="246" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#1a1a1a">mask + record</text>
+<text x="230.0" y="266" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">keep the flow, flag it</text>
+<rect x="520.0" y="216" width="296.0" height="74" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="536.0" y="246" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#1a1a1a">escalate for review</text>
+<text x="536.0" y="266" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">async, the task resumes</text>
+<text x="0" y="338" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#1a1a1a">impossible</text>
+<text x="0" y="358" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b" font-style="italic">payment, delete</text>
+<rect x="214.0" y="312" width="296.0" height="74" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.2"/>
+<text x="230.0" y="342" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#9b4a3f">require approval</text>
+<text x="230.0" y="362" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">a human in the path</text>
+<rect x="520.0" y="312" width="296.0" height="74" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.2"/>
+<text x="536.0" y="342" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13.5" fill="#9b4a3f">block</text>
+<text x="536.0" y="362" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">refuse, and escalate</text>
+<line x1="864" y1="130" x2="864" y2="376" stroke="#9b4a3f" stroke-width="1.4" marker-end="url(#arb)"/>
+<text transform="rotate(-90 856 256.0)" x="856" y="256.0" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" letter-spacing="1.4">EXPOSURE PROMOTES</text>
+<rect x="0" y="408" width="880" height="50" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="16" y="429" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">No cell blocks a free-to-reverse operation at low confidence: that is the most user pain for the least risk reduction.</text>
+<text x="16" y="448" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Human approval sits where the act cannot be undone and the system is genuinely unsure, which is the only place a human's time is well spent.</text>
+<line x1="0" y1="476" x2="880" y2="476" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="496" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Reversal cost, exposure and blast radius are declared in the tool registry. None can be recovered from the text at runtime.</text>
+</svg>

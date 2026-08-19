@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="436" viewBox="0 0 880 436" role="img" aria-label="Four detection techniques on one axis and two sourcing models on an independent axis">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="436" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Four techniques, two sourcing models</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Technique and sourcing are independent axes. A managed service is not a fifth technique.</text>
+<rect x="0.0" y="88" width="209.5" height="236" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<rect x="0.0" y="88" width="209.5" height="30" fill="#1a1a1a"/>
+<text x="104.75" y="108" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.8">RULES</text>
+<text x="12.0" y="138" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">regex, keyword lists,</text>
+<text x="12.0" y="155" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">structural checks</text>
+<text x="12.0" y="182" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">RIGHT FOR</text>
+<text x="12.0" y="199" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">structured, format-defined data:</text>
+<text x="12.0" y="215" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">account numbers, keys, cards</text>
+<text x="12.0" y="241" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">FAILS BY</text>
+<text x="12.0" y="258" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">evadable by anyone who</text>
+<text x="12.0" y="274" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">knows the pattern exists</text>
+<line x1="12.0" y1="294" x2="197.5" y2="294" stroke="#e8e8e8"/>
+<text x="12.0" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">COST</text>
+<text x="197.5" y="313" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a" text-anchor="end">negligible</text>
+<rect x="223.5" y="88" width="209.5" height="236" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<rect x="223.5" y="88" width="209.5" height="30" fill="#1a1a1a"/>
+<text x="328.25" y="108" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.8">CLASSICAL NLP</text>
+<text x="235.5" y="138" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">NER, part of speech,</text>
+<text x="235.5" y="155" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">corpus similarity</text>
+<text x="235.5" y="182" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">RIGHT FOR</text>
+<text x="235.5" y="199" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">unstructured entities:</text>
+<text x="235.5" y="215" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">names, addresses, dates of birth</text>
+<text x="235.5" y="241" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">FAILS BY</text>
+<text x="235.5" y="258" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">no context. it finds a name,</text>
+<text x="235.5" y="274" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">not whether it is a disclosure</text>
+<line x1="235.5" y1="294" x2="421.0" y2="294" stroke="#e8e8e8"/>
+<text x="235.5" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">COST</text>
+<text x="421.0" y="313" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a" text-anchor="end">low</text>
+<rect x="447.0" y="88" width="209.5" height="236" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<rect x="447.0" y="88" width="209.5" height="30" fill="#1a1a1a"/>
+<text x="551.75" y="108" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.8">TRAINED CLASSIFIER</text>
+<text x="459.0" y="138" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">small supervised model</text>
+<text x="459.0" y="155" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">on labelled examples</text>
+<text x="459.0" y="182" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">RIGHT FOR</text>
+<text x="459.0" y="199" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">high volume, where you</text>
+<text x="459.0" y="215" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">already have labelled data</text>
+<text x="459.0" y="241" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">FAILS BY</text>
+<text x="459.0" y="258" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">decays as attacks shift;</text>
+<text x="459.0" y="274" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">confident outside its</text>
+<text x="459.0" y="290" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">training distribution</text>
+<line x1="459.0" y1="294" x2="644.5" y2="294" stroke="#e8e8e8"/>
+<text x="459.0" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">COST</text>
+<text x="644.5" y="313" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a" text-anchor="end">low at inference</text>
+<rect x="670.5" y="88" width="209.5" height="236" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<rect x="670.5" y="88" width="209.5" height="30" fill="#1a1a1a"/>
+<text x="775.25" y="108" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.8">LLM AS JUDGE</text>
+<text x="682.5" y="138" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">a model prompted against</text>
+<text x="682.5" y="155" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">a written policy</text>
+<text x="682.5" y="182" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">RIGHT FOR</text>
+<text x="682.5" y="199" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">nuanced policy that</text>
+<text x="682.5" y="215" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">changes without retraining</text>
+<text x="682.5" y="241" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">FAILS BY</text>
+<text x="682.5" y="258" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">non-deterministic, injectable,</text>
+<text x="682.5" y="274" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">and the most expensive per call</text>
+<line x1="682.5" y1="294" x2="868.0" y2="294" stroke="#e8e8e8"/>
+<text x="682.5" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">COST</text>
+<text x="868.0" y="313" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a" text-anchor="end">high</text>
+<text x="0" y="76" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">TECHNIQUE  ·  HOW THE JUDGEMENT IS MADE</text>
+<text x="0" y="344" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">SOURCING  ·  WHO RUNS IT  ·  CROSSES ALL FOUR</text>
+<rect x="0" y="354" width="880" height="34" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<line x1="440.0" y1="354" x2="440.0" y2="388" stroke="#e8e8e8"/>
+<text x="220.0" y="376" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a" text-anchor="middle">self-hosted: you own the technique, the tuning and the audit</text>
+<text x="660.0" y="376" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#9b4a3f" text-anchor="middle">managed service: a technique you did not choose, behind an API</text>
+<line x1="104.75" y1="324" x2="104.75" y2="350" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="328.25" y1="324" x2="328.25" y2="350" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="551.75" y1="324" x2="551.75" y2="350" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="775.25" y1="324" x2="775.25" y2="350" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="0" y1="406" x2="880" y2="406" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="426" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Choose the technique from the question, then choose sourcing separately on residency, auditability and differentiation.</text>
+</svg>

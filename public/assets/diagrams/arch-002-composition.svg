@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="452" viewBox="0 0 880 452" role="img" aria-label="Score fusion averages incomparable numbers; verdict composition combines verdicts with explicit logic">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="452" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Verdict composition, not score fusion</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Two ways to combine three detectors. Only one of them can be explained to a risk function.</text>
+<rect x="0" y="86" width="420.0" height="272" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="16" y="110" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">SCORE FUSION</text>
+<text x="16" y="130" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">average the numbers</text>
+<rect x="16" y="152" width="150" height="32" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="26" y="173" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">rules</text>
+<text x="186" y="173" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#1a1a1a">0.90</text>
+<text x="232" y="173" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">means 1 in 10 wrong</text>
+<rect x="16" y="196" width="150" height="32" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="26" y="217" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">classifier</text>
+<text x="186" y="217" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#1a1a1a">0.90</text>
+<text x="232" y="217" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">means 6 in 10 wrong</text>
+<rect x="16" y="240" width="150" height="32" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="26" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">judge</text>
+<text x="186" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#1a1a1a">0.90</text>
+<text x="232" y="261" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">means who knows</text>
+<line x1="16" y1="292" x2="404.0" y2="292" stroke="#e8e8e8"/>
+<text x="16" y="316" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#6b6b6b">mean = 0.90</text>
+<text x="16" y="338" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#9b4a3f">a number with no empirical meaning</text>
+<rect x="460.0" y="86" width="420.0" height="272" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="476.0" y="110" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">VERDICT COMPOSITION</text>
+<text x="476.0" y="130" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">each detector owns its threshold</text>
+<rect x="476.0" y="152" width="150" height="32" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="486.0" y="173" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">rules</text>
+<rect x="640.0" y="152" width="96" height="32" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1"/>
+<text x="688.0" y="173" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f" text-anchor="middle">flagged</text>
+<text x="750.0" y="173" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">own threshold</text>
+<rect x="476.0" y="196" width="150" height="32" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="486.0" y="217" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">classifier</text>
+<rect x="640.0" y="196" width="96" height="32" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="688.0" y="217" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b" text-anchor="middle">clear</text>
+<text x="750.0" y="217" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">own threshold</text>
+<rect x="476.0" y="240" width="150" height="32" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="486.0" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">judge</text>
+<rect x="640.0" y="240" width="96" height="32" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="688.0" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b" text-anchor="middle">abstain</text>
+<text x="750.0" y="261" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">own threshold</text>
+<line x1="476.0" y1="292" x2="864.0" y2="292" stroke="#e8e8e8"/>
+<text x="476.0" y="316" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#1a1a1a">WEIGHTED: fire if a high-precision detector flags</text>
+<text x="476.0" y="338" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">policy you can write down, review and audit</text>
+<rect x="0" y="374" width="880" height="44" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="16" y="392" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">THE RULE THAT MAKES OR BREAKS AN ENSEMBLE</text>
+<text x="16" y="410" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Independence. Three regex variants over one keyword list are one detector with three names, and their agreement is not evidence.</text>
+<line x1="0" y1="422" x2="880" y2="422" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="442" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Verdict composition is the default. Score fusion is an optimisation to reach for once the labelled data justifies it, never before.</text>
+</svg>

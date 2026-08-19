@@ -8,12 +8,14 @@ interface Props {
   alt: string;
   caption?: string;
   traceIn?: boolean;
+  /** Break out past the reader column. Structural diagrams need the width. */
+  wide?: boolean;
 }
 
-const { src, alt, caption, traceIn = true } = Astro.props;
+const { src, alt, caption, traceIn = true, wide = false } = Astro.props;
 ---
 
-<figure class:list={['architecture', traceIn && 'architecture--trace-in']}>
+<figure class:list={['architecture', wide && 'architecture--wide', traceIn && 'architecture--trace-in']}>
   <img src={src} alt={alt} class="architecture__svg" loading="lazy" />
   {caption && <figcaption class="architecture__caption">{caption}</figcaption>}
 </figure>
@@ -27,6 +29,29 @@ const { src, alt, caption, traceIn = true } = Astro.props;
     border-radius: var(--radius-md);
   }
 
+  /* Breaks out symmetrically past the reader column; collapses back on narrow
+     viewports, where the width available is less than the column itself. */
+  .architecture--wide {
+    --wide: min(880px, calc(100vw - 3rem));
+    width: var(--wide);
+    margin-left: calc((100% - var(--wide)) / 2);
+  }
+
+  /* Below roughly 800px the diagram would scale down far enough to make its
+     labels unreadable, so let it keep a legible size and pan inside the frame
+     instead. The page itself never scrolls sideways. */
+  .architecture--wide {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .architecture--wide .architecture__svg { min-width: 720px; }
+
+  @media (max-width: 720px) {
+    .architecture--wide { padding: var(--space-3); }
+  }
+
   .architecture__svg {
     width: 100%;
     height: auto;
@@ -34,6 +59,8 @@ const { src, alt, caption, traceIn = true } = Astro.props;
   }
 
   .architecture__caption {
+    position: sticky;
+    left: 0;
     margin-top: var(--space-3);
     text-align: center;
     font-family: var(--font-mono);

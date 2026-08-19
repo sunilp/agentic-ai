@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430" role="img" aria-label="An agent's tool call opens a second agent's full six-chokepoint path, so the chokepoints nest">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="430" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Chokepoints nest when one agent calls another</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">A single-pass model misses the case where the unauthorized agent borrows the authorized one.</text>
+<rect x="12" y="86" width="856" height="132" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="26" y="110" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">AGENT B</text>
+<text x="80.2325" y="110" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#6b6b6b">not authorized to transfer funds</text>
+<rect x="26.0" y="120" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="90.83333333333333" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">1 upload</text>
+<rect x="165.66666666666666" y="120" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="230.5" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">2 retrieval</text>
+<rect x="305.3333333333333" y="120" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="370.16666666666663" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">3 prompt</text>
+<rect x="445.0" y="120" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="509.8333333333333" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">4 response</text>
+<rect x="584.6666666666666" y="120" width="129.66666666666666" height="42" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="649.5" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#9b4a3f" text-anchor="middle">5 tool exec</text>
+<rect x="724.3333333333333" y="120" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="789.1666666666666" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">6 logging</text>
+<text x="26" y="182" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Its own six checks all pass. Nothing it does is, on its own, the prohibited act.</text>
+<line x1="649.5" y1="162" x2="649.5" y2="242" stroke="#9b4a3f" stroke-width="1.6" marker-end="url(#arb)"/>
+<text x="661.5" y="206" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#9b4a3f">calls agent A</text>
+<rect x="12" y="252" width="856" height="132" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="26" y="276" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">AGENT A</text>
+<text x="80.2325" y="276" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#6b6b6b">authorized to transfer funds</text>
+<rect x="26.0" y="286" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="90.83333333333333" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">1 upload</text>
+<rect x="165.66666666666666" y="286" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="230.5" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">2 retrieval</text>
+<rect x="305.3333333333333" y="286" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="370.16666666666663" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">3 prompt</text>
+<rect x="445.0" y="286" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="509.8333333333333" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">4 response</text>
+<rect x="584.6666666666666" y="286" width="129.66666666666666" height="42" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="649.5" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#9b4a3f" text-anchor="middle">5 tool exec</text>
+<rect x="724.3333333333333" y="286" width="129.66666666666666" height="42" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="789.1666666666666" y="312" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b" text-anchor="middle">6 logging</text>
+<text x="26" y="348" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Its own six checks all pass too. It was asked by a trusted internal caller.</text>
+<line x1="0" y1="400" x2="880" y2="400" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="420" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Neither path fails. The composition does. This needs identity that survives the hop, not another detector.</text>
+</svg>
