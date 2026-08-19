@@ -19,6 +19,12 @@ interface ArticleData {
   headline?: string;       // overrides title for schema.org headline if title includes section suffix
 }
 
+// GA4 measurement id for the Agent Engineering Lab's own property. The Lab used
+// to report into the sunilprakash.com property (G-4KDCBS18GZ), which mixed
+// subdomain traffic into the main site's stream; it has its own property since
+// 2026-08-19. Historical Lab data stays in the old property under a hostname filter.
+const GA_MEASUREMENT_ID = 'G-HLPJD4PL17';
+
 interface Props {
   title: string;
   description?: string;
@@ -159,14 +165,17 @@ const websiteSchema = Astro.url.pathname === '/' ? {
       <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
     )}
 
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-4KDCBS18GZ"></script>
-    <script is:inline>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+    <script is:inline define:vars={{ gaId: GA_MEASUREMENT_ID }}>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      // define:vars wraps this script in an IIFE, so publish gtag explicitly:
+      // event calls elsewhere on the site expect the usual global.
+      window.gtag = gtag;
       gtag('js', new Date());
-      gtag('config', 'G-4KDCBS18GZ');
+      gtag('config', gaId);
       document.addEventListener('astro:page-load', () => {
-        gtag('config', 'G-4KDCBS18GZ', { page_path: window.location.pathname + window.location.search });
+        gtag('config', gaId, { page_path: window.location.pathname + window.location.search });
       });
     </script>
 
