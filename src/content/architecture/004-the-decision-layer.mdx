@@ -1,0 +1,241 @@
+---
+id: arch-004
+title: The Decision Layer
+dek: Six possible actions, and the two easiest to build are the two most systems have. Which one fires belongs to the reversal cost, the exposure, and the confidence band, never to the detector.
+description: "Policy enforcement architecture for AI systems: the six actions a decision service can take, choosing between them on reversal cost and exposure rather than on which detector fired, policy as versioned data with real load and rollback semantics, and designing the human approval queue that most systems leave undefined."
+layer: control
+order: 4
+readingTime: 13
+updated: 2026-08-18
+specifies: The decisioning service that turns detector verdicts into enforced actions
+appliesTo: [RAG platform, Coding assistant, Agent system]
+decisions:
+  - Which action each category and band maps to
+  - Whether policy is code or versioned data
+  - What happens when a human approver does not respond
+anchors:
+  - label: Six actions
+    anchor: six-actions
+  - label: Choosing by consequence
+    anchor: choosing-by-consequence-not-by-detector
+  - label: Policy as data
+    anchor: policy-as-data
+  - label: The decision record
+    anchor: the-decision-record
+  - label: The approval queue
+    anchor: the-approval-queue
+  - label: Where it breaks
+    anchor: where-this-blueprint-stops-working
+references: [ch-05, ch-10]
+patterns: [approval-gate, escalation-path]
+---
+
+import Callout from '~/components/universal/Callout.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+Detectors produce verdicts. Verdicts are not decisions. Something has to turn "the PII detector flagged this response with high confidence" into a specific thing that happens to a specific request, and that something is a service with its own design, its own policy, and its own audit obligations.
+
+Collapsing this into an if-statement next to the detector call works until the second detector arrives, and it has no answer at all the first time someone in risk asks why a particular request was blocked in March.
+
+## Six actions
+
+The full vocabulary is larger than most implementations use.
+
+**Allow.** Proceed unchanged. Worth naming explicitly, because an allow that was reached after three detectors ran and cleared is a different fact from an allow where no detector ran at all. The audit trail should distinguish them.
+
+**Block.** Refuse the request and return a message. Total, obvious to the user, and the only correct choice when the harm is irreversible and confidence is high. Also the action that generates escalations, because a false block is loud. A false redaction is quiet, which is worse rather than better: it produces a confident answer with a hole in it, and nobody files a ticket about information they never saw was missing.
+
+**Redact.** Remove the offending content and continue. The response still arrives, minus the account number. The user's task usually still completes.
+
+**Mask.** Replace with a placeholder that preserves structure. Distinct from redaction because it keeps the shape of the data, so the model or a downstream parser can still reason about it. Turning an account number into `ACCT_7F2A` rather than deleting it lets an agent continue a workflow that references it without ever holding the real value.
+
+**Escalate for review.** Suspend and route to a human queue asynchronously. The request does not complete now. It may complete later.
+
+**Require approval.** Suspend and route to a human who must positively authorise this specific action before it proceeds. Distinct from escalation because the human is in the critical path by design rather than as an exception, and the workflow is built around the wait.
+
+Allow and block are the two that get implemented first, because they need no product design. The middle four are the ones that repay it: redaction and masking remove the harm while leaving the user's task intact, and the two human paths buy a decision the system cannot make. A system with only allow and block converts every detector false positive into a failed user interaction, which is how a guardrail programme loses its mandate.
+
+<PullQuote>Block is the action you reach for when you have not designed the other five. It is also the one your users will describe to your sponsor.</PullQuote>
+
+## Choosing by consequence, not by detector
+
+The action does not belong to the detector. A PII detector firing on a chat response and the same detector firing on a tool call that writes to an external system are the same verdict attached to different consequences.
+
+Consequence is not one property, and treating it as one is where this kind of table usually goes wrong. Three things vary independently, and each is declared on the tool or the surface rather than inferred from the text:
+
+- **Reversal cost.** What it takes to undo the effect: free, expensive, or impossible. This is a single ordered axis, and "expensive" means expensive to reverse, not that the harm is large.
+- **Exposure.** Whether the operation moves information across a trust boundary: contained, internal, or external. A tool can be perfectly reversible in effect and still be an irreversible disclosure, because you cannot un-send.
+- **Blast radius.** How many principals or records the operation touches.
+
+The action grid is keyed on reversal cost and confidence band, and exposure then promotes a cell upward.
+
+```
+  reversal cost      band: near threshold        band: above threshold
+
+  free               allow + record              redact or mask
+  (chat response)    monitor, do not interrupt   fix it silently, log it
+
+  expensive          mask + record               escalate for review
+  (shared doc,       keep the flow, flag it    async, task resumes
+   downstream sync)
+
+  impossible         require approval            block
+  (payment, delete)  human in the path         refuse, escalate
+```
+
+**Exposure promotes.** Any operation with external exposure is evaluated one row lower than its reversal cost alone would place it. A `send_email` call is free to reverse in the sense that the draft can be deleted, and impossible to reverse in the sense that matters. Blast radius promotes on the same rule once it crosses a threshold you set per environment.
+
+Two properties of the grid matter more than its exact contents. There is no cell that blocks a free-to-reverse operation at low confidence, which is the configuration that produces the most user pain for the least risk reduction. And human approval sits where the operation cannot be undone and the system is genuinely unsure, which is the only place a human's time is well spent.
+
+All three properties are declared in the tool registry, because none of them can be recovered from the text at runtime:
+
+```
+  tool: transfer_funds
+    reversal_cost: impossible
+    exposure: external
+    blast_radius: single_account
+    default_action_on_flag: require_approval
+
+  tool: draft_email
+    reversal_cost: free
+    exposure: contained        # send is a separate tool
+    blast_radius: single_thread
+    default_action_on_flag: mask
+```
+
+A tool definition missing these leaves the decision layer guessing at the moment it must not. Splitting `draft_email` from `send_email` so the two carry different exposure is the kind of registry design this forces, and it is the point.
+
+## Policy as data
+
+The mapping from category and band to action is policy. It changes more often than the code around it, it is reviewed by people who do not read code, and it needs an audit history. So it should be versioned data that the service loads, not conditionals compiled into the service.
+
+```
+  policy_version: 2026-08-18.3
+  approved_by: risk-forum
+  rules:
+    - category: pii_in_response
+      band: above
+      context: chat
+      action: redact
+      record: full
+
+    - category: pii_in_response
+      band: above
+      context: tool_call
+      target_reversible: false
+      action: require_approval
+      approver_role: data-owner
+
+    - category: prompt_injection
+      band: near
+      action: allow
+      record: full
+      note: below-threshold, retained for base-rate measurement
+
+    # No bare catch-all. Defaults are per surface, and the surface
+    # whose consequences are irreversible does not default to allow.
+    - default:
+      context: chat
+      action: allow
+      record: summary
+
+    - default:
+      context: tool_call
+      target_reversal_cost: impossible
+      action: require_approval
+      record: full
+```
+
+What this buys you: a risk function can read it, a change to a threshold does not require a deployment, the version identifier lands in every decision record so an old decision can be reconstructed against the policy that produced it, and the diff between two policy versions is reviewable.
+
+A single bare `default: allow` is worth calling out as an anti-pattern. It reads as a sensible fallback and behaves as a silent fail-open for every category nobody has written a rule for yet, which is precisely the set of categories you have not thought about. Scope defaults to a surface, and make the irreversible surface default to a human.
+
+### Policy lifecycle
+
+Policy is data, so it needs the operational discipline of data that gates production traffic.
+
+```
+  validate    schema check + conflict detection in CI; a policy that
+              does not compile never reaches a running service
+
+  precedence  most specific rule wins; ties are an error at validation
+              time, not a resolution rule at runtime
+
+  rollout     atomic. a request is evaluated against exactly one policy
+              version, never a half-loaded one
+
+  rollback    previous version stays loadable; rollback is a version
+              pointer change, not an edit
+
+  load failure  keep serving last-known-good, alarm loudly, and mark
+                every decision `degraded`. never fall back to empty
+                policy, because an empty policy allows everything
+```
+
+The load-failure line is the one that gets written last and matters most. A decision service that starts with no policy because the config store was unreachable is an open gate that reports itself healthy.
+
+<Callout type="tip" label="Test the policy, not just the detectors">
+Policy files need their own test suite: a set of synthetic verdicts with expected actions, run in CI. A policy edit that accidentally widens a default from redact to allow is invisible in review and obvious in a test.
+</Callout>
+
+## The decision record
+
+Every decision produces one record. This is the artefact that makes the whole control layer auditable, and it is the thing that is missing when an incident review stalls.
+
+```
+DecisionRecord
+  request_id         correlates across all chokepoints for this request
+  chokepoint         upload|retrieval|prompt|response|tool|logging
+  principal          who, or which agent, on whose authority
+  detectors_run      ids and versions, including those that cleared
+  verdicts           per detector: verdict, band, categories, evidence
+  policy_version     which policy produced the action
+  action             the action taken
+  degraded           whether any detector ran reduced or timed out
+  latency_ms         detection overhead, separate from inference
+  outcome            completed | blocked | pending_approval | overridden
+  override           if overridden: who, when, stated reason
+```
+
+Two fields are routinely omitted and both are load-bearing. Recording detectors that **cleared** is what lets you answer "was this checked", which is the first question in any review, and distinguishes a clean pass from a detector that never ran. Recording the **override** with a stated reason turns human dismissals into data: a rule that is overridden ninety percent of the time is not a rule, it is a queue of noise, and the record is what proves it.
+
+## The approval queue
+
+Human approval is the action most often specified and least often designed. Three questions decide whether it works.
+
+**What does the user see while waiting?** A synchronous request that blocks on a human is a request that times out at the gateway. Approval-bearing flows need to be asynchronous end to end, with a durable task the user can leave and return to. If the agent framework cannot suspend and resume a run, human approval is not actually available to you, whatever the policy file says.
+
+**What happens when nobody responds?** This is the question with no default answer, and leaving it undefined means choosing one accidentally. Pick explicitly:
+
+```
+  timeout: 4h
+  on_timeout: expire      the task fails, the user is told
+                            correct for irreversible actions
+
+  on_timeout: escalate      route to a second approver group
+                          correct where the action is required
+
+  on_timeout: proceed       NEVER for an irreversible action.
+                          this turns your approval gate into a delay
+```
+
+**Who is a valid approver?** The approver must be someone with the authority to accept the risk, and must not be the same principal that requested the action. In multi-agent systems this is not automatic: an orchestrating agent asking a sub-agent to approve its own action satisfies a naive "an approval was recorded" check while providing no control at all. Separation of duties has to be enforced by identity rather than by convention.
+
+An approval queue also needs the ordinary properties of a queue that someone is on the hook for: a volume you can staff, a latency target, and an alarm when depth grows. A gate slow enough to block delivery creates pressure to find a path that avoids it, and that pressure is invisible in the gate's own metrics, which will show a healthy approval rate on falling volume. Watch the volume trend, not just the approval rate.
+
+## Where this blueprint stops working
+
+**Streaming responses break the response chokepoint.** If tokens reach the user as they are generated, there is no moment where the complete response exists before delivery. You are left with incremental detection on partial text, which raises false positives, or buffering, which discards the latency benefit that streaming existed to provide. Choose deliberately per surface rather than letting the frontend decide.
+
+**Redaction can be worse than blocking.** Removing a figure from the middle of an otherwise confident answer produces a response that reads as authoritative and is now wrong. For content where partial information misleads, block and explain. Redaction suits identifiers and suits prose poorly.
+
+**Policy volume becomes its own risk.** A policy file with two hundred rules has interactions nobody has reasoned about, and the same conflict-resolution problems as any large rule system. Once ordering and specificity start to matter, you need conflict detection and a documented resolution order, or the file becomes an oracle that only its author can predict.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 5: Human-in-the-Loop as Architecture", href: "/book/05-human-in-the-loop/" },
+    { label: "Ch 10: Governance and Auditability", href: "/book/10-governance/" },
+  ]}
+  readNext={{ label: "Back to Architecture", href: "/architecture/" }}
+/>

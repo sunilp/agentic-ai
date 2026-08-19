@@ -6,12 +6,13 @@ import type { APIContext } from 'astro';
 export async function GET(context: APIContext) {
   const base = (context.site?.toString() ?? 'https://agenticlab.sunilprakash.com/').replace(/\/$/, '');
 
-  const [chapters, fieldNotes, signal, recipes, labs] = await Promise.all([
+  const [chapters, fieldNotes, signal, recipes, labs, architecture] = await Promise.all([
     getCollection('chapters'),
     getCollection('fieldNotes'),
     getCollection('signal'),
     getCollection('recipes'),
     getCollection('labs'),
+    getCollection('architecture'),
   ]);
 
   const byDateDesc = (a: any, b: any) =>
@@ -24,6 +25,11 @@ export async function GET(context: APIContext) {
   const sg = [...signal].sort(byDateDesc).map((e) => line(e, 'signal')).join('\n');
   const rc = [...recipes].map((e) => line(e, 'recipes')).join('\n');
   const lab = [...labs].sort(byDateDesc).map((e) => line(e, 'labs')).join('\n');
+  const arch = [...architecture]
+    .filter((e) => e.data.status !== 'draft')
+    .sort((a, b) => a.data.order - b.data.order)
+    .map((e) => line(e, 'architecture'))
+    .join('\n');
   const ch = [...chapters]
     .sort((a, b) => a.id.localeCompare(b.id))
     .map((e) => `- [${e.data.title}](${base}/book/${e.id}/): ${e.data.description ?? ''}`)
@@ -31,7 +37,7 @@ export async function GET(context: APIContext) {
 
   const body = `# Agent Engineering Lab
 
-> A working publication on building agent systems that survive contact with reality. Field Notes, Signals, Recipes, Lab Notes, and an interactive Bench, grounded in evidence. Written by Sunil Prakash.
+> A working publication on building agent systems that survive contact with reality. Field Notes, Signals, Recipes, Lab Notes, Architecture blueprints, and an interactive Bench, grounded in evidence. Written by Sunil Prakash.
 
 - Site: ${base}/
 - Full text for ingestion: ${base}/llms-full.txt
@@ -41,6 +47,11 @@ export async function GET(context: APIContext) {
 ## What this is
 
 The Lab is a layered editorial system. The book is the canonical reference. Four ongoing streams sit alongside it: Field Notes are observations from inside the work, Signals are commentary on the discourse around agent engineering, Recipes are buildable-in-an-afternoon walkthroughs with verified code, and Lab Notes are empirical experiments with measured results. Evidence, Patterns, and Projects are reference material. The Bench is an interactive, in-browser playground.
+
+## Architecture blueprints
+${arch}
+
+Index: ${base}/architecture/
 
 ## Field Notes
 ${fn}

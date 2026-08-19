@@ -1,0 +1,25 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ArchitectureLayout from '~/layouts/ArchitectureLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('architecture');
+  return entries
+    .filter((entry) => entry.data.status !== 'draft')
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
+}
+
+interface Props {
+  entry: CollectionEntry<'architecture'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ArchitectureLayout entry={entry}>
+  <Content />
+</ArchitectureLayout>

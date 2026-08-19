@@ -10,13 +10,15 @@ interface Section {
 
 interface Props {
   items: Section[];
+  /** Heading for the bar. Defaults to the Lab Report wording. */
+  label?: string;
 }
 
-const { items } = Astro.props;
+const { items, label = 'In this Lab' } = Astro.props;
 ---
 
 <nav class="section-anchors" aria-label="In-page navigation">
-  <div class="section-anchors__label">In this Lab</div>
+  <div class="section-anchors__label">{label}</div>
   <ul class="section-anchors__list">
     {items.map((s) => (
       <li>

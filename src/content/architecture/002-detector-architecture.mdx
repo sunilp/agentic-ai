@@ -1,0 +1,180 @@
+---
+id: arch-002
+title: Detector Architecture
+dek: Four detection techniques, a sourcing decision people mistake for a fifth, one interface contract, and the calibration problem that breaks every ensemble built by averaging scores that do not mean the same thing.
+description: "The four detection techniques behind production AI safety detectors, why a managed safety service is a sourcing choice rather than a technique, a common interface contract that separates decisions from execution failures, and why scores from a regex, a classifier, and an LLM judge cannot be combined without per-detector calibration."
+layer: control
+order: 2
+readingTime: 13
+updated: 2026-08-18
+specifies: The detector interface contract and the composition rules for combining detectors
+appliesTo: [RAG platform, Coding assistant, Agent system]
+decisions:
+  - Which technique answers which question, and which to run yourself
+  - Whether the ensemble combines scores or verdicts
+  - What a detector is allowed to do when it times out
+anchors:
+  - label: Techniques and sourcing
+    anchor: four-techniques-two-sourcing-models
+  - label: The interface
+    anchor: the-interface-contract
+  - label: The calibration trap
+    anchor: the-calibration-trap
+  - label: Composing detectors
+    anchor: composing-detectors
+  - label: Failure behaviour
+    anchor: failure-behaviour
+  - label: Where it breaks
+    anchor: where-this-blueprint-stops-working
+references: [ch-06, ch-11]
+patterns: [verifier-loop, failure-buckets]
+sources:
+  - title: "OWASP Top 10 for LLM Applications 2025"
+    url: https://genai.owasp.org/llm-top-10/
+    year: 2025
+---
+
+import Callout from '~/components/universal/Callout.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+A detector answers one question about one input and returns a verdict. That is the whole job. The engineering difficulty is not writing detectors, it is making a dozen of them, built with different techniques and sourced in different ways, behave like one coherent system that a policy layer can reason about and an operator can tune.
+
+This blueprint fixes the interface and the composition rules. [ARCH-001](/architecture/001-the-control-plane/) decided where detectors sit; this one decides what they are.
+
+## Four techniques, two sourcing models
+
+Detectors vary on two independent axes, and collapsing them into one list is a mistake that shows up later as a procurement argument. The first axis is **technique**: how the judgement is made. The second is **sourcing**: whether you run it or someone else does. A managed safety service is not a fifth technique, it is one of the four techniques with the sourcing decision already taken for you, and usually without telling you which technique it is.
+
+Four techniques, each with a distinct cost profile and a distinct failure mode.
+
+**Rules and pattern matching.** Regular expressions, keyword lists, structural checks. Negligible latency, negligible marginal cost, fully explainable, and evadable by anyone who knows the pattern exists. Correct for structured data with a defined format: account numbers, national identifiers, card numbers, API keys, base64 blobs where none should be. Wrong for anything expressed in natural language, because natural language has unbounded surface forms and your pattern list does not.
+
+**Classical NLP.** Named entity recognition, part-of-speech analysis, similarity to a known corpus. Fast and cheap relative to a model call, and it generalises across surface forms in a way regex cannot. This is the right tool for unstructured personal data: names, addresses, employers, dates of birth. Its weakness is context. An NER model will find a person's name; it will not tell you whether that name appearing in this document, retrieved by this user, is a disclosure.
+
+**Trained classifiers.** A small supervised model fine-tuned on labelled examples of the thing you are detecting. Cheap at inference, and the technique whose improvement path is most direct, because the labelled set you needed to build it is the same one you tune against. Every technique here can be measured against labelled data; this is the one that cannot exist without it. Its weakness is that you need that labelled data, it decays as attacks shift, and it will confidently misclassify anything unlike its training distribution.
+
+**LLM-as-judge.** A model prompted to evaluate the input against a written policy. The slowest and most expensive per call, and the most flexible in one specific sense: you can express a nuanced policy in a paragraph and change it without retraining. Three weaknesses that matter. It is non-deterministic, so the same input can produce different verdicts. It is itself susceptible to injection, because you are feeding attacker-controlled text to a model and asking it a question. And it is expensive enough that you cannot run it on every request at the prompt layer without a latency conversation.
+
+Then the sourcing axis. **Managed safety services** from cloud and model vendors package one or more of the four techniques behind an API: good coverage of the commodity categories, maintained by someone else, and a real reduction in work. The costs are a network hop in the request path, a data-residency question that is not optional in a regulated environment, a model you cannot audit or tune, and a version that can change underneath you. The technique inside is usually undisclosed, which means you inherit its failure mode without being able to name it. Treat a managed service as a technique you did not choose rather than as a category of its own.
+
+<Callout type="tip" label="Matching technique to question">
+Structured and format-defined, use rules. Unstructured entities, use NLP. High volume with labelled data, train a classifier. Nuanced policy that changes often, use a judge. Then decide sourcing separately, on residency, auditability, and whether the category is one you need to differentiate on. The judge is the easiest to prototype and the most expensive to run on every request, so it is worth pricing at the design stage rather than after the first month's bill.
+</Callout>
+
+## The interface contract
+
+Every detector, regardless of family, returns the same shape. This is what lets the policy layer stay uniform and lets you swap a regex for a classifier without touching anything downstream.
+
+```
+DetectorResult
+  detector_id       stable identifier, no version in it
+  detector_version  model or ruleset version, for audit reconstruction
+  threshold_version which threshold produced `band`
+
+  execution_status  ok | error | timeout | skipped
+  decision          clear | flagged | abstain  (null unless status ok)
+
+  score             float 0..1
+  score_kind        raw | calibrated  (raw: this detector only)
+  band              below | near | above  (vs this detector's threshold)
+
+  categories        list of matched risk categories
+  category_schema   version of the category vocabulary
+  evidence          spans or excerpts that triggered the decision
+  latency_ms        observed, always recorded
+  degraded          bool, true if the detector ran in a reduced mode
+```
+
+The shape matters more than the field names. Five decisions are encoded in it.
+
+**`execution_status` and `decision` are separate.** A timeout is not a verdict. Collapsing "it did not flag" and "it did not run" into one enum is how a system silently fails open, because every downstream consumer reads the absence of a flag as safety. Keep them apart and the policy layer is forced to handle the outage case explicitly.
+
+**`decision` includes `abstain`.** A detector that ran successfully and does not have enough signal to answer is telling you something real, and it is a different fact from a clear. Abstention is what lets a cheap detector defer to an expensive one without pretending to a judgement it does not have.
+
+**Version lives in its own fields, and there are three.** A `detector_id` with a version baked into it cannot be tracked across upgrades. The detector, its threshold, and the category vocabulary all change on different cycles, and an incident review three months later needs all three to reconstruct why a given input produced a given result.
+
+**`score_kind` is explicit.** A raw score is meaningful only within one detector. Marking it prevents the next section's failure from happening by accident downstream.
+
+**`band` exists so the policy layer never sees a raw score.** Policies written against raw numbers break every time you retune a threshold. Policies written against bands survive retuning, and the threshold becomes an operational parameter rather than a code change.
+
+`evidence` exists because a verdict without evidence cannot be reviewed. A human deciding whether to override a block needs the span that triggered it, and a false positive analysis with no evidence field is a spreadsheet of numbers that nobody can diagnose.
+
+`degraded` exists because a detector that fell back to a cheaper path did not answer the same question, and pretending otherwise silently changes your risk posture during exactly the incidents where it matters.
+
+## The calibration trap
+
+Here is a failure that is easy to build and hard to see afterwards.
+
+A regex returns confidence 1.0 when it matches, because it either matched or it did not. That number describes the match, not the likelihood that the match was the thing you cared about: a sixteen-digit internal reference will trip a card-number pattern with exactly the same 1.0. A trained classifier returns 0.9 as an approximately calibrated probability. An LLM judge asked to rate severity out of ten returns 9, which is a sampled token and not a probability at all.
+
+Then someone builds an ensemble that averages them, or takes the maximum, or sums them with weights.
+
+<PullQuote>The number 0.9 means three unrelated things depending on which detector emitted it. Averaging them produces a value that means nothing, on a scale nobody can reason about.</PullQuote>
+
+The system that results has a behaviour no one can predict from first principles and no one can tune, because moving the global threshold changes the effective sensitivity of each family by a different and unknown amount. Teams then discover empirically that 0.72 "works" and freeze it, and the number becomes folklore.
+
+Two ways out, and you should pick one deliberately.
+
+**Per-detector calibration.** Map each detector's raw output onto a common scale using held-out labelled data, so that a calibrated 0.9 means the same empirical thing whichever detector emitted it: roughly nine out of ten items scored here are true positives. Two conditions are easy to miss. The calibration set has to match the population the detector will actually run against, because calibration is population-dependent in the same way precision is. And it has to be redone whenever the detector, the threshold, or the traffic mix changes. It is the right answer when you have the volume and the labelling capacity to keep it current.
+
+**Verdict composition.** Do not combine scores at all. Give each detector its own threshold, tuned on its own data, and let it emit a verdict. Combine verdicts with explicit logic. This is weaker statistically and much easier to reason about, audit, and explain to a risk function.
+
+Verdict composition is the correct default. Score fusion is an optimisation to reach for once you have the labelled data to justify it, and never before.
+
+## Composing detectors
+
+With verdicts rather than scores, composition becomes policy you can write down and review.
+
+```
+  ANY      fire if any detector flags
+           high recall, high false positive rate
+           correct for irreversible harm
+
+  MAJORITY fire if k of n flag
+           balanced, needs detectors with independent failure modes
+
+  WEIGHTED fire if a high-precision detector flags,
+           or if two low-precision detectors agree
+           the usual production answer
+
+  ALL      fire only on unanimity
+           high precision, low recall
+           correct only where a false positive is itself costly
+```
+
+The rule that makes or breaks an ensemble is **independence**. Majority voting assumes the detectors fail for different reasons. Three detectors that are all regex variants over the same keyword list are one detector with three names, and their agreement is not evidence. Before adding a detector to an ensemble, ask what it catches that the others miss, and check that its errors do not correlate with theirs. If you cannot answer, you are adding latency rather than coverage.
+
+Deliberate diversity is worth designing for: one cheap deterministic detector for known-format cases, one trained classifier for the volume, and one judge reserved for the ambiguous band between the other two. Those three fail differently, which is the property that makes voting meaningful.
+
+## Failure behaviour
+
+A detector that times out has not returned "clear". This is where AI safety architecture meets ordinary distributed systems discipline, and it is the reason `execution_status` and `decision` are separate fields above.
+
+Decide explicitly, per detector and per chokepoint, what a timeout means:
+
+- **Fail closed.** Block the request. Correct at tool execution, where the action is irreversible and a refusal is recoverable.
+- **Fail open with a record.** Allow, mark the exchange `degraded`, and raise it in telemetry. Defensible at the prompt layer for a low-severity category, where blocking every request during a detector outage is its own incident.
+- **Fail to a cheaper detector.** Fall back to the rules-based path, mark `degraded`, and accept the reduced coverage knowingly.
+
+Whatever you choose, the outcome must be recorded, because "we were not detecting for four hours" is a fact that surfaces during an incident review and needs to be answerable from the logs rather than from memory.
+
+<Callout type="warn" label="The default nobody chose">
+An unhandled detector exception caught by a generic try/except that returns a passing result is a decision to fail open, made accidentally, applied to every category including the irreversible ones. It is worth grepping for.
+</Callout>
+
+## Where this blueprint stops working
+
+**The interface assumes a verdict per input.** Detectors that need conversational state, such as a slow multi-turn escalation where no single turn is an attack, do not fit a stateless contract. Those need a session-scoped analyser with its own state store, and it is a different component rather than another detector.
+
+**Independence is easier to state than to verify.** Genuinely checking that two detectors fail differently requires a labelled corpus and a correlation analysis on their errors. Most teams assert independence and never test it. That assertion is where majority voting quietly degrades into an expensive single detector.
+
+**Judges cannot safely judge their own input class.** Using an LLM to detect prompt injection means handing attacker-controlled text to a model and trusting its answer about that text. It works against unsophisticated attacks and is a known target for sophisticated ones. Structure the judge call so that the untrusted content is clearly delimited and the judge is never asked to follow instructions found within it, and treat the residual risk as real rather than solved.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 6: Evaluating and Hardening Agents", href: "/book/06-evaluating-and-hardening/" },
+    { label: "Ch 11: Security Deep Dive", href: "/book/11-security/" },
+  ]}
+  readNext={{ label: "ARCH-003: Measuring Detectors", href: "/architecture/003-measuring-detectors/" }}
+/>
