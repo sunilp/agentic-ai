@@ -1,0 +1,96 @@
+---
+/**
+ * HomeRail: the homepage side rail: subscribe, evidence, the Bench, the book.
+ * Same content as the former full-width bands, stacked and compact so the feed leads.
+ * Funnel rule: links to Substack and the LinkedIn newsletter only, no on-site form.
+ */
+const stats = [
+  { value: '+3.4pp', label: 'Workflow beat agent' },
+  { value: '2.4×', label: 'Agent cost' },
+  { value: '2.2×', label: 'Agent latency' },
+];
+const parts = [
+  { label: 'Part I', title: 'Build', desc: 'Tools, loops, multi-agent without theater.', count: '4 chapters', href: '/book/#part-1' },
+  { label: 'Part II', title: 'Judge', desc: 'Eval, oversight, when not to use agents.', count: '3 chapters', href: '/book/#part-2' },
+  { label: 'Part III', title: 'Operate', desc: 'Deploy, govern, secure, remember.', count: '6 chapters', href: '/book/#part-3' },
+];
+---
+
+<div class="rail">
+  <section class="rail__block" aria-labelledby="rail-subscribe">
+    <h3 id="rail-subscribe" class="rail__rubric">Subscribe</h3>
+    <p class="rail__copy">Every Field Note and Signal by email, on a short delay from the site.</p>
+    <p class="rail__links">
+      <a class="rail__cta" href="https://agenticlab.substack.com" target="_blank" rel="noopener">Substack →</a>
+      <a class="rail__cta" href="https://www.linkedin.com/newsletters/building-ai-systems-7310391508670377984/" target="_blank" rel="noopener">LinkedIn newsletter →</a>
+    </p>
+  </section>
+
+  <section class="rail__block" aria-labelledby="rail-evidence">
+    <h3 id="rail-evidence" class="rail__rubric">Evidence</h3>
+    <a class="rail__stats" href="/evidence/" aria-label="Evidence at a glance: workflow beat the agent by 3.4 points, at 2.4 times the cost and 2.2 times the latency. See the evidence.">
+      {stats.map((s) => (
+        <span class="rail__stat">
+          <span class="rail__value">{s.value}</span>
+          <span class="rail__label">{s.label}</span>
+        </span>
+      ))}
+      <span class="rail__more">See the evidence →</span>
+    </a>
+  </section>
+
+  <section class="rail__block" aria-labelledby="rail-bench">
+    <h3 id="rail-bench" class="rail__rubric">The Bench</h3>
+    <p class="rail__copy">Read the argument, then run it. Loop Lab: toggle the fences and watch an agent either delete production or get stopped.</p>
+    <a class="rail__cta" href="/bench/">Run the Loop Lab →</a>
+  </section>
+
+  <section class="rail__block" aria-labelledby="rail-book">
+    <h3 id="rail-book" class="rail__rubric">The Book</h3>
+    <ol class="rail__parts">
+      {parts.map((p) => (
+        <li>
+          <a class="rail__part" href={p.href}>
+            <span class="rail__part-label">{p.label} · {p.count}</span>
+            <span class="rail__part-title">{p.title}</span>
+            <span class="rail__part-desc">{p.desc}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <a class="rail__more rail__more--link" href="/book/">Read the book →</a>
+  </section>
+</div>
+
+<style>
+  .rail { display: flex; flex-direction: column; }
+  .rail__block { padding: 0 0 var(--space-5); margin-bottom: var(--space-5); border-bottom: 1px solid var(--fg-faint); }
+  .rail__block:last-child { border-bottom: 0; margin-bottom: 0; }
+  .rail__rubric {
+    font-family: var(--font-mono); font-size: var(--meta-3); font-weight: 400;
+    letter-spacing: var(--tracking-rubric); text-transform: uppercase; color: var(--brick); margin: 0 0 var(--space-3);
+  }
+  .rail__copy { font-family: var(--font-body); font-size: var(--body-2); line-height: var(--lh-snug); color: #3c3c3a; margin: 0 0 var(--space-3); }
+  .rail__links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); margin: 0; }
+  .rail__cta {
+    display: inline-block; font-family: var(--font-display); font-weight: 600; font-size: var(--display-4);
+    color: var(--fg); border-bottom: 2px solid var(--brick); padding-bottom: 2px;
+  }
+  .rail__cta:hover { color: var(--brick); }
+
+  .rail__stats { display: grid; grid-template-columns: max-content 1fr; column-gap: var(--space-3); row-gap: var(--space-2); align-items: baseline; color: var(--fg); }
+  .rail__stat { display: contents; }
+  .rail__stats .rail__more { grid-column: 1 / -1; }
+  .rail__value { font-family: var(--font-display); font-weight: 600; font-size: var(--display-3); color: var(--brick); }
+  .rail__label { font-family: var(--font-mono); font-size: var(--meta-3); text-transform: uppercase; letter-spacing: var(--tracking-loose); color: var(--fg-light); }
+  .rail__more { display: inline-block; margin-top: var(--space-2); font-family: var(--font-body); font-style: italic; font-size: var(--body-2); color: var(--brick); }
+  .rail__stats:hover .rail__more, .rail__more--link:hover { color: var(--ink); }
+
+  .rail__parts { list-style: none; margin: 0 0 var(--space-2); padding: 0; }
+  .rail__parts li + li { border-top: 1px solid var(--fg-faint); }
+  .rail__part { display: flex; flex-direction: column; padding: var(--space-3) 0; color: var(--fg); }
+  .rail__part-label { font-family: var(--font-mono); font-size: var(--meta-3); text-transform: uppercase; letter-spacing: var(--tracking-loose); color: var(--brick); }
+  .rail__part-title { font-family: var(--font-display); font-weight: 900; font-size: var(--display-3); letter-spacing: var(--tracking-tight); margin-top: 2px; }
+  .rail__part:hover .rail__part-title { color: var(--brick); }
+  .rail__part-desc { font-family: var(--font-body); font-size: var(--body-2); color: #3c3c3a; line-height: var(--lh-snug); }
+</style>

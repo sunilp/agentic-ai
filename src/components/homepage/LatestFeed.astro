@@ -1,0 +1,213 @@
+---
+/**
+ * LatestFeed: the homepage's content-forward core: one featured piece (newest editorial
+ * item, full banner) followed by a dated list of the next pieces and the HomeRail.
+ * Reads all five streams through lib/home-feed so Signal and Architecture are included.
+ */
+import { getCollection } from 'astro:content';
+import { buildHomeFeed, formatFeedDate, type FeedItem } from '~/lib/home-feed';
+import HomeRail from './HomeRail.astro';
+
+const [fns, sgs, recipes, labs, arch] = await Promise.all([
+  getCollection('fieldNotes'),
+  getCollection('signal'),
+  getCollection('recipes'),
+  getCollection('labs'),
+  getCollection('architecture'),
+]);
+
+const { featured, rest } = buildHomeFeed({
+  fieldNotes: fns.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, dek: e.data.dek, banner: e.data.banner, spot: e.data.spot, date: e.data.date, readingTime: e.data.readingTime })),
+  signal: sgs.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, dek: e.data.dek, banner: e.data.banner, date: e.data.date, readingTime: e.data.readingTime })),
+  recipes: recipes.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, description: e.data.description, spot: e.data.spot, verifiedOn: e.data.verifiedOn, estimatedMinutes: e.data.estimatedMinutes })),
+  labs: labs.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, description: e.data.description, spot: e.data.spot, date: e.data.date, readingTime: e.data.readingTime })),
+  architecture: arch.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, dek: e.data.dek, spot: e.data.spot, order: e.data.order, updated: e.data.updated, readingTime: e.data.readingTime, status: e.data.status })),
+});
+
+const webp = (src: string) => src.replace(/\.png$/, '.webp');
+const meta = (i: FeedItem) => {
+  const when = `${i.dateLabel ? i.dateLabel + ' ' : ''}${formatFeedDate(i.date)}`;
+  return i.minutes ? `${when} · ${i.minutes} min` : when;
+};
+
+const streamLinks = [
+  { label: 'Field Notes', href: '/field-notes/' },
+  { label: 'Signal', href: '/signal/' },
+  { label: 'Recipes', href: '/recipes/' },
+  { label: 'Labs', href: '/labs/' },
+  { label: 'Architecture', href: '/architecture/' },
+];
+---
+
+<section class="latest" aria-labelledby="latest-heading">
+  <header class="latest__header">
+    <h2 id="latest-heading" class="latest__label">Latest</h2>
+    <nav class="latest__streams" aria-label="Browse by stream">
+      {streamLinks.map((s, i) => (
+        <>
+          {i > 0 && <span class="latest__sep" aria-hidden="true">·</span>}
+          <a href={s.href}>{s.label}</a>
+        </>
+      ))}
+    </nav>
+  </header>
+
+  {featured && (
+    <a class="featured" href={featured.href}>
+      <div class="featured__art">
+        {featured.banner ? (
+          <picture>
+            <source srcset={webp(featured.banner)} type="image/webp" />
+            <img class="featured__banner" src={featured.banner} alt="" width="1200" height="630" loading="eager" decoding="async" />
+          </picture>
+        ) : featured.spot ? (
+          <picture>
+            <source srcset={webp(featured.spot)} type="image/webp" />
+            <img class="featured__spot" src={featured.spot} alt="" width="1024" height="768" loading="eager" decoding="async" />
+          </picture>
+        ) : null}
+      </div>
+      <div class="featured__text">
+        <div class="featured__rubric">{featured.rubric}</div>
+        <h3 class="featured__title">{featured.title}</h3>
+        <p class="featured__dek">{featured.dek}</p>
+        <div class="featured__meta">{meta(featured)}</div>
+      </div>
+    </a>
+  )}
+
+  <div class="latest__body">
+    <ol class="rows" aria-label="More recent pieces">
+      {rest.map((i) => (
+        <li>
+          <a class="row" href={i.href}>
+            <div class="row__thumb">
+              {i.spot ? (
+                <picture>
+                  <source srcset={webp(i.spot)} type="image/webp" />
+                  <img class="row__spot" src={i.spot} alt="" width="1024" height="768" loading="lazy" decoding="async" />
+                </picture>
+              ) : i.banner ? (
+                <picture>
+                  <source srcset={webp(i.banner)} type="image/webp" />
+                  <img class="row__banner" src={i.banner} alt="" width="1200" height="630" loading="lazy" decoding="async" />
+                </picture>
+              ) : (
+                <div class="row__blank" aria-hidden="true">{i.id.toUpperCase()}</div>
+              )}
+            </div>
+            <div class="row__text">
+              <div class="row__rubric"><span>{i.rubric}</span><span class="row__date">{meta(i)}</span></div>
+              <h3 class="row__title">{i.title}</h3>
+              <p class="row__dek">{i.dek}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <aside class="latest__rail" aria-label="Around the Lab">
+      <HomeRail />
+    </aside>
+  </div>
+</section>
+
+<style>
+  .latest { margin: var(--space-6) 0 var(--space-8); border-top: 3px solid var(--ink); }
+
+  .latest__header {
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5); padding: var(--space-3) 0 var(--space-5);
+  }
+  .latest__label {
+    font-family: var(--font-mono); font-size: var(--meta-3); font-weight: 400;
+    letter-spacing: var(--tracking-rubric); text-transform: uppercase; color: var(--brick); margin: 0;
+  }
+  .latest__streams { font-family: var(--font-body); font-style: italic; font-size: var(--body-2); }
+  .latest__streams a { color: var(--fg); }
+  .latest__streams a:hover { color: var(--brick); }
+  .latest__sep { color: var(--fg-lighter); margin: 0 var(--space-2); }
+
+  /* Featured */
+  .featured {
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-7); align-items: center; color: var(--fg);
+    padding-bottom: var(--space-6); border-bottom: 1px solid var(--ink);
+  }
+  .featured__banner {
+    display: block; width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover;
+    border: 1px solid var(--fg-faint); border-radius: var(--radius-sm); background: var(--paper-recess);
+  }
+  .featured__spot { display: block; max-width: min(420px, 82%); height: auto; margin: 0 auto; }
+  .featured__rubric {
+    font-family: var(--font-mono); font-size: var(--meta-3);
+    letter-spacing: var(--tracking-rubric); text-transform: uppercase; color: var(--brick);
+  }
+  .featured__title {
+    font-family: var(--font-display); font-weight: 400; font-size: var(--display-1);
+    line-height: var(--lh-tight); letter-spacing: var(--tracking-tight); text-wrap: balance;
+    margin: var(--space-3) 0 0;
+  }
+  .featured:hover .featured__title { color: var(--brick); }
+  .featured__dek {
+    font-family: var(--font-body); font-size: var(--dek-size); line-height: 1.5; color: #3c3c3a;
+    margin: var(--space-4) 0 0; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .featured__meta {
+    margin-top: var(--space-4); font-family: var(--font-mono); font-size: var(--meta-2);
+    letter-spacing: var(--tracking-loose); text-transform: uppercase; color: var(--fg-light);
+  }
+
+  /* List + rail */
+  .latest__body {
+    display: grid; grid-template-columns: minmax(0, 1fr) 296px; gap: var(--space-8);
+    align-items: start;
+  }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows li + li .row { border-top: 1px solid var(--fg-faint); }
+  .row {
+    display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: var(--space-5);
+    padding: var(--space-5) 0; color: var(--fg); align-items: start;
+  }
+  .row__thumb { width: 112px; height: 84px; display: flex; align-items: center; justify-content: center; }
+  .row__spot { display: block; max-width: 100%; max-height: 84px; width: auto; height: auto; }
+  .row__banner {
+    display: block; width: 112px; height: 84px; object-fit: cover;
+    border: 1px solid var(--fg-faint); border-radius: var(--radius-sm); background: var(--paper-recess);
+  }
+  .row__blank {
+    width: 112px; height: 84px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: var(--meta-3); letter-spacing: var(--tracking-loose);
+    color: var(--brick); border: 1px solid var(--fg-faint); border-radius: var(--radius-sm); background: var(--paper-recess);
+  }
+  .row__rubric {
+    display: flex; flex-wrap: wrap; gap: 0 var(--space-3);
+    font-family: var(--font-mono); font-size: var(--meta-3);
+    letter-spacing: var(--tracking-rubric); text-transform: uppercase; color: var(--brick);
+  }
+  .row__date { color: var(--fg-light); letter-spacing: var(--tracking-loose); }
+  .row__title {
+    font-family: var(--font-display); font-weight: 600; font-size: clamp(19px, 2.2vw, 22px);
+    line-height: 1.25; margin: var(--space-2) 0 0;
+  }
+  .row:hover .row__title { color: var(--brick); }
+  .row__dek {
+    font-family: var(--font-body); font-style: italic; font-size: var(--display-4); color: #666;
+    margin: var(--space-2) 0 0; line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .latest__rail { padding-top: var(--space-5); }
+
+  @media (max-width: 900px) {
+    .latest__body { grid-template-columns: 1fr; gap: var(--space-6); }
+    .latest__rail { border-top: 1px solid var(--ink); }
+  }
+  @media (max-width: 720px) {
+    .featured { grid-template-columns: 1fr; gap: var(--space-5); }
+    .featured__title { font-size: var(--display-2); }
+    .featured__dek { -webkit-line-clamp: 3; }
+    .row { grid-template-columns: 88px minmax(0, 1fr); gap: var(--space-4); }
+    .row__thumb, .row__banner, .row__blank { width: 88px; height: 66px; }
+    .row__spot { max-height: 66px; }
+  }
+</style>
