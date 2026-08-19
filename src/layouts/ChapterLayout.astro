@@ -193,6 +193,11 @@ const collectionRoute: Record<string, string> = {
   .chapter-cited-by ul { list-style: none; padding: 0; }
   .chapter-cited-by a { font-family: var(--font-mono); font-size: var(--body-3); color: var(--fg); }
 
+  /* TopNav is static below 1000px; keep the sidebar clear of the viewport edge. */
+  @media (max-width: 1000px) {
+    .chapter-sidebar { top: var(--space-4); max-height: calc(100vh - var(--space-6)); }
+  }
+
   @media (max-width: 720px) {
     .chapter-sidebar { display: none; }
   }

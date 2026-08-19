@@ -89,7 +89,15 @@ const items = [
   .topnav__subscribe:hover { color: var(--ink); border-bottom-color: var(--ink); }
   .topnav__subscribe:focus-visible { outline: 2px solid var(--brick); outline-offset: 3px; }
 
-  @media (max-width: 720px) {
+  .topnav__link { white-space: nowrap; }
+
+  /* Below 1000px the single row no longer fits nine items plus the masthead:
+     stack it (brand + Subscribe on the first row, nav on the second), let the
+     nav wrap onto two rows on phones instead of scrolling behind a fade, and
+     drop sticky so a two-row header does not eat the viewport. */
+  @media (max-width: 1000px) {
+    .topnav { position: static; }
+
     .topnav__inner {
       flex-wrap: wrap;
       justify-content: space-between;
@@ -105,21 +113,10 @@ const items = [
       order: 3;
       width: 100%;
       margin-left: 0;
-      flex-wrap: nowrap;
-      gap: var(--space-4);
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+      flex-wrap: wrap;
+      gap: 0 var(--space-4);
     }
 
-    .topnav__items::-webkit-scrollbar { display: none; }
-
-    .topnav__link {
-      font-size: 16px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
+    .topnav__link { font-size: 16px; padding: var(--space-1) 0; }
   }
 </style>
