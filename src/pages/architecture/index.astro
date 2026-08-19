@@ -59,6 +59,11 @@ const byLayer = LAYERS.map((l) => ({
         <strong>how you know what it did</strong>. Blueprints are written to be read in
         order within a layer, and revised rather than republished.
       </p>
+      <p class="arch-thesis__aside">
+        These are engineering specifications. For the same territory at board and operating-model
+        altitude, funding, mandate, maturity and the org structure around all of this, see the
+        <a href="https://sunilprakash.com/enterprise-ai/">Enterprise AI Transformation playbook</a>.
+      </p>
     </section>
 
     {entries.length === 0 ? (
@@ -99,6 +104,24 @@ const byLayer = LAYERS.map((l) => ({
     margin: 0 0 var(--space-5);
     text-align: center;
   }
+
+  .arch-thesis__aside {
+    font-size: var(--body-2);
+    color: var(--fg-light);
+    border-top: 1px solid var(--fg-faint);
+    padding-top: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .arch-thesis__aside a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--brick);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+
+  .arch-thesis__aside a:hover { color: var(--brick); }
 
   .arch-thesis {
     max-width: var(--reader-max);
