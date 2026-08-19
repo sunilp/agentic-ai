@@ -122,4 +122,9 @@ const { items, label = 'In this Lab' } = Astro.props;
     color: var(--brick);
     font-weight: 500;
   }
+
+  /* TopNav is static below 1000px, so stick to the viewport edge there. */
+  @media (max-width: 1000px) {
+    .section-anchors { top: 0; }
+  }
 </style>
