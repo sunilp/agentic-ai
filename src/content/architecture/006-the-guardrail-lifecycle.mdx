@@ -1,0 +1,218 @@
+---
+id: arch-006
+title: The Guardrail Lifecycle
+dek: "A detector goes from proposal to production through eight gates, and the two that matter most are the two teams skip: shadow mode before enforcement, and a revalidation date set on the day it ships."
+description: "The lifecycle a guardrail moves through from intake and tiering to red team, shadow, canary, enforcement, monitoring, revalidation and retirement. Includes the gate criteria, the go-live pack contents, a CI regression gate that blocks a release, and a worked lifecycle for a prompt injection detector."
+layer: evidence
+order: 6
+readingTime: 12
+updated: 2026-08-19
+specifies: The gates a guardrail passes through and the artefact each gate produces
+appliesTo: [RAG platform, Coding assistant, Agent system]
+decisions:
+  - Which gate blocks a release and which only records
+  - How long a detector runs in shadow before it enforces
+  - What makes a detector eligible for retirement
+anchors:
+  - label: Eight gates
+    anchor: eight-gates
+  - label: Tiering
+    anchor: tiering-decides-the-rest
+  - label: Shadow and canary
+    anchor: shadow-then-canary-then-enforce
+  - label: The go-live pack
+    anchor: the-go-live-pack
+  - label: The CI gate
+    anchor: the-regression-gate-that-blocks-a-release
+  - label: Worked example
+    anchor: worked-example-a-prompt-injection-detector
+  - label: Where it breaks
+    anchor: where-this-blueprint-stops-working
+references: [ch-06, ch-09]
+patterns: [eval-loop, verifier-loop]
+sources:
+  - title: "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile, NIST AI 600-1"
+    url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+    authors: [National Institute of Standards and Technology]
+    year: 2024
+  - title: "OWASP Top 10 for LLM Applications 2025"
+    url: https://genai.owasp.org/llm-top-10/
+    year: 2025
+---
+
+import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+A detector is not a feature that ships once. It is a control with a lifespan, and the mistake that produces most guardrail incidents is treating the first deployment as the end of the work rather than the middle of it.
+
+This blueprint specifies the path from proposal to retirement, what each gate requires, and which gates are allowed to block. ARCH-005 said who owns the decisions. This one says when they get made.
+
+## Eight gates
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-006-lifecycle.svg"
+  alt="Eight lifecycle gates from intake through tiering, build, red team, shadow, canary, enforce and monitor, with revalidation looping back and retirement as an exit, marking which gates block a release."
+  caption="Three gates can stop a release outright. Every gate has an exit criterion."
+/>
+
+**1. Intake.** Someone proposes a control, usually because of an incident, a regulation, a red-team finding, or a new system going live. The intake record captures what harm this addresses, which chokepoint it would sit at, and who is asking. Cheap and fast; the point is that controls have a front door rather than arriving as a ticket in a sprint.
+
+**2. Tiering.** The system this control protects gets a tier, and the tier sets everything downstream. This gate blocks: an untiered system cannot proceed, and a tier assigned by the delivery team without second-line sight is not a tier.
+
+**3. Build.** Technique, interface, composition, per ARCH-002. First line owns this outright. The output is a detector that satisfies the interface contract and a test set that is honest about its size.
+
+**4. Red team.** Someone whose job is to break it, tries. Not the author. Exit criterion: every bypass found is either fixed, routed to a control at a different chokepoint, or accepted in writing by the threshold owner. An open bypass with no disposition holds the gate.
+
+**5. Shadow.** The detector runs against real production traffic and records what it would have done. It takes no action. Exit criteria: the observed base rate is measured rather than assumed, the projected daily alert volume is inside what the review workflow is staffed for, and added latency at p95 is inside the budget from ARCH-008. Failing any of the three sends the threshold or the pipeline back, not the release forward.
+
+**6. Canary.** The detector enforces, on a bounded slice: one surface, one user group, or a percentage of traffic. Blast radius is the point. Exit criteria: the support and override volume is understood and attributable, and no unexplained class of false positive remains open.
+
+**7. Enforce.** Full traffic, enforcing. This gate blocks: it needs the go-live pack.
+
+**8. Monitor, then revalidate or retire.** The control is live and generating evidence on a cadence. Revalidation is scheduled at go-live, not triggered by memory.
+
+## Tiering decides the rest
+
+Every organisation that runs this well has a tier model, and every one that struggles has the same argument repeatedly about how much process a given system deserves. Tier once, at intake, and inherit.
+
+Tier on three properties, scored independently, then take the highest. **Authority**: can the system only read, or can it write to systems of record and take actions in the world. **Data sensitivity**: what the worst document it can retrieve would cost if disclosed. **Exposure**: internal users, or customers and the public. Collapsing these into a single "is it customer-facing" question is what puts a read-only public FAQ bot in the same tier as an agent that can move money, and that mistake discredits the model with the teams you need to apply it.
+
+| | Tier 3: contained | Tier 2: elevated | Tier 1: critical |
+|---|---|---|---|
+| Authority, data, exposure | Read-only, no restricted data, internal | Read-only or proposal-only, restricted data in scope, internal or contained | Writes to a system of record or acts externally, or restricted data with public exposure |
+| Typical system | Internal drafting aid, no retrieval of restricted data | Enterprise RAG over internal corpora, coding assistant with repo access | An agent that can move money or change records, or a public assistant over restricted data |
+| Mandatory categories | Content safety | Content safety, PII, prompt injection, system prompt leakage | All of Tier 2, plus tool-use authority controls and data leakage |
+| Red team | Optional | Required before enforce | Required before enforce, and repeated on material change |
+| Shadow period | Not required | Two weeks or 10,000 requests, whichever is later | Four weeks or 50,000 requests, whichever is later |
+| Threshold approval | First line | Second line | Second line, with governing-body-approved appetite |
+| Revalidation | Annual | Semi-annual | Quarterly, and on material traffic change |
+| Human review | None | Sampled | Sampled, plus a queue for the high-precision band |
+
+Every number in that table is illustrative. Neither the NIST Generative AI Profile nor the OWASP list sets review frequencies or shadow durations; those are yours to choose, and no external source will settle them for you. What matters is that they exist before the first system needs them, because a tier model negotiated during a launch is a tier model that reflects the launch date.
+
+<Callout type="warn" label="Tier the system, not the model">
+Tiering by model capability produces nonsense: the same model is a Tier 3 drafting aid and a Tier 1 payment agent depending on what you connected it to. The tier belongs to the deployed system and its authority, which is why it can change without the model changing.
+</Callout>
+
+## Shadow, then canary, then enforce
+
+This is the sequence teams compress, and compressing it is the single most reliable way to lose the mandate for a guardrail programme.
+
+**Shadow answers questions your test set cannot.** ARCH-003 shows that precision depends on the population. Shadow mode is where you measure that population. You learn the real base rate, the real false positive volume per day, and the real latency at production concurrency. A detector that looked fine at 0.91 precision offline routinely produces a four-figure daily alert volume in shadow, and it is much cheaper to discover that before it is blocking anything.
+
+Shadow requires the full decision path to run and record, taking no action. If shadow mode is implemented as "log the score", it will not surface the policy and action bugs, which are the ones that break users.
+
+**Canary bounds the blast radius of being wrong.** Enforcement changes user experience. Pick a slice where the population resembles production, where you have a feedback channel, and where you can revert in minutes. Two weeks of canary tells you what the support ticket volume looks like.
+
+**Enforcement is a decision, not a deployment step.** It needs the go-live pack, and the person who signs it is the threshold owner from ARCH-005, not the engineer merging the change.
+
+<PullQuote>Shadow mode is not a testing phase. It is the only place you get to measure the population your detector will actually meet, and it costs nothing but patience.</PullQuote>
+
+## The go-live pack
+
+The artefact that the enforce gate requires. Keeping it to one page is deliberate: a pack that takes a week to assemble will be assembled once and never updated.
+
+```
+GO-LIVE PACK  ·  <control id>  ·  <system>  ·  <tier>
+
+1  What this control detects, and the harm it prevents
+2  Chokepoint, technique, composition rule
+3  Offline results: precision and recall, with intervals, and
+   the size of the flagged set they rest on
+4  Shadow results: duration, request volume, observed base rate,
+   daily alert volume, p95 added latency
+5  Red-team summary: attempts, bypasses found, fixed vs accepted
+6  Threshold: the cost ratio, the approver, the traffic assumption
+7  Action on fire, and action on detector failure
+8  Review workflow: who sees what, at what volume, and the
+   staffing that assumes
+9  Rollback: the exact change that reverts to shadow, and who
+   can make it without an approval
+10 Revalidation date, and what would trigger it early
+```
+
+Item 9 is the one that gets waved through and matters most under pressure. If reverting to shadow requires a code deploy and a change advisory board, the actual rollback procedure during an incident will be someone disabling the control entirely.
+
+## The regression gate that blocks a release
+
+Guardrails need the same CI discipline as any other production dependency, and this is where policy-as-code stops being a slogan. Two gates belong in the pipeline.
+
+```yaml
+# .github/workflows/guardrail-gates.yml
+name: guardrail-gates
+on: [pull_request]
+
+jobs:
+  policy-validation:
+    # Gate 1: policy is data, so it compiles or it does not ship.
+    steps:
+      - run: guardrail policy validate policies/
+        # schema check, conflict detection, precedence ties are
+        # errors here rather than resolution rules at runtime
+      - run: guardrail policy test policies/ --cases tests/policy-cases.yaml
+        # synthetic verdicts with expected actions. catches the
+        # edit that quietly widens a default from redact to allow
+
+  detector-regression:
+    # Gate 2: no silent accuracy loss.
+    steps:
+      - run: >
+          guardrail eval run
+            --detector pii_in_response
+            --set eval/pii-v7.jsonl
+            --baseline baselines/pii_in_response.json
+            --floor baselines/pii_in_response.floor.json
+            --fail-on recall_drop=0.02,precision_drop=0.03,
+                      alert_volume_increase=0.15,latency_p95_increase=15ms
+      - run: guardrail eval report --format markdown >> $GITHUB_STEP_SUMMARY
+```
+
+Three design notes.
+
+The gate fails on a *drop against the last accepted baseline*, because absolute targets get lowered until they pass. But a per-change tolerance alone permits cumulative decay: twenty changes each losing 1.9 percent of recall all pass, and the detector has quietly lost a third of its recall. So the gate also carries a **floor**, set at go-live and changeable only with the same approval as the original threshold. Baseline catches the bad change; floor catches the slow slide.
+
+It fails on precision and projected alert volume, not just recall. A change that improves recall while doubling false positives has not improved the control, it has moved the cost onto the review queue, and per ARCH-003 that is the failure mode that ends guardrail programmes socially.
+
+And it fails on latency, because a detector that became 40ms slower has spent someone else's budget whether or not anyone noticed.
+
+<Callout type="tip" label="Version the eval set like code">
+`eval/pii-v7.jsonl` is versioned deliberately. When a regression fires, the first question is always whether the detector got worse or the test set got harder, and that is unanswerable if the set is mutable. Changing the set is a reviewed change with its own approval.
+</Callout>
+
+## Worked example: a prompt injection detector
+
+An enterprise RAG assistant over internal documents, Tier 2. Injection arrives inside retrieved content, which is the case ARCH-001 says the prompt layer cannot attribute. This walkthrough is a constructed example, not a report of a specific deployment; the figures show the shape of what each gate produces.
+
+| Gate | What happened | Artefact produced |
+|---|---|---|
+| Intake | Red-team exercise on a sibling system planted instructions in a shared document and got the assistant to summarise a restricted file | Intake record naming retrieval as the chokepoint |
+| Tiering | Internal corpus, no write access, restricted documents in scope: Tier 2 | Tier record, inherited by every later gate |
+| Build | Rules for known patterns, plus a trained classifier over retrieved chunks. Verdict composition, weighted | Detector at interface contract, eval set v1 at 1,200 labelled chunks |
+| Red team | 40 attempts, 9 bypasses. 6 fixed, 3 accepted as out of scope for this technique and routed to the retrieval entitlement control instead | Red-team report, three accepted risks with reasons |
+| Shadow | 3 weeks, 68,000 requests. Observed base rate far below the test set. Daily alert volume at the proposed threshold: 340 | Shadow report; threshold revised upward before enforcement |
+| Canary | One business unit, 2 weeks. 11 support tickets, 9 of them one false positive pattern in a template document | Canary report; one rule narrowed |
+| Enforce | Go-live pack signed by the second-line owner | Go-live pack, threshold approval |
+| Monitor | Weekly regression, monthly sampled review, quarterly revalidation booked at go-live | Evidence pack per ARCH-005 |
+
+The two things this example is meant to show. Shadow changed the threshold, which means shipping straight from offline results would have produced 340 alerts a day into a queue staffed for a fraction of that. And red team found nine bypasses, three of which were correctly *not* fixed in this detector, because the right control for them lived at a different chokepoint. A programme that treats every red-team finding as a defect in the detector under test will build one enormous detector that does everything badly.
+
+## Where this blueprint stops working
+
+**The lifecycle assumes a stable definition of the thing you detect.** Prompt injection in 2026 is not what it was in 2024, and a detector that passes revalidation against a 2024 test set is measuring the wrong thing accurately. Test set refresh has to be its own scheduled work, owned by whoever owns the threat model, or revalidation becomes a ritual that always passes.
+
+**Shadow mode has a real cost.** Running every detector against full production traffic while taking no action doubles the detection compute for the shadow period, and for an LLM judge that is not a rounding error. Tier 3 systems will not justify it. Say that explicitly rather than letting teams quietly skip the gate.
+
+**Retirement almost never happens.** Controls accumulate, each one adding latency and false positives, and no team is rewarded for removing one. Without a forcing function the pipeline only grows.
+
+Resist the obvious proxy. "It has not fired a true positive in a year" is not evidence a control is unnecessary: the attack may be rare rather than absent, the control may be deterring the attempt, or it may be failing to detect what is happening. A defensible retirement case needs three things instead. The harm it addresses is now prevented deterministically somewhere else, usually by an authorization control that made the classification question moot. Its true positives over the period are attributable to that other control on replay. And the threat model that motivated it has been reviewed and still says the same thing. Absent those, the honest answer is that the control stays and its cost is the price of the risk.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 6: Evaluating and Hardening Agents", href: "/book/06-evaluating-and-hardening/" },
+    { label: "Ch 9: Deployment", href: "/book/09-deployment/" },
+  ]}
+  readNext={{ label: "ARCH-007: Telemetry, Audit and the Review Loop", href: "/architecture/007-telemetry-audit-and-review/" }}
+/>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="548" viewBox="0 0 880 548" role="img" aria-label="Five decisions inside one guardrail, each with its owner, the evidence it produces and its review cadence">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="548" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Five decisions inside one guardrail</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">The platform team builds all five. It is accountable for one.</text>
+<text x="0" y="90" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">THE DECISION</text>
+<text x="270" y="90" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">ACCOUNTABLE</text>
+<text x="430" y="90" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">EVIDENCE IT PRODUCES</text>
+<text x="700" y="90" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">REVIEWED</text>
+<line x1="0" y1="98" x2="880" y2="98" stroke="#1a1a1a"/>
+<rect x="0" y="106" width="880" height="58" fill="#fafaf8"/>
+<text x="12" y="130" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a" letter-spacing="0.5">WHAT WE DETECT</text>
+<text x="12" y="149" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">which categories are in scope at all</text>
+<text x="270" y="130" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">second line</text>
+<text x="430" y="130" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the category list, per tier</text>
+<text x="700" y="130" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">on system change</text>
+<line x1="0" y1="166" x2="880" y2="166" stroke="#e8e8e8"/>
+<rect x="0" y="170" width="880" height="58" fill="#f5ece9"/>
+<rect x="0" y="170" width="3" height="58" fill="#9b4a3f"/>
+<text x="12" y="194" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#9b4a3f" letter-spacing="0.5">HOW WE DETECT</text>
+<text x="12" y="213" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">technique, sourcing, composition</text>
+<text x="270" y="194" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#9b4a3f">first line</text>
+<text x="430" y="194" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">detector + eval set version</text>
+<text x="700" y="194" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">every change</text>
+<line x1="0" y1="230" x2="880" y2="230" stroke="#e8e8e8"/>
+<rect x="0" y="234" width="880" height="58" fill="#fafaf8"/>
+<text x="12" y="258" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a" letter-spacing="0.5">HOW HARD</text>
+<text x="12" y="277" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">the threshold, as an explicit cost ratio</text>
+<text x="270" y="258" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">second line</text>
+<text x="430" y="258" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">signed ratio + traffic assumption</text>
+<text x="700" y="258" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">semi-annual</text>
+<line x1="0" y1="294" x2="880" y2="294" stroke="#e8e8e8"/>
+<text x="12" y="322" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a" letter-spacing="0.5">WHAT HAPPENS</text>
+<text x="12" y="341" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">allow, block, redact, mask, escalate</text>
+<text x="270" y="322" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">product + risk</text>
+<text x="430" y="322" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">policy version</text>
+<text x="700" y="322" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">on policy edit</text>
+<line x1="0" y1="358" x2="880" y2="358" stroke="#e8e8e8"/>
+<rect x="0" y="362" width="880" height="58" fill="#fafaf8"/>
+<text x="12" y="386" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a" letter-spacing="0.5">WHO LOOKS</text>
+<text x="12" y="405" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">queue design, staffing, escalation path</text>
+<text x="270" y="386" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">operations</text>
+<text x="430" y="386" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">review findings + SLA</text>
+<text x="700" y="386" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">monthly</text>
+<line x1="0" y1="422" x2="880" y2="422" stroke="#e8e8e8"/>
+<rect x="0" y="440" width="880" height="54" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="16" y="460" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">THE THREE LINES MODEL, APPLIED</text>
+<text x="16" y="480" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">First line owns and operates the control.  Second line sets the standard and challenges.  Third line asks for the decision record.</text>
+<line x1="0" y1="518" x2="880" y2="518" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="538" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Conflating these five is what produces the unowned threshold, and an engineer defending a risk appetite in an audit.</text>
+</svg>

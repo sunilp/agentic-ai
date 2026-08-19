@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="478" viewBox="0 0 880 478" role="img" aria-label="Three separate log stores with different contents, retention, access and audience">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="478" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Three kinds of log, not one</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Different contents, different retention, different readers. One store cannot serve all three.</text>
+<rect x="0.0" y="100" width="280.0" height="222" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.1"/>
+<rect x="0.0" y="100" width="280.0" height="30" fill="#1a1a1a"/>
+<text x="140.0" y="120" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.6">OPERATIONAL TELEMETRY</text>
+<text x="14.0" y="152" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">counters, latencies, error rates,</text>
+<text x="14.0" y="169" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">detector availability, queue depth</text>
+<text x="14.0" y="194" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">no content</text>
+<text x="14.0" y="210" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">no identifiers beyond request_id</text>
+<text x="14.0" y="238" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">RETENTION</text>
+<text x="266.0" y="239" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a" text-anchor="end">days</text>
+<text x="14.0" y="260" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">ACCESS</text>
+<text x="266.0" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a" text-anchor="end">wide</text>
+<line x1="14.0" y1="296" x2="266.0" y2="296" stroke="#e8e8e8"/>
+<text x="14.0" y="314" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">the on-call engineer</text>
+<rect x="300.0" y="100" width="280.0" height="222" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4"/>
+<rect x="300.0" y="100" width="280.0" height="30" fill="#9b4a3f"/>
+<text x="440.0" y="120" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.6">THE DECISION RECORD</text>
+<text x="314.0" y="152" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">detectors and versions, verdicts,</text>
+<text x="314.0" y="169" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">policy version, action, degraded</text>
+<text x="314.0" y="194" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">no prompts</text>
+<text x="314.0" y="210" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">no responses</text>
+<text x="314.0" y="238" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">RETENTION</text>
+<text x="566.0" y="239" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#9b4a3f" text-anchor="end">years</text>
+<text x="314.0" y="260" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">ACCESS</text>
+<text x="566.0" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#9b4a3f" text-anchor="end">narrow</text>
+<line x1="314.0" y1="296" x2="566.0" y2="296" stroke="#e8e8e8"/>
+<text x="314.0" y="314" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">assurance, and audit</text>
+<rect x="600.0" y="100" width="280.0" height="222" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.1"/>
+<rect x="600.0" y="100" width="280.0" height="30" fill="#1a1a1a"/>
+<text x="740.0" y="120" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.6">THE CONTENT ARCHIVE</text>
+<text x="614.0" y="152" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">the prompts, retrieved chunks</text>
+<text x="614.0" y="169" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">and responses themselves</text>
+<text x="614.0" y="194" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">the sensitive text</text>
+<text x="614.0" y="210" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">itself</text>
+<text x="614.0" y="238" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">RETENTION</text>
+<text x="866.0" y="239" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a" text-anchor="end">weeks</text>
+<text x="614.0" y="260" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b" letter-spacing="1.6">ACCESS</text>
+<text x="866.0" y="261" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a" text-anchor="end">break-glass</text>
+<line x1="614.0" y1="296" x2="866.0" y2="296" stroke="#e8e8e8"/>
+<text x="614.0" y="314" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">incident review only</text>
+<line x1="440.0" y1="336" x2="740.0" y2="336" stroke="#9b4a3f" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arb)"/>
+<text x="590.0" y="358" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#9b4a3f" text-anchor="middle">by reference, never embedded</text>
+<rect x="0" y="376" width="880" height="50" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="16" y="396" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">WHY THE REFERENCE MATTERS</text>
+<text x="16" y="414" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">When the archive expires the decision record survives, so you can still prove a control ran without holding the sensitive text forever.</text>
+<line x1="0" y1="448" x2="880" y2="448" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="468" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Keep the fact that a decision was made for years. Keep the text it was about for weeks.</text>
+</svg>

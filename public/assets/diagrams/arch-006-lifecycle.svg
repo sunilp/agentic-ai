@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="450" viewBox="0 0 880 450" role="img" aria-label="Eight lifecycle gates from intake to retirement, marking which of them block a release">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="450" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">The guardrail lifecycle</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Three gates block a release. The rest record. Revalidation is a loop, not an end.</text>
+<text x="0" y="76" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">BLOCKS THE RELEASE</text>
+<rect x="0.0" y="116" width="101.25" height="54" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="50.625" y="139" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#6b6b6b" text-anchor="middle">1</text>
+<text x="50.625" y="158" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a" text-anchor="middle">INTAKE</text>
+<line x1="102.25" y1="143" x2="109.25" y2="143" stroke="#6b6b6b" stroke-width="1.1" marker-end="url(#arg)"/>
+<rect x="156.875" y="84" width="10" height="10" fill="#9b4a3f"/>
+<rect x="111.25" y="116" width="101.25" height="54" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="161.875" y="139" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#9b4a3f" text-anchor="middle">2</text>
+<text x="161.875" y="158" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a" text-anchor="middle">TIERING</text>
+<line x1="213.5" y1="143" x2="220.5" y2="143" stroke="#6b6b6b" stroke-width="1.1" marker-end="url(#arg)"/>
+<rect x="222.5" y="116" width="101.25" height="54" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="273.125" y="139" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#6b6b6b" text-anchor="middle">3</text>
+<text x="273.125" y="158" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a" text-anchor="middle">BUILD</text>
+<line x1="324.75" y1="143" x2="331.75" y2="143" stroke="#6b6b6b" stroke-width="1.1" marker-end="url(#arg)"/>
+<rect x="333.75" y="116" width="101.25" height="54" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="384.375" y="139" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#6b6b6b" text-anchor="middle">4</text>
+<text x="384.375" y="158" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a" text-anchor="middle">RED TEAM</text>
+<line x1="436.0" y1="143" x2="443.0" y2="143" stroke="#6b6b6b" stroke-width="1.1" marker-end="url(#arg)"/>
+<rect x="490.625" y="84" width="10" height="10" fill="#9b4a3f"/>
+<rect x="445.0" y="116" width="101.25" height="54" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="495.625" y="139" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#9b4a3f" text-anchor="middle">5</text>
+<text x="495.625" y="158" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a" text-anchor="middle">SHADOW</text>
+<line x1="547.25" y1="143" x2="554.25" y2="143" stroke="#6b6b6b" stroke-width="1.1" marker-end="url(#arg)"/>
+<rect x="556.25" y="116" width="101.25" height="54" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="606.875" y="139" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#6b6b6b" text-anchor="middle">6</text>
+<text x="606.875" y="158" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a" text-anchor="middle">CANARY</text>
+<line x1="658.5" y1="143" x2="665.5" y2="143" stroke="#6b6b6b" stroke-width="1.1" marker-end="url(#arg)"/>
+<rect x="713.125" y="84" width="10" height="10" fill="#9b4a3f"/>
+<rect x="667.5" y="116" width="101.25" height="54" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="718.125" y="139" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#9b4a3f" text-anchor="middle">7</text>
+<text x="718.125" y="158" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a" text-anchor="middle">ENFORCE</text>
+<line x1="769.75" y1="143" x2="776.75" y2="143" stroke="#6b6b6b" stroke-width="1.1" marker-end="url(#arg)"/>
+<rect x="778.75" y="116" width="101.25" height="54" rx="2" fill="#ffffff" stroke="#e8e8e8" stroke-width="1"/>
+<text x="829.375" y="139" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#6b6b6b" text-anchor="middle">8</text>
+<text x="829.375" y="158" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a" text-anchor="middle">MONITOR</text>
+<path d="M829.375,170 L829.375,196 L273.125,196 L273.125,172" fill="none" stroke="#9b4a3f" stroke-width="1.3" marker-end="url(#arb)"/>
+<text x="551.25" y="213" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#9b4a3f" text-anchor="middle">revalidate: quarterly, semi-annual or annual by tier, and on material change</text>
+<text x="0.0" y="236" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">1</text>
+<text x="16.0" y="236" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">INTAKE</text>
+<text x="100.0" y="236" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">what harm, which chokepoint, and who is asking</text>
+<text x="0.0" y="258" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">2</text>
+<text x="16.0" y="258" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">TIERING</text>
+<text x="100.0" y="258" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">the tier sets every gate downstream</text>
+<text x="0.0" y="280" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">3</text>
+<text x="16.0" y="280" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">BUILD</text>
+<text x="100.0" y="280" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">technique, interface contract, versioned eval set</text>
+<text x="0.0" y="302" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">4</text>
+<text x="16.0" y="302" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">RED TEAM</text>
+<text x="100.0" y="302" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">someone who is not the author tries to break it</text>
+<text x="460.0" y="236" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">5</text>
+<text x="476.0" y="236" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">SHADOW</text>
+<text x="560.0" y="236" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">runs on real traffic, takes no action</text>
+<text x="460.0" y="258" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">6</text>
+<text x="476.0" y="258" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">CANARY</text>
+<text x="560.0" y="258" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">enforces on a bounded slice</text>
+<text x="460.0" y="280" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">7</text>
+<text x="476.0" y="280" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">ENFORCE</text>
+<text x="560.0" y="280" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">needs the go-live pack signed</text>
+<text x="460.0" y="302" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">8</text>
+<text x="476.0" y="302" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">MONITOR</text>
+<text x="560.0" y="302" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b">evidence on a cadence, revalidation booked</text>
+<rect x="0" y="334" width="880" height="50" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="16" y="354" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">RETIREMENT, THE GATE NOBODY REACHES</text>
+<text x="16" y="372" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Report per-detector true positive counts on the same cadence as accuracy, or the pipeline only ever grows.</text>
+<line x1="0" y1="420" x2="880" y2="420" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="440" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Shadow is where you measure the population the detector will actually meet. It costs nothing but patience.</text>
+</svg>

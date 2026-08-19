@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="450" viewBox="0 0 880 450" role="img" aria-label="A tiered detector pipeline where cheap detectors run in parallel and only the ambiguous band reaches an expensive judge">
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker><marker id="arb" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker><marker id="arg" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker></defs>
+<rect width="880" height="450" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Parallel first, then tiered</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">The judge sees the ambiguous band, not the traffic. That ratio is the whole cost model.</text>
+<text x="0" y="96" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">EVERY REQUEST</text>
+<rect x="0" y="108" width="120" height="120" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="60" y="164" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="17" fill="#1a1a1a" text-anchor="middle">100%</text>
+<text x="60" y="184" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" text-anchor="middle">of traffic</text>
+<line x1="126" y1="168" x2="162" y2="168" stroke="#6b6b6b" stroke-width="1.3" marker-end="url(#arg)"/>
+<text x="170" y="96" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">CHEAP TIER, IN PARALLEL</text>
+<rect x="170" y="108" width="250" height="120" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<rect x="182" y="126" width="226" height="26" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="192" y="144" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">rules</text>
+<text x="398" y="144" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b" text-anchor="end">5 ms</text>
+<rect x="182" y="160" width="226" height="26" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="192" y="178" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">classical NLP</text>
+<text x="398" y="178" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b" text-anchor="end">25 ms</text>
+<rect x="182" y="194" width="226" height="26" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="192" y="212" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">trained classifier</text>
+<text x="398" y="212" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b" text-anchor="end">60 ms</text>
+<text x="182" y="242" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">cost = the slowest, not the sum</text>
+<line x1="426" y1="168" x2="460" y2="168" stroke="#6b6b6b" stroke-width="1.3"/>
+<rect x="466" y="106" width="200" height="52" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="480" y="128" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#1a1a1a">~55%</text>
+<text x="536" y="128" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">clear</text>
+<text x="480" y="146" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#6b6b6b">resolves here, no judge</text>
+<rect x="466" y="164" width="200" height="52" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="480" y="186" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#9b4a3f">~10%</text>
+<text x="536" y="186" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">ambiguous</text>
+<text x="480" y="204" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#6b6b6b">escalates</text>
+<rect x="466" y="222" width="200" height="52" rx="2" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1"/>
+<text x="480" y="244" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#1a1a1a">~35%</text>
+<text x="536" y="244" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">above threshold</text>
+<text x="480" y="262" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#6b6b6b">resolves here, no judge</text>
+<line x1="460" y1="168" x2="462" y2="132" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="460" y1="168" x2="462" y2="190" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="460" y1="168" x2="462" y2="248" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="668" y1="190" x2="674" y2="190" stroke="#9b4a3f" stroke-width="1.4" marker-end="url(#arb)"/>
+<text x="680" y="96" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">EXPENSIVE TIER</text>
+<rect x="680" y="158" width="200" height="64" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="694" y="182" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#9b4a3f">LLM judge</text>
+<text x="694" y="202" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#6b6b6b">400 ms deadline</text>
+<rect x="0" y="288" width="880" height="50" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="16" y="308" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f" letter-spacing="1.6">THE MEASUREMENT TRAP THIS CREATES</text>
+<text x="16" y="326" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">A judge that sees only the ambiguous band runs on a population enriched for hard cases. Measure it on tiered traffic.</text>
+<text x="0" y="350" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#1a1a1a" letter-spacing="1.6">TIMEOUT ISOLATION</text>
+<text x="0" y="368" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">per detector</text>
+<text x="118" y="368" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">sized to the detector, never one shared deadline</text>
+<text x="0" y="387" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">per pipeline</text>
+<text x="118" y="387" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">less than the remaining request budget; missing detectors are timeout, not clear</text>
+<text x="0" y="406" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">circuit breaker</text>
+<text x="118" y="406" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">per detector, not per pipeline</text>
+<line x1="0" y1="426" x2="880" y2="426" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="444" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Detection you cannot afford at p95 is detection you will turn off during the first incident.</text>
+</svg>
