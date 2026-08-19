@@ -24,7 +24,7 @@ import Spot from '~/components/universal/Spot.astro';
     grid-template-columns: 1.25fr 1fr;
     gap: var(--space-7);
     align-items: center;
-    padding: var(--space-8) 0 var(--space-6);
+    padding: var(--space-7) 0 var(--space-6);
   }
 
   .hero__title {
@@ -82,7 +82,8 @@ import Spot from '~/components/universal/Spot.astro';
   .hero__art { text-align: center; }
 
   @media (max-width: 820px) {
-    .hero { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr; padding-top: var(--space-6); }
     .hero__art { order: -1; }
+    .hero__art :global(.spot__img) { max-width: 58%; }
   }
 </style>
