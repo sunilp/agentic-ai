@@ -1,0 +1,210 @@
+---
+id: arch-008
+title: Production Execution
+dek: Detection is work you added to a request that a user is waiting on. The latency budget, not the accuracy target, is what decides how many detectors you can actually run and in what order.
+description: "The runtime engineering of a guardrail pipeline: the latency budget, parallel execution, tiered detection that reserves expensive detectors for an ambiguous band, timeout isolation, graceful degradation that does not silently fail open, and rollout as a config change rather than a deploy. Includes a worked budget for tool-use risk control on a coding assistant."
+layer: control
+order: 8
+readingTime: 11
+updated: 2026-08-19
+specifies: The runtime execution, performance and failure behaviour of a detector pipeline
+appliesTo: [RAG platform, Coding assistant, Agent system]
+decisions:
+  - What share of the request budget detection may consume
+  - Which detectors run on every request and which run on a band
+  - What the system does when a detector is slow rather than wrong
+anchors:
+  - label: The latency budget
+    anchor: start-from-the-latency-budget
+  - label: Parallel and tiered
+    anchor: parallel-first-then-tiered
+  - label: Timeout isolation
+    anchor: timeout-isolation
+  - label: Degradation
+    anchor: degradation-that-does-not-fail-open
+  - label: Rollout
+    anchor: rollout-is-a-config-change
+  - label: Worked example
+    anchor: worked-example-tool-use-control-on-a-coding-assistant
+  - label: Where it breaks
+    anchor: where-this-blueprint-stops-working
+references: [ch-09, ch-11]
+patterns: [tool-registry, workflow-first]
+sources:
+  - title: "OWASP Top 10 for LLM Applications 2025"
+    url: https://genai.owasp.org/llm-top-10/
+    year: 2025
+---
+
+import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+Every detector in ARCH-002 is correct in isolation and expensive in aggregate. A pipeline assembled by adding one well-justified control at a time, each approved on its merits, arrives at a system where detection costs more than inference and the product team is asking to turn it off.
+
+This blueprint is the runtime half of the control layer: what the pipeline costs, how it is ordered, and what it does when a component is slow rather than wrong. It is where guardrails stop being a safety topic and become an ordinary distributed systems problem.
+
+## Start from the latency budget
+
+The budget is the design input. Decide it before choosing detectors, because it is what makes the choice decidable.
+
+Two properties matter. Detection latency is *added* latency, on top of retrieval and inference, so users experience it directly. And it lands differently at each chokepoint: work at upload is asynchronous and effectively free, work at the prompt layer is fully on the critical path, and work at the response layer is on the path but can sometimes overlap with streaming.
+
+```
+budget for a synchronous assistant turn      p95 2,500 ms
+(illustrative allocation, not a benchmark)
+
+  retrieval                                   250 ms
+  inference (streamed)                      1,700 ms
+  ─────────────────────────────────────────────────
+  remaining for all detection                 550 ms   (22%)
+
+  allocated
+    prompt-layer detectors, parallel           120 ms
+    response-layer detectors, parallel         180 ms
+    tool-call policy decision, per call         40 ms
+    reserve for retries and jitter             210 ms
+```
+
+The reserve is the part teams omit. A budget spent to the last millisecond at p95 has no room for the day a dependency is slow, and the failure mode is timeouts across the whole pipeline at once.
+
+<PullQuote>Detection you cannot afford at p95 is detection you will turn off during the first incident. Budget it like capacity, not like correctness.</PullQuote>
+
+## Parallel first, then tiered
+
+Two independent techniques, and the order in which you apply them matters.
+
+**Parallel execution is the cheap one, in latency.** Detectors at the same chokepoint are independent by construction, per ARCH-002. Run them concurrently and the chokepoint costs the slowest detector rather than the sum. Any pipeline still running detectors in sequence is paying a bill it does not owe.
+
+It is not free in any other currency. The compute, the connections, the rate limit against a managed service and the load on every shared dependency are unchanged, and they now all arrive at once instead of spread out. Two second-order effects follow. Concurrency raises peak resource demand at exactly the moment traffic peaks. And the latency of a maximum over several distributions is worse than any single one of them: with enough parallel detectors, the chance that at least one is in its own tail approaches certainty, so a chokepoint of six detectors has a worse tail than its slowest detector measured alone. Parallelism buys you the mean and costs you a little of the tail.
+
+The composition rule also needs all the verdicts before it decides, so the chokepoint cost is bounded below by your slowest detector. That is what makes a single LLM judge in the parallel set so expensive: it sets the floor for everything.
+
+**Tiering is how you afford the expensive one.** Rather than running the judge on every request, run the cheap deterministic detectors first and reserve the judge for the band where the cheap ones are ambiguous.
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-008-tiered-pipeline.svg"
+  alt="A tiered detector pipeline: cheap deterministic detectors run in parallel on every request, clear and above-threshold verdicts resolve immediately, and only the ambiguous middle band escalates to an expensive judge with its own timeout."
+  caption="The judge sees the ambiguous band, not the traffic. That ratio is the whole cost model."
+/>
+
+The economics are worth doing properly, because the usual hand-wave is wrong. Amortising cost is straightforward: a judge that runs on a tenth of traffic costs a tenth as much. Amortising *latency* is not, and this is where budgets get broken.
+
+A percentile is a position in a sorted distribution. If a fraction `f` of requests escalate to the judge, and every escalated request is slower than every non-escalated one, then the judge shows up in your p95 whenever `f` is greater than 5 percent. Escalate a tenth of traffic and your p95 *is* a judge call, no matter how fast the cheap tier is.
+
+```
+  escalation rate f      what sets p95        what sets p99
+  ─────────────────────────────────────────────────────────
+  f = 10%                the judge            the judge
+  f =  5%                the boundary         the judge
+  f =  2%                the cheap tier       the judge
+```
+
+Three consequences. The fraction reaching the judge has to be smaller than the tail you are protecting, or the judge is your p95. Reporting p95 alone hides an expensive tier entirely, so report the percentile above your escalation rate too. And if the ambiguous band is genuinely 10 percent of traffic, the answer is not a faster judge; it is to stop waiting on it, either by routing that band to an action that does not need the judge's answer now, such as `require_approval`, or by narrowing the band.
+
+<Callout type="warn" label="Tiering changes what your measurements mean">
+A judge that only ever sees the ambiguous band is running against a population deliberately enriched for hard cases. Its precision on that population is not comparable to its precision on a balanced test set, and per ARCH-003 it is the population that decides. Measure the tiered judge on tiered traffic, or the number is fiction.
+</Callout>
+
+## Timeout isolation
+
+Every detector gets its own timeout, and no detector's timeout is the request's timeout. This sounds obvious and is routinely violated by pipelines that await the whole detector set with one deadline.
+
+Three rules.
+
+**Per-detector deadlines, sized to the detector.** A regex has a 5ms deadline; a judge has 400ms. A shared deadline means the fast detectors inherit the slow one's tail.
+
+**A pipeline deadline that is less than the remaining request budget.** When it expires, the pipeline returns what it has, with the missing detectors marked `execution_status: timeout` rather than absent. ARCH-002 keeps `execution_status` separate from `decision` precisely so this case is representable.
+
+**Circuit breakers per detector, not per pipeline.** A detector failing 80 percent of calls should be taken out of the parallel set entirely for a cool-down, marked degraded, and reported. Continuing to call it costs the whole pipeline its timeout on every request for no verdicts.
+
+## Degradation that does not fail open
+
+ARCH-002 said a timeout is not a verdict. Here is what that means at runtime. The tiers are the ones from ARCH-006, in one line: Tier 3 is read-only, internal, no restricted data; Tier 2 handles restricted data or proposes changes; Tier 1 can write to a system of record or act externally.
+
+| Situation | Tier 3 | Tier 2 | Tier 1 |
+|---|---|---|---|
+| One cheap detector times out | Proceed, mark degraded | Proceed, mark degraded | Proceed, mark degraded, alert |
+| The judge times out | Proceed on cheap-tier verdicts | Fall back to the cheap tier's conservative band | Fail closed for irreversible actions, proceed for read-only |
+| Policy store unreachable | Last-known-good policy | Last-known-good policy, alert | Last-known-good; if none loadable, fail closed |
+| Whole detection pipeline down | Proceed, mark degraded, alert | Fail closed at tool execution, proceed elsewhere | Fail closed at tool execution and response |
+
+The row that decides whether this design is honest is the last one. A system that proceeds normally with its entire detection pipeline down has not degraded gracefully; it has turned the controls off and kept serving.
+
+There is a tempting shortcut here, and it is wrong: that information-harm chokepoints can fail open because only actions are irreversible. You cannot un-disclose. A response that emits credentials, personal data or a restricted document is as irreversible as a payment, and in a regulated setting it is reportable. Reversibility is a property of the specific harm, not of the harm family, which is the same correction ARCH-004 applies to the action grid.
+
+The defensible rule is by exposure and sensitivity rather than by family. Fail open with a record where the content is low sensitivity and the exposure is contained, which is most Tier 3 internal traffic. Fail closed wherever the chokepoint can emit restricted data, wherever the exposure crosses a trust boundary, and always at tool execution, because per ARCH-001 that is the only place an act can still be stopped. A system whose only fail-closed chokepoint is tool execution has decided, usually without noticing, that disclosure is recoverable.
+
+Two invariants regardless of tier. Every degraded request is marked degraded in its decision record, so the period is reconstructable afterwards. And degradation is time-boxed with an alert, because a system that has been quietly degraded for four hours is one that will describe itself as healthy in the incident review.
+
+<Callout type="tip" label="Test degradation the way you test detection">
+Fault injection belongs in the guardrail test suite: kill a detector, slow it past its deadline, make the policy store unreachable, and assert the resulting action and the decision record. The generic try/except that returns a passing result from ARCH-002 is only findable this way.
+</Callout>
+
+## Rollout is a config change
+
+The lifecycle in ARCH-006 needs shadow, canary and enforce to be states the running system can be moved between without a deploy. If changing enforcement requires shipping code, then shadow is a branch nobody maintains and rollback during an incident is a release.
+
+```yaml
+# per control, per system: the runtime state machine
+control: prompt_injection.retrieval
+system: rag-assistant-eu
+mode: canary                 # off | shadow | canary | enforce
+canary:
+  slice: business_unit=markets
+  percentage: 100
+timeouts:
+  cheap_tier_ms: 60
+  judge_ms: 400
+  pipeline_ms: 500
+degradation:
+  on_timeout: proceed_marked_degraded
+  on_pipeline_down: fail_closed_at_tool_execution
+rollback:
+  to: shadow
+  authorised: [platform.oncall, platform.guardrails]
+  requires_approval: false      # deliberately
+```
+
+`requires_approval: false` on rollback is the important line and the one that will attract governance objections. The argument for it: moving a control from enforce back to shadow reduces user impact and is fully recorded. Requiring an approval to do it means the real rollback during an incident will be someone disabling detection entirely, which is strictly worse and less visible.
+
+## Worked example: tool-use control on a coding assistant
+
+A coding assistant that can read a repository, propose changes, and run a small set of tools. The control in question is the tool-execution policy decision from ARCH-004, the only chokepoint that can prevent action harm.
+
+**Budget.** Tool calls are not on the streaming path; the user is waiting on a discrete action. Budget: 120ms p95 for the policy decision, which is generous because it is deterministic work.
+
+**Pipeline, per tool call:**
+
+| Stage | Technique | Deadline | Runs on |
+|---|---|---|---|
+| Tool registry lookup | Static config | 5 ms | Every call |
+| Authority check | Deterministic policy: actor, action, resource | 20 ms | Every call |
+| Argument scan | Rules over arguments for secrets and paths outside the workspace | 15 ms | Every call |
+| Judge on intent | LLM evaluator against the written policy | 400 ms | Only `reversal_cost: impossible` calls in the near band |
+
+Reading it from the bottom: the judge only ever sees calls that are both irreversible and ambiguous. In an assistant whose traffic is dominated by reads, that is a small share of calls, and the rule from the previous section applies directly. Measure that share. If it sits below the tail you are budgeting, the deterministic tiers set your p95 and the judge shows up only in p99. If it does not, the judge is your p95 and the design has to change rather than the number being explained away.
+
+**Degradation.** If the registry or authority check is unavailable, fail closed: no tool call proceeds without an authority decision, because there is no safe default for "may this actor do this". If only the judge is unavailable, calls with `reversal_cost: impossible` in the near band route to `require_approval` instead of proceeding, which converts a detection outage into a human wait rather than an unchecked action.
+
+**What the rollout looks like.** This is a constructed example rather than a report of a specific deployment. Shadow, for the period the tier requires, recording what would have been blocked. The finding worth anticipating: a widely used internal tool registered with the wrong `exposure`, which would have blocked a normal workflow on day one of enforcement. Registry data quality, not detector quality, is the usual reason a tool-use control cannot be switched on. Then canary on one team, then enforce, with rollback to shadow available to on-call without approval.
+
+**The point of this example.** The expensive, model-based part of the control is the smallest part of the design. The load is carried by a registry lookup and a deterministic authority check, which is the same conclusion ARCH-001 reached from a different direction: the highest-value controls are usually authorization questions rather than classification ones.
+
+## Where this blueprint stops working
+
+**Budgets assume a synchronous request.** Long-running agents that work for minutes have no user waiting on a p95, and their constraint is cumulative cost and the blast radius of many actions rather than added latency. The tiering logic still applies; the budget framing does not.
+
+**Tiering leaks information about the tiers.** An attacker who can tell which requests took 400ms has learned which inputs reach the judge, and that is a usable signal for probing the cheap tier's boundary. Where that matters, add jitter or pad the fast path, and accept the cost.
+
+**Fail closed is not free, and sometimes not right.** A system that fails closed at tool execution during a detector outage stops doing useful work, and for some workloads that outage is more damaging than the risk it prevents. That is a legitimate business decision, and it belongs to the threshold owner from ARCH-005 with an explicit acceptance, not to the engineer choosing a default in a config file.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 9: Deployment", href: "/book/09-deployment/" },
+    { label: "Ch 11: Security Deep Dive", href: "/book/11-security/" },
+  ]}
+  readNext={{ label: "ARCH-001: The Control Plane", href: "/architecture/001-the-control-plane/" }}
+/>

@@ -1,0 +1,213 @@
+---
+id: arch-005
+title: Ownership and Decision Rights
+dek: A guardrail has five separable decisions inside it, and they do not all belong to the same team. Most programmes stall because the threshold and the alert queue ended up owned by whoever built the classifier.
+description: "Who owns detectors, thresholds, policy, the alert queue and the exception, mapped onto the Three Lines Model. Includes a control-to-owner-to-evidence table, the decision rights that cannot be delegated to the platform team, and a worked ownership record for PII detection on an enterprise RAG assistant."
+layer: evidence
+order: 5
+readingTime: 12
+updated: 2026-08-19
+specifies: The decision rights inside a guardrail programme and the evidence each owner produces
+appliesTo: [RAG platform, Coding assistant, Agent system]
+decisions:
+  - Which decisions the platform team owns and which it only implements
+  - Who signs a threshold, and what they are signing
+  - Where an exception lives, and when it expires
+anchors:
+  - label: Five decisions
+    anchor: five-decisions-inside-one-guardrail
+  - label: Three lines
+    anchor: mapping-onto-the-three-lines-model
+  - label: The ownership table
+    anchor: the-control-to-evidence-table
+  - label: Exceptions
+    anchor: the-exception-is-the-control
+  - label: Worked example
+    anchor: worked-example-pii-in-responses
+  - label: Where it breaks
+    anchor: where-this-blueprint-stops-working
+references: [ch-10, ch-06]
+patterns: [approval-gate, escalation-path]
+sources:
+  - title: "The IIA's Three Lines Model: An Update of the Three Lines of Defense"
+    url: https://www.theiia.org/globalassets/site/communication/2020/three-lines-model-updated.pdf
+    authors: [Institute of Internal Auditors]
+    year: 2020
+  - title: "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1"
+    url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf
+    authors: [National Institute of Standards and Technology]
+    year: 2023
+  - title: "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile, NIST AI 600-1"
+    url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+    authors: [National Institute of Standards and Technology]
+    year: 2024
+  - title: "OWASP Top 10 for LLM Applications 2025"
+    url: https://genai.owasp.org/llm-top-10/
+    year: 2025
+---
+
+import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+A platform team ships a detector, picks a threshold because someone had to, inherits the alert queue because they built the dashboard, and six months later is being asked in an audit to justify a risk appetite decision it was never authorised to make.
+
+The machinery in the previous four blueprints can all be correct and still produce that outcome, because a guardrail is not one decision owned by one team. It is five, and they have different owners, different evidence and different review cadences.
+
+## Five decisions inside one guardrail
+
+Separate them, because conflating them is what produces the unowned threshold.
+
+**What we detect.** Which risk categories are in scope at all: prompt injection, PII, harmful content, system prompt leakage, policy violations, tool-use risk. This is a risk decision, not an engineering one. It follows from what the system does and what regulation applies to it.
+
+**How we detect it.** Technique, sourcing, composition, the interface contract. This is genuinely the platform team's, and it is the only one of the five where the platform team should have the final word. ARCH-002 is entirely inside this box.
+
+**How hard we detect.** The threshold. As ARCH-003 sets out, a threshold is a statement about how much worse a missed attack is than a false alarm. Someone has to own that ratio, and it cannot be the person optimising the model, because they are measured on a different thing.
+
+**What happens when it fires.** The action: allow, block, redact, mask, escalate, require approval. The choice trades user harm against system harm, so product proposes and the risk owner approves. One approver, not a committee, because an action that two functions jointly own is one nobody can change on the day it is wrong.
+
+**Who looks at the output.** The alert queue, the review workflow, the escalation path, and what happens when nobody looks for a week. This is an operations decision with a staffing cost attached, and it is the one most often left implicit.
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-005-decision-rights.svg"
+  alt="Five decisions inside a guardrail, each with its accountable owner, the evidence it produces, and its review cadence, with the platform team owning only the technique decision outright."
+  caption="The platform team builds all five. It owns one."
+/>
+
+<PullQuote>The platform team implements five decisions and is accountable for one. Every programme that inverts that ends up with an engineer defending a risk appetite in an audit.</PullQuote>
+
+## Mapping onto the Three Lines Model
+
+Regulated organisations already have a structure for this, and guardrails should use it rather than invent a parallel one. The Institute of Internal Auditors replaced the older Three Lines of Defence with the Three Lines Model in 2020, dropping "defence" to stop the framing being purely protective.
+
+Two things the model actually says, because they are routinely misquoted. Second line roles "provide assistance with managing risk", supplying "complementary expertise, support, monitoring, and challenge" to the first line. And responsibility for managing risk "remains a part of first line roles and within the scope of management". The model does not hand the second line approval authority over anything.
+
+So the mapping below is a recommended design, not something the IIA prescribes. It is the assignment that has held up in regulated environments, and the reason to write it down is that the model deliberately leaves it open.
+
+**First line owns and operates the control.** The product team and the platform team that build the AI system also build, run and monitor its guardrails. They pick techniques, write detectors, run the pipeline, hold the error budget, and respond first when something fires. This is the line that produces almost all the evidence.
+
+**Second line sets the standard and challenges the first.** Risk, compliance, model risk management, and the AI governance function. In this design they define which categories are mandatory for which tier of system, hold approval on thresholds, own the policy that maps verdicts to actions, and review the false negative analysis with an independent eye. They do not build detectors. Note that this is an assignment of approval authority the organisation makes; under the model itself, the first line still carries responsibility for the risk whether or not the second line signed the threshold.
+
+**Third line provides independent assurance.** Internal audit tests whether the first two lines did what they said. Their question is never "is the detector accurate", it is "can you show me the decision record for a blocked request in March, who approved this threshold, and when it was last revalidated". Design for that question and the audit is uneventful.
+
+<Callout type="warn" label="The anti-pattern that survives every reorg">
+Second line writing detector requirements at the level of "the model must be 95 percent accurate". That is an unownable requirement, because as ARCH-003 shows, accuracy against a rare attack is dominated by the easy negatives, and precision depends on traffic the second line does not control. The reviewable second-line requirement is a cost ratio and a category list, not a metric target.
+</Callout>
+
+The governing body sits above all three and, in practice, owns exactly one thing here: the statement of risk appetite that makes the cost ratios decidable. If nobody has written that down, every threshold argument becomes a negotiation between two teams with no tiebreaker.
+
+## The control-to-evidence table
+
+The artefact that makes ownership real is a table with five columns, maintained per control rather than per system. Anything less than five columns has a gap someone will fall through.
+
+| Column | What it holds | Failure if missing |
+|---|---|---|
+| Control | The specific check, at a specific chokepoint | Two teams argue about a "PII control" that means different things at retrieval and response |
+| Accountable owner | One named role, never a team | Shared ownership resolves to nobody at 2am |
+| Evidence | The artefact that proves it ran and worked | Assurance becomes an interview rather than a review |
+| Frequency | How often the evidence is produced and reviewed | Controls decay silently between annual audits |
+| Escalation | Who is told, how fast, when it fails or is bypassed | The first escalation path gets designed during the incident |
+
+This is the same shape a control library takes in any mature risk function, which is the point. Guardrails are not a new governance object. They are a new control type inside an existing governance object, and presenting them as something exotic is how programmes end up outside the process that would have resourced them.
+
+## The exception is the control
+
+Every guardrail programme generates exception requests, and they arrive early: a team that needs enforcement relaxed for a launch, a category that produces too many false positives for one workflow, a tool that cannot pass the approval gate on the current timeline.
+
+Exceptions are not a governance failure. Refusing to design for them is, because the alternative is not fewer exceptions, it is undocumented ones. An exception record needs a bounded scope, a justification, a compensating control that addresses the same harm, a named second-line approver, and an expiry. The values below are illustrative; the fields are the point.
+
+```yaml
+exception:
+  id: EXC-2026-0143
+  control: pii_in_response.mask        # the action this system actually applies
+  scope:                               # never "global"
+    system: rag-assistant-eu
+    surface: internal_research_desk
+  justification: >
+    Masking rewrites account identifiers inside quoted source passages,
+    which breaks the citation renderer and makes the quoted document
+    unverifiable against the original.
+  compensating_control: >
+    Retrieval-layer entitlement filtering stays enforcing on this surface,
+    so a requester can only receive passages from documents they are
+    already entitled to read. The residual risk is onward sharing rather
+    than disclosure to an unentitled party. Every response on this surface
+    writes a decision record, and a sample is reviewed monthly.
+  residual_risk_accepted_by: risk.director.markets
+  approved_by: risk.director.markets    # second line, not first
+  granted: 2026-08-19
+  expires: 2026-11-19                   # required field
+  review_owner: platform.guardrails
+```
+
+Two properties carry the weight. The expiry, because an exception without one is a permanent silent change to the control environment made by whoever was in the room, and expiry forces the conversation to happen again once the pressure that produced it has passed. Set a maximum life for exceptions in your standard rather than per request.
+
+And the compensating control, which has to address the same harm as the control it replaces. This is where most exception records are weak: entitlement filtering compensates for a relaxed response-side PII control precisely because it bounds who could have received the content in the first place. Sampling after the fact does not compensate for anything, because the disclosure has already happened. Sampling is detection of control failure, not mitigation of it.
+
+<Callout type="tip" label="The exception register is your best risk report">
+The list of live exceptions, sorted by age, is a more honest picture of a guardrail programme than any dashboard of detector accuracy. If the same exception keeps being renewed, the control is wrong, not the requester.
+</Callout>
+
+## Worked example: PII in responses
+
+One control, filled in completely, for an enterprise RAG assistant that answers questions over internal documents. The system is illustrative and so are its numbers; the shape of the record is what transfers.
+
+**The control.** Detect personally identifiable information in generated responses, at the response chokepoint, before text reaches the user.
+
+**The five decisions, assigned:**
+
+| Decision | Owner | What they actually decide |
+|---|---|---|
+| What we detect | Second line: privacy office | Which PII categories are in scope for this jurisdiction and system tier |
+| How we detect it | First line: platform guardrails team | NER for unstructured entities, rules for structured identifiers, composed by verdict |
+| How hard | Second line: privacy office, with first-line analysis | A cost ratio that puts a missed disclosure far above a false mask, so tune for recall and mitigate automatically |
+| What happens | Product and risk, jointly | Mask rather than block, because the task should still complete |
+| Who looks | First line: platform operations | Sampled review queue, not an alert per event, given the precision this ratio implies |
+
+**The ownership record:**
+
+| Field | Value |
+|---|---|
+| Control | `pii_in_response` at the response chokepoint |
+| Accountable owner | Head of AI Platform (first line) |
+| Standard owner | Data Privacy Officer (second line) |
+| Evidence | Weekly detector regression report; monthly sampled-review findings; decision records for every masked response |
+| Frequency | Regression weekly and on every detector change; sampled review monthly; threshold revalidation twice a year or on material traffic change |
+| Escalation | Detector unavailable beyond the agreed outage threshold, or a confirmed unmasked disclosure, pages the platform on-call and notifies the privacy office inside the notification window the privacy standard sets |
+
+**What the evidence pack actually contains**, because "evidence" without a contents list is where this gets vague:
+
+```
+evidence/pii_in_response/2026-08/
+  regression-2026-08-12.json      detector version, test set version,
+                                  precision and recall with intervals
+  threshold-approval.pdf          signed cost ratio, approver, date,
+                                  the traffic assumption it rests on
+  sampled-review-2026-08.csv      sampled masked responses, reviewer
+                                  verdicts, inter-reviewer disagreement
+  decision-records/               one per masked response, per ARCH-004
+  exceptions.yaml                 live exceptions against this control
+  incident/                       empty this period
+```
+
+None of those artefacts contains a prompt or a response. The decision records carry identifiers, detector and policy versions, verdicts and outcomes, and they point at the content archive by reference rather than embedding it. ARCH-007 specifies why that separation is what makes long retention affordable.
+
+**What this buys you in an audit.** Third line asks why a customer saw a masked account number in March. The decision record names the detector version, the threshold version, the policy version and the action. The threshold approval names who accepted the cost ratio and on what traffic assumption. The regression report shows the detector was performing within its measured interval that week. That is a complete answer in four artefacts, and none of them were written for the audit.
+
+## Where this blueprint stops working
+
+**Small organisations do not have three lines.** In a company where the same person owns product and risk, the model collapses into a checklist rather than a structure. It still helps to keep the five decisions separate and to write down who made each one, because the value was never the org chart. It was the separation of the threshold decision from the model decision.
+
+**Ownership does not survive a reorg on its own.** A control-to-evidence table with a named role in it is stale the moment that role changes hands. The table needs an owner too, and the only durable answer is to attach the control to a role that appears in the system of record rather than to a person, then review the mapping on the same cadence as the controls.
+
+**Decision rights say nothing about competence.** Assigning threshold approval to a second-line function that has no statistical support will produce approvals that are formally correct and empirically meaningless. The blueprint gives you the shape; a second line that can read a precision interval is what gives you the substance, and that capability is usually the real constraint.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 10: Governance", href: "/book/10-governance/" },
+    { label: "Ch 6: Evaluating and Hardening Agents", href: "/book/06-evaluating-and-hardening/" },
+  ]}
+  readNext={{ label: "ARCH-006: The Guardrail Lifecycle", href: "/architecture/006-the-guardrail-lifecycle/" }}
+/>

@@ -1,0 +1,195 @@
+---
+id: arch-007
+title: Telemetry, Audit and the Review Loop
+dek: The control plane produces three different things people call logs, with three different retention rules and three different audiences. Merging them is how a system ends up unable to answer a regulator and full of sensitive data at the same time.
+description: "What an AI control plane emits, how a decision is traced across six chokepoints, why the audit trail is itself a leak surface, how to design a review queue reviewers keep taking seriously, and the loop that turns a red-team finding or an incident into a detector change. Includes a worked example for system prompt leakage."
+layer: evidence
+order: 7
+readingTime: 11
+updated: 2026-08-19
+specifies: The telemetry, audit and human review machinery around an AI control plane
+appliesTo: [RAG platform, Coding assistant, Agent system]
+decisions:
+  - Which of the three log types each fact belongs in
+  - What a reviewer sees, and how much of it
+  - How a red-team finding becomes a threshold or detector change
+anchors:
+  - label: Three kinds of log
+    anchor: three-kinds-of-log
+  - label: Tracing a decision
+    anchor: tracing-one-decision-across-six-chokepoints
+  - label: The audit trail leaks
+    anchor: the-audit-trail-is-a-leak-surface
+  - label: The review queue
+    anchor: designing-a-queue-people-keep-reading
+  - label: The feedback loop
+    anchor: the-loop-from-finding-to-change
+  - label: Worked example
+    anchor: worked-example-system-prompt-leakage
+  - label: Where it breaks
+    anchor: where-this-blueprint-stops-working
+references: [ch-10, ch-11]
+patterns: [trace-the-truth, failure-buckets]
+sources:
+  - title: "OWASP Top 10 for LLM Applications 2025"
+    url: https://genai.owasp.org/llm-top-10/
+    year: 2025
+  - title: "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile, NIST AI 600-1"
+    url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+    authors: [National Institute of Standards and Technology]
+    year: 2024
+  - title: "OpenTelemetry Tracing API specification"
+    url: https://opentelemetry.io/docs/specs/otel/trace/api/
+    authors: [OpenTelemetry Authors]
+---
+
+import Callout from '~/components/universal/Callout.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+The observability layer of an AI system is where two requirements collide head on. Assurance wants to reconstruct any decision months later: which detectors ran, what they said, what the system did. Privacy wants the prompts and responses gone, because they are the same sensitive material the controls exist to protect. Both are right, and a single log store cannot satisfy both.
+
+The resolution is not a compromise on retention. It is recognising that what teams call "the logs" is three separate stores. ARCH-001 made the related point that logging prevents nothing and is itself a leak surface; this blueprint is what follows from taking that seriously.
+
+## Three kinds of log
+
+<ArchitectureDiagram
+  wide
+  src="/assets/diagrams/arch-007-three-logs.svg"
+  alt="Three log stores side by side: operational telemetry, the decision record, and the content archive, each with its own contents, retention period, access control and audience."
+  caption="Different contents, different retention, different readers. One store cannot serve all three."
+/>
+
+**Operational telemetry.** Counters, latencies, error rates, detector availability, queue depth. No content, no identifiers beyond a request id. Short retention, wide access, and it is what the on-call engineer looks at. This is the only one of the three that can be sampled without an argument.
+
+**The decision record.** One per decision, per ARCH-004: which detectors ran and at which versions, what they returned, which policy version applied, what action was taken, whether anything was degraded, who overrode it. Long retention, narrow access. It contains no prompts and no responses, only identifiers, versions, verdict metadata and content hashes, and that constraint is what makes long retention affordable.
+
+A record only carries weight in an audit if it cannot have been edited afterwards. Append-only storage, a hash chain over the sequence, and write credentials separate from the application's own are the minimum; without them you have a log that asserts a control ran, not evidence that it did.
+
+**The content archive.** The actual prompts, retrieved chunks and responses. This is the only store that answers "what exactly did the user see", and it is the one that is itself a disclosure risk. Short retention by default, access on a break-glass basis, encrypted separately. Where a detector has already located the sensitive span, the archive holds the masked form plus offsets rather than the raw value; the raw text survives only where a defensible purpose requires it and only for as long as that purpose lasts.
+
+The decision record references the content archive by id rather than embedding it. When the archive expires, the decision record survives, and you can still prove that a control ran and what it did without holding the sensitive text forever.
+
+<PullQuote>Keep the fact that a decision was made for years. Keep the text that decision was about for weeks. Conflating those two is how audit requirements turn into a data protection finding.</PullQuote>
+
+## Tracing one decision across six chokepoints
+
+A single user question can touch retrieval, prompt, response and one or more tool calls, each with its own detectors. Assurance questions are almost never about one chokepoint. They are about one request.
+
+That makes correlation the most load-bearing part of the whole design. A single flat id is not enough once anything runs concurrently or asynchronously: parallel detectors, a fan-out to three tools, and a nested agent call all need to be distinguishable and orderable afterwards. Use the trace model everyone else already uses, rather than inventing one. A `trace_id` for the request, a `span_id` per operation with its parent, and explicit links where a later operation was caused by an earlier one across a queue boundary. The OpenTelemetry trace API defines these, and reusing it means your control-plane evidence lands in the same tooling as the rest of your traces.
+
+```
+request_id: 8f2a...     ← minted at the edge, never regenerated
+  ├─ retrieval    12 chunks considered, 3 filtered by entitlement
+  │                detectors: injection_scan → clear
+  ├─ prompt       assembled, provenance preserved
+  │                detectors: injection_scan → abstain
+  ├─ response     detectors: pii_scan → flagged (band: above)
+  │                policy 2026-08-18.3 → mask
+  ├─ tool  send_email   BLOCKED
+  │                reversal_cost impossible via exposure promotion
+  │                decision: require_approval → not granted, expired
+  └─ logging      content archived, id c4d1..., retention 30d
+```
+
+Three things this makes answerable that a per-detector log cannot. Whether a control was present but silent versus absent entirely, which is the difference between a tuning problem and a coverage gap. Whether the retrieval filter did work that the response detector then got credit for. And whether the blocked tool call came from the same request as the flagged response, which is the difference between one incident and two.
+
+<Callout type="warn" label="The abstain that reads as clear">
+In the trace above, `injection_scan` abstained at the prompt layer. A dashboard that counts "detectors that did not flag" will show that request as clean twice. Abstentions need their own series, because a rising abstention rate is the earliest signal that traffic has moved away from what the detector was trained on.
+</Callout>
+
+## The audit trail is a leak surface
+
+The store that proves your controls worked is full of the exact material those controls exist to protect. Four rules keep that from becoming its own incident.
+
+**Redact on write, not on read.** If the content archive holds raw PII and access control is the only protection, then every future integration, export and backup is a new copy of the problem. Where the detector already found the span, store the masked form and the span offsets.
+
+**Access to the archive is itself a logged decision.** Break-glass reads produce their own records: who, when, which request, stated reason. If reading the archive is easier than filing a ticket, it will become routine.
+
+**Separate the encryption boundary.** The decision record and the content archive should not be readable with the same credential. The most common realistic breach here is not an attacker, it is an overly broad internal analytics grant.
+
+**Set each store's retention from its own obligation, and reconcile them deliberately.** Teams default to the longest period any stakeholder mentions, applied to everything, because deleting feels risky. Split the question instead. The decision record is evidence, so its retention follows whatever records-retention rule governs control evidence in your jurisdiction and sector. The content archive is personal data, so its retention follows the data protection principle that you keep it no longer than the purpose requires. Those two obligations point in opposite directions, which is exactly why they cannot live in one store. Where they genuinely conflict, that is a decision for legal and the privacy office to make and record, not for a platform default.
+
+## Designing a queue people keep reading
+
+ARCH-003 established that a good detector against a rare attack can be wrong nine times out of ten. That arithmetic has an organisational consequence: an alert queue fed by raw detector output will be abandoned, and the abandonment is rational.
+
+Four design rules follow.
+
+**Route by precision band, not by severity.** The high-precision band goes to humans. The low-precision band goes to an automatic mitigation that is cheap to be wrong about, such as masking or an extra verification pass. Severity decides the action; precision decides who looks.
+
+**Show the reviewer the evidence, not the score.** A reviewer cannot act on "0.87". They can act on the matched span, the surrounding text, the category, and what the system did about it. The `evidence` field in the detector contract exists for this.
+
+**Give the queue a service level and staff to it.** A queue with no target response time and no headcount attached is a backlog with a dashboard. If the volume implied by your threshold exceeds what you can staff, the threshold is wrong, not the reviewers.
+
+**Measure the reviewers.** Sample agreement between reviewers on the same items. A queue where two reviewers disagree half the time is not producing labels you can tune against, and that disagreement is also the ceiling on your test set quality, per ARCH-003.
+
+## The loop from finding to change
+
+Red teaming and incidents both produce the same raw material: a case the current controls handled wrongly. Without a defined path, those findings become a slide deck.
+
+| Stage | Owner | Output | Cadence |
+|---|---|---|---|
+| Finding | Red team, incident review, or a reviewer disagreement | A reproducible case with expected and actual behaviour | Continuous |
+| Triage | First line, guardrails team | Which chokepoint should have caught it, and which control | Weekly |
+| Disposition | Threshold owner with first line | Fix detector, move threshold, change policy, add a control, or accept | Weekly |
+| Test set | First line | The case is added to the versioned eval set, labelled | With the change |
+| Verify | Regression gate in CI, per ARCH-006 | The case passes, and nothing else regressed | On merge |
+| Close | Second line for Tier 1 and 2 | Finding closed with the change that closed it | Monthly review |
+
+The step teams skip is the fourth. A fix that does not add the case to the eval set is a fix that will be regressed by the next model change, silently. Every closed finding should leave behind a permanent test.
+
+## Worked example: system prompt leakage
+
+A coding assistant with a system prompt containing internal tool names and repository conventions. OWASP lists system prompt leakage as LLM07, and ARCH-001 puts the response layer as the only chokepoint where the leak is observable.
+
+**What each store holds for one leak event:**
+
+```
+operational telemetry
+  detector.sysprompt_leak.fired  +1     (no content)
+  detector.sysprompt_leak.p95_ms 42
+  action.block                   +1
+
+decision record  (retention per your evidence rule; no content)
+  request_id        8f2a...
+  chokepoint        response
+  principal         svc:code-assist / user:1042
+  detectors_run     sysprompt_leak@2026-07-02, pii_scan@2026-06-11
+  verdicts          sysprompt_leak: flagged, band above,
+                    categories [system_prompt_fragment],
+                    evidence_ref ev:9931
+  policy_version    2026-08-18.3
+  action            block
+  outcome           blocked
+  degraded          false
+
+content archive  (short retention, break-glass, separately encrypted)
+  ev:9931   the matched span, masked, with offsets
+  c4d1...   full prompt and response, encrypted
+```
+
+**The review path.** This detector is high precision, so it goes to a human queue rather than to sampling. The reviewer sees the masked span, the category and the action, not the raw system prompt.
+
+**The loop, on this case.** The record above is a true positive: the detector fired and the response was blocked, so nothing leaked. It still enters the loop, because a reviewer confirms the classification and the case becomes a labelled example.
+
+The loop matters more in the other direction. In the same period a red-team exercise finds a phrasing family that gets a fragment of the system prompt out *without* firing this detector. That is a genuine false negative, and it has no decision record showing a flag, which is precisely why red teaming and not the queue is what surfaces it. Triage puts it at the response chokepoint, correctly. Disposition is to extend the detector's rules rather than lower the threshold, because precision is already good and the gap is coverage, and lowering the threshold would buy recall by flooding the queue. The case joins `eval/sysprompt-v4.jsonl` with its label, the regression gate proves it now passes and that precision did not drop, and second line closes the finding at the monthly review.
+
+**What this costs.** Measure your own per-event review time and write it down, because a programme that cannot state that number cannot tell whether a threshold change is affordable. It is the multiplier that turns a change in false positive rate into a headcount conversation, and it is the number missing from most threshold proposals.
+
+## Where this blueprint stops working
+
+**Three stores is more infrastructure than a small deployment will accept.** For a Tier 3 system the honest answer is one store with short retention and tight access, and an explicit acceptance that you will not be able to reconstruct a decision from six months ago. Say it, rather than discovering it during an audit.
+
+**Traces do not survive every architecture.** Batch pipelines, asynchronous agents and anything queue-driven will break naive correlation id propagation, and a partial trace is worse than none because it looks complete. If the id cannot survive a hop, record the discontinuity explicitly at the boundary.
+
+**Review capacity is the real constraint, and it does not scale with traffic.** Every threshold conversation is implicitly a staffing conversation, and the queue is the first thing to degrade under cost pressure. A control whose design assumes human review, in an organisation that will not fund human review, is a control that will silently become allow-and-log.
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 10: Governance", href: "/book/10-governance/" },
+    { label: "Ch 11: Security Deep Dive", href: "/book/11-security/" },
+  ]}
+  readNext={{ label: "ARCH-008: Production Execution", href: "/architecture/008-production-execution/" }}
+/>
