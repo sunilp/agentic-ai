@@ -35,5 +35,5 @@ No filler. No listicles. No "5 things you should know about X." If a claim canno
 The cadence is the subscription. Two new issues per week. The archive is the through-line.
 
 - [GitHub repository](https://github.com/sunilp/agentic-ai) -- code companion to every issue
-- [Building AI Systems newsletter](https://www.linkedin.com/newsletters/building-ai-systems-7310391508670377984/) -- selected Field Notes also land here
+- [Building AI Systems newsletter](https://www.linkedin.com/newsletters/building-ai-systems-7437710572604870656/) -- selected Field Notes also land here
 - [@sunilprakash on LinkedIn](https://www.linkedin.com/in/sunilprakash/) -- where new issues are announced
