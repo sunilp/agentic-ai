@@ -129,7 +129,7 @@ export const ENTRIES: Entry[] = [
     layer: 'control',
     primaryStage: 'design',
     alsoStages: ['govern'],
-    oneLine: 'Authority narrows at every hop and never widens.',
+    oneLine: 'Authority never widens at any hop.',
     status: 'restated',
     nearestPrior: [
       {

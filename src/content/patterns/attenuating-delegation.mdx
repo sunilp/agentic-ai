@@ -1,5 +1,5 @@
 ---
-description: "Why a subagent must receive strictly fewer permissions than the agent that called it, how authority attenuates at each hop of a delegation chain, and what breaks when a chain re-grants what an earlier hop gave up."
+description: "Why a subagent must receive no more permissions than the agent that called it, how authority attenuates at each hop of a delegation chain, and what breaks when a chain re-grants what an earlier hop gave up."
 updated: 2026-08-21
 readingTime: 7
 forces:
@@ -41,7 +41,7 @@ The identity does survive the hop, in most systems, in exactly the wrong sense. 
 
 ## The pattern
 
-The rule is simple to state and inconvenient to build: authority narrows at every hop, and never widens. Whatever a subagent receives from its caller must be expressible as a restriction of what the caller held, never as an addition to it.
+The rule is simple to state and inconvenient to build: authority never widens at any hop. Whatever a subagent receives from its caller must be expressible as a restriction of what the caller held, never as an addition to it.
 
 The mechanism is not new. Macaroons, described by Birgisson et al. in 2014, attenuate a credential by contextual caveat: a holder derives a new macaroon from one it holds by appending a caveat, a predicate the credential must satisfy at verification time, and no operation removes a caveat once added. A derived macaroon is therefore never more powerful than its parent, though it can be exactly as powerful if nothing new was added: the guarantee is that authority never widens, not that every hop must shrink it. That mechanism was built for cookies and cloud services, not agents; this pattern carries the same idea into a delegation chain between agents. That is a restatement of an established mechanism in a new context, not a discovery, and the honest thing to do is say so plainly.
 
@@ -73,4 +73,4 @@ A scoped internal pilot, running against no production data, can defer the full 
 
 ## Related patterns
 
-Bounded Grant supplies the shape a narrowed grant has to have: scope, magnitude, expiry, and revocation, all four or none. Authority at the Call Site is where the narrowing actually gets enforced, at the tool call rather than upstream of it. Capability Gate and Approval Gate cover the actions no grant, however tightly scoped, should be allowed to authorize on its own: destructive and irreversible acts stay behind a gate regardless of what the calling agent's credential says. Decision Record is what lets an auditor replay, after the fact, exactly which caveat chain authorized a given action and against which policy version, which is the only way to confirm, once a chain is long enough that nobody holds the whole thing in their head, that no hop quietly re-granted what an earlier one gave up.
+[Bounded Grant](/patterns/#bounded-grant) supplies the shape a narrowed grant has to have: scope, magnitude, expiry, and revocation, all four or none. [Authority at the Call Site](/patterns/#authority-at-the-call-site) is where the narrowing actually gets enforced, at the tool call rather than upstream of it. [Capability Gate](/patterns/#capability-gate) and [Approval Gate](/patterns/#approval-gate) cover the actions no grant, however tightly scoped, should be allowed to authorize on its own: destructive and irreversible acts stay behind a gate regardless of what the calling agent's credential says. [Decision Record](/patterns/#decision-record) is what lets an auditor replay, after the fact, exactly which caveat chain authorized a given action and against which policy version. That is the only way to confirm, once a chain is long enough that nobody holds the whole thing in their head, that no hop quietly re-granted what an earlier one gave up.
