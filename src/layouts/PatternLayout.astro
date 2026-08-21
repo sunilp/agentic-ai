@@ -7,9 +7,11 @@ import Reader from '~/components/layout/Reader.astro';
 import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Tag from '~/components/universal/Tag.astro';
-import Callout from '~/components/universal/Callout.astro';
+import PatternCard from '~/components/universal/PatternCard.astro';
+import Sources from '~/components/universal/Sources.astro';
 import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
 import { entriesToContentEntries } from '~/lib/content-helpers';
+import { bySlug } from '~/data/pattern-language';
 
 interface Props {
   entry: CollectionEntry<'patterns'>;
@@ -17,6 +19,8 @@ interface Props {
 
 const { entry } = Astro.props;
 const d = entry.data;
+const meta = bySlug(entry.id);
+if (!meta) throw new Error(`No pattern-language entry for ${entry.id}`);
 
 const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns] = await Promise.all([
   getCollection('chapters'),
@@ -46,37 +50,40 @@ const collectionRoute: Record<string, string> = {
 ---
 
 <PageLayout
-  title={`${d.name} — Patterns`}
-  description={d.oneLine}
-  currentNav="Book"
+  title={`${meta.name}, Patterns`}
+  description={d.description}
+  currentNav="Patterns"
 >
   <Container>
     <Reader>
-      <Tag>Pattern</Tag>
-      <KineticHeading level={1}>{d.name}</KineticHeading>
-      <Dek italic>{d.oneLine}</Dek>
+      <Tag>{meta.kind === 'pattern' ? 'Pattern' : 'Anti-pattern'}</Tag>
+      <KineticHeading level={1}>{meta.name}</KineticHeading>
+      <Dek italic>{meta.oneLine}</Dek>
+
+      <PatternCard entry={meta} forces={d.forces} />
 
       {d.diagram && (
         <figure class="pattern-diagram">
-          <img src={d.diagram} alt={`${d.name} pattern diagram`} loading="lazy" />
+          <img src={d.diagram} alt={`${meta.name} pattern diagram`} loading="lazy" />
         </figure>
-      )}
-
-      <h2 class="pattern-section-heading">When to use</h2>
-      <div class="pattern-section" set:html={d.whenToUse} />
-
-      <h2 class="pattern-section-heading">When not to use</h2>
-      <div class="pattern-section" set:html={d.whenNotToUse} />
-
-      {d.antiPattern && (
-        <Callout type="warn" label="Anti-pattern">
-          <div set:html={d.antiPattern} />
-        </Callout>
       )}
 
       <article class="pattern-body">
         <slot />
       </article>
+
+      {meta.blueprints && meta.blueprints.length > 0 && (
+        <section class="pattern-specified-in">
+          <h2>Specified in</h2>
+          <ul>
+            {meta.blueprints.map((id) => (
+              <li><a href={`/architecture/${id}/`}>{id}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <Sources items={d.sources} />
 
       {links.mentionedIn.length > 0 && (
         <section class="pattern-used-in">
