@@ -444,7 +444,7 @@ export const ENTRIES: Entry[] = [
     kind: 'anti-pattern',
     layer: 'capability',
     primaryStage: 'design',
-    oneLine: 'A fixed sequence of steps dressed up as autonomy, with all the unpredictability and none of the benefit.',
+    oneLine: 'A fixed sequence dressed as autonomy, buying unpredictability without earning the benefit.',
     status: 'restated',
     nearestPrior: [
       {
@@ -466,12 +466,14 @@ export const REFERENCED: Referenced[] = [
   { slug: 'self-reflection', name: 'Self-Reflection', who: 'Liu et al.', url: LIU_ET_AL, year: 2025 },
   { slug: 'cross-reflection', name: 'Cross-Reflection', who: 'Liu et al.', url: LIU_ET_AL, year: 2025 },
   { slug: 'human-reflection', name: 'Human Reflection', who: 'Liu et al.', url: LIU_ET_AL, year: 2025 },
-  { slug: 'rag', name: 'Retrieval Augmented Generation', who: 'Subramaniam and Fowler', url: 'https://martinfowler.com/articles/gen-ai-patterns/', year: 2025 },
+  { slug: 'rag', name: 'Retrieval Augmented Generation (RAG)', who: 'Subramaniam and Fowler', url: 'https://martinfowler.com/articles/gen-ai-patterns/', year: 2025 },
   { slug: 'hybrid-retriever', name: 'Hybrid Retriever', who: 'Subramaniam and Fowler', url: 'https://martinfowler.com/articles/gen-ai-patterns/', year: 2025 },
   { slug: 'query-rewriting', name: 'Query Rewriting', who: 'Subramaniam and Fowler', url: 'https://martinfowler.com/articles/gen-ai-patterns/', year: 2025 },
   { slug: 'reranker', name: 'Reranker', who: 'Subramaniam and Fowler', url: 'https://martinfowler.com/articles/gen-ai-patterns/', year: 2025 },
+  { slug: 'attention-engineering', name: 'Attention Engineering', who: 'Intelligence Patterns', url: 'https://agents.kour.me/attention-engineering/' },
+  { slug: 'context-editing', name: 'Context Editing', who: 'Intelligence Patterns', url: 'https://agents.kour.me/context-editing/' },
+  { slug: 'filesystem-as-context', name: 'Filesystem as Context', who: 'Intelligence Patterns', url: 'https://agents.kour.me/external-memory/' },
   { slug: 'constrained-tool-use', name: 'Constrained Tool Use', who: 'Intelligence Patterns', url: 'https://agents.kour.me/constrained-tool-use/' },
-  { slug: 'planner-checker', name: 'Planner-Checker', who: 'Intelligence Patterns', url: 'https://agents.kour.me/planner-checker/' },
 ];
 
 export const RETIRED: Record<string, string> = {
