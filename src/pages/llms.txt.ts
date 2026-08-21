@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { byLayer, type Layer } from '~/data/pattern-language';
 
 // Generated llms.txt: a curated, link-first index of the Lab for LLMs and
 // answer engines. Built from the content collections so it never goes stale.
@@ -35,6 +36,14 @@ export async function GET(context: APIContext) {
     .map((e) => `- [${e.data.title}](${base}/book/${e.id}/): ${e.data.description ?? ''}`)
     .join('\n');
 
+  const LAYER_LABEL: Record<Layer, string> = { capability: 'Capability', control: 'Control', evidence: 'Evidence' };
+  const patterns = (['capability', 'control', 'evidence'] as const)
+    .map((layer) => {
+      const items = byLayer(layer).map((e) => `- ${e.name}: ${e.oneLine}`).join('\n');
+      return `### ${LAYER_LABEL[layer]}\n${items}`;
+    })
+    .join('\n\n');
+
   const body = `# Agent Engineering Lab
 
 > A working publication on building agent systems that survive contact with reality. Field Notes, Signals, Recipes, Lab Notes, Architecture blueprints, and an interactive Bench, grounded in evidence. Written by Sunil Prakash.
@@ -52,6 +61,11 @@ The Lab is a layered editorial system. The book is the canonical reference. Four
 ${arch}
 
 Index: ${base}/architecture/
+
+## Patterns
+${patterns}
+
+Index: ${base}/patterns/
 
 ## Field Notes
 ${fn}

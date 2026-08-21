@@ -116,4 +116,20 @@ describe('pattern language data', () => {
       }
     }
   });
+
+  it('resolves every blueprints value to a real architecture entry', () => {
+    const dir = new URL('../content/architecture/', import.meta.url);
+    const archIds = new Set(
+      readdirSync(dir)
+        .filter((f) => f.endsWith('.mdx'))
+        .map((file) => readFileSync(new URL(file, dir), 'utf8').match(/^id: (\S+)$/m))
+        .filter((m): m is RegExpMatchArray => m !== null)
+        .map((m) => m[1]),
+    );
+    for (const e of ENTRIES) {
+      for (const archId of e.blueprints ?? []) {
+        expect(archIds.has(archId), `${e.slug} names unknown blueprint "${archId}"`).toBe(true);
+      }
+    }
+  });
 });

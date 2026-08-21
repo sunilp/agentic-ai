@@ -38,6 +38,9 @@ const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any
 // entriesToContentEntries falls back to entry.id when data.id is absent.
 const links = getReverseLinks(reverseIndex, entry.id);
 
+const blueprintEntries = await getCollection('architecture');
+const blueprintFor = (archId: string) => blueprintEntries.find((b) => b.data.id === archId);
+
 const collectionRoute: Record<string, string> = {
   chapters: '/book',
   fieldNotes: '/field-notes',
@@ -76,9 +79,12 @@ const collectionRoute: Record<string, string> = {
         <section class="pattern-specified-in">
           <h2>Specified in</h2>
           <ul>
-            {meta.blueprints.map((id) => (
-              <li><a href={`/architecture/${id}/`}>{id}</a></li>
-            ))}
+            {meta.blueprints.map((id) => {
+              const b = blueprintFor(id);
+              return b ? (
+                <li><a href={`/architecture/${b.id}/`}>{b.data.title}</a></li>
+              ) : null;
+            })}
           </ul>
         </section>
       )}

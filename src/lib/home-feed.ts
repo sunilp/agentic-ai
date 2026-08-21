@@ -12,7 +12,7 @@
  * Inputs are plain shapes (not astro:content types) so this stays unit-testable.
  */
 
-export type Stream = 'Field Note' | 'Signal' | 'Recipe' | 'Lab' | 'Blueprint';
+export type Stream = 'Field Note' | 'Signal' | 'Recipe' | 'Lab' | 'Blueprint' | 'Pattern';
 
 export interface FeedItem {
   id: string;
@@ -42,6 +42,7 @@ export interface HomeFeedStreams {
   recipes: RecipeIn[];
   labs: LabIn[];
   architecture: BlueprintIn[];
+  patterns?: BlueprintIn[];
 }
 
 export interface HomeFeedOptions { limit?: number; maxBlueprints?: number; }
@@ -81,9 +82,18 @@ export function buildHomeFeed(
       href: `/architecture/${slugOf(e)}/`, date: e.updated, dateLabel: 'Updated', spot: e.spot, minutes: e.readingTime });
   }
 
+  const patterns = (streams.patterns ?? [])
+    .filter((e) => (e.status ?? 'published') === 'published')
+    .sort((a, b) => b.updated.getTime() - a.updated.getTime() || a.order - b.order)
+    .slice(0, maxBlueprints);
+  for (const e of patterns) {
+    items.push({ id: e.id, slug: slugOf(e), stream: 'Pattern', rubric: rubric(e.id, 'Pattern'), title: e.title, dek: e.dek,
+      href: `/patterns/${slugOf(e)}/`, date: e.updated, dateLabel: 'Updated', spot: e.spot, minutes: e.readingTime });
+  }
+
   items.sort((a, b) => b.date.getTime() - a.date.getTime() || a.id.localeCompare(b.id));
 
-  const featuredIdx = items.findIndex((i) => i.stream !== 'Blueprint');
+  const featuredIdx = items.findIndex((i) => i.stream !== 'Blueprint' && i.stream !== 'Pattern');
   const featured = featuredIdx === -1 ? undefined : items[featuredIdx];
   const others = items.filter((_, i) => i !== featuredIdx);
   return { featured, rest: others.slice(0, limit) };
