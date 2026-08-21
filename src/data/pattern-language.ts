@@ -139,7 +139,7 @@ export const ENTRIES: Entry[] = [
       },
     ],
     related: ['bounded-grant', 'authority-at-the-call-site'],
-    blueprints: ['arch-005'],
+    blueprints: ['arch-001'],
   },
   {
     slug: 'authority-at-the-call-site',

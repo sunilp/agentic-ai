@@ -166,8 +166,10 @@ const patterns = defineCollection({
       authors: z.array(z.string()).optional(),
       year: z.number().optional(),
     })).min(1),
-    related: z.array(z.string()).optional(),
-    blueprints: z.array(z.string()).optional(),
+    // `related` and `blueprints` deliberately live ONLY in src/data/pattern-language.ts.
+    // The data module is the single source of truth for catalogue metadata, and an entry
+    // with no essay has no MDX at all, so the data module is the only place an unwritten
+    // entry can record its blueprint.
     anchors: z.array(z.object({ label: z.string(), anchor: z.string() })).min(5),
     diagram: z.string().optional(),
     spot: z.string().optional(),
