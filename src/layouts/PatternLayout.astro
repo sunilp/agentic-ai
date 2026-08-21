@@ -120,22 +120,6 @@ const collectionRoute: Record<string, string> = {
     display: block;
   }
 
-  .pattern-section-heading {
-    margin-top: var(--space-7);
-    margin-bottom: var(--space-3);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--fg-faint);
-  }
-
-  .pattern-section {
-    font-size: var(--body-1);
-    line-height: var(--lh-base);
-  }
-
-  .pattern-section :global(p) {
-    margin: 0 0 var(--space-3);
-  }
-
   .pattern-body {
     margin-top: var(--space-5);
     font-size: var(--body-1);
@@ -147,12 +131,14 @@ const collectionRoute: Record<string, string> = {
     margin: 0 0 var(--space-4);
   }
 
+  .pattern-specified-in,
   .pattern-used-in {
     margin-top: var(--space-7);
     padding-top: var(--space-5);
     border-top: 1px solid var(--fg-faint);
   }
 
+  .pattern-specified-in h2,
   .pattern-used-in h2 {
     font-family: var(--font-mono);
     font-size: var(--meta-2);
@@ -161,6 +147,8 @@ const collectionRoute: Record<string, string> = {
     color: var(--fg-light);
   }
 
+  .pattern-specified-in ul,
   .pattern-used-in ul { list-style: none; padding: 0; }
+  .pattern-specified-in a,
   .pattern-used-in a { font-family: var(--font-mono); font-size: var(--body-3); color: var(--fg); }
 </style>

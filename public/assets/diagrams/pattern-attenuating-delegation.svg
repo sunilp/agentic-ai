@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="672" viewBox="0 0 880 672" role="img" aria-label="A delegation chain of four hops. The grant narrows at the origin, hop one and hop two, then hop three re-grants authority an earlier hop had already removed">
+<defs><marker id="a1" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker></defs>
+<rect width="880" height="672" fill="#ffffff"/>
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Authority narrows at every hop, until one doesn't</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Each hop must derive a grant strictly inside its caller's. The marked row is what happens when one doesn't.</text>
+
+<text x="24" y="78" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">HOP</text>
+<text x="280" y="78" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.4" fill="#6b6b6b">GRANT WIDTH</text>
+<line x1="24" y1="86" x2="860" y2="86" stroke="#1a1a1a" stroke-width="1"/>
+
+<line x1="8" y1="106" x2="8" y2="474" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#a1)"/>
+
+<!-- row 0: ORIGIN -->
+<rect x="0" y="92" width="880" height="124" fill="#fafaf8"/>
+<text x="24" y="122" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">1</text>
+<text x="46" y="122" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">ORIGIN</text>
+<text x="46" y="142" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the case-worker's own session</text>
+<text x="46" y="160" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">the whole branch</text>
+<rect x="280" y="122" width="580" height="24" fill="#1a1a1a"/>
+<text x="280" y="162" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#6b6b6b">region-wide, approve under threshold, session-length</text>
+<line x1="0" y1="216" x2="880" y2="216" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- row 1: HOP 1 -->
+<text x="24" y="246" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">2</text>
+<text x="46" y="246" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">HOP 1</text>
+<text x="46" y="266" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">research subagent, read-only</text>
+<text x="46" y="284" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">spawned for this task</text>
+<rect x="280" y="246" width="380" height="24" fill="#6b6b6b"/>
+<text x="280" y="286" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#6b6b6b">read-only, this case id, session-length</text>
+<line x1="0" y1="340" x2="880" y2="340" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- row 2: HOP 2 -->
+<rect x="0" y="340" width="880" height="124" fill="#fafaf8"/>
+<text x="24" y="370" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">3</text>
+<text x="46" y="370" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">HOP 2</text>
+<text x="46" y="390" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">bureau-lookup tool, one query</text>
+<text x="46" y="408" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">spawned for one lookup</text>
+<rect x="280" y="370" width="190" height="24" fill="#6b6b6b"/>
+<text x="280" y="410" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#6b6b6b">no write, one query, expires in minutes</text>
+<text x="476" y="382" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b">hop 2's limit</text>
+<line x1="0" y1="464" x2="880" y2="464" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- row 3: HOP 3, the failure case -->
+<rect x="0" y="464" width="880" height="124" fill="#f5ece9"/>
+<rect x="0" y="464" width="3" height="124" fill="#9b4a3f"/>
+<text x="24" y="494" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#9b4a3f">4</text>
+<text x="46" y="494" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#9b4a3f">HOP 3</text>
+<text x="46" y="514" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">decisioning subagent</text>
+<text x="46" y="532" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#9b4a3f">wired to a shared service account</text>
+<rect x="280" y="494" width="540" height="24" fill="#9b4a3f"/>
+<text x="280" y="534" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#9b4a3f">branch-wide write, service-account credential</text>
+<text x="280" y="552" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="0.4" fill="#9b4a3f">RE-GRANT: crosses hop 2's limit</text>
+
+<line x1="470" y1="370" x2="470" y2="536" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<circle cx="470" cy="506" r="5" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.6"/>
+
+<line x1="0" y1="588" x2="880" y2="588" stroke="#1a1a1a" stroke-width="1"/>
+
+<rect x="20" y="598" width="14" height="10" fill="#6b6b6b"/>
+<text x="40" y="607" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">grant width, what a hop is allowed to do</text>
+<rect x="380" y="598" width="14" height="10" fill="#9b4a3f"/>
+<text x="400" y="607" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">re-grants past an earlier hop's limit</text>
+
+<text x="0" y="628" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">The chain is only as narrow as its widest hop. A hop that regains authority an earlier one removed is not an edge case.</text>
+<text x="0" y="648" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">It needs a check at the call site, not a policy document upstream of it.</text>
+</svg>
