@@ -126,10 +126,29 @@ describe('pattern language data', () => {
         .filter((m): m is RegExpMatchArray => m !== null)
         .map((m) => m[1]),
     );
-    for (const e of ENTRIES) {
-      for (const archId of e.blueprints ?? []) {
-        expect(archIds.has(archId), `${e.slug} names unknown blueprint "${archId}"`).toBe(true);
-      }
+    // Collect the (slug, blueprintId) pairs before asserting anything, so the test cannot
+    // pass vacuously: if the catalogue ever stops populating `blueprints` on any entry, this
+    // fails loudly instead of the loop below silently asserting nothing.
+    const pairs = ENTRIES.flatMap((e) => (e.blueprints ?? []).map((archId) => ({ slug: e.slug, archId })));
+    expect(pairs.length, 'no ENTRIES declare a blueprints value; this test would pass vacuously').toBeGreaterThan(0);
+    for (const { slug, archId } of pairs) {
+      expect(archIds.has(archId), `${slug} names unknown blueprint "${archId}"`).toBe(true);
     }
+  });
+
+  // Guards the actual bug, not just the data: PatternLayout.astro once built blueprint
+  // hrefs directly from the frontmatter id (`/architecture/${id}/`, e.g. `/architecture/arch-001/`),
+  // which 404s because the architecture collection routes on the collection filename
+  // (e.g. `/architecture/001-the-control-plane/`), not the frontmatter id. A revert of that
+  // fix would keep every blueprint id valid (the data-integrity test above would still pass)
+  // while silently reintroducing the 404. This is a source-grep, which is a blunt instrument;
+  // it stands in for a rendered-HTML assertion until pattern essays exist to render, which
+  // belongs in the final verification task.
+  it('builds blueprint hrefs from the collection entry, not the frontmatter id', () => {
+    const src = readFileSync(new URL('../layouts/PatternLayout.astro', import.meta.url), 'utf8');
+    expect(src).not.toMatch(/\/architecture\/\$\{id\}\//);
+    expect(src).not.toMatch(/\/architecture\/\$\{[a-zA-Z]*[Aa]rch[a-zA-Z]*\}\//);
+    expect(src).toContain("getCollection('architecture')");
+    expect(src).toMatch(/blueprintFor|\.find\(\(b\) => b\.data\.id === /);
   });
 });
