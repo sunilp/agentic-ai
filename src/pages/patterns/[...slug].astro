@@ -5,7 +5,7 @@ import PatternLayout from '~/layouts/PatternLayout.astro';
 export async function getStaticPaths() {
   const entries = await getCollection('patterns');
   return entries.map((entry) => ({
-    params: { slug: entry.data.slug },
+    params: { slug: entry.id },
     props: { entry },
   }));
 }

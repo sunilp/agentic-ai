@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { ENTRIES, REFERENCED, RETIRED, bySlug, byLayer, byStage, counts } from './pattern-language';
 
 describe('pattern language data', () => {
@@ -95,5 +96,12 @@ describe('pattern language data', () => {
   it('contains no em dash in any prose field', () => {
     const prose = ENTRIES.flatMap((e) => [e.name, e.oneLine, ...(e.alsoKnownAs ?? [])]).join(' ');
     expect(prose).not.toContain('—');
+  });
+
+  it('has an astro redirect for every retired stub', () => {
+    const config = readFileSync(new URL('../../astro.config.mjs', import.meta.url), 'utf8');
+    for (const [slug, target] of Object.entries(RETIRED)) {
+      expect(config).toContain(`'/patterns/${slug}/': '${target}'`);
+    }
   });
 });
