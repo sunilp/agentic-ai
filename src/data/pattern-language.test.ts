@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { ENTRIES, REFERENCED, RETIRED, bySlug, byLayer, byStage, counts } from './pattern-language';
 
 describe('pattern language data', () => {
@@ -102,6 +102,18 @@ describe('pattern language data', () => {
     const config = readFileSync(new URL('../../astro.config.mjs', import.meta.url), 'utf8');
     for (const [slug, target] of Object.entries(RETIRED)) {
       expect(config).toContain(`'/patterns/${slug}/': '${target}'`);
+    }
+  });
+
+  it('resolves every pattern slug declared in blueprint frontmatter', () => {
+    const dir = new URL('../content/architecture/', import.meta.url);
+    const valid = new Set([...ENTRIES.map((e) => e.slug), ...REFERENCED.map((r) => r.slug)]);
+    for (const file of readdirSync(dir).filter((f) => f.endsWith('.mdx'))) {
+      const m = readFileSync(new URL(file, dir), 'utf8').match(/^patterns: \[(.*?)\]/m);
+      if (!m) continue;
+      for (const slug of m[1].split(',').map((s) => s.trim()).filter(Boolean)) {
+        expect(valid.has(slug), `${file} references unknown pattern "${slug}"`).toBe(true);
+      }
     }
   });
 });
