@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="600" viewBox="0 0 880 600" role="img" aria-label="Six chokepoints in a request path and the accuracy ceiling each imposes on one attack, instructions hidden inside a retrieved document. Retrieval and tool execution reach close to what a very good detector could do. The prompt layer, though it sees the most, reaches only a small fraction of it.">
+<rect width="880" height="600" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Placement fixes the ceiling before any model does</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">One attack: instructions hidden in a retrieved document. Bar height is what each chokepoint can ever catch or stop.</text>
+<line x1="0" y1="76" x2="880" y2="76" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- PROMPT column tint: the common default, and its ceiling -->
+<rect x="314" y="90" width="136" height="340" fill="#f5ece9"/>
+<rect x="314" y="90" width="3" height="340" fill="#9b4a3f"/>
+
+<!-- dashed reference line: a very good detector, wherever it sits -->
+<line x1="40" y1="104" x2="860" y2="104" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="4,4"/>
+<text x="858" y="97" text-anchor="end" font-family="Georgia,'EB Garamond',serif" font-size="11.5" font-style="italic" fill="#6b6b6b">however good the detector</text>
+
+<!-- baseline / x-axis -->
+<line x1="40" y1="430" x2="860" y2="430" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- bars: gray fill, height = ceiling for this attack at this chokepoint; brick reserved for the marked column (3, PROMPT) -->
+<!-- 1 UPLOAD -->
+<rect x="78" y="283" width="60" height="147" fill="#6b6b6b"/>
+<text x="108" y="273" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">1</text>
+<text x="108" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">UPLOAD</text>
+<text x="108" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the file, not its reader</text>
+
+<!-- 2 RETRIEVAL -->
+<rect x="215" y="143" width="60" height="287" fill="#6b6b6b"/>
+<text x="245" y="133" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">2</text>
+<text x="245" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">RETRIEVAL</text>
+<text x="245" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">content plus identity</text>
+
+<!-- 3 PROMPT (marked) -->
+<rect x="352" y="371" width="60" height="59" fill="#9b4a3f"/>
+<text x="382" y="361" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#9b4a3f">3</text>
+<text x="382" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#9b4a3f">PROMPT</text>
+<text x="382" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#9b4a3f">all of it,</text>
+<text x="382" y="484" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#9b4a3f">nothing attributed</text>
+
+<!-- gap callout: dashed connector from the reference line to the prompt bar -->
+<line x1="427" y1="107" x2="427" y2="368" stroke="#9b4a3f" stroke-width="1" stroke-dasharray="3,3"/>
+<circle cx="427" cy="107" r="3.2" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.4"/>
+<circle cx="427" cy="368" r="3.2" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="433" y="234" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#9b4a3f">the gap no</text>
+<text x="433" y="248" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#9b4a3f">detector closes</text>
+
+<!-- 4 RESPONSE -->
+<rect x="488" y="332" width="60" height="98" fill="#6b6b6b"/>
+<text x="518" y="322" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">4</text>
+<text x="518" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">RESPONSE</text>
+<text x="518" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the output, not intent</text>
+
+<!-- 5 TOOL EXECUTION -->
+<rect x="625" y="130" width="60" height="300" fill="#6b6b6b"/>
+<text x="655" y="120" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">5</text>
+<text x="655" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">TOOL EXECUTION</text>
+<text x="655" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the act, still stoppable</text>
+
+<!-- 6 LOGGING -->
+<rect x="762" y="414" width="60" height="16" fill="#6b6b6b"/>
+<text x="792" y="404" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">6</text>
+<text x="792" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">LOGGING</text>
+<text x="792" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">sees it all,</text>
+<text x="792" y="484" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">too late to act</text>
+
+<!-- legend -->
+<rect x="40" y="510" width="14" height="10" fill="#6b6b6b"/>
+<text x="60" y="519" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">ceiling for this attack, here</text>
+
+<line x1="400" y1="515" x2="430" y2="515" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="4,4"/>
+<text x="436" y="519" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">a very good detector</text>
+
+<rect x="650" y="510" width="14" height="10" fill="#f5ece9"/>
+<rect x="650" y="510" width="2" height="10" fill="#9b4a3f"/>
+<text x="670" y="519" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">today's common default</text>
+
+<line x1="0" y1="546" x2="880" y2="546" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="0" y="568" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">The gap between the dashed line and a bar is accuracy no detector reaches from there.</text>
+<text x="0" y="588" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Retrieval and tool execution close it almost completely. The prompt layer, seeing the most, closes it least.</text>
+</svg>

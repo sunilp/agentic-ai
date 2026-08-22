@@ -2,70 +2,291 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import MagazineGrid from '~/components/layout/MagazineGrid.astro';
 import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Tag from '~/components/universal/Tag.astro';
+import PatternWheel from '~/components/islands/PatternWheel.svelte';
+import { ENTRIES, REFERENCED, byLayer, counts, type Entry } from '~/data/pattern-language';
+import { placeEntries } from '~/lib/pattern-wheel';
 
-const entries = (await getCollection('patterns')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const essays = new Set((await getCollection('patterns')).map((e) => e.id));
+const essaySlugs = [...essays];
+const c = counts();
+
+// Every list item repeats its wheel numeral, so the key works in both
+// directions: a reader sees mark 14 on the wheel and finds 14 in this list.
+const keyBySlug = new Map(placeEntries().map((p) => [p.slug, p.key]));
+function markKey(e: Entry): string {
+  return String(keyBySlug.get(e.slug)).padStart(2, '0');
+}
+
+const LAYERS = [
+  { key: 'capability', label: 'Capability', line: 'What the agent can do, and how it is built.' },
+  { key: 'control', label: 'Control', line: 'What constrains it at runtime.' },
+  { key: 'evidence', label: 'Evidence', line: 'What it can prove, and how it stays honest.' },
+] as const;
+
+const layerGroups = LAYERS.map((l) => ({ ...l, items: byLayer(l.key).filter((e) => e.kind === 'pattern') }));
+const antiPatterns = ENTRIES.filter((e) => e.kind === 'anti-pattern').sort((a, b) => a.name.localeCompare(b.name));
+
+function statusLabel(e: Entry): string {
+  if (e.status === 'proposed') return 'proposed';
+  if (e.status === 'documented') return `documented, ${e.attributedTo.who}`;
+  return `restated, after ${e.nearestPrior[0].who}`;
+}
+
+// A named pattern catalogue is exactly a set of defined terms: same shape as
+// the glossary's DefinedTermSet (src/pages/glossary/index.astro), so an answer
+// engine can cite "Attenuating Delegation" as this site's definition of it.
+// Every ENTRIES slug has a published essay (checked against `essays` above),
+// so every term gets a url with no unwritten-entry branch to guard.
+const patternsURL = new URL('/patterns/', Astro.site).toString();
+const patternTermSet = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  name: 'Agent Engineering Lab Pattern Language',
+  url: patternsURL,
+  hasDefinedTerm: ENTRIES.map((e) => ({
+    '@type': 'DefinedTerm',
+    name: e.name,
+    description: e.oneLine,
+    url: new URL(`/patterns/${e.slug}/`, Astro.site).toString(),
+    inDefinedTermSet: patternsURL,
+  })),
+};
 ---
 
 <PageLayout
-  title="Patterns — Agent Engineering Lab"
-  description="Cross-cutting patterns. Each pattern is a hub linking the chapters, Field Notes, Recipes, and Labs that use it."
-  currentNav="Book"
+  title="Patterns, Agent Engineering Lab"
+  description="A pattern language for shipping agentic systems. Authority, control and evidence patterns, each with its forces, its boundary and its attribution."
+  currentNav="Patterns"
 >
   <Container>
     <header style="margin: var(--space-7) 0 var(--space-6);">
       <Tag>Patterns</Tag>
       <KineticHeading level={1}>Patterns</KineticHeading>
-      <Dek italic>Cross-cutting patterns across the book. Each pattern hub links every chapter, Field Note, Recipe, and Lab that uses it.</Dek>
+      <Dek italic>
+        A pattern language for shipping agentic systems. {c.total} entries: {c.patterns} patterns
+        and {c.antiPatterns} anti-patterns, of which {c.documented} keep an established name,
+        {c.restated} are named here after a prior description, and {c.proposed} are proposed.
+      </Dek>
     </header>
 
-    {entries.length === 0 ? (
-      <p style="color: var(--fg-light); font-style: italic;">No patterns yet.</p>
-    ) : (
-      <MagazineGrid cols={3}>
-        {entries.map((e) => (
-          <a class="pat-card" href={`/patterns/${e.data.slug}/`}>
-            <div class="pat-card__name">{e.data.name}</div>
-            <p class="pat-card__one-line">{e.data.oneLine}</p>
-          </a>
+    <PatternWheel client:visible essaySlugs={essaySlugs} />
+
+    <section class="pat-statuses">
+      <dl>
+        <dt>Documented</dt><dd>A settled external name, kept unchanged, with its attribution.</dd>
+        <dt>Restated</dt><dd>An established practice with no settled name. Named here, citing the nearest prior description.</dd>
+        <dt>Proposed</dt><dd>A shape not previously described in the prior art surveyed.</dd>
+        <dt>Referenced</dt><dd>Well covered at its source. Listed and linked, never re-documented here.</dd>
+      </dl>
+    </section>
+
+    <div class="pat-catalogue">
+      {layerGroups.map((g) => (
+        <section class="pat-group">
+          <header class="pat-group__header">
+            <h2 class="pat-group__title">{g.label}</h2>
+            <p class="pat-group__line">{g.line}</p>
+          </header>
+          <ul class="pat-list">
+            {g.items.map((e) => (
+              <li class="pat-list__item" id={e.slug}>
+                <span class="pat-list__key">{markKey(e)}</span>
+                {essays.has(e.slug)
+                  ? <a class="pat-list__name" href={`/patterns/${e.slug}/`}>{e.name}</a>
+                  : <span class="pat-list__name pat-list__name--unwritten">{e.name}</span>}
+                <span class="pat-list__status">{statusLabel(e)}</span>
+                <p class="pat-list__one-line">{e.oneLine}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      <section class="pat-group pat-group--anti">
+        <header class="pat-group__header">
+          <h2 class="pat-group__title">Anti-patterns</h2>
+          <p class="pat-group__line">Named failures. Each one names the pattern that replaces it.</p>
+        </header>
+        <ul class="pat-list">
+          {antiPatterns.map((e) => (
+            <li class="pat-list__item" id={e.slug}>
+              <span class="pat-list__key">{markKey(e)}</span>
+              {essays.has(e.slug)
+                ? <a class="pat-list__name" href={`/patterns/${e.slug}/`}>{e.name}</a>
+                : <span class="pat-list__name pat-list__name--unwritten">{e.name}</span>}
+              <span class="pat-list__status">{statusLabel(e)}</span>
+              <p class="pat-list__one-line">{e.oneLine}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+
+    <section class="pat-group pat-group--referenced">
+      <header class="pat-group__header">
+        <h2 class="pat-group__title">Named elsewhere, not re-documented here</h2>
+      </header>
+      <ul class="pat-referenced">
+        {REFERENCED.map((r) => (
+          <li id={r.slug}><a href={r.url}>{r.name}</a> <span class="pat-referenced__who">{r.who}</span></li>
         ))}
-      </MagazineGrid>
-    )}
+      </ul>
+    </section>
   </Container>
+
+  <script type="application/ld+json" set:html={JSON.stringify(patternTermSet)} />
 </PageLayout>
 
 <style>
-  .pat-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-5);
-    background: var(--paper);
+  .pat-statuses {
+    max-width: var(--reader-max);
+    margin: 0 auto var(--space-6);
+  }
+
+  .pat-statuses dl {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    margin: 0;
+  }
+
+  .pat-statuses dt {
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brick);
+    margin: 0 0 4px;
+  }
+
+  .pat-statuses dd {
+    font-size: var(--body-3);
+    color: var(--fg-light);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+
+  .pat-group {
+    max-width: var(--reader-max);
+    margin: 0 auto var(--space-7);
+  }
+
+  .pat-group__header {
+    margin: 0 0 var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--brick);
+  }
+
+  .pat-group__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--display-2);
+    line-height: var(--lh-tight);
     color: var(--fg);
-    border: 1px solid var(--fg-faint);
-    border-radius: var(--radius-md);
-    transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    margin: 0 0 4px;
   }
 
-  .pat-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--brick);
+  .pat-group__line {
+    font-family: var(--font-body);
+    font-size: var(--body-3);
+    color: var(--fg-light);
+    margin: 0;
   }
 
-  .pat-card__name {
+  .pat-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pat-list__item {
+    padding: var(--space-4) 0;
+  }
+
+  .pat-list__item + .pat-list__item {
+    border-top: 1px solid var(--fg-faint);
+  }
+
+  /* Keys the numeral on the wheel's mark to this list entry, same small mono
+     treatment as the mark's own numeral, so a reader can go from wheel to
+     list and back in either direction. */
+  .pat-list__key {
+    display: inline-block;
+    width: 26px;
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    color: var(--fg-lighter);
+    vertical-align: baseline;
+  }
+
+  .pat-list__name {
     font-family: var(--font-display);
     font-size: var(--display-3);
     font-weight: 500;
     line-height: var(--lh-snug);
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--brick);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
   }
 
-  .pat-card__one-line {
+  a.pat-list__name:hover { color: var(--brick); }
+
+  .pat-list__name--unwritten {
     color: var(--fg-light);
-    font-size: var(--body-2);
+    text-decoration: none;
+  }
+
+  .pat-list__status {
+    display: inline-block;
+    margin-left: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    letter-spacing: 0.04em;
+    color: var(--fg-lighter);
+  }
+
+  .pat-list__one-line {
+    font-family: var(--font-body);
+    font-size: var(--body-3);
     line-height: var(--lh-snug);
+    color: var(--fg-light);
+    margin: 4px 0 0;
+  }
+
+  .pat-referenced {
+    list-style: none;
     margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .pat-referenced li {
+    font-size: var(--body-3);
+    color: var(--fg);
+  }
+
+  .pat-referenced a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--fg-faint);
+    text-underline-offset: 3px;
+  }
+
+  .pat-referenced a:hover { color: var(--brick); }
+
+  .pat-referenced__who {
+    color: var(--fg-lighter);
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+  }
+
+  @media (max-width: 720px) {
+    .pat-statuses dl { grid-template-columns: repeat(2, 1fr); }
   }
 </style>

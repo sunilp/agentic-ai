@@ -1,11 +1,74 @@
 ---
-slug: workflow-first
-name: Workflow First
-oneLine: Default to a deterministic workflow before reaching for an agent.
-whenToUse: |
-  When the steps a task requires can be listed in advance. When the failure cost is asymmetric (a wrong answer costs more than a missed one). When a workflow can hit 80%+ accuracy on the eval before any LLM autonomy is added. In these cases, a workflow is faster, cheaper, more predictable, and easier to debug.
-whenNotToUse: |
-  When the task requires runtime decisions that cannot be enumerated — open-ended troubleshooting, dynamic multi-step research, novel synthesis tasks. When the workflow's branching factor explodes beyond ~20 branches.
-antiPattern: |
-  Building an agent because the framework is fashionable, then discovering the agent is calling the same 3 tools in the same order on every query. That's a workflow wearing an agent costume; the autonomy is an illusion.
+description: "Why the default in agent design should be a deterministic workflow, the enumerability test that tells you when autonomy has actually earned its place, and the measured run where a workflow router beat a three-agent hierarchy on accuracy, cost, and latency at once."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "An enumerable task looks the same whether a workflow or an agent solves it, until someone measures cost, latency, and the way it fails"
+  - "Autonomy is the only way to resolve a case you could not enumerate in advance without routing it to a person, and enumerating first is the only way to find out a case is one of those"
+  - "A workflow's fixed sequence is a fixed set of chokepoints an engineer can name and test; an agent's freeform path turns every step into one nobody enumerated in advance"
+sources:
+  - title: "Building Effective Agents"
+    url: https://www.anthropic.com/engineering/building-effective-agents
+    authors: [Schluntz E., Zhang B.]
+    year: 2024
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-workflow-first.svg
 ---
+
+## The problem
+
+Ask a team why they built an agent and the honest answer is often that an agent is what you build now, not because anyone checked whether the steps could be listed in advance. A model deciding its own next move is the scaffold a framework hands you before any decision is made, and turning it down takes a deliberate act nobody asks for.
+
+The question that should come first is plain: would a workflow do this job? Most teams skip past it. The tell is rarely outright failure, since most tasks that get an agent thrown at them are narrow enough that autonomy was never going to be wrong, only unnecessary. The tell is that nobody can say what case, specifically, the autonomy was for.
+
+This catalogue already has a name for what shipping looks like when that question never gets asked: [Workflow in an Agent Costume](/patterns/workflow-in-an-agent-costume/), a fixed sequence dressed as autonomy, buying unpredictability without earning the benefit. Workflow First is the decision that anti-pattern's absence describes: the default a design starts from, and the discipline of making autonomy justify displacing it.
+
+## Forces
+
+**An enumerable task looks the same whether a workflow or an agent solves it, until someone measures cost, latency, and the way it fails.** A switch statement dispatching to one of four prompts and a three-agent hierarchy that classifies, handles, and verifies can produce near-identical output on the easy majority of a query set. The difference shows up in the bill, in the seconds a user waits, and in what happens on the hard cases, none of it visible in the transcript of one successful run.
+
+**Autonomy is the only way to resolve a case you could not enumerate in advance without routing it to a person, and enumerating first is the only way to find out a case is one of those.** A workflow can detect that a case falls outside its branches and hand it to [Escalation Path](/patterns/escalation-path/) honestly; that costs a person's time on every one. You cannot know a task's branches are finite until you try writing them down. Skipping that exercise because the task looks hard does not make the branches infinite; it means nobody checked, and the checking costs far less than the agent it would have ruled out.
+
+**A workflow's fixed sequence is a fixed set of [chokepoints](/patterns/chokepoint-placement/) an engineer can name and test; an agent's freeform path turns every step into one nobody enumerated in advance.** A control can only sit at a stage someone can point to before the run happens. A workflow hands you that list for free. An agent makes you discover it by watching calls happen, after the system is already live.
+
+## The pattern
+
+State the rule plainly: default to a deterministic workflow, and make every increment of autonomy earn its place with evidence. This is not a ban on agents. It is a starting position autonomy has to displace on purpose, not skip past because a framework offered it first.
+
+The test is enumerability, checkable before the system exists: write out every branch the task could take and the condition that selects each one. If that list is finite and each branch's handling can be pinned down in code today, encoding it is not a compromise, it is the correct system: faster, because it skips a model call deciding something code already knows; cheaper, because inference is paid for only where judgement is needed; more predictable, because the same category takes the same path every time; and more debuggable, because every branch is code with a name, not a decision buried in a transcript. Autonomy earns its place only where the right next step depends on something the branches could not have anticipated, because the input distribution or the search space is wide enough that no fixed list of conditions covers it. That is a claim about the task, not about how capable this year's model is: a task becomes non-enumerable when the next decision needs information that does not exist until the run is underway, not when the branches are merely numerous.
+
+Two mistakes run in opposite directions: treating a task as open-ended when the complication is finite and known, four support categories, not an open search space; and reaching for autonomy when a workflow's accuracy falls short on an eval, when the defect is really a badly written branch. Handing that branch to a model does not fix it, it just hides the same defect inside a policy nobody wrote down.
+
+None of this is new. Schluntz and Zhang's account of building effective agents at Anthropic already draws this line: predefined code paths for well-defined tasks, autonomous agents reserved for where flexibility is required. Naming it Workflow First restates that distinction as a default posture that did not already have a compact name, a naming act rather than a discovery, credited where the distinction was first drawn.
+
+Keep this apart from [Earn the Complexity](/patterns/earn-the-complexity/); the two answer different questions about the same decision. Workflow First is the posture a design starts from: assume the workflow, and require autonomy to displace it. Earn the Complexity is the bar every increment of autonomy has to clear once that displacement has happened, a measured eval delta for the next tool or hop or turn of the loop, not a plausible story about what it might help with. One decides where the needle starts. The other decides whether it is allowed to move again.
+
+## Worked example
+
+[Lab-001](/labs/multi-agent-vs-router-100-queries/) measured this exact decision on 100 real customer-support queries, filtered to ones that resolve in under five turns: a workload whose category is clear before the first token generates. That is the shape this pattern says to encode in code rather than hand to an agent's judgement.
+
+One system was a workflow router: a switch statement mapping query category to one of four prompts, calling a single agent once per query to produce the answer. What is fixed is the branching, decided by code before the model runs, not by an agent deciding it at the moment of the call. The other system was a three-agent hierarchy: a classifier agent deciding the category instead of the switch statement, a worker agent handling the query, and a verifier agent checking the worker's answer instead of a deterministic check. Two of those three roles are autonomy added at a decision point the category boundary had already made enumerable.
+
+Measured, single run, one model family, one domain: the router beat the hierarchy on every axis. Accuracy, 87 percent against 74, a gap that held at roughly 3 points once the classifier's own misroutes were separated out. Cost, $0.024 against $0.057 per query, 2.4 times more. Latency, 1.8 seconds against 4.0 at the median, 2.2 times slower. The hierarchy's worker was not the problem; its hallucination rate matched the router's single agent exactly, at 4 percent. The gap came from two new ways to fail that autonomy introduced at points that never needed it: a verifier that rubber-stamped 14 percent of answers before a stricter prompt brought that to about 3, and a classifier that misrouted 9 percent of queries to the wrong worker, an error a direct dispatch has no equivalent step to introduce.
+
+Read this as a single measured run on one domain and model family, not a claim that agent hierarchies never earn their keep. The same argument names the workload where autonomy wins outright: [Anthropic's own account of its multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) reports a 90.2 percent improvement over a single agent on breadth-first research, where the directions worth pursuing are discovered mid-task and could never have been branches written in advance. Same rule, opposite answer, because the task's shape differed.
+
+## When not to use it
+
+The stakes here are not that a workflow might be slightly less capable. A fixed branch list is a fixed set of blind spots, and every one fails silently: a workflow does not know it has hit a case outside its switch statement, it just runs the nearest branch and returns an answer with the same confidence as a correct one. Holding this default past the point where you already have evidence the branches do not exist to enumerate is not caution; it is choosing not to look at evidence already in hand.
+
+Some tasks announce their shape before anyone reaches for a switch statement: breadth-first research fanning out across directions discovered mid-task, or real-time troubleshooting against a fault nobody has seen before. These already have a known answer to the enumerability test, and running the exercise anyway is a formality. The default exists to catch tasks that only look open-ended, not the ones everyone already agrees are.
+
+A short-lived spike, built to learn what an agent does on a genuinely novel task and nowhere near production, can build the agent first and ask whether a workflow could have done it later, or never; it cannot carry that deferral past the point where the system touches a real user, a real cost, or a real decision. A workflow already in production, whose switch statement has grown past what anyone holds in their head, one branch bolted on for every new case that turned up in the field, is itself evidence worth reading: the enumerability answer that was true at launch may not be true now, which is the moment to measure whether autonomy would clear [Earn the Complexity](/patterns/earn-the-complexity/)'s bar, not a reason to keep defending the workflow.
+
+None of this makes Workflow First a rule against agents. It decides where a design starts, not where it ends, and the only thing allowed to move that starting point is the shape of the workload, not the calendar, and not what a framework scaffolds by default.
+
+## Related patterns
+
+[Earn the Complexity](/patterns/earn-the-complexity/) picks up once this default is overridden: the evidence bar every subsequent increment of autonomy has to clear, not the decision to add the first one. [Workflow in an Agent Costume](/patterns/workflow-in-an-agent-costume/) names what shipping without ever asking the question looks like: a fixed sequence dressed as autonomy that never had a case to earn its keep. [Tool/Agent Registry](/patterns/tool-agent-registry/) offers the same test from the build side: a callable surface small enough to fit on one screen is itself a reason to ask whether the task needed an agent's runtime flexibility at all. [Verifier Loop](/patterns/verifier-loop/) is often cheaper than autonomy: a deterministic check against the original task catches what a workflow's fixed path gets wrong. [Chokepoint Placement](/patterns/chokepoint-placement/) is easier to apply against a workflow than an agent: a fixed sequence is a nameable set of stages to put a control at, where an agent's freeform path turns every call into a stage nobody enumerated in advance.

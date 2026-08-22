@@ -3,7 +3,14 @@ import { entriesToContentEntries } from './content-helpers';
 import type { ContentEntry } from './cross-links';
 
 describe('entriesToContentEntries', () => {
-  it('maps Astro entries to ContentEntry shape', () => {
+  it('keys by entry.id (the collection id), never by the frontmatter data.id', () => {
+    // fieldNotes (like recipes, signal, labs, architecture) carry a frontmatter `id`
+    // ("fn-001") distinct from their collection id / filename ("fn-001/index" here,
+    // e.g. "incident-triage-durable-agent" for a lab). Every route on this site is
+    // built from the collection id, so ContentEntry.id must be entry.id -- keying by
+    // data.id here previously built a "Cited by" href from the frontmatter id and
+    // 404'd (this is exactly how /labs/lab-001/ and /labs/lab-002/ 404'd from
+    // field-notes and evidence pages).
     const entries = [
       {
         id: 'fn-001/index',
@@ -20,7 +27,7 @@ describe('entriesToContentEntries', () => {
     const result = entriesToContentEntries(entries as any);
     expect(result).toEqual<ContentEntry[]>([
       {
-        id: 'fn-001',
+        id: 'fn-001/index',
         collection: 'fieldNotes',
         references: ['ch-04'],
         cites: ['evidence-a'],
@@ -29,7 +36,7 @@ describe('entriesToContentEntries', () => {
     ]);
   });
 
-  it('falls back to entry.id when data.id is missing (e.g. chapters)', () => {
+  it('uses entry.id when data.id is missing too (e.g. chapters)', () => {
     const entries = [
       {
         id: '01-what-agentic-means',

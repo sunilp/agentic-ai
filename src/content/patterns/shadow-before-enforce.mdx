@@ -1,0 +1,70 @@
+---
+description: "Why a guardrail has to run against real production traffic and record what it would have done before it is allowed to act, and what specific, stated threshold is supposed to end that waiting period."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "Offline evaluation measures the distribution a team assembled to test against; production hands the detector the distribution it actually has, and the two rarely match"
+  - "A detector that runs and does nothing costs compute and patience; a detector that runs and acts wrongly costs trust that a revert does not buy back"
+  - "The pressure to skip straight to enforcement peaks right after red team, exactly when the detector looks most finished and least tested against ordinary traffic"
+sources:
+  - title: "Dark Launching"
+    url: https://martinfowler.com/bliki/DarkLaunching.html
+    authors: [Fowler M.]
+    year: 2020
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-shadow-before-enforce.svg
+---
+
+## The problem
+
+A detector clears its offline evaluation. Precision looks good against the labelled set the team assembled, the threshold is picked wherever the curve makes that number highest, and someone asks the obvious next question: is this ready to enforce. The instinct is to answer with the same evaluation that produced the precision number, because it is the only evidence in the room.
+
+That evidence answers a narrower question than the one being asked. It says how the detector behaves on the distribution the team collected to test it: known attack patterns, past incidents, whatever red-team output existed when the set was built. It says nothing about the distribution the detector will meet once live, because that distribution does not exist yet on this system until the system is live and in use. A curated test set is a guess about the future, presented as a measurement of it.
+
+The gap between the two shows up the same way every time enforcement skips straight from offline to live: an alert volume nobody staffed for, a false-positive pattern the test set never included, or a real base rate far from what the curated set implied. By the time that is visible, enforcement has already flipped on: the gap is no longer a finding, it is an incident, because the detector is now blocking or redacting real requests on the strength of a number that measured something else.
+
+## Forces
+
+**Offline evaluation measures the distribution a team built; production hands the detector the distribution it actually got, and the two are rarely the same one.** A curated set skews toward what the people building it already knew to look for. Real traffic includes benign content that merely resembles an attack, a base rate for the true harm far below or above what months of red-team exercises implied, and whatever the population using this system actually does.
+
+**A detector that runs and records costs compute and patience; a detector that runs and acts wrongly costs trust, and trust does not come back on a revert.** Once enforcement is live and miscalibrated, everyone downstream who got blocked, delayed, or redacted incorrectly has already felt it. The code can be reverted. A request wrongly blocked or redacted cannot be undone after the fact, and the review team that stopped trusting the alert does not start trusting it again just because the threshold changed later. Shadow mode's cost is cheap by comparison, paid before anyone outside the team notices.
+
+**The pressure to skip straight to enforcement is strongest right after red team, exactly when the detector looks most finished.** Red team found bypasses, they got fixed or routed to a different control, and the detector held up under deliberate attack. That is real evidence the detector is sound. It is not evidence about the population it will meet, because a red-team exercise throws adversarial inputs designed to break the detector, not the ordinary mix of mostly legitimate traffic that will make up nearly everything it sees once live. Passing that test answers a different question than the one enforcement is about to ask.
+
+## The pattern
+
+State the rule plainly: the control runs in production, at the exact position enforcement will occupy, against real traffic, producing a full verdict for every request it sees while taking no action on any of them. It logs what it would have flagged, blocked, or redacted, at whatever threshold is under consideration, and it keeps logging until three specific things are true, not until a calendar date arrives.
+
+The three: the real base rate is measured rather than assumed, because the curated set never told you this number and nothing else will. The volume enforcement would generate at the proposed threshold is inside what the review workflow can absorb, because a detector nobody can review is a detector nobody trusts. And the added latency, measured at real production concurrency, is inside the budget the system was designed around. Any one failing sends the threshold, or the detector, back for revision. None of them failing, on any day, ends shadow mode.
+
+This mechanism is not new. Martin Fowler described it in 2020 under the name [Dark Launching](https://martinfowler.com/bliki/DarkLaunching.html), though the term itself predates his write-up: a component that "does all the work it would do when it's released, but nobody can see that it's doing it," used to test a new code path against live traffic before anyone depended on its output. Guardrail teams run the identical move for a different reason, not performance, but detection accuracy against a distribution no offline set can substitute for. That is a restatement of an established mechanism in a new context, not a discovery, and the honest thing is to say so.
+
+A shadow period that logs nothing is not, by itself, evidence the detector is unnecessary or that the threshold can be relaxed. Silence in a shadow log is exactly as ambiguous as silence in a year of enforcement logs: the harm may be rare, the surface may not be getting probed yet, or the detector may be broken and not firing on the real instances passing beneath it, and all three look identical from outside. Shadow mode resolves that the same way it resolves the base-rate question: not by waiting longer, but by checking the log against something independent of it, the red-team attempts from the previous gate replayed against the shadowed detector, or known-positive cases seeded into real traffic deliberately. A quiet shadow log paired with a red-team case that also produced silence is a broken detector, not a rare harm; checking tells the two apart, counting does not.
+
+## Worked example
+
+Take the Tier 2 prompt injection detector [ARCH-006](/architecture/006-the-guardrail-lifecycle/) walks through, for an enterprise RAG assistant reading internal documents: a constructed illustration, not a report of a real deployment, reused here rather than invented fresh, because the shape is what matters.
+
+Offline, the detector runs against a labelled set of 1,200 retrieved chunks and clears the precision and recall bar the team set for it. Red team then makes forty attempts and finds nine bypasses: six get fixed, three get accepted as out of scope for a chunk-level detector and routed to the retrieval entitlement control instead, which is where they actually belong. Both results describe a detector that is technically sound. Neither describes what happens once it meets real traffic.
+
+Shadow answers that. Three weeks, sixty-eight thousand requests, run at the position enforcement will occupy, taking no action on any of them. Two things come back that the offline set could not have produced. The observed base rate sits far below what the curated set implied, because real injection attempts are rarer in this system's actual traffic than the curated set assumed. And the threshold picked offline, projected across real volume, would generate roughly 340 alerts a day, ARCH-006's own number, into a review queue staffed for a fraction of that. Shipping straight from the offline result would have put that volume in front of a team with no way to absorb it, the incident this pattern exists to prevent.
+
+The response is not to abandon the detector. It is to revise the threshold against the measured base rate, run shadow again, and check the three exit criteria a second time: base rate measured, yes, now twice; alert volume inside the review workflow's real capacity, yes, at the revised threshold; latency inside budget, unchanged, since the pipeline itself did not move. Only once those three hold does the detector cross into canary, a bounded slice of real enforcement, and only after canary does it reach the gate this pattern does not cover: full enforcement, signed off by the threshold owner, not merged in by whoever wrote the last commit.
+
+## When not to use it
+
+Not every control has a population left to discover. A deterministic authority check, does this actor have permission for this action, has no base rate to measure and no ambiguity that weeks of silent observation would resolve: the answer is the same on the thousandth call as the first. What would break it is a stale policy or a wrong identity mapping, and while production traffic can still catch an integration bug a test suite missed, that shows up in the first real calls, not after weeks of watching. Shadow mode earns its cost measuring an uncertain distribution against a statistical detector; a yes-or-no check has no distribution to measure, only a configuration to verify before it ships.
+
+Second, a harm shadow would measure but that is already happening, not hypothetical, changes the calculation this pattern depends on. If red team, or an incident, has already shown live exploitation of the gap a detector is meant to close, the patience shadow mode asks for is a cost paid in continued exposure, not a delay on an abstract risk. The right move is a coarser, immediate control standing in, disable the feature, revoke the credential, tighten the entitlement, while the calibrated detector still runs its shadow window in parallel. Shadow mode buys distributional truth about traffic still to come. It does not buy back exposure from traffic that already arrived.
+
+Third, a system with no real traffic yet, a prototype not touching production data, gives shadow mode nothing to observe. Recording what a detector would have done against synthetic or internal test traffic still measures a distribution someone assembled by hand, dressed up as production observation without being one. Shadow mode's value starts on the day real users generate real traffic against the system, not before, and running it earlier produces a log that looks like evidence and is not.
+
+## Related patterns
+
+[Baseline and Floor](/patterns/baseline-and-floor/) inherits shadow mode's numbers directly: the base rate and volume measured here become the baseline every later change is checked against, and the floor beneath which drift may not fall. [Tiered Detection](/patterns/tiered-detection/) sets an escalation fraction that shadow mode actually tests against real traffic, since a fraction picked offline is exactly what this pattern exists to correct. [Failure Buckets](/patterns/failure-buckets/) is what a shadow log becomes once there is enough of it: recorded verdicts sorted into a rubric only mean something once the volume behind them is real. [Decision Record](/patterns/decision-record/) is the reason a shadow verdict is worth anything afterward: even a decision to take no action needs a replayable entry carrying the policy version it was made under, or a later dispute has nothing to check against. [The Expiring Exception](/patterns/the-expiring-exception/) sits on the other side of the same discipline: an exception left open by default becomes permanent, and a shadow period left open by default drifts the same way in the opposite direction, never graduating rather than never expiring. Both refuse to let silence, the absence of an explicit decision, stand in for one.

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="662" viewBox="0 0 880 662" role="img" aria-label="Two eval runs of the same agent stacked as bar charts. Both hold an identical 82 percent pass rate. Beneath that line the eighteen percent that fails is broken into five buckets, and the mix inverts: in the first run failures are mostly low-severity format and scope errors, in the second run the same eighteen percent is dominated by hallucination, a severe failure the aggregate score never reveals.">
+<rect width="880" height="662" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">One flat score, two different systems underneath</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Two eval runs of one agent. Aggregate pass rate unchanged. The bucket mix beneath it is not.</text>
+<line x1="0" y1="76" x2="880" y2="76" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- column headers -->
+<text x="180" y="100" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">RUN A</text>
+<text x="700" y="100" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">RUN B</text>
+
+<!-- outer bar borders: 100 units, y110-492, pass zone 82 units (110-423), fail zone 18 units (423-492) -->
+<rect x="80" y="110" width="200" height="382" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="600" y="110" width="200" height="382" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- pass zones, identical -->
+<rect x="80" y="110" width="200" height="313" fill="#fafaf8"/>
+<rect x="600" y="110" width="200" height="313" fill="#fafaf8"/>
+<text x="180" y="271" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="17" fill="#1a1a1a">82% PASS</text>
+<text x="700" y="271" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="17" fill="#1a1a1a">82% PASS</text>
+
+<!-- RUN A fail-zone bands, stacked from boundary y423 downward: hallucination, cost runaway, tool invocation, scope creep, format violation -->
+<rect x="80" y="423" width="200" height="3.83" fill="#9b4a3f"/>
+<rect x="80" y="426.83" width="200" height="3.83" fill="#6b6b6b"/>
+<rect x="80" y="430.66" width="200" height="11.5" fill="#6b6b6b"/>
+<rect x="80" y="442.16" width="200" height="19.17" fill="#6b6b6b"/>
+<rect x="80" y="461.33" width="200" height="30.67" fill="#6b6b6b"/>
+
+<!-- RUN B fail-zone bands, same stacking order -->
+<rect x="600" y="423" width="200" height="34.5" fill="#9b4a3f"/>
+<rect x="600" y="457.5" width="200" height="15.33" fill="#6b6b6b"/>
+<rect x="600" y="472.83" width="200" height="7.67" fill="#6b6b6b"/>
+<rect x="600" y="480.5" width="200" height="7.67" fill="#6b6b6b"/>
+<rect x="600" y="488.17" width="200" height="3.83" fill="#6b6b6b"/>
+
+<!-- thin paper separators between fail-zone bands, both columns -->
+<line x1="80" y1="426.83" x2="280" y2="426.83" stroke="#ffffff" stroke-width="1"/>
+<line x1="80" y1="430.66" x2="280" y2="430.66" stroke="#ffffff" stroke-width="1"/>
+<line x1="80" y1="442.16" x2="280" y2="442.16" stroke="#ffffff" stroke-width="1"/>
+<line x1="80" y1="461.33" x2="280" y2="461.33" stroke="#ffffff" stroke-width="1"/>
+<line x1="600" y1="457.5" x2="800" y2="457.5" stroke="#ffffff" stroke-width="1"/>
+<line x1="600" y1="472.83" x2="800" y2="472.83" stroke="#ffffff" stroke-width="1"/>
+<line x1="600" y1="480.5" x2="800" y2="480.5" stroke="#ffffff" stroke-width="1"/>
+<line x1="600" y1="488.17" x2="800" y2="488.17" stroke="#ffffff" stroke-width="1"/>
+
+<!-- re-stroke outer borders on top so fills don't cover the edge -->
+<rect x="80" y="110" width="200" height="382" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="600" y="110" width="200" height="382" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<line x1="80" y1="423" x2="280" y2="423" stroke="#1a1a1a" stroke-width="1"/>
+<line x1="600" y1="423" x2="800" y2="423" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- callouts: the hallucination bucket, tiny in Run A, dominant in Run B -->
+<text x="290" y="428.5" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f">1% of cases</text>
+<text x="290" y="440" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#9b4a3f">hallucination</text>
+<text x="590" y="443.5" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#9b4a3f">9% of cases</text>
+<text x="590" y="455" text-anchor="end" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#9b4a3f">hallucination</text>
+
+<!-- captions under the bars -->
+<text x="180" y="513" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">the version that shipped</text>
+<text x="700" y="513" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">the version after the next model swap</text>
+
+<line x1="0" y1="534" x2="880" y2="534" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- legend -->
+<rect x="40" y="550" width="14" height="10" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1"/>
+<text x="60" y="559" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">passed the eval, both runs</text>
+
+<rect x="330" y="550" width="14" height="10" fill="#6b6b6b"/>
+<text x="350" y="559" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">other buckets: cost, tool, scope, format</text>
+
+<rect x="40" y="574" width="14" height="10" fill="#9b4a3f"/>
+<text x="60" y="583" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">hallucination, tier 1, the bucket that grew ninefold</text>
+
+<line x1="0" y1="600" x2="880" y2="600" stroke="#1a1a1a" stroke-width="1"/>
+
+<text x="0" y="620" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">The aggregate did not move. What was failing, and how badly, moved completely.</text>
+<text x="0" y="638" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">A rubric that only scores would have called both runs the same system.</text>
+<text x="0" y="656" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">Illustrative: the two runs are constructed to show the shape, not a second measurement. Bucket names are FN-002's own working set.</text>
+</svg>

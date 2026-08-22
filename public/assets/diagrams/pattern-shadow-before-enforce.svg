@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="680" viewBox="0 0 880 680" role="img" aria-label="The same detector shown twice at the same point in a request path. In the shadow row it produces a verdict but takes no action, while the request itself continues unaffected to the response. A brick graduation gate between the rows checks three measured criteria. In the enforce row the same verdict now drives the action, which changes the response.">
+<defs>
+  <marker id="ink-arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker>
+</defs>
+<rect width="880" height="680" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Record first, decide, then enforce</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">The same detector at the same chokepoint, shown twice. What moves it from the top row to the bottom is a measured decision, not a date.</text>
+<line x1="0" y1="64" x2="880" y2="64" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- vertical wash column: the verdict / decision thread running through both rows and the gate -->
+<rect x="348" y="74" width="140" height="522" fill="#f5ece9"/>
+<rect x="348" y="74" width="3" height="522" fill="#9b4a3f"/>
+
+<!-- ROW 1: SHADOW -->
+<rect x="0" y="74" width="880" height="176" fill="#fafaf8"/>
+<text x="16" y="100" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" letter-spacing="1.2" fill="#1a1a1a">1&#160;&#160;SHADOW</text>
+<text x="16" y="120" font-family="Georgia,'EB Garamond',serif" font-size="11.5" font-style="italic" fill="#6b6b6b">runs the full decision, acts on nothing</text>
+
+<!-- bypass: the request itself, unaffected -->
+<path d="M 300 173 L 300 108 L 710 108 L 710 150" fill="none" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+<text x="505" y="102" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">the request itself: unaffected</text>
+
+<!-- pipeline boxes, row 1 -->
+<rect x="16" y="150" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="86" y="142" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">REQUEST</text>
+
+<line x1="156" y1="173" x2="182" y2="173" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+<rect x="182" y="150" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="252" y="142" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">DETECTOR</text>
+
+<line x1="322" y1="173" x2="348" y2="173" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+<rect x="348" y="150" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="418" y="142" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">VERDICT</text>
+<text x="418" y="210" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">logged</text>
+
+<line x1="488" y1="173" x2="514" y2="173" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#ink-arrow)"/>
+<rect x="514" y="150" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4,3"/>
+<text x="584" y="142" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">ACTION</text>
+<text x="584" y="210" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">not taken</text>
+
+<rect x="680" y="150" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="750" y="142" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">RESPONSE</text>
+<text x="750" y="210" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">unaffected</text>
+
+<!-- connector down to the gate -->
+<line x1="418" y1="224" x2="418" y2="300" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+
+<!-- THE GATE: the single brick element -->
+<rect x="300" y="300" width="236" height="50" fill="#9b4a3f"/>
+<text x="560" y="292" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="1" fill="#9b4a3f">EXIT CRITERIA</text>
+<text x="560" y="310" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">base rate measured, not assumed</text>
+<text x="560" y="328" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">alert volume inside review capacity</text>
+<text x="560" y="346" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">latency inside production budget</text>
+<text x="560" y="368" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#9b4a3f">any one failing sends it back.</text>
+<text x="560" y="384" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#9b4a3f">none failing is the decision that ends it.</text>
+
+<!-- connector down from the gate to enforce -->
+<line x1="418" y1="350" x2="418" y2="420" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+
+<!-- ROW 2: ENFORCE -->
+<rect x="0" y="420" width="880" height="176" fill="#fafaf8"/>
+<text x="16" y="446" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" letter-spacing="1.2" fill="#1a1a1a">2&#160;&#160;ENFORCE</text>
+<text x="16" y="466" font-family="Georgia,'EB Garamond',serif" font-size="11.5" font-style="italic" fill="#6b6b6b">same detector, same verdict, now acts</text>
+
+<rect x="16" y="496" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="86" y="488" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">REQUEST</text>
+
+<line x1="156" y1="519" x2="182" y2="519" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+<rect x="182" y="496" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="252" y="488" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">DETECTOR</text>
+
+<line x1="322" y1="519" x2="348" y2="519" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+<rect x="348" y="496" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="418" y="488" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">VERDICT</text>
+<text x="418" y="556" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">same logic</text>
+
+<line x1="488" y1="519" x2="514" y2="519" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+<rect x="514" y="496" width="140" height="46" fill="#6b6b6b"/>
+<text x="584" y="488" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">ACTION</text>
+<text x="584" y="556" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">taken</text>
+
+<line x1="654" y1="519" x2="680" y2="519" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#ink-arrow)"/>
+<rect x="680" y="496" width="140" height="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="750" y="488" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">RESPONSE</text>
+<text x="750" y="556" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">blocked / redacted</text>
+
+<line x1="0" y1="606" x2="880" y2="606" stroke="#e8e8e8" stroke-width="1"/>
+
+<rect x="0" y="616" width="24" height="14" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,2"/>
+<text x="32" y="627" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">recorded, not executed (shadow)</text>
+
+<rect x="284" y="616" width="24" height="14" fill="#6b6b6b"/>
+<text x="316" y="627" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">executed (enforce)</text>
+
+<rect x="484" y="616" width="24" height="14" fill="#9b4a3f"/>
+<text x="516" y="627" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the exit gate: three criteria, not a date</text>
+
+<text x="0" y="650" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Shadow buys the measurement enforcement cannot take without already having acted.</text>
+<text x="0" y="670" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">What ends shadow mode is the gate, not the calendar.</text>
+</svg>

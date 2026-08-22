@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="634" viewBox="0 0 880 634" role="img" aria-label="Two panels compare the declared architecture of an agent to what the tool-call diagnostic looks like applied to it. Top panel, declared: a query reaches an agent loop node that fans out to three tool boxes, plus a fourth dashed box marked whatever the case needs, representing a system built to branch freely, any order, on paper. Bottom panel, illustrative: six differing query types, billing question, password reset, address change, refund request, shipping delay, duplicate charge, run through the identical three tool calls in the identical order to show what the diagnostic looks like when it finds nothing. A brick-colored bracket spans all six rows with the label six of six queries, same sequence, same order, marking the shape the diagram exists to show, a worked illustration rather than a measured run.">
+<rect width="880" height="634" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">The costume, and what the traces underneath it show</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">One system, drawn as it is pitched, and the same system, illustrated: six differing queries run through it, one identical path underneath.</text>
+<line x1="0" y1="70" x2="880" y2="70" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- ============ TOP PANEL: DECLARED ============ -->
+<text x="24" y="92" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.4" fill="#1a1a1a">DECLARED</text>
+<text x="24" y="106" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the architecture, as it is pitched</text>
+
+<circle cx="52" cy="180" r="5" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="52" y="200" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10" font-style="italic" fill="#6b6b6b">query</text>
+<line x1="58" y1="180" x2="148" y2="180" stroke="#1a1a1a" stroke-width="1.2"/>
+
+<circle cx="172" cy="180" r="24" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="172" y="142" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">AGENT LOOP</text>
+<text x="172" y="224" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10" font-style="italic" fill="#6b6b6b">decides live, any order</text>
+
+<!-- fan out to 3 tools -->
+<line x1="196" y1="180" x2="300" y2="140" stroke="#1a1a1a" stroke-width="1.1"/>
+<line x1="196" y1="180" x2="300" y2="180" stroke="#1a1a1a" stroke-width="1.1"/>
+<line x1="196" y1="180" x2="300" y2="220" stroke="#1a1a1a" stroke-width="1.1"/>
+
+<rect x="300" y="128" width="118" height="24" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="359" y="144" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">TOOL A</text>
+
+<rect x="300" y="168" width="118" height="24" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="359" y="184" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">TOOL B</text>
+
+<rect x="300" y="208" width="118" height="24" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="359" y="224" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">TOOL C</text>
+
+<rect x="440" y="168" width="150" height="24" fill="#ffffff" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="515" y="184" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10" font-style="italic" fill="#6b6b6b">whatever the case needs</text>
+
+<text x="359" y="254" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#6b6b6b">any order, revisit, backtrack, on paper</text>
+
+<line x1="0" y1="278" x2="880" y2="278" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- ============ BOTTOM PANEL: ACTUAL (TRACES) ============ -->
+<text x="24" y="300" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.4" fill="#1a1a1a">ACTUAL</text>
+<text x="24" y="314" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the same diagnostic, illustrated across six differing queries</text>
+
+<!-- column headers for the fixed sequence, shown once -->
+<text x="360" y="338" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="0.5" fill="#1a1a1a">TOOL A</text>
+<text x="440" y="338" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="0.5" fill="#1a1a1a">TOOL B</text>
+<text x="520" y="338" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="0.5" fill="#1a1a1a">TOOL C</text>
+
+<!-- 6 identical rows, distinct query labels -->
+<g font-family="Georgia,'EB Garamond',serif" font-size="10.5" fill="#1a1a1a">
+<text x="24" y="366">billing question</text>
+<text x="24" y="396">password reset</text>
+<text x="24" y="426">address change</text>
+<text x="24" y="456">refund request</text>
+<text x="24" y="486">shipping delay</text>
+<text x="24" y="516">duplicate charge</text>
+</g>
+
+<g stroke="#1a1a1a" stroke-width="1.2" fill="#fafaf8">
+<!-- row 1 -->
+<line x1="200" y1="362" x2="600" y2="362" stroke="#1a1a1a" stroke-width="1"/>
+<circle cx="360" cy="362" r="4"/><circle cx="440" cy="362" r="4"/><circle cx="520" cy="362" r="4"/>
+<!-- row 2 -->
+<line x1="200" y1="392" x2="600" y2="392" stroke="#1a1a1a" stroke-width="1"/>
+<circle cx="360" cy="392" r="4"/><circle cx="440" cy="392" r="4"/><circle cx="520" cy="392" r="4"/>
+<!-- row 3 -->
+<line x1="200" y1="422" x2="600" y2="422" stroke="#1a1a1a" stroke-width="1"/>
+<circle cx="360" cy="422" r="4"/><circle cx="440" cy="422" r="4"/><circle cx="520" cy="422" r="4"/>
+<!-- row 4 -->
+<line x1="200" y1="452" x2="600" y2="452" stroke="#1a1a1a" stroke-width="1"/>
+<circle cx="360" cy="452" r="4"/><circle cx="440" cy="452" r="4"/><circle cx="520" cy="452" r="4"/>
+<!-- row 5 -->
+<line x1="200" y1="482" x2="600" y2="482" stroke="#1a1a1a" stroke-width="1"/>
+<circle cx="360" cy="482" r="4"/><circle cx="440" cy="482" r="4"/><circle cx="520" cy="482" r="4"/>
+<!-- row 6 -->
+<line x1="200" y1="512" x2="600" y2="512" stroke="#1a1a1a" stroke-width="1"/>
+<circle cx="360" cy="512" r="4"/><circle cx="440" cy="512" r="4"/><circle cx="520" cy="512" r="4"/>
+</g>
+
+<!-- the single accent: a brick bracket spanning all 6 identical rows -->
+<path d="M628,355 C648,355 648,355 648,362 L648,512 C648,519 648,519 628,519" fill="none" stroke="#9b4a3f" stroke-width="1.8"/>
+<rect x="660" y="415" width="196" height="42" rx="3" fill="#9b4a3f"/>
+<text x="758" y="432" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="0.3" fill="#fafaf8">6 OF 6 QUERIES</text>
+<text x="758" y="448" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#fafaf8">same sequence, same order</text>
+
+<line x1="0" y1="542" x2="880" y2="542" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- legend -->
+<circle cx="28" cy="562" r="4" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="46" y="566" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the same tool call, every trace</text>
+
+<rect x="350" y="557" width="16" height="10" fill="none" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="374" y="566" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">what the framework declares is possible</text>
+
+<rect x="650" y="557" width="16" height="10" fill="#9b4a3f"/>
+<text x="674" y="566" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the sequence that never varies</text>
+
+<line x1="0" y1="586" x2="880" y2="586" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="0" y="602" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Six different queries, one identical path. That gap between the two panels is the whole anti-pattern.</text>
+<text x="0" y="622" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">Illustrative: the six queries are constructed to show the shape, not a sampled measurement. Diffing real traces for this is the diagnostic itself.</text>
+</svg>

@@ -1,11 +1,72 @@
 ---
-slug: failure-buckets
-name: Failure Buckets
-oneLine: An eval rubric needs categorical failure modes, not just a single score.
-whenToUse: |
-  When you need to diagnose what's failing, not just whether it's failing. Bucket failures into specific categories (e.g. "wrong tool selected", "tool output ignored", "fabricated citation"). A single score tells you the system is broken; buckets tell you what to fix.
-whenNotToUse: |
-  When the eval is purely a pass/fail gate with no diagnostic intent. (But that's almost never the right eval.)
-antiPattern: |
-  Eval rubric that just reports a score (0.68) without telling you which failure mode is dominant. You can't improve what you don't differentiate.
+description: "Why an eval rubric that returns a single accuracy figure can hold perfectly steady while the mix of failures underneath it changes completely, the three properties a failure bucket needs to earn its place on a rubric, and the real Chapter 6 baseline evaluation where five citation failures were hiding inside one 37 percent failure rate."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "A score compresses a run down to the one figure a dashboard can hold, and debugging needs exactly what compression throws away: the shape underneath it."
+  - "More buckets look more rigorous, and bucket count is not the same axis as bucket quality."
+  - "Defining buckets before there are any failures to sort costs real, visible work; a single pass or fail check costs nothing beyond the eval you already have to build."
+sources:
+  - title: "Why Do Multi-Agent LLM Systems Fail?"
+    url: https://arxiv.org/pdf/2503.13657
+    authors: [Cemri M., Pan M., Yang S.]
+    year: 2025
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-failure-buckets.svg
 ---
+
+## The problem
+
+Ask a team whether an agent got better this release and the answer usually arrives as one number: pass rate, up two points or down three. That number is easy to trust because it is easy to compute, and it is the number on the dashboard a VP reads before a go or no-go call. It is also the number that can sit perfectly still while the system underneath it gets meaningfully worse.
+
+[FN-002](/field-notes/002-eval-rubric-failure-buckets/) names the mechanism directly: a rubric that produces one accuracy figure reports the average of your failure modes, not their composition. Two systems can land on the identical score and be, for every purpose an engineer cares about, different systems: picture one whose failures are all cosmetic wrong-format answers, easy to live with, against another with the same failure count, all fabricated citations, a much harder problem to ship past a compliance review. An eval that stops at the aggregate cannot tell you which one you are looking at.
+
+The failure this pattern names is not that the score is wrong; the arithmetic is usually fine. The problem is that a single number is a summary statistic computed over a distribution the rubric never recorded, and it throws away, by construction, exactly what a debugging session needs: not how much failed, but what kind of failure it was, and whether that kind is growing or shrinking. A rubric built to produce a grade will produce a grade. On its own, it will not produce a place to start fixing anything.
+
+## Forces
+
+**A score compresses a run down to the one figure a dashboard can hold, and debugging needs exactly what compression throws away: the shape underneath it.** A pass rate is a single scalar standing in for however many failures occurred and whatever they had in common. That compression is the entire value of a scalar, comparable across releases and cheap to gate a launch on, and it is also why two runs can share a number while sharing nothing else about what actually broke.
+
+**More buckets look more rigorous, and bucket count is not the same axis as bucket quality.** Thirty named categories read as more careful work than eight. A category a reviewer cannot reliably tell apart from its neighbor while looking at one failing transcript adds no information. It splits one real failure mode across two labels, and the count under both is now wrong in the same direction: an argument about which bucket a case belongs in, not a decision about what to fix.
+
+**Defining buckets before there are any failures to sort costs real, visible work; a single pass or fail check costs nothing beyond the eval you already have to build.** The aggregate ships by default because it falls out of any harness at all, free. A bucketed rubric asks someone to name the failure modes in advance, write a detection rule for each that needs no person to adjudicate it, and assign a severity tier, before the first real failure has arrived to prove any of it worth building. Skipping that, and adding buckets retroactively after an aggregate has already surprised someone, is how a rubric ends up measuring last quarter's system.
+
+## The pattern
+
+State the rule plainly: score by bucket distribution, not by aggregate accuracy, and design the buckets before the eval runs, not after a number embarrasses someone. A failure bucket is a named category of mistake, and it earns a place on the rubric only if it clears three tests together.
+
+Mutually distinguishable by a human reader. Handed one failing transcript, a reviewer should say which bucket it belongs to without inventing a tiebreaker on the spot. Two buckets that regularly need one are a single failure mode wearing two names, and every count under both becomes an argument about attribution, not a fact about the system. A run where [Hallucinated Done](/patterns/hallucinated-done/) (declaring a task finished with nothing checking that it is) and [Rubber-Stamp Verifier](/patterns/rubber-stamp-verifier/) (approving without inspecting) both worsen at once is two distinct failures getting worse independently. Collapse them into one "verification broke" bucket and the count moves, but nobody can tell which cause to chase.
+
+Stable across runs. The detection rule for a bucket must return the same verdict on the same failing case every time, or the count is noise wearing the shape of a metric. That is why the rule has to be a check a machine can execute, not a description left to a person's judgment call. Often that rule already exists: it is what a [Verifier Loop](/patterns/verifier-loop/) checks against the original task for an unrelated reason, reused here as the bucket's classifier.
+
+Tied to a different fix. This is what actually earns a bucket its place on the work list. Two categories fixed by the same change are one bucket; splitting them adds bookkeeping, not a decision. [ARCH-003](/architecture/003-measuring-detectors/) makes a related point from the detector side: an overall score holding steady while one category collapses is the normal shape of a regression, visible only in a per-category breakdown, never an aggregate. That breakdown is what a gate like [Baseline and Floor](/patterns/baseline-and-floor/) needs as input: comparing this run's citation-failure rate to last quarter's is a decision waiting to happen. Comparing pass rate to pass rate is a number.
+
+None of this is new; cataloguing failures into named categories is old, unremarkable practice. MAST, Cemri et al.'s taxonomy of fourteen failure modes across three categories in multi-agent systems, already does that, for a different purpose: a fixed, general taxonomy for diagnosing research systems after the fact. This pattern's claim is narrower, that a team builds its own system-specific rubric, defined before scoring starts and re-derived on every model upgrade, rather than importing someone else's taxonomy. Proposed status means that construction rule did not turn up stated as a design constraint in the prior art surveyed for this catalogue, not that naming failure kinds is new, only that stating it as a precondition on the rubric itself was not something the survey found named this way.
+
+## Worked example
+
+The book's own Chapter 6 baseline evaluation of a document-intelligence agent, written up in full in [Failure Case Studies](/evidence/failure-cases/), is a real instance of this shape, not one built to make the argument. Thirty gold-standard cases, eleven failures, a 37 percent failure rate and a 63.3 percent pass rate, one number an engineering review reads as needs work and nothing more specific.
+
+The largest single bucket, no_citation, accounts for five of the eleven, the plurality. But the label is coarser than it looks. Of the two no_citation cases written up in full, one is a citation pointing at the wrong artifact, the source file rather than the chapter describing it, scoring zero on the grounding check even though the substantive answer was correct; its fix is a validator that checks the cited source against the corpus index. The other is a retrieval chunk-boundary miss, the supporting detail split across two chunks that never landed adjacent in context, so there was nothing to cite at all; its fix is a neighbor-boost on the retrieval ranking, a different layer entirely. Same label, two distinct causes, two distinct fixes: the label itself has not passed this pattern's third test.
+
+Three more documented cases close differently: a confidence-estimation gap (answering fluently from a retrieval score too weak to trust) closes with an escalation threshold before the model call; a hallucinated tool argument (an invented collection name) closes by constraining that parameter to an enum; step-budget exhaustion on a multi-hop question closes by decomposing the query before retrieval.
+
+Five documented fixes moved the pass rate from 63.3 to 83.3 percent, six of the eleven original failures resolved. The other five, concentrated in judgment and no_answer categories, needed deeper model capability, not a system fix, and stayed failing. A single 37 percent figure could not say which six were reachable this quarter and which five were not. The bucket distribution, and the split inside its own largest bucket, is what did.
+
+## When not to use it
+
+This pattern's own edge is a volume problem before it is a design problem. A bucket distribution is a distribution: it needs enough failing cases across enough runs to say anything. Three failures split across three buckets on a fifteen-case smoke test carry no more signal than three failures concentrated in one; the sample is too small for either shape to mean anything. There is no distribution yet, only noise wearing a taxonomy, and an eight-category rubric ahead of a corpus large enough to populate it is ceremony spent on evidence that does not exist.
+
+It is decoration, too, if nothing downstream reads it. A bucketed rubric earns its cost only where its output changes a decision: which fix ships next, whether a release is blocked, who gets paged. An eval report with no consumer, no gate, no queue reading the breakdown before the next model swap, gets a finer rubric that measures a feedback loop more precisely without driving it. The gap worth closing there is the loop, not the categories feeding it.
+
+Keep this pattern's own job narrow, too. It decides what a failure is and how severe, nothing about where the evidence behind that classification lives or how long it survives, which is [Split the Log](/patterns/split-the-log/)'s question. FN-002 already covers the two edges specific to bucket design itself, open-ended generative work that resists a bounded failure space, and the bucket-inflation trap where thirty categories with one example each carry less signal than eight with twenty. That ground belongs to the field note, not repeated here.
+
+## Related patterns
+
+[Verifier Loop](/patterns/verifier-loop/) frequently supplies the detection rule a bucket needs at no extra construction cost: a deterministic check against the task is exactly the rule this pattern asks for, reused as a classifier rather than built twice. [Baseline and Floor](/patterns/baseline-and-floor/) is what a bucket distribution feeds once there is more than one run to compare, a per-category rate checked against a baseline and a floor, rather than a single pass-rate threshold a slow, evenly-spread decline can slip under undetected. [Split the Log](/patterns/split-the-log/) owns a different question, where the evidence behind a bucket assignment is stored and for how long; this pattern only decides what a failure is and how severe, never where the transcript proving it lives. [Hallucinated Done](/patterns/hallucinated-done/) and [Rubber-Stamp Verifier](/patterns/rubber-stamp-verifier/) are two failures a bucketed rubric catches by name and a scalar score hides: an agent declaring a task finished with nothing checking it, and a verifier approving without inspecting, can both get worse while an aggregate accuracy figure holds perfectly still, because neither necessarily changes how many cases pass. Bucket them separately, watch each rate on its own, and a flat aggregate stops being able to hide either one.

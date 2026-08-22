@@ -37,5 +37,11 @@ export default defineConfig({
     '/proof/trace-example': '/evidence/trace-example/',
     '/proof/failure-cases': '/evidence/failure-cases/',
     '/principles/': '/manifesto/',
+    '/patterns/agent-loop/': '/patterns/',
+    '/patterns/cold-start-mitigation/': '/patterns/',
+    '/patterns/eval-loop/': '/patterns/#failure-buckets',
+    '/patterns/hub-and-spoke/': '/patterns/#orchestrator-workers',
+    '/patterns/tool-registry/': '/patterns/#tool-agent-registry',
+    '/patterns/trace-the-truth/': '/patterns/#split-the-log',
   },
 });

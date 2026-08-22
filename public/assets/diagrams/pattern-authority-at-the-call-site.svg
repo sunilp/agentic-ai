@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="680" viewBox="0 0 880 680" role="img" aria-label="Two panels showing the same two callers reaching the same tool. Top panel: the check is written where the orchestrator plans the call, and a second caller reaches the tool by a route that never passes the check, so the tool executes. Bottom panel: the check sits at the tool's own boundary, so the same second caller is refused there instead.">
+<defs>
+  <marker id="arrowInk" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker>
+  <marker id="arrowBrick" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker>
+</defs>
+<rect width="880" height="680" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">A check upstream is a check a second path can skip</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Same two callers, same tool. Only where the check sits changes what happens to the second one.</text>
+<line x1="0" y1="68" x2="880" y2="68" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- ============ PANEL A: check written upstream ============ -->
+<text x="24" y="90" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="1.4" fill="#6b6b6b">CHECK WRITTEN UPSTREAM</text>
+
+<!-- main path: PLAN -> ORCHESTRATOR -> TOOL -->
+<rect x="24" y="122" width="118" height="56" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="34" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">PLAN</text>
+<text x="34" y="164" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">states the rule</text>
+
+<line x1="142" y1="150" x2="216" y2="150" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrowInk)"/>
+
+<rect x="222" y="122" width="160" height="56" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="232" y="146" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" letter-spacing="0.4" fill="#1a1a1a">ORCHESTRATOR</text>
+<text x="232" y="164" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the plan looks safe</text>
+
+<line x1="382" y1="150" x2="454" y2="150" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrowInk)"/>
+
+<!-- the gate: sits on the designed path only -->
+<rect x="404" y="128" width="6" height="44" fill="#1a1a1a"/>
+<text x="407" y="118" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10" font-style="italic" fill="#6b6b6b">the rule, checked here</text>
+<text x="407" y="188" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" letter-spacing="1.2" fill="#6b6b6b">CHECK</text>
+
+<rect x="460" y="122" width="160" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1"/>
+<rect x="460" y="122" width="3" height="56" fill="#9b4a3f"/>
+<text x="472" y="145" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">TOOL</text>
+<text x="472" y="163" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">approve()</text>
+
+<!-- second caller, routes around the gate -->
+<rect x="24" y="226" width="200" height="56" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="34" y="250" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" letter-spacing="0.4" fill="#1a1a1a">SECOND CALLER</text>
+<text x="34" y="268" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">a retry, a fallback, another team</text>
+
+<path d="M 224 254 L 440 254 L 440 164 L 454 164" fill="none" stroke="#9b4a3f" stroke-width="1.6" marker-end="url(#arrowBrick)"/>
+<text x="300" y="246" font-family="Georgia,'EB Garamond',serif" font-size="10" font-style="italic" fill="#9b4a3f">never passes the gate above</text>
+
+<text x="472" y="200" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#9b4a3f">EXECUTES</text>
+<text x="472" y="217" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#9b4a3f">nothing here asked whether it should</text>
+
+<line x1="0" y1="304" x2="880" y2="304" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- ============ PANEL B: check at the call site ============ -->
+<text x="24" y="326" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="1.4" fill="#6b6b6b">CHECK AT THE CALL SITE</text>
+
+<rect x="24" y="358" width="118" height="56" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="34" y="382" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">PLAN</text>
+<text x="34" y="400" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">states the rule</text>
+
+<line x1="142" y1="386" x2="216" y2="386" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrowInk)"/>
+
+<rect x="222" y="358" width="160" height="56" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="232" y="382" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" letter-spacing="0.4" fill="#1a1a1a">ORCHESTRATOR</text>
+<text x="232" y="400" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the same call as above</text>
+
+<line x1="382" y1="386" x2="450" y2="386" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrowInk)"/>
+<text x="416" y="378" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#6b6b6b">holds</text>
+
+<rect x="24" y="462" width="200" height="56" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="34" y="486" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" letter-spacing="0.4" fill="#1a1a1a">SECOND CALLER</text>
+<text x="34" y="504" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the same second caller as above</text>
+
+<path d="M 224 490 L 440 490 L 440 396 L 450 396" fill="none" stroke="#1a1a1a" stroke-width="1.2"/>
+<circle cx="450" cy="396" r="4" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"/>
+<line x1="446.2" y1="392.2" x2="453.8" y2="399.8" stroke="#1a1a1a" stroke-width="1.4"/>
+<line x1="446.2" y1="399.8" x2="453.8" y2="392.2" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="416" y="412" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#6b6b6b">refused</text>
+
+<!-- the gate: now sits on the tool's own boundary, where every path must converge -->
+<rect x="454" y="364" width="6" height="44" fill="#1a1a1a"/>
+<text x="457" y="354" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10" font-style="italic" fill="#6b6b6b">the rule, checked here instead</text>
+<text x="457" y="424" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" letter-spacing="1.2" fill="#6b6b6b">CHECK</text>
+
+<rect x="466" y="358" width="160" height="56" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="478" y="381" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">TOOL</text>
+<text x="478" y="399" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">approve()</text>
+
+<text x="478" y="436" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" letter-spacing="0.6" fill="#1a1a1a">executes</text>
+<text x="478" y="452" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">this caller's credential holds</text>
+
+<text x="255" y="440" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" letter-spacing="0.6" fill="#1a1a1a">REFUSED</text>
+<text x="255" y="456" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">stopped here; credential doesn't trace back</text>
+
+<line x1="0" y1="548" x2="880" y2="548" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- legend -->
+<rect x="24" y="566" width="14" height="10" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="44" y="575" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">a call reaching the tool</text>
+
+<line x1="270" y1="571" x2="300" y2="571" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrowInk)"/>
+<text x="308" y="575" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the designed path</text>
+
+<rect x="500" y="566" width="14" height="10" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1"/>
+<rect x="500" y="566" width="3" height="10" fill="#9b4a3f"/>
+<text x="520" y="575" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">skipped the check; nothing caught it</text>
+
+<text x="0" y="608" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Both panels show the same two callers reaching the same tool.</text>
+<text x="0" y="628" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Moving the check from the plan to the tool's own boundary is what makes the second caller visible to it.</text>
+</svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560" role="img" aria-label="Three log stores, operational telemetry, the decision record, and the content archive, each with its own retention, access rule and reader. Below them, an arrow shows what happens when a team merges the three into one store: it can no longer answer a regulator and it is still holding the sensitive prompts it should have deleted, the same mistake causing both failures at once.">
+<rect width="880" height="560" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Split the log, or fail two ways at once</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Three stores, three retentions, three readers. Merge them and one retention clock has to govern all three.</text>
+<line x1="0" y1="66" x2="880" y2="66" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- three store cards -->
+<rect x="0" y="84" width="280" height="192" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.1"/>
+<rect x="0" y="84" width="280" height="28" fill="#1a1a1a"/>
+<text x="140" y="103" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#fafaf8" text-anchor="middle" letter-spacing="0.5">OPERATIONAL TELEMETRY</text>
+<text x="14" y="134" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">counters, latencies, error</text>
+<text x="14" y="151" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">rates, queue depth</text>
+<text x="14" y="176" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">RETENTION</text>
+<text x="266" y="177" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#1a1a1a" text-anchor="end">days</text>
+<text x="14" y="196" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">ACCESS</text>
+<text x="266" y="197" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#1a1a1a" text-anchor="end">wide</text>
+<line x1="14" y1="216" x2="266" y2="216" stroke="#e8e8e8"/>
+<text x="14" y="234" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">READER</text>
+<text x="14" y="256" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a" font-style="italic">the on-call engineer</text>
+
+<rect x="300" y="84" width="280" height="192" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.1"/>
+<rect x="300" y="84" width="280" height="28" fill="#1a1a1a"/>
+<text x="440" y="103" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#fafaf8" text-anchor="middle" letter-spacing="0.5">THE DECISION RECORD</text>
+<text x="314" y="134" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">detectors, verdicts, policy</text>
+<text x="314" y="151" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">version, action, outcome</text>
+<text x="314" y="176" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">RETENTION</text>
+<text x="566" y="177" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#1a1a1a" text-anchor="end">years</text>
+<text x="314" y="196" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">ACCESS</text>
+<text x="566" y="197" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#1a1a1a" text-anchor="end">narrow</text>
+<line x1="314" y1="216" x2="566" y2="216" stroke="#e8e8e8"/>
+<text x="314" y="234" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">READER</text>
+<text x="314" y="256" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a" font-style="italic">the auditor</text>
+
+<rect x="600" y="84" width="280" height="192" rx="2" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.1"/>
+<rect x="600" y="84" width="280" height="28" fill="#1a1a1a"/>
+<text x="740" y="103" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#fafaf8" text-anchor="middle" letter-spacing="0.5">THE CONTENT ARCHIVE</text>
+<text x="614" y="134" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">prompts, retrieved chunks,</text>
+<text x="614" y="151" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">responses, masked where found</text>
+<text x="614" y="176" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">RETENTION</text>
+<text x="866" y="177" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#1a1a1a" text-anchor="end">weeks</text>
+<text x="614" y="196" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">ACCESS</text>
+<text x="866" y="197" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#1a1a1a" text-anchor="end">break-glass</text>
+<line x1="614" y1="216" x2="866" y2="216" stroke="#e8e8e8"/>
+<text x="614" y="234" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9" fill="#6b6b6b" letter-spacing="1.4">READER</text>
+<text x="614" y="256" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a" font-style="italic">incident review, one case at a time</text>
+
+<!-- convergence arrows into the merge failure -->
+<defs>
+  <marker id="argrey" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+    <path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/>
+  </marker>
+</defs>
+<path d="M140,276 C140,320 300,320 400,352" fill="none" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#argrey)"/>
+<path d="M440,276 L440,352" fill="none" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#argrey)"/>
+<path d="M740,276 C740,320 580,320 480,352" fill="none" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#argrey)"/>
+<text x="440" y="300" font-family="Georgia,'EB Garamond',serif" font-size="11" fill="#6b6b6b" text-anchor="middle" font-style="italic">merged into one store, one retention clock</text>
+
+<!-- the merge failure box: the single brick element -->
+<rect x="140" y="360" width="600" height="118" rx="2" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<rect x="140" y="360" width="600" height="28" fill="#9b4a3f"/>
+<text x="440" y="379" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.8">ONE LOG, ONE RETENTION SETTING</text>
+
+<rect x="160" y="400" width="9" height="9" fill="#9b4a3f"/>
+<text x="178" y="409" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Set long enough to satisfy the auditor: now holding raw prompts and</text>
+<text x="178" y="426" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">responses years past any purpose for keeping them.</text>
+
+<rect x="160" y="440" width="9" height="9" fill="#9b4a3f"/>
+<text x="178" y="449" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Set short enough to protect privacy: nothing left when the regulator</text>
+<text x="178" y="466" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">asks about a decision from before the cutoff.</text>
+
+<line x1="0" y1="500" x2="880" y2="500" stroke="#1a1a1a" stroke-width="1"/>
+<text x="0" y="522" font-family="Georgia,'EB Garamond',serif" font-size="13" fill="#1a1a1a">Same merge, same retention clock, both failures at once. That is the point, not a coincidence.</text>
+<text x="0" y="542" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#6b6b6b" font-style="italic">Reference by id across the three stores, not embedding, is what lets each keep its own clock.</text>
+</svg>

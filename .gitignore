@@ -46,3 +46,5 @@ recipes/R-001/rec001/
 # Lab-002 isolated venv (never commit) and local db
 .venv-lab002/
 labs/lab_002/runs/durability.db
+
+reviews/
