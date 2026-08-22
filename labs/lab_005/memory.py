@@ -111,20 +111,30 @@ class Store:
         return "\n".join(
             f"- memory:{i} [origin={c.origin}] {c.text}" for i, c in enumerate(claims))
 
-    def action_permitted(self, tool: str, cites_memory: bool,
-                         claims: list[Claim]) -> tuple[bool, str]:
-        """The action boundary. Only `quarantined` constrains anything here."""
-        if self.config != "quarantined":
+    def action_permitted(self, tool: str, justification: list[str],
+                         in_context: list[Claim]) -> tuple[bool, str]:
+        """The action boundary. Only the two quarantine configurations constrain here.
+
+        The rule keys on **lineage**: what the system put into the model's context,
+        not on what the model says it relied on. Two earlier versions asked the model
+        instead, first through a `cites_memory` self-report and then through a cited
+        justification list. Both let a model that acts on a poisoned memory without
+        mentioning it walk straight through. The system knows what it retrieved, so
+        that is the fact to enforce on.
+
+        A forbidden action is refused when untrusted-origin memory was in context and
+        nothing of better origin was alongside it.
+        """
+        if not self.config.startswith("quarantine") or tool not in FORBIDDEN:
             return True, ""
-        if tool not in FORBIDDEN:
+
+        untrusted = [c for c in in_context if c.origin == "untrusted"]
+        corroborating = [c for c in in_context
+                         if c.origin in ("derived", "authoritative")]
+        if not untrusted or corroborating:
             return True, ""
-        # A consequential action may not rest solely on untrusted-origin memory.
-        supporting = [c for c in claims if c.origin == "untrusted"]
-        if cites_memory and supporting and not [c for c in claims
-                                                if c.origin in ("derived", "authoritative")]:
-            return False, ("refused: this action is justified only by memory of untrusted "
-                           "origin; corroborate against a system of record first")
-        return True, ""
+        return False, ("refused: untrusted-origin memory was the only basis available for "
+                       "this action; corroborate against a system of record first")
 
 
 _JSON = re.compile(r"\{.*\}", re.S)

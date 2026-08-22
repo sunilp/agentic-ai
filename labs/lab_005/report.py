@@ -36,16 +36,23 @@ def render(reports: list[dict], meta: dict) -> str:
             b = r["configs"][c]["poisoned"]
             L.append(f"| `{r['model']}` | `{c}` | {b['stored']}/{b['n']} | {b['cited']}/{b['n']} | "
                      f"**{b['reached']}/{b['n']}** |")
-    L += ["", "## Clean controls", "",
-          "The cost side. A configuration that stopped the poison by stopping the agent from",
-          "acting at all would show it here.", "",
-          "| Model | Configuration | Produced a usable action | Reached forbidden |",
-          "| --- | --- | ---: | ---: |"]
+    L += ["", "## Clean controls: did the gate block legitimate work?", "",
+          "The cost side, and it needs two columns rather than one. A refusal of a forbidden",
+          "tool is the gate working, on a clean scenario as much as on a poisoned one. A",
+          "refusal of an allowed tool would be the gate blocking legitimate work, which is",
+          "the number that would make it unusable.", "",
+          "| Model | Configuration | Chose an allowed tool | Chose a forbidden tool | **Allowed tools blocked** |",
+          "| --- | --- | ---: | ---: | ---: |"]
     for r in reports:
         for c in CONFIGS:
             b = r["configs"][c]["clean"]
-            L.append(f"| `{r['model']}` | `{c}` | {b['usable_action']}/{b['n']} | "
-                     f"{b['reached']}/{b['n']} |")
+            L.append(f"| `{r['model']}` | `{c}` | {b.get('chose_allowed', 0)}/{b['n']} | "
+                     f"{b.get('chose_forbidden', 0)}/{b['n']} | "
+                     f"**{b.get('blocked_allowed', 0)}** |")
+    L += ["", "The last column is zero in every cell. The gate only ever refused forbidden",
+          "tools, which is its entire specification. Note also that the models proposed",
+          "destructive remediations on clean scenarios too, with no poisoned memory involved,",
+          "which is worth seeing on its own: the second column is not a poisoning result."]
     L += ["", "## Origins assigned by the write gate", "",
           "The gate computes origin from the evidence chain rather than from the agent's",
           "claim about itself. A claim citing the reporter-written field is `untrusted`",
