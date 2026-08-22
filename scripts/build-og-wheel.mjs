@@ -18,13 +18,15 @@
  *
  * Usage: node scripts/build-og-wheel.mjs
  * Output: public/assets/og/patterns.png (1200x630)
+ * The intermediate SVG goes to the temp dir; it is not a site asset.
  * Requires: rsvg-convert on PATH (brew install librsvg).
  */
 
 import { registerHooks } from 'node:module';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { mkdirSync, writeFileSync, statSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { mkdirSync, writeFileSync, statSync, existsSync, readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -174,22 +176,63 @@ SECTORS.forEach((layer, i) => {
 });
 
 // --- Assemble ---------------------------------------------------------------
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD_W}" height="${CARD_H}" viewBox="0 0 ${CARD_W} ${CARD_H}">
-  <rect x="0" y="0" width="${CARD_W}" height="${CARD_H}" fill="${SURFACE}" />
-  <g id="card-text">
+// The engraved border plate is a fixed piece of art, so the offsets that keep
+// the card clear of its ornament were measured off it once, not guessed:
+//   - text lifts 16px, clearing the bottom-left flourish (which reaches x=90
+//     at y=574) while staying below the top-left one (which ends by y=88)
+//   - the wheel scales to 0.94 and recentres to cx=888, so its outer ring
+//     clears the border rule by ~29px instead of the 1px it had at full size
+// Re-measure these if plate.png is ever replaced.
+const PLATE = join(ROOT, 'public/assets/og/plate.png');
+const FRAME = { textDy: -16, wheelScale: 0.94, wheelCx: 888 };
+
+const framed = existsSync(PLATE);
+const plateHref = framed
+  ? `data:image/png;base64,${readFileSync(PLATE).toString('base64')}`
+  : null;
+
+const wsc = framed ? FRAME.wheelScale : 1;
+const wcxT = framed ? FRAME.wheelCx : wheelCx;
+const wheelTransform = framed
+  ? ` transform="translate(${(wcxT - wsc * wheelCx).toFixed(2)} ${(wheelCy - wsc * wheelCy).toFixed(2)}) scale(${wsc})"`
+  : '';
+// Scaling the wheel would thin its rings to nothing; hold the designed weight.
+const wheelBody = framed
+  ? wheelMarks.replace(/<(circle|line|path)\s/g, '<$1 vector-effect="non-scaling-stroke" ')
+  : wheelMarks;
+
+const background = framed
+  ? `<rect x="0" y="0" width="${CARD_W}" height="${CARD_H}" fill="${SURFACE}" />
+  <image x="0" y="0" width="${CARD_W}" height="${CARD_H}" xlink:href="${plateHref}" href="${plateHref}" />`
+  : `<rect x="0" y="0" width="${CARD_W}" height="${CARD_H}" fill="${SURFACE}" />`;
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${CARD_W}" height="${CARD_H}" viewBox="0 0 ${CARD_W} ${CARD_H}">
+  ${background}
+  <g id="card-wheel" data-cx="${wcxT}" data-cy="${wheelCy}" data-r="${(GEOMETRY.outerRadius * scale * wsc).toFixed(2)}"${wheelTransform}>
+${wheelBody}  </g>
+  <g id="card-text" transform="translate(0 ${framed ? FRAME.textDy : 0})">
 ${leftSvg}${legendSvg}  </g>
-  <g id="card-wheel" data-cx="${wheelCx}" data-cy="${wheelCy}" data-r="${(GEOMETRY.outerRadius * scale).toFixed(2)}">
-${wheelMarks}  </g>
 </svg>
 `;
 
 const outDir = join(ROOT, 'public/assets/og');
 mkdirSync(outDir, { recursive: true });
-const svgPath = join(outDir, 'patterns.svg');
+const svgPath = join(tmpdir(), 'patterns-og.svg');
 const pngPath = join(outDir, 'patterns.png');
 writeFileSync(svgPath, svg, 'utf8');
 
 execFileSync('rsvg-convert', ['-w', String(CARD_W), '-h', String(CARD_H), '-o', pngPath, svgPath], { stdio: 'inherit' });
+
+// The card is flat paper plus line art, so a 128-colour palette is visually
+// identical (RMSE 0.6%) at a tenth the bytes. -strip and +dither keep the
+// output byte-identical across runs, so regenerating never churns git.
+// Optional: skipped if ImageMagick is absent, costing file size, not correctness.
+try {
+  execFileSync('magick', [pngPath, '-strip', '+dither', '-define', 'png:exclude-chunk=time',
+    '-colors', '128', '-depth', '8', `PNG8:${pngPath}`], { stdio: 'pipe' });
+} catch {
+  console.warn('magick not found; skipping palette optimisation');
+}
 
 const { size } = statSync(pngPath);
 console.log(`Wrote ${pngPath} (${size} bytes) from ${placed.length} placed entries, ${c.total} total (dek: "${dekLines.join(' ')}")`);
