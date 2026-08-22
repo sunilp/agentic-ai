@@ -332,9 +332,9 @@
   </div>
 
   <p class="wheel__note">
-    Five of fifteen cells are empty, and that is deliberate. Capability's work is all up front, so it has nothing at
-    evaluate, operate or govern. Control acts rather than measures, so it has nothing at evaluate. Evidence does not
-    exist before something is built, so it has nothing at design.
+    Each entry sits at the stage where its principal design decision gets made, its primary placement, not every
+    stage it touches. Five of fifteen cells are empty: no catalogue entry currently has capability's evaluate,
+    operate or govern as that primary home, or control's evaluate, or evidence's design.
   </p>
 </div>
 

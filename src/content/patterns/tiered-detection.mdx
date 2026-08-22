@@ -65,7 +65,7 @@ Escalate a tenth of traffic and the judge is your p95, whatever the cheap tier's
 
 ## Worked example
 
-ARCH-008 works this exact arithmetic through a coding assistant that reads a repository, proposes changes, and calls a small set of tools. The chokepoint is tool execution, the only stage that can still stop an action before it happens. The budget, a constructed target rather than a measurement, not a report of a specific deployment: 120ms p95 for the whole policy decision, generous because most of the pipeline is deterministic rather than inference.
+ARCH-008 works this exact arithmetic through a coding assistant that reads a repository, proposes changes, and calls a small set of tools. The chokepoint is tool execution, the last agent-side chokepoint that can still stop an action before it happens. The budget, a constructed target rather than a measurement, not a report of a specific deployment: 120ms p95 for the whole policy decision, generous because most of the pipeline is deterministic rather than inference.
 
 The cheap tier runs on every call: a tool registry lookup at 5ms, an authority check against actor, action and resource at 20ms, an argument scan for secrets and paths outside the workspace at 15ms, each answering an authorization question rather than a classification one. The judge, at 400ms, runs only on calls flagged `reversal_cost: impossible` that the cheap tier also places in the near band: an assistant proposing a force-push or a database write it cannot undo, where the cheap checks alone cannot tell whether this specific call is one the policy permits.
 

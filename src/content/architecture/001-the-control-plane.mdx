@@ -99,12 +99,12 @@ This is the part that decides your architecture. Each chokepoint has a different
   wide
   src="/assets/diagrams/arch-001-chokepoints.svg"
   alt="Six chokepoints down a single request path. Each row gives what that chokepoint can see and what it is blind to, with markers for whether it addresses information harm, action harm, both, or neither."
-  caption="Tool execution is the only chokepoint in both harm families. The prompt layer is in neither."
+  caption="Tool execution is the only agent-side chokepoint in both harm families. The prompt layer is in neither."
 />
 
-**Upload** sees the full document, unhurried. This is the only chokepoint with no latency pressure, because ingestion is asynchronous. It is therefore the correct home for anything expensive: full-document classification, entity extraction across the whole text, structural analysis, a slow model. What it cannot see is who will eventually retrieve this document, or in what context. A document that is harmless for the team that uploaded it may be a leak the moment it is retrievable by another business unit.
+**Upload** sees the full document, unhurried. Unlike the other five, this chokepoint carries no latency pressure, because ingestion is asynchronous. It is therefore the correct home for anything expensive: full-document classification, entity extraction across the whole text, structural analysis, a slow model. What it cannot see is who will eventually retrieve this document, or in what context. A document that is harmless for the team that uploaded it may be a leak the moment it is retrievable by another business unit.
 
-**Retrieval** sees which chunks were selected and, critically, the requester's identity. This is the only chokepoint that can answer "is this person allowed to see this content", because it is the only one that has both the content and the principal at the same time. It is also where injected instructions inside a retrieved document first become visible to the system. In systems whose controls sit only at the prompt and response layers, this is the largest uninstrumented surface.
+**Retrieval** sees which chunks were selected and, critically, the requester's identity. This is the last agent-side chokepoint that can answer "is this person allowed to see this content", because it is the only point in the agent's own path where the content and the principal are present at the same time. It is also where injected instructions inside a retrieved document first become visible to the system. In systems whose controls sit only at the prompt and response layers, this is the largest uninstrumented surface.
 
 **Prompt** sees the assembled payload: system prompt, retrieved context, conversation history, and the user's input, concatenated. It sees everything, and unless you have deliberately preserved structure it can distinguish nothing. Provenance survives only if the assembly step records it. The detector cannot otherwise tell whether "ignore prior instructions" arrived from the user, from a retrieved PDF, or from a previous turn, unless you deliberately preserve that structure. Most frameworks flatten it.
 
@@ -112,7 +112,7 @@ This is the part that decides your architecture. Each chokepoint has a different
 
 **Response** sees what the model produced. It can catch leaked system prompts, PII in output, unsafe content, and claims that contradict the retrieved context. It cannot see intent, and it cannot undo anything, because in a tool-calling system the action has often already been requested by the time text is being generated.
 
-**Tool execution** sees the concrete action: the function, the arguments, the target, and the identity under which it will run. This is the only chokepoint that can prevent an irreversible act, and the only one where the decision is about a specific operation on a specific resource rather than about text. That makes the decision auditable rather than infallible: it is only as good as the identity, the resource metadata, and the policy behind it, and stale identity or mislabelled resources will produce a confident wrong answer here as readily as anywhere else.
+**Tool execution** sees the concrete action: the function, the arguments, the target, and the identity under which it will run. This is the last agent-side chokepoint that can prevent an irreversible act, before the agent's own control decides whether it fires, and the only one where the decision is about a specific operation on a specific resource rather than about text. That makes the decision auditable rather than infallible: it is only as good as the identity, the resource metadata, and the policy behind it, and stale identity or mislabelled resources will produce a confident wrong answer here as readily as anywhere else.
 
 **Logging** sees the whole exchange after the fact. It cannot prevent anything. It is what makes everything else auditable, and it is itself a leak surface, because prompts and responses in a log are the same sensitive data that the other five chokepoints were defending.
 
@@ -122,14 +122,14 @@ Split the harms you are defending against into two families, because the chokepo
 
 **Information harm** is data reaching someone who should not have it. Leaked PII, a disclosed system prompt, a retrieved document outside the requester's entitlement, sensitive content in a log. These harms happen at the moment information moves, so they are addressable at upload, retrieval, response, and logging.
 
-**Action harm** is the system doing something in the world that should not have happened. A row deleted, a payment issued, a ticket closed, a pull request merged. Tool execution is the only chokepoint that can prevent these, because it is the only one that sees the act before it happens.
+**Action harm** is the system doing something in the world that should not have happened. A row deleted, a payment issued, a ticket closed, a pull request merged. Tool execution is the last agent-side chokepoint that can prevent these: the point where the intended action, its arguments, and the delegated identity still coexist, before the agent's own control decides whether it fires. Downstream layers, an API gateway, a service's own authorization check, database permissions, cloud IAM, can still refuse the call after that, but within the agent's own runtime a system with no control at this chokepoint has no agent-side control against action harm at all.
 
 Tool execution belongs to both families, and this is the case worth stating plainly rather than tidying away. A tool call is also an egress path: an email send, an outbound webhook, a search query, a write to a shared document all move information out of the system. Willison's lethal trifecta names this directly, and it is why treating tool execution as purely an action control leaves the exfiltration route uninstrumented.
 
 ```
  information harm  -->  upload, retrieval, response, logging,
                         and tool execution (egress)
- action harm       -->  tool execution  (only)
+ action harm       -->  tool execution  (last agent-side chokepoint)
 ```
 
 Text-in-text-out classification is the tractable, sellable shape for a guardrail product, and the commercial guardrail category reflects that. As a system moves from answering questions to taking actions, more of its risk lands on the one chokepoint that text classification cannot reach.
@@ -146,7 +146,7 @@ Mapping the OWASP Top 10 for LLM Applications 2025 onto the chokepoints turns an
 | LLM02 Sensitive Information Disclosure | Upload and retrieval for input, response and tool execution for output | Entitlement is only knowable where content and principal meet; egress includes tool calls |
 | LLM05 Improper Output Handling | Response and tool execution | The harm is in what the output is used for, not what it says |
 | LLM06 Excessive Agency | Tool execution | Nothing in the text tells you whether this actor may perform this act |
-| LLM07 System Prompt Leakage | Response | The only stage where the leak is observable |
+| LLM07 System Prompt Leakage | Response | The last stage where the leak can be caught before delivery |
 | LLM08 Vector and Embedding Weaknesses | Upload and retrieval | Invisible downstream; by the prompt layer the poisoned chunk looks like context |
 | LLM10 Unbounded Consumption | Tool execution and the loop governor | A budget is a runtime property, not a text property |
 | LLM03 Supply Chain | Outside the request path | A build-time and procurement control; no runtime chokepoint sees it |
@@ -160,7 +160,7 @@ Three of those ten have no runtime chokepoint at all, which is worth saying out 
 A defensible default for an enterprise RAG system, ordered by value per unit of effort:
 
 1. **Retrieval-layer entitlement check.** Filter candidate chunks against the requester's permissions before they reach the payload. This is access control, not machine learning, and it eliminates a whole class of disclosure incidents deterministically.
-2. **Tool-execution policy.** Every tool call passes a policy decision that knows the actor, the action, and the resource. Deterministic, auditable, and the only defence against action harm.
+2. **Tool-execution policy.** Every tool call passes a policy decision that knows the actor, the action, and the resource. Deterministic, auditable, and the last agent-side defence against action harm.
 3. **Upload-time classification.** Expensive detectors run here, once per document, off the request path. Label sensitivity, extract entities, flag instruction-like content in documents that should contain none.
 4. **Response-layer output checks.** System prompt leakage, PII in output, grounding against retrieved context.
 5. **Prompt-layer detection.** Useful, cheap, and the weakest of the five for the reasons above. Worth having. Not worth being your only control.

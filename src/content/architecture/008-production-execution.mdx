@@ -6,7 +6,7 @@ description: "The runtime engineering of a guardrail pipeline: the latency budge
 layer: control
 order: 8
 readingTime: 11
-updated: 2026-08-19
+updated: 2026-08-22
 specifies: The runtime execution, performance and failure behaviour of a detector pipeline
 appliesTo: [RAG platform, Coding assistant, Agent system]
 decisions:
@@ -29,7 +29,7 @@ anchors:
   - label: Where it breaks
     anchor: where-this-blueprint-stops-working
 references: [ch-09, ch-11]
-patterns: [tool-agent-registry, workflow-first]
+patterns: [tool-agent-registry, workflow-first, fail-closed-degrade-on-exposure]
 sources:
   - title: "OWASP Top 10 for LLM Applications 2025"
     url: https://genai.owasp.org/llm-top-10/
@@ -135,7 +135,7 @@ The row that decides whether this design is honest is the last one. A system tha
 
 There is a tempting shortcut here, and it is wrong: that information-harm chokepoints can fail open because only actions are irreversible. You cannot un-disclose. A response that emits credentials, personal data or a restricted document is as irreversible as a payment, and in a regulated setting it is reportable. Reversibility is a property of the specific harm, not of the harm family, which is the same correction ARCH-004 applies to the action grid.
 
-The defensible rule is by exposure and sensitivity rather than by family. Fail open with a record where the content is low sensitivity and the exposure is contained, which is most Tier 3 internal traffic. Fail closed wherever the chokepoint can emit restricted data, wherever the exposure crosses a trust boundary, and always at tool execution, because per ARCH-001 that is the only place an act can still be stopped. A system whose only fail-closed chokepoint is tool execution has decided, usually without noticing, that disclosure is recoverable.
+The defensible rule is by exposure, sensitivity, and whether the call writes, never by family or by chokepoint identity. Fail open with a record where the call is read-only, low sensitivity, and the exposure is contained, which is most Tier 3 internal traffic. Fail closed wherever a call writes to a system of record, is externally visible, carries an impossible reversal cost, or runs under high privilege, whatever chokepoint it runs through, including tool execution, which fails closed here for the ordinary reason that most tool calls write or are irreversible, not because its name is a match key on its own. It is the last agent-side point where the intended action, its arguments, and the delegated identity behind the call still coexist, before the agent's own control decides whether it fires; downstream layers, an API gateway, a service's own authorization check, database permissions, cloud IAM, can still refuse the call after that. A system whose only fail-closed chokepoint is tool execution has decided, usually without noticing, that disclosure is recoverable.
 
 Two invariants regardless of tier. Every degraded request is marked degraded in its decision record, so the period is reconstructable afterwards. And degradation is time-boxed with an alert, because a system that has been quietly degraded for four hours is one that will describe itself as healthy in the incident review.
 
@@ -172,7 +172,7 @@ rollback:
 
 ## Worked example: tool-use control on a coding assistant
 
-A coding assistant that can read a repository, propose changes, and run a small set of tools. The control in question is the tool-execution policy decision from ARCH-004, the only chokepoint that can prevent action harm.
+A coding assistant that can read a repository, propose changes, and run a small set of tools. The control in question is the tool-execution policy decision from ARCH-004, the last agent-side chokepoint that can prevent action harm.
 
 **Budget.** Tool calls are not on the streaming path; the user is waiting on a discrete action. Budget: 120ms p95 for the policy decision, which is generous because it is deterministic work.
 

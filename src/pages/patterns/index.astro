@@ -26,8 +26,18 @@ const LAYERS = [
   { key: 'evidence', label: 'Evidence', line: 'What it can prove, and how it stays honest.' },
 ] as const;
 
-const layerGroups = LAYERS.map((l) => ({ ...l, items: byLayer(l.key).filter((e) => e.kind === 'pattern') }));
-const antiPatterns = ENTRIES.filter((e) => e.kind === 'anti-pattern').sort((a, b) => a.name.localeCompare(b.name));
+// Sort each list by its own wheel key, not alphabetically: the numeral's
+// whole purpose is to key the list to the wheel, and byLayer/name-sort would
+// scramble that ordering (see keyBySlug above, from placeEntries()).
+function byWheelKey(a: Entry, b: Entry): number {
+  return (keyBySlug.get(a.slug) ?? 0) - (keyBySlug.get(b.slug) ?? 0);
+}
+
+const layerGroups = LAYERS.map((l) => ({
+  ...l,
+  items: byLayer(l.key).filter((e) => e.kind === 'pattern').sort(byWheelKey),
+}));
+const antiPatterns = ENTRIES.filter((e) => e.kind === 'anti-pattern').sort(byWheelKey);
 
 function statusLabel(e: Entry): string {
   if (e.status === 'proposed') return 'proposed';
@@ -60,6 +70,7 @@ const patternTermSet = {
   title="Patterns, Agent Engineering Lab"
   description="A pattern language for shipping agentic systems. Authority, control and evidence patterns, each with its forces, its boundary and its attribution."
   currentNav="Patterns"
+  ogImage="/assets/og/patterns.png"
 >
   <Container>
     <header style="margin: var(--space-7) 0 var(--space-6);">
