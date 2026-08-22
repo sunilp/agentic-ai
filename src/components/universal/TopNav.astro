@@ -11,17 +11,20 @@ interface Props {
 
 const { current = '' } = Astro.props;
 
+// Bench, Evidence and Recipes moved to the footer: Bench is one page, Evidence
+// hasn't had a new entry since March, and Recipes has exactly one -- the three
+// held five nav slots between them against 26 in Patterns. current="Bench" /
+// "Evidence" / "Recipes" (their pages still pass it) simply matches no item
+// below, so the nav correctly highlights nothing on those pages instead of
+// mis-highlighting another item.
 const items = [
   { href: '/start/', label: 'Start' },
   { href: '/book/', label: 'Book' },
   { href: '/architecture/', label: 'Architecture' },
   { href: '/patterns/', label: 'Patterns' },
-  { href: '/labs/', label: 'Labs' },
   { href: '/field-notes/', label: 'Field Notes' },
   { href: '/signal/', label: 'Signal' },
-  { href: '/recipes/', label: 'Recipes' },
-  { href: '/bench/', label: 'Bench' },
-  { href: '/evidence/', label: 'Evidence' },
+  { href: '/labs/', label: 'Labs' },
 ];
 ---
 
@@ -92,7 +95,7 @@ const items = [
 
   .topnav__link { white-space: nowrap; }
 
-  /* Below 1000px the single row no longer fits nine items plus the masthead:
+  /* Below 1000px the single row no longer fits seven items plus the masthead:
      stack it (brand + Subscribe on the first row, nav on the second), let the
      nav wrap onto two rows on phones instead of scrolling behind a fade, and
      drop sticky so a two-row header does not eat the viewport. */

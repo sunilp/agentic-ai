@@ -82,12 +82,22 @@ const collectionRoute: Record<string, string> = {
   patterns: '/patterns',
   architecture: '/architecture',
 };
+
+// No essay currently sets `spot` in frontmatter, so this falls through to the
+// site default; the branch exists so the day one does, it's picked up for free.
+const ogImage = d.spot ?? '/og-default.png';
 ---
 
 <PageLayout
   title={`${meta.name}, Patterns`}
   description={d.description}
+  ogImage={ogImage}
   currentNav="Patterns"
+  articleData={{
+    publishedTime: d.updated.toISOString(),
+    section: 'Patterns',
+    headline: meta.name,
+  }}
 >
   <Container>
     <Reader>

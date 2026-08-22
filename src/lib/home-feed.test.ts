@@ -81,12 +81,20 @@ describe('buildHomeFeed', () => {
     expect(byId('fn-004').rubric).toBe('FN-004 · Field Note');
     expect(byId('r-001').href).toBe('/recipes/r-001/');
     expect(byId('r-001').dek).toBe('desc r1');
-    expect(byId('lab-002').href).toBe('/labs/lab-002/');
     expect(byId('arch-001').href).toBe('/architecture/arch-001/');
     expect(byId('arch-001').rubric).toBe('ARCH-001 · Blueprint');
   });
 
-  it('uses the entry slug for hrefs when it differs from the frontmatter id', () => {
+  it('uses the entry slug for hrefs when it differs from the frontmatter id (labs, like architecture and patterns, route by collection id)', () => {
+    // The shared `streams` fixture above omits `slug` for its lab entry, so the
+    // "builds hrefs and rubrics per stream" test above only exercises slugOf's
+    // id-fallback path -- and that fallback previously got asserted here as
+    // '/labs/lab-002/', which is not a real route: lab-002's frontmatter id is
+    // "lab-002" but its content lives at
+    // src/content/labs/incident-triage-durable-agent.mdx, routed at
+    // /labs/incident-triage-durable-agent/. That is what home-feed.ts already builds
+    // once a slug is supplied -- the real caller (LatestFeed.astro) always supplies
+    // `slug: e.id` for every stream -- so this test asserts the real route.
     const s = { ...streams, labs: [{ ...streams.labs[0], slug: 'incident-triage-durable-agent' }] };
     const { rest } = buildHomeFeed(s, { limit: 10 });
     expect(rest.find((i) => i.id === 'lab-002')?.href).toBe('/labs/incident-triage-durable-agent/');

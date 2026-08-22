@@ -5,10 +5,20 @@ import Container from '~/components/layout/Container.astro';
 import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Tag from '~/components/universal/Tag.astro';
-import { ENTRIES, REFERENCED, byLayer, byStage, counts, type Entry } from '~/data/pattern-language';
+import PatternWheel from '~/components/islands/PatternWheel.svelte';
+import { ENTRIES, REFERENCED, byLayer, counts, type Entry } from '~/data/pattern-language';
+import { placeEntries } from '~/lib/pattern-wheel';
 
 const essays = new Set((await getCollection('patterns')).map((e) => e.id));
+const essaySlugs = [...essays];
 const c = counts();
+
+// Every list item repeats its wheel numeral, so the key works in both
+// directions: a reader sees mark 14 on the wheel and finds 14 in this list.
+const keyBySlug = new Map(placeEntries().map((p) => [p.slug, p.key]));
+function markKey(e: Entry): string {
+  return String(keyBySlug.get(e.slug)).padStart(2, '0');
+}
 
 const LAYERS = [
   { key: 'capability', label: 'Capability', line: 'What the agent can do, and how it is built.' },
@@ -16,23 +26,34 @@ const LAYERS = [
   { key: 'evidence', label: 'Evidence', line: 'What it can prove, and how it stays honest.' },
 ] as const;
 
-const STAGES = [
-  { key: 'design', label: 'Design' },
-  { key: 'build', label: 'Build' },
-  { key: 'evaluate', label: 'Evaluate' },
-  { key: 'operate', label: 'Operate' },
-  { key: 'govern', label: 'Govern' },
-] as const;
-
 const layerGroups = LAYERS.map((l) => ({ ...l, items: byLayer(l.key).filter((e) => e.kind === 'pattern') }));
 const antiPatterns = ENTRIES.filter((e) => e.kind === 'anti-pattern').sort((a, b) => a.name.localeCompare(b.name));
-const stageGroups = STAGES.map((s) => ({ ...s, items: byStage(s.key) }));
 
 function statusLabel(e: Entry): string {
   if (e.status === 'proposed') return 'proposed';
   if (e.status === 'documented') return `documented, ${e.attributedTo.who}`;
   return `restated, after ${e.nearestPrior[0].who}`;
 }
+
+// A named pattern catalogue is exactly a set of defined terms: same shape as
+// the glossary's DefinedTermSet (src/pages/glossary/index.astro), so an answer
+// engine can cite "Attenuating Delegation" as this site's definition of it.
+// Every ENTRIES slug has a published essay (checked against `essays` above),
+// so every term gets a url with no unwritten-entry branch to guard.
+const patternsURL = new URL('/patterns/', Astro.site).toString();
+const patternTermSet = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  name: 'Agent Engineering Lab Pattern Language',
+  url: patternsURL,
+  hasDefinedTerm: ENTRIES.map((e) => ({
+    '@type': 'DefinedTerm',
+    name: e.name,
+    description: e.oneLine,
+    url: new URL(`/patterns/${e.slug}/`, Astro.site).toString(),
+    inDefinedTermSet: patternsURL,
+  })),
+};
 ---
 
 <PageLayout
@@ -51,6 +72,8 @@ function statusLabel(e: Entry): string {
       </Dek>
     </header>
 
+    <PatternWheel client:visible essaySlugs={essaySlugs} />
+
     <section class="pat-statuses">
       <dl>
         <dt>Documented</dt><dd>A settled external name, kept unchanged, with its attribution.</dd>
@@ -60,12 +83,7 @@ function statusLabel(e: Entry): string {
       </dl>
     </section>
 
-    <nav class="pat-views" data-views>
-      <button type="button" data-view="layer" aria-pressed="true">By layer</button>
-      <button type="button" data-view="stage" aria-pressed="false">By lifecycle stage</button>
-    </nav>
-
-    <div data-view-panel="layer">
+    <div class="pat-catalogue">
       {layerGroups.map((g) => (
         <section class="pat-group">
           <header class="pat-group__header">
@@ -75,6 +93,7 @@ function statusLabel(e: Entry): string {
           <ul class="pat-list">
             {g.items.map((e) => (
               <li class="pat-list__item" id={e.slug}>
+                <span class="pat-list__key">{markKey(e)}</span>
                 {essays.has(e.slug)
                   ? <a class="pat-list__name" href={`/patterns/${e.slug}/`}>{e.name}</a>
                   : <span class="pat-list__name pat-list__name--unwritten">{e.name}</span>}
@@ -94,6 +113,7 @@ function statusLabel(e: Entry): string {
         <ul class="pat-list">
           {antiPatterns.map((e) => (
             <li class="pat-list__item" id={e.slug}>
+              <span class="pat-list__key">{markKey(e)}</span>
               {essays.has(e.slug)
                 ? <a class="pat-list__name" href={`/patterns/${e.slug}/`}>{e.name}</a>
                 : <span class="pat-list__name pat-list__name--unwritten">{e.name}</span>}
@@ -103,27 +123,6 @@ function statusLabel(e: Entry): string {
           ))}
         </ul>
       </section>
-    </div>
-
-    <div data-view-panel="stage" hidden>
-      {stageGroups.map((g) => (
-        <section class="pat-group">
-          <header class="pat-group__header">
-            <h2 class="pat-group__title">{g.label}</h2>
-          </header>
-          <ul class="pat-list">
-            {g.items.map((e) => (
-              <li class="pat-list__item">
-                {essays.has(e.slug)
-                  ? <a class="pat-list__name" href={`/patterns/${e.slug}/`}>{e.name}</a>
-                  : <span class="pat-list__name pat-list__name--unwritten">{e.name}</span>}
-                <span class="pat-list__status">{statusLabel(e)}</span>
-                <p class="pat-list__one-line">{e.oneLine}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
     </div>
 
     <section class="pat-group pat-group--referenced">
@@ -137,22 +136,9 @@ function statusLabel(e: Entry): string {
       </ul>
     </section>
   </Container>
-</PageLayout>
 
-<script>
-  const nav = document.querySelector('[data-views]');
-  nav?.addEventListener('click', (ev) => {
-    const btn = (ev.target as HTMLElement).closest('button[data-view]');
-    if (!btn) return;
-    const want = btn.getAttribute('data-view');
-    document.querySelectorAll('[data-view-panel]').forEach((p) => {
-      (p as HTMLElement).hidden = p.getAttribute('data-view-panel') !== want;
-    });
-    nav.querySelectorAll('button[data-view]').forEach((b) => {
-      b.setAttribute('aria-pressed', String(b.getAttribute('data-view') === want));
-    });
-  });
-</script>
+  <script type="application/ld+json" set:html={JSON.stringify(patternTermSet)} />
+</PageLayout>
 
 <style>
   .pat-statuses {
@@ -181,35 +167,6 @@ function statusLabel(e: Entry): string {
     color: var(--fg-light);
     line-height: var(--lh-snug);
     margin: 0;
-  }
-
-  .pat-views {
-    max-width: var(--reader-max);
-    margin: 0 auto var(--space-6);
-    display: flex;
-    gap: var(--space-5);
-    border-bottom: 1px solid var(--fg-faint);
-  }
-
-  .pat-views button {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--fg-light);
-    background: none;
-    border: none;
-    padding: var(--space-3) 0;
-    margin-bottom: -1px;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-  }
-
-  .pat-views button:hover { color: var(--fg); }
-
-  .pat-views button[aria-pressed="true"] {
-    color: var(--fg);
-    border-bottom-color: var(--brick);
   }
 
   .pat-group {
@@ -251,6 +208,18 @@ function statusLabel(e: Entry): string {
 
   .pat-list__item + .pat-list__item {
     border-top: 1px solid var(--fg-faint);
+  }
+
+  /* Keys the numeral on the wheel's mark to this list entry, same small mono
+     treatment as the mark's own numeral, so a reader can go from wheel to
+     list and back in either direction. */
+  .pat-list__key {
+    display: inline-block;
+    width: 26px;
+    font-family: var(--font-mono);
+    font-size: var(--meta-3);
+    color: var(--fg-lighter);
+    vertical-align: baseline;
   }
 
   .pat-list__name {
