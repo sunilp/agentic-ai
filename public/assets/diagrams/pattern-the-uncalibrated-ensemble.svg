@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="620" viewBox="0 0 880 620" role="img" aria-label="A regex, a classifier and a judge each report 0.90 for three different reasons: a pattern match, a calibrated probability, and a sampled token. Averaged together they produce a brick-colored 0.90 that means nothing, an incommensurable arithmetic result mistaken for evidence. Below, a smaller contrast row shows the same three detectors composed instead as verdicts, flagged, clear, and abstain, merging into one reviewable decision.">
+<defs>
+<marker id="mkInk" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker>
+<marker id="mkGrey" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker>
+<marker id="mkBrick" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker>
+</defs>
+<rect width="880" height="620" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Three 0.90s that agree are not one fact confirmed three times</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">A match, a probability, and a sampled token share a number, never a meaning. Averaging them manufactures a fourth.</text>
+<line x1="0" y1="68" x2="880" y2="68" stroke="#1a1a1a" stroke-width="1"/>
+
+<text x="20" y="90" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">SAME NUMBER, THREE DIFFERENT KINDS OF FACT</text>
+
+<!-- card 1: regex -->
+<rect x="20" y="102" width="260" height="140" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="32" y="124" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">REGEX MATCH</text>
+<text x="268" y="124" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="20" fill="#1a1a1a">0.90</text>
+<line x1="32" y1="136" x2="268" y2="136" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- icon: a switch that only has two states -->
+<circle cx="70" cy="168" r="9" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"/>
+<line x1="79" y1="168" x2="121" y2="168" stroke="#1a1a1a" stroke-width="1.4"/>
+<circle cx="130" cy="168" r="9" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="70" y="192" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="8.5" fill="#6b6b6b">no match</text>
+<text x="130" y="192" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="8.5" fill="#1a1a1a">fired</text>
+
+<text x="32" y="222" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the pattern fired.</text>
+<text x="32" y="236" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">that is the whole fact.</text>
+
+<!-- card 2: classifier -->
+<rect x="310" y="102" width="260" height="140" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="322" y="124" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">TRAINED CLASSIFIER</text>
+<text x="558" y="124" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="20" fill="#1a1a1a">0.90</text>
+<line x1="322" y1="136" x2="558" y2="136" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- icon: a distribution curve with 0.90 marked on its own axis -->
+<path d="M 325 182 Q 365 140 405 182 Q 415 190 425 190" fill="none" stroke="#1a1a1a" stroke-width="1.4"/>
+<line x1="405" y1="167" x2="405" y2="192" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="2,2"/>
+<line x1="325" y1="192" x2="425" y2="192" stroke="#1a1a1a" stroke-width="1"/>
+<text x="405" y="204" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="8" fill="#6b6b6b">its own population</text>
+
+<text x="322" y="222" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">calibrated against data</text>
+<text x="322" y="236" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">only this detector trained on.</text>
+
+<!-- card 3: judge -->
+<rect x="600" y="102" width="260" height="140" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="612" y="124" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">LLM JUDGE</text>
+<text x="848" y="124" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="20" fill="#1a1a1a">9 / 10</text>
+<line x1="612" y1="136" x2="848" y2="136" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- icon: repeated sampling, three draws, different each time -->
+<rect x="618" y="158" width="26" height="26" rx="3" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.3"/>
+<text x="631" y="176" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">9</text>
+<rect x="654" y="158" width="26" height="26" rx="3" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1.1" stroke-dasharray="2,2"/>
+<text x="667" y="176" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">8</text>
+<rect x="690" y="158" width="26" height="26" rx="3" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1.1" stroke-dasharray="2,2"/>
+<text x="703" y="176" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6b6b6b">9</text>
+<text x="668" y="200" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="8" fill="#6b6b6b">ask again, get another</text>
+
+<text x="612" y="222" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">a sampled token,</text>
+<text x="612" y="236" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">not odds on anything.</text>
+
+<!-- convergence into AVERAGE op -->
+<line x1="150" y1="242" x2="440" y2="278" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="440" y1="242" x2="440" y2="278" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="730" y1="242" x2="440" y2="278" stroke="#6b6b6b" stroke-width="1"/>
+
+<rect x="380" y="280" width="120" height="40" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2" rx="2"/>
+<text x="440" y="305" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#1a1a1a">AVERAGE</text>
+
+<line x1="440" y1="320" x2="440" y2="344" stroke="#9b4a3f" stroke-width="1.6" marker-end="url(#mkBrick)"/>
+
+<!-- the meaningless composite: single brick accent -->
+<rect x="310" y="346" width="260" height="96" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4" rx="2"/>
+<text x="440" y="368" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#9b4a3f">THE COMPOSITE</text>
+<text x="440" y="400" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="26" fill="#9b4a3f">0.90</text>
+<text x="440" y="420" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#9b4a3f">looks like evidence,</text>
+<text x="440" y="435" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#9b4a3f">traces back to nothing</text>
+
+<line x1="0" y1="464" x2="880" y2="464" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="20" y="486" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">THE SAME THREE, COMPOSED AS VERDICTS INSTEAD</text>
+
+<!-- mini contrast row: three verdict chips, ink only, no brick -->
+<rect x="20" y="500" width="130" height="34" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.1" rx="2"/>
+<text x="85" y="521" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">flagged</text>
+
+<rect x="170" y="500" width="130" height="34" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.1" rx="2"/>
+<text x="235" y="521" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">clear</text>
+
+<rect x="320" y="500" width="130" height="34" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.1" rx="2"/>
+<text x="385" y="521" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">abstain</text>
+
+<line x1="85" y1="534" x2="480" y2="560" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="235" y1="534" x2="480" y2="560" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="385" y1="534" x2="480" y2="560" stroke="#6b6b6b" stroke-width="1"/>
+
+<rect x="480" y="500" width="220" height="60" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.3" rx="2"/>
+<text x="590" y="524" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">WEIGHTED &#8594; flagged</text>
+<text x="590" y="544" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">a decision, not an average</text>
+
+<line x1="0" y1="580" x2="880" y2="580" stroke="#1a1a1a" stroke-width="1"/>
+
+<text x="0" y="602" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Agreement on a number is not agreement on what the number means.</text>
+<text x="0" y="618" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Compose the verdicts each detector already reached against its own threshold instead.</text>
+</svg>
