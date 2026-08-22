@@ -51,16 +51,19 @@ export async function GET(context: APIContext) {
         link: `/architecture/${e.id}/`,
         categories: ['Architecture'],
       })),
-    ...patterns.map((e) => {
-      const meta = bySlug(e.id);
-      return {
-        title: meta ? meta.name : e.id,
-        pubDate: e.data.updated,
-        description: e.data.description,
-        link: `/patterns/${e.id}/`,
-        categories: ['Patterns'],
-      };
-    }),
+    ...patterns
+      .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime())
+      .slice(0, 3)
+      .map((e) => {
+        const meta = bySlug(e.id);
+        return {
+          title: meta ? meta.name : e.id,
+          pubDate: e.data.updated,
+          description: e.data.description,
+          link: `/patterns/${e.id}/`,
+          categories: ['Patterns'],
+        };
+      }),
   ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
   return rss({

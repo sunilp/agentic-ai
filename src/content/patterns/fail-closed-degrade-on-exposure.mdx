@@ -62,7 +62,7 @@ degradation:
 
 This is a compact encoding of ARCH-008's own rule, not a new mechanism: the same document states it as prose, this just makes it enforceable. Tool execution matches first regardless of any exposure tag, because that chokepoint alone can still prevent the act rather than only record it. And the default is fail closed, not fail open, so an unlabelled call or any combination other than the single named exception gets the safe answer instead of falling through unmatched.
 
-None of this is new at the level CWE-636 and OWASP's Fail Securely guidance already state: an error path should not grant more than it would deny, fail closed by default, never open silently. [Silent Fail Open](/patterns/#silent-fail-open), the anti-pattern this pattern replaces, cites the same two sources. What neither supplies is the axis: they say fail closed, not fail closed when it is safe to do otherwise. Proposed status here means that specific axis, exposure and sensitivity rather than harm family, did not turn up named in the prior art surveyed for this catalogue. It does not mean the underlying caution about failing open is new. It means the argument had to be worked out here, against this catalogue's own earlier draft of the idea.
+None of this is new at the level CWE-636 and OWASP's Fail Securely guidance already state: an error path should not grant more than it would deny, fail closed by default, never open silently. [Silent Fail Open](/patterns/silent-fail-open/), the anti-pattern this pattern replaces, cites the same two sources. What neither supplies is the axis: they say fail closed, not fail closed when it is safe to do otherwise. Proposed status here means that specific axis, exposure and sensitivity rather than harm family, did not turn up named in the prior art surveyed for this catalogue. It does not mean the underlying caution about failing open is new. It means the argument had to be worked out here, against this catalogue's own earlier draft of the idea.
 
 ## Worked example
 
@@ -86,12 +86,12 @@ The pattern is only as honest as the registry underneath it. Keying degradation 
 
 ## Related patterns
 
-[Silent Fail Open](/patterns/#silent-fail-open) is the anti-pattern this pattern replaces: a control's outage goes unmarked and the request proceeds as if nothing happened. This entry is the corrected version, forced to state, request by request, which fork it took and why.
+[Silent Fail Open](/patterns/silent-fail-open/) is the anti-pattern this pattern replaces: a control's outage goes unmarked and the request proceeds as if nothing happened. This entry is the corrected version, forced to state, request by request, which fork it took and why.
 
-[Tiered Detection](/patterns/#tiered-detection) decides which calls reach the expensive judge and which stop at the cheap tier. The judge carries by far the largest timeout budget and the least margin of any detector in the pipeline, which is why this pattern's fork matters most at the boundary tiering creates.
+[Tiered Detection](/patterns/tiered-detection/) decides which calls reach the expensive judge and which stop at the cheap tier. The judge carries by far the largest timeout budget and the least margin of any detector in the pipeline, which is why this pattern's fork matters most at the boundary tiering creates.
 
-[Chokepoint Placement](/patterns/#chokepoint-placement) decides which of the six stages a control occupies and what it can see there. This pattern asks the different question: what it does the day it breaks.
+[Chokepoint Placement](/patterns/chokepoint-placement/) decides which of the six stages a control occupies and what it can see there. This pattern asks the different question: what it does the day it breaks.
 
-[Capability Gate](/patterns/#capability-gate) is the mechanism behind this pattern's tool-execution row: fail closed there is not a bare timeout check, it is routing to a gate the model cannot argue past, for exactly the calls a gate already exists to stop.
+[Capability Gate](/patterns/capability-gate/) is the mechanism behind this pattern's tool-execution row: fail closed there is not a bare timeout check, it is routing to a gate the model cannot argue past, for exactly the calls a gate already exists to stop.
 
-[Decision Record](/patterns/#decision-record) turns proceeding marked degraded from a private runtime detail into an auditable fact: without a record naming which calls degraded, under which policy, for how long, the label is nothing anyone can check after the incident.
+[Decision Record](/patterns/decision-record/) turns proceeding marked degraded from a private runtime detail into an auditable fact: without a record naming which calls degraded, under which policy, for how long, the label is nothing anyone can check after the incident.

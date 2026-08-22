@@ -6,28 +6,26 @@
  */
 import { getCollection } from 'astro:content';
 import { buildHomeFeed, formatFeedDate, type FeedItem } from '~/lib/home-feed';
-import { bySlug } from '~/data/pattern-language';
 import HomeRail from './HomeRail.astro';
 
-const [fns, sgs, recipes, labs, arch, patterns] = await Promise.all([
+const [fns, sgs, recipes, labs, arch] = await Promise.all([
   getCollection('fieldNotes'),
   getCollection('signal'),
   getCollection('recipes'),
   getCollection('labs'),
   getCollection('architecture'),
-  getCollection('patterns'),
 ]);
 
+// Patterns are intentionally not fed into the home feed yet: no essay has spot art,
+// so a pattern row renders as a raw slug on the only grey blank tile on the page.
+// `patterns` stays optional on HomeFeedStreams and defaults to empty; re-add this
+// stream once pattern spot art exists.
 const { featured, rest } = buildHomeFeed({
   fieldNotes: fns.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, dek: e.data.dek, banner: e.data.banner, spot: e.data.spot, date: e.data.date, readingTime: e.data.readingTime })),
   signal: sgs.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, dek: e.data.dek, banner: e.data.banner, date: e.data.date, readingTime: e.data.readingTime })),
   recipes: recipes.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, description: e.data.description, spot: e.data.spot, verifiedOn: e.data.verifiedOn, estimatedMinutes: e.data.estimatedMinutes })),
   labs: labs.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, description: e.data.description, spot: e.data.spot, date: e.data.date, readingTime: e.data.readingTime })),
   architecture: arch.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, dek: e.data.dek, spot: e.data.spot, order: e.data.order, updated: e.data.updated, readingTime: e.data.readingTime, status: e.data.status })),
-  patterns: patterns.map((e) => {
-    const meta = bySlug(e.id);
-    return { id: e.id, slug: e.id, title: meta ? meta.name : e.id, dek: meta ? meta.oneLine : e.data.description, spot: e.data.spot, order: 0, updated: e.data.updated, readingTime: e.data.readingTime };
-  }),
 });
 
 const webp = (src: string) => src.replace(/\.png$/, '.webp');

@@ -385,7 +385,7 @@ export const ENTRIES: Entry[] = [
     status: 'restated',
     nearestPrior: [
       {
-        what: 'Premature Termination, a multi-agent system stops before the task is genuinely complete',
+        what: 'No or Incomplete Verification, the omission of any proper check on a task outcome before it is accepted as done',
         who: 'Cemri et al. (MAST)',
         url: MAST,
       },
@@ -438,7 +438,14 @@ export const ENTRIES: Entry[] = [
     layer: 'control',
     primaryStage: 'build',
     oneLine: 'Averaging scores that were never on the same scale manufactures false confidence.',
-    status: 'proposed',
+    status: 'restated',
+    nearestPrior: [
+      {
+        what: 'Score normalization before fusion, the requirement that scores be mapped onto a common domain before they are combined',
+        who: 'Jain, Nandakumar and Ross',
+        url: 'https://doi.org/10.1016/j.patcog.2005.01.012',
+      },
+    ],
     replacedBy: 'verdict-composition',
   },
   {

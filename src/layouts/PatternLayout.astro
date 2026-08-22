@@ -43,16 +43,16 @@ const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence
 // does now for field notes). Map every entry by hand instead, keyed on entry.id, so
 // every "Used in" href lands on the entry's real route, for every collection.
 const toContentEntries = (
-  entries: { id: string; collection: string; data: { references?: string[]; cites?: string[]; patterns?: string[] } }[],
+  entries: { id: string; collection: string; data: Record<string, unknown> }[],
 ) =>
   entries.map((e) => ({
     id: e.id,
     collection: e.collection,
-    references: e.data.references,
-    cites: e.data.cites,
-    patterns: e.data.patterns,
+    references: e.data.references as string[] | undefined,
+    cites: e.data.cites as string[] | undefined,
+    patterns: e.data.patterns as string[] | undefined,
   }));
-const reverseIndex = buildReverseIndex(toContentEntries(allEntries as any));
+const reverseIndex = buildReverseIndex(toContentEntries(allEntries));
 const links = getReverseLinks(reverseIndex, entry.id);
 
 const blueprintFor = (archId: string) => architecture.find((b) => b.data.id === archId);

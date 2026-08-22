@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="610" viewBox="0 0 880 610" role="img" aria-label="Two panels compare the declared architecture of an agent to its measured traces. Top panel, declared: a query reaches an agent loop node that fans out to three tool boxes, plus a fourth dashed box marked whatever the case needs, representing a system built to branch freely, any order, on paper. Bottom panel, six real production traces sampled, each a different query, billing question, password reset, address change, refund request, shipping delay, duplicate charge: every single trace runs the identical three tool calls in the identical order. A brick-colored bracket spans all six rows with the label six of six traces, same sequence, same order, marking this as the one measured fact the diagram exists to show.">
-<rect width="880" height="610" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="634" viewBox="0 0 880 634" role="img" aria-label="Two panels compare the declared architecture of an agent to what the tool-call diagnostic looks like applied to it. Top panel, declared: a query reaches an agent loop node that fans out to three tool boxes, plus a fourth dashed box marked whatever the case needs, representing a system built to branch freely, any order, on paper. Bottom panel, illustrative: six differing query types, billing question, password reset, address change, refund request, shipping delay, duplicate charge, run through the identical three tool calls in the identical order to show what the diagnostic looks like when it finds nothing. A brick-colored bracket spans all six rows with the label six of six queries, same sequence, same order, marking the shape the diagram exists to show, a worked illustration rather than a measured run.">
+<rect width="880" height="634" fill="#ffffff"/>
 
 <text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">The costume, and what the traces underneath it show</text>
-<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">One system, drawn as it is pitched, and the same system, read from six real production traces.</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">One system, drawn as it is pitched, and the same system, illustrated: six differing queries run through it, one identical path underneath.</text>
 <line x1="0" y1="70" x2="880" y2="70" stroke="#1a1a1a" stroke-width="1"/>
 
 <!-- ============ TOP PANEL: DECLARED ============ -->
@@ -40,7 +40,7 @@
 
 <!-- ============ BOTTOM PANEL: ACTUAL (TRACES) ============ -->
 <text x="24" y="300" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.4" fill="#1a1a1a">ACTUAL</text>
-<text x="24" y="314" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">six real production traces, sampled and diffed</text>
+<text x="24" y="314" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the same diagnostic, illustrated across six differing queries</text>
 
 <!-- column headers for the fixed sequence, shown once -->
 <text x="360" y="338" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="0.5" fill="#1a1a1a">TOOL A</text>
@@ -81,7 +81,7 @@
 <!-- the single accent: a brick bracket spanning all 6 identical rows -->
 <path d="M628,355 C648,355 648,355 648,362 L648,512 C648,519 648,519 628,519" fill="none" stroke="#9b4a3f" stroke-width="1.8"/>
 <rect x="660" y="415" width="196" height="42" rx="3" fill="#9b4a3f"/>
-<text x="758" y="432" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="0.3" fill="#fafaf8">6 OF 6 TRACES</text>
+<text x="758" y="432" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="0.3" fill="#fafaf8">6 OF 6 QUERIES</text>
 <text x="758" y="448" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#fafaf8">same sequence, same order</text>
 
 <line x1="0" y1="542" x2="880" y2="542" stroke="#1a1a1a" stroke-width="1"/>
@@ -94,9 +94,10 @@
 <text x="374" y="566" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">what the framework declares is possible</text>
 
 <rect x="650" y="557" width="16" height="10" fill="#9b4a3f"/>
-<text x="674" y="566" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">what the traces actually measure</text>
+<text x="674" y="566" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the sequence that never varies</text>
 
 <line x1="0" y1="586" x2="880" y2="586" stroke="#e8e8e8" stroke-width="1"/>
 
 <text x="0" y="602" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Six different queries, one identical path. That gap between the two panels is the whole anti-pattern.</text>
+<text x="0" y="622" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">Illustrative: the six queries are constructed to show the shape, not a sampled measurement. Diffing real traces for this is the diagnostic itself.</text>
 </svg>

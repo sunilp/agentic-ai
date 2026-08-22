@@ -72,10 +72,10 @@ And an escalation path only ever moves one case faster; it says nothing about wh
 
 ## Related patterns
 
-Escalate for review and require approval both hand a case to a human. [Approval Gate](/patterns/#approval-gate) keeps a human in the critical path by design, blocking synchronously until a specific person authorises the exact action in front of them. Escalation Path is what happens once a case is already waiting and nobody with the authority to answer has answered yet.
+Escalate for review and require approval both hand a case to a human. [Approval Gate](/patterns/approval-gate/) keeps a human in the critical path by design, blocking synchronously until a specific person authorises the exact action in front of them. Escalation Path is what happens once a case is already waiting and nobody with the authority to answer has answered yet.
 
-[The Expiring Exception](/patterns/#the-expiring-exception) is the only other pattern in this catalogue with govern as its primary stage, and the two sit together for a reason: both are about what a control does after it fires rather than while it runs, one for a case still waiting on a decision, the other for a decision already made that must not quietly become permanent.
+[The Expiring Exception](/patterns/the-expiring-exception/) is the only other pattern in this catalogue with govern as its primary stage, and the two sit together for a reason: both are about what a control does after it fires rather than while it runs, one for a case still waiting on a decision, the other for a decision already made that must not quietly become permanent.
 
-Every move up the ladder should leave a [Decision Record](/patterns/#decision-record): who held the case, for how long, and who or what moved it next, because a ladder nobody can reconstruct afterward is one an audit has to take on faith. That record belongs in the store [Split the Log](/patterns/#split-the-log) keeps separate from the content it decided about, for the same retention reasons that pattern sets out.
+Every move up the ladder should leave a [Decision Record](/patterns/decision-record/): who held the case, for how long, and who or what moved it next, because a ladder nobody can reconstruct afterward is one an audit has to take on faith. That record belongs in the store [Split the Log](/patterns/split-the-log/) keeps separate from the content it decided about, for the same retention reasons that pattern sets out.
 
-And a ladder moving every case three rungs on schedule is itself a signal [Failure Buckets](/patterns/#failure-buckets) is built to catch: escalation tells you where a stuck case went, not why so many are stuck.
+And a ladder moving every case three rungs on schedule is itself a signal [Failure Buckets](/patterns/failure-buckets/) is built to catch: escalation tells you where a stuck case went, not why so many are stuck.

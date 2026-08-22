@@ -6,7 +6,7 @@
  * markers, the same spacing tokens. A reader moving between /architecture/ and
  * /patterns/ should see one system, not two card designs.
  */
-import type { Entry } from '~/data/pattern-language';
+import { bySlug, type Entry } from '~/data/pattern-language';
 
 interface Props {
   entry: Entry;
@@ -14,6 +14,12 @@ interface Props {
 }
 
 const { entry: e, forces } = Astro.props;
+
+// Resolved title for the "Replaced by" row, mirroring how every other band on this
+// layout (Specified in, Used in) shows a title rather than a raw slug. Guarded on
+// the catalogue lookup succeeding, not on an essay page existing for that slug --
+// see PatternCard's report note on the essay-existence guard.
+const replacedByEntry = e.replacedBy ? bySlug(e.replacedBy) : undefined;
 
 const LAYER_LABEL = { capability: 'Capability', control: 'Control', evidence: 'Evidence' } as const;
 const STAGE_LABEL = {
@@ -86,7 +92,11 @@ const stageLine = [
     {e.replacedBy && (
       <div class="pattern-card__row">
         <dt>Replaced by</dt>
-        <dd><a href={`/patterns/${e.replacedBy}/`}>{e.replacedBy}</a></dd>
+        <dd>
+          {replacedByEntry
+            ? <a href={`/patterns/${replacedByEntry.slug}/`}>{replacedByEntry.name}</a>
+            : e.replacedBy}
+        </dd>
       </div>
     )}
   </dl>
