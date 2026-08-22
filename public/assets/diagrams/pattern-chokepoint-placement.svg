@@ -16,15 +16,15 @@
 <!-- baseline / x-axis -->
 <line x1="40" y1="430" x2="860" y2="430" stroke="#1a1a1a" stroke-width="1"/>
 
-<!-- bars: brick fill, height = ceiling for this attack at this chokepoint -->
+<!-- bars: gray fill, height = ceiling for this attack at this chokepoint; brick reserved for the marked column (3, PROMPT) -->
 <!-- 1 UPLOAD -->
-<rect x="78" y="283" width="60" height="147" fill="#9b4a3f"/>
+<rect x="78" y="283" width="60" height="147" fill="#6b6b6b"/>
 <text x="108" y="273" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">1</text>
 <text x="108" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">UPLOAD</text>
 <text x="108" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the file, not its reader</text>
 
 <!-- 2 RETRIEVAL -->
-<rect x="215" y="143" width="60" height="287" fill="#9b4a3f"/>
+<rect x="215" y="143" width="60" height="287" fill="#6b6b6b"/>
 <text x="245" y="133" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">2</text>
 <text x="245" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">RETRIEVAL</text>
 <text x="245" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">content plus identity</text>
@@ -44,26 +44,26 @@
 <text x="433" y="248" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#9b4a3f">detector closes</text>
 
 <!-- 4 RESPONSE -->
-<rect x="488" y="332" width="60" height="98" fill="#9b4a3f"/>
+<rect x="488" y="332" width="60" height="98" fill="#6b6b6b"/>
 <text x="518" y="322" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">4</text>
 <text x="518" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">RESPONSE</text>
 <text x="518" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the output, not intent</text>
 
 <!-- 5 TOOL EXECUTION -->
-<rect x="625" y="130" width="60" height="300" fill="#9b4a3f"/>
+<rect x="625" y="130" width="60" height="300" fill="#6b6b6b"/>
 <text x="655" y="120" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">5</text>
 <text x="655" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">TOOL EXECUTION</text>
 <text x="655" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the act, still stoppable</text>
 
 <!-- 6 LOGGING -->
-<rect x="762" y="414" width="60" height="16" fill="#9b4a3f"/>
+<rect x="762" y="414" width="60" height="16" fill="#6b6b6b"/>
 <text x="792" y="404" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">6</text>
 <text x="792" y="452" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="0.4" fill="#1a1a1a">LOGGING</text>
 <text x="792" y="470" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">sees it all,</text>
 <text x="792" y="484" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">too late to act</text>
 
 <!-- legend -->
-<rect x="40" y="510" width="14" height="10" fill="#9b4a3f"/>
+<rect x="40" y="510" width="14" height="10" fill="#6b6b6b"/>
 <text x="60" y="519" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">ceiling for this attack, here</text>
 
 <line x1="400" y1="515" x2="430" y2="515" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="4,4"/>
