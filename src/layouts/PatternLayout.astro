@@ -11,7 +11,6 @@ import PatternCard from '~/components/universal/PatternCard.astro';
 import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 import Sources from '~/components/universal/Sources.astro';
 import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
-import { entriesToContentEntries } from '~/lib/content-helpers';
 import { bySlug } from '~/data/pattern-language';
 
 interface Props {
@@ -33,26 +32,45 @@ const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns, archit
   getCollection('patterns'),
   getCollection('architecture'),
 ]);
-const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...patterns];
-// Architecture entries carry a frontmatter `id` (e.g. `arch-001`) distinct from
-// their collection id (the filename, e.g. `001-the-control-plane`), and routes are
-// built from the filename. entriesToContentEntries falls back to entry.id only when
-// data.id is absent, so feeding architecture through it would key + link every
-// mention by the frontmatter id and 404. Map architecture entries by hand instead,
-// keyed by the filename, so "Used in" links land on the real blueprint route.
-const architectureAsEntries = architecture.map((a) => ({
-  id: a.id,
-  collection: a.collection,
-  patterns: a.data.patterns,
-}));
-const reverseIndex = buildReverseIndex([...entriesToContentEntries(allEntries as any), ...architectureAsEntries]);
-// Patterns are stored in the reverse index by entry.id (the filename),
-// since the patterns schema has no `data.id` field. The mapper in
-// entriesToContentEntries falls back to entry.id when data.id is absent.
+const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...patterns, ...architecture];
+// Several collections (fieldNotes, recipes, evidence, labs, architecture) carry a
+// frontmatter `id` distinct from their collection id (the filename), but every
+// collection here routes by the filename. `entriesToContentEntries` in
+// content-helpers.ts keys an entry by frontmatter `data.id` when present, falling
+// back to entry.id only when data.id is absent -- fine for its other callers, but
+// wrong here, since it would key + link "Used in" mentions by the frontmatter id
+// and 404 (as arch-001 did before architecture was special-cased, and as fn-001
+// does now for field notes). Map every entry by hand instead, keyed on entry.id, so
+// every "Used in" href lands on the entry's real route, for every collection.
+const toContentEntries = (
+  entries: { id: string; collection: string; data: { references?: string[]; cites?: string[]; patterns?: string[] } }[],
+) =>
+  entries.map((e) => ({
+    id: e.id,
+    collection: e.collection,
+    references: e.data.references,
+    cites: e.data.cites,
+    patterns: e.data.patterns,
+  }));
+const reverseIndex = buildReverseIndex(toContentEntries(allEntries as any));
 const links = getReverseLinks(reverseIndex, entry.id);
 
 const blueprintFor = (archId: string) => architecture.find((b) => b.data.id === archId);
-const blueprintByFilename = (filename: string) => architecture.find((b) => b.id === filename);
+
+// Title lookups for the "Used in" band, mirroring how "Specified in" above renders
+// `b.data.title` instead of a raw id. Every collection that can appear in
+// `links.mentionedIn` has a `data.title` field except patterns, which has none --
+// its display name lives in src/data/pattern-language.ts instead (see `bySlug`).
+const titleIndex: Record<string, string> = {};
+for (const e of chapters) titleIndex[`chapters:${e.id}`] = e.data.title;
+for (const e of fieldNotes) titleIndex[`fieldNotes:${e.id}`] = e.data.title;
+for (const e of recipes) titleIndex[`recipes:${e.id}`] = e.data.title;
+for (const e of labs) titleIndex[`labs:${e.id}`] = e.data.title;
+for (const e of evidence) titleIndex[`evidence:${e.id}`] = e.data.title;
+for (const e of projects) titleIndex[`projects:${e.id}`] = e.data.title;
+for (const e of architecture) titleIndex[`architecture:${e.id}`] = e.data.title;
+const titleForLink = (l: { id: string; collection: string }) =>
+  l.collection === 'patterns' ? bySlug(l.id)?.name : titleIndex[`${l.collection}:${l.id}`];
 
 const collectionRoute: Record<string, string> = {
   chapters: '/book',
@@ -108,11 +126,7 @@ const collectionRoute: Record<string, string> = {
           <h2>Used in</h2>
           <ul>
             {links.mentionedIn.map((l) => {
-              // Architecture links resolve to a blueprint's title, the same way the
-              // "Specified in" band above renders `b.data.title` rather than a raw id.
-              const label = l.collection === 'architecture'
-                ? (blueprintByFilename(l.id)?.data.title ?? `${l.collection}/${l.id}`)
-                : `${l.collection}/${l.id}`;
+              const label = titleForLink(l) ?? `${l.collection}/${l.id}`;
               return (
                 <li><a href={`${collectionRoute[l.collection] ?? ''}/${l.id}/`}>{label}</a></li>
               );
