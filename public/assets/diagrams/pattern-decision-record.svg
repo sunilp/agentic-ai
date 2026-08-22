@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="800" viewBox="0 0 880 800" role="img" aria-label="One enforced action described two ways. A log line records only the outcome and a timestamp, leaving four questions unanswered: which rule fired, which policy version produced it, what the alternative would have been, and who overrode it and why. A decision record below it lists six fields, request id, principal, detectors run, policy version, action and outcome, and override, that let an auditor reconstruct the same decision months later. The policy version field is marked as the one that makes the record replayable rather than merely descriptive.">
+<rect width="880" height="800" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">A log line proves an outcome. A record proves it can be checked again.</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">The same enforcement action, described two ways, months on. Only one of them can be replayed against the policy that produced it.</text>
+<line x1="0" y1="76" x2="880" y2="76" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- SECTION A: the log line -->
+<text x="24" y="100" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">THE LOG LINE</text>
+
+<rect x="24" y="108" width="460" height="34" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1"/>
+<text x="36" y="130" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">blocked    2026-03-11T14:32Z    category: sanctions_screening</text>
+<text x="506" y="130" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">one action, one word, one timestamp</text>
+
+<!-- unanswered questions -->
+<text x="24" y="162" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">which rule fired</text>
+<line x1="300" y1="157" x2="756" y2="157" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="1,4"/>
+<text x="860" y="162" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" letter-spacing="0.5" fill="#6b6b6b">NOT RECORDED</text>
+<line x1="24" y1="174" x2="860" y2="174" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="24" y="186" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">which policy version produced it</text>
+<line x1="340" y1="181" x2="756" y2="181" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="1,4"/>
+<text x="860" y="186" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" letter-spacing="0.5" fill="#6b6b6b">NOT RECORDED</text>
+<line x1="24" y1="198" x2="860" y2="198" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="24" y="210" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">what the alternative action would have been</text>
+<line x1="410" y1="205" x2="756" y2="205" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="1,4"/>
+<text x="860" y="210" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" letter-spacing="0.5" fill="#6b6b6b">NOT RECORDED</text>
+<line x1="24" y1="222" x2="860" y2="222" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="24" y="234" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">who overrode it, and on what basis</text>
+<line x1="345" y1="229" x2="756" y2="229" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="1,4"/>
+<text x="860" y="234" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" letter-spacing="0.5" fill="#6b6b6b">NOT RECORDED</text>
+<line x1="24" y1="246" x2="860" y2="246" stroke="#e8e8e8" stroke-width="1"/>
+
+<line x1="0" y1="266" x2="880" y2="266" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- SECTION B: the decision record -->
+<text x="24" y="290" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">THE DECISION RECORD, SAME ACTION</text>
+<text x="24" y="310" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.4" fill="#6b6b6b">FIELD</text>
+<text x="280" y="310" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.4" fill="#6b6b6b">WHAT IT RECORDS</text>
+<line x1="24" y1="318" x2="860" y2="318" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- row 1: request_id, y0=334 -->
+<rect x="0" y="334" width="880" height="64" fill="#fafaf8"/>
+<text x="24" y="358" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">request_id</text>
+<text x="24" y="376" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">ties every chokepoint together</text>
+<rect x="280" y="348" width="100" height="22" fill="#6b6b6b"/>
+<text x="280" y="384" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">corr-88214</text>
+<line x1="0" y1="398" x2="880" y2="398" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- row 2: principal, y0=398 -->
+<text x="24" y="422" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">principal</text>
+<text x="24" y="440" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">who, or which agent, on whose authority</text>
+<rect x="280" y="412" width="220" height="22" fill="#6b6b6b"/>
+<text x="280" y="448" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">case-worker session, region APAC-3</text>
+<line x1="0" y1="462" x2="880" y2="462" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- row 3: detectors_run, y0=462 -->
+<rect x="0" y="462" width="880" height="64" fill="#fafaf8"/>
+<text x="24" y="486" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">detectors_run</text>
+<text x="24" y="504" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">including the ones that cleared</text>
+<rect x="280" y="476" width="200" height="22" fill="#6b6b6b"/>
+<text x="280" y="512" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">3 detectors, 2 cleared, 1 flagged</text>
+<line x1="0" y1="526" x2="880" y2="526" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- row 4: policy_version, y0=526, THE MARKED ROW -->
+<rect x="0" y="526" width="880" height="64" fill="#f5ece9"/>
+<rect x="0" y="526" width="3" height="64" fill="#9b4a3f"/>
+<text x="24" y="550" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#9b4a3f">policy_version</text>
+<text x="24" y="568" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#9b4a3f">the version that produced this action</text>
+<rect x="280" y="540" width="120" height="22" fill="#9b4a3f"/>
+<text x="280" y="576" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#9b4a3f">2026-03-11.2</text>
+<text x="420" y="555" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" letter-spacing="0.4" fill="#9b4a3f">REPLAYABLE FROM HERE</text>
+<line x1="0" y1="590" x2="880" y2="590" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- row 5: action / outcome, y0=590 -->
+<text x="24" y="614" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">action / outcome</text>
+<text x="24" y="632" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">what happened, and what it resolved to</text>
+<rect x="280" y="604" width="260" height="22" fill="#6b6b6b"/>
+<text x="280" y="640" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">require_approval, then overridden</text>
+<line x1="0" y1="654" x2="880" y2="654" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- row 6: override, y0=654 -->
+<rect x="0" y="654" width="880" height="64" fill="#fafaf8"/>
+<text x="24" y="678" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">override</text>
+<text x="24" y="696" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">who, when, and the stated reason</text>
+<rect x="280" y="668" width="380" height="22" fill="#6b6b6b"/>
+<text x="280" y="704" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">risk-analyst, false positive on stale entity match</text>
+
+<line x1="0" y1="718" x2="880" y2="718" stroke="#1a1a1a" stroke-width="1"/>
+
+<rect x="24" y="734" width="14" height="10" fill="#6b6b6b"/>
+<text x="44" y="743" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">a field recorded, either way</text>
+<rect x="400" y="734" width="14" height="10" fill="#9b4a3f"/>
+<text x="420" y="743" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the field that makes it replayable</text>
+
+<text x="0" y="768" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">The log line proves the action happened. The record proves why, against which policy, and can be checked again.</text>
+<text x="0" y="788" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Only the field in brick, the policy version, is what makes that check possible months on.</text>
+</svg>

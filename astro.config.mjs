@@ -43,7 +43,6 @@ export default defineConfig({
     '/patterns/earn-the-complexity/': '/patterns/#earn-the-complexity',
     '/patterns/escalation-path/': '/patterns/#escalation-path',
     '/patterns/eval-loop/': '/patterns/#failure-buckets',
-    '/patterns/failure-buckets/': '/patterns/#failure-buckets',
     '/patterns/hub-and-spoke/': '/patterns/#orchestrator-workers',
     '/patterns/tool-registry/': '/patterns/#tool-agent-registry',
     '/patterns/trace-the-truth/': '/patterns/#split-the-log',

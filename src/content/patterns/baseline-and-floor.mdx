@@ -1,0 +1,87 @@
+---
+description: "Why a CI gate that compares each release only to the one before it can let a detector's recall erode for months without ever failing, and why the fix is two numbers, a baseline and a floor, rather than one."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "A baseline measures velocity between one release and the next; it has no memory of where the detector started, so position can drift for months while every single step looks fine"
+  - "A floor that moves as easily as a baseline is a baseline with a second name, and a floor that never moves at all turns every legitimate retuning into an exception request"
+  - "The engineer who ships a small, tolerable regression is rarely the person watching the cumulative position twenty releases later, so a slow decay has no natural owner until it becomes an incident"
+sources:
+  - title: "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile, NIST AI 600-1"
+    url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+    authors: [National Institute of Standards and Technology]
+    year: 2024
+  - title: "Emerging Patterns in Building GenAI Products"
+    url: https://martinfowler.com/articles/gen-ai-patterns/
+    authors: [Subramaniam B., Fowler M.]
+    year: 2025
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-baseline-and-floor.svg
+---
+
+## The problem
+
+Ask a team running a guardrail programme whether their detectors sit behind CI, and the confident ones say yes immediately. Every change to a detector, a ruleset, or a model version runs the frozen evaluation set, and the build fails if precision or recall drops beyond an agreed tolerance. That is real discipline, not theatre: [ARCH-006](/architecture/006-the-guardrail-lifecycle/) puts exactly this gate in the pipeline as one of only two checks allowed to block a release outright, and ARCH-003 names the mechanics behind it, compare against the baseline, fail the build on a drop beyond tolerance, require an explicit override to ship a known regression.
+
+Look closer at what "compare against the baseline" actually compares against, and the blind spot is built into the design itself. The baseline it checks is the last accepted release, not the detector's original, go-live position. A gate built this way answers one question well: did this change make things measurably worse than the change before it. It cannot answer a different question: is this detector, right now, still good enough. Those are not the same question, and a system can pass the first one indefinitely while failing the second one badly, because the first question resets its own reference point every time it is answered.
+
+The failure mode this produces is not a bad release slipping through. A release that drops recall by eight points in one change is exactly what a baseline-only gate is built to catch, and it catches it. The failure mode is a long run of individually acceptable releases, each one a hair under the tolerance, each one comparing cleanly to the release before it, compounding into a position nobody would sign off on if it were stated plainly. Every one of those releases earned a green checkmark. None of them was the bad release the gate was built to stop. The detector decayed anyway, in full view of a pipeline that never once said no.
+
+## Forces
+
+**A baseline measures velocity, not position.** Comparing today's run to yesterday's tells you whether the last step was acceptable. It says nothing about how many acceptable steps came before it or where they have collectively led, because a baseline-only gate updates its own reference point on every accepted change and therefore carries no memory beyond the change directly behind it.
+
+**A floor that moves too easily is a baseline with a second name, and a floor that never moves at all turns every legitimate retuning into an exception request.** The value of an absolute floor is that it resists the exact pressure that lets a baseline slide, quietly, release by release. Hand it back that flexibility and it stops doing the one job a baseline structurally cannot do. Remove all flexibility instead, and a team with a genuine reason to retune a threshold, after a real change to the threat model, has no legitimate way to move the line either.
+
+**The person who ships a small, tolerable regression is rarely the person who would notice the cumulative one.** A recall loss a fraction under tolerance looks like noise in a single pull request, and in isolation it usually is. Nobody is assigned to watch the position across twenty pull requests spread over months, because the dashboard was built to answer "did this change pass," and answering that question twenty times in a row gives no signal at all about the twenty-first question, which is whether the detector is still doing its job.
+
+## The pattern
+
+The fix is not a stricter tolerance on the same single comparison. It is a second, independent number. A regression gate needs a baseline, the last accepted release, to catch a sudden drop, and a floor, an absolute minimum recall and precision set at go-live, to catch the slide no single comparison would ever flag. The floor does not move when a release passes. It moves only on the same approval that set the original threshold, which per ARCH-005 sits with the threshold owner, not the engineer merging the change.
+
+```yaml
+jobs:
+  detector-regression:
+    # Two conditions, not one: --baseline catches a bad change,
+    # --floor catches the slow slide no single change would trip.
+    steps:
+      - run: >
+          guardrail eval run
+            --detector pii_in_response
+            --set eval/pii-v7.jsonl
+            --baseline baselines/pii_in_response.json
+            --floor baselines/pii_in_response.floor.json
+            --fail-on recall_drop=0.02,precision_drop=0.03,
+                      alert_volume_increase=0.15,latency_p95_increase=15ms
+      - run: guardrail eval report --format markdown >> $GITHUB_STEP_SUMMARY
+```
+
+Read the two conditions apart. The four thresholds inside `--fail-on`, recall drop, precision drop, alert volume increase, latency increase, are all measured against `--baseline`, the last accepted release: a bad single change trips one of them directly. The `--floor` file is a different kind of check, an absolute line the current run must clear regardless of whether anything changed since yesterday, because the question it asks is not "did this get worse" but "is this still good enough." A release that lost nothing since the last one can still fail this half of the gate, correctly, if the position it inherited was already below the floor and nobody had noticed.
+
+None of this is a novel mechanism. A baseline-plus-floor check is two threshold comparisons, and any engineer who has maintained a CI pipeline has written something like each half separately. Subramaniam and Fowler's Evals pattern already establishes that evaluation belongs in the build pipeline as well as in recurring production checks, which is the ground this pattern stands on. What that entry does not specify is the mechanism that stops a run of individually acceptable regressions from compounding into an unacceptable one. Proposed status here means that specific argument, a single per-change tolerance needs a second, independent floor before the gate can be trusted, did not turn up stated as a design rule in the prior art surveyed for this catalogue. It does not mean nobody had built a floor behind a baseline before, since a team that versions its evaluation set, per ARCH-003's own regression discipline, is one deliberate decision away from exactly this. It means no surveyed source named the two-number requirement as something to build in before a decay is found, rather than a fix reached for after one already was.
+
+## Worked example
+
+Take a detector shipping under the tolerance ARCH-006 itself specifies: the baseline half of the gate fails a release if recall drops by more than 2 percent relative to the release directly before it. The number that follows is ARCH-006's own illustration, reused here rather than constructed fresh for this pattern, and it is a worked arithmetic point, not a measurement of any real detector. Twenty separate changes, each one costing 1.9 percent of whatever recall the release before it still had, a hair under that line every single time. Twenty green checkmarks, one after another. Losses like that compound rather than add: each one is taken off whatever is left after the loss before it, not off the original number, and twenty of them in a row cost the detector roughly a third of its total recall while every comparison the gate ran said the release was fine. A baseline-only gate has no way to see that number, because it never looks past whichever single release it happens to be checking.
+
+Now put a floor under the same detector, set at go-live from the go-live pack's own offline and shadow results, the number the threshold owner actually signed. The floor does not care that each of the twenty releases individually passed. It cares whether whichever release first crosses that line still clears the number recorded as the minimum acceptable position. That release fails, loudly, on a gate a baseline alone would have waved through every time before it. The failure does not arrive as a mystery; it arrives against a specific, dated number, the same one the go-live pack recorded in the first place.
+
+## When not to use it
+
+The two-number gate assumes a detector is already enforcing, and it assumes the numbers behind both thresholds mean something. Neither assumption holds everywhere, and this pattern's own stakes, not the blueprint's, are what decide when to skip it.
+
+A detector still in shadow has nothing to gate yet. Shadow Before Enforce's whole purpose is to observe without blocking, so wiring a blocking floor around a shadow run defeats the phase it is running in; the floor belongs at the enforce gate, once there is a release that can actually be stopped.
+
+A rare-attack category is the sharper case. ARCH-003 is direct that recall on a handful of true positives a year cannot be reliably estimated at all, and a floor computed from five labelled attacks moves every time one of them is relabelled. A gate built on that number does not catch decay; it fires on noise, and a team paged on noise stops trusting the gate. Build the floor only where the measurement underneath it is stable enough to mean something, or it manufactures exactly the alert fatigue the whole regression discipline exists to prevent.
+
+Lowering a floor deserves the same suspicion as retiring a control, for the identical reason. A floor the detector has comfortably cleared for a year is not evidence that the floor was set too conservatively, in the same way a control with no true positive in a year is not evidence that the control is unneeded: rare, deterred, and missed all look identical from outside the metric. A floor should move only for a reason that traces to a reviewed change in the threat model or the population the detector runs against, never because it has gone quietly unthreatened.
+
+## Related patterns
+
+[Failure Buckets](/patterns/#failure-buckets) is what the baseline and the floor should actually be checked against: a per-category breakdown, never one blended number, because an aggregate recall holding steady while a single bucket collapses is the exact shape of decay this pattern exists to catch. [Shadow Before Enforce](/patterns/#shadow-before-enforce) supplies the numbers a floor is set from in the first place; there is no honest go-live floor for a detector that has never run against real traffic. [Tiered Detection](/patterns/#tiered-detection) splits a pipeline into a cheap pass and an expensive one, and a baseline or floor measured only on the blended output can hide a cheap tier decaying quietly behind an expensive tier's healthy numbers, so measure both per tier. [Decision Record](/patterns/#decision-record) is where moving the floor itself belongs, logged with the same rigor as any enforced action, so an auditor can later see exactly when the line moved, under whose approval, and against which policy version. [Verdict Composition](/patterns/#verdict-composition) is the reason the gate fails on any one of recall, precision, alert volume, or latency crossing its own line rather than on a blended score: those numbers are not on the same scale, and averaging them would manufacture a confidence the individual failures do not support. A gate that respects that distinction is the same discipline this pattern asks of the detector it is checking.

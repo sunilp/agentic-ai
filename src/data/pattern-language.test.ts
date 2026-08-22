@@ -64,8 +64,31 @@ describe('pattern language data', () => {
     }
   });
 
-  it('retires exactly the twelve stubs', () => {
-    expect(Object.keys(RETIRED)).toHaveLength(12);
+  it('retires exactly the eleven stubs', () => {
+    expect(Object.keys(RETIRED)).toHaveLength(11);
+  });
+
+  // Guards a real production bug: astro.config.mjs's static `redirects` map wins over
+  // the page src/pages/patterns/[...slug].astro generates for a real content collection
+  // entry. If a slug stays in RETIRED after its essay lands, the build stays green and
+  // `dist/patterns/<slug>/index.html` exists on disk, but it's the 425-byte meta-refresh
+  // stub, not the essay, so a naive `test -f` check misses it entirely. The fix is to
+  // remove the slug from both RETIRED (here) and its redirect line in astro.config.mjs.
+  it('never retires a slug that now has an essay', () => {
+    const dir = new URL('../content/patterns/', import.meta.url);
+    const essaySlugs = new Set(
+      readdirSync(dir)
+        .filter((f) => f.endsWith('.mdx'))
+        .map((f) => f.replace(/\.mdx$/, '')),
+    );
+    for (const slug of Object.keys(RETIRED)) {
+      expect(
+        essaySlugs.has(slug),
+        `"${slug}" has an essay at src/content/patterns/${slug}.mdx but is still in RETIRED, ` +
+          `so the static redirect in astro.config.mjs shadows the real page. Remove "${slug}" ` +
+          `from RETIRED in src/data/pattern-language.ts and delete its redirect line in astro.config.mjs.`,
+      ).toBe(false);
+    }
   });
 
   it('well-forms every url without fetching it', () => {
