@@ -46,7 +46,6 @@ export default defineConfig({
     '/patterns/hub-and-spoke/': '/patterns/#orchestrator-workers',
     '/patterns/tool-registry/': '/patterns/#tool-agent-registry',
     '/patterns/trace-the-truth/': '/patterns/#split-the-log',
-    '/patterns/verifier-loop/': '/patterns/#verifier-loop',
     '/patterns/workflow-first/': '/patterns/#workflow-first',
   },
 });

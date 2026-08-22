@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="740" viewBox="0 0 880 740" role="img" aria-label="Three detectors, a regex, a classifier and a judge, each report a raw score of 0.90 that means something different in each case. Averaging them produces one brick highlighted 0.90 with no empirical meaning. The same three detectors, composed instead as verdicts against each one's own threshold, produce an auditable weighted decision of flagged.">
+<defs>
+<marker id="mkInk" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker>
+<marker id="mkBrick" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#9b4a3f"/></marker>
+</defs>
+<rect width="880" height="740" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">Averaging three unrelated numbers is not composition</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">The same three detectors, combined two ways. Only one produces a decision anyone can defend.</text>
+<line x1="0" y1="76" x2="880" y2="76" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- PANEL A: the score path -->
+<text x="20" y="98" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">THE SCORE PATH, THREE SCALES READ AS ONE</text>
+
+<!-- box 1: regex -->
+<rect x="20" y="112" width="260" height="78" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="32" y="134" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">regex_pii_v3</text>
+<text x="268" y="134" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="20" fill="#1a1a1a">0.90</text>
+<line x1="32" y1="146" x2="268" y2="146" stroke="#e8e8e8" stroke-width="1"/>
+<text x="32" y="162" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">score_kind: raw</text>
+<text x="32" y="178" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">matched. not a likelihood.</text>
+
+<!-- box 2: classifier -->
+<rect x="310" y="112" width="260" height="78" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="322" y="134" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">pii_classifier_v7</text>
+<text x="558" y="134" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="20" fill="#1a1a1a">0.90</text>
+<line x1="322" y1="146" x2="558" y2="146" stroke="#e8e8e8" stroke-width="1"/>
+<text x="322" y="162" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">score_kind: raw</text>
+<text x="322" y="178" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">an approximate probability</text>
+
+<!-- box 3: judge -->
+<rect x="600" y="112" width="260" height="78" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="612" y="134" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">policy_judge_v2</text>
+<text x="848" y="134" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="20" fill="#1a1a1a">0.90</text>
+<line x1="612" y1="146" x2="848" y2="146" stroke="#e8e8e8" stroke-width="1"/>
+<text x="612" y="162" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">score_kind: raw</text>
+<text x="612" y="178" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">a sampled token, not odds</text>
+
+<!-- convergence into the average -->
+<line x1="150" y1="190" x2="440" y2="224" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="440" y1="190" x2="440" y2="224" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="730" y1="190" x2="440" y2="224" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="440" y1="224" x2="440" y2="242" stroke="#9b4a3f" stroke-width="1.6" marker-end="url(#mkBrick)"/>
+
+<!-- the averaged score: the single brick element -->
+<rect x="310" y="244" width="260" height="92" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.4" rx="2"/>
+<text x="440" y="266" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#9b4a3f">SCORE FUSION</text>
+<text x="440" y="298" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="26" fill="#9b4a3f">0.90</text>
+<text x="440" y="316" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#9b4a3f">a number with no</text>
+<text x="440" y="332" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#9b4a3f">empirical meaning</text>
+
+<line x1="0" y1="356" x2="880" y2="356" stroke="#e8e8e8" stroke-width="1"/>
+<text x="440" y="378" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="12.5" font-style="italic" fill="#6b6b6b">the same three detectors, decided instead of averaged</text>
+
+<!-- PANEL B: the verdict path -->
+<text x="20" y="404" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#6b6b6b">THE VERDICT PATH, EACH AGAINST ITS OWN THRESHOLD</text>
+
+<!-- box 1: regex verdict -->
+<rect x="20" y="418" width="260" height="78" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="32" y="440" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">regex_pii_v3</text>
+<text x="268" y="440" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">flagged</text>
+<line x1="32" y1="452" x2="268" y2="452" stroke="#e8e8e8" stroke-width="1"/>
+<text x="32" y="468" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">v3 threshold, band above</text>
+<text x="32" y="484" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">against its own threshold</text>
+
+<!-- box 2: classifier verdict -->
+<rect x="310" y="418" width="260" height="78" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="322" y="440" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">pii_classifier_v7</text>
+<text x="558" y="440" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">clear</text>
+<line x1="322" y1="452" x2="558" y2="452" stroke="#e8e8e8" stroke-width="1"/>
+<text x="322" y="468" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">v11 threshold, band below</text>
+<text x="322" y="484" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">against its own threshold</text>
+
+<!-- box 3: judge verdict -->
+<rect x="600" y="418" width="260" height="78" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" rx="2"/>
+<text x="612" y="440" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">policy_judge_v2</text>
+<text x="848" y="440" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">abstain</text>
+<line x1="612" y1="452" x2="848" y2="452" stroke="#e8e8e8" stroke-width="1"/>
+<text x="612" y="468" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">v2 threshold, band near</text>
+<text x="612" y="484" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">against its own threshold</text>
+
+<!-- convergence into the composed verdict -->
+<line x1="150" y1="496" x2="440" y2="530" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="440" y1="496" x2="440" y2="530" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="730" y1="496" x2="440" y2="530" stroke="#6b6b6b" stroke-width="1"/>
+<line x1="440" y1="530" x2="440" y2="548" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#mkInk)"/>
+
+<!-- the composed verdict: ink, not brick -->
+<rect x="310" y="550" width="260" height="92" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2" rx="2"/>
+<text x="440" y="572" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.6" fill="#1a1a1a">WEIGHTED</text>
+<text x="440" y="604" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="26" fill="#1a1a1a">flagged</text>
+<text x="440" y="622" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#6b6b6b">policy you can write</text>
+<text x="440" y="638" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#6b6b6b">down, review, and audit</text>
+
+<line x1="0" y1="662" x2="880" y2="662" stroke="#1a1a1a" stroke-width="1"/>
+
+<rect x="20" y="676" width="14" height="10" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1"/>
+<text x="40" y="685" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">score fusion, one meaningless number</text>
+<rect x="440" y="676" width="14" height="10" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="460" y="685" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">verdict composition, an auditable decision</text>
+
+<text x="0" y="708" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Three different statements about the world do not average into one true statement.</text>
+<text x="0" y="728" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Compose the decisions each detector already made against its own threshold instead.</text>
+</svg>

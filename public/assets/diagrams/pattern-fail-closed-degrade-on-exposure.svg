@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="700" viewBox="0 0 880 700" role="img" aria-label="A detector times out or goes down, the same failure behind all three lanes. Fail open silently proceeds every call including the external, restricted one, marked in brick as a disclosure that cannot be undone. Block everything halts every call including the contained, low sensitivity one, an unnecessary outage. The pattern's rule proceeds marked degraded only where exposure is contained and sensitivity is low, and fails closed wherever exposure is external or restricted.">
+<rect width="880" height="700" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">One detector goes dark. Three rules answer differently.</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">The failure below is identical in every lane. Two uniform rules get it wrong; only exposure and sensitivity decide correctly.</text>
+<line x1="0" y1="64" x2="880" y2="64" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- shared trigger band: the one failure every lane responds to -->
+<rect x="0" y="72" width="880" height="34" fill="#fafaf8"/>
+<text x="440" y="93" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="12" font-style="italic" fill="#1a1a1a">Same trigger for every lane below: the detector times out, or is down. No verdict exists.</text>
+<line x1="0" y1="106" x2="880" y2="106" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- column headers -->
+<text x="24" y="124" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="1.1" fill="#6b6b6b">RESPONSE, ON DETECTOR-DOWN</text>
+<text x="627" y="124" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="0.8" fill="#6b6b6b">CONTAINED CALL</text>
+<text x="787" y="124" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" letter-spacing="0.8" fill="#6b6b6b">EXTERNAL CALL</text>
+<line x1="0" y1="132" x2="880" y2="132" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- LANE 1: fail open silently -->
+<rect x="0" y="142" width="880" height="148" fill="#fafaf8"/>
+<text x="24" y="176" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">1</text>
+<text x="46" y="176" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">FAIL OPEN, SILENTLY</text>
+<text x="46" y="198" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">one rule for every call, regardless of exposure</text>
+
+<rect x="555" y="182" width="145" height="60" fill="#f0f0f0"/>
+<text x="627" y="206" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">PROCEEDS</text>
+<text x="627" y="226" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#6b6b6b">no harm done</text>
+
+<rect x="715" y="182" width="145" height="60" fill="#f5ece9"/>
+<rect x="715" y="182" width="3" height="60" fill="#9b4a3f"/>
+<text x="787" y="206" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" font-weight="600" fill="#9b4a3f">PROCEEDS</text>
+<text x="787" y="226" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#9b4a3f">disclosed, unrecoverable</text>
+
+<line x1="0" y1="290" x2="880" y2="290" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- LANE 2: block everything -->
+<text x="24" y="324" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">2</text>
+<text x="46" y="324" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">BLOCK EVERYTHING</text>
+<text x="46" y="346" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">one rule for every call, regardless of exposure</text>
+
+<rect x="555" y="330" width="145" height="60" fill="#e8e8e8"/>
+<text x="627" y="354" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">BLOCKED</text>
+<text x="627" y="374" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#6b6b6b">no risk existed</text>
+
+<rect x="715" y="330" width="145" height="60" fill="#e8e8e8"/>
+<text x="787" y="354" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">BLOCKED</text>
+<text x="787" y="374" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#6b6b6b">correct, but blunt</text>
+
+<line x1="0" y1="438" x2="880" y2="438" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- LANE 3: keyed on exposure, the pattern -->
+<rect x="0" y="438" width="880" height="148" fill="#fafaf8"/>
+<text x="24" y="472" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">3</text>
+<text x="46" y="472" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" font-weight="600" fill="#1a1a1a">KEYED ON EXPOSURE</text>
+<text x="46" y="494" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">a different rule for each call's exposure and sensitivity</text>
+
+<rect x="555" y="478" width="145" height="60" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="627" y="502" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" font-weight="600" fill="#1a1a1a">PROCEEDS, DEGRADED</text>
+<text x="627" y="522" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#1a1a1a">correctable if wrong</text>
+
+<rect x="715" y="478" width="145" height="60" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="787" y="502" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" font-weight="600" fill="#1a1a1a">FAILS CLOSED</text>
+<text x="787" y="522" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="9.5" font-style="italic" fill="#1a1a1a">same as tool execution</text>
+
+<line x1="0" y1="586" x2="880" y2="586" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- legend -->
+<rect x="24" y="606" width="14" height="10" fill="#e8e8e8"/>
+<text x="44" y="615" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">wrong for one exposure</text>
+
+<rect x="290" y="606" width="14" height="10" fill="#f5ece9"/>
+<rect x="290" y="606" width="2" height="10" fill="#9b4a3f"/>
+<text x="310" y="615" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">cannot be undone</text>
+
+<rect x="540" y="606" width="14" height="10" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="560" y="615" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">this pattern's rule</text>
+
+<line x1="0" y1="632" x2="880" y2="632" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="0" y="654" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">The failure is identical in every lane: the detector produced no verdict at all.</text>
+<text x="0" y="674" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Only exposure and sensitivity decide what happens next, never the lane's harm-family label.</text>
+</svg>

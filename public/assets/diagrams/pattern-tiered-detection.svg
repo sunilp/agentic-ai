@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="530" viewBox="0 0 880 530" role="img" aria-label="Three bars, each the sorted latency of a request stream from fastest on the left to slowest on the right, for escalation fractions of ten percent, five percent and two percent. The escalated slice, always the slowest calls, is shown in brick. A dashed p95 line crosses inside the escalated slice at ten percent, sits exactly on its edge at five percent, and falls short of it at two percent. A second dashed p99 line is covered by the escalated slice in all three cases.">
+<rect width="880" height="530" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">As the escalation fraction crosses five percent, the judge becomes your p95</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Sorted request latency, fastest to slowest. The escalated slice always sits at the slow end, wherever it falls.</text>
+<line x1="0" y1="76" x2="880" y2="76" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- axis endpoints -->
+<text x="180" y="92" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">0% (fastest)</text>
+<text x="820" y="92" text-anchor="end" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">100% (slowest)</text>
+
+<!-- threshold labels -->
+<text x="788" y="106" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a">p95</text>
+<text x="814" y="106" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="9.5" fill="#6b6b6b">p99</text>
+
+<!-- guide lines, span all three rows -->
+<line x1="788" y1="112" x2="788" y2="410" stroke="#1a1a1a" stroke-width="1.1" stroke-dasharray="4,4"/>
+<line x1="814" y1="112" x2="814" y2="410" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+
+<!-- ROW 1: f = 10% -->
+<text x="40" y="140" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">f = 10%</text>
+<rect x="180" y="122" width="576" height="28" fill="#6b6b6b"/>
+<rect x="756" y="122" width="64" height="28" fill="#9b4a3f"/>
+<text x="40" y="166" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#9b4a3f">one call in ten escalates: the judge is your p95</text>
+
+<!-- ROW 2: f = 5%, the boundary -->
+<text x="40" y="250" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">f = 5%</text>
+<rect x="180" y="232" width="608" height="28" fill="#6b6b6b"/>
+<rect x="788" y="232" width="32" height="28" fill="#9b4a3f"/>
+<circle cx="788" cy="246" r="4" fill="#ffffff" stroke="#9b4a3f" stroke-width="1.6"/>
+<text x="40" y="276" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#9b4a3f">one call in twenty: right on the line, the boundary</text>
+
+<!-- ROW 3: f = 2% -->
+<text x="40" y="360" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#1a1a1a">f = 2%</text>
+<rect x="180" y="342" width="627" height="28" fill="#6b6b6b"/>
+<rect x="807" y="342" width="13" height="28" fill="#9b4a3f"/>
+<text x="40" y="386" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#1a1a1a">one call in fifty: the cheap tier still sets p95</text>
+
+<line x1="0" y1="430" x2="880" y2="430" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- legend -->
+<rect x="40" y="444" width="14" height="10" fill="#6b6b6b"/>
+<text x="60" y="453" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">cheap-tier-only calls, fastest to slowest</text>
+
+<rect x="460" y="444" width="14" height="10" fill="#9b4a3f"/>
+<text x="480" y="453" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">escalated to the judge, always the slow end</text>
+
+<text x="0" y="480" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">The escalated slice is always the slowest calls, so its fraction alone fixes which percentile it occupies.</text>
+<text x="0" y="500" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">Five percent is not a rule of thumb. It is the exact width of the p95 slice.</text>
+</svg>

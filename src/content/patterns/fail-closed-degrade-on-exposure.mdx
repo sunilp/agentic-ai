@@ -1,0 +1,97 @@
+---
+description: "Why an information-harm control must fail closed exactly like a destructive tool call once what it protects crosses a trust boundary, why a wrong detector and a down detector need different responses, and why degradation should be keyed on exposure and sensitivity rather than harm family."
+updated: 2026-08-22
+readingTime: 8
+forces:
+  - "Harm family answers where a control belongs, not what it should do when it fails"
+  - "A detector that is wrong and a detector that is down are not the same failure"
+  - "Conflating the two is how systems fail open under load, quietly"
+sources:
+  - title: "CWE-636: Not Failing Securely ('Failing Open')"
+    url: https://cwe.mitre.org/data/definitions/636.html
+    authors: [MITRE]
+  - title: "Fail securely"
+    url: https://owasp.org/www-community/Fail_securely
+    authors: [OWASP]
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-fail-closed-degrade-on-exposure.svg
+---
+
+## The problem
+
+Ask a team what its guardrail pipeline does when a detector stops answering, and the reflex sorts by harm family. Tool execution: fail closed, because a payment or a delete cannot be walked back once it fires. A response-layer check for leaked PII or a disclosed system prompt: let it through with a record, because information is not destructive the way an action is, and a human can review the record later.
+
+That reflex has a real blueprint behind it, and the blueprint corrects it in its own text. [ARCH-008](/architecture/008-production-execution/) names it a tempting shortcut, then rejects it: "There is a tempting shortcut here, and it is wrong: that information-harm chokepoints can fail open because only actions are irreversible. You cannot un-disclose. A response that emits credentials, personal data or a restricted document is as irreversible as a payment, and in a regulated setting it is reportable." Reversibility is a property of the specific harm, not of the family a control belongs to.
+
+The reflex conflates two different questions because both draw on the same taxonomy. [ARCH-001](/architecture/001-the-control-plane/) splits harm into information harm and action harm to answer where a control belongs: which of the six chokepoints can address which risk. That split is correct for placement. It says nothing about what a control should do the day its detector times out or goes down, and a team that reaches for the same axis to answer that second question gets it wrong silently, because using the taxonomy correctly for placement never tests whether it also decides failure behavior.
+
+## Forces
+
+**Harm family answers where a control belongs, not what it should do when it fails.** ARCH-001's split exists to route a detector to the right chokepoint. Reused as a failure-mode rule, it produces exactly the error ARCH-008 has to correct: a Tier 3 internal drafting aid and an external-facing customer letter can share one detector and the same information-harm label, and still need opposite defaults the moment that detector goes dark.
+
+**A detector that is wrong and a detector that is down are not the same failure.** A wrong verdict means the detector ran and answered incorrectly: a calibration and accuracy problem, worked on by better composition, thresholds, and evaluation, none of which is a runtime failure-handling question. A slow or absent verdict means no answer exists at all: an availability problem, and the only question left is what the system does in the gap. A rule that tightens the outage response to compensate for a chronically wrong detector fixes nothing, because the detector was never down: it answered, confidently, and the wrong thing came out the other side.
+
+**Conflating the two is how systems fail open under load, quietly.** A pipeline that loosens a wrong detector's threshold and one that proceeds anyway around a down detector look identical on a dashboard reporting only a pass rate. Under load, both degrade the same way: more traffic gets waved through, and nobody can tell afterward which reason it happened for, because the system was never built to keep the two apart.
+
+## The pattern
+
+State the rule for the second failure, the only one this pattern is about: key the response on the exposure and sensitivity of what a call is about to move, never on which harm family the chokepoint nominally belongs to. Fail open, marked degraded, only where exposure is contained and content is low sensitivity, because a wrong answer there can still be caught before it reaches anyone who should not have seen it. Fail closed wherever the chokepoint can emit restricted data, wherever exposure crosses a trust boundary, and always at tool execution, the one place ARCH-001 shows an act can still be stopped. Information-harm chokepoints get no standing exemption: a response about to cross a trust boundary fails closed exactly as a destructive tool call does, because once it goes out, no later control retracts it.
+
+[ARCH-004](/architecture/004-the-decision-layer/) already supplies the vocabulary, having made the equivalent move for actions first: exposure promotes a cell in its action grid upward regardless of reversal cost, because "a tool can be perfectly reversible in effect and still be an irreversible disclosure, because you cannot un-send." Degradation policy can use the same fields, the exposure and sensitivity a registry already declares to split `draft_email` from `send_email`, rather than a static harm-family tag fixed once and never revisited per call.
+
+Written as policy instead of prose, the shape is compact:
+
+```yaml
+# degradation on detector-down, keyed on exposure and sensitivity,
+# not on which harm family the chokepoint belongs to. rules apply
+# in order; the first match wins.
+degradation:
+  on_detector_down:
+    - match: { chokepoint: tool_execution }
+      action: fail_closed
+    - match: { exposure: contained, sensitivity: low }
+      action: proceed_marked_degraded
+    - default: fail_closed
+```
+
+This is a compact encoding of ARCH-008's own rule, not a new mechanism: the same document states it as prose, this just makes it enforceable. Tool execution matches first regardless of any exposure tag, because that chokepoint alone can still prevent the act rather than only record it. And the default is fail closed, not fail open, so an unlabelled call or any combination other than the single named exception gets the safe answer instead of falling through unmatched.
+
+None of this is new at the level CWE-636 and OWASP's Fail Securely guidance already state: an error path should not grant more than it would deny, fail closed by default, never open silently. [Silent Fail Open](/patterns/#silent-fail-open), the anti-pattern this pattern replaces, cites the same two sources. What neither supplies is the axis: they say fail closed, not fail closed when it is safe to do otherwise. Proposed status here means that specific axis, exposure and sensitivity rather than harm family, did not turn up named in the prior art surveyed for this catalogue. It does not mean the underlying caution about failing open is new. It means the argument had to be worked out here, against this catalogue's own earlier draft of the idea.
+
+## Worked example
+
+Take a Tier 2 enterprise RAG assistant in a regulated institution, ARCH-006's own worked tier: internal corpus, no write access, restricted documents in scope. One response-layer detector, watching for PII and leaked restricted content, sits behind two surfaces sharing both the detector and the harm-family label.
+
+The first surface is a case-worker's own draft notes, never sent anywhere, correctable next turn. Exposure: contained, sensitivity: low, the case this pattern's rule allows to fail open. If the detector times out here, proceeding with a record is right: whatever it would have caught stays inside one reader's session, and a wrong answer this once costs a correction, not a disclosure.
+
+The second surface is the same assistant answering a customer's support query directly, streamed straight to that customer with no approval queue between the model's output and their screen. Same detector, same corpus, same information-harm label ARCH-001 applies to both. But exposure here is external and the corpus mixes cases across customers, so sensitivity is restricted: once that response streams, whatever the detector would have caught, another customer's file mixed into context, has crossed a trust boundary no later review can undo, because nobody stands between the model and the reader. A timeout here has to fail closed, holding the response and returning a retry, while the case-worker's notes on the other surface keep moving unaffected. Harm family predicted nothing here. Exposure did all the work.
+
+Now separate that from the other failure this catalogue warns about. Suppose the same detector never times out and simply misjudges: an identifier slips through because the pattern behind it was written for a narrower format than this document uses. No degradation rule fixes that, because the detector was never down. That is a decision problem, worked on elsewhere through better composition and evaluation, not a rule for a detector that is slow or absent. Treating a chronically wrong detector as though a stricter outage policy would fix it spends effort on the wrong half of the problem.
+
+## When not to use it
+
+This pattern needs a chokepoint whose call carries a declared exposure and sensitivity, and more than one value those fields can take. Neither is a given.
+
+A single-tenant tool where every consumer already holds the system's own authority has no exposure axis to key on: nothing that reaches one reader could not already reach any other, so a request-level fork between degrading and failing closed decides nothing a flat default does not. Building it spends machinery on a distinction the deployment does not have.
+
+A surface whose normal path already routes through a human before anything reaches a reader, the escalate-for-review cell in ARCH-004's action grid, does not need this pattern's fork either: the exposure it worries about cannot happen there regardless of what the detector does, because a person reviews the content before it moves. The fork matters for the synchronous path with no human between a detector's answer and a reader; where one already sits there, the workflow has already decided the question.
+
+The pattern is only as honest as the registry underneath it. Keying degradation on exposure and sensitivity requires those fields declared per tool and surface, the same work ARCH-004 requires for its action grid. A system that has not done that work has nothing real to match against, and an exposure-keyed policy bolted onto undeclared fields is worse than a uniformly conservative fail-closed default: it looks considered and is actually a guess wearing that property's name. Do the registry work first; a universal fail-closed default, while wasteful, is at least honest about what it is.
+
+## Related patterns
+
+[Silent Fail Open](/patterns/#silent-fail-open) is the anti-pattern this pattern replaces: a control's outage goes unmarked and the request proceeds as if nothing happened. This entry is the corrected version, forced to state, request by request, which fork it took and why.
+
+[Tiered Detection](/patterns/#tiered-detection) decides which calls reach the expensive judge and which stop at the cheap tier. The judge carries by far the largest timeout budget and the least margin of any detector in the pipeline, which is why this pattern's fork matters most at the boundary tiering creates.
+
+[Chokepoint Placement](/patterns/#chokepoint-placement) decides which of the six stages a control occupies and what it can see there. This pattern asks the different question: what it does the day it breaks.
+
+[Capability Gate](/patterns/#capability-gate) is the mechanism behind this pattern's tool-execution row: fail closed there is not a bare timeout check, it is routing to a gate the model cannot argue past, for exactly the calls a gate already exists to stop.
+
+[Decision Record](/patterns/#decision-record) turns proceeding marked degraded from a private runtime detail into an auditable fact: without a record naming which calls degraded, under which policy, for how long, the label is nothing anyone can check after the incident.

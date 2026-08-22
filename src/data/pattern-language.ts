@@ -489,7 +489,6 @@ export const RETIRED: Record<string, string> = {
   'hub-and-spoke': '/patterns/#orchestrator-workers',
   'tool-registry': '/patterns/#tool-agent-registry',
   'trace-the-truth': '/patterns/#split-the-log',
-  'verifier-loop': '/patterns/#verifier-loop',
   'workflow-first': '/patterns/#workflow-first',
 };
 
