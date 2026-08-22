@@ -6,7 +6,7 @@
 <rect width="880" height="480" fill="#ffffff"/>
 
 <text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">The instruction bends. The gate does not.</text>
-<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Same model, same task, same delete_all call. What differs is whether the check sits beside the loop or on it.</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Same setup, same task, same delete_all call. What differs is whether the check sits beside the loop or on it.</text>
 <line x1="0" y1="76" x2="880" y2="76" stroke="#1a1a1a" stroke-width="1"/>
 
 <!-- ROW A: system prompt only, the marked / failure row -->
@@ -84,5 +84,5 @@
 <rect x="470" y="430" width="14" height="10" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1"/>
 <text x="490" y="439" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">enforcement outside it, at the call: holds regardless</text>
 
-<text x="0" y="462" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Same model, same instruction, same delete_all call. The difference is not what the agent believed.</text>
+<text x="0" y="462" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Same run, same instruction, same delete_all call. The difference is not what the agent believed.</text>
 </svg>
