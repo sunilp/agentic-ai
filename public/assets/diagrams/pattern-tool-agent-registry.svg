@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="548" viewBox="0 0 880 548" role="img" aria-label="Two ways an agent's callable surface gets decided. Row A, the emergent surface: a decorator, an MCP server entry, framework auto-discovery, and a stray import are stacked with no boundary drawn around them, each feeding a shared dashed line into the agent, and neither of two questions, what can this agent call right now, and what changed since last week, has an answer. Row B, the declared registry: a single bordered file, tool_registry.yaml, marked in brick as the one artifact both questions read from, feeds the same agent along one solid line, and both questions are answered directly from that file and its version history.">
+<rect width="880" height="548" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">The callable set is either declared, or it is whatever the code happens to reach.</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">Same agent, same runtime. Only one side can answer what changed since last week.</text>
+<line x1="0" y1="76" x2="880" y2="76" stroke="#1a1a1a" stroke-width="1"/>
+
+<defs>
+  <marker id="arrGrey" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#6b6b6b"/></marker>
+  <marker id="arrInk" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#1a1a1a"/></marker>
+</defs>
+
+<!-- ROW A: the emergent surface -->
+<text x="0" y="100" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">A</text>
+<text x="22" y="100" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">THE EMERGENT SURFACE</text>
+<text x="22" y="118" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">whatever the runtime happens to reach, assembled from wherever code adds a tool</text>
+
+<!-- four sources, stacked in one column so no connector crosses another box -->
+<rect x="20" y="132" width="220" height="24" rx="3" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="130" y="148" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">@tool decorator</text>
+
+<rect x="20" y="160" width="220" height="24" rx="3" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="130" y="176" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">MCP server list</text>
+
+<rect x="20" y="188" width="220" height="24" rx="3" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="130" y="204" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">auto-discovery</text>
+
+<rect x="20" y="216" width="220" height="24" rx="3" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="130" y="232" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#6b6b6b">a helper import</text>
+
+<!-- each source joins a shared vertical bus, well clear of every box, then one line into the agent -->
+<line x1="240" y1="144" x2="270" y2="144" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="240" y1="172" x2="270" y2="172" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="240" y1="200" x2="270" y2="200" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="240" y1="228" x2="270" y2="228" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="270" y1="144" x2="270" y2="228" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="270" y1="186" x2="378" y2="186" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrGrey)"/>
+
+<rect x="382" y="163" width="90" height="46" rx="4" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="427" y="190" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a">AGENT</text>
+
+<!-- right side: the two questions, unanswered -->
+<text x="500" y="160" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">what can this agent call right now?</text>
+<text x="500" y="178" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="0.3" fill="#6b6b6b">-&gt; no fixed list to check</text>
+<line x1="500" y1="186" x2="860" y2="186" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="500" y="206" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">what changed since last week?</text>
+<text x="500" y="224" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="0.3" fill="#6b6b6b">-&gt; no prior version to diff against</text>
+<line x1="500" y1="232" x2="860" y2="232" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="20" y="254" font-family="Georgia,'EB Garamond',serif" font-size="11.5" font-style="italic" fill="#6b6b6b">the true set is whatever the next pull request happens to add.</text>
+
+<line x1="0" y1="272" x2="880" y2="272" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- ROW B: the declared registry -->
+<text x="0" y="296" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#1a1a1a">B</text>
+<text x="22" y="296" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">THE DECLARED REGISTRY</text>
+<text x="22" y="314" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">one file, read by the runtime at dispatch, checked into version control</text>
+
+<!-- the single brick element: the registry artifact itself -->
+<rect x="20" y="328" width="320" height="122" rx="4" fill="#fafaf8" stroke="#9b4a3f" stroke-width="2.4"/>
+<text x="36" y="350" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.4" fill="#9b4a3f">tool_registry.yaml</text>
+<text x="36" y="366" font-family="Georgia,'EB Garamond',serif" font-size="10" font-style="italic" fill="#9b4a3f">the one artifact both questions on the right read from</text>
+
+<text x="36" y="388" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">transfer_funds:</text>
+<text x="46" y="404" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a">reversal_cost: impossible</text>
+<text x="46" y="419" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a">exposure: external</text>
+<text x="46" y="434" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10" fill="#1a1a1a">owner: payments-platform</text>
+
+<line x1="340" y1="389" x2="378" y2="389" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#arrInk)"/>
+
+<rect x="382" y="366" width="90" height="46" rx="4" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.2"/>
+<text x="427" y="393" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a">AGENT</text>
+
+<!-- right side: the two questions, answered -->
+<text x="500" y="384" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">what can this agent call right now?</text>
+<text x="500" y="402" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="0.3" fill="#1a1a1a">-&gt; read tool_registry.yaml</text>
+<line x1="500" y1="410" x2="860" y2="410" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="500" y="430" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">what changed since last week?</text>
+<text x="500" y="448" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" letter-spacing="0.3" fill="#1a1a1a">-&gt; diff two commits of that file</text>
+<line x1="500" y1="456" x2="860" y2="456" stroke="#e8e8e8" stroke-width="1"/>
+
+<text x="20" y="472" font-family="Georgia,'EB Garamond',serif" font-size="11.5" font-style="italic" fill="#6b6b6b">every entry is data the runtime consults before a call executes, and a diff before it ships.</text>
+
+<line x1="0" y1="490" x2="880" y2="490" stroke="#1a1a1a" stroke-width="1"/>
+
+<rect x="20" y="500" width="14" height="10" fill="#fafaf8" stroke="#6b6b6b" stroke-width="1" stroke-dasharray="2,2"/>
+<text x="40" y="509" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">ad hoc: no file behind the claim</text>
+<rect x="400" y="500" width="14" height="10" fill="#fafaf8" stroke="#9b4a3f" stroke-width="2"/>
+<text x="420" y="509" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">declared: the one place both questions are answered</text>
+
+<text x="0" y="534" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">The runtime does not care which one exists. The two questions on the right always do.</text>
+</svg>

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="636" viewBox="0 0 880 636" role="img" aria-label="One request waits in an approval queue with no timeout line written. Three branches are possible when the clock runs out: blocks forever, auto-rejects, or auto-approves. The unwritten line still resolves to one of them, auto-approves, marked as the branch that turns the gate into theatre.">
+<rect width="880" height="636" fill="#ffffff"/>
+
+<text x="0" y="24" font-family="Georgia,'EB Garamond',serif" font-size="19" fill="#1a1a1a">The queue has to choose. If you don't, it already has.</text>
+<text x="0" y="46" font-family="Georgia,'EB Garamond',serif" font-size="13.5" fill="#6b6b6b">One request, one unwritten timeout line, and the three things that happen when nobody answers it.</text>
+<line x1="0" y1="76" x2="880" y2="76" stroke="#1a1a1a" stroke-width="1"/>
+
+<!-- the request / gate node -->
+<rect x="270" y="92" width="340" height="66" rx="4" fill="#fafaf8" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="440" y="114" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#1a1a1a">transfer_funds: require_approval</text>
+<text x="440" y="133" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#6b6b6b">on_timeout: <tspan fill="#9b4a3f" text-decoration="underline">____</tspan></text>
+<text x="440" y="150" text-anchor="middle" font-family="Georgia,'EB Garamond',serif" font-size="10.5" font-style="italic" fill="#6b6b6b">the line nobody wrote</text>
+
+<!-- fan-out: three possible resolutions of the unwritten line, contained above the rows -->
+<line x1="330" y1="158" x2="150" y2="192" stroke="#1a1a1a" stroke-width="1.1"/>
+<circle cx="150" cy="192" r="3" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="150" y="184" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">A</text>
+
+<line x1="440" y1="158" x2="440" y2="192" stroke="#1a1a1a" stroke-width="1.1"/>
+<circle cx="440" cy="192" r="3" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="440" y="184" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#1a1a1a">B</text>
+
+<line x1="550" y1="158" x2="730" y2="192" stroke="#9b4a3f" stroke-width="1.6"/>
+<circle cx="730" cy="192" r="3.4" fill="#9b4a3f" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="730" y="184" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#9b4a3f">C</text>
+
+<!-- ROW 1: BLOCKS FOREVER -->
+<rect x="0" y="200" width="880" height="118" fill="#fafaf8"/>
+<text x="24" y="232" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#1a1a1a">A</text>
+<text x="46" y="232" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">BLOCKS FOREVER</text>
+<text x="46" y="250" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">no bound set: never exits on its own</text>
+<rect x="270" y="222" width="240" height="26" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="390" y="240" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">queue depth: unbounded</text>
+<line x1="510" y1="235" x2="560" y2="235" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,3"/>
+<text x="600" y="240" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#1a1a1a">the business routes around it, off the record</text>
+<text x="46" y="292" font-family="Georgia,'EB Garamond',serif" font-size="10.5" fill="#6b6b6b">a manual override gets the transfer done anyway, with the gate's</text>
+<text x="46" y="308" font-family="Georgia,'EB Garamond',serif" font-size="10.5" fill="#6b6b6b">knowledge but not its authorization.</text>
+<line x1="0" y1="318" x2="880" y2="318" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- ROW 2: AUTO-REJECTS -->
+<text x="24" y="350" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#1a1a1a">B</text>
+<text x="46" y="350" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#1a1a1a">AUTO-REJECTS</text>
+<text x="46" y="368" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#6b6b6b">expire, no notification sent</text>
+<rect x="270" y="340" width="240" height="26" fill="#ffffff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="390" y="358" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#1a1a1a">task closes, no error raised</text>
+<line x1="510" y1="353" x2="560" y2="353" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,3"/>
+<text x="600" y="358" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#1a1a1a">nobody is told, legitimate work dies unseen</text>
+<text x="46" y="410" font-family="Georgia,'EB Garamond',serif" font-size="10.5" fill="#6b6b6b">the correct branch for an irreversible action, minus the half of</text>
+<text x="46" y="426" font-family="Georgia,'EB Garamond',serif" font-size="10.5" fill="#6b6b6b">the spec that tells the requester it failed.</text>
+<line x1="0" y1="436" x2="880" y2="436" stroke="#e8e8e8" stroke-width="1"/>
+
+<!-- ROW 3: AUTO-APPROVES, the marked row -->
+<rect x="0" y="436" width="880" height="130" fill="#f5ece9"/>
+<rect x="0" y="436" width="3" height="130" fill="#9b4a3f"/>
+<text x="24" y="468" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#9b4a3f">C</text>
+<text x="46" y="468" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="12.5" letter-spacing="0.6" fill="#9b4a3f">AUTO-APPROVES</text>
+<text x="46" y="486" font-family="Georgia,'EB Garamond',serif" font-size="11" font-style="italic" fill="#9b4a3f">swallowed, never reviewed</text>
+<rect x="270" y="458" width="240" height="26" fill="#9b4a3f" stroke="#9b4a3f" stroke-width="1"/>
+<text x="390" y="476" text-anchor="middle" font-family="'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace" font-size="10.5" fill="#fafaf8">EXECUTED, no human looked</text>
+<line x1="510" y1="471" x2="560" y2="471" stroke="#9b4a3f" stroke-width="1.4"/>
+<text x="600" y="476" font-family="Georgia,'EB Garamond',serif" font-size="11.5" fill="#9b4a3f">the gate is still on the diagram. It authorized nothing.</text>
+<text x="46" y="528" font-family="Georgia,'EB Garamond',serif" font-size="10.5" fill="#9b4a3f">what "we never decided" quietly becomes: the branch a stalled</text>
+<text x="46" y="544" font-family="Georgia,'EB Garamond',serif" font-size="10.5" fill="#9b4a3f">system or a swallowed error runs by default, with nobody choosing it.</text>
+
+<line x1="0" y1="580" x2="880" y2="580" stroke="#1a1a1a" stroke-width="1"/>
+
+<rect x="0" y="592" width="14" height="10" fill="#6b6b6b" stroke="#1a1a1a" stroke-width="1"/>
+<text x="20" y="601" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">a branch someone configured on purpose</text>
+<rect x="380" y="592" width="14" height="10" fill="#9b4a3f"/>
+<text x="400" y="601" font-family="Georgia,'EB Garamond',serif" font-size="12" fill="#1a1a1a">the branch an unwritten line runs anyway</text>
+
+<text x="0" y="616" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">All three are decisions. Only one of them was never made on purpose.</text>
+</svg>

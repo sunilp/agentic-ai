@@ -47,6 +47,23 @@ describe('buildHomeFeed', () => {
     expect(all.find((i) => i.id === 'arch-009')).toBeUndefined();
   });
 
+  it('caps patterns to one entry like blueprints and never features one', () => {
+    const s = {
+      ...streams,
+      patterns: [
+        { id: 'agent-loop', title: 'Agent Loop', dek: 'dek p1', order: 2, updated: d('2026-08-20'), readingTime: 5, status: 'published' as const },
+        { id: 'earn-the-complexity', title: 'Earn the Complexity', dek: 'dek p2', order: 1, updated: d('2026-08-20'), readingTime: 4, status: 'published' as const },
+      ],
+    };
+    const { featured, rest } = buildHomeFeed(s, { limit: 10 });
+    const all = [featured!, ...rest];
+    const patternItems = all.filter((i) => i.stream === 'Pattern');
+    expect(patternItems.map((i) => i.id)).toEqual(['earn-the-complexity']);
+    expect(patternItems[0].href).toBe('/patterns/earn-the-complexity/');
+    expect(patternItems[0].dateLabel).toBe('Updated');
+    expect(featured!.stream).not.toBe('Pattern');
+  });
+
   it('labels dates by stream semantics', () => {
     const { featured, rest } = buildHomeFeed(streams, { limit: 10 });
     const all = [featured!, ...rest];

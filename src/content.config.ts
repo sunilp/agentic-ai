@@ -154,13 +154,26 @@ const labs = defineCollection({
 const patterns = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/patterns' }),
   schema: z.object({
-    slug: z.string(),
-    name: z.string(),
-    oneLine: z.string(),
-    whenToUse: z.string(),
-    whenNotToUse: z.string(),
-    antiPattern: z.string().optional(),
+    // The filename is the slug and joins to src/data/pattern-language.ts,
+    // which owns name, kind, layer, stage, status and attribution.
+    description: z.string(),
+    updated: z.coerce.date(),
+    readingTime: z.number(),
+    forces: z.array(z.string()).min(2),
+    sources: z.array(z.object({
+      title: z.string(),
+      url: z.string().url(),
+      authors: z.array(z.string()).optional(),
+      year: z.number().optional(),
+    })).min(1),
+    // `related` and `blueprints` deliberately live ONLY in src/data/pattern-language.ts.
+    // The data module is the single source of truth for catalogue metadata, and an entry
+    // with no essay has no MDX at all, so the data module is the only place an unwritten
+    // entry can record its blueprint.
+    anchors: z.array(z.object({ label: z.string(), anchor: z.string() })).min(5),
     diagram: z.string().optional(),
+    spot: z.string().optional(),
+    spotCaption: z.string().optional(),
   }),
 });
 

@@ -1,0 +1,110 @@
+---
+description: "Why an AI control plane's telemetry, decision record and content archive need three different retention and access rules, why the archive that proves a control worked is also the store most dangerous to over-retain, and how one request still traces across all three."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "Audit wants years and privacy wants weeks, and no single retention setting satisfies both at once"
+  - "Wide, narrow and break-glass access are three different threat models, not three settings on one dial"
+  - "Proving a control worked all the way down means keeping the archive that makes it provable, and that archive is the most dangerous store to over-retain"
+sources:
+  - title: "OWASP Top 10 for LLM Applications 2025"
+    url: https://genai.owasp.org/llm-top-10/
+    year: 2025
+  - title: "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile, NIST AI 600-1"
+    url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+    authors: [National Institute of Standards and Technology]
+    year: 2024
+  - title: "OpenTelemetry Tracing API specification"
+    url: https://opentelemetry.io/docs/specs/otel/trace/api/
+    authors: [OpenTelemetry Authors]
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-split-the-log.svg
+---
+
+## The problem
+
+Ask a team where its logs live and everyone means something different by the word. The on-call engineer means the dashboard of latencies and error rates. The auditor means the record of which detector ran, what it decided, and against which policy version. The incident reviewer means the actual prompt and response, the material someone has to read to know what really happened. All three get called "the logs," and most systems keep them in one place, at one retention, behind one access control, because building three of anything is more work than building one.
+
+[ARCH-007](/architecture/007-telemetry-audit-and-review/) names what that convenience costs: a single store cannot serve an assurance requirement that wants years and a privacy requirement that wants weeks at the same time, and pushing retention either direction to satisfy one obligation fails the other.
+
+That is the double failure this pattern exists to name, and the reason to name it as one thing rather than two unrelated incidents: the same merge causes both. A system that cannot answer a regulator and a system still holding sensitive material it should not have are not two mistakes with two root causes. They are one mistake, seen from two directions, and a team that fixes one without noticing the other has usually just moved the retention dial in whichever direction its most recent incident pointed, and manufactured the opposite failure a few months later.
+
+## Forces
+
+**Audit and privacy pull retention in opposite directions, and no single number satisfies both.** A records-retention obligation wants evidence a control ran, kept long enough to survive a regulator's lookback window, sometimes years. A data protection obligation wants the content that decision was about gone as soon as its collection purpose has passed, often weeks. Split the difference and the result is too short to be defensible evidence and too long to be defensible privacy, satisfying neither.
+
+**Wide, narrow and break-glass access are three different threat models, not three settings on one dial.** Operational telemetry can stay wide access, because by design it carries no identifiers beyond a request id and no content. The decision record needs to be hard to alter after the fact, an integrity requirement more than a secrecy one. The content archive needs to be difficult to read casually, because a lapse there is itself the incident the other two stores exist to help investigate. Collapse the three into one access policy and either the loosest wins by default, or the tightest wins and the on-call engineer loses the dashboard they need.
+
+**Proving a control worked all the way down is also what creates the leak surface.** This is the harder half of the problem, and the one teams notice last. The decision record alone proves a policy fired; it takes the content archive next to it, holding the actual prompt or response, to prove what it fired on. That archive is exactly the sensitive material the controls exist to protect, so the more complete the evidentiary trail, the more attractive a target it becomes, and the two cannot both be strengthened by turning the same retention knob in the same direction.
+
+## The pattern
+
+State the rule plainly: what a control plane calls "the logs" is at minimum three separate stores, never one, each with its own contents, its own retention, its own access rule and its own reader, and none of the three may be inferred from the others.
+
+```ts
+type LogStore = {
+  contents: string;
+  retention: string;
+  access: 'wide' | 'narrow' | 'break-glass';
+  reader: string;
+};
+
+const stores: Record<'telemetry' | 'decisionRecord' | 'contentArchive', LogStore> = {
+  telemetry: {
+    contents: 'counters, latencies, error rates, queue depth; no content',
+    retention: 'days',
+    access: 'wide',
+    reader: 'the on-call engineer',
+  },
+  decisionRecord: {
+    contents: 'detectors run, verdicts, policy version, action, outcome',
+    retention: 'years, append-only, hash-chained',
+    access: 'narrow',
+    reader: 'the auditor',
+  },
+  contentArchive: {
+    contents: 'prompts, retrieved chunks, responses, masked where a span was found',
+    retention: 'weeks',
+    access: 'break-glass',
+    reader: 'incident review, one case at a time',
+  },
+};
+```
+
+Splitting into three stores does not mean splitting the ability to reconstruct a decision. What holds them together, including a request's parallel and nested calls, is correlation, not colocation: a `trace_id` minted once at the edge, a `span_id` per chokepoint carrying its parent, and an explicit link across any queue boundary. Reuse the trace model already built for this rather than inventing a house format, and the same ids appear, unmodified, inside the decision record. That answers a harder question than one flat log could: not just what happened, but which chokepoint saw a control fire, which stayed silent, and whether a blocked tool call belongs to the same request as a response flagged upstream, one incident rather than a guess at two.
+
+That correlation is also what makes the split affordable, not just correct. The content archive expires on its own short clock because the decision record only holds a reference to it by id, not the content itself. When the archive deletes a prompt weeks later, the record that pointed at it is untouched, still provable, still years from its own expiry. One retention clock would force a record and the content it describes to live and die together, which is exactly what the split exists to prevent.
+
+The content archive earns extra rules because it is the leak surface inside a trail built for accountability. Redact at write time, not read time: where a detector has already located the sensitive span, store the masked form and the offsets, since every later export of an unredacted store is a new copy of the same exposure. Give the archive its own encryption boundary, so a credential reading the decision record cannot also read the prompts it references. Log the read itself, or a break-glass exception becomes the default the moment it is easier than filing a ticket.
+
+Proposed status here does not claim this three-way split was invented for this catalogue. It claims the specific argument, that treating a records-retention obligation and a data-protection obligation as the same retention question produces a system that fails both, did not turn up stated as a design rule in the prior art surveyed. Teams have split logs before, usually for operational convenience or cost. The claim here is narrower: the split has to trace to which obligation each store answers to, not to which team owns which pipeline.
+
+## Worked example
+
+Take a coding assistant whose system prompt names internal tool identifiers and repository conventions, the shape OWASP lists as system prompt leakage. A response-layer detector fires on a leak attempt and the response is blocked. What each store holds afterward is ARCH-007's own worked case, reused rather than invented fresh.
+
+Operational telemetry records a counter and a latency, nothing else: `detector.sysprompt_leak.fired +1`, `detector.sysprompt_leak.p95_ms 42`, `action.block +1`. No content, no identifier beyond what routing needs.
+
+The decision record, keyed to the same `request_id`, carries the chokepoint (response), the principal, both detectors that ran and their versions, the verdict (flagged, band above, category `system_prompt_fragment`), the policy version that decided the action (`2026-08-18.3`), and the outcome (blocked). No prompt text, only an `evidence_ref` pointing at where the matched span lives.
+
+The content archive holds what the decision record only points to: the masked span at that evidence reference for routine review, and separately, on a shorter clock measured in weeks, the full prompt and response, encrypted, kept only because this case still needs it.
+
+A reviewer, because this detector runs at high precision, sees the masked span, the category and the action, not the system prompt itself. That case closes as a true positive. The case that matters more happens in the same period, when a red-team exercise finds a phrasing family that extracts a prompt fragment without tripping this detector at all: a false negative with no decision record showing a flag, because nothing fired. Triage still traces it to the response chokepoint, using the same correlation model that tied the true positive together above, and confirms a coverage gap rather than a tuning problem. What the decision record could not tell anyone, an absence of any entry at all, is the exact failure mode this pattern's split exists to make visible: no flag is not the same claim as no leak, and only the trace, not the log, can tell the two apart.
+
+## When not to use it
+
+Three stores, three retention jobs and three access policies is real infrastructure, and it is not owed to every system that emits a log line. The cost this pattern asks a team to carry is proportional to how much someone outside engineering is entitled to ask about a decision later, and a system nobody outside engineering will ever be asked to account for does not have that someone yet.
+
+A prototype running against synthetic data, with no personal information in its inputs and no regulator, auditor or privacy office who will ever question it, has nothing for the content archive to protect and nothing for the decision record to prove. Building the full split there is not caution, it is unearned ceremony: three retention clocks and three access policies to keep straight, in service of an audience that does not exist yet. One store, short retention, honestly labelled as insufficient for a real audit, is the correct answer until that changes.
+
+What a team cannot do is let that deferral survive contact with the thing it was deferring against. The moment retrieval starts drawing on real user content, the moment a regulator's lookback window becomes a real obligation, or the moment a privacy office states a position on what the system is holding, the case for the split stops being a judgment call made once at the start and becomes the design the system is actually accountable to. Carrying the single-store shortcut past that point is not a scoped tradeoff. It is the same double failure this pattern exists to name, just not yet discovered.
+
+## Related patterns
+
+[Decision Record](/patterns/decision-record/) is the middle store's own contract, what belongs inside it and what must never be. Split the Log sits one level up: making sure that record's neighbors, telemetry and the content archive, never inherit its retention or access rule by default. [Chokepoint Placement](/patterns/chokepoint-placement/) names the six stages a request passes through and calls logging the sixth chokepoint in its own right, the one that sees everything and prevents nothing; this pattern is what that sixth chokepoint has to do once chosen. [Shadow Before Enforce](/patterns/shadow-before-enforce/) means a new detector's verdicts land in these same three stores before it is ever allowed to block anything, so retention and access are live from the first shadow run, not retrofitted at go-live. [The Expiring Exception](/patterns/the-expiring-exception/) keeps a break-glass read of the content archive from quietly becoming a standing grant; without a mandatory expiry, the archive's tightest access rule degrades into its loosest one. [Failure Buckets](/patterns/failure-buckets/) is where a closed finding actually goes, not back into the decision record, which only proves the finding was handled, but into a labelled, bucketed eval case the next regression gate can check against.

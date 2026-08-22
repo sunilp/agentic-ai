@@ -1,0 +1,74 @@
+---
+description: "Why a control that fails and a request that proceeds anyway is not the defect, silence about it is, why a missing else-branch, a swallowed exception and a deadline-driven timeout are the shapes this takes in practice, and why a metric built on a control's own output cannot detect that control's own silence."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "A control that fails and a control that succeeds can resolve to the identical action, allow, so nothing downstream can tell the two apart without a record built to say which one happened"
+  - "Catching every unhandled case costs real design work up front; letting an unhandled case default to allow costs nothing, and is what most languages and most timeouts do without being asked"
+  - "A metric assembled from a control's own output cannot detect that control's own silence, because the request the control never checked is written into that output as an ordinary pass"
+sources:
+  - title: "CWE-636: Not Failing Securely ('Failing Open')"
+    url: https://cwe.mitre.org/data/definitions/636.html
+    authors: [MITRE]
+  - title: "Fail securely"
+    url: https://owasp.org/www-community/Fail_securely
+    authors: [OWASP]
+anchors:
+  - { label: What it looks like in the wild, anchor: what-it-looks-like-in-the-wild }
+  - { label: Why it happens, anchor: why-it-happens }
+  - { label: What it costs, anchor: what-it-costs }
+  - { label: Worked example, anchor: worked-example }
+  - { label: The pattern that replaces it, anchor: the-pattern-that-replaces-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-silent-fail-open.svg
+---
+
+## What it looks like in the wild
+
+A request enters, a control is supposed to check it, and the control does not answer: it throws, times out, its dependency is unreachable, or nobody wrote a rule for the exact case in front of it. The request keeps moving anyway, reaches the tool call, the response reaches the reader, the transfer clears. Nothing in the trace marks that moment as different from any request that passed because it was supposed to.
+
+No exception surfaces. No alert fires. The count of requests the control blocked does not move, because as far as that count is concerned, nothing happened here at all. A policy engine falls back to an empty rule set when its config store is unreachable, and an empty rule set answers every request the only way it can: yes. An authorization check wrapped to keep a request alive returns true on its own exception path, because true was already in scope and the request needed to continue. A circuit breaker trips on a slow detector, and the calls that would have gone to it are waved through instead of held, because waving through was already written and holding was not.
+
+Failing open is sometimes the right call, made on purpose, with a reason stated somewhere a reviewer can find it: some workloads cannot absorb the outage a strict fail-closed default would cause, and choosing availability over a check, deliberately, is legitimate. What is never legitimate is failing open with no record of it, no alert about it, and no metric that moves because of it. The word doing the work here is silent, not open. A system that fails open and says so is making a tradeoff. A system that fails open and says nothing is reporting the same green status whether the control is working or was never asked, and a status that reads the same in both cases has stopped telling anyone anything.
+
+None of this is new. CWE-636 named the shape in 2008 as Not Failing Securely, an error path failing open instead of closed; OWASP's Fail Securely guidance states the same rule for any control, whatever it protects. Neither was written for agents, and neither needed to be: an unhandled path in a policy engine behaves like an unhandled path anywhere else. Restated status means exactly that, carrying an old rule to a newer set of chokepoints, not discovering a new failure.
+
+## Why it happens
+
+Go looking for the decision that produced this and usually there is not one: no design review weighed availability against exposure and chose it out loud, no ticket reads "on timeout, allow." What sits there instead is an absence, in one of three shapes.
+
+The first is a missing else-branch. Code checks for the verdicts it expects, block, redact, escalate, and has no named branch for when none of those comes back, whether that is a null, an empty response, or an exception nobody handled. Without a case named for "no answer," execution falls through to whatever the next statement does, usually the one that lets the request through, because that code was already there once the known checks were finished.
+
+The second is an exception swallowed to keep a request alive. A `try` wraps a check that can fail, and the `except` returns a safe-looking default so the surrounding function does not blow up. Under a deadline, safe-looking and keeps-the-request-moving are the same instinct, and the value that keeps it moving is almost always the permissive one, because the alternative was what the developer was trying to avoid.
+
+The third is a timeout defaulting to allow because that was the path of least resistance. A detector call has a deadline; when it fires, the pipeline can reject the request outright or proceed without a verdict. Rejecting costs something immediately and visibly: a completed request that did not complete, felt by whoever is waiting. Proceeding costs nothing immediately, so it becomes the default nobody argued against, and the outage stays invisible for exactly as long as it stays convenient.
+
+Nobody writes "fail open silently" in a design document, because nobody would sign that sentence. What gets written, if anything, is "keep the service up," under exactly the pressure that makes an availability choice and its silent cousin feel like the same decision.
+
+## What it costs
+
+The direct cost is whatever the control existed to prevent, once, on this request. That part is obvious. What is interesting is what happens next to every measurement of that control.
+
+A control's own numbers, block rate, trigger rate, false-positive count, are gathered from the same records the control produces when it works. A silent fail open produces no distinguishing record: the request that slipped through looks, in the log and on the dashboard, exactly like a request the control correctly decided to allow. There is no separate bucket for "the control was never asked." The metric a team would use to notice the control failing is drawn from data the failure already corrupted, and it reads unchanged, because it was never built to distinguish a checked pass from an unchecked one.
+
+That is the specific shape of the compounding harm: the failure erases its own evidence where a team would go looking for it. Whatever gets built on that number afterward, a release gate, an SLA, an audit letter, inherits the same blindness, because none of them can see past the metric they were handed.
+
+The system now reports the same status whether the control is working or absent. A dashboard that cannot distinguish those two states has stopped measuring the control at all; it is measuring only that requests continued to be served, which was never in question.
+
+## Worked example
+
+[ARCH-004](/architecture/004-the-decision-layer/) walks through this shape directly, in a policy file rather than a stack trace, which is useful because it shows the failure with no exception anywhere in it. A decision service maps category and confidence band to an action, rule by rule: redact personal data above threshold in a chat response, require approval on an irreversible tool call flagged near threshold. Somewhere below the explicit rules sits a catch-all for whatever a rule was never written for, a bare `default: allow`. The blueprint names the problem plainly: "It reads as a sensible fallback and behaves as a silent fail-open for every category nobody has written a rule for yet, which is precisely the set of categories you have not thought about." Nothing here is broken; the service is running, the policy loaded, every explicit rule firing correctly. The failure sits in the row built to catch what nobody anticipated, resolving to allow because that was the easiest thing to write there, not because anyone decided the unanticipated case should be permitted.
+
+The same document supplies the failure one level up: what a decision service does when it cannot load a policy at all, because its config store is unreachable at startup. Fall back to an empty rule set and the service does not crash; it answers every request the only way an empty rule set can, yes, correctly formed and fast. ARCH-004 states the consequence without softening it: a service that starts this way "is an open gate that reports itself healthy," because nothing in its own health check was ever wired to notice policy is missing. The corrected version in the same document, keep serving the last known good policy, alarm loudly, mark every decision under it degraded, names three things a silent fail open skips: something to fall back to besides empty, something that pages a person, a field saying this decision is not like the others. None of the three is exotic engineering. All three are absent by default, which is the entire finding.
+
+## The pattern that replaces it
+
+[Fail Closed, Degrade on Exposure](/patterns/fail-closed-degrade-on-exposure/) is not a rule that availability must always lose. Its correction is narrower and more useful than "fail closed everywhere": proceed, when a call's exposure is contained and its content is low sensitivity, because a wrong answer there is still recoverable before it reaches anyone who should not see it. The distinction that matters is not open against closed. It is marked against silent. The pattern keeps a case-worker's contained draft moving through a detector outage, exactly the choice a bare fail-open default would also make on that call. What differs is that the replacement writes proceeding under degradation into the decision record, not a plain allow, so the two are never confused afterward.
+
+That distinction, marked instead of silent, is the entire correction from this anti-pattern's side. [Decision Record](/patterns/decision-record/) is the artefact that carries it: a field, present on every enforced action, true whenever a detector ran reduced or not at all. A record without it cannot tell a control that worked apart from one that was never asked, the exact gap this anti-pattern lives inside. Add the field and the same choice, proceeding through an outage, stops being invisible: a fact a query can find, a rate a dashboard can plot apart from ordinary traffic, an interval an alert can page on. [ARCH-008](/architecture/008-production-execution/) draws the line explicitly: degradation left unmarked and untimed for hours is a system that will describe itself as healthy in the incident review that follows.
+
+None of this requires the exposure-and-sensitivity rule to be correct everywhere; a team can reasonably choose a different degradation policy at a different chokepoint. What it cannot reasonably choose is silence about which policy fired, and that is the one thing this anti-pattern's fix does not leave optional.
+
+## Related patterns
+
+[Fail Closed, Degrade on Exposure](/patterns/fail-closed-degrade-on-exposure/) is the pattern this entry names its own replacement: the same operational choice, proceeding through an outage, made explicit and recorded instead of defaulted and hidden. [Decision Record](/patterns/decision-record/) is the artefact that makes the difference checkable afterward: without a field marking a decision degraded, nothing distinguishes a control that ran from one that never got the chance, the exact blindness this anti-pattern depends on. [Split the Log](/patterns/split-the-log/) matters because a record is only as useful as the channel it reaches: an outage marked correctly in a store nobody pages against is silence wearing a paper trail, and the alert this anti-pattern skips belongs on the operational side of that split, not buried in years of retention. [Chokepoint Placement](/patterns/chokepoint-placement/) decides how much a silent failure costs: failing open at the one stage still able to stop an action is worse than the same silence where a later chokepoint could still catch it. [Baseline and Floor](/patterns/baseline-and-floor/) is the release gate this anti-pattern quietly defeats: a floor computed over a period when a control was silently failing open is not a conservative measure of the system's worst case, it is a measurement of a system with an unmarked hole in it.

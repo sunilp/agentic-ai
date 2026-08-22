@@ -1,9 +1,0 @@
----
-slug: cold-start-mitigation
-name: Cold Start Mitigation
-oneLine: Serverless agent runtimes have a 1-3 second cold start; design around it.
-whenToUse: |
-  Production deployments where p99 latency matters. Strategies: keep-warm pings every N minutes, provisioned concurrency for predictable load, or fallback to a smaller / cached model on cold-start detection.
-whenNotToUse: |
-  When the workload is batched and latency-insensitive. Cold start adds cost in keep-warm strategies; only pay it when latency is the bottleneck.
----

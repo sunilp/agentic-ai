@@ -1,14 +1,16 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { bySlug } from '~/data/pattern-language';
 
 export async function GET(context: APIContext) {
-  const [fieldNotes, signal, recipes, labs, architecture] = await Promise.all([
+  const [fieldNotes, signal, recipes, labs, architecture, patterns] = await Promise.all([
     getCollection('fieldNotes'),
     getCollection('signal'),
     getCollection('recipes'),
     getCollection('labs'),
     getCollection('architecture'),
+    getCollection('patterns'),
   ]);
 
   const items = [
@@ -49,6 +51,19 @@ export async function GET(context: APIContext) {
         link: `/architecture/${e.id}/`,
         categories: ['Architecture'],
       })),
+    ...patterns
+      .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime())
+      .slice(0, 3)
+      .map((e) => {
+        const meta = bySlug(e.id);
+        return {
+          title: meta ? meta.name : e.id,
+          pubDate: e.data.updated,
+          description: e.data.description,
+          link: `/patterns/${e.id}/`,
+          categories: ['Patterns'],
+        };
+      }),
   ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
   return rss({

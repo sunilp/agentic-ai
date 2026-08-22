@@ -1,0 +1,71 @@
+---
+description: "Why the only authority check that holds is the one that runs at the tool call itself, not the one written into a prompt or an orchestrator's plan, and why that requirement is fifty years old, restated here at the boundary where an agent's stated intent becomes an actual act."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "A rule is easiest to write where the reasoning is visible; the operation it is meant to govern runs somewhere that reasoning is never read"
+  - "Every additional caller of a tool is a path around whatever check does not live at the tool itself"
+  - "Centralizing the check upstream is cheaper for exactly as long as there is only one path to the tool"
+sources:
+  - title: "The Protection of Information in Computer Systems"
+    url: https://doi.org/10.1109/PROC.1975.9939
+    authors: [Saltzer J.H., Schroeder M.D.]
+    year: 1975
+  - title: "Least privilege for AI agents: Identity, access, and tool binding"
+    url: https://www.microsoft.com/en-us/security/blog/2026/07/16/least-privilege-for-ai-agents-identity-access-and-tool-binding/
+    year: 2026
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-authority-at-the-call-site.svg
+---
+
+## The problem
+
+Ask an agent team where it checks whether a caller may do something, and the answer nearly always names a place upstream of the operation. An orchestrator's system prompt states who may approve, delete, or send. A planning step reasons about the chain it is about to build and judges the shape safe. A delegation chain narrows what each hop is handed down, one caveat at a time. All of that reads like governance. None of it is a check, because none of it runs at the moment the operation happens.
+
+The gap this leaves is not an edge case; it is the ordinary shape of a running system, because the place a rule is easiest to state and the place an action executes are, once a system has more than one caller, two different places with no enforcement between them unless something is built to supply it. The orchestrator that decided a subagent should read one document is not the tool endpoint that opens it. If a retry path, a fallback branch nobody diagrammed, or a second agent built by another team reaches that endpoint by a route the designer never charted, the rule never gets asked to apply.
+
+Everything before the call is a statement of intent: the plan, the reasoning trace, the prompt's instructions, the caveat structure of a delegation chain however carefully attenuated. A statement of intent is not the fact it describes, and a system that treats the two as interchangeable has built a control that holds only as long as the world matches the diagram it was designed against.
+
+## Forces
+
+**A rule is easiest to write where the reasoning is visible, and the reasoning is exactly what a downstream call is free to ignore.** An orchestrator's plan, or a prompt's instruction, can state policy in full sentences: who may act, under what condition, for what reason. That legibility is why the rule ends up written there. But legibility belongs to the place it was written, not to the operation it governs, and nothing obliges the tool a plan eventually calls to have read it, agree with it, or know it existed.
+
+**Every additional path into a tool is a path around whatever check does not live at the tool itself.** One agent calling one tool through one code path can get away with an upstream rule, because there is only one way in. Real systems do not hold that shape for long. A subagent, a retry, a fallback branch, a second team's integration: each reaches the identical operation by a route the rule never anticipated, and an upstream check has to be copied to every one of them to mean anything at all.
+
+**Centralizing the check upstream looks cheaper, because it is one check instead of many, right up until a second path to the tool exists.** Writing a rule once, at the top of a chain, costs less than writing an equivalent check into every tool the chain might call, and for a single-path system the saving is real. Nothing about one upstream check gets more correct as callers multiply, only cheaper to have written first. The cost deferred does not vanish; it moves downstream, to whatever call arrives by a route the check never covered.
+
+## The pattern
+
+State the rule plainly: the only authority check that counts is the one that runs where the call cannot be routed around, against the actual function, arguments, and identity behind it, at the moment it happens. Not a restatement nearer the top of the chain, not a policy document consulted when the chain was designed. That point is usually the tool call itself; where a layer beneath it already mediates every access and genuinely cannot be bypassed, the database case below, the check belongs there instead. Wherever it sits, it runs every time, regardless of which upstream layer already reasoned this should be allowed.
+
+This is not a new mechanism, and the honest thing is to say so rather than dress it up as one. Saltzer and Schroeder named it in 1975: complete mediation, every access to every object must be checked for authority. Fifty years old, and never written about agents; their own image for it was a wall built around anything worth protecting, a door in the wall, and a guard posted at the door, checking every attempt to pass rather than only the first, because a permission granted correctly at login can become wrong by the time of use. A guard that trusts an earlier decision instead of the current one inherits every error that decision could have made, plus every one since. Microsoft's least-privilege guidance for agent tools restates the same requirement at this boundary: the check belongs at the tool call, not the prompt. This pattern carries that fifty-year-old principle to the one place an operation stops being a description and starts being an act. That is a naming act, not a discovery: the industry is rediscovering complete mediation, one framework at a time, at a boundary a 1975 paper already covered.
+
+Chokepoint Placement is close kin, worth separating carefully. It asks which of six points in a request path, upload, retrieval, prompt, response, tool execution, or logging, a control should occupy, and argues a control's accuracy ceiling is set by what each point can observe. Authority at the Call Site does not choose among those six; it is a claim about tool execution alone, and about what has to be true there no matter how well the other five are instrumented. A system can place its detectors exactly where Chokepoint Placement recommends and still fail this pattern, if tool execution trusts an upstream verdict instead of confirming authority itself.
+
+The connection to Attenuating Delegation is closer than kinship; it is dependency. That pattern narrows what each hop of a chain is handed, one caveat at a time, so a subagent three hops down holds strictly less than the agent that spawned it. Bounded Grant says what the grant must carry: scope, magnitude, expiry, revocation. None of that is worth anything unless something reads the caveat where the call lands and refuses whatever fails it; a caveat checked only at the top of a chain is a description of a constraint, filed where the bottom never consults it. This pattern turns a narrowed grant into an enforced fact instead of a document. For destructive or irreversible calls, Capability Gate adds a gate the model cannot argue past, because a correctly checked authority alone is not enough for those.
+
+## Worked example
+
+Return to the loan-origination chain from Attenuating Delegation's own worked example: a case-worker's session, scoped to one region and to approving amounts under a set threshold, delegated three hops down to a decisioning subagent that turns a credit-bureau response into a recommendation. That pattern's account ends with the approve call wired through a shared service account carrying branch-wide write access, because the narrower grant was never carried into code a separate team wrote under deadline pressure. This pattern is about what has to be true at the exact moment that approve call executes, for the re-grant to fail instead of succeed.
+
+At that moment, the approve action has in front of it a function name, an amount, a case id, and whatever credential the caller presented, with its own scope, expiry, and revocation state. Nothing else exists yet. The plan that spawned the subagent, the prompt that told the orchestrator amounts under threshold were fine: none of it is visible here unless carried forward as data attached to this specific call. Authority at the Call Site says the approve action must evaluate that credential itself, against the actual amount in the actual request, and refuse anything that does not trace back to a case-worker's own bounded session, however legitimately the credential is configured elsewhere.
+
+Under that discipline, the shared service account fails cleanly, not because a planner would have flagged it; none is consulted here, by design, because a planner's opinion is not evidence about what is about to happen. The account authenticates without any trouble; it is a real, correctly configured credential, and that is exactly the trap. What it lacks is authorization for this specific action: derivation back to this case-worker's session, for this case id, under this threshold. The subagent that reached for it may have believed the action was fine; what it believed is irrelevant to a check that reads only what is presented, on this call. Any approval genuinely outside the threshold still routes to a human through an approval gate; what changes is that the tool refuses to be the last word on a request the wired-through credential was never entitled to make.
+
+## When not to use it
+
+This is not a control every tool call owes. An agent that only produces text, with no binding to a tool that reaches outside itself, has no call site to enforce at; whatever authority question exists belongs to whether the agent should have been given a token at all, not to any single invocation.
+
+It is also not the right home for a question that is not about authority. Whether a response contains a customer's personal data, whether a tone is appropriate: these are judgments about content, belonging to whichever chokepoint Chokepoint Placement assigns them, usually response or prompt. Folding them into the call-site check dilutes a decision that should be fast and binary with slow, probabilistic ones that do not belong at that boundary.
+
+And where a lower layer already mediates every access on its own, a database enforcing row-level security regardless of which client issued the query, the question is whether that layer can truly not be bypassed by whatever credential the agent's tool layer forwards to it, not whether to rebuild an identical gate one layer up.
+
+## Related patterns
+
+[Attenuating Delegation](/patterns/attenuating-delegation/) narrows what a chain hands down, hop by hop; this pattern makes that narrowing an enforced fact rather than a caveat nobody at the call site reads. [Bounded Grant](/patterns/bounded-grant/) names the four fields a grant must carry, scope, magnitude, expiry, revocation, which is what the call-site check evaluates against the request in front of it. [Capability Gate](/patterns/capability-gate/) sits above this pattern for destructive or irreversible actions: a correctly checked authority is necessary there and still not sufficient, so a gate the model cannot argue past sits on top. [Chokepoint Placement](/patterns/chokepoint-placement/) is close kin and easy to conflate with this pattern; it chooses which of six points in a request path a control occupies, while this pattern insists that whichever point is tool execution must hold its own check regardless of what any other point already decided. [Decision Record](/patterns/decision-record/) lets an auditor confirm, after the fact, that the check ran on a given call, against which policy version, rather than trusting that it did.

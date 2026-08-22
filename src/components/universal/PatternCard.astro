@@ -1,0 +1,158 @@
+---
+/**
+ * PatternCard, the visual sibling of the blueprint summary card in ArchitectureLayout.astro.
+ *
+ * Same family as the blueprint card: a definition list of labelled rows, brick list
+ * markers, the same spacing tokens. A reader moving between /architecture/ and
+ * /patterns/ should see one system, not two card designs.
+ */
+import { bySlug, type Entry } from '~/data/pattern-language';
+
+interface Props {
+  entry: Entry;
+  forces: string[];
+}
+
+const { entry: e, forces } = Astro.props;
+
+// Resolved title for the "Replaced by" row, mirroring how every other band on this
+// layout (Specified in, Used in) shows a title rather than a raw slug. Guarded on
+// the catalogue lookup succeeding, not on an essay page existing for that slug --
+// see PatternCard's report note on the essay-existence guard.
+const replacedByEntry = e.replacedBy ? bySlug(e.replacedBy) : undefined;
+
+const LAYER_LABEL = { capability: 'Capability', control: 'Control', evidence: 'Evidence' } as const;
+const STAGE_LABEL = {
+  design: 'Design',
+  build: 'Build',
+  evaluate: 'Evaluate',
+  operate: 'Operate',
+  govern: 'Govern',
+} as const;
+
+const stageLine = [
+  STAGE_LABEL[e.primaryStage],
+  ...(e.alsoStages ?? []).map((s) => `also ${STAGE_LABEL[s]}`),
+].join(', ');
+---
+
+<section class="pattern-card" aria-label="Pattern summary">
+  <dl class="pattern-card__list">
+    {e.alsoKnownAs && e.alsoKnownAs.length > 0 && (
+      <div class="pattern-card__row">
+        <dt>Also known as</dt>
+        <dd>{e.alsoKnownAs.join(' · ')}</dd>
+      </div>
+    )}
+
+    <div class="pattern-card__row">
+      <dt>Kind</dt>
+      <dd>{e.kind === 'pattern' ? 'Pattern' : 'Anti-pattern'}</dd>
+    </div>
+
+    <div class="pattern-card__row">
+      <dt>Layer</dt>
+      <dd>{LAYER_LABEL[e.layer]}</dd>
+    </div>
+
+    <div class="pattern-card__row">
+      <dt>Stage</dt>
+      <dd>{stageLine}</dd>
+    </div>
+
+    <div class="pattern-card__row">
+      <dt>Status</dt>
+      <dd>
+        {e.status === 'proposed' && 'Proposed'}
+        {e.status === 'documented' && (
+          <>Documented. Named by <a href={e.attributedTo.url}>{e.attributedTo.who}</a>{e.attributedTo.year ? ` (${e.attributedTo.year})` : ''}</>
+        )}
+        {e.status === 'restated' && (
+          <>
+            Restated. Nearest prior {e.nearestPrior.length > 1 ? 'descriptions' : 'description'}:
+            <ul class="pattern-card__prior">
+              {e.nearestPrior.map((p) => (
+                <li>{p.what}, <a href={p.url}>{p.who}</a></li>
+              ))}
+            </ul>
+          </>
+        )}
+      </dd>
+    </div>
+
+    <div class="pattern-card__row">
+      <dt>Forces</dt>
+      <dd>
+        <ul class="pattern-card__forces">
+          {forces.map((f) => <li>{f}</li>)}
+        </ul>
+      </dd>
+    </div>
+
+    {e.replacedBy && (
+      <div class="pattern-card__row">
+        <dt>Replaced by</dt>
+        <dd>
+          {replacedByEntry
+            ? <a href={`/patterns/${replacedByEntry.slug}/`}>{replacedByEntry.name}</a>
+            : e.replacedBy}
+        </dd>
+      </div>
+    )}
+  </dl>
+</section>
+
+<style>
+  .pattern-card {
+    margin: var(--space-5) 0 var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    background: var(--brick-wash);
+    border-left: 3px solid var(--brick);
+  }
+
+  .pattern-card__list { margin: 0; }
+
+  .pattern-card__row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+  }
+
+  .pattern-card__row + .pattern-card__row {
+    border-top: 1px solid rgba(155, 74, 63, 0.18);
+  }
+
+  .pattern-card__row dt {
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brick);
+    padding-top: 3px;
+  }
+
+  .pattern-card__row dd {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--body-2);
+    line-height: var(--lh-snug);
+    color: var(--fg);
+  }
+
+  .pattern-card__prior,
+  .pattern-card__forces {
+    margin: 0;
+    padding-left: 1.1em;
+    list-style: disc;
+  }
+
+  .pattern-card__prior li,
+  .pattern-card__forces li { margin: 0 0 2px; }
+  .pattern-card__prior li::marker,
+  .pattern-card__forces li::marker { color: var(--brick); }
+
+  @media (max-width: 720px) {
+    .pattern-card__row { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
