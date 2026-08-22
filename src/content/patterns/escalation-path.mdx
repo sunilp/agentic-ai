@@ -1,0 +1,81 @@
+---
+description: "Why a blocked case needs a named owner, a deadline and an automatic next step, why that mechanism is borrowed whole from incident management rather than invented here, and why routing an escalation to a second-line role is a decision a control programme makes, not one the Three Lines Model hands it."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "A named owner and a deadline cost a staffing line to build; an unowned queue costs nothing, until the day it does"
+  - "The role that wrote the policy is not, by default, the role that owns the queue, and blurring the two is where responsibility goes missing"
+  - "A deadline with no automatic next step is a countdown to nothing; a next step with no deadline attached never fires"
+sources:
+  - title: "Escalation Policies"
+    url: https://support.pagerduty.com/main/docs/escalation-policies
+    authors: [PagerDuty]
+  - title: "The IIA's Three Lines Model: An Update of the Three Lines of Defense"
+    url: https://www.theiia.org/globalassets/site/communication/2020/three-lines-model-updated.pdf
+    authors: [Institute of Internal Auditors]
+    year: 2020
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-escalation-path.svg
+---
+
+## The problem
+
+A control fires. An approval gate suspends a payment past a threshold. A masking rule can't tell whether a matched string is a customer's account number or a legitimate internal reference, and the ambiguous case gets routed to a human instead of resolved automatically. Whatever the trigger, the request stops moving through the pipeline built for it, and becomes someone else's problem.
+
+A decision service makes this moment easy to name and easy to under-build. [ARCH-004](/architecture/004-the-decision-layer/) lists it among six possible actions: escalate for review, suspend the case and route it to a human queue asynchronously; require approval, suspend it and route it to a human who must positively authorise this specific action. Setting the action to escalate in a policy file costs nothing. It describes what happens up to the second a human is supposed to notice the case exists, and nothing about what happens after.
+
+That silence is not an edge case, it's the default. [ARCH-005](/architecture/005-ownership-and-decision-rights/) lists five decisions inside a guardrail programme and names the fifth, who looks at the output, as the one most often left implicit: an operations decision with a real staffing cost a platform team inherits because it built the dashboard the queue sits behind, not because anyone decided it should carry the queue. A programme can get the threshold right, get the action grid right, and still fail exactly here: the case sits in a queue, correctly, and nothing says whether, or when, or by whom, it will ever be looked at.
+
+## Forces
+
+**A named owner and a deadline cost a staffing line to build; an unowned queue costs nothing, until the day it does.** An escalation ladder is real machinery: someone defines the levels, wires the paging, writes the timeout logic, and gets a named owner to agree to each rung. A queue with a dashboard costs an afternoon. On any day nothing has gone wrong the two look identical from outside, which is exactly the condition that lets the cheaper one get built and the gap go unnoticed, sometimes for years.
+
+**The role that wrote the policy is not, by default, the role that owns the queue, and blurring the two is where responsibility goes missing.** An unactioned case has to be routed somewhere, and the obvious-looking choice is the function that wrote the threshold, because it already holds the pen. Ownership of a queue and responsibility for the risk it represents are not the same fact, and a design that quietly treats them as one is the design an auditor eventually asks about.
+
+**A deadline with no automatic next step is a countdown to nothing; a next step with no deadline attached never fires.** Neither half works alone. An ack window that simply expires with no stated consequence teaches its owner that missing it costs nothing. An escalation rule with no timeout attached has nothing watching the clock, so it never triggers. Both halves have to be present at every rung, not one or the other.
+
+## The pattern
+
+State the rule directly: for every case that reaches this queue, name an ordered set of levels, a named owner for each, an acknowledgement deadline for each, and an automatic move to the next level the moment that deadline passes with nothing done, the last level included: its own deadline has to resolve to a stated action, never to silence. Missing any of this, what you have is a queue with an aspiration, not an escalation path.
+
+The mechanism is not new, and writing about it otherwise would be dishonest. PagerDuty's escalation policies define exactly this shape for incident response: ordered levels, each with a named on-call owner, an acknowledgement timeout, and automatic escalation to the next level when nobody acknowledges in time. Incident management solved the shape of this problem decades before an approval queue needed to hold an AI-generated request. This pattern borrows that shape whole and names it here, where the equivalent has mostly been an alert channel and a hope. That is what restated means: an established practice with no settled name in this context, not something discovered.
+
+Say plainly what this is not, because the substitution is where most designs stop early. An escalation path is not an alert. An alert notifies: it puts a fact in front of someone and its job ends there. An escalation path assigns: it names an owner, a deadline, and what happens automatically once that deadline passes with nothing done, the same discipline ARCH-004 asks of one approval gate's timeout (expire, escalate, or proceed, never proceed if irreversible), extended to every rung rather than one queue. Acknowledging a case stops the ladder from moving; it is not the same as resolving it, and a design that treats the two as one has only moved the abandonment problem inside the first rung.
+
+The place this gets delicate is naming who sits at each rung, and it's worth being exact about a mistake good intentions produce easily. ARCH-005 maps a guardrail programme onto the Institute of Internal Auditors' Three Lines Model: first line builds and operates the control, second line sets standards and challenges it, third line assures independently. It's tempting to read that as licence to route an unactioned case to a second-line function once first line's turn ends, as though the framework provides for it. It doesn't. The IIA's 2020 update states plainly that second-line roles "provide assistance with managing risk" and that responsibility for managing risk "remains a part of first line roles", full stop; the model hands the second line no approval authority and nobody a mandate to receive an escalated case. Putting a second-line role at a later rung can still be the right call, ARCH-005 recommends exactly that for threshold approval, but it is the organisation's own decision, not a description of what the Model requires. The distinction matters here specifically: responsibility does not travel with the case across that line. Whoever holds it, the risk stays, by the model's own words, a first-line matter.
+
+## Worked example
+
+Take the PII-in-response control ARCH-005 works through in full. Masking is the default action for a matched string, but a share of matches sit close enough to the threshold that a human has to look: an escalate-for-review case in ARCH-004's terms.
+
+Level one, zero to four hours: the platform on-call reviewer, first line, the same window ARCH-004 already uses as its own illustrative approval-queue timeout. If nobody acknowledges inside it, the case doesn't sit. It moves.
+
+Level two, four to twelve hours: the platform team lead, still first line, the accountable owner ARCH-005's own ownership table names for this control. This is the rung it's easiest to skip, going straight from a reviewer's queue to whoever wrote the policy; skipping it is how an accountable owner learns about a live problem in their own control from an audit rather than from the ladder meant to reach them first.
+
+Level three, twelve to twenty-four hours: the privacy office, second line, the standard owner ARCH-005 names for the same control. Putting a second-line function this late is not something the Three Lines Model requires; it's this programme's own choice, the same first-line-operates, second-line-challenges split ARCH-005 sets out for who signs a threshold, applied here to who gets asked next. It does not mean the privacy office now owns the underlying risk: if the disclosure this case concerns turns out to matter, that risk was, and stays, the platform team's to manage.
+
+What happens if level three is also silent past twenty-four hours is where the rule above earns its keep. ARCH-004 rules out one answer for anything irreversible: never let a timeout resolve to proceed. The right design pages the accountable owner directly, outside the queue, and treats the case as a live incident, rather than letting the ladder run out of rungs and call that resolved.
+
+## When not to use it
+
+An escalation ladder is real infrastructure: paging integration, ack-timeout tracking, a named owner at every rung who has agreed to carry it. A queue with one owner watching every case in real time, backed by a supervisor who would notice a miss directly rather than through the ladder's own timeout, doesn't need three rungs and an audit trail proving each one; it needs the accountable owner ARCH-005 already asks a programme to name. What it should not do is wait for a missed window to justify itself: for a rare, high-consequence case, that miss is the failure this pattern exists to prevent, not evidence to collect first.
+
+Don't reach for this pattern to soften a control built to be a hard stop with no override. Some blocks are absolute on purpose, and the honest design keeps them that way. Wiring an escalation ladder onto that kind of block manufactures a path to eventually-someone-says-yes that the control was built specifically not to have, which is worse than the case simply staying blocked.
+
+And an escalation path only ever moves one case faster; it says nothing about whether the queue is the right size. A ladder that reliably moves every case up three rungs on schedule is still telling you the control keeps producing cases nobody at level one can resolve, a signal about the threshold, not the ladder. Escalation Path fixes what happens to a case that's already stuck. It has nothing to say about why so many are.
+
+## Related patterns
+
+Escalate for review and require approval both hand a case to a human. [Approval Gate](/patterns/#approval-gate) keeps a human in the critical path by design, blocking synchronously until a specific person authorises the exact action in front of them. Escalation Path is what happens once a case is already waiting and nobody with the authority to answer has answered yet.
+
+[The Expiring Exception](/patterns/#the-expiring-exception) is the only other pattern in this catalogue with govern as its primary stage, and the two sit together for a reason: both are about what a control does after it fires rather than while it runs, one for a case still waiting on a decision, the other for a decision already made that must not quietly become permanent.
+
+Every move up the ladder should leave a [Decision Record](/patterns/#decision-record): who held the case, for how long, and who or what moved it next, because a ladder nobody can reconstruct afterward is one an audit has to take on faith. That record belongs in the store [Split the Log](/patterns/#split-the-log) keeps separate from the content it decided about, for the same retention reasons that pattern sets out.
+
+And a ladder moving every case three rungs on schedule is itself a signal [Failure Buckets](/patterns/#failure-buckets) is built to catch: escalation tells you where a stuck case went, not why so many are stuck.

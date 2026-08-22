@@ -481,10 +481,8 @@ export const REFERENCED: Referenced[] = [
 
 export const RETIRED: Record<string, string> = {
   'agent-loop': '/patterns/',
-  'approval-gate': '/patterns/#approval-gate',
   'cold-start-mitigation': '/patterns/',
   'earn-the-complexity': '/patterns/#earn-the-complexity',
-  'escalation-path': '/patterns/#escalation-path',
   'eval-loop': '/patterns/#failure-buckets',
   'hub-and-spoke': '/patterns/#orchestrator-workers',
   'tool-registry': '/patterns/#tool-agent-registry',

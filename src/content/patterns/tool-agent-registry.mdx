@@ -1,0 +1,83 @@
+---
+description: "Why the set of tools an agent may call has to be declared data rather than whatever the runtime happens to reach, what one registry entry has to carry to make that boundary reviewable and diffable, and why enumerating the callable surface is a precondition for enforcement, not the enforcement itself."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "Framework convenience adds a tool the moment a decorator runs or an MCP server gets listed in a config file; declaring it as reviewable data is a step someone has to take on purpose"
+  - "A registry that is not the runtime's actual dispatch path costs nothing to maintain and proves nothing true, because the file and the code it claims to describe can drift apart the day after either one changes"
+  - "Enumerating the callable surface is necessary before any policy can check a call against it, and sufficient for nothing on its own: a complete, accurate registry still lets every listed tool run unchecked until a separate control reads it"
+sources:
+  - title: "Agent Design Pattern Catalogue: A Collection of Architectural Patterns for Foundation Model based Agents"
+    url: https://arxiv.org/abs/2405.10467
+    authors: [Liu Y., Lo S.K., Lu Q.]
+    year: 2025
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-tool-agent-registry.svg
+---
+
+## The problem
+
+Liu et al.'s Agent Design Pattern Catalogue names Tool/Agent Registry directly, pattern sixteen of eighteen: a centralized registry that an agent queries, once it has decomposed a goal into tasks, for the capability, pricing, and context-window metadata to select the right tool or agent from many candidates. That is a discovery problem, choosing well from a known set of options, and the name is kept here unchanged, credited to the paper that gave it.
+
+This essay works one layer under discovery. Before an agent can choose well among the entries a registry lists, someone has to answer a plainer question first: what is the complete set of things this agent could call at all. In most systems that has no clean answer, because the callable surface was never written down as a single artifact. It is whatever the running code happens to expose: a decorator in one module, an MCP server appended to a config file by whoever wired up a connector last quarter, a framework's auto-discovery reading type hints off anything a developer happened to import. Each addition is small and reasonable on its own. The set they add up to is knowable only by reading every file that might register something, and a codebase that has shipped for even a few months turns that into real, unscheduled work.
+
+[ARCH-001](/architecture/001-the-control-plane/) states the sharper version of the same gap for the risk that matters most: excessive agency has exactly one chokepoint, tool execution, because nothing in a request's text tells a system whether the actor behind it may perform the act it names. Answering that requires knowing, first, what acts are even possible for this agent, a question about the registry, not about the request in front of it. A tool surface nobody wrote down cannot be checked against a policy. It can only be discovered, incident by incident, after the fact.
+
+## Forces
+
+**Framework convenience adds a tool the moment a decorator runs or an MCP server gets listed; declaring it as reviewable data is a step someone has to take on purpose.** Agent frameworks optimize the path from function to callable tool: read a docstring, read a type hint, generate a schema, done. That convenience is real and worth keeping. It does not on its own produce anything a second person can review before the tool goes live, because the schema is generated at import time, from whatever the code looks like that day, not written down anywhere a diff can catch.
+
+**A registry that is not the runtime's actual dispatch path costs nothing to maintain and proves nothing true.** A YAML file describing tools, sitting beside code that does not consult it, is documentation with a registry's confidence and none of its guarantee. The two drift the first time someone adds a function directly and forgets the file, or edits the file and never touches the function it describes. Nothing forces them back into agreement, because nothing reads the file at the moment a call needs it to be true.
+
+**Enumerating the callable surface is necessary before any policy can check a call against it, and sufficient for nothing on its own.** A complete, accurate registry answers "does this tool exist" and "what does this entry claim about it." It does not answer "was this call authorized," "did this actor have standing to make it," or "should this class of call be gated at all." Those are separate questions, answered by separate machinery, that happen to need the registry as an input. Building the registry and stopping there produces a system that can name every tool it has and still let all of them run unchecked.
+
+## The pattern
+
+State the rule plainly: the set of tools an agent may call is declared data, checked into version control, consulted by the runtime at dispatch, and reviewed the way any other change to production behavior is reviewed. It is not a survey of whatever the code happens to expose this week. If a tool is not in the registry, the agent cannot reach it, regardless of what the codebase contains.
+
+One entry carries more than a name and a description, because a registry earns its keep on three questions asked by three readers. The model reads the name, description, and the shape of the input schema to decide whether and how to call the tool. The runtime reads the handler to know what to execute, and reads that same schema again, after the call, to validate the arguments actually sent rather than the ones offered. A reviewer, and anything downstream enforcing a policy, reads everything else:
+
+```yaml
+# tool_registry.yaml -- one entry, one PR diff, one thing to review
+- name: transfer_funds
+  description: Move funds between two accounts held by the same customer
+  handler: payments.transfer_funds      # what actually runs
+  input_schema: TransferFundsArgs       # validated before dispatch
+  reversal_cost: impossible             # read by the decision layer, not the model
+  exposure: external
+  blast_radius: single_account
+  default_action_on_flag: require_approval
+  owner: payments-platform
+  version: 3                            # bump on any field change; the diff is the review
+  added: 2026-07-14
+```
+
+`reversal_cost`, `exposure`, and `blast_radius` are not registry bookkeeping. They are exactly the fields [ARCH-004](/architecture/004-the-decision-layer/) needs to place a call on its action grid, and a tool definition missing them leaves that decision layer guessing at the one moment it must not. `owner`, `version`, and `added` turn the file into something a PR diff can carry: a reviewer sees which fields changed, who is accountable, and when the entry entered production, none of which a runtime survey of decorated functions produces, because a decorator records nothing about who added it or what it looked like last week.
+
+This is where the pattern's own limit has to be stated rather than glossed over. A registry, however complete, is a capability-layer artifact: it says what exists and what each entry claims about itself. It checks nothing at the moment a call runs. That is the job of the control layer sitting on top of it, [Authority at the Call Site](/patterns/#authority-at-the-call-site) and [Capability Gate](/patterns/#capability-gate) among them, and neither can check a call against a policy it cannot enumerate. A registry is what makes that check possible. It is not the check.
+
+## Worked example
+
+[This book's own walkthrough of a first agent](/book/00c-first-agent/) shows the boundary holding with no adversary involved. Asked for the weather in London, the model calls a tool named `weather`, reasonable arguments and all. Nothing in the registry defines a tool by that name; `execute_tool_call` returns a structured error, `"Error: unknown tool 'weather'"`, instead of crashing, and the model reads it and answers honestly that it cannot check the weather. Nothing about that model was well-behaved. What held is that the registry had an authoritative no for a name it never declared, and the loop was built to read that no rather than paper over it.
+
+The same principle recurs a level down, inside a tool's arguments rather than across its name. The book's own Chapter 6 baseline evaluation, in [Failure Case Studies](/evidence/failure-cases/), is case FH-001: an agent refining a weak retrieval calls `search_documents(query=..., collection="error_handling_docs")`, a collection that does not exist against a registry defining exactly one, `documents`. The model invented the name because `collection` was typed as a free string with no enumeration of what was valid, the call failed, and the final answer, scored 0.42, missed material a correct retrieval would have found. The fix was changing `collection` to an enum of the collections that exist, plus a `list_collections` tool to check first: the same discipline applied to a value inside a call rather than the name of the call.
+
+[ARCH-008](/architecture/008-production-execution/) shows the registry doing the opposite job: catching an absence rather than surviving one. Its coding-assistant pipeline runs a registry lookup on every tool call, a constructed budget of 5ms, ahead of the authority check, so a call for a tool never heard of is refused before anything costlier runs. What ARCH-008 flags as the real failure mode is not a missing lookup, it is a wrong one: "a widely used internal tool registered with the wrong `exposure`, which would have blocked a normal workflow on day one of enforcement," and its conclusion is blunt: "registry data quality, not detector quality, is the usual reason a tool-use control cannot be switched on." Enumerability catches an undeclared name cheaply. It has nothing to say about a declared entry carrying a wrong field, because a registry answering "does this exist" correctly can still answer "what is this" wrong, and `owner` above is who a reviewer asks about the difference, not a technical lock on who can touch the file.
+
+## When not to use it
+
+The registry's own credibility is the thing worth protecting, and it fails in one way that has nothing to do with the blueprints built on top of it: a file that looks like the registry but is not the runtime's dispatch path. A hand-maintained YAML sitting beside a framework that still auto-discovers tools by decorator, with nobody having wired the loader to refuse anything absent from the file, is documentation wearing a registry's authority. Every claim built on it, that the surface is enumerable, that a diff shows what changed, is checking a file the system does not consult. That is worse than admitting no registry exists, because it looks resolved.
+
+An agent with one or two tools, hardcoded in the same module that calls them, inside one trust boundary, has nothing hidden to declare. The source file is already the enumeration; a reviewer sees the entire callable surface in the same diff that changes it, and a registry layer over two functions adds indirection with no drift it is actually preventing. This is the shape [Workflow First](/patterns/#workflow-first) asks from the design side: a callable surface small enough to fit on one screen is itself a signal the task may not need an agent's runtime flexibility at all.
+
+A scoped pilot touching no production credentials can defer the full field set, `reversal_cost`, `exposure`, `blast_radius`, keeping only name, description, and schema until there is a real decision layer to feed. What it cannot do is carry that deferral past the point where a call can move real money, real customer data, or a real system of record, because that is where an entry with nothing behind it stops being a shortcut and starts being a gap nobody agreed to.
+
+## Related patterns
+
+[Authority at the Call Site](/patterns/#authority-at-the-call-site) is the check that reads a registry entry at the moment a call executes, and a lookup with no enforcement behind it is a lookup, not a control. [Capability Gate](/patterns/#capability-gate) needs the same entry for a narrower question, whether this tool is marked destructive, and a gate over a tool nobody registered protects nothing. [Bounded Grant](/patterns/#bounded-grant) expresses a subagent's scope as a subset of the registry's own tool names, checkable against a fixed list rather than trusted on the caller's word. [Workflow First](/patterns/#workflow-first) uses the same enumeration for a design-time question instead of a runtime one: a two-tool registry that fits on one screen is a reason to ask whether the task needed an agent's autonomy at all. [Decision Record](/patterns/#decision-record) ties an enforcement action back to the registry entry, and its version, that was live when the action fired, so an audit checks the metadata that governed the call that day, not whatever the registry says now.

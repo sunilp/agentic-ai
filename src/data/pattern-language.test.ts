@@ -64,8 +64,8 @@ describe('pattern language data', () => {
     }
   });
 
-  it('retires exactly the ten stubs', () => {
-    expect(Object.keys(RETIRED)).toHaveLength(10);
+  it('retires exactly the eight stubs', () => {
+    expect(Object.keys(RETIRED)).toHaveLength(8);
   });
 
   // Guards a real production bug: astro.config.mjs's static `redirects` map wins over
