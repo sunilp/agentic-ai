@@ -8,6 +8,7 @@ import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Tag from '~/components/universal/Tag.astro';
 import PatternCard from '~/components/universal/PatternCard.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 import Sources from '~/components/universal/Sources.astro';
 import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
 import { entriesToContentEntries } from '~/lib/content-helpers';
@@ -22,7 +23,7 @@ const d = entry.data;
 const meta = bySlug(entry.id);
 if (!meta) throw new Error(`No pattern-language entry for ${entry.id}`);
 
-const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns] = await Promise.all([
+const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns, architecture] = await Promise.all([
   getCollection('chapters'),
   getCollection('fieldNotes'),
   getCollection('recipes'),
@@ -30,16 +31,28 @@ const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns] = awai
   getCollection('evidence'),
   getCollection('projects'),
   getCollection('patterns'),
+  getCollection('architecture'),
 ]);
 const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...patterns];
-const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
+// Architecture entries carry a frontmatter `id` (e.g. `arch-001`) distinct from
+// their collection id (the filename, e.g. `001-the-control-plane`), and routes are
+// built from the filename. entriesToContentEntries falls back to entry.id only when
+// data.id is absent, so feeding architecture through it would key + link every
+// mention by the frontmatter id and 404. Map architecture entries by hand instead,
+// keyed by the filename, so "Used in" links land on the real blueprint route.
+const architectureAsEntries = architecture.map((a) => ({
+  id: a.id,
+  collection: a.collection,
+  patterns: a.data.patterns,
+}));
+const reverseIndex = buildReverseIndex([...entriesToContentEntries(allEntries as any), ...architectureAsEntries]);
 // Patterns are stored in the reverse index by entry.id (the filename),
 // since the patterns schema has no `data.id` field. The mapper in
 // entriesToContentEntries falls back to entry.id when data.id is absent.
 const links = getReverseLinks(reverseIndex, entry.id);
 
-const blueprintEntries = await getCollection('architecture');
-const blueprintFor = (archId: string) => blueprintEntries.find((b) => b.data.id === archId);
+const blueprintFor = (archId: string) => architecture.find((b) => b.data.id === archId);
+const blueprintByFilename = (filename: string) => architecture.find((b) => b.id === filename);
 
 const collectionRoute: Record<string, string> = {
   chapters: '/book',
@@ -49,6 +62,7 @@ const collectionRoute: Record<string, string> = {
   evidence: '/evidence',
   labs: '/labs',
   patterns: '/patterns',
+  architecture: '/architecture',
 };
 ---
 
@@ -66,9 +80,7 @@ const collectionRoute: Record<string, string> = {
       <PatternCard entry={meta} forces={d.forces} />
 
       {d.diagram && (
-        <figure class="pattern-diagram">
-          <img src={d.diagram} alt={`${meta.name} pattern diagram`} loading="lazy" />
-        </figure>
+        <ArchitectureDiagram wide src={d.diagram} alt={`${meta.name} pattern diagram`} />
       )}
 
       <article class="pattern-body">
@@ -95,9 +107,16 @@ const collectionRoute: Record<string, string> = {
         <section class="pattern-used-in">
           <h2>Used in</h2>
           <ul>
-            {links.mentionedIn.map((l) => (
-              <li><a href={`${collectionRoute[l.collection] ?? ''}/${l.id}/`}>{l.collection}/{l.id}</a></li>
-            ))}
+            {links.mentionedIn.map((l) => {
+              // Architecture links resolve to a blueprint's title, the same way the
+              // "Specified in" band above renders `b.data.title` rather than a raw id.
+              const label = l.collection === 'architecture'
+                ? (blueprintByFilename(l.id)?.data.title ?? `${l.collection}/${l.id}`)
+                : `${l.collection}/${l.id}`;
+              return (
+                <li><a href={`${collectionRoute[l.collection] ?? ''}/${l.id}/`}>{label}</a></li>
+              );
+            })}
           </ul>
         </section>
       )}
@@ -106,20 +125,6 @@ const collectionRoute: Record<string, string> = {
 </PageLayout>
 
 <style>
-  .pattern-diagram {
-    margin: var(--space-5) 0;
-    padding: var(--space-5);
-    background: var(--paper-bright);
-    border: 1px solid var(--fg-faint);
-    border-radius: var(--radius-md);
-  }
-
-  .pattern-diagram img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
   .pattern-body {
     margin-top: var(--space-5);
     font-size: var(--body-1);
