@@ -39,11 +39,9 @@ export default defineConfig({
     '/principles/': '/manifesto/',
     '/patterns/agent-loop/': '/patterns/',
     '/patterns/cold-start-mitigation/': '/patterns/',
-    '/patterns/earn-the-complexity/': '/patterns/#earn-the-complexity',
     '/patterns/eval-loop/': '/patterns/#failure-buckets',
     '/patterns/hub-and-spoke/': '/patterns/#orchestrator-workers',
     '/patterns/tool-registry/': '/patterns/#tool-agent-registry',
     '/patterns/trace-the-truth/': '/patterns/#split-the-log',
-    '/patterns/workflow-first/': '/patterns/#workflow-first',
   },
 });

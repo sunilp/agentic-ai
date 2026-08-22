@@ -1,0 +1,74 @@
+---
+description: "Why every increment of architectural complexity, another agent, a verifier, a durable runtime, needs a metric named before you build it and a measured delta after, and how the same increment in a real run lost on accuracy and cost while winning decisively on durability, because the axis you check first is the axis that decides the verdict."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "Every increment of architecture reads as more capable in a design review, and a demo rewards exactly that impression, never the number a rubric would have produced instead"
+  - "A metric decided after the build tends to be whichever one the build already clears; only a metric decided before the build has the power to say no"
+  - "The same increment can lose on one axis and win decisively on another, so the discipline is not reaching a single verdict; it is naming, before anything is built, which axis the increment is answerable to"
+sources:
+  - title: "Building Effective Agents"
+    url: https://www.anthropic.com/engineering/building-effective-agents
+    authors: [Schluntz E., Zhang B.]
+    year: 2024
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-earn-the-complexity.svg
+---
+
+## The problem
+
+An agent system that isn't working well always has a fix on hand that reads as unambiguous progress: add another agent, add a verifier, split a router into a hierarchy, put a durable runtime under the whole thing. Each does something the simpler system plainly could not do before. A three-agent pipeline classifies, executes, and checks its own output; a single agent behind a switch statement does none of that. Read only the capability list, and every one of these looks like an improvement, because on its own terms, each one is.
+
+That is the trap. "Does something the old system couldn't" is not the same claim as "does the thing you care about, better," and only one of those claims is falsifiable. A demo can look more capable and still score worse on the metric a customer or an incident channel actually experiences, because a demo is not a measurement.
+
+The gap gets papered over by evaluating after the build instead of before it. [Lab-001](/labs/multi-agent-vs-router-100-queries/)'s first pass at scoring a three-agent support system came back at 81 percent, close enough to its single-agent baseline to read as competitive. What that pass actually measured was a verifier rubber-stamping 14 percent of queries regardless of content; [Verifier Loop](/patterns/#verifier-loop) covers what fixing that cost the headline number. An eval run after a build is already committed tends to ratify the commitment. Only a metric fixed before the build catches a rubber stamp before it ships as a result.
+
+## Forces
+
+**Every increment of architecture reads as more capable in a design review, and a demo rewards exactly that impression, never the number a rubric would have produced instead.** A design review reads a spec or watches a demo; it does not run a held-out set against a rubric. A three-agent hierarchy that classifies, delegates, and checks its own answer sounds responsible, and a demo has no trouble looking that way. The pressure to add an increment is continuous; the pressure to measure one is not.
+
+**A metric decided after the build tends to be whichever one the build already clears; only a metric decided before the build has the power to say no.** A team that ships an increment and evaluates it afterward has already spent the effort building it, and a negative result then is a harder number to publish than a positive one: the eval's job has quietly shifted from deciding whether to build to describing what got built.
+
+**The same increment can lose on one axis and win decisively on another, so the discipline is not reaching a single verdict; it is naming, before anything is built, which axis the increment is answerable to.** Complexity typically trades on one axis for a cost on another: accuracy against latency, capability against durability. [Lab-002](/labs/incident-triage-durable-agent/) is the clean case: the same increment failed on accuracy and cost, and won decisively on durability, and which sentence gets written depends on the axis checked.
+
+## The pattern
+
+State the rule plainly: before adding an increment of architectural complexity, another agent, another hop, a verifier, a durable runtime underneath any of it, name the metric it has to move, the size of the move that counts as earning its place, and the axis that metric belongs to. Build it. Run the same task through the same rubric, before and after. The increment does not ship on the strength of a review. It ships, or does not, axis by axis, on whether the named number actually moved.
+
+None of this is new, and the honest thing to do is say so. Schluntz and Zhang, writing for Anthropic on effective agent design, state the direction plainly: find the simplest solution possible, and increase complexity only when a simpler one falls short. That is the rule this pattern is named after, credited here rather than claimed: a naming act, not a discovery. What their account leaves unstated is what "when needed" cashes out to: needed quietly becomes seems needed, a felt sense rather than a number, which is the gap Earn the Complexity closes with a metric, decided before the build, that moves by a stated amount.
+
+[Workflow First](/patterns/#workflow-first) is the sibling pattern most likely to be confused with this one, and the two do different jobs. Workflow First is the default you start from, the presumption in favor of the plain, deterministic path before any agent, verifier, or hop is on the table. Earn the Complexity is the gate every increment above that default has to clear: Workflow First answers where you begin, Earn the Complexity what it costs to leave.
+
+What keeps this pattern from being keep it simple restated with a citation is the plural axis. An increment can be measured against accuracy, cost, latency, or durability at once, and nothing says one that fails on one has to fail on the rest. The discipline is naming every axis that matters before the build, and reporting the increment's true position against each one, even when they disagree.
+
+## Worked example
+
+[Lab-001](/labs/multi-agent-vs-router-100-queries/) is the clean case for an increment that earns its place on no axis. The hypothesis named the axes before the run: a workflow router (a single agent chosen by a switch statement) against a three-agent hierarchy of classifier, worker, and verifier, on 100 real support queries resolved in under five turns, scored on one rubric (correctness, grounding, completeness, a 0.7 pass threshold), each system run three times to bound judge variance at under one point on both.
+
+The measured outcome, from this one run of the comparison: accuracy 87 percent for the router against 74 for the hierarchy, a 13-point gross gap that the Lab attributes mostly to the classifier's own misrouted queries, leaving roughly 3.4 points of architecture cost once that's set aside. Cost ran $0.024 per query against $0.057, 2.4 times more, mostly new coordination overhead on a worker doing the router's own job. Latency ran 1.8 seconds against 4.0 at the median, 2.2 times slower. Three axes named in advance, three where the added architecture lost.
+
+[Lab-002](/labs/incident-triage-durable-agent/) is the harder case. It ran a dynamic ADK 2.0 Workflow graph, fanning out into four investigation branches with an external verifier and retry loop, pausing at a human approval gate before remediation, against a static, single-pass router, on 30 synthetic incidents scored against a known root cause. The hypothesis named two axes up front: whether decomposition earns its overhead on accuracy, on a task the router cannot decompose, and whether the durable runtime recovers a crashed run instead of re-paying for it.
+
+On the first axis, on a 3B local model (llama3.2:3b), the increment lost. LLM-judge pass rate: 16.7 percent for the router against 10.0 for the graph; heuristic pass rate: 20.0 against 10.0. The average judge score leaned the other way, 0.273 against 0.326, findings marginally better but not enough to clear the pass bar more often. Cost ran 290 tokens and one model call per incident for the router against 6,256 tokens and 16.93 calls for the graph, 21.56 times more, at 18.85 times the latency, for a lower pass rate. On accuracy and cost, the increment failed, more decisively than Lab-001's did.
+
+On the second axis, the same increment won outright. Across five deliberate crash tests, the graph's session was persisted, the runner destroyed mid-run to simulate a process death, and a fresh runner reopened the same store and resumed. Nothing re-ran: an average of 6,265 tokens, 17 model calls, and 48.6 seconds of prior work per incident came back from the persisted event log instead of being re-paid. A naive harness with no durable runtime would have repeated every one of those calls. This one repeated none.
+
+One architecture, one run, two axes named before the build, two verdicts, both measured, both true. Measured only on accuracy, the honest sentence is don't build this. Measured only on durability, the honest sentence is obviously build this. Both are correct and both are incomplete, because the axis you check decides which sentence you get to write. The frontier-model version of the accuracy question is still open, and Lab-002 says so rather than picking a model that would flatter one answer. That is what naming the axis before you build buys: not one tidy verdict, but the right to report the true one, on every axis that mattered.
+
+## When not to use it
+
+The discipline has a real cost, and paying it everywhere is not free either. Early exploration, before anyone knows what good means for a new task, is not the moment to pre-register a rubric and a pass bar: a metric fixed on a guess about a task nobody understands yet rewards whichever architecture satisfies that guess, the same failure this pattern exists to prevent, moved one step earlier. Discovery work earns a deliberate pass on formal measurement, not a permanent one: once an exploratory build is a candidate for something real users depend on, the deferral ends and the metric gets named.
+
+A small, low-stakes, reversible increment does not need the full weight this pattern asks for elsewhere: a held-out set, several judge passes, a bounded-variance rubric. An internal tool with a handful of users and an easy rollback can check an increment against a lighter signal, a week of production observation against one named number, rather than a harness built before anyone knows if it is worth one.
+
+This pattern also has nothing to say about whether an increment should exist at all, once the task's shape has already answered that. A workload that cannot be decomposed by any router was never a candidate for the simple path, and measuring the complex option against a baseline it was never going to beat confirms nothing worth the run. Earn the Complexity assumes a decision is on the table; where the workload already made it, the metric still belongs in the record, confirming a shape, not settling an argument.
+
+## Related patterns
+
+[Workflow First](/patterns/#workflow-first) sets the default this pattern's gate sits above: start at the plain workflow, and let this pattern decide whether anything past it earns its keep. [Workflow in an Agent Costume](/patterns/#workflow-in-an-agent-costume) is what happens when the gate never gets applied: a fixed sequence wearing the shape of autonomy, bought for the look of it. [Verifier Loop](/patterns/#verifier-loop) is itself the kind of increment this pattern polices: Lab-001's own verifier had to earn a rubric capable of failing before its number could be trusted. [Failure Buckets](/patterns/#failure-buckets) turns a number that moved the wrong way into a reason, which failure mode absorbed the cost, so the next attempt fixes the mechanism instead of re-running with more polish. [Baseline and Floor](/patterns/#baseline-and-floor) is the shape the metric itself needs before this is checkable: a floor an increment cannot cross while chasing an average improvement.

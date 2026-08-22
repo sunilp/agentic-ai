@@ -1,0 +1,66 @@
+---
+description: "Kulkarni's own account of Bayer's PRINCE platform names harness engineering and its nine components. This essay maps which component buys which kind of reliability, works a case where the harness itself got less reliable by adding a model call, and states plainly where no amount of scaffolding substitutes for a better model."
+updated: 2026-08-22
+readingTime: 8
+forces:
+  - "A harness failure and a model failure look identical from outside the system, and only one of them has a component with a name attached to point at, so the model upgrade gets tried first because it is the visible lever"
+  - "Every component that catches a failure is itself new engineering with its own failure mode, purchased deliberately because the alternative hides defects in the part of the system hardest to instrument, the model's own reasoning"
+  - "Some of the nine components are deterministic engineering that never asks the model anything, and some are a second model call wearing the harness's name, and mistaking the second kind for the first reintroduces the exact unreliability the harness exists to remove"
+sources:
+  - title: "Building Reliable Agentic AI Systems"
+    url: https://martinfowler.com/articles/reliable-llm-bayer.html
+    authors: [Kulkarni S.S.]
+    year: 2026
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-harness-engineering.svg
+---
+
+## The problem
+
+Sarang Sanjay Kulkarni names harness engineering directly, in an account of building PRINCE, Bayer's preclinical research platform, published on martinfowler.com in June 2026. The definition is exact: harness engineering "shaped the scaffolding around the models: orchestration, tool boundaries, state persistence, retries, fallbacks, validation, reflection loops, observability, and human review." Kulkarni's own conclusion is sharper than the list itself: "Reliability comes from engineering both the context the model sees and the harness within which the model acts." Context engineering, what information a model receives and what it does not, is named there as the paired discipline; this essay stays on the harness half. The name is kept unchanged, credited to the practitioner who wrote it down for a production system inside a regulated pharmaceutical pipeline, not coined by this catalogue.
+
+What a pattern catalogue aimed at shipping adds to a settled name is what a single field article has no room for: which of those nine components buys which kind of reliability, where the boundary sits between an engineering fix and a genuine model limit, and a worked example detailed enough to check rather than take on faith. This site made a version of the same argument in May 2026, watching Anthropic's own admissions rather than Bayer's build: [Anthropic just told you the harness is the product](/field-notes/003-anthropic-told-you-harness-is-product/) traces a post-mortem where three dated harness changes produced weeks of perceived model regression on weights that never changed. [ARCH-008](/architecture/008-production-execution/) is this site's own runtime engineering of one slice of that scaffolding: a detection pipeline's latency budget, timeout isolation, and degradation rules. Kulkarni's account is the independent third: a different author, a different company, a different kind of system, arriving at the same layer as the thing that actually failed.
+
+The claim underneath all three is specific enough to be wrong: the parts of an agent system that decide whether it survives production are the retries, the persisted state, the tool boundaries, the validators, and the observability, none of which are the model. Left at that altitude the claim is a slogan. What follows narrows it: which component buys which reliability, and which failures no component can buy at all.
+
+## Forces
+
+**A harness failure and a model failure look identical from outside the system, and only one of them has a component with a name attached to point at.** When an agent's answers get worse, the visible lever is the model selector: swap the provider, swap the version, wait for the next release. A lowered reasoning-effort default, a caching bug, or an unreviewed verbosity prompt has no equivalent one-click fix, and rarely gets checked first, even though the post-mortem above found exactly that shape behind weeks of complaints about a regression that never touched a weight.
+
+**Every component that catches a failure is itself new engineering, with its own failure mode, that the team now owns forever.** A retry policy can retry a call whose side effect should not repeat. A fallback provider can differ from the primary just enough that failing over to it is its own regression, discovered days after it fired. A checkpoint schema has to migrate every time the workflow's shape changes. The nine components are not free reliability; they are nine more places a defect can hide, purchased deliberately because the alternative hides its defects in the part of the system hardest to instrument: the model's own reasoning.
+
+**Some of the nine are deterministic engineering that never asks the model anything, and some are a second model call wearing the harness's name, and the two fail in unrelated ways.** A SQL validator that permits only SELECT statements and blocks DELETE, INSERT, and UPDATE outright is a rule: its outcome is checkable by reading the rule, not by judging whether the query looked reasonable. A step where an LLM reviews a generated query for correctness is a judgment call executed by a second, equally fallible model, and its failure mode is not a bug in a rule. It is the same unreliability the harness exists to contain, one layer further in, still wearing a name and a place in the pipeline diagram right up until it is measured against the deterministic check sitting next to it.
+
+## The pattern
+
+The rule: reliability is engineered into the scaffolding around a model, not assumed from the model inside it, which means treating each named component as answering one specific reliability question rather than crediting the whole harness for what one piece of it does.
+
+Orchestration buys the pausable, inspectable workflow that makes every other component attachable at all. State persistence buys resumability, not correctness: PRINCE checkpoints agent state to Postgres and application state to DynamoDB, so a failed node resumes from itself rather than from the start. Retries and fallbacks buy availability against a transient failure, not a wrong one: a timed-out call retries, a failing provider switches to an alternate. Validation buys correctness against an error narrow enough to write down as a rule: PRINCE's SQL validator permits only SELECT statements, blocking DELETE, INSERT, and UPDATE outright. Tool boundaries buy scope, what [Tool/Agent Registry](/patterns/#tool-agent-registry) declares callable is the ceiling on what a harness this size can attempt, correctly or not, and observability buys the ability to tell a harness regression from a model one after the fact, which is what let the post-mortem above trace three dated changes rather than blame a weight. Human review buys accountability for the calls where being wrong costs more than a person's time is worth.
+
+Reflection loops need the most care: Kulkarni's architecture runs two as standing steps, process reflection on whether the workflow is still on the right trajectory and data reflection on whether what was retrieved is sufficient, and supports extending the writer stage with a third, draft reflection, for complex outputs. None of the three is a deterministic check. Each is a model call asked a narrower question than the original task; PRINCE's own account credits process reflection with "a dramatic improvement in the accuracy of tool selection", but it buys that by spending a model's judgment, not by replacing the need for one. [Verifier Loop](/patterns/#verifier-loop) names the deterministic version of the same shape, a check against a rule rather than a second opinion; a reflection loop can improve a trajectory, but it cannot turn an ambiguous judgment into a checkable one.
+
+That boundary is real. A rule is only as reliable as its own specification: an allow-list of SELECT statements is exhaustive by construction, which is why it is checkable rather than merely hopeful. Nothing in the nine components turns a genuinely ambiguous judgment, does this retrieved passage actually answer this clinical question, into a rule the same way, because the judgment itself is what is being asked for. Harness engineering shrinks the set of failures only a model's judgment can catch; it does not shrink that set to zero, and where it lands, the job is to route the call to a human or a narrower prompt, not manufacture a rule where none exists.
+
+## Worked example
+
+The clearest evidence for that boundary is a component PRINCE removed, not one it kept. Kulkarni's account is direct: "An earlier iteration of this process included an LLM review step for generated SQL queries; however, this step was later removed as it was found that the reviewing LLM sometimes incorrectly flagged valid queries as erroneous." The review step looked like a harness component, beside the deterministic validator that blocks unsafe operations. It was not the same kind of thing: a second judgment call, fallible like the first, and measured against the rule beside it, it made the system less reliable, not more. The fix was not a third layer of review. It was removing the second model call and keeping the rule.
+
+The components PRINCE kept do exactly this: state persistence resumes at the failed node, retries pass a failed SQL query back with its error for up to three attempts, fallbacks switch to an alternate vendor once retries are exhausted. None of the three fixes a wrong answer; all three keep a right one from being lost to an infrastructure problem that had nothing to do with reasoning.
+
+[ARCH-008](/architecture/008-production-execution/) generalizes the same lesson: a detector "failing 80 percent of calls should be taken out of the parallel set entirely for a cool-down, marked degraded, and reported." An unreliable component inside a harness is not neutral; the fix in both cases is subtraction, not addition, a move "add more scaffolding" would miss.
+
+## When not to use it
+
+Nine components are a second system, owned for the life of the product, for exactly the maintenance reasons the second force above names. PRINCE's own deployment includes a LangGraph orchestration layer, two databases for state, and a two-tier evaluation pipeline, dataset evaluations on every significant change plus daily live-traffic evaluation. None of that is owed to a tool with no state worth persisting and no outage worth a fallback route. [Earn the Complexity](/patterns/#earn-the-complexity) is the design-time question this pattern answers at build time: whether a task's duration and risk justify a workflow needing most of these nine pieces; a single-turn prototype with no real user yet has nothing here worth building.
+
+The harder boundary is the one from the pattern above, restated as a decision rather than an observation. A harness does not fix a task whose failure is the model's own judgment on a question with no deterministic test behind it. Stacking retries, a fallback provider, and a second reflection pass around a model that does not understand the domain produces a more elaborate wrong answer, not a correct one. Where the actual gap is the model's grasp of the task rather than the scaffolding around it, the fix is a better model, better context, or a narrower task. It is never a tenth component.
+
+## Related patterns
+
+[Tool/Agent Registry](/patterns/#tool-agent-registry) is the declared data behind tool boundaries, one of Kulkarni's nine, and a harness cannot bound what it never enumerated. [Verifier Loop](/patterns/#verifier-loop) is the deterministic cousin of Kulkarni's reflection loops, a check against a rule rather than a second model's opinion, the difference between narrowing a judgment call and eliminating one. [Decision Record](/patterns/#decision-record) is what observability becomes once it has to support an audit rather than a dashboard, the artifact that let the post-mortem above trace three dated harness changes instead of arguing about them. [Capability Gate](/patterns/#capability-gate) is where human review, Kulkarni's ninth component, attaches to one specific irreversible call rather than floating as general policy. [Earn the Complexity](/patterns/#earn-the-complexity) is the question to ask before building any of this: whether the task needs nine components of scaffolding, or was never going to fail in the ways they exist to catch.

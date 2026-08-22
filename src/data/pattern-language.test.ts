@@ -64,8 +64,8 @@ describe('pattern language data', () => {
     }
   });
 
-  it('retires exactly the eight stubs', () => {
-    expect(Object.keys(RETIRED)).toHaveLength(8);
+  it('retires exactly the six stubs', () => {
+    expect(Object.keys(RETIRED)).toHaveLength(6);
   });
 
   // Guards a real production bug: astro.config.mjs's static `redirects` map wins over
@@ -81,14 +81,13 @@ describe('pattern language data', () => {
         .filter((f) => f.endsWith('.mdx'))
         .map((f) => f.replace(/\.mdx$/, '')),
     );
-    for (const slug of Object.keys(RETIRED)) {
-      expect(
-        essaySlugs.has(slug),
-        `"${slug}" has an essay at src/content/patterns/${slug}.mdx but is still in RETIRED, ` +
-          `so the static redirect in astro.config.mjs shadows the real page. Remove "${slug}" ` +
-          `from RETIRED in src/data/pattern-language.ts and delete its redirect line in astro.config.mjs.`,
-      ).toBe(false);
-    }
+    const offenders = Object.keys(RETIRED).filter((slug) => essaySlugs.has(slug));
+    expect(
+      offenders,
+      `these slugs have an essay at src/content/patterns/<slug>.mdx but are still in RETIRED, ` +
+        `so the static redirect in astro.config.mjs shadows the real page: ${offenders.join(', ')}. ` +
+        `Remove each from RETIRED in src/data/pattern-language.ts and delete its redirect line in astro.config.mjs.`,
+    ).toEqual([]);
   });
 
   it('well-forms every url without fetching it', () => {

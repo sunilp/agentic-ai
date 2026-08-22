@@ -52,7 +52,7 @@ export const ENTRIES: Entry[] = [
     kind: 'pattern',
     layer: 'capability',
     primaryStage: 'design',
-    oneLine: 'Every increment of autonomy is paid for by a measured eval delta.',
+    oneLine: 'Every increment of complexity is paid for by a measured delta on an axis named in advance.',
     status: 'restated',
     nearestPrior: [
       {
@@ -482,12 +482,10 @@ export const REFERENCED: Referenced[] = [
 export const RETIRED: Record<string, string> = {
   'agent-loop': '/patterns/',
   'cold-start-mitigation': '/patterns/',
-  'earn-the-complexity': '/patterns/#earn-the-complexity',
   'eval-loop': '/patterns/#failure-buckets',
   'hub-and-spoke': '/patterns/#orchestrator-workers',
   'tool-registry': '/patterns/#tool-agent-registry',
   'trace-the-truth': '/patterns/#split-the-log',
-  'workflow-first': '/patterns/#workflow-first',
 };
 
 export function bySlug(slug: string): Entry | undefined {
