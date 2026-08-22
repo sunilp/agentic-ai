@@ -1,0 +1,75 @@
+---
+description: "Why an instruction telling a model never to run a destructive call is a request it can still talk its way past, what makes a capability gate a check the model cannot argue with instead, and how the Loop Lab's own toggle makes that difference visible."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "A rule against a destructive call competes with everything else in the model's context; a gate does not compete with anything, because it is not in the conversation"
+  - "The cheap fix is one sentence in a system prompt; the correct one is a registry entry, a check at the call site, and a source of out-of-band approval"
+  - "A gate taxes every call it protects, mostly the harmless majority, to catch the one call an incident review would ask about by name"
+sources:
+  - title: "Least privilege for AI agents: Identity, access, and tool binding"
+    url: https://www.microsoft.com/en-us/security/blog/2026/07/16/least-privilege-for-ai-agents-identity-access-and-tool-binding/
+    year: 2026
+  - title: "Constrained Tool Use"
+    url: https://agents.kour.me/constrained-tool-use/
+  - title: "Large Language Models Cannot Self-Correct Reasoning Yet"
+    url: https://arxiv.org/abs/2310.01798
+    authors: [Huang J.]
+    year: 2024
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-capability-gate.svg
+---
+
+## The problem
+
+Ask a team how they stop an agent from dropping a table and the common answer is a line in the system prompt: never delete production data without explicit approval. Framed as a rule, it reads like a control. It behaves like a request, because a system prompt is context the model reads and reasons over, not code the runtime enforces. It sits in the same token stream as the retrieved document, the conversation history, and the task itself, competing for attention rather than standing outside it. When a model decides that "clean up the staging table" means every row should go, the interpretation and the instruction telling it not to are both products of the same process, and nothing forces one to beat the other.
+
+[FN-004](/field-notes/004-loop-engineering-30-year-old-loop/) measured why a model is the wrong party to hold this line by itself: without an outside check, asking a model to review its own answer does not just fail to help, it can make things worse. A DeepMind team found intrinsic self-correction, a model revising its own response with no external signal, dropped GPT-4's accuracy on grade-school math from 95.5 to 91.5 percent, because the model talked itself out of correct answers nearly as readily as wrong ones. That is a measurement about correcting a conclusion, not about obeying a standing instruction, but the shape travels one hop over: asking the party that just decided an action is correct to also be the check on that decision is asking the wrong party twice.
+
+The [Loop Lab](/bench/), the interactive companion to FN-004, makes the failure concrete without a live model call: run the same scripted decision twice, an agent that reads a few rows and treats "clean up" as license to delete them. The destructive call either executes or doesn't, depending on whether a check external to that decision stands between it and the call, not because the runtime read the agent's justification and judged it insufficient. It never reads the justification at all. The worked example below walks through both runs.
+
+## Forces
+
+**A rule against a destructive call competes with everything else in the model's context; a gate does not compete with anything, because it is not in the conversation.** The retrieved document, the plan the model just built, and its own account of what "done" requires are all in the same stream as the standing instruction not to delete. Raise the wording from "please don't" to "under no circumstances" and it is still a sentence in that stream. A gate is checked by code the model's output cannot touch, so there is nothing for its reasoning to out-argue.
+
+**The cheap fix is one sentence in a system prompt; the correct one is a registry entry, a check at the call site, and a source of out-of-band approval.** Writing the rule costs nothing and passes every test run against a cooperative model, because a cooperative model was never the case that mattered. Building the gate costs a decision about which calls count as destructive, a check at the point of execution, and a place for an approval to come from when required. The prompt-only version looks identical until a persuasive injected instruction, or a hallucinated "done," asks the model to justify the exact action the sentence was written to prevent, and there was never anything checking, only asking.
+
+**A gate taxes every call it protects, mostly the harmless majority, to catch the one call an incident review would ask about by name.** The cost, a delay, a registry entry someone maintains, an approval path someone staffs, is paid on every call that would have completed harmlessly with no gate at all. The call that needed it does not announce itself in advance. The case for paying that tax is that the one call it exists for is irreversible once it lands, and you do not choose which run that turns out to be.
+
+## The pattern
+
+State the rule plainly: before a destructive call executes, something outside the model answers a question, and its answer decides, not the model's. That something is a capability gate: a check on the call itself, at the moment it is about to run, against state the model does not hold, an approval token, a permission record, a policy version. Absent that state, the gate refuses the call, regardless of what the model's own output argued for.
+
+The mechanism is not new, and the honest thing is to say so rather than let the name imply otherwise. Microsoft's least-privilege guidance for agent tools names step-up approval for delete, export, and privilege-change actions directly, because those classes of call carry a cost of being wrong that ordinary calls do not. Intelligence Patterns' Constrained Tool Use names the same shape from the tool's side: a tool restricted by state, permission, and policy rather than trusted to run whenever invoked. This pattern gives the combination one name for an agent context, a restatement of both, not a new mechanism.
+
+Be precise about what the gate is not. It is not a detector: a detector reads an output and scores it, suspicious, clean, likely injected. A capability gate scores nothing the model said; it checks whether a fact holds outside the model, and the model's justification is not an input to that check, however articulate. Nor is it a stronger instruction: every rung from "please don't" to "you really must not" is still a sentence in the conversation, and a confident model, or a well-crafted injected prompt, can read past any rung you write. The gate has no rung to climb, because it sits outside the conversation entirely, at the point where the call executes, the tool-execution stage [Chokepoint Placement](/patterns/#chokepoint-placement) treats as the only one that can still prevent an action, and the stage [ARCH-008](/architecture/008-production-execution/) builds its tool-use pipeline around: a registry lookup and an authority check ahead of anything that reads intent. A check placed upstream of the call is a check a different code path can route around.
+
+The answer does not always need a human. A capability gate can simply refuse a call when no valid authorization exists, which is what most of them should do most of the time. When a person has to accept the risk instead, that hand-off is [Approval Gate](/patterns/#approval-gate)'s job, the same block-or-require-approval split [ARCH-004](/architecture/004-the-decision-layer/) keys to reversal cost.
+
+## Worked example
+
+The Loop Lab runs one small loop two ways, deterministically, so the contrast is visible without a model call. The scenario is "hallucinated done": the agent reads a few rows, calls a destructive `delete_all`, then declares the task finished. Three fences sit around the loop, and only one is a capability gate: an iteration cap, a no-progress detector that halts on a repeated call, and the gate, which refuses a destructive call unless it carries an out-of-band approval.
+
+Turn all three off, "prompted" in the Lab's own labeling, and the run is nothing but the model's judgment at every step: `read_rows` executes, `delete_all` executes, the agent claims done, and the database panel reads DELETED. No fence intervened, because there was no fence, only instructions sitting in context, and instructions do not stop a call from executing. Only code does.
+
+Toggle the capability gate on alone, leaving the other two fences off, and rerun the same scenario. `read_rows` still executes: it is not destructive, so the gate has no opinion on it. `delete_all` reaches the same point in the loop, and the gate's check runs: is there an out-of-band approval attached to this call? There is none, so the call is refused. The trace records it as blocked, not argued down: the check never evaluates the agent's stated reason, because a stated reason was never part of what it reads. The database panel reads intact.
+
+FN-004 runs the identical contrast against a real LangGraph agent: told only to clean up a staging table, the ungated agent reaches for the destructive tool and nothing stops it; the enforced agent, running the same model and the same tools, cannot get past the gate, because the gate never consults the model to begin with. A prompt is advice the model weighs against everything else it is holding. A gate is a fact about the world the model has no way to alter by producing better text.
+
+## When not to use it
+
+A capability gate is only as honest as the registry entry marking a call destructive. A gate over `delete_all`, remembered and flagged, protects nothing about a `purge_archive` tool a different team ships next quarter without the same flag. This is the pattern's own failure mode: the gate looks complete, because every call it was told about is covered, while the gap stays invisible until the unflagged call is the one that runs.
+
+Gating too much costs the pattern its own credibility. A call that was always harmless, checked every time at a delay someone feels, trains people to route around the gate: a shared credential wired in to skip it, a batch job pulled outside the registry because gating it once broke a legitimate nightly run. [Attenuating Delegation](/patterns/#attenuating-delegation)'s worked example is this failure from a different angle, a team reaching for the convenient path because the correct one was in the way, and the gate on paper stops being the one the traffic passes through.
+
+A read-only agent, with no destructive tool at all, has nothing to gate, and building the machinery anyway defends an action that cannot happen. An action that is genuinely, cheaply reversible and contained, a soft delete inside a retention window, a draft nobody has sent, does not carry the stakes this pattern is built for; gate it anyway and the friction is spent on a risk that was never there. Reserve the check for the call an incident review would ask about by name.
+
+## Related patterns
+
+[Approval Gate](/patterns/#approval-gate) is what a capability gate hands off to when the answer should come from a person rather than be refused outright, carrying the same timeout discipline an unanswered gate needs. [Authority at the Call Site](/patterns/#authority-at-the-call-site) is where a capability gate has to live for the claim to hold at all; a check placed anywhere the call does not have to pass through is a check a different path can avoid. [Attenuating Delegation](/patterns/#attenuating-delegation) decides whether a credential presented to the gate counts as valid authorization at all, so a shared service account three hops removed from the accountable party fails the gate rather than satisfying it. [Fail Closed, Degrade on Exposure](/patterns/#fail-closed-degrade-on-exposure) governs what the gate does when the system that would answer its check is unreachable: proceeding anyway is not a gate with a bug, it is the failure [Silent Fail Open](/patterns/#silent-fail-open) names, a control that goes dark and lets the call through with nobody told.
