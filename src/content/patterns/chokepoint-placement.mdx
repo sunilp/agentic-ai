@@ -1,0 +1,77 @@
+---
+description: "Why a chokepoint's position in the request path fixes the best accuracy any detector stationed there can ever reach, independent of the classifier behind it, and how to read a coverage table before choosing where to build."
+updated: 2026-08-22
+readingTime: 7
+forces:
+  - "Observability rises as a request moves downstream and the ability to prevent falls at nearly the same rate, except at the one chokepoint built to break that trend"
+  - "The chokepoint that sees the most also carries the tightest latency budget; the one with room to spare sees the least"
+  - "Blocking early is cheap and structurally blind, because the evidence a later check would need has not happened yet"
+sources:
+  - title: "OWASP Top 10 for LLM Applications 2025"
+    url: https://genai.owasp.org/llm-top-10/
+    year: 2025
+  - title: "The Lethal Trifecta for AI agents"
+    url: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+    authors: [Willison S.]
+    year: 2025
+  - title: "Emerging Patterns in Building GenAI Products"
+    url: https://martinfowler.com/articles/gen-ai-patterns/
+    authors: [Subramaniam B., Fowler M.]
+    year: 2025
+anchors:
+  - { label: The problem, anchor: the-problem }
+  - { label: Forces, anchor: forces }
+  - { label: The pattern, anchor: the-pattern }
+  - { label: Worked example, anchor: worked-example }
+  - { label: When not to use it, anchor: when-not-to-use-it }
+  - { label: Related patterns, anchor: related-patterns }
+diagram: /assets/diagrams/pattern-chokepoint-placement.svg
+---
+
+## The problem
+
+Ask an engineering team where its AI guardrails live and the answer is almost always the same: in front of the model. A classifier reads the incoming prompt, scores it, and the request passes or it doesn't. Some teams add a second pass on the output side. Framed that way, the work sounds finished: a prompt filter and a response filter, both tuned, both monitored.
+
+The ceiling on that design has nothing to do with how well either filter is tuned. A prompt-layer detector reads the assembled payload: system prompt, retrieved context, history, and the user's input, concatenated into one block of text. If an attack arrives inside a retrieved document rather than the user's own message, the detector still reads it all, but cannot tell where any part came from unless the assembly step preserved that, and most don't. No classifier, however well trained, answers a question it was never given the information to answer.
+
+That is not a training problem. It is a placement problem. Before you choose a detector, you choose where it sits, and where it sits fixes, in advance, the best accuracy that detector can ever reach. A detector stationed where it cannot see the retrieved document carrying an injection will not detect that injection, no matter how good the model behind it becomes. The document was never in its input. You cannot classify evidence you were never handed.
+
+[ARCH-001](/architecture/001-the-control-plane/) shows why this happens systematically. Strip any enterprise AI system to the path one request takes and six stages appear: a document is uploaded, context is retrieved, a payload is assembled, the model produces tokens, a tool call may fire, and the exchange is logged. A chokepoint is a stage where the request is fully materialized and execution can pause. Each of the six has a different view of the truth, and placement decides which view a control gets to work from, before anyone chooses what runs there.
+
+## Forces
+
+**Observability rises as the request moves downstream, and the ability to prevent falls at nearly the same rate.** Retrieval sees the selected chunks and the requester's identity, but nothing about what the model will do with them. The prompt chokepoint sees the entire assembled payload, but by the time a response exists the system usually cannot undo whatever the model already decided to do, because the action has often already been requested by the time text is being generated. Logging sees the most of all, the whole exchange after the fact, and prevents nothing. Tool execution breaks the trend: a narrower slice than logging sees, the function, the arguments, the target, and the identity behind the call, yet full power to stop the action before it happens.
+
+**The chokepoint that sees the most also carries the tightest latency budget, and the one with room to spare sees the least.** Upload sees a whole document, unhurried, because ingestion happens off the request path with nobody waiting on it: the right home for anything expensive, full-document classification, entity extraction, a slow model. Prompt and response detection sit on the path a user actually feels. In one illustrative budget for a synchronous assistant turn, a 2,500ms p95 turn spends 250ms on retrieval and 1,700ms on streamed inference, leaving 550ms, 22 percent of the turn, for every detector combined: 120ms for prompt-layer detectors running in parallel, 180ms for response-layer detectors, 40ms for a tool-call policy decision, and a 210ms reserve for the day something is slow. The stage with the most room to look knows the least about who will use what it approved.
+
+**Blocking early is cheap and structurally blind.** A retrieval-layer entitlement check runs before the model ever sees a payload, deterministic rather than statistical, and eliminates a whole class of disclosure before it happens: the single highest-value item on ARCH-001's own defensible-default list, and not a detector at all but an authorization decision. What retrieval cannot see is what the model will do with the content, because that hasn't happened yet. Every early chokepoint trades the same way: cheap to check, blind to what comes after.
+
+## The pattern
+
+State the rule plainly: a chokepoint's accuracy ceiling is fixed by what it can observe, not by the model behind it, and no detector can classify evidence it never receives. So choose the chokepoint first, asking which harm you are defending against and where the evidence for it lives, then choose a detector for that chokepoint, never the reverse.
+
+Split the harms into two families, because the chokepoints that address them differ. Information harm is data reaching someone who should not have it: leaked PII, a disclosed system prompt, a retrieved document outside the requester's entitlement. It is addressable at upload, retrieval, and response, wherever information moves, and at logging too, since a log is a leak surface of its own, not a place to undo an earlier disclosure. Action harm is the system doing something in the world that should not have happened: a row deleted, a payment issued, a pull request merged. Tool execution is the only chokepoint that can prevent it, because it alone sees the act before it happens. Tool execution belongs to both families at once: a tool call is also an egress path, an email send, a webhook. Willison's lethal trifecta names the same shape, private data, untrusted content, and a way to communicate externally, and treating tool execution as purely an action control leaves that route uninstrumented.
+
+Mapping a real risk list onto the six chokepoints makes the claim checkable line by line. Prompt injection's best chokepoint is retrieval, then prompt, because injected text usually arrives inside retrieved content, which the prompt layer sees but cannot attribute. Excessive agency's best chokepoint is tool execution alone, because nothing in the text tells you whether this actor may perform this act. Three risks on the same OWASP list, among them supply chain and weight poisoning, have no runtime chokepoint at all, and a control plane built from the six stages above does not cover them; calling one complete coverage oversells it.
+
+None of this is a new mechanism: Subramaniam and Fowler's Guardrails pattern already names the runtime check at a stage like this, but not which stage, or why that choice bounds what the check can ever detect. Proposed status here means that specific placement argument did not turn up, named, in the prior art surveyed for this catalogue: not that nobody had noticed a detector needs the right input, only that no surveyed source stated it as a design rule to apply before a classifier is chosen.
+
+## Worked example
+
+Take a coding assistant that reads a repository, proposes changes, and runs a few tools. The obvious guardrail instinct is a prompt-layer check: read the model's stated intent and judge whether it looks dangerous. Placement rules that out first: a prompt-layer detector reads text, not the function about to be called, the arguments, the target, or the identity the call will run under, because none of that exists yet. Whatever that detector's ceiling, it isn't defending what matters: which action is about to happen, and to what.
+
+Put the control at tool execution instead, and a different pipeline becomes possible: the evidence is now present. Budget, a constructed target rather than a measurement: 120ms p95 for the policy decision, generous because most of it is deterministic work rather than inference. A tool registry lookup, 5ms, on every call. An authority check against actor, action, and resource, 20ms, on every call. An argument scan for secrets and paths outside the workspace, 15ms, on every call. An LLM judge against the written policy, 400ms, reserved for calls where the reversal cost is impossible and the cheap tiers leave it ambiguous.
+
+Read that pipeline bottom up: the expensive, model-based part is the smallest part of the design, seeing only calls that are irreversible and ambiguous, a small share of traffic on an assistant whose calls are mostly reads. The load is carried by a registry lookup and a deterministic authority check, both authorization questions rather than classification ones, answerable only because tool execution is the one chokepoint where the function, the arguments, and the identity are all present at once. ARCH-001 reaches this conclusion from the retrieval side; ARCH-008 reaches it again from tool execution, on a different system built for a different purpose. Neither blueprint is independent evidence alone, but the same shape turning up twice is a better reason to trust it than one assertion.
+
+## When not to use it
+
+The six-chokepoint frame assumes a request path, and not every system has one. Batch pipelines, streaming ingestion, and scheduled background agents have no clean request boundary, and the principal in whose name the work happens is often a service account with no meaningful entitlement to check against. That class of system needs the authority question answered at design time, in how the service account is scoped, because no runtime moment offers a user's permissions to check.
+
+A single-turn, read-only tool with no write capability and no untrusted retrieval has a blast radius already capped by what it can do. Mapping all six chokepoints for a tool that only populates two, prompt and response, is analysis spent on a system too small to need it. A prototype not yet touching production data can make that call deliberately, but it cannot carry the deferral, unexamined, past the point where retrieval starts drawing from a shared corpus, or a tool can write.
+
+Placement is not the whole job. It sets the ceiling; it says nothing about whether the detector at the right chokepoint is any good. That is a measurement question, and a team that stops at placement has fixed what a detector could see without checking whether it sees correctly.
+
+## Related patterns
+
+[Verdict Composition](/patterns/#verdict-composition) picks up once a chokepoint has more than one detector: placement decides which stage carries the composition problem, that pattern decides how the outputs combine without treating incomparable scores as comparable. [Tiered Detection](/patterns/#tiered-detection) decides, within a chokepoint, which calls get the expensive check and which get the cheap one, the same shape as the coding assistant's judge seeing only the ambiguous band. [Authority at the Call Site](/patterns/#authority-at-the-call-site) is the enforcement mechanism once placement has put a control at tool execution, the one chokepoint that can stop an action. [Fail Closed, Degrade on Exposure](/patterns/#fail-closed-degrade-on-exposure) governs what a chokepoint does when its detector times out, differently for each of the six, because upload can fail open where tool execution cannot. [Split the Log](/patterns/#split-the-log) owns the sixth chokepoint itself, what gets written down about the other five and how long it survives. Placement tells you where to put a control. These are what to do once it's there.
