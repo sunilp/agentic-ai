@@ -62,6 +62,6 @@
 <text x="74" y="567" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">addresses this harm family</text>
 <circle cx="290" cy="563" r="5" fill="none" stroke="#e8e8e8" stroke-width="1.4"/>
 <text x="304" y="567" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">does not</text>
-<text x="58" y="592" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Tool execution is the only chokepoint that can stop an act, and it is an egress path too, so it sits in both families.</text>
+<text x="58" y="592" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#1a1a1a">Tool execution is the last agent-side chokepoint that can stop an act, and it is an egress path too, so it sits in both families.</text>
 <text x="58" y="612" font-family="Georgia,'EB Garamond',serif" font-size="12.5" fill="#6b6b6b">The prompt layer sits in neither: it sees everything and attributes nothing.</text>
 </svg>

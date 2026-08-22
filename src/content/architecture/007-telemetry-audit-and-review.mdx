@@ -142,7 +142,7 @@ The step teams skip is the fourth. A fix that does not add the case to the eval 
 
 ## Worked example: system prompt leakage
 
-A coding assistant with a system prompt containing internal tool names and repository conventions. OWASP lists system prompt leakage as LLM07, and ARCH-001 puts the response layer as the only chokepoint where the leak is observable.
+A coding assistant with a system prompt containing internal tool names and repository conventions. OWASP lists system prompt leakage as LLM07, and ARCH-001 puts the response layer as the last chokepoint where the leak can be caught before it reaches the user.
 
 **What each store holds for one leak event:**
 

@@ -172,8 +172,8 @@ export function placeEntries(entries: readonly Entry[] = ENTRIES, geo: WheelGeom
 }
 
 /** (layer, primaryStage) distribution. Five of fifteen cells are legitimately
- *  empty: capability has nothing past build, control has nothing at evaluate,
- *  evidence has nothing at design. */
+ *  empty: no catalogue entry currently has capability past build, control at
+ *  evaluate, or evidence at design as its primary placement. */
 export function cellCounts(entries: readonly Entry[] = ENTRIES): Record<Layer, Record<Stage, number>> {
   const out = {} as Record<Layer, Record<Stage, number>>;
   for (const l of SECTORS) out[l] = { design: 0, build: 0, evaluate: 0, operate: 0, govern: 0 };
