@@ -1,72 +1,11 @@
 ---
-description: "Why a verifier that checks a step against the one before it lets a chain drift coherently to the wrong answer, what an explicit rubric with the power to fail actually requires, and the real multi-agent run where making a verifier stricter dropped the headline score by seven points because a rubber-stamp version had been hiding the difference."
-updated: 2026-08-22
-readingTime: 7
-forces:
-  - "A step-local check is cheap to write and blind to drift, because consistency with the previous hop composes locally and says nothing about the request the chain started from"
-  - "A rubric that can actually fail costs real design work before the first run; an LLM call that approves everything costs nothing and is indistinguishable from a working verifier until something asks it to reject"
-  - "A verifier that enforces its rubric will sometimes make the headline number worse, not better, and that is the exact moment a team is tempted to loosen it"
-sources:
-  - title: "Planner-Checker"
-    url: https://agents.kour.me/planner-checker/
-  - title: "Building Effective Agents"
-    url: https://www.anthropic.com/engineering/building-effective-agents
-    authors: [Schluntz E., Zhang B.]
-    year: 2024
-  - title: "Agent Design Pattern Catalogue: A Collection of Architectural Patterns for Foundation Model based Agents"
-    url: https://arxiv.org/abs/2405.10467
-    authors: [Liu Y., Lo S.K., Lu Q.]
-    year: 2025
-anchors:
-  - { label: The problem, anchor: the-problem }
-  - { label: Forces, anchor: forces }
-  - { label: The pattern, anchor: the-pattern }
-  - { label: Worked example, anchor: worked-example }
-  - { label: When not to use it, anchor: when-not-to-use-it }
-  - { label: Related patterns, anchor: related-patterns }
-diagram: /assets/diagrams/pattern-verifier-loop.svg
+slug: verifier-loop
+name: Verifier Loop
+oneLine: Every multi-agent step is checked by a deterministic verifier against the original task before the next step runs.
+whenToUse: |
+  When the multi-agent system is producing compounding errors. When you need to bound error amplification (the DeepMind study showed verifier loops keep amplification under 2x vs 17x without). When each step's output can be rubric-graded against a known criterion.
+whenNotToUse: |
+  When the verifier itself is an LLM call with no rubric — that's not verification, it's rubber-stamping. When the task is single-step (verifier adds cost with no upside).
+antiPattern: |
+  A verifier agent that says "looks good to me" to 90% of inputs because no explicit verification criteria were given. Lab L-001 (multi-agent vs router) saw this — first eval pass scored 81% pre-fix, dropped to 74% after the verifier was made strict.
 ---
-
-## The problem
-
-A chain of agent calls fails in a way no single hop will show you. Route a task through three specialists and inspect each hop alone: each agent's output looks like a reasonable answer to whatever it was just handed. Every join in the chain is locally coherent. None of that tells you whether the chain answered the question that started it.
-
-That gap has two failure signatures, and only one is loud. [Hallucinated Done](/patterns/hallucinated-done/) is the loud one: the agent declares the task finished and nothing checks whether it actually is, a failure visible to anyone who looks. The quiet failure wears the shape of diligence. A chain that checks each step against the step before it looks, from outside, exactly like a chain doing real verification: something inspects every hop, a verdict comes back. What that check confirms is narrower than it appears: only that step N is a plausible continuation of step N minus one, never whether step N still answers the task the chain was given. A request can pass through five hops, each a defensible response to the one before it, and land somewhere the original requester never asked for, with a passing verdict at every stage.
-
-## Forces
-
-**A step-local check is cheap to write and blind to drift, because consistency with the previous hop composes locally and says nothing about the request the chain started from.** Comparing step N to step N minus one needs only what is already in scope, the immediately prior output. Comparing step N to the original task needs that task present at every hop of a chain that may run five calls deep, extra plumbing most frameworks skip. The cheap check answers a real question. It is simply not the one anyone needed answered.
-
-**A rubric that can actually fail costs real design work before the first run; an LLM call that approves everything costs nothing and is indistinguishable from a working verifier until something asks it to reject.** Writing checkable criteria for what a correct step looks like is the same unglamorous work an eval rubric demands, and it is easy to skip: a bare "does this look right" prompt to another LLM call fills the verifier's slot in the diagram at a fraction of the cost. The two are visually identical there, a box labeled verifier, an arrow in, an arrow out. Only one of them can say no.
-
-**A verifier that enforces its rubric will sometimes make the headline number worse, not better, and that is the exact moment a team is tempted to loosen it.** A verifier that never rejects anything never subtracts from an accuracy figure; the aggregate looks stable for exactly as long as nobody checks what it is actually doing. The moment a rubric starts catching real failures, the reported number gets worse, because those failures were already there, simply uncounted. That is the pressure a working verifier has to survive: the appearance of a regression that is, underneath, a correction.
-
-## The pattern
-
-State the rule plainly: a verifier loop holds the task, as given when the chain began, fixed at every checkpoint, and checks each step against that fixed target, never against whatever the step before it produced. A hop-to-hop check still has its own job, catching a malformed handoff, but not this one. Checking against the previous step is not wrong at any one hop; it fails at the one job this pattern is for, because "consistent with what came before" composes only locally. A five-hop chain can satisfy that question at every boundary and still have wandered arbitrarily far from the task, because a step-local check never carries the original request past the hop where it was last consulted. Only a verifier anchored to the task can catch that drift, because it alone still holds what was actually asked for. A requester who amends the task mid-chain moves the anchor; the target changed, not a missed drift.
-
-The mechanism is not new. Intelligence Patterns' Planner-Checker puts a checker after a planned sequence of steps, comparing execution results against the plan's own expected outcomes, not the previous tool call's return value. Schluntz and Zhang's evaluator-optimizer, from Anthropic's account of effective agent design, runs a second LLM call that holds a generator's output against explicit evaluation criteria in a loop until they are met. Liu et al.'s Cross-Reflection puts a separate agent instance in the critic's seat before an output is accepted, distinct from the agent that produced it. Three real descriptions of generate-then-check, and none of them is being named here for the first time. Restated status means exactly that: an established practice, named plainly, credited to where it was already described, not discovered.
-
-What none of the three states as a rule is where the check has to anchor once a chain runs longer than one hop: the original task, not the adjacent step. That anchor also separates a verifier loop from its own failure mode. A verifier with no explicit rubric is not verification; it is [Rubber-Stamp Verifier](/patterns/rubber-stamp-verifier/), an LLM call approving whatever it is handed because nothing written down could ever make it say no. The two are a matched pair on purpose: same slot in the diagram, opposite behavior. A real verifier needs three things together. An explicit rubric, specific enough that a second human reading the same transcript reaches the same verdict. Criteria that are checkable, not a vibe about whether the output looks acceptable. And a demonstrated ability to fail, on a real case, not merely in theory. Missing any one, whatever sits in the verifier's slot is decoration wearing the job title.
-
-## Worked example
-
-[Lab-001](/labs/multi-agent-vs-router-100-queries/) ran a version of this exact question, in service of a different comparison: whether a three-agent hierarchy beats a single-agent workflow router on short-horizon support queries. Its architecture put a classifier, a worker, and a verifier in sequence, and by design the verifier checked the worker's output against the original query, not the classifier's routing decision. What the Lab measured next: a verifier with no rubric, and what happens to the topline number once it gets one.
-
-The first eval pass on the multi-agent system scored 81 percent, close enough to the router's number to read as a real contest. On inspection, the verifier was bypassing 14 percent of queries with a "looks good to me" response regardless of content, measured directly from the run: a verifier in name, a Rubber-Stamp Verifier in function, holding no rubric it could actually fail against. The fix was a stricter verifier prompt carrying explicit criteria. It did not change what the worker produced; it changed whether a wrong worker output got waved through as verified or correctly counted as a failure. The rubber-stamp rate fell to roughly 3 percent, and honest accuracy came out at 74 percent, a seven-point drop in the headline number, produced entirely by a lenient verifier no longer hiding failures that were already there.
-
-That data point is the clearest evidence in this catalogue for why the anchor and the rubric both matter, and it should not be stretched past what it shows. It is one architecture, one model pairing, one 100-query set: the 14-percent and 3-percent rubber-stamp rates, and the 81-to-74 swing, are measured figures from a single run, not a general constant to design around. What the run establishes is direction: the fixed system looked worse on the one number a dashboard reads, and was actually the same system with an honest verifier instead of a decorative one. [Failure Buckets](/patterns/failure-buckets/) is what let the Lab tell that story at all; one aggregate figure would show only a number moving from 81 to 74 with no way to say why, where the bucketed breakdown separates a verification failure from every other kind sharing the run.
-
-Beyond this one 100-query run, [FN-001](/field-notes/001-multi-agent-papers-nobody-cites/) carries the popular framing of a December 2025 DeepMind study: unstructured peer-to-peer agent networks reportedly amplified reasoning errors by up to 17.2x over single-agent baselines, while hierarchical orchestration with a verifier held it under 2x. That is the popular framing of someone else's study, not a primary finding this catalogue has verified, and it earns exactly that hedge, nothing stronger.
-
-## When not to use it
-
-This pattern's own cost is a call at every hop it protects, and that cost is not hypothetical: Lab-001's classifier and verifier were net-new calls on the same worker, costing 2.4 times what the router cost per query, most of it orchestration overhead, not the underlying task. A verifier loop on a one-hop chain is not protecting against drift; there is no adjacent hop for the task to have drifted from, and the check collapses into the same single-pass eval the system needed anyway, run twice.
-
-The rubric requirement cuts the other way too. A verifier can only be honest about tasks where a correct step is expressible as checkable criteria. Forced onto an open-ended judgment, criteria specific enough to fail anything either narrow the task in a way nobody signed off on, or get written so generically that nothing written down could reject a bad answer, quietly reproducing the rubber stamp with a rubric's paperwork attached. That judgment call belongs in front of a person, not dressed up as a deterministic gate.
-
-The last edge is what a passing verdict is worth once the action behind it cannot be undone. A verifier loop confirms a step matched the task; it says nothing about whether that step should have been allowed to happen at all. [Capability Gate](/patterns/capability-gate/) stands in front of a destructive or irreversible action regardless of what any verifier upstream reported, because a step can match the original task and still be the wrong thing to let run without a human first. Verification and authorization are different questions; a passing verifier loop only answers the first.
-
-## Related patterns
-
-[Rubber-Stamp Verifier](/patterns/rubber-stamp-verifier/) is this pattern's own failure mode: the same box in the diagram, missing the rubric that separates the two. [Hallucinated Done](/patterns/hallucinated-done/) is the louder sibling failure, skipping verification entirely; a verifier loop with no rubric is quieter only because something in the diagram claims to be checking. [Failure Buckets](/patterns/failure-buckets/) turns a verifier's pass and fail verdicts into a distribution a team can act on, rubber-stamp rate against misrouting rate against every other failure, rather than one aggregate score hiding all three. [Capability Gate](/patterns/capability-gate/) picks up where a verifier's job ends: confirming a step matched the task is not confirming it should have been allowed to run, and an irreversible action needs the gate regardless of what the verifier said. [Decision Record](/patterns/decision-record/) makes any of this checkable after the fact: a verifier's verdict, alone, is a claim; a verdict written down against the rubric version that produced it is evidence.

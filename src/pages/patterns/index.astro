@@ -2,322 +2,70 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
+import MagazineGrid from '~/components/layout/MagazineGrid.astro';
 import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Tag from '~/components/universal/Tag.astro';
-import { ENTRIES, REFERENCED, byLayer, byStage, counts, type Entry } from '~/data/pattern-language';
 
-const essays = new Set((await getCollection('patterns')).map((e) => e.id));
-const c = counts();
-
-const LAYERS = [
-  { key: 'capability', label: 'Capability', line: 'What the agent can do, and how it is built.' },
-  { key: 'control', label: 'Control', line: 'What constrains it at runtime.' },
-  { key: 'evidence', label: 'Evidence', line: 'What it can prove, and how it stays honest.' },
-] as const;
-
-const STAGES = [
-  { key: 'design', label: 'Design' },
-  { key: 'build', label: 'Build' },
-  { key: 'evaluate', label: 'Evaluate' },
-  { key: 'operate', label: 'Operate' },
-  { key: 'govern', label: 'Govern' },
-] as const;
-
-const layerGroups = LAYERS.map((l) => ({ ...l, items: byLayer(l.key).filter((e) => e.kind === 'pattern') }));
-const antiPatterns = ENTRIES.filter((e) => e.kind === 'anti-pattern').sort((a, b) => a.name.localeCompare(b.name));
-const stageGroups = STAGES.map((s) => ({ ...s, items: byStage(s.key) }));
-
-function statusLabel(e: Entry): string {
-  if (e.status === 'proposed') return 'proposed';
-  if (e.status === 'documented') return `documented, ${e.attributedTo.who}`;
-  return `restated, after ${e.nearestPrior[0].who}`;
-}
+const entries = (await getCollection('patterns')).sort((a, b) => a.data.name.localeCompare(b.data.name));
 ---
 
 <PageLayout
-  title="Patterns, Agent Engineering Lab"
-  description="A pattern language for shipping agentic systems. Authority, control and evidence patterns, each with its forces, its boundary and its attribution."
-  currentNav="Patterns"
+  title="Patterns — Agent Engineering Lab"
+  description="Cross-cutting patterns. Each pattern is a hub linking the chapters, Field Notes, Recipes, and Labs that use it."
+  currentNav="Book"
 >
   <Container>
     <header style="margin: var(--space-7) 0 var(--space-6);">
       <Tag>Patterns</Tag>
       <KineticHeading level={1}>Patterns</KineticHeading>
-      <Dek italic>
-        A pattern language for shipping agentic systems. {c.total} entries: {c.patterns} patterns
-        and {c.antiPatterns} anti-patterns, of which {c.documented} keep an established name,
-        {c.restated} are named here after a prior description, and {c.proposed} are proposed.
-      </Dek>
+      <Dek italic>Cross-cutting patterns across the book. Each pattern hub links every chapter, Field Note, Recipe, and Lab that uses it.</Dek>
     </header>
 
-    <section class="pat-statuses">
-      <dl>
-        <dt>Documented</dt><dd>A settled external name, kept unchanged, with its attribution.</dd>
-        <dt>Restated</dt><dd>An established practice with no settled name. Named here, citing the nearest prior description.</dd>
-        <dt>Proposed</dt><dd>A shape not previously described in the prior art surveyed.</dd>
-        <dt>Referenced</dt><dd>Well covered at its source. Listed and linked, never re-documented here.</dd>
-      </dl>
-    </section>
-
-    <nav class="pat-views" data-views>
-      <button type="button" data-view="layer" aria-pressed="true">By layer</button>
-      <button type="button" data-view="stage" aria-pressed="false">By lifecycle stage</button>
-    </nav>
-
-    <div data-view-panel="layer">
-      {layerGroups.map((g) => (
-        <section class="pat-group">
-          <header class="pat-group__header">
-            <h2 class="pat-group__title">{g.label}</h2>
-            <p class="pat-group__line">{g.line}</p>
-          </header>
-          <ul class="pat-list">
-            {g.items.map((e) => (
-              <li class="pat-list__item" id={e.slug}>
-                {essays.has(e.slug)
-                  ? <a class="pat-list__name" href={`/patterns/${e.slug}/`}>{e.name}</a>
-                  : <span class="pat-list__name pat-list__name--unwritten">{e.name}</span>}
-                <span class="pat-list__status">{statusLabel(e)}</span>
-                <p class="pat-list__one-line">{e.oneLine}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
-
-      <section class="pat-group pat-group--anti">
-        <header class="pat-group__header">
-          <h2 class="pat-group__title">Anti-patterns</h2>
-          <p class="pat-group__line">Named failures. Each one names the pattern that replaces it.</p>
-        </header>
-        <ul class="pat-list">
-          {antiPatterns.map((e) => (
-            <li class="pat-list__item" id={e.slug}>
-              {essays.has(e.slug)
-                ? <a class="pat-list__name" href={`/patterns/${e.slug}/`}>{e.name}</a>
-                : <span class="pat-list__name pat-list__name--unwritten">{e.name}</span>}
-              <span class="pat-list__status">{statusLabel(e)}</span>
-              <p class="pat-list__one-line">{e.oneLine}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
-
-    <div data-view-panel="stage" hidden>
-      {stageGroups.map((g) => (
-        <section class="pat-group">
-          <header class="pat-group__header">
-            <h2 class="pat-group__title">{g.label}</h2>
-          </header>
-          <ul class="pat-list">
-            {g.items.map((e) => (
-              <li class="pat-list__item">
-                {essays.has(e.slug)
-                  ? <a class="pat-list__name" href={`/patterns/${e.slug}/`}>{e.name}</a>
-                  : <span class="pat-list__name pat-list__name--unwritten">{e.name}</span>}
-                <span class="pat-list__status">{statusLabel(e)}</span>
-                <p class="pat-list__one-line">{e.oneLine}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
-    </div>
-
-    <section class="pat-group pat-group--referenced">
-      <header class="pat-group__header">
-        <h2 class="pat-group__title">Named elsewhere, not re-documented here</h2>
-      </header>
-      <ul class="pat-referenced">
-        {REFERENCED.map((r) => (
-          <li id={r.slug}><a href={r.url}>{r.name}</a> <span class="pat-referenced__who">{r.who}</span></li>
+    {entries.length === 0 ? (
+      <p style="color: var(--fg-light); font-style: italic;">No patterns yet.</p>
+    ) : (
+      <MagazineGrid cols={3}>
+        {entries.map((e) => (
+          <a class="pat-card" href={`/patterns/${e.data.slug}/`}>
+            <div class="pat-card__name">{e.data.name}</div>
+            <p class="pat-card__one-line">{e.data.oneLine}</p>
+          </a>
         ))}
-      </ul>
-    </section>
+      </MagazineGrid>
+    )}
   </Container>
 </PageLayout>
 
-<script>
-  const nav = document.querySelector('[data-views]');
-  nav?.addEventListener('click', (ev) => {
-    const btn = (ev.target as HTMLElement).closest('button[data-view]');
-    if (!btn) return;
-    const want = btn.getAttribute('data-view');
-    document.querySelectorAll('[data-view-panel]').forEach((p) => {
-      (p as HTMLElement).hidden = p.getAttribute('data-view-panel') !== want;
-    });
-    nav.querySelectorAll('button[data-view]').forEach((b) => {
-      b.setAttribute('aria-pressed', String(b.getAttribute('data-view') === want));
-    });
-  });
-</script>
-
 <style>
-  .pat-statuses {
-    max-width: var(--reader-max);
-    margin: 0 auto var(--space-6);
-  }
-
-  .pat-statuses dl {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-4);
-    margin: 0;
-  }
-
-  .pat-statuses dt {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--brick);
-    margin: 0 0 4px;
-  }
-
-  .pat-statuses dd {
-    font-size: var(--body-3);
-    color: var(--fg-light);
-    line-height: var(--lh-snug);
-    margin: 0;
-  }
-
-  .pat-views {
-    max-width: var(--reader-max);
-    margin: 0 auto var(--space-6);
+  .pat-card {
     display: flex;
-    gap: var(--space-5);
-    border-bottom: 1px solid var(--fg-faint);
-  }
-
-  .pat-views button {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--fg-light);
-    background: none;
-    border: none;
-    padding: var(--space-3) 0;
-    margin-bottom: -1px;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-  }
-
-  .pat-views button:hover { color: var(--fg); }
-
-  .pat-views button[aria-pressed="true"] {
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: var(--paper);
     color: var(--fg);
-    border-bottom-color: var(--brick);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+    transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
   }
 
-  .pat-group {
-    max-width: var(--reader-max);
-    margin: 0 auto var(--space-7);
+  .pat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--brick);
   }
 
-  .pat-group__header {
-    margin: 0 0 var(--space-4);
-    padding-bottom: var(--space-2);
-    border-bottom: 2px solid var(--brick);
-  }
-
-  .pat-group__title {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: var(--display-2);
-    line-height: var(--lh-tight);
-    color: var(--fg);
-    margin: 0 0 4px;
-  }
-
-  .pat-group__line {
-    font-family: var(--font-body);
-    font-size: var(--body-3);
-    color: var(--fg-light);
-    margin: 0;
-  }
-
-  .pat-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .pat-list__item {
-    padding: var(--space-4) 0;
-  }
-
-  .pat-list__item + .pat-list__item {
-    border-top: 1px solid var(--fg-faint);
-  }
-
-  .pat-list__name {
+  .pat-card__name {
     font-family: var(--font-display);
     font-size: var(--display-3);
     font-weight: 500;
     line-height: var(--lh-snug);
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--brick);
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
   }
 
-  a.pat-list__name:hover { color: var(--brick); }
-
-  .pat-list__name--unwritten {
+  .pat-card__one-line {
     color: var(--fg-light);
-    text-decoration: none;
-  }
-
-  .pat-list__status {
-    display: inline-block;
-    margin-left: var(--space-3);
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    letter-spacing: 0.04em;
-    color: var(--fg-lighter);
-  }
-
-  .pat-list__one-line {
-    font-family: var(--font-body);
-    font-size: var(--body-3);
+    font-size: var(--body-2);
     line-height: var(--lh-snug);
-    color: var(--fg-light);
-    margin: 4px 0 0;
-  }
-
-  .pat-referenced {
-    list-style: none;
     margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-2);
-  }
-
-  .pat-referenced li {
-    font-size: var(--body-3);
-    color: var(--fg);
-  }
-
-  .pat-referenced a {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--fg-faint);
-    text-underline-offset: 3px;
-  }
-
-  .pat-referenced a:hover { color: var(--brick); }
-
-  .pat-referenced__who {
-    color: var(--fg-lighter);
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-  }
-
-  @media (max-width: 720px) {
-    .pat-statuses dl { grid-template-columns: repeat(2, 1fr); }
   }
 </style>

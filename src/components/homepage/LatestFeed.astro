@@ -16,10 +16,6 @@ const [fns, sgs, recipes, labs, arch] = await Promise.all([
   getCollection('architecture'),
 ]);
 
-// Patterns are intentionally not fed into the home feed yet: no essay has spot art,
-// so a pattern row renders as a raw slug on the only grey blank tile on the page.
-// `patterns` stays optional on HomeFeedStreams and defaults to empty; re-add this
-// stream once pattern spot art exists.
 const { featured, rest } = buildHomeFeed({
   fieldNotes: fns.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, dek: e.data.dek, banner: e.data.banner, spot: e.data.spot, date: e.data.date, readingTime: e.data.readingTime })),
   signal: sgs.map((e) => ({ id: e.data.id, slug: e.id, title: e.data.title, dek: e.data.dek, banner: e.data.banner, date: e.data.date, readingTime: e.data.readingTime })),

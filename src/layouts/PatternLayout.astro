@@ -7,11 +7,9 @@ import Reader from '~/components/layout/Reader.astro';
 import KineticHeading from '~/components/universal/KineticHeading.astro';
 import Dek from '~/components/universal/Dek.astro';
 import Tag from '~/components/universal/Tag.astro';
-import PatternCard from '~/components/universal/PatternCard.astro';
-import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
-import Sources from '~/components/universal/Sources.astro';
+import Callout from '~/components/universal/Callout.astro';
 import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
-import { bySlug } from '~/data/pattern-language';
+import { entriesToContentEntries } from '~/lib/content-helpers';
 
 interface Props {
   entry: CollectionEntry<'patterns'>;
@@ -19,10 +17,8 @@ interface Props {
 
 const { entry } = Astro.props;
 const d = entry.data;
-const meta = bySlug(entry.id);
-if (!meta) throw new Error(`No pattern-language entry for ${entry.id}`);
 
-const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns, architecture] = await Promise.all([
+const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns] = await Promise.all([
   getCollection('chapters'),
   getCollection('fieldNotes'),
   getCollection('recipes'),
@@ -30,47 +26,13 @@ const [chapters, fieldNotes, recipes, labs, evidence, projects, patterns, archit
   getCollection('evidence'),
   getCollection('projects'),
   getCollection('patterns'),
-  getCollection('architecture'),
 ]);
-const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...patterns, ...architecture];
-// Several collections (fieldNotes, recipes, evidence, labs, architecture) carry a
-// frontmatter `id` distinct from their collection id (the filename), but every
-// collection here routes by the filename. `entriesToContentEntries` in
-// content-helpers.ts keys an entry by frontmatter `data.id` when present, falling
-// back to entry.id only when data.id is absent -- fine for its other callers, but
-// wrong here, since it would key + link "Used in" mentions by the frontmatter id
-// and 404 (as arch-001 did before architecture was special-cased, and as fn-001
-// does now for field notes). Map every entry by hand instead, keyed on entry.id, so
-// every "Used in" href lands on the entry's real route, for every collection.
-const toContentEntries = (
-  entries: { id: string; collection: string; data: Record<string, unknown> }[],
-) =>
-  entries.map((e) => ({
-    id: e.id,
-    collection: e.collection,
-    references: e.data.references as string[] | undefined,
-    cites: e.data.cites as string[] | undefined,
-    patterns: e.data.patterns as string[] | undefined,
-  }));
-const reverseIndex = buildReverseIndex(toContentEntries(allEntries));
+const allEntries = [...chapters, ...fieldNotes, ...recipes, ...labs, ...evidence, ...projects, ...patterns];
+const reverseIndex = buildReverseIndex(entriesToContentEntries(allEntries as any));
+// Patterns are stored in the reverse index by entry.id (the filename),
+// since the patterns schema has no `data.id` field. The mapper in
+// entriesToContentEntries falls back to entry.id when data.id is absent.
 const links = getReverseLinks(reverseIndex, entry.id);
-
-const blueprintFor = (archId: string) => architecture.find((b) => b.data.id === archId);
-
-// Title lookups for the "Used in" band, mirroring how "Specified in" above renders
-// `b.data.title` instead of a raw id. Every collection that can appear in
-// `links.mentionedIn` has a `data.title` field except patterns, which has none --
-// its display name lives in src/data/pattern-language.ts instead (see `bySlug`).
-const titleIndex: Record<string, string> = {};
-for (const e of chapters) titleIndex[`chapters:${e.id}`] = e.data.title;
-for (const e of fieldNotes) titleIndex[`fieldNotes:${e.id}`] = e.data.title;
-for (const e of recipes) titleIndex[`recipes:${e.id}`] = e.data.title;
-for (const e of labs) titleIndex[`labs:${e.id}`] = e.data.title;
-for (const e of evidence) titleIndex[`evidence:${e.id}`] = e.data.title;
-for (const e of projects) titleIndex[`projects:${e.id}`] = e.data.title;
-for (const e of architecture) titleIndex[`architecture:${e.id}`] = e.data.title;
-const titleForLink = (l: { id: string; collection: string }) =>
-  l.collection === 'patterns' ? bySlug(l.id)?.name : titleIndex[`${l.collection}:${l.id}`];
 
 const collectionRoute: Record<string, string> = {
   chapters: '/book',
@@ -80,57 +42,49 @@ const collectionRoute: Record<string, string> = {
   evidence: '/evidence',
   labs: '/labs',
   patterns: '/patterns',
-  architecture: '/architecture',
 };
 ---
 
 <PageLayout
-  title={`${meta.name}, Patterns`}
-  description={d.description}
-  currentNav="Patterns"
+  title={`${d.name} — Patterns`}
+  description={d.oneLine}
+  currentNav="Book"
 >
   <Container>
     <Reader>
-      <Tag>{meta.kind === 'pattern' ? 'Pattern' : 'Anti-pattern'}</Tag>
-      <KineticHeading level={1}>{meta.name}</KineticHeading>
-      <Dek italic>{meta.oneLine}</Dek>
-
-      <PatternCard entry={meta} forces={d.forces} />
+      <Tag>Pattern</Tag>
+      <KineticHeading level={1}>{d.name}</KineticHeading>
+      <Dek italic>{d.oneLine}</Dek>
 
       {d.diagram && (
-        <ArchitectureDiagram wide src={d.diagram} alt={`${meta.name} pattern diagram`} />
+        <figure class="pattern-diagram">
+          <img src={d.diagram} alt={`${d.name} pattern diagram`} loading="lazy" />
+        </figure>
+      )}
+
+      <h2 class="pattern-section-heading">When to use</h2>
+      <div class="pattern-section" set:html={d.whenToUse} />
+
+      <h2 class="pattern-section-heading">When not to use</h2>
+      <div class="pattern-section" set:html={d.whenNotToUse} />
+
+      {d.antiPattern && (
+        <Callout type="warn" label="Anti-pattern">
+          <div set:html={d.antiPattern} />
+        </Callout>
       )}
 
       <article class="pattern-body">
         <slot />
       </article>
 
-      {meta.blueprints && meta.blueprints.length > 0 && (
-        <section class="pattern-specified-in">
-          <h2>Specified in</h2>
-          <ul>
-            {meta.blueprints.map((id) => {
-              const b = blueprintFor(id);
-              return b ? (
-                <li><a href={`/architecture/${b.id}/`}>{b.data.title}</a></li>
-              ) : null;
-            })}
-          </ul>
-        </section>
-      )}
-
-      <Sources items={d.sources} />
-
       {links.mentionedIn.length > 0 && (
         <section class="pattern-used-in">
           <h2>Used in</h2>
           <ul>
-            {links.mentionedIn.map((l) => {
-              const label = titleForLink(l) ?? `${l.collection}/${l.id}`;
-              return (
-                <li><a href={`${collectionRoute[l.collection] ?? ''}/${l.id}/`}>{label}</a></li>
-              );
-            })}
+            {links.mentionedIn.map((l) => (
+              <li><a href={`${collectionRoute[l.collection] ?? ''}/${l.id}/`}>{l.collection}/{l.id}</a></li>
+            ))}
           </ul>
         </section>
       )}
@@ -139,6 +93,36 @@ const collectionRoute: Record<string, string> = {
 </PageLayout>
 
 <style>
+  .pattern-diagram {
+    margin: var(--space-5) 0;
+    padding: var(--space-5);
+    background: var(--paper-bright);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-md);
+  }
+
+  .pattern-diagram img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .pattern-section-heading {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--fg-faint);
+  }
+
+  .pattern-section {
+    font-size: var(--body-1);
+    line-height: var(--lh-base);
+  }
+
+  .pattern-section :global(p) {
+    margin: 0 0 var(--space-3);
+  }
+
   .pattern-body {
     margin-top: var(--space-5);
     font-size: var(--body-1);
@@ -150,14 +134,12 @@ const collectionRoute: Record<string, string> = {
     margin: 0 0 var(--space-4);
   }
 
-  .pattern-specified-in,
   .pattern-used-in {
     margin-top: var(--space-7);
     padding-top: var(--space-5);
     border-top: 1px solid var(--fg-faint);
   }
 
-  .pattern-specified-in h2,
   .pattern-used-in h2 {
     font-family: var(--font-mono);
     font-size: var(--meta-2);
@@ -166,8 +148,6 @@ const collectionRoute: Record<string, string> = {
     color: var(--fg-light);
   }
 
-  .pattern-specified-in ul,
   .pattern-used-in ul { list-style: none; padding: 0; }
-  .pattern-specified-in a,
   .pattern-used-in a { font-family: var(--font-mono); font-size: var(--body-3); color: var(--fg); }
 </style>

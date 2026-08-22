@@ -16,7 +16,6 @@ import ArticleHeader from '~/components/universal/ArticleHeader.astro';
 import Spot from '~/components/universal/Spot.astro';
 import SectionAnchors from '~/components/universal/SectionAnchors.astro';
 import Sources from '~/components/universal/Sources.astro';
-import { bySlug } from '~/data/pattern-language';
 
 interface Props {
   entry: CollectionEntry<'architecture'>;
@@ -96,18 +95,6 @@ const ogImage = `/assets/banners/${d.id}.png`;
       <slot />
     </article>
 
-    {d.patterns && d.patterns.length > 0 && (
-      <section class="blueprint-patterns">
-        <h2>Patterns used here</h2>
-        <ul>
-          {d.patterns.map((slug) => {
-            const p = bySlug(slug);
-            return <li><a href={`/patterns/#${slug}`}>{p ? p.name : slug}</a></li>;
-          })}
-        </ul>
-      </section>
-    )}
-
     {d.sources && d.sources.length > 0 && <Sources items={d.sources} />}
 
     <nav class="blueprint-nav" aria-label="Blueprint navigation">
@@ -182,56 +169,6 @@ const ogImage = `/assets/banners/${d.id}.png`;
 
   /* Structural diagrams read better slightly tighter than prose code. */
   .blueprint-body :global(pre code) { line-height: 1.45; }
-
-  .blueprint-patterns {
-    margin-top: var(--space-6);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--fg-faint);
-  }
-
-  .blueprint-patterns h2 {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    letter-spacing: var(--tracking-rubric);
-    text-transform: uppercase;
-    color: var(--fg-light);
-    margin: 0 0 var(--space-3);
-    font-weight: 500;
-  }
-
-  .blueprint-patterns ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-4);
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-body);
-    font-size: var(--body-2);
-  }
-
-  .blueprint-patterns li::before {
-    content: '·';
-    color: var(--brick);
-    margin-right: var(--space-2);
-  }
-
-  .blueprint-patterns li:first-child::before {
-    content: '';
-    margin-right: 0;
-  }
-
-  .blueprint-patterns a {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--fg-faint);
-    text-underline-offset: 3px;
-  }
-
-  .blueprint-patterns a:hover {
-    color: var(--brick);
-    text-decoration-color: var(--brick);
-  }
 
   .blueprint-nav {
     display: grid;

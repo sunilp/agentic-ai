@@ -70,34 +70,28 @@ const byLayer = LAYERS.map((l) => ({
       <p class="arch-index__empty">No blueprints published yet.</p>
     ) : (
       <div class="arch-layers">
-        {byLayer.map((layer) => (
+        {byLayer.map((layer) => layer.items.length > 0 && (
           <section class="arch-layer">
             <header class="arch-layer__header">
               <h2 class="arch-layer__title">{layer.label}</h2>
               <p class="arch-layer__line">{layer.line}</p>
             </header>
-            {layer.items.length > 0 ? (
-              <ol class="arch-list">
-                {layer.items.map((e) => (
-                  <li class="arch-list__item">
-                    <a href={`/architecture/${e.id}/`} class="arch-list__link">
-                      <span class="arch-list__num">{e.data.id.toUpperCase()}</span>
-                      <span class="arch-list__body">
-                        <span class="arch-list__title">{e.data.title}</span>
-                        <span class="arch-list__dek">{e.data.dek}</span>
-                        <span class="arch-list__meta">
-                          {e.data.appliesTo.join(' · ')} <span class="arch-list__dot">·</span> {e.data.readingTime} min
-                        </span>
+            <ol class="arch-list">
+              {layer.items.map((e) => (
+                <li class="arch-list__item">
+                  <a href={`/architecture/${e.id}/`} class="arch-list__link">
+                    <span class="arch-list__num">{e.data.id.toUpperCase()}</span>
+                    <span class="arch-list__body">
+                      <span class="arch-list__title">{e.data.title}</span>
+                      <span class="arch-list__dek">{e.data.dek}</span>
+                      <span class="arch-list__meta">
+                        {e.data.appliesTo.join(' · ')} <span class="arch-list__dot">·</span> {e.data.readingTime} min
                       </span>
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p class="arch-layer__empty">
-                No blueprint yet. The {layer.label.toLowerCase()} patterns live in the <a href="/patterns/">pattern catalogue</a>.
-              </p>
-            )}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
           </section>
         ))}
       </div>
@@ -234,25 +228,6 @@ const byLayer = LAYERS.map((l) => ({
   }
 
   .arch-list__dot { color: var(--brick); }
-
-  .arch-layer__empty {
-    font-family: var(--font-body);
-    font-size: var(--body-2);
-    font-style: italic;
-    color: var(--fg-light);
-    margin: 0;
-    padding: var(--space-3) 0;
-  }
-
-  .arch-layer__empty a {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--brick);
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
-  }
-
-  .arch-layer__empty a:hover { color: var(--brick); }
 
   .arch-index__empty {
     color: var(--fg-light);

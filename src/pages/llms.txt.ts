@@ -1,20 +1,18 @@
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
-import { byLayer, bySlug, ENTRIES, type Layer } from '~/data/pattern-language';
 
 // Generated llms.txt: a curated, link-first index of the Lab for LLMs and
 // answer engines. Built from the content collections so it never goes stale.
 export async function GET(context: APIContext) {
   const base = (context.site?.toString() ?? 'https://agenticlab.sunilprakash.com/').replace(/\/$/, '');
 
-  const [chapters, fieldNotes, signal, recipes, labs, architecture, patternEssays] = await Promise.all([
+  const [chapters, fieldNotes, signal, recipes, labs, architecture] = await Promise.all([
     getCollection('chapters'),
     getCollection('fieldNotes'),
     getCollection('signal'),
     getCollection('recipes'),
     getCollection('labs'),
     getCollection('architecture'),
-    getCollection('patterns'),
   ]);
 
   const byDateDesc = (a: any, b: any) =>
@@ -37,36 +35,6 @@ export async function GET(context: APIContext) {
     .map((e) => `- [${e.data.title}](${base}/book/${e.id}/): ${e.data.description ?? ''}`)
     .join('\n');
 
-  // Essays exist for both patterns and anti-patterns (~26 total); link only entries
-  // that have a published page, same guard as /patterns/index.astro.
-  const essaySlugs = new Set(patternEssays.map((e) => e.id));
-  const patternLink = (e: { slug: string; name: string }) =>
-    essaySlugs.has(e.slug) ? `[${e.name}](${base}/patterns/${e.slug}/)` : e.name;
-
-  const LAYER_LABEL: Record<Layer, string> = { capability: 'Capability', control: 'Control', evidence: 'Evidence' };
-  const patterns = (['capability', 'control', 'evidence'] as const)
-    .map((layer) => {
-      const items = byLayer(layer)
-        .filter((e) => e.kind === 'pattern')
-        .map((e) => `- ${patternLink(e)}: ${e.oneLine}`)
-        .join('\n');
-      return `### ${LAYER_LABEL[layer]}\n${items}`;
-    })
-    .join('\n\n');
-
-  // Anti-patterns are named failures, never recommendations. Kept out of the
-  // capability/control/evidence lists above and given their own labelled section,
-  // mirroring /patterns/index.astro, so an answer engine cannot quote one back as
-  // a pattern this site endorses.
-  const antiPatterns = ENTRIES.filter((e) => e.kind === 'anti-pattern')
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map((e) => {
-      const replacement = e.replacedBy ? bySlug(e.replacedBy) : undefined;
-      const replacedBy = replacement ? ` Replaced by ${patternLink(replacement)}.` : '';
-      return `- ${patternLink(e)}: ${e.oneLine}${replacedBy}`;
-    })
-    .join('\n');
-
   const body = `# Agent Engineering Lab
 
 > A working publication on building agent systems that survive contact with reality. Field Notes, Signals, Recipes, Lab Notes, Architecture blueprints, and an interactive Bench, grounded in evidence. Written by Sunil Prakash.
@@ -84,16 +52,6 @@ The Lab is a layered editorial system. The book is the canonical reference. Four
 ${arch}
 
 Index: ${base}/architecture/
-
-## Patterns
-${patterns}
-
-### Anti-patterns (do not use)
-
-Named failures, not recommendations. Each one names the pattern that replaces it.
-${antiPatterns}
-
-Index: ${base}/patterns/
 
 ## Field Notes
 ${fn}
