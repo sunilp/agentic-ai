@@ -121,6 +121,7 @@ export const ENTRIES: Entry[] = [
         url: LIU_ET_AL,
       },
     ],
+    blueprints: ['arch-004'],
   },
   {
     slug: 'attenuating-delegation',
@@ -317,6 +318,7 @@ export const ENTRIES: Entry[] = [
         url: MICROSOFT_LEAST_PRIVILEGE,
       },
     ],
+    blueprints: ['arch-004'],
   },
   {
     slug: 'failure-buckets',
@@ -369,6 +371,7 @@ export const ENTRIES: Entry[] = [
         url: MICROSOFT_LEAST_PRIVILEGE,
       },
     ],
+    blueprints: ['arch-005'],
   },
 
   // --- Anti-patterns ---
