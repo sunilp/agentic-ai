@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q005",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can provide more information on account termination.\n\nTo confirm, if a freemium account is terminated, all associated data will be deleted after 30 days, including any saved settings or preferences. Is there anything else I can help you with regarding your account?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 634,
+  "latency_ms": 1146.1149160168134,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 493.49270801758394,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 53,
+      "total_tokens": 251,
+      "latency_ms": 652.6222079992294,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

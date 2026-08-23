@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q006",
+  "category_true": "account",
+  "category_used": "technical",
+  "answer": "I can't help you with that, as I don't have access to your account information. Can I call kb_lookup to see if there's any information about retrieving a PIN code in our knowledge base?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 683,
+  "latency_ms": 1179.0754589892458,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 61,
+      "completion_tokens": 2,
+      "total_tokens": 63,
+      "latency_ms": 137.61066700681113,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 494.8957079905085,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 42,
+      "total_tokens": 240,
+      "latency_ms": 546.5690839919262,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

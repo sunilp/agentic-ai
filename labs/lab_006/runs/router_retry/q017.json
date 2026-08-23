@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q017",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For Platinum account holders, can you please provide the account ID so I can look into your specific issue?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1238,
+  "latency_ms": 1834.1195419779979,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 360,
+      "completion_tokens": 17,
+      "total_tokens": 377,
+      "latency_ms": 481.9737089856062,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 192,
+      "completion_tokens": 42,
+      "total_tokens": 234,
+      "latency_ms": 530.2425420086365,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 378,
+      "completion_tokens": 17,
+      "total_tokens": 395,
+      "latency_ms": 463.05404099985026,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 210,
+      "completion_tokens": 22,
+      "total_tokens": 232,
+      "latency_ms": 358.8492499839049,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

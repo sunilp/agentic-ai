@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q047",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I was unable to find the information you requested in our knowledge base. Can I create a ticket for you to speak with a customer service representative?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 617,
+  "latency_ms": 929.3464999936987,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 369,
+      "completion_tokens": 17,
+      "total_tokens": 386,
+      "latency_ms": 490.158041997347,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 30,
+      "total_tokens": 231,
+      "latency_ms": 439.18845799635164,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

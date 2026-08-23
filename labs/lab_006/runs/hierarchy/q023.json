@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q023",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[Category: Technical]\nCustomer: Can I see the ETA of the purchase {{Order Number}}?\n\nAnswer: Standard delivery is 3 to 5 business days. Tracking is available from the Orders page once an item ships. Address changes are only possible before an order enters the shipped state.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2449,
+  "latency_ms": 6619.615040981444,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 66,
+      "completion_tokens": 2,
+      "total_tokens": 68,
+      "latency_ms": 208.91783299157396,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 560.0732500024606,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 59,
+      "total_tokens": 262,
+      "latency_ms": 801.6561249969527,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 145,
+      "completion_tokens": 53,
+      "total_tokens": 198,
+      "latency_ms": 1451.7212079954334,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 603.9210000017192,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 59,
+      "total_tokens": 279,
+      "latency_ms": 793.7551249924581,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 145,
+      "completion_tokens": 29,
+      "total_tokens": 174,
+      "latency_ms": 840.1531249983236,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 534.0327919984702,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 59,
+      "total_tokens": 279,
+      "latency_ms": 825.3845830040518,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

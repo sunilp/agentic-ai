@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q077",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: is it possible to order from {{Delivery City}}\nAnswer:\nOur standard delivery area does not include {{Delivery City}}. However, you can try using a different shipping address or consider expedited shipping options for faster delivery.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 634,
+  "latency_ms": 1166.9865830044728,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 499.1066250076983,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 52,
+      "total_tokens": 252,
+      "latency_ms": 667.8799579967745,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

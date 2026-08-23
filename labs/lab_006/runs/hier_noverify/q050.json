@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q050",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I was unable to find any information on \"where to shop some of ur item\" in the knowledge base. I'm going to create a ticket for this issue. Can you please provide more context or details about the item you're trying to purchase?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 686,
+  "latency_ms": 1255.1406240090728,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 60,
+      "completion_tokens": 2,
+      "total_tokens": 62,
+      "latency_ms": 130.17558300634846,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 486.4090830087662,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 51,
+      "total_tokens": 245,
+      "latency_ms": 638.5559579939581,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

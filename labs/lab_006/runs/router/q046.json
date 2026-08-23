@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q046",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a specific bill number or refund information without accessing your account details. To assist you further, I'll need to create a ticket with our billing team. Would you like me to proceed with that?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 623,
+  "latency_ms": 1080.9907499933615,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 502.25912500172853,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 44,
+      "total_tokens": 244,
+      "latency_ms": 578.731624991633,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

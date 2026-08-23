@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q017",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For more information on Platinum account features or to reset your password, please visit our Account Settings page. If you need further assistance, I can create a ticket for you. Would you like me to proceed?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 611,
+  "latency_ms": 949.9222910089884,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 360,
+      "completion_tokens": 17,
+      "total_tokens": 377,
+      "latency_ms": 419.92929100524634,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 192,
+      "completion_tokens": 42,
+      "total_tokens": 234,
+      "latency_ms": 529.993000003742,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

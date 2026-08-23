@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q024",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For custom customer assistance, please create a ticket with our support team using the \"Create Ticket\" tool. This will allow you to provide more detailed information about your issue and receive a response from our support agents.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1274,
+  "latency_ms": 2348.6456659738906,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 519.3192079896107,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 41,
+      "total_tokens": 237,
+      "latency_ms": 609.2819579935167,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 497.5057500123512,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 43,
+      "total_tokens": 257,
+      "latency_ms": 722.5387499784119,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

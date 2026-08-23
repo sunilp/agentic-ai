@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q085",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I can't provide information on closing a customer account. If you'd like to file a complaint against our company, I can assist you with creating a ticket for that purpose. Would you like me to create a ticket for you?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 688,
+  "latency_ms": 1271.0272499825805,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 156.3132090086583,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 506.9121659907978,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 47,
+      "total_tokens": 243,
+      "latency_ms": 607.8018749831244,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

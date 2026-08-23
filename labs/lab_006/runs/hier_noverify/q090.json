@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q090",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "I can assist you further with reporting payment issues. To report a payment problem, please go to the Account Settings page, click on \"Payment\" and then select \"Report a Problem\". You will be guided through the process from there. If you need help with this step, feel free to ask.",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 714,
+  "latency_ms": 1368.4739170130342,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 66,
+      "completion_tokens": 2,
+      "total_tokens": 68,
+      "latency_ms": 131.40808400930837,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 499.8443750082515,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 61,
+      "total_tokens": 261,
+      "latency_ms": 737.2214579954743,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

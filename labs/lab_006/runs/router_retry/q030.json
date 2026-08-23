@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q030",
+  "category_true": "escalation",
+  "category_used": "escalation",
+  "answer": "I apologize for any inconvenience you've experienced with our business. To lodge a consumer complaint, please create a ticket with us. Our specialist will review your case within 24 hours and respond accordingly. The ticket reference is #ESC-1234.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1279,
+  "latency_ms": 2301.172624982428,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 18,
+      "total_tokens": 383,
+      "latency_ms": 509.50162499793805,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 37,
+      "total_tokens": 232,
+      "latency_ms": 566.4330419967882,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 18,
+      "total_tokens": 401,
+      "latency_ms": 514.409124996746,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 50,
+      "total_tokens": 263,
+      "latency_ms": 710.8288329909556,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

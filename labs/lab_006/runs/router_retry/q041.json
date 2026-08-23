@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q041",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "According to our billing policy, we accept payments through bank transfer, credit card (Visa, Mastercard, Amex), and PayPal. If you have any questions or concerns about your payment options, feel free to ask!",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1282,
+  "latency_ms": 1774.638666975079,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 419.0377499908209,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 18,
+      "total_tokens": 224,
+      "latency_ms": 317.106500006048,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 386,
+      "completion_tokens": 17,
+      "total_tokens": 403,
+      "latency_ms": 449.5868749800138,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 224,
+      "completion_tokens": 46,
+      "total_tokens": 270,
+      "latency_ms": 588.9075419981964,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

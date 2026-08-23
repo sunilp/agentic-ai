@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q075",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "I apologize for the unhelpful response earlier. To answer your question directly:\n\nTo demand reimbursements of your money, please contact our customer support team via phone or email with a detailed explanation of the issue and any relevant documentation. We will review your case and provide a reimbursement decision based on our company's policies and procedures.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 645,
+  "latency_ms": 1241.2754579854663,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 436.2837079970632,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 66,
+      "total_tokens": 263,
+      "latency_ms": 804.9917499884032,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

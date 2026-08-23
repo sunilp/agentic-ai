@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q004",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: I try to check purcbase {{Order Number}} status\nAnswer:\nTechnical support: standard delivery is 3 to 5 business days. Tracking is available from the Orders page once an item ships. Address changes are only possible before an order enters the shipped state.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1332,
+  "latency_ms": 2331.2160429777578,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 421.56379198422655,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 62,
+      "total_tokens": 264,
+      "latency_ms": 739.8167499923147,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 430.0039589870721,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 62,
+      "total_tokens": 282,
+      "latency_ms": 739.8315420141444,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

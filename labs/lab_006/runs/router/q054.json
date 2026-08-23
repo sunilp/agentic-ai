@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q054",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I can't provide information on closing an account. Would you like to write a review of our company instead?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 602,
+  "latency_ms": 785.952875012299,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 423.3703750069253,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 23,
+      "total_tokens": 220,
+      "latency_ms": 362.58250000537373,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

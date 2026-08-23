@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q009",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For switching to the {{Account Category}} account, you can go to your Account Settings and look for the option to switch or change your account type. If you're having trouble finding it, you can refer to our help article on managing your account settings. Is there anything else I can assist you with?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1336,
+  "latency_ms": 2234.5565010327846,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 371,
+      "completion_tokens": 17,
+      "total_tokens": 388,
+      "latency_ms": 413.89604200958274,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 56,
+      "total_tokens": 259,
+      "latency_ms": 673.5543330141809,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 389,
+      "completion_tokens": 17,
+      "total_tokens": 406,
+      "latency_ms": 425.8489590138197,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 221,
+      "completion_tokens": 62,
+      "total_tokens": 283,
+      "latency_ms": 721.2571669952013,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

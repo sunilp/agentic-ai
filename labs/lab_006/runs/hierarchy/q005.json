@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q005",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For more information on closing a freemium account, please refer to our knowledge base article on \"Closing Your Account\". This will provide you with detailed instructions on the process and any potential consequences.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2379,
+  "latency_ms": 5803.668210020987,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 132.44941699667834,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 485.01645799842663,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 53,
+      "total_tokens": 251,
+      "latency_ms": 655.3196670138277,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 138,
+      "completion_tokens": 53,
+      "total_tokens": 191,
+      "latency_ms": 1282.1514580282383,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 504.90462497691624,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 40,
+      "total_tokens": 256,
+      "latency_ms": 526.5073339978699,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 125,
+      "completion_tokens": 49,
+      "total_tokens": 174,
+      "latency_ms": 1185.6270839925855,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 506.2637920200359,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 40,
+      "total_tokens": 256,
+      "latency_ms": 525.4283749964088,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

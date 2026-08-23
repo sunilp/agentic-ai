@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q024",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can assist you with your account-related queries. Would you like to know more about a specific aspect of your account or would you like me to guide you through the process of accessing your account settings?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 682,
+  "latency_ms": 1273.1793750135694,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 180.4977499996312,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 517.8046670043841,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 41,
+      "total_tokens": 237,
+      "latency_ms": 574.8769580095541,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

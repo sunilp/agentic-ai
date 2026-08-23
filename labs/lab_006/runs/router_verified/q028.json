@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q028",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "You can check the current status of your restitution by logging into your account and looking for any updates or notifications related to your refund. If you're unable to find the information, you can also contact our customer support team for assistance.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2455,
+  "latency_ms": 6092.05454000039,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 427.05704100080766,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 132,
+      "total_tokens": 330,
+      "latency_ms": 1535.8083329920191,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 31,
+      "total_tokens": 247,
+      "latency_ms": 897.2435840114485,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 523.8197910075542,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 47,
+      "total_tokens": 262,
+      "latency_ms": 599.5342920068651,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 131,
+      "completion_tokens": 40,
+      "total_tokens": 171,
+      "latency_ms": 1000.2857079962268,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 511.12804099102505,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 47,
+      "total_tokens": 262,
+      "latency_ms": 597.1777499944437,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

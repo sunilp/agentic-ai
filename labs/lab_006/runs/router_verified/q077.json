@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q077",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "Based on the knowledge base, it appears that address changes are not possible after an order has entered the shipped state. If you'd like to make changes to your delivery address, please contact our customer service team as soon as possible so we can assist you with modifying your order before it ships.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2365,
+  "latency_ms": 6112.244958960218,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 459.4992909987923,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 52,
+      "total_tokens": 252,
+      "latency_ms": 639.3196249846369,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 135,
+      "completion_tokens": 43,
+      "total_tokens": 178,
+      "latency_ms": 1082.6509589969646,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 508.41599999694154,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 59,
+      "total_tokens": 276,
+      "latency_ms": 713.0458330211695,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 142,
+      "completion_tokens": 61,
+      "total_tokens": 203,
+      "latency_ms": 1475.2842499874532,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 510.40979198296554,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 59,
+      "total_tokens": 276,
+      "latency_ms": 723.6192089912947,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

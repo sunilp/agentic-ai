@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q019",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "For acquiring products, you can check your available balance or add a new payment method in the Account Settings > Payment Information section. If you have any issues with your account or need further assistance, please create a ticket for help.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1270,
+  "latency_ms": 2095.8430410246365,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 476.6148329945281,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 42,
+      "total_tokens": 236,
+      "latency_ms": 574.6074579947162,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 380,
+      "completion_tokens": 17,
+      "total_tokens": 397,
+      "latency_ms": 440.29312502243556,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 212,
+      "completion_tokens": 46,
+      "total_tokens": 258,
+      "latency_ms": 604.3276250129566,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

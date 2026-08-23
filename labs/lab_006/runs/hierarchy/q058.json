@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q058",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "For ordering several articles, I recommend visiting our online store and using the \"Add to Cart\" function for each item you'd like to purchase. You can also consider placing a bulk order by contacting our customer service team directly. Would you like me to assist with that?",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2314,
+  "latency_ms": 5902.374958066503,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 59,
+      "completion_tokens": 2,
+      "total_tokens": 61,
+      "latency_ms": 150.61308300937526,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 361,
+      "completion_tokens": 17,
+      "total_tokens": 378,
+      "latency_ms": 509.20170900644735,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 193,
+      "completion_tokens": 22,
+      "total_tokens": 215,
+      "latency_ms": 348.05120900273323,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 102,
+      "completion_tokens": 46,
+      "total_tokens": 148,
+      "latency_ms": 1097.7779160020873,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 379,
+      "completion_tokens": 17,
+      "total_tokens": 396,
+      "latency_ms": 507.33087499975227,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 211,
+      "completion_tokens": 55,
+      "total_tokens": 266,
+      "latency_ms": 751.2068330252077,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 135,
+      "completion_tokens": 53,
+      "total_tokens": 188,
+      "latency_ms": 1375.2027080045082,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 379,
+      "completion_tokens": 17,
+      "total_tokens": 396,
+      "latency_ms": 500.40770799387246,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 211,
+      "completion_tokens": 55,
+      "total_tokens": 266,
+      "latency_ms": 662.5829170225188,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

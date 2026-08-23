@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q072",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "I can't provide information on closing an account. Is there anything else I can help you with regarding your rebate request?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1235,
+  "latency_ms": 1564.8786250094417,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 419.03570902650245,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 20,
+      "total_tokens": 216,
+      "latency_ms": 337.73887497955,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 425.63445802079514,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 25,
+      "total_tokens": 239,
+      "latency_ms": 382.46958298259415,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

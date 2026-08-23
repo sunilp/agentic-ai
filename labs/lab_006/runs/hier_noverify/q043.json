@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q043",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a refund without more information. Can I help you with anything else?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 666,
+  "latency_ms": 1864.3334159860387,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 243.20054100826383,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 775.648791983258,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 19,
+      "total_tokens": 221,
+      "latency_ms": 845.4840829945169,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

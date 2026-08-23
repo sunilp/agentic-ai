@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q044",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can provide more information on your specific situation. Can you please provide me with your account ID so I can look into this further?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 611,
+  "latency_ms": 888.5637920175213,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 462.6010420033708,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 28,
+      "total_tokens": 230,
+      "latency_ms": 425.9627500141505,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

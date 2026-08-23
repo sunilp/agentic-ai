@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q027",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "Based on the knowledge base lookup, it appears that refunds are not typically offered for changes to account settings or subscription preferences. However, if you're experiencing issues with your account or would like to cancel your subscription, I can assist you with that. Would you like me to create a ticket for further assistance?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 703,
+  "latency_ms": 1376.6709999763407,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 138.20062499144115,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 486.03374999947846,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 62,
+      "total_tokens": 258,
+      "latency_ms": 752.4366249854211,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

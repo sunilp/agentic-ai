@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q092",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "I can assist you further with your issue. Would you like to create a ticket for the problem you're experiencing or check if there's a known KB article that addresses your concern?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 612,
+  "latency_ms": 991.1594169971067,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 487.45745900669135,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 37,
+      "total_tokens": 232,
+      "latency_ms": 503.7019579904154,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q051",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: I am calling to see how long the shipping takes\n\nA reviewer flagged the previous answer. Re-answer the question directly using the knowledge base.\n\nTechnical support: According to our knowledge, standard delivery typically takes 3 to 5 business days. For more information on tracking and address changes, please visit our Orders page.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1316,
+  "latency_ms": 2301.6928340366576,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 427.7547920064535,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 45,
+      "total_tokens": 245,
+      "latency_ms": 591.1187080200762,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 428.1434589938726,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 71,
+      "total_tokens": 289,
+      "latency_ms": 854.6758750162553,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

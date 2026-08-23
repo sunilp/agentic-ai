@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q050",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "For shopping items, you can find them in the \"My Orders\" section of your account. If you're having trouble locating a specific item, you can try searching for it on our website or contacting us for assistance.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2245,
+  "latency_ms": 4720.528041012585,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 438.67320800200105,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 51,
+      "total_tokens": 245,
+      "latency_ms": 642.152000014903,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 132,
+      "completion_tokens": 21,
+      "total_tokens": 153,
+      "latency_ms": 598.2778749894351,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 380,
+      "completion_tokens": 17,
+      "total_tokens": 397,
+      "latency_ms": 508.615083002951,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 212,
+      "completion_tokens": 45,
+      "total_tokens": 257,
+      "latency_ms": 583.973667002283,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 126,
+      "completion_tokens": 34,
+      "total_tokens": 160,
+      "latency_ms": 866.0276659938972,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 380,
+      "completion_tokens": 17,
+      "total_tokens": 397,
+      "latency_ms": 505.04237500717863,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 212,
+      "completion_tokens": 45,
+      "total_tokens": 257,
+      "latency_ms": 577.7661669999361,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q015",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can't help with that, as I don't have access to your account information. Please contact our customer service team directly for assistance with your order. \n\nWould you like me to create a ticket for you?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 694,
+  "latency_ms": 1207.5409579556435,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 146.99070798815228,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 491.99695797869936,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 44,
+      "total_tokens": 245,
+      "latency_ms": 568.5532919887919,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

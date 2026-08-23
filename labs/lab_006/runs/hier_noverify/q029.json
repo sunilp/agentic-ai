@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q029",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I'll check on any exceptions for your account. Can you please provide your account ID?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 660,
+  "latency_ms": 948.7904169945978,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 61,
+      "completion_tokens": 2,
+      "total_tokens": 63,
+      "latency_ms": 133.45983400358818,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 488.09845800860785,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 19,
+      "total_tokens": 217,
+      "latency_ms": 327.23212498240173,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

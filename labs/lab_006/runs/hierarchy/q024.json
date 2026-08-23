@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q024",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For custom customer assistance, please create a ticket with our support team using the \"Create Ticket\" tool. This will allow you to provide more detailed information about your issue and receive a response from our support agents.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2305,
+  "latency_ms": 5020.681876048911,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 148.44641700619832,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 507.4439999880269,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 41,
+      "total_tokens": 237,
+      "latency_ms": 553.282125008991,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 124,
+      "completion_tokens": 36,
+      "total_tokens": 160,
+      "latency_ms": 952.0969590230379,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 506.01075001759455,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 43,
+      "total_tokens": 257,
+      "latency_ms": 571.2008329865057,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 126,
+      "completion_tokens": 25,
+      "total_tokens": 151,
+      "latency_ms": 706.1709580011666,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 513.8168340199627,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 43,
+      "total_tokens": 257,
+      "latency_ms": 562.2129999974277,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

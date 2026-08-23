@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q066",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "We don't have a specific \"submit feedback\" method for accounts, but you can reach out to us through our contact page or by creating a ticket with your concerns. This will allow our team to assist you in providing feedback that can help improve our services.",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 697,
+  "latency_ms": 1268.3677919849288,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 137.6436660066247,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 478.90170899336226,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 53,
+      "total_tokens": 250,
+      "latency_ms": 651.8224169849418,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q080",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "You can view your shipment options by checking the tracking information on the Orders page, which will be available once your item has shipped. You can also visit our website and sign in to your account to access this feature. If you have any further questions or concerns, please feel free to ask.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1325,
+  "latency_ms": 2191.5407500055153,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 371,
+      "completion_tokens": 17,
+      "total_tokens": 388,
+      "latency_ms": 424.7185830026865,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 44,
+      "total_tokens": 250,
+      "latency_ms": 578.1699999934062,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 388,
+      "completion_tokens": 17,
+      "total_tokens": 405,
+      "latency_ms": 455.38604201283306,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 223,
+      "completion_tokens": 59,
+      "total_tokens": 282,
+      "latency_ms": 733.2661249965895,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

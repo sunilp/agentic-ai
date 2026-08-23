@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q082",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "You can view the status of your order {{Order Number}} on our website by following these steps:\n\n1. Sign in to your account.\n2. Click on \"Orders\" in the top navigation menu.\n3. Find your order {{Order Number}} and click on it.\n4. Scroll down to the \"Tracking Information\" section to view the current status of your shipment.\n\nIf you have any further questions or concerns, please don't hesitate to contact us.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2412,
+  "latency_ms": 6400.607124000089,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 517.5710409821477,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 30,
+      "total_tokens": 231,
+      "latency_ms": 456.1495000089053,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 114,
+      "completion_tokens": 41,
+      "total_tokens": 155,
+      "latency_ms": 1011.1398750159424,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 509.24412498716265,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 93,
+      "total_tokens": 311,
+      "latency_ms": 1168.8284999981988,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 177,
+      "completion_tokens": 44,
+      "total_tokens": 221,
+      "latency_ms": 1126.1476250074338,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 500.97024999558926,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 93,
+      "total_tokens": 311,
+      "latency_ms": 1110.5562080047093,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

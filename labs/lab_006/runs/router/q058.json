@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q058",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: i need help ordering several articles\nAnswer:\nYou can place multiple orders at once by adding items to your cart and proceeding to checkout. Please note that each order is processed separately, so you will receive a separate order confirmation and tracking information for each item. If you have any questions or concerns about placing multiple orders, I'd be happy to help further.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 653,
+  "latency_ms": 1528.3402909699362,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 361,
+      "completion_tokens": 17,
+      "total_tokens": 378,
+      "latency_ms": 532.0530409808271,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 79,
+      "total_tokens": 275,
+      "latency_ms": 996.2872499891091,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

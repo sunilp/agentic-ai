@@ -1,0 +1,87 @@
+{
+  "system": "hierarchy",
+  "query_id": "q090",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "For reporting payment problems, you can follow these steps:\n\n1. Go to your Account Settings.\n2. Click on \"Payment Methods\" or \"Payment Information\".\n3. Look for the specific payment method that's causing issues (e.g., credit card, bank account).\n4. Follow the prompts to report any errors or discrepancies.\n\nIf you're unable to resolve the issue through these steps, consider creating a ticket with our support team for further assistance.",
+  "model_calls": 7,
+  "tool_calls": 2,
+  "total_tokens": 1816,
+  "latency_ms": 4777.583958988544,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 66,
+      "completion_tokens": 2,
+      "total_tokens": 68,
+      "latency_ms": 138.93625000491738,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 507.56904200534336,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 61,
+      "total_tokens": 261,
+      "latency_ms": 741.5745839825831,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 148,
+      "completion_tokens": 53,
+      "total_tokens": 201,
+      "latency_ms": 1291.3725830148906,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 386,
+      "completion_tokens": 17,
+      "total_tokens": 403,
+      "latency_ms": 503.9769999857526,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 91,
+      "total_tokens": 309,
+      "latency_ms": 1167.6145840028767,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 178,
+      "completion_tokens": 11,
+      "total_tokens": 189,
+      "latency_ms": 426.5399159921799,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": true
+  }
+}

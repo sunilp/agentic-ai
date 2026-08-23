@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q086",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I apologize for not providing a direct answer earlier. To see the allowed payment methods, you can log into your account and navigate to the \"Payment Methods\" section. Alternatively, you can contact our customer support team, and we'll be happy to assist you with that information. \n\nWould you like me to create a ticket for this issue?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 660,
+  "latency_ms": 1388.8435419939924,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 542.2573749965522,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 69,
+      "total_tokens": 275,
+      "latency_ms": 846.5861669974402,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

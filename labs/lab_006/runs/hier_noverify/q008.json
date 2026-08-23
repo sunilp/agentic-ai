@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q008",
+  "category_true": "account",
+  "category_used": "technical",
+  "answer": "I can't help you with that, as I don't have information on shipping options or address changes. However, I can call kb_lookup to see if there's any additional information on this topic in our knowledge base. \n\nPlease wait for a moment while I check the knowledge base... \n\nOkay, according to the knowledge base, if an order has already shipped, it is not possible to make changes to the shipping address. If you need to update your address, you can contact our customer service team and we will do our best to assist you.\n\nIs there anything else I can help you with?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 774,
+  "latency_ms": 1943.2404579711147,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 65,
+      "completion_tokens": 2,
+      "total_tokens": 67,
+      "latency_ms": 148.94137499504723,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 480.4187909758184,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 121,
+      "total_tokens": 323,
+      "latency_ms": 1313.880292000249,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

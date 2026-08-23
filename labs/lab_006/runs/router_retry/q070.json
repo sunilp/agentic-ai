@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q070",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "To delete a standard account, go to Account Settings, then click on \"Close Account\" at the bottom of the page. Please note that closing your account is a permanent action and will remove all associated data after 30 days. If you have any further questions or concerns, please create a ticket for assistance.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1330,
+  "latency_ms": 2516.215374984313,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 418.38854100205936,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 73,
+      "total_tokens": 270,
+      "latency_ms": 874.3132499803323,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 447.95724999858066,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 63,
+      "total_tokens": 278,
+      "latency_ms": 775.5563340033405,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

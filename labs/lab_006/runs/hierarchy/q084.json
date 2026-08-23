@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q084",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "Based on the knowledge base, it appears that you cannot file a consumer claim against our organization. Our organization is not a financial institution or a business entity that can be held liable for consumer claims. If you have any concerns or issues related to your account, I'd be happy to assist you with troubleshooting or providing information on how to resolve the issue.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2447,
+  "latency_ms": 5985.231501981616,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 159.07829199568368,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 520.1036670187023,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 71,
+      "total_tokens": 268,
+      "latency_ms": 909.5471249893308,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 154,
+      "completion_tokens": 25,
+      "total_tokens": 179,
+      "latency_ms": 735.8873749908525,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 507.1214589988813,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 71,
+      "total_tokens": 285,
+      "latency_ms": 896.8416670104489,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 154,
+      "completion_tokens": 31,
+      "total_tokens": 185,
+      "latency_ms": 860.675124975387,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 508.56666700565256,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 71,
+      "total_tokens": 285,
+      "latency_ms": 887.410124996677,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

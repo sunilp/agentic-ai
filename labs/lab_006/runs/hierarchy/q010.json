@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q010",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "Unfortunately, that answer doesn't address the customer's question about checking the expected delivery time of their order. Let me try again.\n\nAccording to our knowledge base, you can check the status of your order by logging into your account and clicking on \"Order History\". From there, you should be able to see the estimated delivery date for your order. If you're unable to find this information, please create a ticket and I'll be happy to assist you further.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2539,
+  "latency_ms": 6733.6941229586955,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 133.66958298138343,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 486.1846670100931,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 64,
+      "total_tokens": 262,
+      "latency_ms": 769.7459579794668,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 148,
+      "completion_tokens": 27,
+      "total_tokens": 175,
+      "latency_ms": 740.804290981032,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 503.6065830208827,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 93,
+      "total_tokens": 308,
+      "latency_ms": 1050.605332973646,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 177,
+      "completion_tokens": 60,
+      "total_tokens": 237,
+      "latency_ms": 1486.2775829969905,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 498.20312499650754,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 93,
+      "total_tokens": 308,
+      "latency_ms": 1064.5970000186935,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

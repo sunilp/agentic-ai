@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q099",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide information on billing policies or payment methods. Can I help you with something else?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 602,
+  "latency_ms": 852.6310409943108,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 504.7230829950422,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 21,
+      "total_tokens": 222,
+      "latency_ms": 347.90795799926855,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

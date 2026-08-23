@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q076",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I was unable to find any information on sending a comment for our products in the knowledge base (kb_lookup). Can I create a ticket for you to provide more details about your inquiry?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 685,
+  "latency_ms": 1128.469875024166,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 139.61600000038743,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 478.42575001413934,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 38,
+      "total_tokens": 236,
+      "latency_ms": 510.4281250096392,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

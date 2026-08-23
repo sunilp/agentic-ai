@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q039",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I was unable to find information on cancelling a purchase in the knowledge base. Can I create a ticket for you to speak with a customer support agent about cancelling your order?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 679,
+  "latency_ms": 1248.6282500030939,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 240.01149999094196,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 520.7999590202235,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 35,
+      "total_tokens": 232,
+      "latency_ms": 487.8167909919284,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

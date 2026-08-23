@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q067",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I couldn't find any information on writing a review about products in our knowledge base or account settings. Can I create a ticket for you to assist with this?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 686,
+  "latency_ms": 1140.442376025021,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 66,
+      "completion_tokens": 2,
+      "total_tokens": 68,
+      "latency_ms": 147.88720902288333,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 523.7605840084143,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 33,
+      "total_tokens": 233,
+      "latency_ms": 468.79458299372345,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

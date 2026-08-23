@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q039",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I'm sorry, but I was unable to locate information on cancelling a purchase with Order Number {{Order Number}} in our system. Would you like me to create a ticket for further assistance?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 621,
+  "latency_ms": 995.9448750014417,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 489.6844169998076,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 39,
+      "total_tokens": 239,
+      "latency_ms": 506.2604580016341,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

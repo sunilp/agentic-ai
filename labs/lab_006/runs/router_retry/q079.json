@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q079",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For creating a new {{Account Category}} account, you can start by visiting our website and clicking on the \"Create Account\" button. Fill out the required information, including your email address, password, and other details. You will also have the option to subscribe to our newsletter. If you need further assistance or have any questions about your account, feel free to ask.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1328,
+  "latency_ms": 2574.277709965827,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 475.7025419967249,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 59,
+      "total_tokens": 256,
+      "latency_ms": 739.7061669907998,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 463.72183397761546,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 75,
+      "total_tokens": 290,
+      "latency_ms": 895.1471670006867,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

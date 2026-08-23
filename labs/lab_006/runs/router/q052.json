@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q052",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "Sorry, but you don't have access to close a {{Account Type}} account as it is not available for your account type.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 606,
+  "latency_ms": 816.3870419957675,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 416.82337498059496,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 27,
+      "total_tokens": 224,
+      "latency_ms": 399.56366701517254,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

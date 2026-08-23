@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q007",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "Unfortunately, I can't provide information on available payment methods for your account. Can I help you with something else?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1289,
+  "latency_ms": 1908.7600409402512,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 429.5526249916293,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 205,
+      "completion_tokens": 51,
+      "total_tokens": 256,
+      "latency_ms": 638.7800829834305,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 448.68958299048245,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 223,
+      "completion_tokens": 24,
+      "total_tokens": 247,
+      "latency_ms": 391.737749974709,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

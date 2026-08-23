@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q009",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For switching to the {{Account Category}} account, you can go to your Account Settings and look for the option to switch or change your account type. If you're having trouble finding it, you can refer to our help article on managing your account settings. Is there anything else I can assist you with?",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2397,
+  "latency_ms": 5479.109208972659,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 371,
+      "completion_tokens": 17,
+      "total_tokens": 388,
+      "latency_ms": 410.6753339874558,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 56,
+      "total_tokens": 259,
+      "latency_ms": 666.3642080093268,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 146,
+      "completion_tokens": 38,
+      "total_tokens": 184,
+      "latency_ms": 974.1273330000695,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 389,
+      "completion_tokens": 17,
+      "total_tokens": 406,
+      "latency_ms": 508.8809169828892,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 221,
+      "completion_tokens": 62,
+      "total_tokens": 283,
+      "latency_ms": 725.0577079830691,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 152,
+      "completion_tokens": 36,
+      "total_tokens": 188,
+      "latency_ms": 943.7435420113616,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 389,
+      "completion_tokens": 17,
+      "total_tokens": 406,
+      "latency_ms": 503.7437920109369,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 221,
+      "completion_tokens": 62,
+      "total_tokens": 283,
+      "latency_ms": 746.5163749875501,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

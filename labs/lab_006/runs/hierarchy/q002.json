@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q002",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can assist you with your account-related inquiry. Would you like to know more about a specific setting or have any questions about closing your account?",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2210,
+  "latency_ms": 4297.06066698418,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 61,
+      "completion_tokens": 2,
+      "total_tokens": 63,
+      "latency_ms": 136.67700000223704,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 22,
+      "total_tokens": 385,
+      "latency_ms": 535.5139999883249,
+      "tool_calls": [
+        "account_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 186,
+      "completion_tokens": 23,
+      "total_tokens": 209,
+      "latency_ms": 352.50395801267587,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 105,
+      "completion_tokens": 27,
+      "total_tokens": 132,
+      "latency_ms": 701.1358749878127,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 504.90258299396373,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 30,
+      "total_tokens": 243,
+      "latency_ms": 433.06329200277105,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 112,
+      "completion_tokens": 27,
+      "total_tokens": 139,
+      "latency_ms": 698.25679200585,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 507.73904199013487,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 30,
+      "total_tokens": 243,
+      "latency_ms": 427.2681250004098,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

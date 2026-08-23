@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q094",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a refund or cancellation information for your specific bill #37777 without accessing your account information. Would you like me to create a ticket so I can assist you further?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 615,
+  "latency_ms": 987.6236660347786,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 361,
+      "completion_tokens": 17,
+      "total_tokens": 378,
+      "latency_ms": 481.3876660191454,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 38,
+      "total_tokens": 237,
+      "latency_ms": 506.2360000156332,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q025",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide information that may be used to circumvent billing policies. Is there anything else I can help you with?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 627,
+  "latency_ms": 957.4377920071129,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 373,
+      "completion_tokens": 17,
+      "total_tokens": 390,
+      "latency_ms": 556.7324169969652,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 211,
+      "completion_tokens": 26,
+      "total_tokens": 237,
+      "latency_ms": 400.7053750101477,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

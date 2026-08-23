@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q077",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "Based on the knowledge base, it appears that you cannot place an order from {{Delivery City}} as a delivery city. Our system only allows orders to be placed from our available locations. If you'd like to know more about our shipping options or have any other questions, I'm here to help!",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2419,
+  "latency_ms": 5732.912915060297,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 139.5763329928741,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 487.5579159997869,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 67,
+      "total_tokens": 264,
+      "latency_ms": 810.9817080257926,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 150,
+      "completion_tokens": 38,
+      "total_tokens": 188,
+      "latency_ms": 1049.9500420119148,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 513.7502090074122,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 61,
+      "total_tokens": 275,
+      "latency_ms": 746.5591660002246,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 144,
+      "completion_tokens": 28,
+      "total_tokens": 172,
+      "latency_ms": 736.0838750028051,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 511.6397080128081,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 61,
+      "total_tokens": 275,
+      "latency_ms": 736.8139580066781,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

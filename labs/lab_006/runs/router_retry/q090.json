@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q090",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "For payment problems, please contact our billing department at [phone number] or [email address]. They will be able to assist you with reporting any issues and provide guidance on next steps.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1301,
+  "latency_ms": 1985.1615009829402,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 427.60695901233703,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 45,
+      "total_tokens": 251,
+      "latency_ms": 580.0896250002552,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 386,
+      "completion_tokens": 17,
+      "total_tokens": 403,
+      "latency_ms": 459.46045898017474,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 224,
+      "completion_tokens": 38,
+      "total_tokens": 262,
+      "latency_ms": 518.0044579901733,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

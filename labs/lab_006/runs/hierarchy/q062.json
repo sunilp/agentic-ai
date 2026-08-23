@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q062",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "You can sign up to receive the corporate newsletter by going to your Account Settings and updating your newsletter preferences. This information is available in our knowledge base article on Account Settings.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2365,
+  "latency_ms": 5240.371916996082,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 130.56874999892898,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 486.4651249954477,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 80,
+      "total_tokens": 276,
+      "latency_ms": 905.1491669961251,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 163,
+      "completion_tokens": 36,
+      "total_tokens": 199,
+      "latency_ms": 941.9682500010822,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 508.4601659909822,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 35,
+      "total_tokens": 249,
+      "latency_ms": 471.187208982883,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 118,
+      "completion_tokens": 31,
+      "total_tokens": 149,
+      "latency_ms": 811.1850420245901,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 503.50233301287517,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 35,
+      "total_tokens": 249,
+      "latency_ms": 481.8858749931678,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

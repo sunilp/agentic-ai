@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q022",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can assist you with your account-related query. Would you like to know more about a specific aspect of your account or would you like me to guide you through the process of accessing your account settings?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1248,
+  "latency_ms": 1932.2197080473416,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 360,
+      "completion_tokens": 22,
+      "total_tokens": 382,
+      "latency_ms": 473.70341600617394,
+      "tool_calls": [
+        "account_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 183,
+      "completion_tokens": 37,
+      "total_tokens": 220,
+      "latency_ms": 485.31437502242625,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 378,
+      "completion_tokens": 17,
+      "total_tokens": 395,
+      "latency_ms": 431.3548750069458,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 210,
+      "completion_tokens": 41,
+      "total_tokens": 251,
+      "latency_ms": 541.8470420117956,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

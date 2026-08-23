@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q016",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "Unfortunately, our business is not liable for consumer complaints regarding products or services purchased from other companies. If you have concerns about a product or service, I suggest contacting the manufacturer or supplier directly. Is there anything else I can assist you with?",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2452,
+  "latency_ms": 6579.459499975201,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 143.65699997870252,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 507.0522500027437,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 72,
+      "total_tokens": 270,
+      "latency_ms": 871.7621249961667,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 157,
+      "completion_tokens": 73,
+      "total_tokens": 230,
+      "latency_ms": 1856.0121670016088,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 514.8369169910438,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 49,
+      "total_tokens": 265,
+      "latency_ms": 616.7024169990327,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 134,
+      "completion_tokens": 37,
+      "total_tokens": 171,
+      "latency_ms": 947.2776250040624,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 506.6265409986954,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 49,
+      "total_tokens": 265,
+      "latency_ms": 615.5324580031447,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

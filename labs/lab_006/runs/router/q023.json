@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q023",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[Category: Technical]\nCustomer: Can I see the status of my order {{Order Number}}?\n\n ETA not available as this is a standard delivery order. Standard delivery typically takes 3 to 5 business days. Tracking information will be available on the Orders page once the item has shipped.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 647,
+  "latency_ms": 1446.974666992901,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 545.8449170109816,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 59,
+      "total_tokens": 262,
+      "latency_ms": 901.1297499819193,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

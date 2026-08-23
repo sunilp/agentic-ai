@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q048",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "Sorry, but we don't currently offer {{Account Type}} accounts. Would you like to know more about our available account types or open a ticket for further assistance?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 675,
+  "latency_ms": 1107.3124170361552,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 138.04529199842364,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 487.9101670230739,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 34,
+      "total_tokens": 230,
+      "latency_ms": 481.3569580146577,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

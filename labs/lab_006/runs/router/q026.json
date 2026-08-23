@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q026",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can assist you with closing your platinum account. Would you like me to guide you through the process or provide more information on what happens after account closure?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 597,
+  "latency_ms": 957.8505420067813,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 358,
+      "completion_tokens": 17,
+      "total_tokens": 375,
+      "latency_ms": 521.7763340042438,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 190,
+      "completion_tokens": 32,
+      "total_tokens": 222,
+      "latency_ms": 436.0742080025375,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

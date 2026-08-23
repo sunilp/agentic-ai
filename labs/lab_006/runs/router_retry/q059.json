@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q059",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "For purchasing multiple articles, I recommend checking out our bulk purchase options or contacting our sales team directly for assistance. Is there anything else I can help you with?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1294,
+  "latency_ms": 2390.5391239968594,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 487.6395410101395,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 71,
+      "total_tokens": 267,
+      "latency_ms": 938.8367089850362,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 493.4857079933863,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 33,
+      "total_tokens": 247,
+      "latency_ms": 470.57716600829735,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

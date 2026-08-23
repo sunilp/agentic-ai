@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q095",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: can i place an oeder from {{Delivery City}}\nAnswer:\nTechnical support: standard delivery is 3 to 5 business days. Tracking is available from the Orders page once an item ships. Address changes are only possible before an order enters the shipped state.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1322,
+  "latency_ms": 2437.7495429944247,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 465.7232089957688,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 60,
+      "total_tokens": 261,
+      "latency_ms": 737.0564169832505,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 471.9335419940762,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 60,
+      "total_tokens": 278,
+      "latency_ms": 763.0363750213291,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

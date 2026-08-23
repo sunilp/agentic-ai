@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q015",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can't help with that, as I don't have access to your order number. Please contact our customer service team directly for assistance with locating your order. You can reach them at 1-800-123-4567 or through our website's Contact Us page.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2371,
+  "latency_ms": 5209.109374001855,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 131.56612499733455,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 507.82708398764953,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 44,
+      "total_tokens": 245,
+      "latency_ms": 568.7330829969142,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 128,
+      "completion_tokens": 31,
+      "total_tokens": 159,
+      "latency_ms": 811.2574999977369,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 510.88245800929144,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 56,
+      "total_tokens": 274,
+      "latency_ms": 698.7042910186574,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 140,
+      "completion_tokens": 30,
+      "total_tokens": 170,
+      "latency_ms": 794.8457919992507,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 504.49408299755305,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 56,
+      "total_tokens": 274,
+      "latency_ms": 680.7989579974674,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q032",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "I was unable to find information on the current status of a refund in our knowledge base. I recommend creating a ticket so that a customer support agent can assist you further. Would you like me to create a ticket for you?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 669,
+  "latency_ms": 1248.4701670182403,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 56,
+      "completion_tokens": 2,
+      "total_tokens": 58,
+      "latency_ms": 161.85495900572278,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 358,
+      "completion_tokens": 17,
+      "total_tokens": 375,
+      "latency_ms": 500.9492500103079,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 190,
+      "completion_tokens": 46,
+      "total_tokens": 236,
+      "latency_ms": 585.6659580022097,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

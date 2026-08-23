@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q099",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "For listing allowed payment methods, please log in to your account and navigate to the \"Payment Methods\" section under Account Settings. Here you can view and manage the accepted payment methods for your account.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2284,
+  "latency_ms": 5280.46050001285,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 61,
+      "completion_tokens": 2,
+      "total_tokens": 63,
+      "latency_ms": 133.9897919970099,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 490.41333299828693,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 25,
+      "total_tokens": 220,
+      "latency_ms": 380.5382499995176,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 107,
+      "completion_tokens": 37,
+      "total_tokens": 144,
+      "latency_ms": 911.1508330097422,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 501.9412499968894,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 40,
+      "total_tokens": 253,
+      "latency_ms": 532.7222499763593,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 122,
+      "completion_tokens": 53,
+      "total_tokens": 175,
+      "latency_ms": 1279.3635000125505,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 515.2546250028536,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 40,
+      "total_tokens": 253,
+      "latency_ms": 535.086667019641,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

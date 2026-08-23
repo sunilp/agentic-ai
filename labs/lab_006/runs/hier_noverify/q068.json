@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q068",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "To lodge a reclamation, please go to the Account Settings page and look for the \"Reclaim\" or \"Cancel Subscription\" option. If you're unable to find this option, you can contact our customer support team for assistance.",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 698,
+  "latency_ms": 1221.706998971058,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 65,
+      "completion_tokens": 2,
+      "total_tokens": 67,
+      "latency_ms": 133.53241598815657,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 486.92533298162743,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 48,
+      "total_tokens": 247,
+      "latency_ms": 601.249250001274,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

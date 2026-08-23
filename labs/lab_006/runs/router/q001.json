@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q001",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I couldn't find any information on ordering articles in our knowledge base. Can I create a ticket for you?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 603,
+  "latency_ms": 1036.6440420330036,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 513.6460000067018,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 23,
+      "total_tokens": 222,
+      "latency_ms": 522.9980420263018,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

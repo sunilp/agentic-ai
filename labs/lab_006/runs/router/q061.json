@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q061",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "To write a comment for the service, you can follow these steps:\n\n1. Log in to your account.\n2. Go to Account Settings.\n3. Look for the \"Comment\" or \"Feedback\" section.\n4. Type your comment in the provided field.\n5. Click \"Submit\" to send your comment.\n\nIf you need more detailed instructions or have any issues, please let me know and I'll be happy to assist you further.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 679,
+  "latency_ms": 1526.0464579914697,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 370,
+      "completion_tokens": 17,
+      "total_tokens": 387,
+      "latency_ms": 485.66445798496716,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 90,
+      "total_tokens": 292,
+      "latency_ms": 1040.3820000065025,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

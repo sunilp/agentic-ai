@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q061",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "For writing a comment for a service, you can follow these steps:\n\n1. Log in to your account on our website.\n2. Click on the \"Account\" dropdown menu at the top right corner of the page.\n3. Select \"My Profile\" from the dropdown menu.\n4. Scroll down to the \"Comment\" section and click on \"Write a comment\".\n5. Enter your comment in the text box provided.\n6. Click \"Submit\" to post your comment.\n\nIf you have any issues or need further assistance, please contact our customer support team.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1416,
+  "latency_ms": 3394.763874995988,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 370,
+      "completion_tokens": 17,
+      "total_tokens": 387,
+      "latency_ms": 456.7445409775246,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 90,
+      "total_tokens": 292,
+      "latency_ms": 1051.9542090187315,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 387,
+      "completion_tokens": 17,
+      "total_tokens": 404,
+      "latency_ms": 484.0454579971265,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 114,
+      "total_tokens": 333,
+      "latency_ms": 1402.0196670026053,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

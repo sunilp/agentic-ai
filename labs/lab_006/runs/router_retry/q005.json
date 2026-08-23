@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q005",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For more information on closing a freemium account, please refer to our knowledge base article on \"Closing Your Account\". This will provide you with detailed instructions on the process and any potential consequences.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1291,
+  "latency_ms": 2021.8712099594995,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 431.61616698489524,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 53,
+      "total_tokens": 251,
+      "latency_ms": 654.3823340034578,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 421.62183398613706,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 40,
+      "total_tokens": 256,
+      "latency_ms": 514.2508749850094,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

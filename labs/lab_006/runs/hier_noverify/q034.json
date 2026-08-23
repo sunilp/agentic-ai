@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q034",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For more information on updating your {{ Account Type }} account, please visit our Account Settings page or contact us at [insert contact info].",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 666,
+  "latency_ms": 1323.5079159785528,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 61,
+      "completion_tokens": 2,
+      "total_tokens": 63,
+      "latency_ms": 213.1738329771906,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 597.2853749990463,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 28,
+      "total_tokens": 223,
+      "latency_ms": 513.0487080023158,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q053",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can't help with that. Is there anything else I can assist you with?",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2122,
+  "latency_ms": 3808.725459035486,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 422.59687499608845,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 16,
+      "total_tokens": 216,
+      "latency_ms": 292.2890830086544,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 99,
+      "completion_tokens": 30,
+      "total_tokens": 129,
+      "latency_ms": 767.9950410092715,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 508.258209010819,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 18,
+      "total_tokens": 235,
+      "latency_ms": 321.3330419966951,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 101,
+      "completion_tokens": 26,
+      "total_tokens": 127,
+      "latency_ms": 673.4492090181448,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 509.57458300399594,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 18,
+      "total_tokens": 235,
+      "latency_ms": 313.22941699181683,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

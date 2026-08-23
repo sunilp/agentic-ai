@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q062",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "You can sign up to receive the corporate newsletter by going to your Account Settings and updating your newsletter preferences. This information is available in our knowledge base article on Account Settings.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1305,
+  "latency_ms": 2439.8926670255605,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 484.098625020124,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 80,
+      "total_tokens": 276,
+      "latency_ms": 1021.3740000035614,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 443.3463340101298,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 35,
+      "total_tokens": 249,
+      "latency_ms": 491.0737079917453,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

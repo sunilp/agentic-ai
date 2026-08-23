@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q037",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can't help with that. Is there anything else I can assist you with?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 674,
+  "latency_ms": 986.7305839725304,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 66,
+      "completion_tokens": 2,
+      "total_tokens": 68,
+      "latency_ms": 144.30220899521373,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 520.2369999897201,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 18,
+      "total_tokens": 221,
+      "latency_ms": 322.19137498759665,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

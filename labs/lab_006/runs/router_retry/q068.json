@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q068",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "To lodge a reclamation, please contact our customer support team directly. They will be able to assist you with the process. You can reach them by calling our dedicated phone number or submitting a request through our website.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1292,
+  "latency_ms": 2049.834333010949,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 428.16362500889227,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 48,
+      "total_tokens": 247,
+      "latency_ms": 612.214541004505,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 437.8359999973327,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 44,
+      "total_tokens": 260,
+      "latency_ms": 571.6201670002192,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

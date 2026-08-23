@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q096",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "Here's a more detailed answer:\n\nYou can choose from the following delivery methods:\n\n* Standard Delivery (3-5 business days): This is our most cost-effective option, with tracking available from the Orders page once your item has shipped.\n* Expedited Delivery (1-2 business days): For an additional fee, you can upgrade to expedited shipping, which guarantees faster delivery times and also includes tracking.\n\nPlease note that address changes are only possible before an order enters the \"shipped\" state. If you need to make changes after your order has shipped, please contact our customer service team for assistance.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2501,
+  "latency_ms": 7165.157372975955,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 475.73483298765495,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 33,
+      "total_tokens": 234,
+      "latency_ms": 478.60104200663045,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 117,
+      "completion_tokens": 39,
+      "total_tokens": 156,
+      "latency_ms": 974.1144999861717,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 498.8427500065882,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 122,
+      "total_tokens": 340,
+      "latency_ms": 1500.4376659926493,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 42,
+      "total_tokens": 248,
+      "latency_ms": 1132.2122080018744,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 547.4464159924537,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 122,
+      "total_tokens": 340,
+      "latency_ms": 1557.7679580019321,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

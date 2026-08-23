@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q030",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "Sorry, but I can't provide information or guidance on how to lodge a consumer complaint against our business. If you have a concern about your experience with us, I recommend reaching out to our customer support team directly so we can assist you further. Is there anything else I can help you with?",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2424,
+  "latency_ms": 6323.938623070717,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 173.10383301810361,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 509.6037909970619,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 51,
+      "total_tokens": 248,
+      "latency_ms": 641.6566249972675,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 135,
+      "completion_tokens": 43,
+      "total_tokens": 178,
+      "latency_ms": 1100.6445830280427,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 510.2644160215277,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 60,
+      "total_tokens": 275,
+      "latency_ms": 746.3859999843407,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 144,
+      "completion_tokens": 57,
+      "total_tokens": 201,
+      "latency_ms": 1410.1628749922384,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 504.3143750226591,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 60,
+      "total_tokens": 275,
+      "latency_ms": 727.8021250094753,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

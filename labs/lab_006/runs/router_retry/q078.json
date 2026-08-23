@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q078",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "According to our billing policy, you can request a refund in the following situations:\n\n* If you cancel your plan within the first 30 days of an annual subscription and choose to downgrade or terminate your service.\n* If there's an error on our part that resulted in incorrect charges or billing.\n\nRefunds for other reasons, such as changes in personal circumstances or simply deciding not to use the service, are subject to a cancellation fee. Refunds are processed within 5-7 business days and will be credited back to your original payment method.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1401,
+  "latency_ms": 3128.537332988344,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 455.0604159885552,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 205,
+      "completion_tokens": 78,
+      "total_tokens": 283,
+      "latency_ms": 930.5252920021303,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 473.3187500096392,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 223,
+      "completion_tokens": 109,
+      "total_tokens": 332,
+      "latency_ms": 1269.6328749880195,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

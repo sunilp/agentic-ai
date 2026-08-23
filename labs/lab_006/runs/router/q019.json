@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q019",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I was unable to find information on acquiring products in the knowledge base. I'm going to create a ticket for you so that a human can assist you further. Please wait for a representative to contact you.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 615,
+  "latency_ms": 967.6837069855537,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 420.1106659893412,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 42,
+      "total_tokens": 236,
+      "latency_ms": 547.5730409962125,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

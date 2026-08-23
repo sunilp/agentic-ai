@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q058",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I can't provide information on closing a permanent account. Would you like to know more about ordering articles?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 654,
+  "latency_ms": 1094.7247500298545,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 59,
+      "completion_tokens": 2,
+      "total_tokens": 61,
+      "latency_ms": 187.33387501561083,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 361,
+      "completion_tokens": 17,
+      "total_tokens": 378,
+      "latency_ms": 532.3236660042312,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 193,
+      "completion_tokens": 22,
+      "total_tokens": 215,
+      "latency_ms": 375.06720901001245,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

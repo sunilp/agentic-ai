@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q057",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "For more information on managing your account, please visit our Account Settings page: [link to Account Settings](kb_lookup 'Account Settings').",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1241,
+  "latency_ms": 1874.885000026552,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 686.9427500059828,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 23,
+      "total_tokens": 219,
+      "latency_ms": 354.16849999455735,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 422.3859580233693,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 28,
+      "total_tokens": 242,
+      "latency_ms": 411.3877920026425,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

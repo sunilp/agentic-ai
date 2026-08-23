@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q025",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide information that may be used to circumvent billing policies. Is there anything else I can help you with?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 700,
+  "latency_ms": 1032.9728760116268,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 71,
+      "completion_tokens": 2,
+      "total_tokens": 73,
+      "latency_ms": 133.07379200705327,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 373,
+      "completion_tokens": 17,
+      "total_tokens": 390,
+      "latency_ms": 504.8574169923086,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 211,
+      "completion_tokens": 26,
+      "total_tokens": 237,
+      "latency_ms": 395.04166701226495,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

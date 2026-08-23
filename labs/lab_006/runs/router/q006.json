@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q006",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can't provide information that could be used to access someone else's account. If you are trying to recover your own account PIN code, I recommend checking the help center for more information on password recovery: https://help.example.com/article/1234-recovering-your-password",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 630,
+  "latency_ms": 1090.7927929947618,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 416.87345900572836,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 55,
+      "total_tokens": 250,
+      "latency_ms": 673.9193339890335,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

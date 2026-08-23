@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q034",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For more information on updating your {{ Account Type }} account, please visit our Account Settings page or contact us at [insert contact info].",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 603,
+  "latency_ms": 943.0299579980783,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 527.1496250061318,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 28,
+      "total_tokens": 223,
+      "latency_ms": 415.8803329919465,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q074",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "For available payment modalities, you can find the following options in your Account Settings:\n\n* Profile\n* Password\n* Newsletter\n* Subscription\n\nPlease note that closing an account is a permanent action and will remove all saved data after 30 days.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2325,
+  "latency_ms": 5406.118000013521,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 61,
+      "completion_tokens": 2,
+      "total_tokens": 63,
+      "latency_ms": 133.1348749808967,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 497.1548749890644,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 34,
+      "total_tokens": 229,
+      "latency_ms": 476.2792499968782,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 116,
+      "completion_tokens": 44,
+      "total_tokens": 160,
+      "latency_ms": 1078.995166986715,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 506.6590000060387,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 51,
+      "total_tokens": 264,
+      "latency_ms": 638.7687080132309,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 133,
+      "completion_tokens": 36,
+      "total_tokens": 169,
+      "latency_ms": 906.118333019549,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 512.7376670134254,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 51,
+      "total_tokens": 264,
+      "latency_ms": 656.2701250077225,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

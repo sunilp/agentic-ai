@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q081",
+  "category_true": "escalation",
+  "category_used": "billing",
+  "answer": "I can't provide a refund or cancellation policy. However, I can guide you on how to submit your feedback for a product. To do this, please contact our customer support team directly and we will be happy to assist you with submitting your feedback. \n\nWould you like me to create a ticket for you?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 652,
+  "latency_ms": 1390.734957967652,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 577.6722499867901,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 205,
+      "completion_tokens": 63,
+      "total_tokens": 268,
+      "latency_ms": 813.0627079808619,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q073",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I couldn't find any information on tracking or estimated delivery times in our knowledge base. I'm going to create a ticket for you so we can look into this further. Would you like me to proceed?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 693,
+  "latency_ms": 1178.329542017309,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 65,
+      "completion_tokens": 2,
+      "total_tokens": 67,
+      "latency_ms": 131.7280000075698,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 491.3750840059947,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 42,
+      "total_tokens": 243,
+      "latency_ms": 555.2264580037445,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

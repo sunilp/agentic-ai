@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q010",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: how to check how soon can I expect the order?\n\nAnswer:\nOur standard delivery time is 3 to 5 business days. You can track your order on our website by logging into your account and visiting the Orders page once it has shipped.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 641,
+  "latency_ms": 1174.4302090082783,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 480.9219999879133,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 57,
+      "total_tokens": 258,
+      "latency_ms": 693.508209020365,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

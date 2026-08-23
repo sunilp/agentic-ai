@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q011",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "Based on the knowledge base lookup, the answer is:\n\nYou can list your allowed payment options by going to Account Settings.",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 663,
+  "latency_ms": 1010.4760000249371,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 61,
+      "completion_tokens": 2,
+      "total_tokens": 63,
+      "latency_ms": 131.8692920031026,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 488.4725830052048,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 25,
+      "total_tokens": 220,
+      "latency_ms": 390.1341250166297,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

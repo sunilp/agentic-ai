@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q049",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For issues with signing up, could you please try resetting your password or contact our support team for further assistance?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1255,
+  "latency_ms": 1757.0110420347191,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 417.68708400195464,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 42,
+      "total_tokens": 238,
+      "latency_ms": 549.0258750214707,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 426.36433299048804,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 23,
+      "total_tokens": 237,
+      "latency_ms": 363.93375002080575,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

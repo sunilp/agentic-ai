@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q043",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a refund for a cancellation fee. Would you like me to look up more information on our billing policy?",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2230,
+  "latency_ms": 5072.60887499433,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 184.58029101020657,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 592.5302089890465,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 19,
+      "total_tokens": 221,
+      "latency_ms": 389.4757079833653,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 102,
+      "completion_tokens": 25,
+      "total_tokens": 127,
+      "latency_ms": 820.5134579911828,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 585.5005420162342,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 26,
+      "total_tokens": 246,
+      "latency_ms": 463.7830420106184,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 109,
+      "completion_tokens": 38,
+      "total_tokens": 147,
+      "latency_ms": 1021.9097499793861,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 568.973042012658,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 26,
+      "total_tokens": 246,
+      "latency_ms": 445.34283300163224,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

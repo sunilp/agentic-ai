@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q074",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "Based on our billing policy, the available payment modalities for refunds are:\n\n* Original payment method (e.g., credit card, bank transfer)\n\nPlease note that cancellation fees may apply if you cancel your plan within the first 30 days of signing up for an annual plan.\n\nIf you have any further questions or concerns, feel free to ask!",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1359,
+  "latency_ms": 2820.239375025267,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 452.67837500432506,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 91,
+      "total_tokens": 292,
+      "latency_ms": 1068.3671670267358,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 460.8558749896474,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 70,
+      "total_tokens": 289,
+      "latency_ms": 838.3379580045585,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

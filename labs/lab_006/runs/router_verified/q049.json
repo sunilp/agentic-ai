@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q049",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For issues with signing up, could you please try resetting your password or contact our support team for further assistance?",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2191,
+  "latency_ms": 4467.750084004365,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 424.9767500150483,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 42,
+      "total_tokens": 238,
+      "latency_ms": 556.7372090008575,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 125,
+      "completion_tokens": 29,
+      "total_tokens": 154,
+      "latency_ms": 770.0237919925712,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 506.8309170019347,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 23,
+      "total_tokens": 237,
+      "latency_ms": 359.7472500114236,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 106,
+      "completion_tokens": 40,
+      "total_tokens": 146,
+      "latency_ms": 968.6615829996299,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 509.1610829986166,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 23,
+      "total_tokens": 237,
+      "latency_ms": 371.611499984283,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

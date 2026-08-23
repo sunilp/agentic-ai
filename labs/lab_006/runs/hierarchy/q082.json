@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q082",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "You can view the status of your order {{Order Number}} by logging into your account and checking the \"Orders\" section under Account Settings. This will provide you with detailed information on the current status of your order, including any updates or changes made to it.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2357,
+  "latency_ms": 6500.804582989076,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 160.82633400219493,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 528.5115409933496,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 23,
+      "total_tokens": 221,
+      "latency_ms": 376.68750001466833,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 107,
+      "completion_tokens": 35,
+      "total_tokens": 142,
+      "latency_ms": 896.8854999984615,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 521.8266659940127,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 53,
+      "total_tokens": 268,
+      "latency_ms": 754.8649999953341,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 137,
+      "completion_tokens": 72,
+      "total_tokens": 209,
+      "latency_ms": 1836.0896249942016,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 635.706625005696,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 53,
+      "total_tokens": 268,
+      "latency_ms": 789.4057919911575,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

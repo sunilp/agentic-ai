@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q083",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For changing your account type, I recommend visiting our Account Settings page where you can manage your {{Account Type}} account details. If you need further assistance or have questions about the process, please create a ticket with us.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 636,
+  "latency_ms": 1275.8306249743327,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 371,
+      "completion_tokens": 17,
+      "total_tokens": 388,
+      "latency_ms": 535.2881659928244,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 45,
+      "total_tokens": 248,
+      "latency_ms": 740.5424589815084,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

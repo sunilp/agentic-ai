@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q018",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "For purchasing articles, you can add them to your cart or wishlist directly from the product page. If you need assistance with placing an order, I can create a ticket for you. Would you like me to proceed?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1241,
+  "latency_ms": 1746.3699999789242,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 360,
+      "completion_tokens": 17,
+      "total_tokens": 377,
+      "latency_ms": 421.59079198609106,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 192,
+      "completion_tokens": 23,
+      "total_tokens": 215,
+      "latency_ms": 339.54983300645836,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 378,
+      "completion_tokens": 17,
+      "total_tokens": 395,
+      "latency_ms": 422.9075000039302,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 210,
+      "completion_tokens": 44,
+      "total_tokens": 254,
+      "latency_ms": 562.3218749824446,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

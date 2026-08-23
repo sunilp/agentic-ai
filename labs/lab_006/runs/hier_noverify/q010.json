@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q010",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I apologize for not providing a direct answer to your question. To check the status of your order, I recommend checking the Order Status page in your account. You can also contact our customer support team for more information on when you can expect your order to be shipped. Is there anything else I can help you with?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 711,
+  "latency_ms": 1377.2603329853155,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 140.2481659897603,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 477.6910840009805,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 64,
+      "total_tokens": 262,
+      "latency_ms": 759.3210829945747,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

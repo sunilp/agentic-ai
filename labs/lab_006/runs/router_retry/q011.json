@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q011",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "According to our billing policy, you can list your allowed payment options on the account dashboard or by contacting our customer support team for more information.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1267,
+  "latency_ms": 1834.4566659943666,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 460.76225000433624,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 42,
+      "total_tokens": 243,
+      "latency_ms": 532.2508749959525,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 380,
+      "completion_tokens": 17,
+      "total_tokens": 397,
+      "latency_ms": 421.8723329831846,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 29,
+      "total_tokens": 247,
+      "latency_ms": 419.5712080108933,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

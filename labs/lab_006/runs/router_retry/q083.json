@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q083",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For changing to a different account type, you can follow these steps:\n\n1. Go to your Account Settings.\n2. Click on the \"Account Type\" dropdown menu.\n3. Select your desired account type from the list.\n\nIf you need further assistance or have any questions about this process, feel free to ask!",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1327,
+  "latency_ms": 3104.8300440015737,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 371,
+      "completion_tokens": 17,
+      "total_tokens": 388,
+      "latency_ms": 575.1414170081262,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 45,
+      "total_tokens": 248,
+      "latency_ms": 806.1185839760583,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 389,
+      "completion_tokens": 17,
+      "total_tokens": 406,
+      "latency_ms": 601.2918339984026,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 221,
+      "completion_tokens": 64,
+      "total_tokens": 285,
+      "latency_ms": 1122.2782090189867,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

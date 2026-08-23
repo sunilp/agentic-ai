@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q064",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't help with that. Is there anything else I can assist you with?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1255,
+  "latency_ms": 1619.0573739877436,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 467.6491660065949,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 205,
+      "completion_tokens": 23,
+      "total_tokens": 228,
+      "latency_ms": 355.37699999986216,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 465.84470800007693,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 223,
+      "completion_tokens": 18,
+      "total_tokens": 241,
+      "latency_ms": 330.18649998120964,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

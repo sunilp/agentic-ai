@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q093",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "For leaving a review for a product you need help with, I recommend visiting our Help & Support page and clicking on the \"Leave a Review\" button. This will allow you to provide feedback on your experience with our product and service. If you have any further questions or concerns, feel free to ask!",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1333,
+  "latency_ms": 2434.480124997208,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 369,
+      "completion_tokens": 17,
+      "total_tokens": 386,
+      "latency_ms": 436.26429099822417,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 61,
+      "total_tokens": 262,
+      "latency_ms": 747.1688340010587,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 387,
+      "completion_tokens": 17,
+      "total_tokens": 404,
+      "latency_ms": 460.40320800966583,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 62,
+      "total_tokens": 281,
+      "latency_ms": 790.6437919882592,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

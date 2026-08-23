@@ -1,0 +1,58 @@
+{
+  "system": "hierarchy",
+  "query_id": "q001",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I apologize for any frustration caused by the previous response. To answer your question directly:\n\nYou can order multiple articles by selecting all the desired items on a single page, then proceeding to checkout. Alternatively, you can add items individually from different pages and complete the checkout process. If you need assistance with placing an order or have questions about our ordering process, I'd be happy to help.",
+  "model_calls": 4,
+  "tool_calls": 1,
+  "total_tokens": 890,
+  "latency_ms": 1928.3770000038203,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 132.78725001146086,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 484.50679099187255,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 78,
+      "total_tokens": 274,
+      "latency_ms": 903.5994590085465,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 160,
+      "completion_tokens": 11,
+      "total_tokens": 171,
+      "latency_ms": 407.48349999194033,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": false,
+    "verifier_passed": true
+  }
+}

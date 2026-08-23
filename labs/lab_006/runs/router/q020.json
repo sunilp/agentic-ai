@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q020",
+  "category_true": "escalation",
+  "category_used": "billing",
+  "answer": "I'm happy to help you with your billing question. However, I noticed that you mentioned providing feedback about a product. Could you please clarify which product you would like to provide feedback on? Or if it's related to our billing service, I can try to assist you further.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 638,
+  "latency_ms": 1239.2275419842917,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 545.8232919918373,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 57,
+      "total_tokens": 258,
+      "latency_ms": 693.4042499924544,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

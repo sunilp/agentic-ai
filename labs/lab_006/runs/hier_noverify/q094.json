@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q094",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a refund or cancellation information for your specific bill #37777 without accessing your account information. Would you like me to create a ticket so I can assist you further?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 676,
+  "latency_ms": 1138.5460830060765,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 59,
+      "completion_tokens": 2,
+      "total_tokens": 61,
+      "latency_ms": 137.945333000971,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 361,
+      "completion_tokens": 17,
+      "total_tokens": 378,
+      "latency_ms": 502.68775000586174,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 38,
+      "total_tokens": 237,
+      "latency_ms": 497.91299999924377,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q051",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I apologize for not addressing your question about shipping times. According to our knowledge base, we do not have specific information on shipping times for individual orders. However, I can suggest checking the status of your order by logging into your account and looking for the \"Order Status\" section. If you need further assistance, please create a ticket and I'll be happy to help.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2423,
+  "latency_ms": 5741.07791602728,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 141.54070802032948,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 484.27816599723883,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 44,
+      "total_tokens": 241,
+      "latency_ms": 573.7997500109486,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 128,
+      "completion_tokens": 25,
+      "total_tokens": 153,
+      "latency_ms": 675.3918750036974,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 507.1170839946717,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 75,
+      "total_tokens": 290,
+      "latency_ms": 874.1410420043394,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 159,
+      "completion_tokens": 43,
+      "total_tokens": 202,
+      "latency_ms": 1102.7705000014976,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 501.57179101370275,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 75,
+      "total_tokens": 290,
+      "latency_ms": 880.4669999808539,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

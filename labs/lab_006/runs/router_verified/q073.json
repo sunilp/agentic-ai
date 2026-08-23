@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q073",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: wanna check how long it takes for my delivery to arrive\n\nA reviewer flagged the previous answer. Re-answer the question directly using the knowledge base.\n\nTechnical support: According to our knowledge, standard delivery typically takes 3 to 5 business days. You can track the status of your order on our website by logging into your account and visiting the Orders page. If you have any further questions or concerns, please create a ticket for assistance.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2440,
+  "latency_ms": 6143.6853319755755,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 433.94816599902697,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 42,
+      "total_tokens": 243,
+      "latency_ms": 549.0804580040276,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 127,
+      "completion_tokens": 35,
+      "total_tokens": 162,
+      "latency_ms": 900.5508749978617,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 511.6425409796648,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 95,
+      "total_tokens": 314,
+      "latency_ms": 1073.279125004774,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 180,
+      "completion_tokens": 42,
+      "total_tokens": 222,
+      "latency_ms": 1094.0707089903299,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 503.1136249890551,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 95,
+      "total_tokens": 314,
+      "latency_ms": 1077.9998330108356,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}
