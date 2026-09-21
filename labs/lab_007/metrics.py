@@ -202,3 +202,25 @@ def resolution(preds: Sequence[float], tolerance: float = 1e-9) -> Resolution:
         raise ValueError("no predictions")
     extreme = sum(p <= tolerance or p >= 1.0 - tolerance for p in preds)
     return Resolution(distinct=len(set(preds)), extreme_fraction=extreme / len(preds))
+
+
+def auc(preds: Sequence[float], labels: Sequence[int]) -> float:
+    """Probability a random positive outscores a random negative, ties counted half.
+
+    Threshold-free and scale-free, which is what lets two readouts of the same
+    model be compared when one of them puts all its mass near zero. It measures
+    ranking only: an AUC of 0.9 says nothing about whether any stated number is
+    a calibrated probability.
+    """
+    _check(preds, labels)
+    pos = [p for p, y in zip(preds, labels, strict=True) if y == 1]
+    neg = [p for p, y in zip(preds, labels, strict=True) if y == 0]
+    if not pos or not neg:
+        raise ValueError("need both positive and negative examples")
+
+    wins = sum(
+        1.0 if a > b else 0.5 if a == b else 0.0
+        for a in pos
+        for b in neg
+    )
+    return wins / (len(pos) * len(neg))

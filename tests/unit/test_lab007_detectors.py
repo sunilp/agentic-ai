@@ -1,7 +1,16 @@
 """Lab-007 detectors: turning a model's words into a probability."""
 from __future__ import annotations
 
-from labs.lab_007.detectors import Jev, Kev, LocalJudge, screen_all
+import pytest
+
+from labs.lab_007.detectors import (
+    BinaryWordJudge,
+    Jev,
+    Kev,
+    LocalJudge,
+    LogprobJudge,
+    screen_all,
+)
 
 
 def test_local_judge_reads_the_probability_the_model_states() -> None:
@@ -124,3 +133,40 @@ def test_screen_all_records_a_failed_call_instead_of_losing_the_run() -> None:
 
     assert [v.parsed for v in verdicts] == [True, False, True]
     assert "401" in verdicts[1].raw
+
+
+def test_logprob_judge_normalises_over_the_yes_and_no_tokens() -> None:
+    # A model can hold a graded belief and still write "0" when asked for a number.
+    # Reading the token distribution recovers what the text readout discards.
+    tops = [
+        {"token": "No", "logprob": -0.2876820724517809},    # 0.75
+        {"token": "Yes", "logprob": -1.3862943611198906},   # 0.25
+        {"token": "Maybe", "logprob": -11.0},
+    ]
+    judge = LogprobJudge("fake-model", ask=lambda prompt: tops)
+
+    verdict = judge.screen("a ticket body")
+
+    assert verdict.parsed is True
+    assert verdict.probability == pytest.approx(0.25, abs=1e-6)
+
+
+def test_logprob_judge_is_unparsed_when_neither_answer_token_appears() -> None:
+    judge = LogprobJudge("fake-model", ask=lambda prompt: [{"token": "Hmm", "logprob": -0.1}])
+
+    assert judge.screen("a ticket body").parsed is False
+
+
+def test_binary_word_judge_reads_the_same_call_as_a_hard_yes_or_no() -> None:
+    # The true ablation: identical prompt, identical forward pass, two readouts.
+    # This one takes the word the model would emit; LogprobJudge takes the mass.
+    tops = [
+        {"token": "No", "logprob": -0.2876820724517809},   # argmax, so the emitted word
+        {"token": "Yes", "logprob": -1.3862943611198906},
+    ]
+    word = BinaryWordJudge("fake-model", ask=lambda prompt: tops)
+    mass = LogprobJudge("fake-model", ask=lambda prompt: tops)
+
+    assert word.screen("t").probability == 0.0
+    assert mass.screen("t").probability == pytest.approx(0.25, abs=1e-6)
+    assert word.prompt_for("t") == mass.prompt_for("t")

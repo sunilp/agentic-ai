@@ -6,7 +6,12 @@ say about a real detector. These are the gate, not decoration.
 from __future__ import annotations
 
 from labs.lab_007.metrics import expected_calibration_error
-from labs.lab_007.synthetic import calibrated, noise_floor, overconfident
+from labs.lab_007.synthetic import (
+    calibrated,
+    noise_floor,
+    noise_floor_spread,
+    overconfident,
+)
 
 
 def test_instrument_separates_a_calibrated_detector_from_an_overconfident_one() -> None:
@@ -28,3 +33,11 @@ def test_noise_floor_falls_as_the_corpus_grows() -> None:
     # A 200-row corpus cannot certify any detector to an ECE of 0.02, because a
     # perfectly calibrated one does not read that low at 200 rows.
     assert small > 0.02
+
+
+def test_noise_floor_spread_reports_variability_not_just_a_mean() -> None:
+    # The ECE a calibrated detector reads is an expected value with spread, not a
+    # lower bound. Reporting only the mean invites reading it as a threshold.
+    stats = noise_floor_spread(200, trials=12, seed=3)
+
+    assert stats.low < stats.mean < stats.high

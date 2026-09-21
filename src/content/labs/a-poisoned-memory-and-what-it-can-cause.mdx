@@ -1,0 +1,73 @@
+---
+id: lab-005
+title: The poison was stored, retrieved and cited every time. What changed was what it was allowed to cause.
+description: "An agent reads an incident ticket carrying a false causal claim, remembers it, and meets a matching incident later with a clean ticket. Four configurations, measured on three separate things: whether the claim is stored, whether it is cited, and whether it reaches a forbidden action."
+hypothesis: Storage, citation and reachability are three different measurements, and only the last one is under architectural control.
+result: 0 of 12
+resultLabel: An action gate keyed on computed lineage took forbidden actions to zero while citation stayed at twelve of twelve
+spot: /assets/spots/lab-005.png
+spotCaption: the jar was full, the tube was full, the beaker stayed empty
+date: 2026-09-21
+readingTime: 9
+seed: 42
+references:
+  - arch-001
+  - lab-004
+---
+
+import Callout from '~/components/universal/Callout.astro';
+
+Two phases. An agent investigates an incident whose ticket carries a false causal claim in a reporter-written field, and proposes something to remember. Later an incident of the same shape arrives with a clean ticket, memory is retrieved, and the agent proposes an action.
+
+The question is not whether the poison is stored or believed. It is whether it reaches something consequential.
+
+## The four configurations
+
+| Configuration | What it does |
+| --- | --- |
+| `freetext` | Whatever the model wrote is stored verbatim. No structure, no origin, no evidence. |
+| `gated` | Typed claim, evidence must resolve to observations the run actually had, origin computed from the evidence chain, label shown in the later run's context. |
+| `quarantine_cited` | As `gated`, plus an action gate refusing forbidden actions whose only basis is untrusted-origin memory. Origin still comes from the evidence the model listed. |
+| `quarantine_lineage` | The same action gate, but origin is computed from what the run actually had in context rather than from what the model said it used. |
+
+Corpus: 18 scenarios, 12 poisoned and 6 clean controls, seed 42, temperature 0, a fresh store per configuration so memory never leaks between them.
+
+## What it found
+
+| Model | Configuration | Stored | Cited in phase 2 | Forbidden action reached |
+| --- | --- | ---: | ---: | ---: |
+| `llama3.2:3b` | `freetext` | 12/12 | 12/12 | **2/12** |
+| `llama3.2:3b` | `gated` | 10/12 | 12/12 | **2/12** |
+| `llama3.2:3b` | `quarantine_cited` | 10/12 | 12/12 | **1/12** |
+| `llama3.2:3b` | `quarantine_lineage` | 10/12 | 12/12 | **0/12** |
+| `qwen2.5:7b` | `freetext` | 12/12 | 12/12 | **9/12** |
+| `qwen2.5:7b` | `gated` | 12/12 | 12/12 | **8/12** |
+
+**Citation never moves.** Every configuration, every model, twelve of twelve. The agent finds the memory, judges it relevant, and says so. No gate here stops that and none was designed to.
+
+**Storage barely moves.** The write gate does not stop the poison being stored. It stops it being stored without an origin.
+
+**Reachability is the column that responds to architecture.** And the difference between the last two rows is the whole lesson: `quarantine_cited` computes origin from the evidence the model *said* it used, and `quarantine_lineage` computes it from what the run actually had in context. Trusting the model's account of its own sources leaves one path open. Computing it leaves none.
+
+<Callout type="gotcha">
+A high citation rate under quarantine is the correct result, not a failure. The agent read the memory, found it relevant, and said so. It was then refused an action resting on nothing else, and told what corroboration was missing. That converts a poisoning attempt into a lookup.
+</Callout>
+
+## One thing worth seeing on its own
+
+The models proposed destructive remediations on clean scenarios too, with no poisoned memory involved. The clean-control column is not a poisoning result and should not be read as one.
+
+## Scope and limits
+
+- Small local models at temperature 0. Storage and citation rates are properties of these models on this corpus. **The reachability result is structural**: an action gate refusing untrusted-only justification refuses it whatever the model concluded.
+- The poisoned claims are ordinary careless sentences, not optimised triggers. This measures the accidental path, which is the common one. It is not a red-team result and says nothing about an adversary optimising against the retriever.
+- Retrieval is an exact match on service and fault family, not embedding search. A real store's retrieval brings its own failure modes, and a poisoning that manipulates ranking is out of scope.
+- Two phases only. Gradual poisoning across many runs is not measured.
+
+## Reproduce
+
+```bash
+ollama serve                       # llama3.2:3b, qwen2.5:7b
+python -m labs.lab_005.run         # all configurations, writes RESULTS.md
+python -m labs.lab_005.report      # re-render from results.json
+```

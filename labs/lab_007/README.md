@@ -18,21 +18,22 @@ evidence.
 ## What it found
 
 **Expected calibration error is biased upward, and the bias is large enough to
-swallow most published corpora.**
+swallow most published corpora. It is an expected value with a wide spread, not
+a floor.**
 
 A *perfectly calibrated* detector still reads a non-zero ECE, because every
 bin's observed rate carries sampling noise and the metric takes the absolute
 value of each gap, so noise cannot cancel. That floor shrinks with corpus size:
 
-| Rows | ECE floor for a perfect detector | Corpus at this scale |
+| Rows | Mean ECE for a perfect detector | Range over 30 trials | Corpus at this scale |
 | ---: | ---: | --- |
-| 50 | 0.104 | `lab_004` corpus as it stands |
-| 200 | 0.053 | JBB-Behaviors |
-| 569 | 0.031 | R-Judge |
-| 1,000 | 0.021 | deepset/prompt-injections |
-| 4,000 | 0.011 | |
-| 10,000 | 0.007 | wildguardmix |
-| 20,000 | 0.005 | |
+| 50 | 0.104 | 0.036 to 0.224 | `lab_004` corpus as it stands |
+| 200 | 0.053 | 0.026 to 0.083 | JBB-Behaviors |
+| 569 | 0.031 | 0.012 to 0.048 | R-Judge |
+| 1,000 | 0.021 | 0.013 to 0.043 | deepset/prompt-injections |
+| 4,000 | 0.011 | n/a | |
+| 10,000 | 0.007 | 0.003 to 0.015 | wildguardmix |
+| 20,000 | 0.005 | n/a | |
 
 Read that against the signal. A synthetic detector that overstates every claim
 by 0.35 reads about 0.20, so even 50 rows catches a gross liar. A detector that
@@ -258,6 +259,59 @@ long run at all.
 The shape is the same one Phase B recorded: an artefact of the harness presenting
 as a result. There it flattered a model, here it destroyed a run.
 
+## Phase E: one forward pass, read two ways
+
+Phases B to D compared different systems, so none of them could say what caused
+the difference in granularity. This arm changes one thing, after the model has
+already answered.
+
+The model is asked a single Yes or No question. At temperature 0 the token it
+emits is the argmax of its own distribution, so both readouts come from one
+forward pass: one takes the word, the other takes the probability mass on Yes
+against Yes plus No. Same prompt, same call, same weights.
+
+| Model | Readout | Distinct values | At exactly 0 or 1 | AUC [95% CI] |
+| --- | --- | ---: | ---: | ---: |
+| `llama3.2:3b` | word | 1 | 100% | 0.500 [0.500, 0.500] |
+| `llama3.2:3b` | **logprob** | **50** | **0%** | **1.000 [1.000, 1.000]** |
+| `qwen2.5:7b` | word | 2 | 100% | 0.583 [0.527, 0.667] |
+| `qwen2.5:7b` | **logprob** | 29 | 60% | **0.967 [0.914, 1.000]** |
+| `gemma4:e2b` | word | parsed 0/50 | | n/a |
+| `gemma4:e2b` | **logprob** | 28 | 46% | **0.950 [0.893, 1.000]** |
+
+AUC is used because the readouts put their scores in different places, and
+ranking is the only comparison that survives that. It measures ordering and says
+nothing about calibration.
+
+**`llama3.2:3b` said "No" to all fifty tickets.** One value, AUC 0.500, no
+information at all. The distribution over that same token ranks all fifty
+correctly. The graded belief was there; reading it as a word discarded every bit.
+
+Three cautions on that table. The 1.000 intervals are degenerate, because a
+bootstrap resampling perfectly separated observations preserves the separation,
+so those bounds are an artefact of the method rather than independent evidence.
+`gemma4:e2b` emits a reasoning token before any answer, so its word readout parses
+nothing. And the two readouts share one call, so only one latency exists per
+model; the runner attributes it to the word row and records zero for the other.
+
+**The scale moved.** The logprob readout averages 0.106 on injected tickets and
+0.007 on clean ones. Ranking is perfect and a 0.5 threshold catches nothing. A
+readout change is a detector change and every threshold tuned against the old one
+is invalid.
+
+### Limits of this arm
+
+- One prompt. A different question might narrow or widen the gap; this measures one ordinary way of asking, not the best possible one.
+- The readout works only where the answer lands in the first generated token. A model that reasons first puts almost no mass on either answer token, which is why `qwen2.5:7b` and `gemma4:e2b` still show 60% and 46% at the endpoints: their ratios rank at very small magnitudes.
+- Still fifty tickets from six injection texts. AUC 1.000 is a statement about this corpus and nothing else.
+- Recovering the distribution costs nothing extra here because Ollama returns it on request. A runtime that does not expose token probabilities cannot do this at all, and one that does may charge for it.
+
+### Production note
+
+`jev` parsed 49 of 50 on this run. One call failed and was recorded as an
+unparsed verdict rather than raising, which is the fix added after an expired
+token destroyed an earlier run. It behaved as intended.
+
 ## Files
 
 | File | What it is |
@@ -275,6 +329,7 @@ python -m labs.lab_007.run                  # phase A, no models, seconds
 python -m labs.lab_007.run --out /tmp/x     # write somewhere else instead
 python -m labs.lab_007.baseline             # phase B, needs ollama, about 4 minutes
 python -m labs.lab_007.baseline --jev       # adds phase C, needs CLOUDFLARE_* env
+python -m labs.lab_007.baseline --logprob   # adds phase E, the readout ablation, local
 python -m labs.lab_007.baseline --kev       # adds phase D, needs a local kev server:
 #   git clone https://github.com/jaredpalmer/kev && cd kev && uv sync --extra serve
 #   KEV_DTYPE=bf16 uv run --extra serve python -m kev.serve --run jaredpalmer/kev-0.8b --port 8009

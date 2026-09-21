@@ -6,6 +6,7 @@ import random
 import pytest
 
 from labs.lab_007.metrics import (
+    auc,
     bootstrap_ci,
     precision_from_rates,
     resolution,
@@ -96,3 +97,14 @@ def test_an_unobserved_false_positive_rate_destroys_precision_at_a_rare_base_rat
     assert precision_from_rates(
         base_rate=0.01, recall=0.47, false_positive_rate=0.15
     ) == pytest.approx(0.0307, abs=1e-4)
+
+
+def test_auc_is_one_for_perfect_ranking_and_half_for_all_ties() -> None:
+    # Threshold-free, so it compares readouts whose scales sit in different places.
+    assert auc([0.1, 0.2, 0.8, 0.9], [0, 0, 1, 1]) == pytest.approx(1.0)
+    assert auc([0.5, 0.5, 0.5, 0.5], [0, 0, 1, 1]) == pytest.approx(0.5)
+
+
+def test_auc_ignores_where_the_scores_sit_and_only_ranks() -> None:
+    # The logprob readout compresses everything near zero. Ranking must survive it.
+    assert auc([0.001, 0.002, 0.003, 0.004], [0, 0, 1, 1]) == pytest.approx(1.0)

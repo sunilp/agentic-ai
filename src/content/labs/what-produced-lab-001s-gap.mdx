@@ -1,0 +1,74 @@
+---
+id: lab-006
+title: A second attempt was worth six points. Deciding when to take one was worth one.
+description: Lab-001 changed two things at once and reported a seventeen point gap. This varies them independently across five arms, reproduces both original numbers exactly, and finds that the metric Lab-001 called routing quality was measuring agreement with a keyword map.
+hypothesis: The gap Lab-001 attributed to topology is carried by the retry, not by the extra agents, and the two factors interact rather than adding.
+result: +6.0pp vs +1.0pp
+resultLabel: An unconditional retry carried the gap; gating it behind a verifier added one point at twice the model calls
+spot: /assets/spots/lab-006.png
+spotCaption: the wheel did the work; the governor barely moved
+date: 2026-09-21
+readingTime: 9
+seed: 42
+references:
+  - lab-001
+  - arch-003
+---
+
+import Callout from '~/components/universal/Callout.astro';
+
+Lab-001 compared a rule-based workflow router against a three-agent hierarchy and reported 40.0% against 23.0%. That comparison changes two things at once: who classifies the query, and whether a second answer attempt is available. So the seventeen point gap cannot be attributed to the topology.
+
+This Lab varies the two factors independently.
+
+|  | 1 answer attempt | verifier-gated re-answer |
+| --- | --- | --- |
+| **rule classify** | `router` | `router_verified` |
+| **model classify** | `hier_noverify` | `hierarchy` |
+
+Plus a fifth arm, `router_retry`: rule classification with one **unconditional** re-answer and no verifier. That is the arm separating *having a second attempt* from *deciding when to take one*.
+
+Everything except the arms is imported from Lab-001 rather than copied: dataset and seed, system prompts, tool registry, verifier prompt, re-answer prompt, rubric, weights, pass threshold and judge. Both original arms are re-run and re-judged in the same session, so every contrast is internal to one run.
+
+## What it found
+
+| Arm | Pass | Model calls | Misroute |
+| --- | ---: | ---: | ---: |
+| `router` | 23.0% | 2 | 33% |
+| `router_retry` | 29.0% | 4 | 33% |
+| `router_verified` | 30.0% | 7.73 | 33% |
+| `hier_noverify` | 15.0% | 3 | 68% |
+| `hierarchy` | 40.0% | 8.69 | 68% |
+
+Both replicated arms reproduce Lab-001 exactly, 23.0% and 40.0% with 8.69 mean calls for the hierarchy. That is the check that the rebuild is faithful.
+
+**A second answer attempt is worth +6.0pp on its own**, with no verifier and no extra agent.
+
+**Gating that attempt behind a verifier adds +1.0pp**, at 7.73 model calls against 4. The verifier rejects the first answer in 95% of runs, so it is an expensive way to almost always retry. Its judgement about *when* is worth roughly one query in a hundred.
+
+**Model classification has no stable sign**: -8.0pp alone, +10.0pp combined with verification. The factors interact, so no additive decomposition of the original seventeen points is honest.
+
+## The metric was measuring the wrong thing
+
+In both model-classified arms, queries the classifier sent somewhere other than the dataset's label pass **more** often than the ones it agreed on, 44.1% against 31.2% in the hierarchy.
+
+The dataset's category comes from a keyword map built to organise the corpus. The rule-based switch agrees with it by construction, because both are keyword rules. So `misroute_rate` measures agreement with a label defined for another purpose, not routing quality. Lab-001 reported it as though it were the latter.
+
+<Callout type="gotcha">
+This is the more transferable finding. A metric inherited from how a dataset was assembled will flatter whichever system resembles the assembly process. Before reporting a rate as quality, ask what the ground truth was built for.
+</Callout>
+
+## Honest limits
+
+- This settles which factor carries the gap **in this configuration**. It does not rank workflows against multi-agent systems, and every arm's pass rate is far too low for production use.
+- The contrasts are between-arm differences on the same queries rather than terms in a fitted factorial model, so the interaction between the two factors is not separated.
+- One deliberate imperfection: the unconditional-retry arm uses Lab-001's re-answer prompt verbatim, which says "a reviewer flagged the previous answer" when no reviewer did. Rewording it would have confounded the comparison with a prompt difference. That arm gets a mildly misleading instruction, and the trade is recorded rather than hidden.
+
+## Reproduce
+
+```bash
+ollama serve                       # llama3.2:3b, qwen2.5:14b
+python -m labs.lab_006.run         # transcripts for all five arms
+python -m labs.lab_006.evaluate    # judge and score
+python -m labs.lab_006.report      # re-render RESULTS.md
+```

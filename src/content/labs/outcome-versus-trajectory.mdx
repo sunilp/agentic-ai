@@ -1,0 +1,61 @@
+---
+id: lab-003
+title: The baseline got the right answer and emitted one dispatchable action in thirty runs
+description: Lab-002's sixty committed run records, scored twice. Once on the answer and once on the path. The two metrics rank the two systems in opposite directions, and the single assertion that explains it is whether the proposed remediation could actually be executed.
+hypothesis: An outcome metric and a trajectory metric rank the same systems differently, because an answer that reads correctly to a keyword scorer can be unexecutable by anything downstream.
+result: 1 of 30
+resultLabel: The system that looked twice as good on the answer emitted one machine-executable action in thirty runs
+spot: /assets/spots/lab-003.png
+spotCaption: the address was right; the slot was the wrong shape
+date: 2026-09-21
+readingTime: 7
+seed: 42
+references:
+  - lab-002
+  - arch-003
+---
+
+import Callout from '~/components/universal/Callout.astro';
+
+Lab-002 measured whether two architectures reached the right answer. It did not measure whether they got there acceptably. An outcome metric cannot tell a system that is safe from one that got lucky, and this Lab puts a number on that gap using runs that already existed.
+
+It runs no models. It reads the sixty run records Lab-002 committed and applies deterministic assertions to each, which makes it free, instant, and exactly reproducible from data already in the repository.
+
+## What it found
+
+| System | Outcome pass | Trajectory pass | Passed outcome, failed trajectory |
+| --- | ---: | ---: | ---: |
+| baseline, static single pass | 20.0% | 3.3% | 6 of 6 |
+| contender, workflow graph with a gate | 10.0% | 33.3% | 2 |
+
+**The two metrics rank the systems in opposite directions.** On the answer the baseline looks twice as good. On the path the contender is ten times better. Every single baseline run that passed the outcome check failed the trajectory check.
+
+One assertion explains it.
+
+| | Names the correct service and version | Emits a dispatchable action |
+| --- | ---: | ---: |
+| baseline | 19 / 30 | **1 / 30** |
+| contender | 28 / 30 | 22 / 30 |
+
+The baseline identifies the right remediation in most incidents and almost never expresses it in a form anything can execute. It writes *"Roll back deployment of 'svc-search' to its previous version ('v1.8.2') immediately."* where the executor needs `rollback_deploy:svc-search@v1.8.2`.
+
+A keyword-overlap outcome score sees a good answer. An executor sees nothing it can dispatch.
+
+<Callout type="gotcha">
+This is the shape to watch for when an eval says a system works. The answer was right. It was right in a format that made it useless, and no outcome metric built on text overlap can see that. If something downstream has to act on the output, assert on the thing that acts, not on the words.
+</Callout>
+
+## Scope and limits
+
+- Sixty run records from one Lab, two systems, one incident corpus. The rates are properties of those runs.
+- The trajectory assertions are deterministic checks written after the fact. They encode one view of what an acceptable path looks like, and a different view would produce different numbers.
+- Scoring existing records cannot measure anything the records did not capture.
+
+## Reproduce
+
+```bash
+python -m labs.lab_003.score          # writes RESULTS.md and results.json
+python -m labs.lab_003.score --print  # stdout only
+```
+
+No API keys, no Ollama, no network. Inputs are `labs/lab_002/results.json` and `labs/lab_002/incidents.json`, both tracked in git.
