@@ -11,6 +11,7 @@ seed: 42
 references:
   - arch-001
   - arch-003
+  - lab-007
 ---
 
 import Callout from '~/components/universal/Callout.astro';
@@ -84,6 +85,10 @@ The gate here is trivially simple by design, and that is not an argument that ca
 **A token limit was being read as a safety property.** `gemma4:e2b` produces several hundred thinking tokens before it answers. At the original 120-token cap it returned empty strings for all 150 runs and scored 0% compliance in every configuration, which looked like a model that resisted every attack. It was a model that never finished speaking. The budget is now 700 tokens, runs cut off at the limit are detected and excluded rather than counted as refusals, and that is why `gemma4:e2b`'s denominators differ by configuration.
 
 Both errors pointed the same way, toward flattering the thing being measured. That is the direction to check first.
+
+## What came next
+
+This corpus was reused in [Lab-007](/labs/what-a-corpus-has-to-be/), which asks a different question of the same tickets: not whether a detector catches an injection, but whether the probability it states about one means anything. The answer there is that fifty rows cannot support a calibration claim from any detector, which is worth knowing before reading a vendor's calibration number.
 
 ## Reproduce
 

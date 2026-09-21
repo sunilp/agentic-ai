@@ -86,9 +86,11 @@ for a probability between 0 and 1.
 
 **The number is a label with a decimal point.** Asked for a probability, all
 three answer almost entirely 0.0 or 1.0. `llama3.2:3b` used three values in
-fifty tickets. The scale has no interior, so there is nothing for a reliability
-curve to pass through, and this is not a corpus-size problem: more rows of the
-same thing would add no resolution.
+fifty tickets. That does not make it uncalibratable: a map can attach an
+empirical rate to each of three values. What calibration cannot recover is a
+distinction the detector never made, so every ticket scoring 1.0 receives the
+same number however different those tickets were. More rows would buy confidence
+in the three values and no further resolution.
 
 That is a sharper claim than ARCH-002 currently makes. The blueprint says the
 confidence is not calibrated. On these models it is not a probability at all.
@@ -146,8 +148,8 @@ model put nearly all its mass on the two endpoints. Whatever else is true, these
 are different kinds of output: one is a distribution, the other is a label.
 
 **And the calibration claim is still not tested.** Resolution is not calibration.
-Having an interior is necessary for a reliability curve and not sufficient for a
-correct one. At fifty rows the ECE floor is 0.104, so this corpus cannot tell a
+A coarse detector can be calibrated and a granular one can be
+badly wrong; granularity and calibration are independent. At fifty rows the ECE floor is 0.104, so this corpus cannot tell a
 calibrated detector from a moderately miscalibrated one whatever it emits. The
 claim that a stated 0.93 is right 93% of the time remains unmeasured here.
 
@@ -206,20 +208,23 @@ by a base URL and the absence of a Cloudflare envelope.
 | `kev-0.8b`, typed decision model | **0.8B** | **20** | **0%** | 0.53 | **149 ms** |
 | `jev-1.13.0`, typed decision model | undisclosed | 9 | 0% | 1.00 | 674 ms |
 
-**This isolates the variable.** Kev-0.8B is the smallest model in the table, four
-to nine times smaller than the general models it sits under, and it is the only
-local one that uses the probability scale. Twenty distinct values against three,
-and nothing at the endpoints.
+**Granularity did not track model size.** Kev-0.8B is the smallest model in the
+table, four to nine times smaller than the general models it sits under, and it
+produced the most granular output of any of them: twenty distinct values against
+three, and nothing at the endpoints.
 
-So the near-binary output in Phase B is not a symptom of small models, and not a
-symptom of local hosting. It is what you get when you ask a language model to
-write a number in text. The mechanism produces the probability, not the model.
+Be careful what that licenses. These systems differ in base model, training and
+output mechanism at once, and no same-model ablation was run, so this does not
+isolate the typed output head as the cause. The supported claim is narrower: if
+granularity came from using a bigger or better general model, this column would
+not look like this.
 
-**And it separates two things usually reported as one.** Kev-0.8B's recall of
-0.53 sits in the middle of the general models' 0.37 to 0.60. It is not better at
-telling injected tickets from clean ones. It is better at saying how sure it is.
-Discrimination and resolution are different properties and this corpus moves them
-independently.
+**Granularity and detection moved independently.** Kev-0.8B's recall at a 0.5
+threshold, 0.53, sits between the general models' 0.37 and 0.60, while its
+distinct-value count is more than three times any of theirs. Recall at a single
+threshold is a thin measurement and does not establish equivalent detection, but
+nothing here suggests the granular detector bought its granularity by being
+better at the task.
 
 That also means the interesting part of this lab costs nothing to reproduce.
 Fifty tickets in 8 seconds on a laptop, Apache-2.0 weights, no account, no key,
