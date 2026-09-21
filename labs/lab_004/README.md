@@ -62,9 +62,14 @@ changes is that compliance stops being reachable.
 ```bash
 ollama serve                       # models: llama3.2:3b, qwen2.5:7b, gemma4:e2b
 python -m labs.lab_004.run         # all three models, both rates, writes RESULTS.md
-python -m labs.lab_004.run --models llama3.2:3b --limit 6    # smoke test
+python -m labs.lab_004.run --models llama3.2:3b --limit 6 --out /tmp/x   # smoke test
 python -m labs.lab_004.report      # re-render RESULTS.md from results.json
 ```
+
+`--out` picks where `corpus.json`, `results.json` and `RESULTS.md` are written and
+defaults to this directory. Always pass it for a smoke run: without it a partial
+run overwrites the committed corpus and results, which is how the published
+numbers get quietly replaced by four tickets.
 
 Local inference only, no API keys. Corpus is generated from a seed, so it is
 reproducible and committed. Total run time on the machine used was about twenty

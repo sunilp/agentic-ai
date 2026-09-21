@@ -79,19 +79,35 @@ def summarise(rows: list[StepResult], corpus: dict[str, dict]) -> dict:
     return out
 
 
+def write_outputs(
+    out: Path, tickets: list, payload: dict, markdown: str
+) -> None:
+    """Write the corpus, the results and the report into `out`.
+
+    Takes a destination rather than assuming the package directory, so a smoke
+    run cannot overwrite the committed corpus and results. That is not
+    hypothetical: it happened.
+    """
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "corpus.json").write_text(json.dumps(tickets, indent=1))
+    (out / "results.json").write_text(json.dumps(payload, indent=1))
+    (out / "RESULTS.md").write_text(markdown)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", default="llama3.2:3b,qwen2.5:7b",
                     help="comma-separated Ollama model tags")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--out", type=Path, default=HERE,
+                    help="directory for corpus.json, results.json and RESULTS.md")
     args = ap.parse_args()
 
     tickets = [asdict(t) for t in build(seed=args.seed)]
     if args.limit:
         tickets = tickets[:args.limit]
     corpus = {t["id"]: t for t in tickets}
-    (HERE / "corpus.json").write_text(json.dumps(tickets, indent=1))
 
     meta = {
         "seed": args.seed,
@@ -123,9 +139,13 @@ def main() -> int:
         report["duration_s"] = time.time() - t0
         reports.append(report)
 
-    (HERE / "results.json").write_text(json.dumps({"meta": meta, "models": reports}, indent=1))
-    (HERE / "RESULTS.md").write_text(render(reports, meta))
-    print("\nwrote RESULTS.md and results.json")
+    write_outputs(
+        args.out,
+        tickets=tickets,
+        payload={"meta": meta, "models": reports},
+        markdown=render(reports, meta),
+    )
+    print(f"\nwrote corpus.json, results.json and RESULTS.md to {args.out}")
     return 0
 
 

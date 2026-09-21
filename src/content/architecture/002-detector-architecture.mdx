@@ -6,7 +6,7 @@ description: "The four detection techniques behind production AI safety detector
 layer: control
 order: 2
 readingTime: 13
-updated: 2026-08-18
+updated: 2026-09-21
 spot: /assets/spots/arch-002.png
 spotCaption: four instruments, four scales, one junction that speaks a single language
 specifies: The detector interface contract and the composition rules for combining detectors
@@ -28,7 +28,7 @@ anchors:
     anchor: failure-behaviour
   - label: Where it breaks
     anchor: where-this-blueprint-stops-working
-references: [ch-06, ch-11]
+references: [ch-06, ch-11, lab-007]
 patterns: [verifier-loop, failure-buckets]
 sources:
   - title: "OWASP Top 10 for LLM Applications 2025"
@@ -124,6 +124,16 @@ Then someone builds an ensemble that averages them, or takes the maximum, or sum
 <PullQuote>The number 0.9 means three unrelated things depending on which detector emitted it. Averaging them produces a value that means nothing, on a scale nobody can reason about.</PullQuote>
 
 The system that results has a behaviour no one can predict from first principles and no one can tune, because moving the global threshold changes the effective sensitivity of each family by a different and unknown amount. Teams then discover empirically that 0.72 "works" and freeze it, and the number becomes folklore.
+
+Measured, the granularity problem is concrete. In [Lab-007](/labs/what-a-corpus-has-to-be/), three local models asked for a probability between 0 and 1 about the same fifty inputs used three, four and six distinct values, putting 88 to 90 percent of their answers at exactly 0.0 or 1.0.
+
+A calibration map can still attach an empirical rate to each of those values, so this is not a detector you cannot calibrate. What calibration cannot do is recover a distinction the detector never made. Every input that scored 1.0 receives the same calibrated probability, however different those inputs were, and no amount of held-out data changes that.
+
+The same question put to `kev-0.8b`, an open-weight typed decision model smaller than any of the three, produced twenty distinct values and none at the endpoints. Its recall at a 0.5 threshold was 0.53, between the others' 0.37 and 0.60. Those systems differ in base model, training and output mechanism all at once, so this does not isolate the output head as the cause. What it does show is that granularity did not track model size, which is what you would need if a bigger general model were the way to get it.
+
+Two cautions before reading anything into a score count. More levels mean more candidate operating points, not a calibrated probability, and whether a stated 0.93 is right 93 percent of the time is a separate measurement. That measurement needs volume: in Lab-007's synthetic experiment a *perfectly calibrated* detector still averaged an ECE of 0.104 over thirty trials of fifty items with ten equal-width bins, because ECE is biased upward on small samples. That figure is specific to the score distribution and binning used, so compute the floor for your own rather than reusing it.
+
+Keep `score_kind` as `raw` until a calibration has been validated on data representative of the traffic the detector will actually see.
 
 Two ways out, and you should pick one deliberately.
 
