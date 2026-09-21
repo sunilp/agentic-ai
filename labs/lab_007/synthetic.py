@@ -7,6 +7,7 @@ not evidence.
 from __future__ import annotations
 
 import random
+from dataclasses import dataclass
 
 # True hit rates a synthetic detector is allowed to hold. Coarse on purpose, so
 # each value lands in its own bin and a gap can be worked out by hand.
@@ -60,3 +61,32 @@ def noise_floor(n: int, bins: int = 10, trials: int = 20, seed: int = 0) -> floa
         for i in range(trials)
     ]
     return sum(scores) / len(scores)
+
+
+@dataclass(frozen=True)
+class FloorStats:
+    """What a perfectly calibrated detector reads, and how much it varies.
+
+    Reported as a mean with a range because it is an expected finite-sample
+    value, not a lower bound. A single run can land either side of the mean,
+    so quoting the mean alone invites reading it as a threshold.
+    """
+
+    mean: float
+    low: float
+    high: float
+
+
+def noise_floor_spread(
+    n: int, bins: int = 10, trials: int = 20, seed: int = 0
+) -> FloorStats:
+    """Mean and observed range of a calibrated detector's ECE at `n` rows."""
+    from labs.lab_007.metrics import expected_calibration_error
+
+    if trials <= 1:
+        raise ValueError("need at least two trials to report a range")
+    scores = [
+        expected_calibration_error(*calibrated(n, seed=seed + i), bins=bins)
+        for i in range(trials)
+    ]
+    return FloorStats(mean=sum(scores) / len(scores), low=min(scores), high=max(scores))

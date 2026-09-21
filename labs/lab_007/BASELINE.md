@@ -4,15 +4,21 @@ Corpus: lab_004, 20 clean and 30 injected, seed 42. Threshold 0.5. Temperature 0
 
 ## Does the detector use the scale at all?
 
-| Model | Parsed | Truncated | Distinct values | Share at 0 or 1 | Median latency |
+| Model | Parsed | Distinct values | Share at 0 or 1 | AUC [95% CI] | Median latency |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| `llama3.2:3b` | 50/50 | 0 | 3 | 90% | 223 ms |
-| `qwen2.5:7b` | 50/50 | 0 | 6 | 88% | 339 ms |
-| `gemma4:e2b` | 50/50 | 0 | 4 | 90% | 4088 ms |
-| `kev-0.8b` | 50/50 | 0 | 20 | 0% | 149 ms |
-| `jev` | 50/50 | 0 | 9 | 0% | 674 ms |
+| `llama3.2:3b` | 50/50 | 3 | 90% | 0.733 [0.643, 0.817] | 218 ms |
+| `qwen2.5:7b` | 50/50 | 6 | 88% | 0.733 [0.647, 0.833] | 334 ms |
+| `gemma4:e2b` | 50/50 | 4 | 90% | 0.800 [0.720, 0.893] | 3974 ms |
+| `llama3.2:3b (word)` | 50/50 | 1 | 100% | 0.500 [0.500, 0.500] | 160 ms |
+| `llama3.2:3b (logprob)` | 50/50 | 50 | 0% | 1.000 [1.000, 1.000] | 0 ms |
+| `qwen2.5:7b (word)` | 50/50 | 2 | 100% | 0.583 [0.527, 0.667] | 208 ms |
+| `qwen2.5:7b (logprob)` | 50/50 | 29 | 60% | 0.967 [0.914, 1.000] | 0 ms |
+| `gemma4:e2b (word)` | 0/50 | 0 | 0% | n/a | 259 ms |
+| `gemma4:e2b (logprob)` | 50/50 | 28 | 46% | 0.950 [0.893, 1.000] | 0 ms |
+| `kev-0.8b` | 50/50 | 20 | 0% | 1.000 [1.000, 1.000] | 150 ms |
+| `jev` | 50/50 | 10 | 0% | 1.000 [1.000, 1.000] | 596 ms |
 
-The ECE noise floor at 50 rows is 0.104, so no calibration claim is available here at any resolution. That is a property of the corpus, not of the models.
+At 50 rows a perfectly calibrated detector reads an ECE of 0.104 on average, and anywhere from 0.036 to 0.224 on any single run. No calibration claim is available at this corpus size, whatever a detector emits. That is a property of the corpus, not of the models.
 
 ## What a threshold buys, by declared base rate
 
@@ -33,6 +39,21 @@ bound. The gap between the two columns is what a 50-row corpus cannot tell you.
 | `gemma4:e2b` | 50% | 0.60 | 0.00 | 1.00 | 0.80 |
 | `gemma4:e2b` | 10% | 0.60 | 0.00 | 1.00 | 0.31 |
 | `gemma4:e2b` | 1% | 0.60 | 0.00 | 1.00 | 0.04 |
+| `llama3.2:3b (word)` | 50% | 0.00 | 0.00 | 0.00 | 0.00 |
+| `llama3.2:3b (word)` | 10% | 0.00 | 0.00 | 0.00 | 0.00 |
+| `llama3.2:3b (word)` | 1% | 0.00 | 0.00 | 0.00 | 0.00 |
+| `llama3.2:3b (logprob)` | 50% | 0.00 | 0.00 | 0.00 | 0.00 |
+| `llama3.2:3b (logprob)` | 10% | 0.00 | 0.00 | 0.00 | 0.00 |
+| `llama3.2:3b (logprob)` | 1% | 0.00 | 0.00 | 0.00 | 0.00 |
+| `qwen2.5:7b (word)` | 50% | 0.17 | 0.00 | 1.00 | 0.53 |
+| `qwen2.5:7b (word)` | 10% | 0.17 | 0.00 | 1.00 | 0.11 |
+| `qwen2.5:7b (word)` | 1% | 0.17 | 0.00 | 1.00 | 0.01 |
+| `qwen2.5:7b (logprob)` | 50% | 0.17 | 0.00 | 1.00 | 0.53 |
+| `qwen2.5:7b (logprob)` | 10% | 0.17 | 0.00 | 1.00 | 0.11 |
+| `qwen2.5:7b (logprob)` | 1% | 0.17 | 0.00 | 1.00 | 0.01 |
+| `gemma4:e2b (logprob)` | 50% | 0.00 | 0.00 | 0.00 | 0.00 |
+| `gemma4:e2b (logprob)` | 10% | 0.00 | 0.00 | 0.00 | 0.00 |
+| `gemma4:e2b (logprob)` | 1% | 0.00 | 0.00 | 0.00 | 0.00 |
 | `kev-0.8b` | 50% | 0.53 | 0.00 | 1.00 | 0.78 |
 | `kev-0.8b` | 10% | 0.53 | 0.00 | 1.00 | 0.28 |
 | `kev-0.8b` | 1% | 0.53 | 0.00 | 1.00 | 0.03 |

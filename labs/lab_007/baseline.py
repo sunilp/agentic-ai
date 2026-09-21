@@ -14,20 +14,26 @@ from pathlib import Path
 
 from labs.lab_004.corpus import build
 from labs.lab_007.detectors import (
+    BinaryWordJudge,
     Jev,
     Kev,
     LocalJudge,
+    LogprobJudge,
     cloudflare_credentials,
     ollama_ask,
+    ollama_ask_logprobs,
     screen_all,
 )
 from labs.lab_007.metrics import (
+    Resolution,
+    auc,
+    bootstrap_ci,
     operating_point,
     precision_from_rates,
     resolution,
     rule_of_three_upper_bound,
 )
-from labs.lab_007.synthetic import noise_floor
+from labs.lab_007.synthetic import noise_floor, noise_floor_spread
 
 HERE = Path(__file__).parent
 MODELS = ("llama3.2:3b", "qwen2.5:7b", "gemma4:e2b")
@@ -54,7 +60,9 @@ def measure_detector(name: str, judge, tickets: list, threshold: float) -> dict:
     usable = [r for r in rows if r["parsed"]]
     preds = [r["probability"] for r in usable]
     labels = [int(r["injected"]) for r in usable]
-    res = resolution(preds)
+    # A detector can answer nothing usable, which is a finding about that
+    # detector and not a reason to discard every other one in the run.
+    res = resolution(preds) if preds else Resolution(distinct=0, extreme_fraction=0.0)
     lat = sorted(r["latency_ms"] for r in rows)
 
     points = []
@@ -70,6 +78,11 @@ def measure_detector(name: str, judge, tickets: list, threshold: float) -> dict:
             for br in BASE_RATES
         ]
 
+    ranking = None
+    if 0 < sum(labels) < len(labels):
+        lo, hi = bootstrap_ci(preds, labels, lambda p, l: auc(p, l), resamples=400, seed=5)
+        ranking = {"auc": auc(preds, labels), "ci": [lo, hi]}
+
     versions = sorted({r["model_version"] for r in rows if r["model_version"]})
     return {
         "model": name,
@@ -81,6 +94,7 @@ def measure_detector(name: str, judge, tickets: list, threshold: float) -> dict:
         "distinct_values": res.distinct,
         "extreme_fraction": res.extreme_fraction,
         "median_latency_ms": lat[len(lat) // 2],
+        "ranking": ranking,
         "operating_points": points,
         "rows": rows,
     }
@@ -96,20 +110,26 @@ def render(data: dict) -> str:
         "",
         "## Does the detector use the scale at all?",
         "",
-        "| Model | Parsed | Truncated | Distinct values | Share at 0 or 1 | Median latency |",
+        "| Model | Parsed | Distinct values | Share at 0 or 1 | AUC [95% CI] | Median latency |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ]
     for r in data["models"]:
+        rank = r.get("ranking")
+        col = (
+            f"{rank['auc']:.3f} [{rank['ci'][0]:.3f}, {rank['ci'][1]:.3f}]" if rank else "n/a"
+        )
         out.append(
-            f"| `{r['model']}` | {r['parsed']}/{r['n']} | {r['truncated']} | "
-            f"{r['distinct_values']} | {r['extreme_fraction']:.0%} | "
+            f"| `{r['model']}` | {r['parsed']}/{r['n']} | "
+            f"{r['distinct_values']} | {r['extreme_fraction']:.0%} | {col} | "
             f"{r['median_latency_ms']:.0f} ms |"
         )
     out += [
         "",
-        f"The ECE noise floor at {m['n_clean'] + m['n_injected']} rows is "
-        f"{m['noise_floor']:.3f}, so no calibration claim is available here at any "
-        "resolution. That is a property of the corpus, not of the models.",
+        f"At {m['n_clean'] + m['n_injected']} rows a perfectly calibrated detector reads an "
+        f"ECE of {m['noise_floor']:.3f} on average, and anywhere from "
+        f"{m['noise_floor_spread']['low']:.3f} to {m['noise_floor_spread']['high']:.3f} on any "
+        "single run. No calibration claim is available at this corpus size, whatever a "
+        "detector emits. That is a property of the corpus, not of the models.",
         "",
         "## What a threshold buys, by declared base rate",
         "",
@@ -143,6 +163,8 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--out", type=Path, default=HERE)
     ap.add_argument("--jev", action="store_true", help="also run typesafe/jev via Cloudflare")
+    ap.add_argument("--logprob", action="store_true",
+                    help="also read the same local models from their token distribution")
     ap.add_argument("--kev", action="store_true", help="also run a local kev server")
     ap.add_argument("--kev-url", default="http://localhost:8009")
     ap.add_argument("--render-only", action="store_true",
@@ -164,6 +186,24 @@ def main() -> int:
         results.append(
             measure_detector(model, LocalJudge(model, ask=ollama_ask(model)), tickets, args.threshold)
         )
+    if args.logprob:
+        for model in models:
+            print(f"  {model} readout ablation ...", flush=True)
+            # One transport, memoised, so both readouts come from the same call.
+            raw = ollama_ask_logprobs(model)
+            seen: dict[str, list] = {}
+
+            def once(prompt: str, _raw=raw, _seen=seen) -> list:
+                if prompt not in _seen:
+                    _seen[prompt] = _raw(prompt)
+                return _seen[prompt]
+
+            results.append(
+                measure_detector(f"{model} (word)", BinaryWordJudge(model, ask=once),
+                                 tickets, args.threshold))
+            results.append(
+                measure_detector(f"{model} (logprob)", LogprobJudge(model, ask=once),
+                                 tickets, args.threshold))
     if args.kev:
         print("  kev ...", flush=True)
         results.append(
@@ -183,6 +223,7 @@ def main() -> int:
             "seed": args.seed,
             "threshold": args.threshold,
             "noise_floor": noise_floor(len(tickets), trials=30, seed=101),
+            "noise_floor_spread": vars(noise_floor_spread(len(tickets), trials=30, seed=101)),
         },
         "models": results,
     }
