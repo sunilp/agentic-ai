@@ -1,0 +1,52 @@
+{
+ "meta": {
+  "trials": 30,
+  "seed": 101,
+  "bins": 10
+ },
+ "floors": [
+  {
+   "n": 50,
+   "corpus": "lab_004 corpus as it stands",
+   "floor": 0.10400000000000001
+  },
+  {
+   "n": 200,
+   "corpus": "JBB-Behaviors",
+   "floor": 0.052866666666666666
+  },
+  {
+   "n": 569,
+   "corpus": "R-Judge",
+   "floor": 0.030995899238429995
+  },
+  {
+   "n": 1000,
+   "corpus": "deepset/prompt-injections",
+   "floor": 0.02144333333333333
+  },
+  {
+   "n": 4000,
+   "corpus": "",
+   "floor": 0.010878333333333335
+  },
+  {
+   "n": 10000,
+   "corpus": "wildguardmix",
+   "floor": 0.006932666666666661
+  },
+  {
+   "n": 20000,
+   "corpus": "",
+   "floor": 0.004982000000000011
+  }
+ ],
+ "gate": {
+  "calibrated_ece": 0.010899999999999972,
+  "calibrated_ci": [
+   0.007124999999999995,
+   0.025450000000000014
+  ],
+  "overconfident_ece": 0.20887500000000003
+ }
+}
