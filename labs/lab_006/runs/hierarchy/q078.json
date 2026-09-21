@@ -1,0 +1,58 @@
+{
+  "system": "hierarchy",
+  "query_id": "q078",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "Based on the knowledge base lookup, it appears that you can request a refund in certain situations:\n\n* If you've been charged for a service or product that was not delivered or was defective\n* If you've been charged for a subscription that was cancelled due to your request\n* If you've been charged for a service or product that was not as described\n\nHowever, refunds are subject to our refund policy and may be processed within 5-7 business days.",
+  "model_calls": 4,
+  "tool_calls": 1,
+  "total_tokens": 935,
+  "latency_ms": 2316.4465840382036,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 65,
+      "completion_tokens": 2,
+      "total_tokens": 67,
+      "latency_ms": 174.9382090056315,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 517.7712500153575,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 94,
+      "total_tokens": 293,
+      "latency_ms": 1156.5249580016825,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 180,
+      "completion_tokens": 11,
+      "total_tokens": 191,
+      "latency_ms": 467.21216701553203,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": false,
+    "verifier_passed": true
+  }
+}

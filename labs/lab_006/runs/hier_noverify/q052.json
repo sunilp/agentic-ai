@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q052",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "Sorry, but you don't have access to close a {{Account Type}} account as it is not available for your account type.",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 671,
+  "latency_ms": 1011.509040981764,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 134.63612500345334,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 478.48770799464546,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 27,
+      "total_tokens": 224,
+      "latency_ms": 398.38520798366517,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

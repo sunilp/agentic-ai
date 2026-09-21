@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q080",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I couldn't find any information on shipment options in our knowledge base. I'm going to create a ticket for you so that one of our representatives can assist you further. Please wait for a call back from us.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 638,
+  "latency_ms": 1066.4443749992643,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 371,
+      "completion_tokens": 17,
+      "total_tokens": 388,
+      "latency_ms": 489.1247499908786,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 44,
+      "total_tokens": 250,
+      "latency_ms": 577.3196250083856,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

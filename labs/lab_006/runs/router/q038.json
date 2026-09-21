@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q038",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I apologize for the unclear response earlier. To lodge a claim against our company, you will need to provide detailed information about the issue or incident you are claiming for. This can be done by creating a ticket with us, where you'll be guided through the process and provided with instructions on how to proceed. Would you like me to assist you in creating a ticket?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 661,
+  "latency_ms": 1436.0869169759098,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 369,
+      "completion_tokens": 17,
+      "total_tokens": 386,
+      "latency_ms": 494.0280419832561,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 74,
+      "total_tokens": 275,
+      "latency_ms": 942.0588749926537,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

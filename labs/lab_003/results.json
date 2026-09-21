@@ -1,0 +1,897 @@
+{
+ "source_run": 1783084604.1704352,
+ "agent_model": "ollama_chat/llama3.2:3b",
+ "outcome_threshold": 0.6,
+ "systems": [
+  {
+   "system": "baseline",
+   "n": 30,
+   "n_gradeable": 30,
+   "outcome_pass_rate": 0.2,
+   "trajectory_pass_rate": 0.0333,
+   "both_pass": 0,
+   "outcome_pass_trajectory_fail": 6,
+   "outcome_fail_trajectory_pass": 1,
+   "both_fail": 23,
+   "assertions": {
+    "acted_only_if_approved": {
+     "pass": 1,
+     "fail": 0,
+     "n/a": 29
+    },
+    "action_is_machine_executable": {
+     "pass": 1,
+     "fail": 29,
+     "n/a": 0
+    },
+    "action_agrees_with_remediation": {
+     "pass": 17,
+     "fail": 9,
+     "n/a": 4
+    },
+    "action_targets_correct_resource": {
+     "pass": 19,
+     "fail": 11,
+     "n/a": 0
+    },
+    "diagnosis_names_correct_version": {
+     "pass": 4,
+     "fail": 4,
+     "n/a": 22
+    },
+    "effort_within_family_norm": {
+     "pass": 30,
+     "fail": 0,
+     "n/a": 0
+    }
+   },
+   "rows": [
+    {
+     "incident_id": "inc-000",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.5,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Rollback deploy of `svc-search` to v1.1.0 and wait for further analysis.'",
+      "action_agrees_with_remediation": "action 1.1.0 vs prose 1.9.6"
+     }
+    },
+    {
+     "incident_id": "inc-001",
+     "fault_family": "config_drift",
+     "outcome_score": 0.25,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Revert config:svc-auth@v1.3.7'",
+      "action_agrees_with_remediation": "action 1.3.7 vs prose 1.0.1",
+      "action_targets_correct_resource": "needs svc-auth@1.0.1; action names svc-auth@1.3.7"
+     }
+    },
+    {
+     "incident_id": "inc-002",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Rollback update: svc-catalog service reverted to v1.4.0 using most recent available backup'"
+     }
+    },
+    {
+     "incident_id": "inc-003",
+     "fault_family": "data_issue",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Rebuild service cache with latest version (v1.6.1)'",
+      "action_targets_correct_resource": "needs svc-pricing@1.1.5; action names no service@1.6.1"
+     }
+    },
+    {
+     "incident_id": "inc-004",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.6,
+     "outcome_pass": true,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Irreversible action: Immediately cancel any pending deployment of the new service search v'",
+      "action_agrees_with_remediation": "action 1.1.3 vs prose 1.4.9",
+      "action_targets_correct_resource": "needs svc-search@1.4.9; action names no service@1.1.3"
+     }
+    },
+    {
+     "incident_id": "inc-005",
+     "fault_family": "config_drift",
+     "outcome_score": 0.222,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Revert config:svc-auth@v1.6.4'"
+     }
+    },
+    {
+     "incident_id": "inc-006",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.2,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Run `baseline_responder restart_service:svc-catalog@v1.5.0`'",
+      "action_agrees_with_remediation": "action 1.5.0 vs prose 1.2.8",
+      "action_targets_correct_resource": "needs svc-catalog@1.2.8; action names svc-catalog@1.5.0"
+     }
+    },
+    {
+     "incident_id": "inc-007",
+     "fault_family": "data_issue",
+     "outcome_score": 0.1,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge cache for svc-profile@v1.0.5'",
+      "action_agrees_with_remediation": "action 1.0.5 vs prose 1.7.6"
+     }
+    },
+    {
+     "incident_id": "inc-008",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.4,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-009",
+     "fault_family": "config_drift",
+     "outcome_score": 0.444,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Apply irreversible change by reverting configuration to previous state. This will involve '",
+      "action_targets_correct_resource": "needs svc-orders@1.3.2; action names no service@1.3.2"
+     }
+    },
+    {
+     "incident_id": "inc-010",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Irreversible Action: Remove the latest patch version of svc-catalog (v1.1.8) from all node'"
+     }
+    },
+    {
+     "incident_id": "inc-011",
+     "fault_family": "data_issue",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Revert to v1.5.1 on svc-pricing: Run `purge_cache:svc-pricing@v1.8.1`'",
+      "diagnosis_names_correct_version": "cause names 1.8.1; incident is about 1.5.1"
+     }
+    },
+    {
+     "incident_id": "inc-012",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.6,
+     "outcome_pass": true,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Perform an irreversible action: Remove all existing deployments of v1.4.8 from the system,'",
+      "action_agrees_with_remediation": "action 1.4.8 vs prose 1.9.5",
+      "action_targets_correct_resource": "needs svc-search@1.4.8; action names no service@1.4.8"
+     }
+    },
+    {
+     "incident_id": "inc-013",
+     "fault_family": "config_drift",
+     "outcome_score": 0.222,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"Revert configuration of service 'svc-orders' to v1.0.1 using the candidate action 'revert_\"",
+      "action_agrees_with_remediation": "action 1.0.1 vs prose 1.6.2"
+     }
+    },
+    {
+     "incident_id": "inc-014",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.2,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Apply the latest stable version of service catalog (version v1.3.0, not v1.3.8), then rest'",
+      "action_targets_correct_resource": "needs svc-catalog@1.2.2; action names no service@1.3.0,1.3.8"
+     }
+    },
+    {
+     "incident_id": "inc-015",
+     "fault_family": "data_issue",
+     "outcome_score": 0.2,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge cache for svc-feed@v1.3.4'"
+     }
+    },
+    {
+     "incident_id": "inc-016",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.6,
+     "outcome_pass": true,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"Execute the candidate action 'rollback_deploy:svc-checkout@v1.1.5' with caution and monito\""
+     }
+    },
+    {
+     "incident_id": "inc-017",
+     "fault_family": "config_drift",
+     "outcome_score": 0.375,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Revert the `svc-auth` configuration to v1.0.5, which is the previously deployed version.'"
+     }
+    },
+    {
+     "incident_id": "inc-018",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"irreversible-action: Run a recovery rollbacks of the container group for 'svc-ledger', and\"",
+      "action_targets_correct_resource": "needs svc-ledger@1.3.7; action names svc-ledger@1.6.7"
+     }
+    },
+    {
+     "incident_id": "inc-019",
+     "fault_family": "data_issue",
+     "outcome_score": 0.4,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Revert service to previous version (v1.0.1) by purging cache and restarting the service'",
+      "action_targets_correct_resource": "needs svc-feed@1.0.1; action names no service@1.0.1"
+     }
+    },
+    {
+     "incident_id": "inc-020",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.9,
+     "outcome_pass": true,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_targets_correct_resource",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"{'type': 'rollBack', 'resourceId': '/services/v1/search', 'revision': 'v1.7.2'}\"",
+      "action_targets_correct_resource": "needs svc-search@1.7.2; action names no service@1.7.2",
+      "diagnosis_names_correct_version": "cause names 1.8.1; incident is about 1.7.2"
+     }
+    },
+    {
+     "incident_id": "inc-021",
+     "fault_family": "config_drift",
+     "outcome_score": 0.25,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Revert config: svc-auth@v1.8.0'"
+     }
+    },
+    {
+     "incident_id": "inc-022",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_targets_correct_resource",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"Irreversible action: Delete the latest patch from the container registry for 'svc-ledger'.\"",
+      "action_targets_correct_resource": "needs svc-ledger@1.0.6; action names svc-ledger@no version",
+      "diagnosis_names_correct_version": "cause names 1.2.3; incident is about 1.0.6"
+     }
+    },
+    {
+     "incident_id": "inc-023",
+     "fault_family": "data_issue",
+     "outcome_score": 0.2,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"Revert to a previous known good state by purging the cache for the 'svc-pricing' service a\"",
+      "action_agrees_with_remediation": "action 1.3.0 vs prose 1.9.7"
+     }
+    },
+    {
+     "incident_id": "inc-024",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.6,
+     "outcome_pass": true,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"Roll back deployment of 'svc-search' to its previous version ('v1.8.2') immediately.\"",
+      "diagnosis_names_correct_version": "cause names 1.6.1; incident is about 1.8.2"
+     }
+    },
+    {
+     "incident_id": "inc-025",
+     "fault_family": "config_drift",
+     "outcome_score": 0.222,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Revert config:svc-inventory@v1.3.9'"
+     }
+    },
+    {
+     "incident_id": "inc-026",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"Revert changes made to the 'svc-catalog' service from v1.1.0 to v1.5.3 and restore to the \""
+     }
+    },
+    {
+     "incident_id": "inc-027",
+     "fault_family": "data_issue",
+     "outcome_score": 0.4,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: \"Clear the svc-pricing service cache using the candidate action 'purge_cache:svc-pricing@v1\"",
+      "action_agrees_with_remediation": "action 1.9.9 vs prose 1.1.3"
+     }
+    },
+    {
+     "incident_id": "inc-028",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.8,
+     "outcome_pass": true,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Rollback the `svc-payments` service to version v1.4.2'"
+     }
+    },
+    {
+     "incident_id": "inc-029",
+     "fault_family": "config_drift",
+     "outcome_score": 0.333,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Revert configuration to svc-inventory: v1.1.2'"
+     }
+    }
+   ]
+  },
+  {
+   "system": "contender",
+   "n": 30,
+   "n_gradeable": 30,
+   "outcome_pass_rate": 0.1,
+   "trajectory_pass_rate": 0.3333,
+   "both_pass": 1,
+   "outcome_pass_trajectory_fail": 2,
+   "outcome_fail_trajectory_pass": 9,
+   "both_fail": 18,
+   "assertions": {
+    "acted_only_if_approved": {
+     "pass": 30,
+     "fail": 0,
+     "n/a": 0
+    },
+    "action_is_machine_executable": {
+     "pass": 22,
+     "fail": 8,
+     "n/a": 0
+    },
+    "action_agrees_with_remediation": {
+     "pass": 12,
+     "fail": 7,
+     "n/a": 11
+    },
+    "action_targets_correct_resource": {
+     "pass": 28,
+     "fail": 2,
+     "n/a": 0
+    },
+    "diagnosis_names_correct_version": {
+     "pass": 8,
+     "fail": 11,
+     "n/a": 11
+    },
+    "effort_within_family_norm": {
+     "pass": 30,
+     "fail": 0,
+     "n/a": 0
+    }
+   },
+   "rows": [
+    {
+     "incident_id": "inc-000",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.5,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_targets_correct_resource",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Roll back the deployment to v1.1.0'",
+      "action_targets_correct_resource": "needs svc-search@1.1.0; action names no service@1.1.0",
+      "diagnosis_names_correct_version": "cause names 1.9.6; incident is about 1.1.0"
+     }
+    },
+    {
+     "incident_id": "inc-001",
+     "fault_family": "config_drift",
+     "outcome_score": 0.375,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-002",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.2,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "diagnosis_names_correct_version": "cause names 1.1.1; incident is about 1.4.0"
+     }
+    },
+    {
+     "incident_id": "inc-003",
+     "fault_family": "data_issue",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge_cache:svc-pricing@v1.1.5'",
+      "diagnosis_names_correct_version": "cause names 1.6.1; incident is about 1.1.5"
+     }
+    },
+    {
+     "incident_id": "inc-004",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.5,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-005",
+     "fault_family": "config_drift",
+     "outcome_score": 0.333,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_agrees_with_remediation": "action 1.6.4 vs prose 1.4.1"
+     }
+    },
+    {
+     "incident_id": "inc-006",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.4,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_agrees_with_remediation": "action 1.2.8 vs prose 1.4.0"
+     }
+    },
+    {
+     "incident_id": "inc-007",
+     "fault_family": "data_issue",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge cache:svc-profile@v1.0.5'",
+      "action_agrees_with_remediation": "action 1.0.5 vs prose 1.7.6"
+     }
+    },
+    {
+     "incident_id": "inc-008",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.7,
+     "outcome_pass": true,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "diagnosis_names_correct_version": "cause names 1.9.6; incident is about 1.7.2"
+     }
+    },
+    {
+     "incident_id": "inc-009",
+     "fault_family": "config_drift",
+     "outcome_score": 0.0,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-010",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_agrees_with_remediation": "action 1.1.6 vs prose 1.1.8"
+     }
+    },
+    {
+     "incident_id": "inc-011",
+     "fault_family": "data_issue",
+     "outcome_score": 0.4,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge cache:svc-pricing@v1.5.1'",
+      "diagnosis_names_correct_version": "cause names 1.8.1; incident is about 1.5.1"
+     }
+    },
+    {
+     "incident_id": "inc-012",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.7,
+     "outcome_pass": true,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-013",
+     "fault_family": "config_drift",
+     "outcome_score": 0.222,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "diagnosis_names_correct_version": "cause names 1.7.1; incident is about 1.0.1"
+     }
+    },
+    {
+     "incident_id": "inc-014",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.1,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-015",
+     "fault_family": "data_issue",
+     "outcome_score": 0.1,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge cache:svc-feed@v1.3.4'",
+      "action_agrees_with_remediation": "action 1.3.4 vs prose 1.1.3"
+     }
+    },
+    {
+     "incident_id": "inc-016",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.2,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-017",
+     "fault_family": "config_drift",
+     "outcome_score": 0.5,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-018",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_agrees_with_remediation": "action 1.3.7 vs prose 1.6.7"
+     }
+    },
+    {
+     "incident_id": "inc-019",
+     "fault_family": "data_issue",
+     "outcome_score": 0.2,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge_cache:svc-feed@v1.0.1'",
+      "diagnosis_names_correct_version": "cause names 1.3.3; incident is about 1.0.1"
+     }
+    },
+    {
+     "incident_id": "inc-020",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.5,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "diagnosis_names_correct_version": "cause names 1.8.1; incident is about 1.7.2"
+     }
+    },
+    {
+     "incident_id": "inc-021",
+     "fault_family": "config_drift",
+     "outcome_score": 0.375,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-022",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.1,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    },
+    {
+     "incident_id": "inc-023",
+     "fault_family": "data_issue",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable",
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge_cache:svc-pricing@v1.3.0'",
+      "diagnosis_names_correct_version": "cause names 1.9.7; incident is about 1.3.0"
+     }
+    },
+    {
+     "incident_id": "inc-024",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.6,
+     "outcome_pass": true,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "diagnosis_names_correct_version": "cause names 1.6.1; incident is about 1.8.2"
+     }
+    },
+    {
+     "incident_id": "inc-025",
+     "fault_family": "config_drift",
+     "outcome_score": 0.222,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "diagnosis_names_correct_version"
+     ],
+     "detail": {
+      "diagnosis_names_correct_version": "cause names 1.4.3; incident is about 1.3.9"
+     }
+    },
+    {
+     "incident_id": "inc-026",
+     "fault_family": "dependency_failure",
+     "outcome_score": 0.3,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_targets_correct_resource"
+     ],
+     "detail": {
+      "action_targets_correct_resource": "needs svc-catalog@1.5.3; action names svc-catalog@1.1.0"
+     }
+    },
+    {
+     "incident_id": "inc-027",
+     "fault_family": "data_issue",
+     "outcome_score": 0.2,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_is_machine_executable"
+     ],
+     "detail": {
+      "action_is_machine_executable": "not dispatchable: 'Purge_cache:svc-pricing@v1.9.9'"
+     }
+    },
+    {
+     "incident_id": "inc-028",
+     "fault_family": "bad_deploy",
+     "outcome_score": 0.5,
+     "outcome_pass": false,
+     "trajectory_pass": false,
+     "failed_assertions": [
+      "action_agrees_with_remediation"
+     ],
+     "detail": {
+      "action_agrees_with_remediation": "action 1.4.2 vs prose 1.8.4"
+     }
+    },
+    {
+     "incident_id": "inc-029",
+     "fault_family": "config_drift",
+     "outcome_score": 0.222,
+     "outcome_pass": false,
+     "trajectory_pass": true,
+     "failed_assertions": [],
+     "detail": {}
+    }
+   ]
+  }
+ ]
+}

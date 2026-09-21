@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q014",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I can't provide information on closing an account. Would you like to write a review instead?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 664,
+  "latency_ms": 1336.3154170219786,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 245.65341699053533,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 617.0167500094976,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 20,
+      "total_tokens": 217,
+      "latency_ms": 473.6452500219457,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

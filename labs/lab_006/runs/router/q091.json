@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q091",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I can't provide information on closing an account permanently. If you'd like to make a claim against our company, I'll need to create a ticket for you. Would you like me to do that?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 623,
+  "latency_ms": 1023.7192499917,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 488.887874991633,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 42,
+      "total_tokens": 240,
+      "latency_ms": 534.831375000067,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

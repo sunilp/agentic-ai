@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q029",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can provide more information on shipment options. According to our knowledge base, we offer various shipping methods with different delivery times. You can view the available options and estimated delivery times on the checkout page during the ordering process. Would you like me to guide you through that?",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2289,
+  "latency_ms": 4728.595750028035,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 61,
+      "completion_tokens": 2,
+      "total_tokens": 63,
+      "latency_ms": 131.5886660013348,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 491.12991700530984,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 19,
+      "total_tokens": 217,
+      "latency_ms": 330.5284170201048,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 101,
+      "completion_tokens": 25,
+      "total_tokens": 126,
+      "latency_ms": 652.4267079948913,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 513.0510420131031,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 55,
+      "total_tokens": 271,
+      "latency_ms": 684.3484999844804,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 137,
+      "completion_tokens": 28,
+      "total_tokens": 165,
+      "latency_ms": 747.1001670055557,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 498.86258301557973,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 55,
+      "total_tokens": 271,
+      "latency_ms": 679.5597499876749,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

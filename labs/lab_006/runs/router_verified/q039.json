@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q039",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can't help with that. You can cancel your order by contacting our customer service team at 1-800-123-4567 or [support@company.com](mailto:support@company.com).",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2301,
+  "latency_ms": 6284.161417977884,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 473.35137499612756,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 39,
+      "total_tokens": 239,
+      "latency_ms": 518.2911249867175,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 122,
+      "completion_tokens": 29,
+      "total_tokens": 151,
+      "latency_ms": 788.8656250142958,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 513.9129579765722,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 43,
+      "total_tokens": 260,
+      "latency_ms": 556.8581669940613,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 126,
+      "completion_tokens": 85,
+      "total_tokens": 211,
+      "latency_ms": 2087.9841670102905,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 747.5504589965567,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 43,
+      "total_tokens": 260,
+      "latency_ms": 597.3475420032628,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

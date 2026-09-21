@@ -1,0 +1,78 @@
+{
+  "system": "router_verified",
+  "query_id": "q052",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "You can close your {{Account Type}} account by going to Account Settings and selecting the \"Close Account\" option. Please note that this action is irreversible and will remove access to all account features, including saved data, after 30 days.",
+  "model_calls": 6,
+  "tool_calls": 2,
+  "total_tokens": 1547,
+  "latency_ms": 3019.6172070573084,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 421.81212501600385,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 27,
+      "total_tokens": 224,
+      "latency_ms": 402.4039580253884,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 110,
+      "completion_tokens": 26,
+      "total_tokens": 136,
+      "latency_ms": 680.339249985991,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 514.3064580042847,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 49,
+      "total_tokens": 263,
+      "latency_ms": 617.9002500139177,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 132,
+      "completion_tokens": 11,
+      "total_tokens": 143,
+      "latency_ms": 382.85516601172276,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": true
+  }
+}

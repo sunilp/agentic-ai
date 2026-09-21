@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q055",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: is it possible to place an order from {{Delivery Country}}?\n\nAnswer:\nTechnical support: standard delivery is 3 to 5 business days. Tracking is available from the Orders page once an item ships. Address changes are only possible before an order enters the shipped state.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 650,
+  "latency_ms": 1273.0069590033963,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 519.7674589871895,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 62,
+      "total_tokens": 265,
+      "latency_ms": 753.2395000162069,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q089",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I'm happy to help you with your online payment error. According to our billing policy, refunds are typically processed to the original payment method within 5 to 7 business days. If you'd like more information or have any further questions, please let me know.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2484,
+  "latency_ms": 6023.189249041025,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 433.45995800336823,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 137,
+      "total_tokens": 339,
+      "latency_ms": 1565.5907500186004,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 29,
+      "total_tokens": 249,
+      "latency_ms": 846.767417009687,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 510.00695800757967,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 54,
+      "total_tokens": 274,
+      "latency_ms": 667.7653329970781,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 137,
+      "completion_tokens": 32,
+      "total_tokens": 169,
+      "latency_ms": 823.5760839888826,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 504.3353330111131,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 54,
+      "total_tokens": 274,
+      "latency_ms": 671.6874160047155,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

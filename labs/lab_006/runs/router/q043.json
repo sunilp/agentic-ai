@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q043",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a refund without more information. Can I help you with anything else?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 602,
+  "latency_ms": 941.0151670163032,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 580.1052500028163,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 19,
+      "total_tokens": 221,
+      "latency_ms": 360.90991701348685,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

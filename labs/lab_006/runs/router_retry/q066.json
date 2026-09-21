@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q066",
+  "category_true": "escalation",
+  "category_used": "billing",
+  "answer": "Thank you for reaching out to us about providing feedback on our billing process. According to our knowledge base, we do have a method to provide feedback - please contact our customer support team directly so we can assist you with your inquiry. We're here to help!",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1314,
+  "latency_ms": 2253.542875027051,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 440.7812090066727,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 57,
+      "total_tokens": 260,
+      "latency_ms": 704.206875001546,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 442.884000018239,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 53,
+      "total_tokens": 273,
+      "latency_ms": 665.6707910005935,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

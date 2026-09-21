@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q099",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "According to our billing policy, the allowed payment methods for refunds and cancellations include the original payment method used to set up the account. If you have any further questions or concerns about your specific situation, I can create a ticket for assistance from a human representative.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2228,
+  "latency_ms": 4437.058165058261,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 448.51354201091453,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 21,
+      "total_tokens": 222,
+      "latency_ms": 340.81920800963417,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 103,
+      "completion_tokens": 26,
+      "total_tokens": 129,
+      "latency_ms": 678.2527499890421,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 504.71262499922886,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 53,
+      "total_tokens": 272,
+      "latency_ms": 663.53941601119,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 135,
+      "completion_tokens": 22,
+      "total_tokens": 157,
+      "latency_ms": 611.9871660193894,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 511.40637500793673,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 53,
+      "total_tokens": 272,
+      "latency_ms": 677.827083010925,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q089",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a specific answer based on the information you've given, as I don't have access to your account details or the current status of your online payment. However, I can guide you on what steps you can take.\n\nTo resolve the issue with your online payment, I recommend the following:\n\n1. Check your email: Look for an invoice or a notification from us regarding your payment.\n2. Log in to your account: Visit our website and log in to your account to check the payment status.\n3. Contact us: Reach out to our customer support team, and we'll be happy to assist you further.\n\nIs there anything else I can help you with?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 720,
+  "latency_ms": 2030.7874579739291,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 491.5939999918919,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 137,
+      "total_tokens": 339,
+      "latency_ms": 1539.1934579820372,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

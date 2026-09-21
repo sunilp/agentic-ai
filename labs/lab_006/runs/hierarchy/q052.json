@@ -1,0 +1,87 @@
+{
+  "system": "hierarchy",
+  "query_id": "q052",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "You can close your {{Account Type}} account by going to Account Settings and selecting the \"Close Account\" option. Please note that this action is irreversible and will remove access to all account features, including saved data, after 30 days.",
+  "model_calls": 7,
+  "tool_calls": 2,
+  "total_tokens": 1612,
+  "latency_ms": 3845.747542072786,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 129.45912501891144,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 691.071916022338,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 27,
+      "total_tokens": 224,
+      "latency_ms": 529.0083340078127,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 110,
+      "completion_tokens": 26,
+      "total_tokens": 136,
+      "latency_ms": 936.7266670160461,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 564.6844590082765,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 49,
+      "total_tokens": 263,
+      "latency_ms": 621.9225829991046,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 132,
+      "completion_tokens": 11,
+      "total_tokens": 143,
+      "latency_ms": 372.8744580002967,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": true
+  }
+}

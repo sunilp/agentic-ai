@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q081",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I can't provide information on closing an account. Would you like to submit your feedback for a product instead?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 673,
+  "latency_ms": 996.0826249734964,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 65,
+      "completion_tokens": 2,
+      "total_tokens": 67,
+      "latency_ms": 135.7158329919912,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 494.38091699266806,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 23,
+      "total_tokens": 222,
+      "latency_ms": 365.98587498883717,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

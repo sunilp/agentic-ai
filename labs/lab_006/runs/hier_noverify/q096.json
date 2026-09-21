@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q096",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I was unable to find any information on delivery methods in the knowledge base. Can I create a ticket for you?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 671,
+  "latency_ms": 1056.1132509610616,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 174.87491699284874,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 505.5954169947654,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 24,
+      "total_tokens": 222,
+      "latency_ms": 375.6429169734474,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

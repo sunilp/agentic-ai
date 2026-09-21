@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q066",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "For submitting feedback, you can use our online form located under the Help menu. Simply click on \"Contact Us\" and select \"Feedback\" from the dropdown menu to provide your comments or suggestions.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2343,
+  "latency_ms": 5321.504623949295,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 135.36962500074878,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 484.34670799179,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 53,
+      "total_tokens": 250,
+      "latency_ms": 652.941166976234,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 136,
+      "completion_tokens": 33,
+      "total_tokens": 169,
+      "latency_ms": 841.7835829895921,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 508.99587498861365,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 40,
+      "total_tokens": 254,
+      "latency_ms": 521.7449170013424,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 123,
+      "completion_tokens": 48,
+      "total_tokens": 171,
+      "latency_ms": 1169.671790994471,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 490.3289999929257,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 40,
+      "total_tokens": 254,
+      "latency_ms": 516.3219580135774,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "agent_model": "llama3.2:3b",
+  "arms": [
+    "router",
+    "router_retry",
+    "router_verified",
+    "hier_noverify",
+    "hierarchy"
+  ],
+  "n_queries": 100,
+  "errors": 0,
+  "dataset_meta": {
+    "source": "Bitext customer-support dataset",
+    "url": "https://huggingface.co/datasets/bitext/Bitext-customer-support-llm-chatbot-training-dataset/resolve/main/Bitext_Sample_Customer_Support_Training_Dataset_27K_responses-v11.csv",
+    "license": "CC-BY-4.0 (Bitext)",
+    "seed": 42,
+    "requested_n": 100,
+    "actual_n": 100,
+    "buckets": [
+      "billing",
+      "technical",
+      "account",
+      "escalation"
+    ],
+    "used_fallback": false,
+    "category_map": {
+      "INVOICE": "billing",
+      "PAYMENT": "billing",
+      "REFUND": "billing",
+      "CANCELLATION_FEE": "billing",
+      "DELIVERY": "technical",
+      "ORDER": "technical",
+      "SHIPPING_ADDRESS": "technical",
+      "ACCOUNT": "account",
+      "NEWSLETTER": "account",
+      "SUBSCRIPTION": "account",
+      "CONTACT": "account",
+      "FEEDBACK": "escalation"
+    }
+  },
+  "duration_s": 1543.1,
+  "finished": "2026-08-23T01:54:37Z"
+}

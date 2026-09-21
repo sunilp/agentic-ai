@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q050",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "For shopping items, you can find them in the \"My Orders\" section of your account. If you're having trouble locating a specific item, you can try searching for it on our website or contacting us for assistance.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1278,
+  "latency_ms": 2109.6471240452956,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 442.0786249975208,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 51,
+      "total_tokens": 245,
+      "latency_ms": 640.5950830085203,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 380,
+      "completion_tokens": 17,
+      "total_tokens": 397,
+      "latency_ms": 436.52391602518037,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 212,
+      "completion_tokens": 45,
+      "total_tokens": 257,
+      "latency_ms": 590.4495000140741,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

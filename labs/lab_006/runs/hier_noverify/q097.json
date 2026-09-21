@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q097",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "Customer: Can you tell me what the current balance is for account 732201349959?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 665,
+  "latency_ms": 1007.6245000236668,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 65,
+      "completion_tokens": 2,
+      "total_tokens": 67,
+      "latency_ms": 139.14920800016262,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 21,
+      "total_tokens": 388,
+      "latency_ms": 542.8949170163833,
+      "tool_calls": [
+        "account_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 190,
+      "completion_tokens": 20,
+      "total_tokens": 210,
+      "latency_ms": 325.5803750071209,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

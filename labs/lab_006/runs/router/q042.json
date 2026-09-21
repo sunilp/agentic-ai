@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q042",
+  "category_true": "escalation",
+  "category_used": "billing",
+  "answer": "I can't provide a response that includes cancellation fees or refund processing times. Is there anything else I can help you with?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 609,
+  "latency_ms": 909.9843339936342,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 509.1095420066267,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 26,
+      "total_tokens": 228,
+      "latency_ms": 400.8747919870075,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

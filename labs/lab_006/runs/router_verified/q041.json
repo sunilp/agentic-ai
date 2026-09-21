@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q041",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "According to our billing policy, we accept payments through bank transfer, credit card (Visa, Mastercard, Amex), and PayPal. If you have any questions or concerns about your payment options, feel free to ask!",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2243,
+  "latency_ms": 4329.99895903049,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 495.1412500231527,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 18,
+      "total_tokens": 224,
+      "latency_ms": 305.2892909909133,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 105,
+      "completion_tokens": 25,
+      "total_tokens": 130,
+      "latency_ms": 650.0546660099644,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 386,
+      "completion_tokens": 17,
+      "total_tokens": 403,
+      "latency_ms": 504.2197090224363,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 224,
+      "completion_tokens": 46,
+      "total_tokens": 270,
+      "latency_ms": 587.4168330046814,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 133,
+      "completion_tokens": 25,
+      "total_tokens": 158,
+      "latency_ms": 682.8587919881102,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 386,
+      "completion_tokens": 17,
+      "total_tokens": 403,
+      "latency_ms": 513.0553339840844,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 224,
+      "completion_tokens": 46,
+      "total_tokens": 270,
+      "latency_ms": 591.9630840071477,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

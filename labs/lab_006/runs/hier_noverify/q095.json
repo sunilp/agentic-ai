@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q095",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I was unable to find any information on placing orders from a specific delivery city in our knowledge base (kb_lookup). Can I create a ticket for you to assist with your question?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 684,
+  "latency_ms": 1158.6413329932839,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 2,
+      "total_tokens": 66,
+      "latency_ms": 148.35475001018494,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 507.4096249882132,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 37,
+      "total_tokens": 235,
+      "latency_ms": 502.87695799488574,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

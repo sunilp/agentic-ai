@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q077",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "Based on the knowledge base, it appears that address changes are not possible after an order has entered the shipped state. If you'd like to make changes to your delivery address, please contact our customer service team as soon as possible so we can assist you with modifying your order before it ships.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1309,
+  "latency_ms": 2484.3608749797568,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 486.9749159843195,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 52,
+      "total_tokens": 252,
+      "latency_ms": 668.8827920006588,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 519.6155419980641,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 59,
+      "total_tokens": 276,
+      "latency_ms": 808.8876249967143,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q065",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "Sorry, I can't provide a refund for {{Refund Amount}}. Our billing policy states that refunds are only issued for cancellations made within the first 30 days of an annual plan, and even then, cancellation fees may apply. Would you like to discuss further or create a ticket?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1299,
+  "latency_ms": 2146.1128739465494,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 448.5179579933174,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 35,
+      "total_tokens": 238,
+      "latency_ms": 481.7970829899423,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 463.5422079882119,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 60,
+      "total_tokens": 280,
+      "latency_ms": 752.2556249750778,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

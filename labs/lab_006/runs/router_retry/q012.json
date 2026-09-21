@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q012",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For hours of operation, you can contact us Monday through Friday from 9 AM to 5 PM EST. If you need assistance outside of these hours, please submit a request through our website or call us at [phone number].",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1316,
+  "latency_ms": 2326.850374985952,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 420.36895899218507,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 67,
+      "total_tokens": 266,
+      "latency_ms": 790.3665830090176,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 506.45575000089593,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 47,
+      "total_tokens": 264,
+      "latency_ms": 609.6590829838533,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

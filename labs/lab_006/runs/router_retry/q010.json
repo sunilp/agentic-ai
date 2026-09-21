@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q010",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "According to our knowledge base, you can track your order by logging into your account and navigating to the Orders page. Once your order has shipped, you will be able to view tracking information. If you have any further questions or concerns, please don't hesitate to contact us.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1315,
+  "latency_ms": 2222.1726249845233,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 419.6552920038812,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 57,
+      "total_tokens": 258,
+      "latency_ms": 697.1452079887968,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 415.77104199677706,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 56,
+      "total_tokens": 274,
+      "latency_ms": 689.6010829950683,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

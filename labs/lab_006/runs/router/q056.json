@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q056",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I can't provide information on closing an account. Would you like to leave feedback about a product instead?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 603,
+  "latency_ms": 775.9999570262153,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 427.8640410047956,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 22,
+      "total_tokens": 220,
+      "latency_ms": 348.1359160214197,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

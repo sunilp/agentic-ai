@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q020",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "Thank you for reaching out to us about leaving feedback on our product. I've checked on the latest information from our knowledge base (kb_lookup) and it seems that you can provide feedback through our website's contact page or by emailing us directly. Would you like me to guide you on how to do that?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 702,
+  "latency_ms": 1515.5887079890817,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 157.210125005804,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 528.5026250057854,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 63,
+      "total_tokens": 258,
+      "latency_ms": 829.8759579774924,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

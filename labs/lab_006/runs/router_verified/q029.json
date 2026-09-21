@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q029",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can provide more information on shipment options. According to our knowledge base, we offer various shipping methods with different delivery times. You can view the available options and estimated delivery times on the checkout page during the ordering process. Would you like me to guide you through that?",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2226,
+  "latency_ms": 4584.314207022544,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 424.5036659995094,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 19,
+      "total_tokens": 217,
+      "latency_ms": 328.3944159920793,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 101,
+      "completion_tokens": 25,
+      "total_tokens": 126,
+      "latency_ms": 665.7626660016831,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 508.1606669991743,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 55,
+      "total_tokens": 271,
+      "latency_ms": 697.7593339979649,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 137,
+      "completion_tokens": 28,
+      "total_tokens": 165,
+      "latency_ms": 767.9625000164378,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 507.970042002853,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 55,
+      "total_tokens": 271,
+      "latency_ms": 683.8009160128422,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

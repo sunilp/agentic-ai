@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q041",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide information on cancellation fees. Can I help you with something else?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 609,
+  "latency_ms": 921.2754580366891,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 610.6150410196278,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 18,
+      "total_tokens": 224,
+      "latency_ms": 310.66041701706126,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

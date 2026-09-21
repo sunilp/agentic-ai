@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q028",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "You can check the current status of your restitution by logging into your account and looking for any updates or notifications related to your refund. If you're unable to find the information, you can also contact our customer support team for assistance.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1375,
+  "latency_ms": 3028.2712490006816,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 462.84733299398795,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 132,
+      "total_tokens": 330,
+      "latency_ms": 1512.8227499953937,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 448.2269160216674,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 47,
+      "total_tokens": 262,
+      "latency_ms": 604.3742499896325,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

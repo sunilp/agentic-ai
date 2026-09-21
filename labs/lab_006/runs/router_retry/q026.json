@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q026",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "Sorry, but I don't have information on removing a platinum account. Can you please contact our customer support team directly so they can assist you further?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1229,
+  "latency_ms": 1849.8181669856422,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 358,
+      "completion_tokens": 17,
+      "total_tokens": 375,
+      "latency_ms": 454.58679198054597,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 190,
+      "completion_tokens": 32,
+      "total_tokens": 222,
+      "latency_ms": 448.0048330151476,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 376,
+      "completion_tokens": 17,
+      "total_tokens": 393,
+      "latency_ms": 496.66666699340567,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 208,
+      "completion_tokens": 31,
+      "total_tokens": 239,
+      "latency_ms": 450.55987499654293,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

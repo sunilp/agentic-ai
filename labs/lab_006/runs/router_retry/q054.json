@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q054",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "Sorry to hear that you're trying to write a review for our company. Unfortunately, we don't have the capability to allow customers to leave reviews directly on our platform. However, we appreciate your feedback and would like to know more about your experience with us. Can I assist you with anything else?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1278,
+  "latency_ms": 1933.7044990097638,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 413.1154580099974,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 23,
+      "total_tokens": 220,
+      "latency_ms": 360.3447909990791,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 418.7510420160834,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 61,
+      "total_tokens": 276,
+      "latency_ms": 741.4932079846039,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

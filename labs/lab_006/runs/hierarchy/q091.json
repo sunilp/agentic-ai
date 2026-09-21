@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q091",
+  "category_true": "escalation",
+  "category_used": "escalation",
+  "answer": "I can assist you with making a claim against our company. Please create a ticket using the link below and a representative will contact you within 24 hours to discuss your claim. \n\n[create_ticket]",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2393,
+  "latency_ms": 6218.003793008393,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 64,
+      "completion_tokens": 4,
+      "total_tokens": 68,
+      "latency_ms": 161.5499589825049,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 18,
+      "total_tokens": 384,
+      "latency_ms": 501.7656249983702,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 56,
+      "total_tokens": 252,
+      "latency_ms": 692.9214170086198,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 140,
+      "completion_tokens": 73,
+      "total_tokens": 213,
+      "latency_ms": 1714.4725830003154,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 18,
+      "total_tokens": 401,
+      "latency_ms": 515.9057500131894,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 41,
+      "total_tokens": 254,
+      "latency_ms": 545.3200420015492,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 125,
+      "completion_tokens": 41,
+      "total_tokens": 166,
+      "latency_ms": 1024.3414159922395,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 18,
+      "total_tokens": 401,
+      "latency_ms": 521.7329589941073,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 41,
+      "total_tokens": 254,
+      "latency_ms": 539.9940420174971,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

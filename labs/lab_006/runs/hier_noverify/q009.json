@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q009",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For switching to the {{Account Category}} account, you can go to your Account Settings and select the desired category from the dropdown menu. This will update your profile information and any associated settings. If you need further assistance or have questions about the process, please let me know.",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 718,
+  "latency_ms": 1325.5386250384618,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 69,
+      "completion_tokens": 2,
+      "total_tokens": 71,
+      "latency_ms": 139.38445801613852,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 371,
+      "completion_tokens": 17,
+      "total_tokens": 388,
+      "latency_ms": 507.6560419984162,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 56,
+      "total_tokens": 259,
+      "latency_ms": 678.498125023907,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

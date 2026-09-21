@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q030",
+  "category_true": "escalation",
+  "category_used": "escalation",
+  "answer": "I apologize for any inconvenience you've experienced with our business. To lodge a consumer complaint, please create a ticket with us. Our specialist will review your case within 24 hours and respond accordingly. The ticket reference is #ESC-1234.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2286,
+  "latency_ms": 6207.316875021206,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 18,
+      "total_tokens": 383,
+      "latency_ms": 509.8985419899691,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 37,
+      "total_tokens": 232,
+      "latency_ms": 536.7689169943333,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 121,
+      "completion_tokens": 55,
+      "total_tokens": 176,
+      "latency_ms": 1440.1318749878556,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 18,
+      "total_tokens": 401,
+      "latency_ms": 694.2279580107424,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 50,
+      "total_tokens": 263,
+      "latency_ms": 806.9920830021147,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 134,
+      "completion_tokens": 33,
+      "total_tokens": 167,
+      "latency_ms": 996.4629580208566,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 18,
+      "total_tokens": 401,
+      "latency_ms": 551.1083750170656,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 50,
+      "total_tokens": 263,
+      "latency_ms": 671.726166998269,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q073",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: wanna check how long it takes for my delivery to arrive\n\nA reviewer flagged the previous answer. Re-answer the question directly using the knowledge base.\n\nTechnical support: According to our knowledge, standard delivery typically takes 3 to 5 business days. You can track the status of your order on our website by logging into your account and visiting the Orders page. If you have any further questions or concerns, please create a ticket for assistance.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1341,
+  "latency_ms": 2600.7427489967085,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 440.5497080006171,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 42,
+      "total_tokens": 243,
+      "latency_ms": 549.5738750032615,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 434.0955829829909,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 95,
+      "total_tokens": 314,
+      "latency_ms": 1176.523583009839,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

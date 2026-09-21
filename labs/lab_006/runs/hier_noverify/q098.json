@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q098",
+  "category_true": "account",
+  "category_used": "technical",
+  "answer": "I couldn't find any information on a \"standard profile\" in our knowledge base. Can you please provide more context or clarify what you mean by \"standard profile\"? I'll do my best to assist you further. \n\nWould you like me to create a ticket for this issue?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 695,
+  "latency_ms": 1438.9865830016788,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 60,
+      "completion_tokens": 2,
+      "total_tokens": 62,
+      "latency_ms": 170.92316600610502,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 515.7026250089984,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 57,
+      "total_tokens": 254,
+      "latency_ms": 752.3607919865754,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

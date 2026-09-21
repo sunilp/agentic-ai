@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q032",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I don't have specific information on your refund status. Can you please provide me with your account ID so I can look into this further for you?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 602,
+  "latency_ms": 940.7699580187909,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 358,
+      "completion_tokens": 17,
+      "total_tokens": 375,
+      "latency_ms": 491.8787080096081,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 31,
+      "total_tokens": 227,
+      "latency_ms": 448.89125000918284,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

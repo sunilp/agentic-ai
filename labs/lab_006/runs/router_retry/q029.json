@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q029",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can provide more information on shipment options. According to our knowledge base, we offer various shipping methods with different delivery times. You can view the available options and estimated delivery times on the checkout page during the ordering process. Would you like me to guide you through that?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1266,
+  "latency_ms": 1849.284500000067,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 419.69524999149144,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 19,
+      "total_tokens": 217,
+      "latency_ms": 321.22279101167805,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 420.6527920032386,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 55,
+      "total_tokens": 271,
+      "latency_ms": 687.713666993659,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

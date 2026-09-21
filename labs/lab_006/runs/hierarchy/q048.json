@@ -1,0 +1,58 @@
+{
+  "system": "hierarchy",
+  "query_id": "q048",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "Sorry, but we don't currently offer {{Account Type}} accounts. Would you like to know more about our available account types or open a ticket for further assistance?",
+  "model_calls": 4,
+  "tool_calls": 1,
+  "total_tokens": 803,
+  "latency_ms": 1471.2835000245832,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 138.98404099745676,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 485.42825001641177,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 34,
+      "total_tokens": 230,
+      "latency_ms": 468.47658400656655,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 117,
+      "completion_tokens": 11,
+      "total_tokens": 128,
+      "latency_ms": 378.3946250041481,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": false,
+    "verifier_passed": true
+  }
+}

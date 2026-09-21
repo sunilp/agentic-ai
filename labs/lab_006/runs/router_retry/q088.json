@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q088",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For more information on managing your account settings, including canceling your newsletter subscription, please visit our website at [website URL] or contact us directly.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1281,
+  "latency_ms": 2110.8929170295596,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 502.5089170085266,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 48,
+      "total_tokens": 247,
+      "latency_ms": 639.606917015044,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 524.4892080081627,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 31,
+      "total_tokens": 248,
+      "latency_ms": 444.2878749978263,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

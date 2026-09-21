@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q043",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a refund for a cancellation fee. Would you like me to look up more information on our billing policy?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1247,
+  "latency_ms": 1752.496624016203,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 487.934500008123,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 19,
+      "total_tokens": 221,
+      "latency_ms": 356.88570799538866,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 482.78020799625665,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 26,
+      "total_tokens": 246,
+      "latency_ms": 424.8962080164347,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

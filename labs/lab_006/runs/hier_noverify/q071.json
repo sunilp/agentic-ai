@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q071",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I can assist you with filing a customer complaint. Can you please provide me with more details about the issue you're experiencing?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 661,
+  "latency_ms": 1000.6792079948355,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 60,
+      "completion_tokens": 2,
+      "total_tokens": 62,
+      "latency_ms": 128.75224999152124,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 477.2172500088345,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 26,
+      "total_tokens": 220,
+      "latency_ms": 394.7097079944797,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

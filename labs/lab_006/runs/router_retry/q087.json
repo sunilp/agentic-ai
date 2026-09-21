@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q087",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a refund or cancellation information without knowing your account ID. Can I help you with something else?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1285,
+  "latency_ms": 1896.7556650168262,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 425.7330829859711,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 204,
+      "completion_tokens": 53,
+      "total_tokens": 257,
+      "latency_ms": 668.3572910260409,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 427.6748749834951,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 221,
+      "completion_tokens": 24,
+      "total_tokens": 245,
+      "latency_ms": 374.9904160213191,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q089",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I'm happy to help you with your online payment error. According to our billing policy, refunds are typically processed to the original payment method within 5 to 7 business days. If you'd like more information or have any further questions, please let me know.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1393,
+  "latency_ms": 3116.58220901154,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 442.968125018524,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 137,
+      "total_tokens": 339,
+      "latency_ms": 1553.7217500095721,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 441.6070419829339,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 54,
+      "total_tokens": 274,
+      "latency_ms": 678.2852920005098,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

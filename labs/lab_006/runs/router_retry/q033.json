@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q033",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I apologize for any inconvenience you've experienced with our services. If you'd like to file a claim, I recommend visiting our Help Center at <https://help.example.com> to find the relevant form or contact information. Is there anything else I can assist you with today?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1276,
+  "latency_ms": 1971.6127079736907,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 446.56224999926053,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 22,
+      "total_tokens": 220,
+      "latency_ms": 359.0531249938067,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 443.4118329954799,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 56,
+      "total_tokens": 272,
+      "latency_ms": 722.5854999851435,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

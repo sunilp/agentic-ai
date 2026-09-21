@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q076",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "Here's a more detailed response:\n\nYou can send a comment for our products through the \"Contact Us\" section in your Account Settings. This will allow you to provide feedback or suggestions directly to our customer support team. Please note that comments are reviewed and may take some time to be responded to.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1296,
+  "latency_ms": 2124.7339580440894,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 433.0147920118179,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 38,
+      "total_tokens": 236,
+      "latency_ms": 522.94362502289,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 384,
+      "completion_tokens": 17,
+      "total_tokens": 401,
+      "latency_ms": 434.3658330035396,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 60,
+      "total_tokens": 276,
+      "latency_ms": 734.4097080058418,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

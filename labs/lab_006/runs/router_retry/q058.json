@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q058",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can help you with ordering several articles. According to our website, standard delivery takes 3 to 5 business days. You can track your orders on the Orders page once they ship. If you need to make any address changes, please note that this is only possible before an order enters the shipped state.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1326,
+  "latency_ms": 2705.7697079726495,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 361,
+      "completion_tokens": 17,
+      "total_tokens": 378,
+      "latency_ms": 457.03458299976774,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 79,
+      "total_tokens": 275,
+      "latency_ms": 994.2723329877481,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 379,
+      "completion_tokens": 17,
+      "total_tokens": 396,
+      "latency_ms": 461.3062079879455,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 63,
+      "total_tokens": 277,
+      "latency_ms": 793.1565839971881,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

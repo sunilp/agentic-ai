@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q091",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I can't provide information or guidance on making a claim against the company. If you're looking to make a claim, I recommend reaching out to our claims department directly. Would you like me to create a ticket for you?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1284,
+  "latency_ms": 2043.5631670115981,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 452.7698330057319,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 42,
+      "total_tokens": 240,
+      "latency_ms": 554.1349170089234,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 442.6490420009941,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 46,
+      "total_tokens": 261,
+      "latency_ms": 594.0093749959487,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q090",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can provide more information on how to report payment problems. To initiate a refund, please contact our customer support team at [phone number] or [email address]. We'll be happy to assist you with your inquiry.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 636,
+  "latency_ms": 1074.1373340133578,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 489.17987500317395,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 206,
+      "completion_tokens": 45,
+      "total_tokens": 251,
+      "latency_ms": 584.9574590101838,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q052",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "You can close your {{Account Type}} account by going to Account Settings and selecting the \"Close Account\" option. Please note that this action is irreversible and will remove access to all account features, including saved data, after 30 days.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1268,
+  "latency_ms": 1878.595457994379,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 421.0779170098249,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 27,
+      "total_tokens": 224,
+      "latency_ms": 405.6408329925034,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 426.70949999592267,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 49,
+      "total_tokens": 263,
+      "latency_ms": 625.1672079961281,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q001",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I apologize for any inconvenience, but it seems that our previous answer was not clear enough. To clarify, you can place multiple orders through our website or mobile app by following these steps:\n\n1. Log in to your account and navigate to the \"Orders\" page.\n2. Click on \"Place a New Order\" and select the items you'd like to purchase.\n3. Review your cart and proceed to checkout.\n4. Enter your shipping and payment information as usual.\n\nIf you have any issues or concerns during the ordering process, please don't hesitate to contact us for assistance.",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2446,
+  "latency_ms": 6326.870667049661,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 415.33983300905675,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 23,
+      "total_tokens": 222,
+      "latency_ms": 355.3149579965975,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 105,
+      "completion_tokens": 41,
+      "total_tokens": 146,
+      "latency_ms": 1014.8902089858893,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 502.9678330174647,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 117,
+      "total_tokens": 333,
+      "latency_ms": 1292.0262500119861,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 36,
+      "total_tokens": 235,
+      "latency_ms": 960.4490420024376,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 504.3316670053173,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 216,
+      "completion_tokens": 117,
+      "total_tokens": 333,
+      "latency_ms": 1281.550875020912,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

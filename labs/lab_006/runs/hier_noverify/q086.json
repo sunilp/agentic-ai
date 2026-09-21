@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q086",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "I was unable to find information on \"allowed payment methods\" in the knowledge base. Can I create a ticket for you to assist with this issue?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 684,
+  "latency_ms": 1072.0336670055985,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 66,
+      "completion_tokens": 2,
+      "total_tokens": 68,
+      "latency_ms": 139.26295799319632,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 504.1320000018459,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 31,
+      "total_tokens": 231,
+      "latency_ms": 428.63870901055634,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

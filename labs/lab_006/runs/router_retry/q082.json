@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q082",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "You can view the status of your order {{Order Number}} on our website by following these steps:\n\n1. Sign in to your account.\n2. Click on \"Orders\" in the top navigation menu.\n3. Find your order {{Order Number}} and click on it.\n4. Scroll down to the \"Tracking Information\" section to view the current status of your shipment.\n\nIf you have any further questions or concerns, please don't hesitate to contact us.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1325,
+  "latency_ms": 2656.9972499855794,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 463.39820898720063,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 30,
+      "total_tokens": 231,
+      "latency_ms": 450.3372909966856,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 488.5507080180105,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 218,
+      "completion_tokens": 93,
+      "total_tokens": 311,
+      "latency_ms": 1254.7110419836827,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

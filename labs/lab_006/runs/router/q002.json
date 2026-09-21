@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q002",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I'm happy to help you with your account issue. Would you like me to create a ticket for assistance?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 594,
+  "latency_ms": 866.8590409797616,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 22,
+      "total_tokens": 385,
+      "latency_ms": 530.4290829808451,
+      "tool_calls": [
+        "account_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 186,
+      "completion_tokens": 23,
+      "total_tokens": 209,
+      "latency_ms": 336.4299579989165,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

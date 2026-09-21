@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q022",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I'm happy to help you with your account issue. An operator will be assigned to assist you shortly. In the meantime, please have your account information ready when they contact you.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 602,
+  "latency_ms": 1059.8707089957315,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 360,
+      "completion_tokens": 22,
+      "total_tokens": 382,
+      "latency_ms": 574.6997499954887,
+      "tool_calls": [
+        "account_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 183,
+      "completion_tokens": 37,
+      "total_tokens": 220,
+      "latency_ms": 485.1709590002429,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

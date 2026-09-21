@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q003",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "Unfortunately, that's not what the customer asked. Let me try again.\n\nTo write a comment on your account, you can log in to your account dashboard and click on the \"Comments\" section. From there, you can type in your comment and submit it for review.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 629,
+  "latency_ms": 1094.2156249948312,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 413.80899999057874,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 56,
+      "total_tokens": 250,
+      "latency_ms": 680.4066250042524,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

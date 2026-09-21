@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q006",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can't assist with that request as it involves sensitive information. Would you like to create a ticket for further assistance?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1266,
+  "latency_ms": 1905.7346660119947,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 431.89541599713266,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 55,
+      "total_tokens": 250,
+      "latency_ms": 673.8173330086283,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 422.27458400884643,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 25,
+      "total_tokens": 238,
+      "latency_ms": 377.7473329973873,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

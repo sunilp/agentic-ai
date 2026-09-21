@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q049",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can try to assist you further with your issue signing up. Can you please provide me with more details about the error message you're seeing or any specific problems you're experiencing during the sign-up process?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 619,
+  "latency_ms": 1037.9611249954905,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 492.1182499965653,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 42,
+      "total_tokens": 238,
+      "latency_ms": 545.8428749989253,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

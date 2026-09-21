@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q053",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I can't provide information on how to cancel an order permanently. Would you like me to look up the status of your order instead?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 672,
+  "latency_ms": 1032.6946249988396,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 135.88133399025537,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 489.4038329948671,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 28,
+      "total_tokens": 225,
+      "latency_ms": 407.4094580137171,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

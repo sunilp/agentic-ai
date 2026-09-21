@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q051",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "[category: technical]\nCustomer: I am calling to see how long the shipping takes\n\n**Shipping Timeframe:** Our standard delivery typically takes 3 to 5 business days.\n\nWould you like to track your order?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 627,
+  "latency_ms": 1102.3852920043282,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 510.48466700012796,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 45,
+      "total_tokens": 245,
+      "latency_ms": 591.9006250042003,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

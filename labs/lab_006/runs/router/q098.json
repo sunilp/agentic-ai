@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q098",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For more information on using the standard profile, I recommend checking out our knowledge base article on \"Managing Your Profile\" (kb_lookup: KB-1234). If you have any further questions or need assistance with your account, feel free to create a ticket and I'll be happy to help.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 633,
+  "latency_ms": 1260.9035009809304,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 478.8320839870721,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 60,
+      "total_tokens": 254,
+      "latency_ms": 782.0714169938583,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

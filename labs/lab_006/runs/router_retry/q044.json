@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q044",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "For troubles with payments, I recommend checking your account status and payment history through our online portal or by contacting us directly. If you have any issues with a specific invoice, please provide the invoice number so we can assist you further.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1277,
+  "latency_ms": 2073.2852919900324,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 481.05970898177475,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 28,
+      "total_tokens": 230,
+      "latency_ms": 430.4521250014659,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 382,
+      "completion_tokens": 17,
+      "total_tokens": 399,
+      "latency_ms": 483.50258299615234,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 220,
+      "completion_tokens": 47,
+      "total_tokens": 267,
+      "latency_ms": 678.2708750106394,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

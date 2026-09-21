@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q064",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a detailed billing policy in this format. Is there anything else I can help you with?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 612,
+  "latency_ms": 909.8462919646408,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 525.6567919859663,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 205,
+      "completion_tokens": 23,
+      "total_tokens": 228,
+      "latency_ms": 384.1894999786746,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

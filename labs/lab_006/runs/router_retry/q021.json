@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q021",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I apologize for the delay in processing your refund. According to our billing policy, refunds are typically processed within 5-7 business days from the date of cancellation. If you could please confirm your payment method with me, I can assist you further.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1340,
+  "latency_ms": 2474.7587089659646,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 369,
+      "completion_tokens": 17,
+      "total_tokens": 386,
+      "latency_ms": 460.9014999878127,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 207,
+      "completion_tokens": 67,
+      "total_tokens": 274,
+      "latency_ms": 841.5595419937745,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 387,
+      "completion_tokens": 17,
+      "total_tokens": 404,
+      "latency_ms": 499.3888750032056,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 225,
+      "completion_tokens": 51,
+      "total_tokens": 276,
+      "latency_ms": 672.9087919811718,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

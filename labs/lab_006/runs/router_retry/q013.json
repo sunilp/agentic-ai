@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q013",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "To file a claim, you'll need to log in to your account, go to the \"Claims\" or \"Support\" section, and follow the prompts to submit your claim. You can find more detailed instructions by clicking on the \"Help\" link under the claims section. If you're having trouble finding the claims section, you can contact our customer support team for assistance.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1322,
+  "latency_ms": 2777.1301669999957,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 502.0405419927556,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 198,
+      "completion_tokens": 50,
+      "total_tokens": 248,
+      "latency_ms": 770.2329999883659,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 383,
+      "completion_tokens": 17,
+      "total_tokens": 400,
+      "latency_ms": 493.0950000125449,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 215,
+      "completion_tokens": 76,
+      "total_tokens": 291,
+      "latency_ms": 1011.7616250063293,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q066",
+  "category_true": "escalation",
+  "category_used": "billing",
+  "answer": "I don't have a specific method for submitting feedback on our billing process, but you can contact our customer support team directly at [insert contact info] with any concerns or suggestions you may have. We value your feedback and will do our best to address any issues you've encountered.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 642,
+  "latency_ms": 1177.4863739847206,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 472.5441659975331,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 57,
+      "total_tokens": 260,
+      "latency_ms": 704.9422079871874,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

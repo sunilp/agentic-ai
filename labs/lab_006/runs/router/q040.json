@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q040",
+  "category_true": "escalation",
+  "category_used": "billing",
+  "answer": "I don't have a specific section for submitting feedback, but you can contact our customer support team directly at [support email] or [support phone number]. They will be happy to assist you with any concerns or suggestions you may have. You can also visit our website and look for the \"Contact Us\" page for more information on how to get in touch with us.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 662,
+  "latency_ms": 1518.5261250007898,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 531.2915000249632,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 204,
+      "completion_tokens": 75,
+      "total_tokens": 279,
+      "latency_ms": 987.2346249758266,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q045",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For more information on managing your account settings, please visit our website's Help section or contact our customer support team directly.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1296,
+  "latency_ms": 2281.621832953533,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 431.31200000061654,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 85,
+      "total_tokens": 280,
+      "latency_ms": 995.6299999903422,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 452.49462497304194,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 213,
+      "completion_tokens": 25,
+      "total_tokens": 238,
+      "latency_ms": 402.1852079895325,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

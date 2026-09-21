@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q026",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "Sorry, but I don't have information on removing a platinum account. Can you please contact our customer support team directly so they can assist you further?",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2152,
+  "latency_ms": 4843.160167016322,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 358,
+      "completion_tokens": 17,
+      "total_tokens": 375,
+      "latency_ms": 461.94204202038236,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 190,
+      "completion_tokens": 32,
+      "total_tokens": 222,
+      "latency_ms": 448.2421249849722,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 109,
+      "completion_tokens": 29,
+      "total_tokens": 138,
+      "latency_ms": 806.7975000012666,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 376,
+      "completion_tokens": 17,
+      "total_tokens": 393,
+      "latency_ms": 598.983457981376,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 208,
+      "completion_tokens": 31,
+      "total_tokens": 239,
+      "latency_ms": 473.2469170121476,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 108,
+      "completion_tokens": 45,
+      "total_tokens": 153,
+      "latency_ms": 1096.860417019343,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 376,
+      "completion_tokens": 17,
+      "total_tokens": 393,
+      "latency_ms": 513.8105829828419,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 208,
+      "completion_tokens": 31,
+      "total_tokens": 239,
+      "latency_ms": 443.2771250139922,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

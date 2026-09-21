@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q065",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can't provide a refund of {{Currency Symbol}}{{Refund Amount}} as it exceeds our standard refund policy. Would you like me to explain the full refund policy?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 685,
+  "latency_ms": 1137.4320430331863,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 141.64579199859872,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 512.5809170131106,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 203,
+      "completion_tokens": 35,
+      "total_tokens": 238,
+      "latency_ms": 483.20533402147703,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

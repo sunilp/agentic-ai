@@ -1,0 +1,98 @@
+{
+  "system": "router_verified",
+  "query_id": "q012",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For hours of operation, you can contact us Monday through Friday from 9 AM to 5 PM EST. If you need assistance outside of these hours, please submit a request through our website or call us at [phone number].",
+  "model_calls": 8,
+  "tool_calls": 3,
+  "total_tokens": 2362,
+  "latency_ms": 6315.475293027703,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 475.1465000153985,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 67,
+      "total_tokens": 266,
+      "latency_ms": 848.6179999890737,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 153,
+      "completion_tokens": 43,
+      "total_tokens": 196,
+      "latency_ms": 1141.752625000663,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 518.5743750189431,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 47,
+      "total_tokens": 264,
+      "latency_ms": 617.555499979062,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 133,
+      "completion_tokens": 51,
+      "total_tokens": 184,
+      "latency_ms": 1445.3672090021428,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 559.1865840251558,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 47,
+      "total_tokens": 264,
+      "latency_ms": 709.2744999972638,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

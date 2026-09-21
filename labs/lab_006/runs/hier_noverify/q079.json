@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q079",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I can assist you with creating an account. To do so, please provide me with the required information such as your name, email address, and password. I'll guide you through the process of setting up your account. \n\nWould you like me to walk you through this step by step?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 703,
+  "latency_ms": 1372.1998340042774,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 139.80812500813045,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 489.822917006677,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 59,
+      "total_tokens": 256,
+      "latency_ms": 742.5687919894699,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

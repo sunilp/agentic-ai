@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q021",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I apologize for the delay in processing your refund. According to our billing policy, refunds are typically processed within 5-7 business days from the date of cancellation. If you could please confirm your payment method with me, I can assist you further.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2452,
+  "latency_ms": 5644.926791952457,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 67,
+      "completion_tokens": 2,
+      "total_tokens": 69,
+      "latency_ms": 147.8744159976486,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 369,
+      "completion_tokens": 17,
+      "total_tokens": 386,
+      "latency_ms": 524.4075420196168,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 207,
+      "completion_tokens": 67,
+      "total_tokens": 274,
+      "latency_ms": 804.6109580027405,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 155,
+      "completion_tokens": 40,
+      "total_tokens": 195,
+      "latency_ms": 1055.6840419885702,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 387,
+      "completion_tokens": 17,
+      "total_tokens": 404,
+      "latency_ms": 506.3089999894146,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 225,
+      "completion_tokens": 51,
+      "total_tokens": 276,
+      "latency_ms": 658.2021669892129,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 139,
+      "completion_tokens": 29,
+      "total_tokens": 168,
+      "latency_ms": 771.4821249828674,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 387,
+      "completion_tokens": 17,
+      "total_tokens": 404,
+      "latency_ms": 511.6747919819318,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 225,
+      "completion_tokens": 51,
+      "total_tokens": 276,
+      "latency_ms": 664.6817500004545,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

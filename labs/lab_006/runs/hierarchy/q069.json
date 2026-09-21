@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q069",
+  "category_true": "account",
+  "category_used": "escalation",
+  "answer": "I apologize for the inconvenience you've experienced with our previous response. I'm happy to escalate your issue to a human specialist. Your ticket reference is #XXXXX, and you can expect a response within 24 hours. Is there anything else I can assist you with in the meantime?",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2381,
+  "latency_ms": 5685.205373971257,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 60,
+      "completion_tokens": 3,
+      "total_tokens": 63,
+      "latency_ms": 151.06291699339636,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 18,
+      "total_tokens": 380,
+      "latency_ms": 503.9917499816511,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 192,
+      "completion_tokens": 60,
+      "total_tokens": 252,
+      "latency_ms": 713.2253329909872,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 141,
+      "completion_tokens": 38,
+      "total_tokens": 179,
+      "latency_ms": 959.5259169873316,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 380,
+      "completion_tokens": 18,
+      "total_tokens": 398,
+      "latency_ms": 515.7761659938842,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 210,
+      "completion_tokens": 58,
+      "total_tokens": 268,
+      "latency_ms": 715.9779580251779,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 139,
+      "completion_tokens": 36,
+      "total_tokens": 175,
+      "latency_ms": 905.0307089928538,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 380,
+      "completion_tokens": 18,
+      "total_tokens": 398,
+      "latency_ms": 510.21479099290445,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 210,
+      "completion_tokens": 58,
+      "total_tokens": 268,
+      "latency_ms": 710.3998330130707,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

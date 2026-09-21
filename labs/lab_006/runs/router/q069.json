@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q069",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I apologize for the frustration caused by our automated system. You can contact a human agent for your account issue by calling our dedicated phone number or sending a request through our website's contact form. Please have your account information ready to provide to the representative when you speak with them.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 627,
+  "latency_ms": 1183.450083975913,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 24,
+      "total_tokens": 386,
+      "latency_ms": 502.8997919871472,
+      "tool_calls": [
+        "create_ticket"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 185,
+      "completion_tokens": 56,
+      "total_tokens": 241,
+      "latency_ms": 680.5502919887658,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

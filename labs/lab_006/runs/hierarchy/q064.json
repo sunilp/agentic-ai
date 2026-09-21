@@ -1,0 +1,107 @@
+{
+  "system": "hierarchy",
+  "query_id": "q064",
+  "category_true": "billing",
+  "category_used": "account",
+  "answer": "To find Invoice #00108, I recommend checking your account history or past transactions. You can do this by logging into your account and navigating to the \"Transaction History\" or \"Order History\" section, where you should be able to view all invoices associated with your account. If you're unable to locate the invoice, please contact our customer support team for further assistance.",
+  "model_calls": 9,
+  "tool_calls": 3,
+  "total_tokens": 2476,
+  "latency_ms": 6470.981333957752,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 65,
+      "completion_tokens": 2,
+      "total_tokens": 67,
+      "latency_ms": 153.3507500134874,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 496.7521249782294,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 46,
+      "total_tokens": 245,
+      "latency_ms": 600.933041976532,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 132,
+      "completion_tokens": 38,
+      "total_tokens": 170,
+      "latency_ms": 965.5173329811078,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 508.86437500594184,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 75,
+      "total_tokens": 292,
+      "latency_ms": 876.5277919883374,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 161,
+      "completion_tokens": 61,
+      "total_tokens": 222,
+      "latency_ms": 1463.342625007499,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 385,
+      "completion_tokens": 17,
+      "total_tokens": 402,
+      "latency_ms": 507.4805420008488,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 75,
+      "total_tokens": 292,
+      "latency_ms": 898.2127500057686,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": true,
+    "retried": true,
+    "verifier_passed": false
+  }
+}

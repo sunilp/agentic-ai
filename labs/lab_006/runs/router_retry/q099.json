@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q099",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "According to our billing policy, the allowed payment methods for refunds and cancellations include the original payment method used to set up the account. If you have any further questions or concerns about your specific situation, I can create a ticket for assistance from a human representative.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1272,
+  "latency_ms": 1858.2628339645453,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 363,
+      "completion_tokens": 17,
+      "total_tokens": 380,
+      "latency_ms": 421.09337498550303,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 21,
+      "total_tokens": 222,
+      "latency_ms": 341.34899999480695,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 381,
+      "completion_tokens": 17,
+      "total_tokens": 398,
+      "latency_ms": 424.26516697742045,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 219,
+      "completion_tokens": 53,
+      "total_tokens": 272,
+      "latency_ms": 671.5552920068149,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

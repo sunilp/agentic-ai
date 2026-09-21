@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q094",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "Unfortunately, I don't have access to your account information to provide more details about your specific bill #37777. Can you please contact our billing department directly so they can assist you further?",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1267,
+  "latency_ms": 1868.5184159839991,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 361,
+      "completion_tokens": 17,
+      "total_tokens": 378,
+      "latency_ms": 420.9887500037439,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 38,
+      "total_tokens": 237,
+      "latency_ms": 515.9981249889825,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 379,
+      "completion_tokens": 17,
+      "total_tokens": 396,
+      "latency_ms": 412.66583299147896,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 217,
+      "completion_tokens": 39,
+      "total_tokens": 256,
+      "latency_ms": 518.8657079997938,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

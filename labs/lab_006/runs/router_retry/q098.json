@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q098",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "For using the standard profile, you can access it by going to your Account Settings and selecting the \"Profile\" option. From there, you can view and edit your profile information, including your password, newsletter preferences, and subscription settings. If you have any issues or need further assistance, please create a ticket.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1305,
+  "latency_ms": 2559.90012496477,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 362,
+      "completion_tokens": 17,
+      "total_tokens": 379,
+      "latency_ms": 490.3274589742068,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 194,
+      "completion_tokens": 60,
+      "total_tokens": 254,
+      "latency_ms": 811.8042499991134,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 380,
+      "completion_tokens": 17,
+      "total_tokens": 397,
+      "latency_ms": 472.0477079972625,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 212,
+      "completion_tokens": 63,
+      "total_tokens": 275,
+      "latency_ms": 785.7207079941873,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q055",
+  "category_true": "technical",
+  "category_used": "account",
+  "answer": "I couldn't find any information that suggests it's not possible to place an order from {{Delivery Country}}. You can try placing an order now and see if the system allows it. If you have any issues, I can create a ticket for assistance.",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 705,
+  "latency_ms": 1283.6031659971923,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 66,
+      "completion_tokens": 2,
+      "total_tokens": 68,
+      "latency_ms": 131.8575830082409,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 368,
+      "completion_tokens": 17,
+      "total_tokens": 385,
+      "latency_ms": 498.6548750021029,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 52,
+      "total_tokens": 252,
+      "latency_ms": 653.0907079868484,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q044",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "I can provide more information on your specific situation. Can you please provide me with your account ID so I can look into this further?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 675,
+  "latency_ms": 1346.1143329623155,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 62,
+      "completion_tokens": 2,
+      "total_tokens": 64,
+      "latency_ms": 196.80808298289776,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 364,
+      "completion_tokens": 17,
+      "total_tokens": 381,
+      "latency_ms": 575.3258329932578,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 202,
+      "completion_tokens": 28,
+      "total_tokens": 230,
+      "latency_ms": 573.98041698616,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

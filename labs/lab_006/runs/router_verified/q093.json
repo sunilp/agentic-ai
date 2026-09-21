@@ -1,0 +1,49 @@
+{
+  "system": "router_verified",
+  "query_id": "q093",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I've checked the knowledge base (kb_lookup) for your question. It seems that you're looking to leave a review for a product, but I'm not sure which product or service it's related to. Can you please provide more information about the product you'd like to leave a review for?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 808,
+  "latency_ms": 1696.4952900016215,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 369,
+      "completion_tokens": 17,
+      "total_tokens": 386,
+      "latency_ms": 476.51416598819196,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 61,
+      "total_tokens": 262,
+      "latency_ms": 775.0949580222368,
+      "tool_calls": []
+    },
+    {
+      "stage": "verifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 149,
+      "completion_tokens": 11,
+      "total_tokens": 160,
+      "latency_ms": 444.8861659911927,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": false,
+    "verified": true,
+    "retried": false,
+    "verifier_passed": true
+  }
+}

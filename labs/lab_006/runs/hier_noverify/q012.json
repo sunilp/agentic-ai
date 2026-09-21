@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q012",
+  "category_true": "account",
+  "category_used": "account",
+  "answer": "I've checked the knowledge base (kb_lookup) for your question. It seems that you can find the hours of operation for customer service by checking our website's \"Help\" section or by contacting us through various channels such as phone, email, or live chat.\n\nWould you like me to look up more information on this topic?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 717,
+  "latency_ms": 1775.3398749919143,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 65,
+      "completion_tokens": 2,
+      "total_tokens": 67,
+      "latency_ms": 200.13295800890774,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 367,
+      "completion_tokens": 17,
+      "total_tokens": 384,
+      "latency_ms": 571.5023339726031,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 199,
+      "completion_tokens": 67,
+      "total_tokens": 266,
+      "latency_ms": 1003.7045830104034,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

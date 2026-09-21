@@ -1,0 +1,60 @@
+{
+  "system": "router_retry",
+  "query_id": "q032",
+  "category_true": "billing",
+  "category_used": "billing",
+  "answer": "According to our billing policy, refunds are typically processed within 5 to 7 business days to the original payment method. However, please note that cancellation fees may apply if you cancel your annual plan within the first 30 days. If you have any further questions or concerns about your refund status, I'd be happy to help.",
+  "model_calls": 4,
+  "tool_calls": 2,
+  "total_tokens": 1276,
+  "latency_ms": 2122.7888760331552,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 358,
+      "completion_tokens": 17,
+      "total_tokens": 375,
+      "latency_ms": 434.7031670040451,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 196,
+      "completion_tokens": 31,
+      "total_tokens": 227,
+      "latency_ms": 445.8259170060046,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 376,
+      "completion_tokens": 17,
+      "total_tokens": 393,
+      "latency_ms": 430.7286670082249,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 214,
+      "completion_tokens": 67,
+      "total_tokens": 281,
+      "latency_ms": 811.5311250148807,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": true,
+    "verifier_passed": null
+  }
+}

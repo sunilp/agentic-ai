@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q030",
+  "category_true": "escalation",
+  "category_used": "escalation",
+  "answer": "I'm sorry but I can't assist you with lodging a complaint against our business. Please create a ticket for further assistance. Our specialist will be in touch within 24 hours.",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 615,
+  "latency_ms": 1136.7538330086973,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 18,
+      "total_tokens": 383,
+      "latency_ms": 571.5782500046771,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 195,
+      "completion_tokens": 37,
+      "total_tokens": 232,
+      "latency_ms": 565.1755830040202,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

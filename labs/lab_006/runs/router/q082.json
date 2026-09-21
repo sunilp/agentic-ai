@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q082",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I couldn't find any information on Order {{Order Number}} in our system. Could you please check your order details or contact us for assistance?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 614,
+  "latency_ms": 1015.1877080206759,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 366,
+      "completion_tokens": 17,
+      "total_tokens": 383,
+      "latency_ms": 540.4240000061691,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 201,
+      "completion_tokens": 30,
+      "total_tokens": 231,
+      "latency_ms": 474.76370801450685,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

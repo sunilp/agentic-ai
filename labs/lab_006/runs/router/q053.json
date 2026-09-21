@@ -1,0 +1,40 @@
+{
+  "system": "router",
+  "query_id": "q053",
+  "category_true": "technical",
+  "category_used": "technical",
+  "answer": "I can't help with that. Would you like assistance with something else?",
+  "model_calls": 2,
+  "tool_calls": 1,
+  "total_tokens": 598,
+  "latency_ms": 776.92995898542,
+  "steps": [
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 487.6474170014262,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 200,
+      "completion_tokens": 16,
+      "total_tokens": 216,
+      "latency_ms": 289.2825419839937,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": false,
+    "model_classify": false,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}

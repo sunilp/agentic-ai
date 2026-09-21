@@ -1,0 +1,49 @@
+{
+  "system": "hier_noverify",
+  "query_id": "q000",
+  "category_true": "escalation",
+  "category_used": "account",
+  "answer": "I've checked the knowledge base (kb_lookup) and it seems that you are referring to a customer reclamation against our company's services. According to our policy, we do not accept customer reclaims for dissatisfaction with our services or pricing. However, I can offer you a refund or store credit if you are unhappy with your purchase. Would you like me to assist you with that?",
+  "model_calls": 3,
+  "tool_calls": 1,
+  "total_tokens": 722,
+  "latency_ms": 1759.1829990269616,
+  "steps": [
+    {
+      "stage": "classifier",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 63,
+      "completion_tokens": 2,
+      "total_tokens": 65,
+      "latency_ms": 258.158208016539,
+      "tool_calls": []
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 365,
+      "completion_tokens": 17,
+      "total_tokens": 382,
+      "latency_ms": 605.0177080032881,
+      "tool_calls": [
+        "kb_lookup"
+      ]
+    },
+    {
+      "stage": "agent",
+      "model": "llama3.2:3b",
+      "prompt_tokens": 197,
+      "completion_tokens": 78,
+      "total_tokens": 275,
+      "latency_ms": 896.0070830071345,
+      "tool_calls": []
+    }
+  ],
+  "flags": {
+    "misroute": true,
+    "model_classify": true,
+    "verified": false,
+    "retried": false,
+    "verifier_passed": null
+  }
+}
