@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="446" viewBox="0 0 880 446" role="img" aria-label="Ranking quality by which part of the output is read. Reading the word a small model wrote scores at or near chance. Reading the probability distribution behind that same token, from the same forward pass, ranks nearly perfectly. Two typed decision models rank perfectly.">
+<rect width="880" height="446" fill="#fafaf8"/>
+<text x="10" y="26" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#1a1a1a" font-weight="600">Ranking quality, by which part of the output you read</text>
+<text x="10" y="45" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b">ROC-AUC over 50 support tickets. 0.5 is a coin.</text>
+<line x1="252.2" y1="58" x2="252.2" y2="392" stroke="#e4e2de" stroke-width="1"/>
+<text x="252.2" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">0.5</text>
+<line x1="362.1" y1="58" x2="362.1" y2="392" stroke="#e4e2de" stroke-width="1"/>
+<text x="362.1" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">0.6</text>
+<line x1="472.1" y1="58" x2="472.1" y2="392" stroke="#e4e2de" stroke-width="1"/>
+<text x="472.1" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">0.7</text>
+<line x1="582.1" y1="58" x2="582.1" y2="392" stroke="#e4e2de" stroke-width="1"/>
+<text x="582.1" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">0.8</text>
+<line x1="692.0" y1="58" x2="692.0" y2="392" stroke="#e4e2de" stroke-width="1"/>
+<text x="692.0" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">0.9</text>
+<line x1="802.0" y1="58" x2="802.0" y2="392" stroke="#e4e2de" stroke-width="1"/>
+<text x="802.0" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">1.0</text>
+<text x="10" y="83" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">llama3.2:3b</text>
+<text x="234.15" y="83" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" text-anchor="end">the word it wrote</text>
+<rect x="252.15" y="66" width="2.5" height="26" rx="4" fill="#1a1a1a"/>
+<text x="263.6" y="83" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">0.500</text>
+<text x="10" y="121" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">llama3.2:3b</text>
+<text x="234.15" y="121" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" text-anchor="end">its own distribution</text>
+<rect x="252.15" y="104" width="549.9" height="26" rx="4" fill="#9b4a3f"/>
+<text x="811.0" y="121" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">1.000</text>
+<text x="10" y="159" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">qwen2.5:7b</text>
+<text x="234.15" y="159" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" text-anchor="end">the word it wrote</text>
+<rect x="252.15" y="142" width="91.3" height="26" rx="4" fill="#1a1a1a"/>
+<text x="352.4" y="159" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">0.583</text>
+<text x="10" y="197" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">qwen2.5:7b</text>
+<text x="234.15" y="197" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" text-anchor="end">its own distribution</text>
+<rect x="252.15" y="180" width="513.6" height="26" rx="4" fill="#9b4a3f"/>
+<text x="774.7" y="197" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">0.967</text>
+<text x="10" y="235" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">gemma4:e2b</text>
+<text x="234.15" y="235" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" text-anchor="end">the word it wrote</text>
+<text x="260.15" y="235" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" font-style="italic">nothing parsed in 50 of 50 runs</text>
+<text x="10" y="273" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">gemma4:e2b</text>
+<text x="234.15" y="273" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" text-anchor="end">its own distribution</text>
+<rect x="252.15" y="256" width="494.9" height="26" rx="4" fill="#9b4a3f"/>
+<text x="756.0" y="273" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">0.950</text>
+<text x="10" y="311" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">kev-0.8b</text>
+<text x="234.15" y="311" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" text-anchor="end">typed decision model</text>
+<rect x="252.15" y="294" width="549.9" height="26" rx="4" fill="#9b4a3f"/>
+<text x="811.0" y="311" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">1.000</text>
+<text x="10" y="349" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">jev-1.13.0</text>
+<text x="234.15" y="349" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b" text-anchor="end">typed decision model</text>
+<rect x="252.15" y="332" width="549.9" height="26" rx="4" fill="#9b4a3f"/>
+<text x="811.0" y="349" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1a1a1a">1.000</text>
+<line x1="252.15" y1="58" x2="252.15" y2="392" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="10" y="419" width="10" height="10" rx="2" fill="#1a1a1a"/><text x="26" y="428" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">read as text</text><rect x="160" y="419" width="10" height="10" rx="2" fill="#9b4a3f"/><text x="176" y="428" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">read as a distribution</text>
+</svg>

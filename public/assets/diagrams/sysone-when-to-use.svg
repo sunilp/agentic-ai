@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="596" viewBox="0 0 880 596" role="img" aria-label="A decision ladder for when to reach for a typed decision model. Four questions: whether the answer must be prose, whether the option set is known before the call, whether one input carries several questions, and whether you need a confidence. Falling through all four points to a typed decision model.">
+<rect width="880" height="596" fill="#fafaf8"/>
+<text x="12" y="28" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#1a1a1a" font-weight="600">When a typed decision model is the right tool</text>
+<text x="12" y="47" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b">Fall through all four and you are in its territory. Stop at any one and you are not.</text>
+<rect x="52" y="92" width="400" height="54" rx="5" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="66" y="124" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" fill="#1a1a1a">Do you need generated prose out of this call?</text>
+<line x1="452" y1="119.0" x2="510" y2="119.0" stroke="#6b6b6b" stroke-width="1.5"/>
+<path d="M510,119.0 l-8,-4 l0,8 Z" fill="#6b6b6b"/>
+<text x="462" y="111.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">yes</text>
+<rect x="520" y="93.0" width="300" height="52" rx="5" fill="#f1efeb"/>
+<text x="532" y="115.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">Use a generative model.</text>
+<text x="532" y="131.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">This is not that.</text>
+<line x1="252.0" y1="146" x2="252.0" y2="186" stroke="#1a1a1a" stroke-width="1.5"/>
+<path d="M252.0,186 l-4,-8 l8,0 Z" fill="#1a1a1a"/>
+<text x="261.0" y="168" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">no</text>
+<rect x="52" y="188" width="400" height="54" rx="5" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="66" y="220" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" fill="#1a1a1a">Is the set of allowed answers known before the call?</text>
+<line x1="452" y1="215.0" x2="510" y2="215.0" stroke="#6b6b6b" stroke-width="1.5"/>
+<path d="M510,215.0 l-8,-4 l0,8 Z" fill="#6b6b6b"/>
+<text x="462" y="207.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">no</text>
+<rect x="520" y="181.0" width="300" height="68" rx="5" fill="#f1efeb"/>
+<text x="532" y="203.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">Use a generative model.</text>
+<text x="532" y="219.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">You need it to invent</text>
+<text x="532" y="235.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">the option space.</text>
+<line x1="252.0" y1="242" x2="252.0" y2="282" stroke="#1a1a1a" stroke-width="1.5"/>
+<path d="M252.0,282 l-4,-8 l8,0 Z" fill="#1a1a1a"/>
+<text x="261.0" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">yes</text>
+<rect x="52" y="284" width="400" height="54" rx="5" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="66" y="316" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" fill="#1a1a1a">Is it high volume, or inside a latency budget?</text>
+<line x1="452" y1="311" x2="510" y2="311" stroke="#6b6b6b" stroke-width="1.5"/><path d="M510,311 l-8,-4 l0,8 Z" fill="#6b6b6b"/><text x="462" y="303" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">no</text>
+<rect x="520" y="277.0" width="300" height="68" rx="5" fill="#f1efeb"/>
+<text x="532" y="299.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">Either tool works.</text>
+<text x="532" y="315.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">Use whatever you</text>
+<text x="532" y="331.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">already run.</text>
+<text x="532" y="339.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b"></text>
+<line x1="252.0" y1="338" x2="252.0" y2="378" stroke="#1a1a1a" stroke-width="1.5"/>
+<path d="M252.0,378 l-4,-8 l8,0 Z" fill="#1a1a1a"/>
+<text x="261.0" y="360" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">yes</text>
+<rect x="52" y="380" width="400" height="54" rx="5" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="66" y="412" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" fill="#1a1a1a">Do the questions or options change often?</text>
+<line x1="452" y1="407.0" x2="510" y2="407.0" stroke="#6b6b6b" stroke-width="1.5"/>
+<path d="M510,407.0 l-8,-4 l0,8 Z" fill="#6b6b6b"/>
+<text x="462" y="399.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">no</text>
+<rect x="520" y="373.0" width="300" height="68" rx="5" fill="#f1efeb"/>
+<text x="532" y="395.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">A trained classifier will</text>
+<text x="532" y="411.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">likely beat it on one</text>
+<text x="532" y="427.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">fixed, well-sampled task.</text>
+<line x1="252.0" y1="438" x2="252.0" y2="474" stroke="#9b4a3f" stroke-width="2"/>
+<path d="M252.0,474 l-5,-9 l10,0 Z" fill="#9b4a3f"/>
+<rect x="52" y="480" width="400" height="54" rx="5" fill="#9b4a3f"/>
+<text x="252.0" y="513" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#fafaf8" text-anchor="middle" font-weight="600">A typed decision model</text>
+<text x="520" y="496" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#1a1a1a" font-weight="600">Typical work</text>
+<text x="520" y="514" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">· routing a request to a tier or team</text>
+<text x="520" y="529" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">· gating a tool call before it runs</text>
+<text x="520" y="544" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">· triaging a queue</text>
+<text x="520" y="559" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">· scoring against a rubric</text>
+<text x="520" y="574" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b">· flagging content for review</text>
+</svg>

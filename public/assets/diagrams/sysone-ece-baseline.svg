@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430" role="img" aria-label="Measured calibration error for a detector that is perfectly calibrated, against evaluation size. At 50 rows it averages 0.104 and individual runs range from 0.036 to 0.224. The figure falls to 0.007 at ten thousand rows. Common agent-safety benchmarks sit at the small end.">
+<rect width="880" height="430" fill="#fafaf8"/>
+<text x="10" y="26" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#1a1a1a" font-weight="600">Measured error for a detector that is already perfect</text>
+<text x="10" y="45" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b6b6b">Mean measured ECE over 30 simulated runs, with the observed range. Six-value score grid, 10 equal-width bins. Rebinning moves these numbers.</text>
+<line x1="74" y1="366.0" x2="680" y2="366.0" stroke="#e4e2de" stroke-width="1"/>
+<text x="64" y="370.0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="end">0.00</text>
+<line x1="74" y1="305.2" x2="680" y2="305.2" stroke="#e4e2de" stroke-width="1"/>
+<text x="64" y="309.2" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="end">0.05</text>
+<line x1="74" y1="244.3" x2="680" y2="244.3" stroke="#e4e2de" stroke-width="1"/>
+<text x="64" y="248.3" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="end">0.10</text>
+<line x1="74" y1="183.5" x2="680" y2="183.5" stroke="#e4e2de" stroke-width="1"/>
+<text x="64" y="187.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="end">0.15</text>
+<line x1="74" y1="122.7" x2="680" y2="122.7" stroke="#e4e2de" stroke-width="1"/>
+<text x="64" y="126.7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="end">0.20</text>
+<text x="97.4" y="388" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">50</text>
+<text x="170.0" y="388" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">100</text>
+<text x="338.6" y="388" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">500</text>
+<text x="411.3" y="388" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">1,000</text>
+<text x="579.9" y="388" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">5,000</text>
+<text x="652.5" y="388" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">10,000</text>
+<polygon points="97.4,93.5 242.6,265.0 352.2,307.6 411.3,313.7 652.5,347.8 652.5,362.4 411.3,350.2 352.2,351.4 242.6,334.4 97.4,322.2" fill="#9b4a3f" fill-opacity="0.10"/>
+<polyline points="97.4,239.5 242.6,301.5 352.2,328.3 411.3,340.4 652.5,357.5" fill="none" stroke="#9b4a3f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="97.4" y1="322.2" x2="97.4" y2="93.5" stroke="#9b4a3f" stroke-width="1" stroke-opacity="0.55"/>
+<circle cx="97.4" cy="239.5" r="4.5" fill="#9b4a3f" stroke="#fafaf8" stroke-width="2"/>
+<text x="106.4" y="230.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1a1a1a">0.104</text>
+<text x="97.4" y="406" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9.5" fill="#6b6b6b" text-anchor="middle">a 50-row corpus</text>
+<line x1="242.6" y1="334.4" x2="242.6" y2="265.0" stroke="#9b4a3f" stroke-width="1" stroke-opacity="0.55"/>
+<circle cx="242.6" cy="301.5" r="4.5" fill="#9b4a3f" stroke="#fafaf8" stroke-width="2"/>
+<text x="251.6" y="292.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1a1a1a">0.053</text>
+<text x="242.6" y="406" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9.5" fill="#6b6b6b" text-anchor="middle">JailbreakBench</text>
+<line x1="352.2" y1="351.4" x2="352.2" y2="307.6" stroke="#9b4a3f" stroke-width="1" stroke-opacity="0.55"/>
+<circle cx="352.2" cy="328.3" r="4.5" fill="#9b4a3f" stroke="#fafaf8" stroke-width="2"/>
+<text x="361.2" y="319.3" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1a1a1a">0.031</text>
+<text x="352.2" y="406" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9.5" fill="#6b6b6b" text-anchor="middle">R-Judge</text>
+<line x1="411.3" y1="350.2" x2="411.3" y2="313.7" stroke="#9b4a3f" stroke-width="1" stroke-opacity="0.55"/>
+<circle cx="411.3" cy="340.4" r="4.5" fill="#9b4a3f" stroke="#fafaf8" stroke-width="2"/>
+<text x="420.3" y="331.4" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1a1a1a">0.021</text>
+<line x1="652.5" y1="362.4" x2="652.5" y2="347.8" stroke="#9b4a3f" stroke-width="1" stroke-opacity="0.55"/>
+<circle cx="652.5" cy="357.5" r="4.5" fill="#9b4a3f" stroke="#fafaf8" stroke-width="2"/>
+<text x="661.5" y="348.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1a1a1a">0.007</text>
+<text x="652.5" y="406" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9.5" fill="#6b6b6b" text-anchor="middle">wildguardmix</text>
+<text x="696" y="153.1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#1a1a1a">At fifty rows a perfect</text>
+<text x="696" y="168.1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#1a1a1a">detector measured</text>
+<text x="696" y="183.1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#1a1a1a">anywhere from 0.036</text>
+<text x="696" y="198.1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#1a1a1a">to 0.224. Any single</text>
+<text x="696" y="213.1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#1a1a1a">score there carries</text>
+<text x="696" y="228.1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#1a1a1a">no information.</text>
+<line x1="74" y1="366.0" x2="680" y2="366.0" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="74" y1="66" x2="74" y2="366.0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="377" y="422" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle">rows in the evaluation set (log scale)</text>
+</svg>
