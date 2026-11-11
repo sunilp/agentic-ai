@@ -2,7 +2,7 @@
 dek: "Before a policy, a committee or a single form, agree what governance is for: deciding what ships, naming who decides, and keeping the evidence behind each decision."
 description: "Step 1 of AI Governance, from Scratch. Define governance as decisions, owners and evidence, agree that it exists to make safe delivery faster, and see where it is decided and where it is enforced."
 updated: 2026-11-11
-readingTime: 8
+readingTime: 9
 spot: /assets/spots/gov-01.png
 spotCaption: "A small rudder lets a large ship run at full sail into open water."
 anchors:
@@ -34,6 +34,8 @@ sources:
     url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/ai-inventory.md"
   - title: "AI Governance Framework v2.2.0: retroactive governance"
     url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#retroactive-governance"
+  - title: "AI Governance Framework v2.2.0: governance metrics and KPIs"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/governance-metrics.md"
   - title: "AI Governance Framework v2.2.0: NIST AI RMF mapping"
     url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/compliance/nist-ai-rmf-mapping.md"
   - title: "AI Governance Framework v2.2.0: ISO/IEC 42001 mapping"
@@ -131,9 +133,25 @@ Then someone wants the assistant to send replies itself. That is a new decision.
 
 The framework gives each decision [exactly one accountable approver per tier](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/roles-responsibilities.md#approvals-by-tier), and for its two highest tiers a verbal approval doesn't count. If you can't write the three lines for your most important system, start there.
 
+The guide carries this assistant through every step. Step 2 writes the rules it falls under, Step 3 its register entry and Step 4 its tier.
+
+### How to tell it is working
+
+You can check the claim that governance makes delivery faster. The framework's [governance metrics](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/governance-metrics.md) give you measures to start tracking with your first system. They are things to measure. This guide reports no results for them.
+
+- **Mean time to production.** Days from development complete to deployed. Watch the trend.
+- **Deployment gate pass rate.** The share of releases that pass their gates first time. The framework aims above 80 percent. A low rate may point to unclear standards, or to teams meeting the requirements late.
+- **Active exceptions, by tier.** A rising count is a reason to look closer.
+- **Register coverage.** What each check against bills, consoles and code finds running without an entry.
+- **Incidents, by severity.** What got past the controls.
+
+Read the first measure with the last. Faster delivery with more incidents is the wrong trade.
+
+The framework also lists measures that backfire. Time spent in governance reviews, used as an efficiency target, is one. It rewards rushed reviews.
+
 ### Three things mistaken for governance
 
-**A committee.** A committee is one kind of owner, suited to decisions that need several senior views at once: the highest-risk systems and the exceptions. Ask it to review every change and it becomes the queue your engineers learn to route around. The guide's call is that controls live in the platform and committees handle exceptions.
+**A committee.** A committee is one kind of owner, suited to decisions that need several senior views at once: the highest-risk systems and the exceptions. Ask it to review every change and it becomes the queue your engineers learn to route around. The guide's call is to automate the controls that repeat, and keep committees for high-risk approvals and exceptions.
 
 **A policy document.** A policy sets direction at the top of the diamond. On its own it enforces nothing at the call. A policy nobody can test is a wish, which is why Step 2 keeps yours to one testable page.
 

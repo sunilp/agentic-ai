@@ -8,7 +8,7 @@ import Hourglass from '~/components/governance/Hourglass.astro';
 import Track from '~/components/governance/Track.astro';
 import GovernanceMachine from '~/components/governance/GovernanceMachine.svelte';
 import TierRequirements from '~/components/governance/TierRequirements.astro';
-import { PARTS, PART_LABEL, STEPS, FRAMEWORK_REPO, FRAMEWORK_TAG, kitUrl, kitLabel, stepsInPart, writtenHref, type Part } from '~/data/governance-path';
+import { PARTS, PART_LABEL, STEPS, RELEASE, FRAMEWORK_REPO, FRAMEWORK_TAG, kitUrl, kitLabel, stepsInPart, writtenHref, type Part } from '~/data/governance-path';
 
 const written = (await getCollection('governance')).filter((e) => e.data.status !== 'draft').map((e) => e.id);
 const href = writtenHref(new Set(written));
@@ -26,9 +26,11 @@ const partStatus = (p: Part) => {
 
 const RULES: [string, string][] = [
   ['Start at Step 1.', 'Each step opens with what done looks like. If you can show it, move on. If you can only describe it, you are not done.'],
-  ['Go in order.', 'Each step rests on the ones before it. A gate without a register has nothing to stop.'],
-  ["Don't skip Part II.", 'It is the reason the rest gets followed instead of routed around.'],
+  ['Read in order.', 'Each step rests on the ones before it. When you apply it, take one real system through every step as you go.'],
+  ["Don't skip Part II.", 'It is the reason the rest gets followed instead of routed around. Until it is written up, its calls and files are on the sheet below.'],
   ['Deep dives can wait.', 'The top half of a step gets it working. The deep dive is for the edge cases you meet later.'],
+  ['Adapt the defaults.', 'They are strict, and written for regulated industries. Set tiers, decision rights and evidence to your own risk appetite and the rules you answer to.'],
+  ['Extend what you have.', 'If security, privacy, procurement, model risk or change management already work, add AI to them. Build nothing in parallel.'],
 ];
 
 const ON_PAGE = [
@@ -54,7 +56,7 @@ const ON_PAGE = [
           {firstHref && <a class="gov-btn" href={firstHref}>Start at Step 1 <span aria-hidden="true">→</span></a>}
           <a class="gov-btn gov-btn--ghost" href="#the-path">See all 22 steps</a>
         </p>
-        <p class="gov-hero__status">{publishedCount} of {STEPS.length} steps are published. The rest are listed below and marked Coming.</p>
+        <p class="gov-hero__status">{publishedCount} of {STEPS.length} steps are published. They set {RELEASE.covers}. {RELEASE.next} is next. New steps appear in the <a href="/rss.xml">RSS feed</a>.</p>
       </div>
       <figure class="gov-hero__art">
         <picture>
@@ -91,6 +93,7 @@ const ON_PAGE = [
         <div class="gov-track-row">
           <span class="gov-track-row__label" aria-hidden="true">Show the guide for a</span>
           <TrackToggle />
+          <span class="gov-track-row__note">Changes the done-when lines here and the guidance inside every step.</span>
         </div>
       </div>
       <nav class="gov-parts-nav" aria-label="Parts">

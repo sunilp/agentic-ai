@@ -37,6 +37,11 @@ export interface Step {
   checklist: { item: string; response: string };
   doneWhen: string;
   doneWhenSmall?: string;
+  /** What keeps the step done after the first pass. Written with each essay. */
+  keptWhen?: string;
+  keptWhenSmall?: string;
+  /** Who runs the working session for this step and what goes in and comes out. Written with each essay. */
+  session?: { lead: string; leadSmall?: string; with: string; withSmall?: string; bring: string; leave: string };
   restsOn: number[];
   patterns: string[]; // pattern-language slugs
   deepDive: string[];
@@ -45,6 +50,12 @@ export interface Step {
   book?: Book;
   related: string[]; // architecture collection ids (filenames)
 }
+
+/** What the published steps add up to, and what comes next. Update with each release. */
+export const RELEASE = {
+  covers: 'your purpose, mandate, policy, register and risk tiers',
+  next: 'Part II, People before process',
+};
 
 export const FRAMEWORK_REPO = 'https://github.com/sunilp/ai-governance-framework';
 export const FRAMEWORK_TAG = 'v2.2.0';
@@ -79,6 +90,13 @@ export const STEPS: Step[] = [
     title: 'Agree what governance is for', short: 'Purpose',
     checklist: { item: 'PURPOSE', response: 'AGREED' },
     doneWhen: 'Your sponsor can explain, in a minute, why it makes delivery faster.',
+    keptWhen: 'People who were not in the room can say who decides and what evidence they need.',
+    session: {
+      lead: 'Whoever is standing governance up',
+      with: 'Your sponsor',
+      bring: 'The name of whoever could stop a model from shipping today',
+      leave: 'One agreed paragraph: decisions, owners, evidence, and why it speeds delivery',
+    },
     restsOn: [], patterns: [],
     deepDive: ['decisions, owners, evidence', 'what governance is not'],
     call: 'Governance exists to make safe delivery faster.',
@@ -89,6 +107,14 @@ export const STEPS: Step[] = [
     title: 'Get a mandate and a one-page AI policy', short: 'Mandate and policy',
     checklist: { item: 'MANDATE, POLICY', response: 'OWNED · PUBLISHED' },
     doneWhen: 'An executive owns AI risk, and the policy is published.',
+    keptWhen: 'Three engineers picked at random can quote a rule and name its owner.',
+    session: {
+      lead: 'You, drafting for the executive who will own AI risk',
+      with: 'The CRO, the AI Risk Committee and the Board Risk Committee',
+      withSmall: 'The CTO, or a founder',
+      bring: "Step 1's paragraph, and any policy you have or were about to copy",
+      leave: 'A named executive owner, a written risk appetite and a published one-page policy',
+    },
     restsOn: [1], patterns: [],
     deepDive: ['risk appetite', 'acceptable use', 'principles you can test'],
     call: 'One page, one executive owner. A policy nobody can test is a wish.',
@@ -101,6 +127,15 @@ export const STEPS: Step[] = [
     checklist: { item: 'REGISTER', response: 'COMPLETE' },
     doneWhen: 'Nothing reaches production without a register entry.',
     doneWhenSmall: 'Every system is listed in one file in a repo, and no model credential is issued without an entry.',
+    keptWhen: 'The quarterly check against what is running finds nothing without an entry.',
+    keptWhenSmall: 'The monthly sweep of cloud accounts and SaaS settings finds nothing without an entry.',
+    session: {
+      lead: 'AI Risk, which owns the register',
+      leadSmall: 'The team lead, who owns the file',
+      with: 'Procurement, finance, security and whoever runs your cloud accounts and SaaS tools',
+      bring: 'The one-page policy, and access to contracts, bills, repositories and admin consoles',
+      leave: 'One entry per AI system, and a gate that issues no production credential without one',
+    },
     restsOn: [2], patterns: ['tool-agent-registry'],
     deepDive: ['shadow and vendor AI', 'agents as entries', 'model lineage'],
     call: 'The register is the gate: no entry, no production credential.',
@@ -113,6 +148,14 @@ export const STEPS: Step[] = [
     checklist: { item: 'TIER', response: 'SET · SOME SAID NO' },
     doneWhen: 'Each entry has a tier, and the tier changes what it must pass.',
     doneWhenSmall: 'Each entry has a tier, and the tier decides who signs it off and what it must pass.',
+    keptWhen: 'Every tier is checked again at each formal review and on each material change.',
+    session: {
+      lead: 'The product owner, who prepares each assessment',
+      leadSmall: 'The team lead, who scores each system',
+      with: 'The approver for each tier, and an independent validator for T1 and T2',
+      bring: 'The register, your prohibited list from Step 2 and the risk matrices',
+      leave: 'A tier on every entry, with its scores, overrides and approver recorded',
+    },
     restsOn: [3], patterns: ['earn-the-complexity', 'workflow-first'],
     deepDive: ['overrides', 'agentic risk', 're-tiering', 'six worked examples'],
     call: 'Govern by tier, not by project. Decide the prohibited list before the first request.',
@@ -178,7 +221,7 @@ export const STEPS: Step[] = [
     doneWhen: "A system can't deploy without its tier's evidence pack.",
     restsOn: [4, 6, 8], patterns: ['approval-gate', 'capability-gate'],
     deepDive: ['the ten stages', 'fast lane', 'retroactive governance'],
-    call: "If it can't block a release, it isn't a control.",
+    call: "A gate that can't stop a release isn't a gate.",
     kit: [
       'framework/governance-operations/governance-workflow.md',
       'framework/llm-lifecycle/deployment-gates.md',
@@ -330,7 +373,7 @@ export const STEPS: Step[] = [
     doneWhen: 'Most controls run automatically on the paved road.',
     restsOn: [6, 9, 10], patterns: ['chokepoint-placement', 'split-the-log', 'decision-record'],
     deepDive: ['gateway', 'registry', 'policy as code', 'shared evals', 'architecture direction'],
-    call: 'Controls live in the platform. Committees handle exceptions.',
+    call: 'Automate the controls that repeat. Keep committees for high-risk approvals and exceptions.',
     kit: [
       'reference-implementations/README.md',
       'controls/stage-07-deployment.yaml',
@@ -340,13 +383,13 @@ export const STEPS: Step[] = [
     related: ['008-production-execution', '001-the-control-plane'],
   },
   {
-    n: 21, slug: '21-map-once-comply-everywhere', part: 'VI',
-    title: 'Map once, comply everywhere', short: 'One evidence pack for every regulator',
+    n: 21, slug: '21-reuse-controls-and-evidence', part: 'VI',
+    title: 'Reuse one set of controls and evidence across regulators', short: 'One evidence pack, reused across regulators',
     checklist: { item: 'REGULATORS', response: 'ONE EVIDENCE PACK' },
-    doneWhen: 'One evidence pack answers every regulator you face.',
+    doneWhen: 'One evidence pack supports every obligation that applies to you, with the gaps written down.',
     restsOn: [3, 10, 11], patterns: ['decision-record', 'split-the-log'],
     deepDive: ['EU AI Act', 'ISO/IEC 42001', 'NIST AI RMF', 'SR 26-2', 'change monitoring'],
-    call: 'Map each regulation to your controls once. Never build a programme per regulator.',
+    call: 'Keep one mapping from rules to controls and reuse it. Never build a programme per regulator.',
     kit: [
       'framework/compliance/eu-ai-act-mapping.md',
       'framework/compliance/iso-42001-mapping.md',
