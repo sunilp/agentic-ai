@@ -45,11 +45,11 @@ import TierExamples from '~/components/governance/TierExamples.astro';
 import TierRequirements from '~/components/governance/TierRequirements.astro';
 import { OVERRIDES } from '~/lib/governance-tier';
 
-Two requests reach your intake on the same morning. The IT team wants an assistant that answers staff questions from the internal wiki. The lending team wants a model that scores every loan application.
+Two requests reach your intake at once. The IT team wants an assistant that answers staff questions from the internal wiki. The lending team wants a model that scores every loan application.
 
 One process for both fails one of them. Hold the wiki assistant to the credit model's bar, with a committee sign-off, full independent validation and a challenger model, and the IT team learns to go around you. Hold the credit model to the wiki assistant's bar, a peer review and a monthly look at its metrics, and it ships without independent validation.
 
-So one of them waits. Which one, and what does it wait for? Write your answer down before you read on.
+So one of them waits. Which one, and what does it wait for? Write your answer down.
 
 ## The move
 
@@ -64,7 +64,9 @@ Everything that passes gets a tier, by one rule:
 3. **Check every override.** Nine facts about a system set a floor of T1 or T2. Overrides can raise the tier, never lower it.
 4. **The approver may raise it** with a recorded rationale. Nobody can lower it below what the scoring and overrides give.
 
-**The guide's call: govern by tier, not by project, and decide the no-list before the first request.** Every system at a tier meets the same approver, the same evidence bar for its kind of system and the same reviews, so no team negotiates its own process. A no written in advance is a rule. A no improvised in the room is a fight with whoever loves the demo.
+**The guide's call: govern by tier, not by project, and decide the no-list before the first request.** Every system at a tier meets the same approver, the same evidence bar for its kind of system and the same reviews, so no team negotiates its own process. A no written in advance is a rule. A no improvised in the room is a fight.
+
+Break it in one direction only: an approver can hold a system to a stricter tier's bar, never a looser one.
 
 ## How it works
 
@@ -86,14 +88,14 @@ Here is what the tier changes.
 
 <TierRequirements />
 
-One field in your register now decides who approves a system, who validates it and when it is reviewed again. The red-team row applies to GenAI systems.
+One field in your register now decides who approves a system, who validates it and when it is reviewed again.
 
 ## How it scales
 
-The rule holds at any size. What changes is who prepares the assessment and who signs it.
+Size decides who prepares the assessment and who signs it.
 
 <Track for="small">
-Have your tech lead score each system, in the product owner's role, which the framework lets a team lead hold.
+Have your team lead score each system. The framework lets a team lead hold the product owner's role, which prepares the assessment.
 
 Your T3 and T4 systems take the framework's [fast lane](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4): the same stages, less evidence, no committee, and the team lead's sign-off. Any override puts a system at T2 or above, outside the fast lane.
 
@@ -118,7 +120,7 @@ The product owner prepares the assessment. The tier picks the approver: the AI R
 
 ### The override list
 
-The canonical list applies in every matrix: GenAI, traditional ML, multimodal and agentic.
+The [canonical list](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/genai-risk-matrix.md#tier-override-rules) applies in every matrix: GenAI, traditional ML, multimodal and agentic.
 
 <ul>
 {OVERRIDES.map((o) => <li><strong>Item {o.item} · {o.floor === 'T1' ? 'automatic T1' : 'minimum T2'}.</strong> {o.text}.</li>)}

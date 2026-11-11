@@ -15,6 +15,9 @@ sources:
     url: "https://doi.org/10.6028/NIST.AI.100-1"
     authors: ["National Institute of Standards and Technology"]
     year: 2023
+  - title: "NIST AI Risk Management Framework (AI RMF 1.0 is being revised)"
+    url: "https://www.nist.gov/itl/ai-risk-management-framework"
+    authors: ["National Institute of Standards and Technology"]
   - title: "ISO/IEC 42001:2023, AI management systems"
     url: "https://www.iso.org/standard/81230.html"
     authors: ["ISO/IEC JTC 1/SC 42"]
@@ -58,7 +61,7 @@ Define governance as three things, and write each one down.
 - **Owners.** Who makes each decision, by name.
 - **Evidence.** What each decision rested on, and what shows later that it was right.
 
-You make these decisions per system. A system is the model with its prompts, data, tools and permissions, and that is what "a model" means on this page.
+You make these decisions per system. A system here means the model with its prompts, data, tools and permissions.
 
 Everything else you build serves one of the three. A policy records decisions. A register and a list of approvers record owners. Evaluations, logs and sign-offs are evidence. A meeting that serves none of them can go.
 
@@ -66,13 +69,13 @@ Everything else you build serves one of the three. A policy records decisions. A
 
 Some uses must never ship, however fast you could clear them. Speed is the wrong measure there, and Step 4 sets the list of uses that get a no.
 
-Write the three definitions and the call in a short paragraph, and agree it with your sponsor. This step is done when your sponsor can explain, in a minute, why governance makes delivery faster. First, one test for you.
+Write the three definitions and the call in a short paragraph. Agree it with your sponsor. This step is done when your sponsor can explain, in a minute, why governance makes delivery faster. First, one test for you.
 
 **Your call.** Before you read on, write down who in your organisation could stop a model from shipping today. A name, a role or a forum. Keep it in front of you.
 
 ## How it works
 
-<Diamond written={[]} caption="Decided at one point, enforced at one point." />
+<Diamond caption="Decided at one point, enforced at one point." />
 
 The diamond is the guide's picture of governance. The top tip is accountability. In an enterprise that is the board. It sets how much AI risk the organisation will accept, and it answers for the result. Direction flows down from it: the policy, the principles, and the risk tiers that turn appetite into rules a team can follow.
 
@@ -95,7 +98,7 @@ The two tips exist at every size. What changes is how many people stand between 
 <Track for="small">
 Name one owner for each system, such as the team lead. Write the decisions in the repo, next to the code: what the system is allowed to do, who approved it, and which evaluation results the approval rested on. A decisions file reviewed like code is the guide's recommendation. The framework leaves the format to you. Your top tip is whoever answers for the company, such as a founder or the CTO.
 
-The framework lets a team of three to five [run a medium- or low-risk system on its own](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/START-HERE.md#small-teams), apart from a few named touchpoints such as an outside red-teamer. A high-risk system is different. It needs validation and approval from outside the team, so decide now where that independence will come from.
+The framework lets a team of three to five [run a medium- or low-risk system on its own](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/START-HERE.md#small-teams), apart from a few named touchpoints such as a red-teamer from outside the team. A high- or critical-risk system is different. It needs validation and approval from outside the team, so decide now where that independence will come from.
 </Track>
 
 <Track for="enterprise">
@@ -126,7 +129,7 @@ Here is the support assistant from the meeting with the three written down. It i
 
 Then someone wants the assistant to send replies itself. That is a new decision. It goes back to the approver, with new evidence.
 
-The framework gives each decision [exactly one accountable approver per tier](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/roles-responsibilities.md#approvals-by-tier), and for its two highest tiers a verbal approval doesn't count. Those two rules carry most of this step. If you can't write the three lines for your most important system, start there.
+The framework gives each decision [exactly one accountable approver per tier](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/roles-responsibilities.md#approvals-by-tier), and for its two highest tiers a verbal approval doesn't count. If you can't write the three lines for your most important system, start there.
 
 ### Three things mistaken for governance
 
