@@ -53,8 +53,8 @@ export interface Step {
 
 /** What the published steps add up to, and what comes next. Update with each release. */
 export const RELEASE = {
-  covers: 'your purpose, mandate, policy, register and risk tiers',
-  next: 'Part II, People before process',
+  covers: 'your purpose, mandate, policy, register and risk tiers, and the habits that get them followed',
+  next: 'Part III, Setting it up',
 };
 
 export const FRAMEWORK_REPO = 'https://github.com/sunilp/ai-governance-framework';
@@ -172,16 +172,40 @@ export const STEPS: Step[] = [
     title: 'Find where your engineers will route around you', short: 'Known shortcuts',
     checklist: { item: 'SHORTCUTS', response: 'NAMED' },
     doneWhen: 'You can name the three shortcuts your teams take most.',
+    keptWhen: 'Each quarter, a fresh read of the traces confirms your three shortcuts or replaces one.',
+    keptWhenSmall: 'Each retrospective asks what the team skipped and why, and the list of three is updated.',
+    session: {
+      lead: 'AI Risk, which holds the register and the exception register',
+      leadSmall: 'Someone outside the build team',
+      with: 'Engineers and team leads in each business unit, the unit stewards and Security',
+      withSmall: 'The whole build team',
+      bring: 'The register, the exception register, shadow AI reports, gate results and cloud bills',
+      leave: 'Three named shortcuts, each with its cause, who pays, and the kind of safety it needs',
+    },
     restsOn: [1], patterns: [],
     deepDive: ['present bias', 'the demo that became production', 'normalised deviance'],
     call: 'A shortcut tells you something about your process.',
-    kit: ['START-HERE.md'], related: [],
+    kit: [
+      'framework/operating-model/acceptable-use.md',
+      'framework/operating-model/governance-metrics.md',
+      'START-HERE.md',
+    ],
+    related: [],
   },
   {
     n: 6, slug: '06-make-the-governed-path-fastest', part: 'II',
     title: 'Make the governed path the fastest path', short: 'Paved road',
     checklist: { item: 'PAVED ROAD', response: 'FASTEST' },
     doneWhen: 'The paved road is quicker than the workaround.',
+    keptWhen: 'The race is run again for each new shortcut, and the road still wins.',
+    session: {
+      lead: 'The platform team, which builds and runs the road',
+      leadSmall: 'The team lead, who owns the repository template',
+      with: 'AI Risk to approve each pattern, and a team that took the shortcut',
+      withSmall: 'Whoever holds the vendor accounts and the CI settings',
+      bring: "Step 5's top shortcut, one real system's steps and waits, and the framework's governance gate",
+      leave: 'An approved endpoint, a repository template with the gate in its pipeline, and a race the road wins',
+    },
     restsOn: [3, 5], patterns: ['harness-engineering', 'shadow-before-enforce'],
     deepDive: ['forcing functions', 'guardrails not gates', 'risk budgets'],
     call: 'Make the safe way the easy way, and enforce it in the pipeline, not in a meeting.',
@@ -193,6 +217,16 @@ export const STEPS: Step[] = [
     title: 'Build a culture that reports problems', short: 'Reporting culture',
     checklist: { item: 'NEAR-MISSES', response: 'REPORTED · THANKED' },
     doneWhen: 'Someone reported a near-miss and was thanked for it.',
+    keptWhen: 'Reports keep coming from more than one team, and none has led to blame.',
+    keptWhenSmall: 'Reports keep coming from more than one person, and none has led to blame.',
+    session: {
+      lead: 'The Head of AI Operations, who owns the reporting line in the policy',
+      leadSmall: 'The team lead, who reads the report channel',
+      with: 'System owners, HR and a champion from each team that builds or runs AI',
+      withSmall: 'The whole team',
+      bring: "What happened to the last person who reported a problem, and Step 5's three shortcuts",
+      leave: 'One report route, who replies and how fast, and who draws the line between honest mistake and reckless act',
+    },
     restsOn: [5], patterns: [],
     deepDive: ['just culture', 'blameless review', 'the brilliant rule-breaker'],
     call: 'Thank people for near-misses. A culture that hides problems defeats every control.',

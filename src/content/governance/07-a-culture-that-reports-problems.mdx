@@ -1,0 +1,179 @@
+---
+dek: "Make a near-miss quick to report, thank the person who reports it, and turn every finding into a test or a control change, so problems reach you while they are still cheap."
+description: "Step 7 of AI Governance, from Scratch. Say what counts as a near-miss for an AI system, open one report route that takes minutes, answer with thanks within a day, review without blame under a just culture, and turn each finding into an evaluation case or a control change."
+updated: 2026-11-11
+readingTime: 9
+spot: /assets/spots/gov-07.png
+spotCaption: "Pull the cord, and the line thanks you."
+anchors:
+  - { label: The move, anchor: the-move }
+  - { label: How it works, anchor: how-it-works }
+  - { label: How it scales, anchor: how-it-scales }
+  - { label: Deep dive, anchor: deep-dive }
+sources:
+  - title: "Human error: models and management"
+    url: "https://doi.org/10.1136/bmj.320.7237.768"
+    authors: ["James Reason"]
+    year: 2000
+  - title: "Just culture: who gets to draw the line?"
+    url: "https://doi.org/10.1007/s10111-008-0110-7"
+    authors: ["Sidney W. A. Dekker"]
+    year: 2009
+  - title: "Blameless PostMortems and a Just Culture"
+    url: "https://www.etsy.com/codeascraft/blameless-postmortems"
+    authors: ["John Allspaw"]
+    year: 2012
+  - title: "Psychological Safety and Learning Behavior in Work Teams"
+    url: "https://doi.org/10.2307/2666999"
+    authors: ["Amy Edmondson"]
+    year: 1999
+  - title: "A typology of organisational cultures"
+    url: "https://doi.org/10.1136/qshc.2003.009522"
+    authors: ["Ron Westrum"]
+    year: 2004
+  - title: "DORA capabilities: Generative organizational culture"
+    url: "https://dora.dev/capabilities/generative-organizational-culture/"
+    authors: ["DORA"]
+  - title: "Managing the Unexpected: Sustained Performance in a Complex World, third edition"
+    url: "https://doi.org/10.1002/9781119175834"
+    authors: ["Karl E. Weick", "Kathleen M. Sutcliffe"]
+    year: 2015
+  - title: "OWASP Security Champions Guide: principles 5, Trust your champions, and 8, Reward responsibility"
+    url: "https://securitychampions.owasp.org/"
+    authors: ["OWASP Foundation"]
+  - title: "AI Governance Framework v2.2.0: escalation paths, severity classification"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/escalation-paths.md#severity-classification"
+  - title: "AI Governance Framework v2.2.0: incident forensics, blameless review principles"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/incident-forensics.md#blameless-review-principles"
+  - title: "AI Governance Framework v2.2.0: GenAI incident report template"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/incident-report-genai.md"
+  - title: "AI Governance Framework v2.2.0: acceptable use, amnesty route"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#amnesty-route"
+  - title: "AI Governance Framework v2.2.0: AI policy template, Policy on a Page and section 13"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-policy.md#13-incidents-reporting-and-concerns"
+  - title: "AI Governance Framework v2.2.0: ISO/IEC 42001 mapping, gaps a certification audit will find"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/compliance/iso-42001-mapping.md#gaps-a-certification-audit-will-find"
+  - title: "AI Governance Framework v2.2.0: evaluation governance, production evaluation"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/llm-lifecycle/evaluation-governance.md#production-evaluation"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture an engineer testing a new internal agent the evening before its pilot. She asks it to summarise a supplier contract. In the log, she sees it also tried to email the contract to an address outside the company. The tool permission blocked the call. Nothing left the building.
+
+She can tighten the prompt, rerun the test and ship on time. Nobody would ever know. Or she can report it, delay a pilot her manager has announced, and tell a story about her own agent nearly leaking a contract.
+
+Your controls held this time. Whether you learn why the agent tried is up to her. What will she do, in your organisation, today? Decide before you read on.
+
+## The move
+
+Build one loop: notice, report, thank, fix, share.
+
+1. **Say what counts.** A near-miss is a problem caught before it hurt anyone. For an AI system, that is a wrong output caught before it reached a customer, a test that showed the model repeating data it should not have, or a blocked tool call nobody expected. The framework never uses the word. Classify each one on its [severity scale](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/escalation-paths.md#severity-classification). Most fit S3, "a problem detected internally before it reached anyone outside". Check the higher levels first. A real data exposure is S1, and a failed key control on a T1 or T2 system is S2, even when nobody outside was hurt.
+2. **Open one route that takes minutes.** One channel, alias or button, the same for every system. The reporter says what happened, where, and what they did. The framework names an incident commander for each incident, who files the [report](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/incident-report-genai.md). The guide's recommendation: the reporter never has to fill in the template.
+3. **Thank them in the first reply.** The framework gives an S3 to the system owner, and 24 hours to acknowledge it and start containment. The guide adds a reply to the reporter inside the same clock. A person replies, and the first line is thanks. Questions come second.
+4. **Turn the finding into a test or a control change.** Then tell the reporter, and their team, what changed.
+
+The framework's acceptable use standard already tells all staff to report "a mistake, a data exposure or a tool behaving unexpectedly as soon as you notice it". This step makes it quick and safe.
+
+**The guide's call: thank people for near-misses. A culture that hides problems defeats every control.** Every control has gaps, and the people closest to the work see them first. If reporting costs them, they stop. Then you can't see your own controls.
+
+This guide builds safety in two ways. Some failures you make impossible by construction, like Step 3's register gate. The rest you catch early, while they are cheap to recover from. This step builds the second kind.
+
+Break the call for the act, never for the report. A reckless act, or a repeat after someone was told to stop, goes to your disciplinary policy. The framework's [amnesty](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#amnesty-route) already draws that line for staff use of AI tools: it excludes deliberate exfiltration, use after a specific instruction to stop, and repeat breaches. The section on just culture, below, says who judges. Even then, thank the person for the report.
+
+**Your call.** Write down what happened to the last person who reported a problem with an AI system where you work. If you can't name anyone, write that down.
+
+## How it works
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-07-reporting-loop.svg" alt="The reporting loop: notice, report, thank, fix and share, then back to notice. Each fix lands as an evaluation case or a control change." />
+
+**Notice.** James Reason drew defences as slices of Swiss cheese. Every slice has holes. Harm gets through when the holes in many slices line up. A near-miss is the moment one slice failed and the next one held, so it shows you a hole for free. Reason's [paper](https://doi.org/10.1136/bmj.320.7237.768) says risk management "depends crucially on establishing a reporting culture". Without analysing incidents, near misses and "free lessons", you can't know where the edge is "until we fall over it".
+
+For high-reliability organisations, Karl Weick and Kathleen Sutcliffe put preoccupation with failure first: watching small errors before they spread, and "opportunities to speak up and be listened to". They warn that a near miss seen as success "reinforces their beliefs that current operations are sufficient". Read a near-miss as proof your controls work, and you learn nothing.
+
+**Thank.** Thanks come before the fix. A fix can take weeks, and the reporter reads your first reply today. Amy Edmondson defines psychological safety as "a shared belief held by members of a team that the team is safe for interpersonal risk taking". In her [study](https://doi.org/10.2307/2666999) of 51 teams in a manufacturing company, it went with learning behaviour, which includes "discussing errors or unexpected outcomes of actions". Learning behaviour, in turn, went with team performance. Every reply to a report teaches the team whether speaking up is safe.
+
+**Fix and share.** After an incident, the framework's [forensics standard](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/incident-forensics.md#evaluation-suite-regression) asks whether the scenario was in the evaluation suite: "If not, add it." The guide does the same for a near-miss. Label the case with a [failure bucket](/patterns/failure-buckets/) to see which failures keep coming back. If a control should have caught it sooner, change the control. Then share it. One system's incident, the framework notes, can reveal a weakness in others.
+
+Ron Westrum sorted organisations by how they handle information. In DORA's version of his table, pathological cultures punish messengers. Bureaucratic ones neglect them. Generative ones train them. The middle type is the quiet danger: nobody is punished, and nobody replies. Westrum's [paper](https://doi.org/10.1136/qshc.2003.009522) found information culture associated with error reporting, and called its link to safety not yet definitive. [DORA's research](https://dora.dev/capabilities/generative-organizational-culture/) finds that a high-trust, generative culture predicts software delivery and organisational performance. That is Step 1's promise again.
+
+Now look at what you wrote. If the last reporter was thanked and told what changed, your route works. If they were asked why they hadn't caught it sooner, everyone watching learned to stay quiet. If you named nobody, you have no route, or nobody trusts it.
+
+<RunningExample>
+A customer writes in to cancel their plan. The assistant's draft says they can cancel with no fee. Their plan has one. The support agent spots it, fixes the line and presses the flag button in the drafting tool. The tool attaches the draft, the prompt version and the model version, so her note is one line. The details are made up.
+
+In the framework's terms this is S3, caught before it reached the customer. The human review worked. The model got a fact wrong. Most edits to a draft are wording. This one was a wrong fact, stated with confidence, and that is why it counts.
+
+The system owner replies within hours, and the first line thanks her. The AI lead replays the email, and the assistant makes the same promise again. With personal data removed, the email becomes an evaluation case:
+
+```yaml
+case: "cancel-plan-with-fee"
+source: "near-miss report, S3"
+input: "Customer asks to cancel a plan that has a cancellation fee."
+expected: "States the fee and how to cancel."
+failure_bucket: "wrong policy stated"
+```
+
+It joins the full offline suite, which the framework [re-runs](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/llm-lifecycle/evaluation-governance.md#production-evaluation) monthly at T1 and on every model, provider or prompt change. With her agreement, the Head of Customer Support names the catch at the next team meeting, and says what changed.
+</RunningExample>
+
+## How it scales
+
+One thank-you shows the route worked once. The step stays done while reports keep coming, from more than one team, and none leads to blame.
+
+<Track for="small">
+Use one channel for every AI system, read by the team lead, who replies the same working day and starts with thanks. Each finding becomes a test in the repo, or an issue against the control that missed it.
+
+In a small team, everyone knows who reported what. So the team lead goes first, posting their own near-misses in the same channel. Once a quarter, look at who reported. If it is always the same person, the others aren't safe yet, or aren't looking. The channel, the same-day reply, going first and the quarterly look are the guide's recommendations.
+</Track>
+
+<Track for="enterprise">
+Keep one route for the whole organisation, linked to your speak-up channel for anonymous reports. The framework's [policy template](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-policy.md#13-incidents-reporting-and-concerns) leaves section 13, how staff raise concerns and the non-retaliation commitment, for you to write. Its [ISO/IEC 42001 mapping](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/compliance/iso-42001-mapping.md#gaps-a-certification-audit-will-find) lists that process as a gap a certification audit will find. This step gives you the process. You still have to write it down and get it approved.
+
+The guide recommends a champion in each team that builds or runs AI. The [OWASP Security Champions Guide](https://securitychampions.owasp.org/) says teams trust their own champions more, as "one of their own", and asks you to reward the work. The guide's call: count finding problems as good work in reviews and promotion.
+
+The template's Policy on a Page already commits that "AI incidents and concerns are reported, and nobody is penalised for raising one". Its default owner is the Head of AI Operations. A breach shows as "an incident found by audit that was never reported". Each quarter, report the number of near-miss reports by team. Visit the teams that send none. Set no target to cut that number. A falling number can mean fewer problems or fewer reporters, and the number alone can't tell you which. These three are the guide's recommendations.
+</Track>
+
+<Shortcut quote="It got caught, so there's nothing to report.">
+**Why it's tempting.** Nothing went wrong. A report means a delay, some paperwork and a story about your own system.
+
+**Why it bites.** The hole is still open. Next time, the person who caught it is tired or new, and the holes line up.
+
+**The early catch.** Make reporting cheaper than keeping quiet: a flag button that attaches the evidence, and a reply that starts with thanks. This is detection plus culture, the second kind of safety, because nothing can make a quiet fix impossible. The button and the reply are the guide's recommendations.
+</Shortcut>
+
+<StarterKit n={7} />
+
+<DeepDive>
+
+### Just culture
+
+Reason tied reporting to fairness. Trust is a key element of a reporting culture, he wrote, and it requires "a just culture": a shared understanding of "where the line should be drawn between blameless and blameworthy actions".
+
+Sidney Dekker's [paper](https://doi.org/10.1007/s10111-008-0110-7) asks who gets to draw that line. Culpability, he argues, is something people decide after the act. When people see reports treated unfairly, their willingness to report declines. He suggests that peers who do the same work help decide what happens next. And he expects unfairness about who draws the line to outweigh any guidance on where it goes.
+
+The guide's call: name who draws the line before the first case. Include a peer who does the same kind of work. Never leave it to one manager. Judge the choice the person made with what they knew. The framework's acceptable use standard handles breaches "in proportion to intent and impact", and any breach that exposes customer data is a disciplinary matter. Let impact set the response to the incident: its severity, and any notification. Let the choice set the response to the person.
+
+### Blameless review
+
+John Allspaw [described](https://www.etsy.com/codeascraft/blameless-postmortems) blameless post-mortems as the way engineers can give a detailed account of what they did, saw and assumed "without fear of punishment or retribution". An engineer who expects a reprimand has a reason to leave out the details that explain the failure. Blameless still means accountable. In Allspaw's account, the people closest to a mistake help design the fix, and teach others to avoid it.
+
+The framework sets four [blameless review principles](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/incident-forensics.md#blameless-review-principles). Focus on systemic causes. Ask "why did the system allow this?" and not "who caused this?". Assume everyone acted with the best information available to them. Aim to improve the system. They sit in the post-mortem process, which the framework requires only for S1 and S2. For an S3, the guide's call is to use them in the root-cause note, and to ask the post-mortem's control gap question: which control should have caught this, and why didn't it?
+
+### The brilliant rule-breaker
+
+Your best engineer ships an agent through a personal API key, because the paved road takes too long. It works. Customers like it. Both easy moves teach the wrong lesson. Let it go, and everyone learns the rules bend for status. Make an example of them, and everyone learns to hide the next bypass better.
+
+For an agent built on an unapproved tool, the framework's [shadow AI rules](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#shadow-ai-detection) say: stop it, register it, and take it through retroactive governance if it must keep running. Then the guide's recommendation: if the engineer is open about it and helps register it and clean up, treat that first bypass as a report. It shows where the road is slower than the workaround, which is Step 5's question and Step 6's job. Ask the engineer to help fix that stretch. If the shortcut must stay meanwhile, it needs an approved, time-limited exception, like anyone else's.
+
+Skill buys no exemption. Reason warns that "it is often the best people who make the worst mistakes". Once someone has been told to stop, a repeat is a choice, and the amnesty doesn't cover it. Judge it by the same rule, with the same people, as anyone else's.
+
+</DeepDive>
+
+Part II ends with people telling you when something nearly went wrong. That is half the job. Every report ends in a decision: hold the release or ship the fix, accept the risk or stop the system. The business owner accepts the risk. Who makes each of the other decisions is still open. Step 8 names one accountable person for each.

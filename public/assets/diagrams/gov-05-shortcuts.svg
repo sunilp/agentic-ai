@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 312" role="img" aria-label="The governed path runs idea, register, tier, gate, live. Three shortcuts leave it and land on live: real data before the entry, call it a pilot, and secure it later. Each one leaves where the path costs more than the way around it."><rect width="880" height="312" fill="#fff"/>
+<rect x="10" y="212" width="136" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="78.0" y="234.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">IDEA</text>
+<text x="78.0" y="249.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">a team wants it</text>
+<rect x="190" y="212" width="136" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="258.0" y="234.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">REGISTER</text>
+<text x="258.0" y="249.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">Step 3</text>
+<rect x="370" y="212" width="136" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="438.0" y="234.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">TIER</text>
+<text x="438.0" y="249.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">Step 4</text>
+<rect x="550" y="212" width="136" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="618.0" y="234.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">GATE</text>
+<text x="618.0" y="249.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">Step 9</text>
+<rect x="730" y="212" width="136" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="798.0" y="234.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">LIVE</text>
+<text x="798.0" y="249.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">real data and users</text>
+<path d="M146 236.0 L188 236.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M181.6 238.7 L188 236.0 L181.6 233.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M326 236.0 L368 236.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M361.6 238.7 L368 236.0 L361.6 233.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M506 236.0 L548 236.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M541.6 238.7 L548 236.0 L541.6 233.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M686 236.0 L728 236.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M721.6 238.7 L728 236.0 L721.6 233.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M78 212 C78 -9.333333333333343 846 -9.333333333333343 846 212" fill="none" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="5 4"/>
+<path d="M846 200 L846 211" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M843.3 204.6 L846 211 L848.7 204.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<circle cx="78" cy="212" r="4.5" fill="#9b4a3f"/>
+<text x="462.0" y="37" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">real data before the entry</text>
+<path d="M258 212 C258 70.66666666666666 806 70.66666666666666 806 212" fill="none" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="5 4"/>
+<path d="M806 200 L806 211" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M803.3 204.6 L806 211 L808.7 204.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<circle cx="258" cy="212" r="4.5" fill="#9b4a3f"/>
+<text x="532.0" y="97" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">call it a pilot</text>
+<path d="M438 212 C438 150.66666666666666 766 150.66666666666666 766 212" fill="none" stroke="#6b6b6b" stroke-width="1.2" stroke-dasharray="5 4"/>
+<path d="M766 200 L766 211" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M763.3 204.6 L766 211 L768.7 204.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<circle cx="438" cy="212" r="4.5" fill="#9b4a3f"/>
+<text x="602.0" y="157" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">secure it later</text>
+<circle cx="16" cy="290" r="4.5" fill="#9b4a3f"/>
+<text x="28" y="294" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">Each shortcut leaves where the path costs more than the way around it.</text>
+</svg>

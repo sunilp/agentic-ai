@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 262" role="img" aria-label="Two routes from idea to production. Without a road: find an approver, argue the tier, answer vendor checks again, build evidence by hand, wait for a meeting. On the paved road: register, use an approved pattern, let pipeline checks write the evidence, then wait only for the approvals the tier sets."><rect width="880" height="262" fill="#fff"/>
+<rect x="10" y="96.0" width="70" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="45.0" y="128.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">IDEA</text>
+<rect x="770" y="96.0" width="100" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="820.0" y="128.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PRODUCTION</text>
+<text x="105" y="22" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">WITHOUT A ROAD</text>
+<text x="105" y="146" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">THE PAVED ROAD</text>
+<rect x="105" y="34" width="112" height="56" fill="#fff" stroke="none" stroke-width="1"/>
+<path d="M105 34 L217 34 L217 90 L105 90 Z" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="161.0" y="60.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">APPROVER</text>
+<text x="161.0" y="75.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">find who signs</text>
+<rect x="237" y="34" width="112" height="56" fill="#fff" stroke="none" stroke-width="1"/>
+<path d="M237 34 L349 34 L349 90 L237 90 Z" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="293.0" y="60.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">TIER</text>
+<text x="293.0" y="75.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">argued per case</text>
+<path d="M217 62.0 L236 62.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M229.6 64.7 L236 62.0 L229.6 59.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="369" y="34" width="112" height="56" fill="#fff" stroke="none" stroke-width="1"/>
+<path d="M369 34 L481 34 L481 90 L369 90 Z" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="425.0" y="60.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">VENDOR CHECKS</text>
+<text x="425.0" y="75.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">asked again</text>
+<path d="M349 62.0 L368 62.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M361.6 64.7 L368 62.0 L361.6 59.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="501" y="34" width="112" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="557.0" y="60.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">EVIDENCE</text>
+<text x="557.0" y="75.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">built by hand</text>
+<path d="M481 62.0 L500 62.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M493.6 64.7 L500 62.0 L493.6 59.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="633" y="34" width="112" height="56" fill="#fff" stroke="none" stroke-width="1"/>
+<path d="M633 34 L745 34 L745 90 L633 90 Z" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="689.0" y="60.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">MEETING</text>
+<text x="689.0" y="75.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">next free slot</text>
+<path d="M613 62.0 L632 62.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M625.6 64.7 L632 62.0 L625.6 59.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="105" y="158" width="145" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="177.5" y="184.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">REGISTER</text>
+<text x="177.5" y="199.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">entry and credential</text>
+<rect x="270" y="158" width="145" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="342.5" y="184.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">APPROVED PATTERN</text>
+<text x="342.5" y="199.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">endpoint and template</text>
+<path d="M250 186.0 L269 186.0" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M262.6 188.7 L269 186.0 L262.6 183.3" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<rect x="435" y="158" width="145" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="507.5" y="184.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">PIPELINE CHECKS</text>
+<text x="507.5" y="199.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">evidence produced</text>
+<path d="M415 186.0 L434 186.0" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M427.6 188.7 L434 186.0 L427.6 183.3" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<rect x="600" y="158" width="145" height="56" fill="#f5ece9" stroke="none" stroke-width="1"/>
+<path d="M600 158 L745 158 L745 214 L600 214 Z" fill="none" stroke="#9b4a3f" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="672.5" y="184.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">TIER APPROVALS</text>
+<text x="672.5" y="199.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">set by the tier</text>
+<path d="M580 186.0 L599 186.0" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M592.6 188.7 L599 186.0 L592.6 183.3" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M80 124.0 L92 124.0 L92 62.0 L104 62.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M92 62.0 L104 62.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M97.6 64.7 L104 62.0 L97.6 59.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M92 124.0 L92 186.0 L104 186.0" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M92 186.0 L104 186.0" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M97.6 188.7 L104 186.0 L97.6 183.3" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M745 62.0 L757 62.0 L757 118.0 L769 118.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M757 118.0 L769 118.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M762.6 120.7 L769 118.0 L762.6 115.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M745 186.0 L757 186.0 L757 130.0 L769 130.0" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M757 130.0 L769 130.0" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M762.6 132.7 L769 130.0 L762.6 127.3" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M105 238 L135 238 L135 252 L105 252 Z" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="145" y="249" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">waiting on someone</text>
+<rect x="300" y="238" width="30" height="14" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="340" y="249" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">work the team does</text>
+</svg>
