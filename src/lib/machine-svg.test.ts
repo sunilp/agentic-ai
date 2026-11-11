@@ -44,6 +44,6 @@ describe('machine svg', () => {
   });
 
   it('has no em dashes', () => {
-    expect(renderMachineSvg({ selected: 18, mode: 'explore' })).not.toContain('—');
+    expect(renderMachineSvg({ selected: 18, mode: 'explore' })).not.toContain(String.fromCharCode(0x2014));
   });
 });
