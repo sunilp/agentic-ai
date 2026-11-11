@@ -18,15 +18,25 @@ const { current = '' } = Astro.props;
 // below, so the nav correctly highlights nothing on those pages instead of
 // mis-highlighting another item.
 const items = [
-  { href: '/start/', label: 'Start' },
-  { href: '/book/', label: 'Book' },
-  { href: '/architecture/', label: 'Architecture' },
-  { href: '/governance/', label: 'Governance' },
-  { href: '/patterns/', label: 'Patterns' },
-  { href: '/field-notes/', label: 'Field Notes' },
-  { href: '/signal/', label: 'Signal' },
-  { href: '/labs/', label: 'Labs' },
+  { href: '/start/', label: 'Start', note: 'Pick a path for where you are' },
+  { href: '/book/', label: 'Book', note: 'Agentic AI for Serious Engineers' },
+  { href: '/architecture/', label: 'Architecture', note: 'Blueprints for AI systems' },
+  { href: '/governance/', label: 'Governance', note: 'AI governance from scratch, in 22 steps' },
+  { href: '/patterns/', label: 'Patterns', note: 'Named patterns for shipping agents' },
+  { href: '/field-notes/', label: 'Field Notes', note: 'Notes from inside the work' },
+  { href: '/signal/', label: 'Signal', note: 'What to keep, what to skip' },
+  { href: '/labs/', label: 'Labs', note: 'Experiments you can reproduce' },
 ];
+// The footer's reference pages, repeated in the phone menu so nothing needs a scroll to the bottom.
+const more = [
+  { href: '/topics/', label: 'Topics' },
+  { href: '/glossary/', label: 'Glossary' },
+  { href: '/evidence/', label: 'Evidence' },
+  { href: '/recipes/', label: 'Recipes' },
+  { href: '/bench/', label: 'Bench' },
+  { href: '/about/', label: 'About' },
+];
+const SUBSCRIBE = 'https://agenticlab.substack.com';
 ---
 
 <header class="topnav">
@@ -43,9 +53,53 @@ const items = [
         </a>
       ))}
     </nav>
-    <a class="topnav__subscribe" href="https://agenticlab.substack.com" target="_blank" rel="noopener">Subscribe</a>
+    <div class="topnav__tools">
+      <button type="button" class="topnav__search" data-open-search aria-label="Search the Lab">
+        <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M12.8 12.8 L17.5 17.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+        <span class="topnav__search-label">Search</span>
+      </button>
+      <a class="topnav__subscribe" href={SUBSCRIBE} target="_blank" rel="noopener">Subscribe</a>
+      <details class="topnav__menu">
+        <summary><span>Menu</span></summary>
+        <nav class="topnav__panel" aria-label="All sections">
+          <ul class="topnav__panel-main">
+            {items.map((item) => (
+              <li>
+                <a href={item.href} class:list={[current === item.label && 'is-current']} aria-current={current === item.label ? 'page' : undefined}>
+                  <span class="topnav__panel-label">{item.label}</span>
+                  <span class="topnav__panel-note">{item.note}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <ul class="topnav__panel-more">
+            {more.map((m) => <li><a href={m.href}>{m.label}</a></li>)}
+            <li><a class="topnav__panel-subscribe" href={SUBSCRIBE} target="_blank" rel="noopener">Subscribe →</a></li>
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>
+
+<script>
+  // One delegated listener, so it survives View Transitions without re-binding.
+  document.addEventListener('click', (e) => {
+    const t = e.target as Element | null;
+    if (t?.closest('[data-open-search]')) {
+      document.querySelectorAll<HTMLDetailsElement>('details.topnav__menu[open]').forEach((d) => { d.open = false; });
+      window.dispatchEvent(new Event('lab:open-search'));
+      return;
+    }
+    // Close the phone menu on a click outside it.
+    document.querySelectorAll<HTMLDetailsElement>('details.topnav__menu[open]').forEach((d) => {
+      if (!d.contains(t)) d.open = false;
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll<HTMLDetailsElement>('details.topnav__menu[open]').forEach((d) => { d.open = false; });
+  });
+</script>
 
 <style>
   .topnav {
@@ -96,32 +150,87 @@ const items = [
 
   .topnav__link { white-space: nowrap; }
 
-  /* Below 1000px the single row no longer fits seven items plus the masthead:
-     stack it (brand + Subscribe on the first row, nav on the second), let the
-     nav wrap onto two rows on phones instead of scrolling behind a fade, and
-     drop sticky so a two-row header does not eat the viewport. */
+  .topnav__tools { display: flex; align-items: center; gap: var(--space-4); align-self: center; }
+
+  .topnav__search {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 10px;
+    border: 1px solid var(--fg-faint);
+    border-radius: 999px;
+    background: var(--paper-bright);
+    color: var(--fg-light);
+    font-family: var(--font-mono);
+    font-size: var(--meta-2);
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+  }
+  .topnav__search:hover { color: var(--brick); border-color: var(--brick); }
+
+  .topnav__menu { display: none; }
+
+  /* Between 1001px and 1180px eight links, Search and Subscribe get tight: drop the Search word, keep the icon. */
+  @media (max-width: 1180px) {
+    .topnav__inner { gap: var(--space-5); }
+    .topnav__items { gap: var(--space-4); }
+    .topnav__search-label { display: none; }
+    .topnav__search { padding: 7px; }
+  }
+
+  /* At 1000px and below the links move into a Menu panel, so the header is one
+     row on every phone. It stays static so a page's own sticky bar can use the top edge. */
   @media (max-width: 1000px) {
-    .topnav { position: static; }
+    .topnav { position: relative; }
+    .topnav__inner { align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4); }
+    .topnav__items, .topnav__subscribe { display: none; }
+    .topnav__tools { gap: var(--space-2); }
+    .topnav__search { padding: 9px; }
 
-    .topnav__inner {
-      flex-wrap: wrap;
+    .topnav__menu { display: block; }
+    .topnav__menu summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 7px 12px;
+      border: 1px solid var(--ink);
+      font-family: var(--font-mono);
+      font-size: var(--meta-1);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .topnav__menu summary::-webkit-details-marker { display: none; }
+    .topnav__menu[open] summary { background: var(--ink); color: var(--paper); }
+    .topnav__menu[open] summary span::after { content: ' ×'; }
+
+    .topnav__panel {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      z-index: 120;
+      background: var(--paper);
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: var(--space-2) var(--space-4) var(--space-4);
+      box-shadow: 0 12px 24px rgba(26, 26, 26, 0.08);
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+    .topnav__panel ul { list-style: none; margin: 0; padding: 0; }
+    .topnav__panel-main a {
+      display: flex;
+      align-items: baseline;
       justify-content: space-between;
-      row-gap: var(--space-2);
-      padding: var(--space-3) var(--space-4);
+      gap: var(--space-3);
+      padding: 11px 0;
+      border-bottom: 1px solid var(--fg-faint);
     }
-
-    .topnav__inner :global(.brand) { order: 1; }
-
-    .topnav__subscribe { order: 2; margin-left: 0; }
-
-    .topnav__items {
-      order: 3;
-      width: 100%;
-      margin-left: 0;
-      flex-wrap: wrap;
-      gap: 0 var(--space-4);
-    }
-
-    .topnav__link { font-size: 16px; padding: var(--space-1) 0; }
+    .topnav__panel-label { font-family: var(--font-display); font-weight: 500; font-size: 19px; }
+    .topnav__panel-note { font-family: var(--font-body); font-style: italic; font-size: 15px; color: var(--fg-light); text-align: right; }
+    .topnav__panel-main a.is-current .topnav__panel-label { color: var(--brick); }
+    .topnav__panel-more { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); padding-top: var(--space-4) !important; font-family: var(--font-body); font-size: 16px; }
+    .topnav__panel-more a { color: var(--fg-light); }
+    .topnav__panel-subscribe { color: var(--brick) !important; }
   }
 </style>
