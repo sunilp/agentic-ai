@@ -120,13 +120,13 @@ The product owner prepares the assessment. The tier picks the approver: the AI R
 
 ### The override list
 
-The [canonical list](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/genai-risk-matrix.md#tier-override-rules) applies in every matrix: GenAI, traditional ML, multimodal and agentic.
+The [full list](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/genai-risk-matrix.md#tier-override-rules) applies in every matrix: GenAI, traditional ML, multimodal and agentic.
 
 <ul>
 {OVERRIDES.map((o) => <li><strong>Item {o.item} · {o.floor === 'T1' ? 'automatic T1' : 'minimum T2'}.</strong> {o.text}.</li>)}
 </ul>
 
-The four safeguards in items 3 and 8 are zero data retention by the vendor, a regional endpoint that meets data residency requirements, a signed DPA, and PII redaction or minimisation before the call. Miss one and the system is automatic T1. The when-to-say-no standard goes further: fix the safeguard before the design review passes. T1 governance can't repair a data flow you can't evidence.
+The four safeguards in items 3 and 8 are zero data retention by the vendor, a regional endpoint that meets data residency requirements, a signed DPA, and PII redaction or minimisation before the call. Miss one and the system is automatic T1. The when-to-say-no standard goes further: fix the safeguard before the design review passes. T1 governance can't repair a data flow you can't prove is safe.
 
 ### Why every agent is at least T2
 
@@ -142,7 +142,7 @@ A change that raises the tier goes back through assessment and needs the new tie
 
 ### When to say no
 
-Two of the standard's eight positions are the Step 0 screen and the simpler-method test. The other six are design rules. Take figures with legal effect from a system of record. Keep a human on adverse regulated decisions. Allow no autonomous write that can't be undone or capped. Send no customer or regulated data to an external API without evidenced residency and zero retention. Launch nothing whose evaluation can't show its threshold is met. Run no business-critical process on a model you can't replace.
+Two of the standard's eight positions are the Step 0 screen and the simpler-method test. The other six are design rules. Take figures with legal effect from a system of record. Keep a human on adverse regulated decisions. Allow no autonomous write that can't be undone or capped. Send no customer or regulated data to an external API without proof of residency and zero retention. Launch nothing whose evaluation can't show its threshold is met. Run no business-critical process on a model you can't replace.
 
 A team that thinks a position shouldn't apply takes its case to the tier approver, who decides and records it. Two can't be set aside at all: the prohibited-use screen, and the kill switch in the no-undo position.
 

@@ -3,16 +3,32 @@ import { getCollection } from 'astro:content';
 import '~/styles/governance.css';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Reader from '~/components/layout/Reader.astro';
-import ArticleHeader from '~/components/universal/ArticleHeader.astro';
-import Spot from '~/components/universal/Spot.astro';
 import TrackToggle from '~/components/governance/TrackToggle.astro';
 import Hourglass from '~/components/governance/Hourglass.astro';
 import Track from '~/components/governance/Track.astro';
 import GovernanceMachine from '~/components/governance/GovernanceMachine.svelte';
-import { PARTS, PART_LABEL, stepsInPart, writtenHref } from '~/data/governance-path';
+import { PARTS, PART_LABEL, STEPS, stepsInPart, writtenHref, type Part } from '~/data/governance-path';
 
 const written = (await getCollection('governance')).filter((e) => e.data.status !== 'draft').map((e) => e.id);
 const href = writtenHref(new Set(written));
+const publishedCount = STEPS.filter((s) => href(s.n)).length;
+const firstHref = href(1);
+const partId = (p: Part) => `part-${p.toLowerCase()}`;
+const partName = (p: Part) => (p === 'Close' ? 'Close' : `Part ${p}`);
+const partTitle = (p: Part) => (p === 'Close' ? 'Prove it on one system' : PART_LABEL[p]);
+const partStatus = (p: Part) => {
+  const steps = stepsInPart(p);
+  const done = steps.filter((s) => href(s.n)).length;
+  if (done === steps.length) return 'Published';
+  return done === 0 ? 'Coming' : `${done} of ${steps.length} published`;
+};
+
+const RULES: [string, string][] = [
+  ['Start at Step 1.', 'Each step opens with what done looks like. If you can show it, move on. If you can only describe it, you are not done.'],
+  ['Go in order.', 'Each step rests on the ones before it. A gate without a register has nothing to stop.'],
+  ["Don't skip Part II.", 'It is the reason the rest gets followed instead of routed around.'],
+  ['Deep dives can wait.', 'The top half of a step gets it working. The deep dive is for the edge cases you meet later.'],
+];
 
 const CALLS: [string, string][] = [
   ['Govern by tier, not by project.', 'Medium- and low-risk systems take a fast lane. Effort goes where the risk is.'],
@@ -31,74 +47,118 @@ const CALLS: [string, string][] = [
   ogImage="/assets/og/governance.png"
   currentNav="Governance"
 >
-  <Reader>
-    <ArticleHeader
-      rubric="AGENT ENGINEERING LAB · GUIDE"
-      title="AI Governance, from Scratch"
-      dek="How to stand up AI governance in an organisation that has none, and make it the reason your teams can move fast. One path, twenty-two steps, in this order."
-    />
-    <TrackToggle />
-    <Spot
-      src="/assets/spots/governance-hub.png"
-      alt="Seen from behind, a cyclist leans into a bend on a mountain road; the outer wall at that bend is brick red and the open road winds on into the valley."
-      caption="The wall is what lets the rider go fast."
-      eager
-    />
+  <Reader maxWidth="980px" class="gov-hub">
+    <header class="gov-hero">
+      <div class="gov-hero__text">
+        <p class="gov-hero__rubric">Agent Engineering Lab · Guide</p>
+        <h1 class="gov-hero__title">AI Governance, from Scratch</h1>
+        <p class="gov-hero__dek">How to stand up AI governance in an organisation that has none, and make it the reason your teams can move fast. One path, twenty-two steps, in this order.</p>
+        <p class="gov-hero__cta">
+          {firstHref && <a class="gov-btn" href={firstHref}>Start at Step 1 <span aria-hidden="true">→</span></a>}
+          <a class="gov-btn gov-btn--ghost" href="#the-path">See all 22 steps</a>
+        </p>
+        <p class="gov-hero__status">{publishedCount} of {STEPS.length} steps are published. The rest are listed below and marked Coming.</p>
+      </div>
+      <figure class="gov-hero__art">
+        <picture>
+          <source srcset="/assets/spots/governance-hub.webp" type="image/webp" />
+          <img
+            src="/assets/spots/governance-hub.png"
+            alt="Seen from behind, a cyclist leans into a bend on a mountain road; the outer wall at that bend is brick red and the open road winds on into the valley."
+            width="1024" height="768" loading="eager" fetchpriority="high" decoding="async"
+          />
+        </picture>
+        <figcaption>The wall is what lets the rider go fast.</figcaption>
+      </figure>
+    </header>
 
-    <section aria-labelledby="how-to-use">
-      <h2 id="how-to-use">How to use this guide</h2>
+    <section class="gov-howto" aria-labelledby="how-to-use">
+      <h2 id="how-to-use" class="gov-eyebrow">How to use this guide</h2>
       <ol class="gov-rules">
-        <li><b>Start at Step 1. Everyone does.</b> Each step opens with what done looks like. If you can show it, move on. If you can only describe it, you are not done.</li>
-        <li><b>Do the steps in order.</b> Each one rests on the ones before it. A gate without a register has nothing to stop.</li>
-        <li><b>Don't skip Part II.</b> It is the reason the rest gets followed instead of routed around.</li>
-        <li><b>Read the deep dive when the step is real for you.</b> The top half of a step gets it working. The deep dive is for the edge cases you meet later.</li>
+        {RULES.map(([t, b]) => <li><b>{t}</b> {b}</li>)}
       </ol>
     </section>
 
-    <section aria-labelledby="one-picture">
-      <h2 id="one-picture">Governance in one picture</h2>
-      <p class="gov-hub-sub">Everything you answer to keeps growing above. Every team, system and agent keeps growing below. Wire each rule to each team and the connections multiply. Put one narrow waist between them and they add.</p>
-      <Hourglass written={written} caption="The narrow waist: one register, one tiering, one control set, one evidence pack, built into the platform." />
-    </section>
-
-    <section aria-labelledby="the-path">
-      <h2 id="the-path">The path</h2>
-      <p class="gov-hub-sub">Each step adds one part. Select a part to see what it rests on, what rests on it, and the patterns it puts into play.</p>
-      <div class="gov-figure gov-figure--wide gov-figure--machine">
-        <GovernanceMachine client:visible initial={1} mode="explore" written={written} interactive />
-        <p class="gov-figure__caption">Brick outline and tint: the selected step. Solid line: what it rests on. Dashed outline: what rests on it. Pattern colours follow the catalogue: blue capability, brick control, gold evidence; a diamond marks an anti-pattern.</p>
-      </div>
-      {PARTS.map((part) => (
-        <div class="gov-part">
-          <h3 class="gov-part__name">{part === 'Close' ? 'Close' : `Part ${part} · ${PART_LABEL[part]}`}</h3>
-          <ol class="gov-steps">
-            {stepsInPart(part).map((s) => (
-              <li class="gov-step">
-                <span class="gov-step__n">{s.n}</span>
-                <div>
-                  <p class="gov-step__t">{href(s.n) ? <a href={href(s.n)!}>{s.title}</a> : s.title}</p>
-                  <p class="gov-step__check"><span>{s.n} {s.checklist.item}</span><span class="gov-step__dots" aria-hidden="true"></span><span class="gov-step__resp">{s.checklist.response}</span></p>
-                  {s.doneWhenSmall ? (
-                    <>
-                      <Track for="enterprise"><p class="gov-step__done"><b>Done when</b> {s.doneWhen}</p></Track>
-                      <Track for="small"><p class="gov-step__done"><b>Done when</b> {s.doneWhenSmall}</p></Track>
-                    </>
-                  ) : (
-                    <p class="gov-step__done"><b>Done when</b> {s.doneWhen}</p>
-                  )}
-                  <p class="gov-step__deep">Deep dive: {s.deepDive.join(' · ')}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+    <section aria-labelledby="the-path" class="gov-path">
+      <div class="gov-path__head">
+        <div>
+          <h2 id="the-path">The path</h2>
+          <p class="gov-hub-sub">Twenty-two steps in six parts. Each one tells you what done looks like.</p>
         </div>
+        <div class="gov-track-row">
+          <span class="gov-track-row__label" aria-hidden="true">Show the guide for a</span>
+          <TrackToggle />
+        </div>
+      </div>
+      <nav class="gov-parts-nav" aria-label="Parts">
+        {PARTS.map((part) => (
+          <a href={`#${partId(part)}`}><span>{part === 'Close' ? '22' : part}</span>{partTitle(part)}</a>
+        ))}
+      </nav>
+
+      {PARTS.map((part) => (
+        <section class="gov-part" id={partId(part)} aria-labelledby={`${partId(part)}-h`}>
+          <header class="gov-part__head">
+            <h3 id={`${partId(part)}-h`}><span class="gov-part__num">{partName(part)}</span>{partTitle(part)}</h3>
+            <span class:list={['gov-part__status', partStatus(part) === 'Published' && 'is-live']}>{partStatus(part)}</span>
+          </header>
+          <ol class="gov-steps">
+            {stepsInPart(part).map((s) => {
+              const link = href(s.n);
+              const Row = link ? 'a' : 'div';
+              return (
+                <li class:list={['gov-step', !link && 'gov-step--coming']}>
+                  <Row class="gov-step__row" href={link ?? undefined}>
+                    <span class="gov-step__n">{s.n}</span>
+                    <span class="gov-step__body">
+                      <span class="gov-step__t">{s.title}</span>
+                      {s.doneWhenSmall ? (
+                        <>
+                          <Track for="enterprise"><span class="gov-step__done"><b>Done when</b> {s.doneWhen}</span></Track>
+                          <Track for="small"><span class="gov-step__done"><b>Done when</b> {s.doneWhenSmall}</span></Track>
+                        </>
+                      ) : (
+                        <span class="gov-step__done"><b>Done when</b> {s.doneWhen}</span>
+                      )}
+                    </span>
+                    <span class="gov-step__tag">{link ? <>Read <span aria-hidden="true">→</span></> : 'Coming'}</span>
+                  </Row>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
       ))}
     </section>
 
-    <section aria-labelledby="the-calls">
+    <section aria-labelledby="fits-together" class="gov-fits">
+      <h2 id="fits-together">How it fits together</h2>
+      <p class="gov-hub-sub">Everything you answer to keeps growing above. Every team, system and agent keeps growing below. Wire each rule to each team and the connections multiply. Put one narrow waist between them and they add.</p>
+      <Hourglass written={written} caption="The narrow waist: one register, one tiering, one control set, one evidence pack, built into the platform." />
+
+      <div class="gov-machine-block">
+        <h3 class="gov-fits__h3">What each step rests on</h3>
+        <p class="gov-hub-sub">Read it from the bottom up: foundations at the base, scale at the top. Select a step to see what it rests on, what rests on it, and the patterns it puts into play.</p>
+        <div class="gov-figure gov-figure--wide gov-figure--machine">
+          <GovernanceMachine client:visible initial={1} mode="explore" written={written} interactive />
+          <p class="gov-figure__caption">Brick outline and tint: the selected step. Solid line: what it rests on. Dashed outline: what rests on it. Pattern colours follow the catalogue: blue capability, brick control, gold evidence; a diamond marks an anti-pattern.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="the-calls" class="gov-calls-block">
       <h2 id="the-calls">The calls this guide makes</h2>
       <p class="gov-hub-sub">Each step argues for its call and says when to break it.</p>
       <dl class="gov-calls">{CALLS.map(([t, b]) => <div><dt>{t}</dt><dd>{b}</dd></div>)}</dl>
     </section>
+
+    {firstHref && (
+      <a class="gov-next__card gov-hub-start" href={firstHref}>
+        <span class="gov-next__k">Begin · Step 1 of {STEPS.length}</span>
+        <span class="gov-next__t">{STEPS[0].title}</span>
+        <span class="gov-next__d"><b>Done when</b> {STEPS[0].doneWhen}</span>
+        <span class="gov-next__arrow" aria-hidden="true">→</span>
+      </a>
+    )}
   </Reader>
 </PageLayout>

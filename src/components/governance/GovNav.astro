@@ -1,0 +1,77 @@
+---
+/**
+ * GovNav: the guide's step list, used as the desktop rail and inside the
+ * mobile step bar. Published steps link; the rest are listed and marked "soon".
+ * On a step page the current step expands to its sections, with scroll-spy.
+ */
+import { PARTS, PART_LABEL, stepsInPart, writtenHref } from '~/data/governance-path';
+
+interface Anchor { label: string; anchor: string }
+interface Props { current?: number; written: string[]; anchors?: Anchor[] }
+const { current, written, anchors = [] } = Astro.props;
+const href = writtenHref(new Set(written));
+---
+<nav class="gov-nav" aria-label="Guide steps">
+  <a class="gov-nav__home" href="/governance/">All 22 steps</a>
+  {PARTS.map((part) => (
+    <div class="gov-nav__part">
+      <p class="gov-nav__partname">{part === 'Close' ? 'Close' : `${part} · ${PART_LABEL[part]}`}</p>
+      <ol>
+        {stepsInPart(part).map((s) => (
+          <li class:list={[s.n === current && 'is-current', !href(s.n) && 'is-coming']}>
+            {href(s.n) ? (
+              <a href={href(s.n)!} aria-current={s.n === current ? 'page' : undefined}>
+                <span class="gov-nav__n">{s.n}</span><span>{s.short}</span>
+              </a>
+            ) : (
+              <span class="gov-nav__item">
+                <span class="gov-nav__n">{s.n}</span><span>{s.short}</span><span class="gov-nav__soon">soon</span>
+              </span>
+            )}
+            {s.n === current && anchors.length > 0 && (
+              <ul class="gov-nav__sections">
+                {anchors.map((a) => <li><a href={`#${a.anchor}`} data-gov-anchor={a.anchor}>{a.label}</a></li>)}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  ))}
+</nav>
+
+<script>
+  let observer: IntersectionObserver | null = null;
+
+  function setup() {
+    observer?.disconnect();
+    observer = null;
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-gov-anchor]'));
+    if (!links.length) return;
+    const ids = Array.from(new Set(links.map((l) => l.dataset.govAnchor!)));
+    const mark = (id: string) => links.forEach((l) => l.classList.toggle('is-active', l.dataset.govAnchor === id));
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        const hit = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top))[0];
+        if (hit) mark(hit.target.id);
+      },
+      { rootMargin: '-80px 0px -65% 0px' }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer!.observe(el);
+    });
+
+    // Close the mobile step bar after a section link is chosen.
+    document.querySelectorAll<HTMLDetailsElement>('details.gov-bar').forEach((bar) => {
+      bar.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => { bar.open = false; }));
+    });
+  }
+
+  setup();
+  document.addEventListener('astro:page-load', setup);
+  document.addEventListener('astro:before-preparation', () => { observer?.disconnect(); observer = null; });
+</script>
