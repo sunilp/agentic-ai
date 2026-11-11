@@ -3,16 +3,16 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import '~/styles/governance.css';
 import PageLayout from './PageLayout.astro';
-import Reader from '~/components/layout/Reader.astro';
 import ArticleHeader from '~/components/universal/ArticleHeader.astro';
 import Spot from '~/components/universal/Spot.astro';
-import SectionAnchors from '~/components/universal/SectionAnchors.astro';
 import Sources from '~/components/universal/Sources.astro';
 import TrackToggle from '~/components/governance/TrackToggle.astro';
+import Track from '~/components/governance/Track.astro';
 import ChecklistLine from '~/components/governance/ChecklistLine.astro';
 import GoDeeper from '~/components/governance/GoDeeper.astro';
+import GovNav from '~/components/governance/GovNav.astro';
 import GovernanceMachine from '~/components/governance/GovernanceMachine.svelte';
-import { stepBySlug, neighbours, PART_LABEL, writtenHref, type Step } from '~/data/governance-path';
+import { STEPS, stepBySlug, neighbours, PART_LABEL, writtenHref } from '~/data/governance-path';
 
 interface Props { entry: CollectionEntry<'governance'> }
 const { entry } = Astro.props;
@@ -30,9 +30,10 @@ const updatedLong = d.updated
   .toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
   .toUpperCase();
 const byline = ['SUNIL PRAKASH', `UPDATED ${updatedLong}`, `${d.readingTime} MIN`];
+const total = STEPS.length;
 const partName = step.part === 'Close' ? 'CLOSE' : `PART ${step.part} · ${PART_LABEL[step.part].toUpperCase()}`;
 const ogImage = d.spot ?? '/assets/og/governance.png';
-const navLabel = (s: Step, dir: 'prev' | 'next') => (dir === 'prev' ? `← Step ${s.n} · ${s.title}` : `Step ${s.n} · ${s.title} →`);
+const anchors = d.anchors ?? [];
 ---
 <PageLayout
   title={`${step.title}, Governance`}
@@ -41,36 +42,83 @@ const navLabel = (s: Step, dir: 'prev' | 'next') => (dir === 'prev' ? `← Step 
   currentNav="Governance"
   articleData={{ publishedTime: d.updated.toISOString(), section: 'Governance', headline: step.title }}
 >
-  <Reader>
-    <ArticleHeader rubric={`GOVERNANCE · STEP ${step.n} OF 22 · ${partName}`} title={step.title} dek={d.dek} byline={byline} />
-    <TrackToggle />
-    {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
-    <ChecklistLine n={step.n} />
-    {step.n <= 21 && (
-      <section class="gov-where" aria-labelledby="where-this-sits">
-        <h2 id="where-this-sits">Where this sits</h2>
-        <div class="gov-figure gov-figure--wide gov-figure--machine">
-          <GovernanceMachine initial={step.n} mode="progress" written={written} />
-          <p class="gov-figure__caption">Solid line: what this step rests on. Dashed outline: what rests on it. Faded: steps still to come.{step.patterns.length > 0 && ' Pattern colours follow the catalogue: blue capability, brick control, gold evidence; a diamond marks an anti-pattern.'}</p>
-        </div>
-      </section>
-    )}
-    {d.anchors && d.anchors.length > 0 && <SectionAnchors items={d.anchors} label="In this step" />}
-    <article class="gov-body prose">
-      <slot />
-    </article>
-    {step.book && <GoDeeper book={step.book} />}
-    {related.length > 0 && (
-      <section class="gov-related">
-        <h2>Engineering depth</h2>
-        <ul>{related.map((a) => <li><a href={`/architecture/${a.id}/`}>{a.data.title}</a></li>)}</ul>
-      </section>
-    )}
-    <Sources items={d.sources} />
-    <nav class="gov-prevnext" aria-label="Steps">
-      {prev ? (href(prev.n) ? <a href={href(prev.n)!}>{navLabel(prev, 'prev')}</a> : <span>{navLabel(prev, 'prev')}</span>) : <span />}
-      <a href="/governance/">All steps</a>
-      {next ? (href(next.n) ? <a href={href(next.n)!}>{navLabel(next, 'next')}</a> : <span>{navLabel(next, 'next')}</span>) : <span />}
-    </nav>
-  </Reader>
+  <div class="gov-shell">
+    <aside class="gov-rail">
+      <GovNav current={step.n} written={written} anchors={anchors} />
+    </aside>
+
+    <div class="gov-main">
+      <details class="gov-bar">
+        <summary>
+          <span class="gov-bar__where"><b>Step {step.n} of {total}</b> · {step.short}</span>
+          <span class="gov-bar__open">All steps</span>
+        </summary>
+        <GovNav current={step.n} written={written} anchors={anchors} />
+      </details>
+
+      <ArticleHeader rubric={`GOVERNANCE · STEP ${step.n} OF ${total} · ${partName}`} title={step.title} dek={d.dek} byline={byline} />
+      <div class="gov-progress" role="img" aria-label={`Step ${step.n} of ${total}`}>
+        <span style={`width:${(step.n / total) * 100}%`}></span>
+      </div>
+
+      <ChecklistLine n={step.n} />
+      <div class="gov-track-row gov-track-row--step">
+        <span class="gov-track-row__label" aria-hidden="true">Show the guide for a</span>
+        <TrackToggle />
+      </div>
+
+      {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
+
+      <article class="gov-body prose">
+        <slot />
+      </article>
+
+      {step.n <= 21 && (
+        <section class="gov-where" aria-labelledby="where-this-sits">
+          <h2 id="where-this-sits">Where this step sits</h2>
+          <div class="gov-figure gov-figure--wide gov-figure--machine">
+            <GovernanceMachine initial={step.n} mode="progress" written={written} />
+            <p class="gov-figure__caption gov-figure__caption--drawing">Read it from the bottom up. Solid line: what this step rests on. Dashed outline: what rests on it. Faded: steps still to come.{step.patterns.length > 0 && ' Pattern colours follow the catalogue: blue capability, brick control, gold evidence; a diamond marks an anti-pattern.'}</p>
+          </div>
+        </section>
+      )}
+
+      {step.book && <GoDeeper book={step.book} />}
+      {related.length > 0 && (
+        <section class="gov-related">
+          <h2>Engineering depth</h2>
+          <ul>{related.map((a) => <li><a href={`/architecture/${a.id}/`}>{a.data.title}</a></li>)}</ul>
+        </section>
+      )}
+      <Sources items={d.sources} />
+
+      <nav class="gov-next" aria-label="Steps">
+        {next && (href(next.n) ? (
+          <a class="gov-next__card" href={href(next.n)!}>
+            <span class="gov-next__k">Next · Step {next.n} of {total}</span>
+            <span class="gov-next__t">{next.title}</span>
+            {next.doneWhenSmall ? (
+              <>
+                <Track for="enterprise"><span class="gov-next__d"><b>Done when</b> {next.doneWhen}</span></Track>
+                <Track for="small"><span class="gov-next__d"><b>Done when</b> {next.doneWhenSmall}</span></Track>
+              </>
+            ) : (
+              <span class="gov-next__d"><b>Done when</b> {next.doneWhen}</span>
+            )}
+            <span class="gov-next__arrow" aria-hidden="true">→</span>
+          </a>
+        ) : (
+          <div class="gov-next__card gov-next__card--coming">
+            <span class="gov-next__k">Next · Step {next.n} of {total} · Coming</span>
+            <span class="gov-next__t">{next.title}</span>
+            <span class="gov-next__d">This step is not published yet. The full path, with what done looks like for each step, is on the guide's front page.</span>
+          </div>
+        ))}
+        <p class="gov-next__links">
+          {prev && href(prev.n) ? <a href={href(prev.n)!}><span aria-hidden="true">←</span> Step {prev.n} · {prev.title}</a> : <span />}
+          <a href="/governance/#the-path">All {total} steps</a>
+        </p>
+      </nav>
+    </div>
+  </div>
 </PageLayout>

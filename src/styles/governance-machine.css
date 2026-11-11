@@ -7,7 +7,8 @@
 .machine__node.is-selected .machine__part { fill: #f5ece9; stroke: #9b4a3f; stroke-width: 1.8; }
 .machine__node.is-selected .machine__label { fill: #9b4a3f; }
 .machine__node.is-holdsUp .machine__part { stroke-dasharray: 4 3; }
-.machine__node.is-faded, .machine__node.is-future { opacity: 0.28; }
+.machine__node.is-faded { opacity: 0.6; }
+.machine__node.is-future { opacity: 0.45; }
 .machine__node[role='button'], a.machine__node { cursor: pointer; }
 .machine__node:focus-visible .machine__part { stroke: #9b4a3f; stroke-width: 2.2; }
 .machine__halo { fill: none; stroke: #fafaf8; stroke-width: 6; stroke-linecap: round; }

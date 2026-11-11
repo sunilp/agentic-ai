@@ -7,8 +7,9 @@ interface Props { written: string[]; caption?: string }
 const { written, caption } = Astro.props;
 const href = writtenHref(new Set(written));
 const refs = (r: (number | string)[]) => renderRefs(r, href);
+const plain = (r: (number | string)[]) => `Steps ${r.join('')}`;
 ---
-<figure class="gov-figure gov-figure--wide">
+<figure class="gov-figure gov-figure--wide gov-figure--hourglass">
   <svg class="gov-svg" viewBox="0 0 880 440" role="img" aria-labelledby="hourglass-title">
     <title id="hourglass-title">The narrow waist: everything you answer to above, every team and system below, and one register, tiering, control set and evidence pack between them.</title>
     <path class="shape" d="M70 20 L810 20 L700 95 L180 95 Z" />
@@ -35,5 +36,12 @@ const refs = (r: (number | string)[]) => renderRefs(r, href);
     <text class="t-sub t-brick" x="800" y="226" text-anchor="end">{H.sides.right[0]}</text>
     <text class="t-sub t-brick" x="800" y="240" text-anchor="end">{H.sides.right[1]}</text>
   </svg>
+  <ol class="gov-hg-stack">
+    <li class="w1"><b>{H.above.title}</b><span>{H.above.sub}</span></li>
+    <li class="w2"><b>{H.upper.title}</b><span>{plain(H.upper.refs)}</span></li>
+    <li class="w3 is-waist"><b>{H.waist.title}</b>{H.waist.lines[0]}<br />{H.waist.lines[1]}<span>{plain(H.waist.refs)}</span></li>
+    <li class="w2"><b>{H.lower.title}</b><span>{plain(H.lower.refs)}</span></li>
+    <li class="w1"><b>{H.below.title}</b><span>{plain(H.below.refs)}</span></li>
+  </ol>
   {caption && <figcaption class="gov-figure__caption">{caption}</figcaption>}
 </figure>
