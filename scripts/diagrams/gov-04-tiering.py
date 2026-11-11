@@ -1,0 +1,21 @@
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+from govkit import Svg, BRICK
+
+s = Svg(880, 230, 'Tiering: a prohibited-use screen, five scored dimensions, the highest wins, overrides only raise, the approver may raise but never lower.')
+s.box(10, 30, 140, 56, 'STEP 0', 'prohibited use?')
+s.box(180, 30, 170, 56, 'SCORE', 'five dimensions')
+s.box(380, 30, 140, 56, 'HIGHEST WINS', 'not the sum')
+s.box(550, 30, 150, 56, 'OVERRIDES', 'can only raise')
+s.box(730, 30, 140, 56, 'TIER', 'T1 · T2 · T3 · T4', brick=True)
+s.arrow(150, 58, 178, 58)
+s.arrow(350, 58, 378, 58)
+s.arrow(520, 58, 548, 58)
+s.arrow(700, 58, 728, 58, stroke=BRICK)
+s.arrow(80, 86, 80, 148)
+s.box(10, 150, 140, 56, 'REJECTED', 'not tiered')
+s.box(670, 150, 200, 56, 'APPROVER', 'may raise, never lower')
+s.arrow(800, 150, 800, 88, stroke=BRICK)
+s.text(88, 121, 'yes', size=10, anchor='start', box=40)
+s.text(164, 51, 'no', size=10, anchor='middle', box=24)
+s.save(os.path.join(os.path.dirname(__file__), '..', '..', 'public', 'assets', 'diagrams', 'gov-04-tiering.svg'))
