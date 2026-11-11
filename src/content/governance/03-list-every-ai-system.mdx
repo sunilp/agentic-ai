@@ -46,11 +46,11 @@ Your one-page policy governs a list you don't have. How do you find every AI sys
 
 Do three things, in this order.
 
-1. **Open the register.** One entry per AI system you build, buy or use. The framework's default test: it uses a trained or calibrated model to produce predictions, content, recommendations or decisions, and it supports operations, customers, decisions about people or reporting. Pilots that touch real data count. So do agents of every kind. A script with no model stays off until it calls one.
+1. **Open the register.** One entry per AI system you build, buy or use. The framework's default test: it uses a trained or calibrated model to produce predictions, content, recommendations or decisions, and it supports operations, customers, decisions about people or reporting. Pilots that touch real data count. So do agents of every kind. A script with no model stays off the register until it calls one, or its rules came from one.
 2. **Find what nobody declared.** Search where AI leaves a trace, not only your teams' memories.
 3. **Make the register the gate.** A system with no entry gets nothing it needs to run in production.
 
-**The guide's call: the register is the gate. No entry, no production credential.** The framework requires the entry before development begins (control RA-006). Holding back the credential turns that rule into a lock. Put the same check wherever a system goes live: the deployment pipeline for a self-hosted model, the admin switch for a vendor feature, the tool grants for an agent.
+**The guide's call: the register is the gate. No entry, no production credential.** The framework requires the entry before development begins (control RA-006). Holding back the credential turns that rule into a lock. Put the same check wherever a system goes live: the deployment pipeline for a self-hosted model, the admin switch for a material vendor feature, the tool grants for an agent.
 
 Pilots get no exception. What bends is how much the entry holds. At intake it needs an ID, a name, a purpose, owners and a status, with the tier pending until Step 4. A live pilot's entry needs a tier, a deployed date and a next review date. Registering a system doesn't approve it. Step 9's gates do. When in doubt, the framework says, register.
 
@@ -78,7 +78,7 @@ Match every item to an entry. Each one is a lead until you trace it to something
 
 On the right, the register feeds Step 4's tiers, Step 8's owners and Step 21's answers to auditors and regulators. The framework makes it the single source for every portfolio number the board sees. Keep no second count.
 
-Now look at your number. If it came from asking around, it counts only what people remember. Bills, consoles and code tell you what is running.
+Now look at your number. If it came from asking around, it counts only what people remember. Bills, consoles and code remember what people forget.
 
 ## How it scales
 
@@ -112,7 +112,7 @@ In the framework, AI Risk owns the register, issues IDs and reconciles it each q
 
 Someone installs a browser extension that summarises pages. Someone else buys a chatbot subscription on a corporate card. Proxy, secure web gateway, CASB and DNS logs show the traffic. Endpoint management shows desktop apps and extensions. Expense claims show subscriptions bought one seat at a time.
 
-In the framework's [shadow AI detection](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/acceptable-use.md#shadow-ai-detection), Security runs these feeds, and the finding sets the response. Confidential or personal data sent to it is an incident. An automation or agent built on it is stopped and registered, and goes through retroactive governance if it must keep running.
+In the framework's [shadow AI detection](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/acceptable-use.md#shadow-ai-detection), Security runs these feeds, and the finding sets the response. Confidential or personal data sent to an unapproved tool is an incident. An automation or agent built on one is stopped and registered, and goes through retroactive governance if it must keep running.
 
 ### Vendor and SaaS features
 
