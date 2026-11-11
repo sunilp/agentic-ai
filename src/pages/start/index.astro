@@ -1,62 +1,95 @@
 ---
+import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
-import Tag from '~/components/universal/Tag.astro';
+import IndexHeader from '~/components/universal/IndexHeader.astro';
+import { STEPS } from '~/data/governance-path';
 
-const tracks = [
+const [chapters, recipes, labs, arch, gov] = await Promise.all([
+  getCollection('chapters'), getCollection('recipes'), getCollection('labs'), getCollection('architecture'), getCollection('governance'),
+]);
+
+interface Item { id?: string; title: string; href: string; note?: string }
+
+// A chapter by its number, with its real title and reading time. Chapters that are
+// only previewed on the site say so, so nobody clicks expecting the full text.
+const chapter = (n: string): Item => {
+  const c = chapters.find((x) => x.id.startsWith(`${n}-`));
+  if (!c) throw new Error(`no chapter ${n}`);
+  return { id: n, title: c.data.title, href: `/book/${c.id}/`, note: c.data.status === 'draft' ? 'in the book' : `${c.data.readingTime} min` };
+};
+const recipe = recipes.sort((a, b) => b.data.verifiedOn.getTime() - a.data.verifiedOn.getTime())[0];
+const blueprint = (id: string): Item => {
+  const a = arch.find((x) => x.id === id);
+  if (!a) throw new Error(`no blueprint ${id}`);
+  return { id: a.data.id.toUpperCase(), title: a.data.title, href: `/architecture/${a.id}/`, note: `${a.data.readingTime} min` };
+};
+const govLive = gov.filter((g) => g.data.status !== 'draft').length;
+
+const paths: { name: string; who: string; items: Item[] }[] = [
   {
-    label: 'New to agentic AI',
-    description: 'You\'ve seen the hype. You want to know what\'s real and how to think about it.',
-    next: 'Start with the Foundations.',
-    cta: 'Foundations',
-    href: '/book/00a-how-llms-work/',
-    chapters: ['00a How LLMs Work', '00b API to Tools', '00c Your First Agent', '01 What Agentic Means'],
+    name: 'New to agents',
+    who: 'You have seen the hype. You want to know what is real, and how to think about it.',
+    items: [chapter('00a'), chapter('00b'), chapter('00c'), chapter('01')],
   },
   {
-    label: 'Building an agent',
-    description: 'You\'re writing the code now. You want patterns that survive contact with production.',
-    next: 'Jump to the build-focused chapters and the flagship project.',
-    cta: 'Building chapters',
-    href: '/book/#part-1',
-    chapters: ['02 Tools, Context, Agent Loop', '03 Workflow First', '04 Multi-Agent Without Theater', 'R-001 Strands on AgentCore'],
+    name: 'Building an agent',
+    who: 'You are writing the code now. You want patterns that hold up in production.',
+    items: [
+      chapter('02'), chapter('03'), chapter('04'),
+      ...(recipe ? [{ id: recipe.data.id.toUpperCase(), title: recipe.data.title, href: `/recipes/${recipe.id}/`, note: `${recipe.data.estimatedMinutes} min` }] : []),
+      { title: 'The pattern catalogue', href: '/patterns/', note: 'reference' },
+    ],
   },
   {
-    label: 'Running in production',
-    description: 'You shipped. Now you need to evaluate, harden, and operate.',
-    next: 'Evidence, evaluation, and operations chapters.',
-    cta: 'Evidence Wall',
-    href: '/evidence/',
-    chapters: ['06 Evaluating and Hardening', '07 When Not to Use Agents', 'Evidence Wall', 'L-001 Lab Report'],
+    name: 'Running in production',
+    who: 'You shipped. Now you need to evaluate, harden and operate.',
+    items: [
+      chapter('06'), chapter('07'),
+      { title: 'The evidence wall', href: '/evidence/', note: 'reference' },
+      { title: 'Lab reports', href: '/labs/', note: `${labs.length} reports` },
+      blueprint('001-the-control-plane'),
+    ],
+  },
+  {
+    name: 'Setting up governance',
+    who: 'Someone has asked you to make AI safe to ship across many teams.',
+    items: [
+      { title: 'AI Governance, from Scratch', href: '/governance/', note: `${govLive} of ${STEPS.length} steps` },
+      { id: 'Step 1', title: STEPS[0].title, href: `/governance/${STEPS[0].slug}/`, note: 'start here' },
+      { title: 'Every call and template on one sheet', href: '/governance/#one-sheet', note: 'reference' },
+      blueprint('005-ownership-and-decision-rights'),
+    ],
   },
 ];
 ---
 
 <PageLayout
   title="Start — Agent Engineering Lab"
-  description="Pick a path based on where you are: new to agentic AI, building, or running in production."
+  description="Pick a path based on where you are: new to agents, building, running in production, or setting up governance."
   currentNav="Start"
 >
-  <Container>
-    <header style="margin: var(--space-7) 0 var(--space-6);">
-      <Tag>Start</Tag>
-      <KineticHeading level={1}>Start</KineticHeading>
-      <Dek italic>Pick the path that matches where you are. Each one is a curated reading list, not a 13-chapter slog.</Dek>
-    </header>
+  <Container maxWidth="1080px">
+    <IndexHeader title="Start" dek="Pick the path that matches where you are. Each one is a short reading list, in order." />
 
-    <div class="start-tracks">
-      {tracks.map((t) => (
-        <section class="start-track">
-          <div class="start-track__label">{t.label}</div>
-          <p class="start-track__description">{t.description}</p>
-          <p class="start-track__next"><em>{t.next}</em></p>
-
-          <ul class="start-track__chapters">
-            {t.chapters.map((c) => (<li>{c}</li>))}
-          </ul>
-
-          <a href={t.href} class="start-track__cta">{t.cta} →</a>
+    <div class="paths">
+      {paths.map((p) => (
+        <section class="path">
+          <header class="path__header">
+            <h2 class="path__name">{p.name}</h2>
+            <p class="path__who">{p.who}</p>
+          </header>
+          <ol class="path__list">
+            {p.items.map((i) => (
+              <li>
+                <a class="path__item" href={i.href}>
+                  <span class="path__id">{i.id ?? ''}</span>
+                  <span class="path__title">{i.title}</span>
+                  {i.note && <span class="path__note">{i.note}</span>}
+                </a>
+              </li>
+            ))}
+          </ol>
         </section>
       ))}
     </div>
@@ -64,78 +97,25 @@ const tracks = [
 </PageLayout>
 
 <style>
-  .start-tracks {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-5);
-    margin: var(--space-7) 0;
-  }
+  .paths { margin-bottom: var(--space-8); }
+  .path { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); padding: var(--space-6) 0; border-bottom: 1px solid var(--ink); }
+  .path:first-child { padding-top: var(--space-3); }
+  @media (min-width: 900px) { .path { grid-template-columns: 290px minmax(0, 1fr); gap: var(--space-8); } }
+  .path__name { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(26px, 3vw, 34px); line-height: 1.1; margin: 0; }
+  .path__who { font-family: var(--font-body); font-size: 18px; line-height: 1.45; color: #4a4a48; margin: var(--space-2) 0 0; }
 
-  .start-track {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-6) var(--space-5);
-    background: var(--paper);
-    border: 1px solid var(--fg-faint);
-    border-radius: var(--radius-md);
-    transition: border-color var(--dur-micro) var(--ease-out);
-  }
+  .path__list { list-style: none; margin: 0; padding: 0; }
+  .path__list li + li { border-top: 1px solid var(--fg-faint); }
+  .path__item { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; gap: var(--space-3); align-items: baseline; padding: 13px 0; color: var(--fg); }
+  .path__list li:first-child .path__item { padding-top: 4px; }
+  .path__id { font-family: var(--font-mono); font-size: var(--meta-2); letter-spacing: 0.06em; color: var(--brick); }
+  .path__title { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.3; transition: color var(--dur-micro) var(--ease-out); }
+  .path__item:hover .path__title { color: var(--brick); }
+  .path__note { font-family: var(--font-body); font-style: italic; font-size: 15px; color: var(--fg-light); white-space: nowrap; }
 
-  .start-track:hover {
-    border-color: var(--brick);
-  }
-
-  .start-track__label {
-    font-family: var(--font-display);
-    font-size: var(--display-3);
-    font-weight: 500;
-    line-height: var(--lh-snug);
-    color: var(--brick);
-    margin-bottom: var(--space-3);
-  }
-
-  .start-track__description {
-    font-size: var(--body-1);
-    color: var(--fg);
-    margin: 0 0 var(--space-3);
-    line-height: var(--lh-base);
-  }
-
-  .start-track__next {
-    color: var(--fg-light);
-    font-size: var(--body-2);
-    margin: 0 0 var(--space-4);
-    line-height: var(--lh-snug);
-  }
-
-  .start-track__chapters {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 var(--space-5);
-    flex: 1;
-    border-left: 2px solid var(--brick-wash);
-    padding-left: var(--space-4);
-  }
-
-  .start-track__chapters li {
-    font-family: var(--font-mono);
-    font-size: var(--body-3);
-    color: var(--fg-light);
-    line-height: 1.8;
-  }
-
-  .start-track__cta {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-    color: var(--brick);
-    text-decoration: none;
-    border-top: 1px solid var(--fg-faint);
-    padding-top: var(--space-3);
-  }
-
-  @media (max-width: 720px) {
-    .start-tracks { grid-template-columns: 1fr; }
+  @media (max-width: 560px) {
+    .path__item { grid-template-columns: minmax(0, 1fr) auto; }
+    .path__id { grid-column: 1 / -1; }
+    .path__id:empty { display: none; }
   }
 </style>

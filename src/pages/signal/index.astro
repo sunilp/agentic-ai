@@ -2,12 +2,14 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import MagazineGrid from '~/components/layout/MagazineGrid.astro';
-import ArticleHeader from '~/components/universal/ArticleHeader.astro';
-import EntryCard from '~/components/universal/EntryCard.astro';
+import IndexHeader from '~/components/universal/IndexHeader.astro';
+import EntryList from '~/components/universal/EntryList.astro';
 
-const entries = await getCollection('signal');
-const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const entries = (await getCollection('signal')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const items = entries.map((e) => ({
+  href: `/signal/${e.id}/`, id: e.data.id.toUpperCase(), title: e.data.title, line: e.data.dek,
+  date: e.data.date, minutes: e.data.readingTime, image: e.data.banner, imageKind: 'banner' as const,
+}));
 ---
 
 <PageLayout
@@ -15,40 +17,15 @@ const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   description="Commentary on the discourse around building agents. What to keep, what to skip."
   currentNav="Signal"
 >
-  <Container>
-    <div class="sg-index__header">
-      <ArticleHeader
-        rubric="SIGNAL"
-        title="Signal"
-        dek="What to keep, what to skip. Commentary on the discourse around agent engineering: papers, tools, marketplaces, claims. Distinct from Field Notes, which report from inside the work."
-      />
-    </div>
-
-    {sorted.length === 0 ? (
-      <p class="sg-index__empty">No Signal pieces published yet.</p>
-    ) : (
-      <MagazineGrid cols={3}>
-        {sorted.map((e) => (
-          <EntryCard
-            href={`/signal/${e.id}/`}
-            rubric={`SIGNAL · ${e.data.id.toUpperCase()} · ${e.data.date.toISOString().slice(0, 10)}`}
-            title={e.data.title}
-            line={e.data.dek}
-            image={e.data.banner}
-            imageKind="banner"
-          />
-        ))}
-      </MagazineGrid>
-    )}
+  <Container maxWidth="1080px">
+    <IndexHeader
+      title="Signal"
+      dek="What to keep, what to skip. Commentary on the talk around agent engineering: papers, tools, marketplaces and claims. Field Notes report from inside the work. Signal reads what everyone else is saying."
+    />
+    {items.length === 0 ? <p class="index-empty">No Signal pieces published yet.</p> : <EntryList items={items} lead label="Signal pieces, newest first" />}
   </Container>
 </PageLayout>
 
 <style>
-  .sg-index__header { margin: 0 0 var(--space-6); }
-
-  .sg-index__empty {
-    color: var(--fg-light);
-    font-style: italic;
-    margin: var(--space-7) 0;
-  }
+  .index-empty { color: var(--fg-light); font-style: italic; margin: var(--space-7) 0; }
 </style>

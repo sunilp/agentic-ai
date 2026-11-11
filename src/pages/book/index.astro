@@ -2,9 +2,7 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
-import Tag from '~/components/universal/Tag.astro';
+import IndexHeader from '~/components/universal/IndexHeader.astro';
 
 const chapters = (await getCollection('chapters')).sort((a, b) => a.id.localeCompare(b.id));
 
@@ -53,24 +51,15 @@ function chapterPrefix(slug: string): string {
   currentNav="Book"
 >
   <Container>
-    <header class="book-header">
-      <div class="book-header__text">
-        <Tag variant="accent">Book</Tag>
-        <KineticHeading level={1}>The Book</KineticHeading>
-        <Dek italic>A field guide to building reliable, evaluable, production-grade agent systems.</Dek>
-        <div class="book-header__ctas">
-          <a class="book-header__cta book-header__cta--primary" href="https://www.amazon.com/dp/B0GVG6848F" target="_blank" rel="noopener noreferrer">
-            Get the book on Amazon →
-          </a>
-          <a class="book-header__cta" href="/book/00a-how-llms-work/">
-            Start the Foundations
-          </a>
-        </div>
+    <IndexHeader title="Agentic AI for Serious Engineers" dek="A field guide to building reliable, evaluable, production-grade agent systems. Start with the free Foundations here, then get the book.">
+      <div class="book-header__ctas">
+        <a class="book-header__cta book-header__cta--primary" href="https://www.amazon.com/dp/B0GVG6848F" target="_blank" rel="noopener noreferrer">Get the book on Amazon</a>
+        <a class="book-header__cta" href="/book/00a-how-llms-work/">Start the Foundations</a>
       </div>
-      <div class="book-header__cover">
-        <img src="/assets/images/book-cover.jpg" alt="Agentic AI for Serious Engineers — book cover" loading="eager" width="320" height="480" />
+      <div slot="aside" class="book-header__cover">
+        <img src="/assets/images/book-cover.jpg" alt="Agentic AI for Serious Engineers, book cover" loading="eager" width="320" height="480" />
       </div>
-    </header>
+    </IndexHeader>
 
     {parts.map((part) => {
       const partChapters = chapters.filter((c) => part.filter(c.id));
@@ -89,7 +78,7 @@ function chapterPrefix(slug: string): string {
                     <span class="book-part__chapter-title">{c.data.title}</span>
                     {c.data.description && <span class="book-part__chapter-dek">{c.data.description}</span>}
                   </span>
-                  <span class="book-part__chapter-meta">{c.data.readingTime} min</span>
+                  <span class="book-part__chapter-meta">{c.data.status === 'draft' ? 'in the book' : `${c.data.readingTime} min`}</span>
                 </a>
               </li>
             ))}
@@ -101,20 +90,6 @@ function chapterPrefix(slug: string): string {
 </PageLayout>
 
 <style>
-  .book-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--space-7);
-    align-items: center;
-    margin: var(--space-7) 0 var(--space-7);
-    padding-bottom: var(--space-6);
-    border-bottom: 1px solid var(--fg-faint);
-  }
-
-  .book-header__text :global(.kinetic-heading) {
-    font-size: var(--display-1);
-  }
-
   .book-header__ctas {
     margin-top: var(--space-4);
     display: flex;
@@ -123,17 +98,17 @@ function chapterPrefix(slug: string): string {
   }
 
   .book-header__cta {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: var(--meta-1);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.2;
     color: var(--fg);
     text-decoration: none;
-    padding: var(--space-3) var(--space-5);
+    padding: 12px 20px;
     border: 1px solid var(--ink);
-    border-radius: var(--radius-md);
-    transition: background var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    transition: background var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
   }
 
   .book-header__cta:hover {
@@ -160,10 +135,6 @@ function chapterPrefix(slug: string): string {
   }
 
   @media (max-width: 720px) {
-    .book-header {
-      grid-template-columns: 1fr;
-      gap: var(--space-5);
-    }
     .book-header__cover img {
       width: 180px;
       margin: 0 auto;
@@ -253,10 +224,10 @@ function chapterPrefix(slug: string): string {
   }
 
   .book-part__chapter-meta {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 15px;
     color: var(--fg-light);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
+    white-space: nowrap;
   }
 </style>

@@ -351,7 +351,7 @@
   .wheel__header {
     margin: 0 0 var(--space-5, 24px);
     padding-bottom: var(--space-2, 8px);
-    border-bottom: 2px solid var(--brick, #9b4a3f);
+    border-bottom: 1px solid var(--ink, #1a1a1a);
   }
 
   .wheel__title {
@@ -587,11 +587,11 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-family: var(--font-mono, monospace);
-    font-size: var(--meta-2, 11px);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-family: var(--font-body, Georgia, serif);
+    font-style: italic;
+    font-size: 14.5px;
     color: var(--fg-light, #6b6b6b);
+    text-transform: capitalize;
   }
 
   .wheel__detail-head {
@@ -602,18 +602,16 @@
   }
 
   .wheel__detail-cell {
-    font-family: var(--font-mono, monospace);
-    font-size: var(--meta-2, 11px);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-family: var(--font-body, Georgia, serif);
+    font-style: italic;
+    font-size: 14.5px;
     color: var(--fg-light, #6b6b6b);
   }
 
   .wheel__detail-tag {
-    font-family: var(--font-mono, monospace);
-    font-size: var(--meta-3, 10px);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-family: var(--font-body, Georgia, serif);
+    font-style: italic;
+    font-size: 14.5px;
     color: var(--fg-light, #6b6b6b);
     border: 1px solid var(--fg-faint, #e8e8e8);
     border-radius: 2px;
