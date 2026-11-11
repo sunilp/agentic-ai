@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 250" role="img" aria-label="Five discovery sources feed one AI register, which feeds tiering, owners and audit."><rect width="880" height="250" fill="#fff"/>
+<rect x="10" y="14" width="250" height="32" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="24" y="35" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">Contracts and procurement</text>
+<path d="M260 30 L360 125" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="10" y="60" width="250" height="32" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="24" y="81" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">Cloud bills and API keys</text>
+<path d="M260 76 L360 125" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="10" y="106" width="250" height="32" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="24" y="127" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">Code and model registries</text>
+<path d="M260 122 L360 125" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="10" y="152" width="250" height="32" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="24" y="173" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">SaaS admin consoles</text>
+<path d="M260 168 L360 125" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="10" y="198" width="250" height="32" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="24" y="219" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">Team declarations</text>
+<path d="M260 214 L360 125" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="360" y="95" width="210" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="465" y="121" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">AI REGISTER</text>
+<text x="465" y="141" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">system of record</text>
+<path d="M570 125 L650 56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="650" y="40" width="220" height="32" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="664" y="61" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">Tiering · Step 4</text>
+<path d="M570 125 L650 125" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="650" y="109" width="220" height="32" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="664" y="130" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">Owners · Step 8</text>
+<path d="M570 125 L650 194" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="650" y="178" width="220" height="32" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="664" y="199" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">Audit · Step 21</text>
+</svg>
