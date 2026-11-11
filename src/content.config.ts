@@ -211,4 +211,26 @@ const architecture = defineCollection({
   }),
 });
 
-export const collections = { chapters, fieldNotes, recipes, signal, projects, evidence, labs, patterns, architecture };
+const governance = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/governance' }),
+  schema: z.object({
+    // The filename (e.g. 03-list-every-ai-system) joins to src/data/governance-path.ts,
+    // which owns the title, checklist line, dependencies, patterns and starter kit.
+    dek: z.string(),
+    description: z.string(),
+    updated: z.coerce.date(),
+    readingTime: z.number(),
+    spot: z.string().optional(),
+    spotCaption: z.string().optional(),
+    anchors: z.array(z.object({ label: z.string(), anchor: z.string() })).optional(),
+    sources: z.array(z.object({
+      title: z.string(),
+      url: z.string().url(),
+      authors: z.array(z.string()).optional(),
+      year: z.number().optional(),
+    })).min(1),
+    status: z.enum(['draft', 'published']).default('published'),
+  }),
+});
+
+export const collections = { chapters, fieldNotes, recipes, signal, projects, evidence, labs, patterns, architecture, governance };

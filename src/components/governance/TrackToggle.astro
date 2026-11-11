@@ -1,0 +1,27 @@
+---
+/** Page-wide Small team / Enterprise switch. Works without JS (CSS :has); JS only remembers the choice. */
+---
+<div class="track-toggle" role="radiogroup" aria-label="Show the guide for">
+  <input type="radio" name="gov-track" id="track-small" value="small" />
+  <label for="track-small">Small team</label>
+  <input type="radio" name="gov-track" id="track-enterprise" value="enterprise" checked />
+  <label for="track-enterprise">Enterprise</label>
+</div>
+<script is:inline>
+  (function () {
+    var KEY = 'gov-track';
+    try {
+      var saved = localStorage.getItem(KEY);
+      if (saved === 'small' || saved === 'enterprise') {
+        var el = document.getElementById('track-' + saved);
+        if (el) el.checked = true;
+      }
+    } catch (e) {}
+    document.addEventListener('change', function (e) {
+      var t = e.target;
+      if (t && t.name === 'gov-track') {
+        try { localStorage.setItem(KEY, t.value); } catch (err) {}
+      }
+    });
+  })();
+</script>

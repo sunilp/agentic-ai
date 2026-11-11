@@ -1,0 +1,9 @@
+---
+interface Props { for: 'small' | 'enterprise' }
+const which = Astro.props.for;
+const label = which === 'small' ? 'Small team' : 'Enterprise';
+---
+<div class={`track track--${which}`} data-track={which}>
+  <p class="track__label">{label}</p>
+  <slot />
+</div>

@@ -1,0 +1,20 @@
+---
+import { stepByN } from '~/data/governance-path';
+import Track from './Track.astro';
+interface Props { n: number }
+const s = stepByN(Astro.props.n);
+if (!s) throw new Error(`no step ${Astro.props.n}`);
+---
+<section class="gov-check" aria-label="Done when">
+  <p class="gov-check__line">
+    <span>{s.n} {s.checklist.item}</span><span class="gov-check__dots" aria-hidden="true"></span><span class="gov-check__resp">{s.checklist.response}</span>
+  </p>
+  {s.doneWhenSmall ? (
+    <>
+      <Track for="enterprise"><p class="gov-check__done"><b>Done when</b> {s.doneWhen}</p></Track>
+      <Track for="small"><p class="gov-check__done"><b>Done when</b> {s.doneWhenSmall}</p></Track>
+    </>
+  ) : (
+    <p class="gov-check__done"><b>Done when</b> {s.doneWhen}</p>
+  )}
+</section>

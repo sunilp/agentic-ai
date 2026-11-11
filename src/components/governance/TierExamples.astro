@@ -1,0 +1,25 @@
+---
+import { EXAMPLES } from '~/data/governance-examples';
+import { computeTier } from '~/lib/governance-tier';
+import { kitUrl } from '~/data/governance-path';
+---
+<div class="gov-table-wrap">
+  <table class="gov-table">
+    <caption>The framework's six worked examples, tiered by its own rule</caption>
+    <thead><tr><th scope="col">System</th><th scope="col">Scored</th><th scope="col">Overrides</th><th scope="col">Tier</th><th scope="col">Why</th></tr></thead>
+    <tbody>
+      {EXAMPLES.map((e) => {
+        const r = computeTier(e);
+        return (
+          <tr>
+            <td><a href={kitUrl(`examples/${e.slug}/risk-assessment.md`)}>{e.name}</a><span class="gov-table__sub">{e.matrix}</span></td>
+            <td>{r.scored}</td>
+            <td>{e.overrides.length ? e.overrides.join(', ') : 'none'}</td>
+            <td class="gov-table__tier">{r.tier}</td>
+            <td>{r.reasons.join(' ')}{e.rationale && <span class="gov-table__sub">{e.rationale}</span>}</td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>

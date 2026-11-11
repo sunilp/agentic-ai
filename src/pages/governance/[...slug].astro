@@ -1,0 +1,18 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import GovernanceLayout from '~/layouts/GovernanceLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('governance');
+  return entries
+    .filter((e) => e.data.status !== 'draft')
+    .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props { entry: CollectionEntry<'governance'> }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<GovernanceLayout entry={entry}>
+  <Content />
+</GovernanceLayout>
