@@ -38,8 +38,10 @@
     try {
       const r = await pagefind.search(query);
       const top10 = r.results.slice(0, 10);
-      const datas = await Promise.all(top10.map((x: { data: () => Promise<SearchResult> }) => x.data()));
-      results = datas;
+      // Pagefind keeps the page title under meta.title, not at the top level.
+      type Raw = { url: string; excerpt: string; meta?: { title?: string } };
+      const datas: Raw[] = await Promise.all(top10.map((x: { data: () => Promise<Raw> }) => x.data()));
+      results = datas.map((d) => ({ url: d.url, excerpt: d.excerpt, title: d.meta?.title ?? d.url }));
       activeIdx = 0;
     } catch (e) {
       console.error('CommandPalette: search failed', e);
@@ -86,11 +88,17 @@
 
   $effect(() => {
     document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    // The Search button in TopNav opens the palette with this event.
+    window.addEventListener('lab:open-search', open);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('lab:open-search', open);
+    };
   });
 
   $effect(() => {
-    if (isOpen) runSearch();
+    // Re-run when the query changes or Pagefind finishes loading.
+    if (isOpen && pagefindLoaded) { query; runSearch(); }
   });
 </script>
 
@@ -101,7 +109,7 @@
       <input
         id="cmdk-input"
         type="search"
-        placeholder="Search this site (Cmd+K)…"
+        placeholder="Search the Lab…"
         bind:value={query}
         class="cmdk__input"
         autocomplete="off"
@@ -112,7 +120,7 @@
             <li class:cmdk__result--active={i === activeIdx}>
               <a href={r.url} class="cmdk__result">
                 <div class="cmdk__result-title">{r.title}</div>
-                <div class="cmdk__result-excerpt" innerHTML={r.excerpt}></div>
+                <div class="cmdk__result-excerpt">{@html r.excerpt}</div>
               </a>
             </li>
           {/each}
@@ -121,6 +129,8 @@
         <p class="cmdk__empty">No results.</p>
       {:else if !pagefindLoaded}
         <p class="cmdk__empty">Loading search…</p>
+      {:else}
+        <p class="cmdk__empty">Type to search field notes, patterns, blueprints and the governance guide.</p>
       {/if}
     </div>
   </div>
@@ -167,6 +177,8 @@
     from { opacity: 0; transform: translateY(-12px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  .cmdk__input::-webkit-search-cancel-button { filter: grayscale(1); cursor: pointer; }
 
   .cmdk__input {
     width: 100%;
