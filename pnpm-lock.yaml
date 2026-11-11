@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@astrojs/mdx':
         specifier: ^4.3.0
-        version: 4.3.14(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0))
+        version: 4.3.14(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.1))
       '@astrojs/rss':
         specifier: ^4.0.18
         version: 4.0.18
@@ -19,7 +19,7 @@ importers:
         version: 3.7.2
       '@astrojs/svelte':
         specifier: ^7.2.0
-        version: 7.2.5(@types/node@22.19.19)(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0))(svelte@5.55.5)(typescript@5.9.3)(yaml@2.9.0)
+        version: 7.2.5(@types/node@22.19.19)(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.1))(svelte@5.55.5)(typescript@5.9.3)(yaml@2.9.1)
       '@fontsource-variable/fraunces':
         specifier: ^5.2.9
         version: 5.2.9
@@ -31,7 +31,7 @@ importers:
         version: 5.2.7
       astro:
         specifier: ^5.7.0
-        version: 5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0)
+        version: 5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.1)
       d3:
         specifier: ^7.9.0
         version: 7.9.0
@@ -66,6 +66,9 @@ importers:
       vitest:
         specifier: ^2.0.0
         version: 2.1.9(@types/node@22.19.19)
+      yaml:
+        specifier: ^2.9.1
+        version: 2.9.1
 
 packages:
 
@@ -2465,6 +2468,7 @@ packages:
   tsconfck@3.1.6:
     resolution: {integrity: sha512-ks6Vjr/jEw0P1gmOVwutM3B7fWxoWBL2KRDb1JfqGVawBmO5UsvmWOQFGHBPl5yxYz4eERr19E6L7NMv+Fej4w==}
     engines: {node: ^18 || >=20}
+    deprecated: unmaintained
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
@@ -2857,8 +2861,8 @@ packages:
     engines: {node: '>= 14'}
     hasBin: true
 
-  yaml@2.9.0:
-    resolution: {integrity: sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==}
+  yaml@2.9.1:
+    resolution: {integrity: sha512-3NxN8+78OdzbT7C/WjGsyfPAtJaN3FNDsWxv7Y7mcDsT/oOmgW8BpyQQFFBnvZE3j9Y2Sdz1ULFLezL7Eb2yFw==}
     engines: {node: '>= 14.6'}
     hasBin: true
 
@@ -2973,12 +2977,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@4.3.14(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0))':
+  '@astrojs/mdx@4.3.14(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.1))':
     dependencies:
       '@astrojs/markdown-remark': 6.3.11
       '@mdx-js/mdx': 3.1.1
       acorn: 8.16.0
-      astro: 5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0)
+      astro: 5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.1)
       es-module-lexer: 1.7.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -3008,14 +3012,14 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 4.4.3
 
-  '@astrojs/svelte@7.2.5(@types/node@22.19.19)(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0))(svelte@5.55.5)(typescript@5.9.3)(yaml@2.9.0)':
+  '@astrojs/svelte@7.2.5(@types/node@22.19.19)(astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.1))(svelte@5.55.5)(typescript@5.9.3)(yaml@2.9.1)':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0))
-      astro: 5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0)
+      '@sveltejs/vite-plugin-svelte': 5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1))
+      astro: 5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.1)
       svelte: 5.55.5
       svelte2tsx: 0.7.55(svelte@5.55.5)(typescript@5.9.3)
       typescript: 5.9.3
-      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.0)
+      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.1)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -3044,7 +3048,7 @@ snapshots:
 
   '@astrojs/yaml2ts@0.2.3':
     dependencies:
-      yaml: 2.9.0
+      yaml: 2.9.1
 
   '@babel/helper-string-parser@7.27.1': {}
 
@@ -3613,25 +3617,25 @@ snapshots:
     dependencies:
       acorn: 8.16.0
 
-  '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0)))(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0))':
+  '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1)))(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0))
+      '@sveltejs/vite-plugin-svelte': 5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1))
       debug: 4.4.3
       svelte: 5.55.5
-      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.0)
+      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.1)
     transitivePeerDependencies:
       - supports-color
 
-  '@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0))':
+  '@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 4.0.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0)))(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0))
+      '@sveltejs/vite-plugin-svelte-inspector': 4.0.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1)))(svelte@5.55.5)(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1))
       debug: 4.4.3
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.21
       svelte: 5.55.5
-      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.0)
-      vitefu: 1.1.3(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0))
+      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.1)
+      vitefu: 1.1.3(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1))
     transitivePeerDependencies:
       - supports-color
 
@@ -3942,7 +3946,7 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.0):
+  astro@5.18.1(@types/node@22.19.19)(rollup@4.60.3)(typescript@5.9.3)(yaml@2.9.1):
     dependencies:
       '@astrojs/compiler': 2.13.1
       '@astrojs/internal-helpers': 0.7.6
@@ -3999,8 +4003,8 @@ snapshots:
       unist-util-visit: 5.1.0
       unstorage: 1.17.5
       vfile: 6.0.3
-      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.0)
-      vitefu: 1.1.3(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0))
+      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.1)
+      vitefu: 1.1.3(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1))
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
       yocto-spinner: 0.2.3
@@ -5879,7 +5883,7 @@ snapshots:
       '@types/node': 22.19.19
       fsevents: 2.3.3
 
-  vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0):
+  vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.4)
@@ -5890,11 +5894,11 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.19.19
       fsevents: 2.3.3
-      yaml: 2.9.0
+      yaml: 2.9.1
 
-  vitefu@1.1.3(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.0)):
+  vitefu@1.1.3(vite@6.4.2(@types/node@22.19.19)(yaml@2.9.1)):
     optionalDependencies:
-      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.0)
+      vite: 6.4.2(@types/node@22.19.19)(yaml@2.9.1)
 
   vitest@2.1.9(@types/node@22.19.19):
     dependencies:
@@ -6075,7 +6079,7 @@ snapshots:
 
   yaml@2.7.1: {}
 
-  yaml@2.9.0: {}
+  yaml@2.9.1: {}
 
   yargs-parser@21.1.1: {}
 
