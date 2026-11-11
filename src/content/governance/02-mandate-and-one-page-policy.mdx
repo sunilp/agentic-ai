@@ -1,0 +1,167 @@
+---
+dek: "Get one executive to own AI risk, then write a one-page policy whose every line has an owner and a test."
+description: "Step 2 of AI Governance, from Scratch. Get an executive to own AI risk, write down your risk appetite, and publish a one-page AI policy of principles, rules, an owner and a review trigger, with an owner and a test for every line."
+updated: 2026-11-11
+readingTime: 10
+spot: /assets/spots/gov-02.png
+spotCaption: "One sheet under one seal: short enough to quote, and owned by whoever pressed the seal."
+anchors:
+  - { label: The move, anchor: the-move }
+  - { label: How it works, anchor: how-it-works }
+  - { label: How it scales, anchor: how-it-scales }
+  - { label: Deep dive, anchor: deep-dive }
+sources:
+  - title: "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1"
+    url: "https://doi.org/10.6028/NIST.AI.100-1"
+    authors: ["National Institute of Standards and Technology"]
+    year: 2023
+  - title: "ISO/IEC 42001:2023, AI management systems"
+    url: "https://www.iso.org/standard/81230.html"
+    authors: ["ISO/IEC JTC 1/SC 42"]
+    year: 2023
+  - title: "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Articles 4 and 5"
+    url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+    authors: ["European Parliament and Council of the European Union"]
+    year: 2024
+  - title: "Regulation (EU) 2026/1744 (Digital Omnibus on AI), replacing Article 4 of the AI Act"
+    url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj"
+    authors: ["European Parliament and Council of the European Union"]
+    year: 2026
+  - title: "AI Governance Framework v2.0.0: AI policy template"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/templates/ai-policy.md"
+  - title: "AI Governance Framework v2.0.0: acceptable use of AI tools"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/acceptable-use.md"
+  - title: "AI Governance Framework v2.0.0: AI Risk Committee charter template"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/templates/ai-risk-committee-charter.md"
+  - title: "AI Governance Framework v2.0.0: board reporting, AI risk appetite statement"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement"
+  - title: "AI Governance Framework v2.0.0: AI literacy"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/ai-literacy.md"
+  - title: "AI Governance Framework v2.0.0: control register, programme-level controls GV-001 to GV-006"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/governance-operations/control-register.md#programme-level-controls"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture two companies on the same afternoon. At each, an engineer wants to paste a folder of customer emails into an AI tool to try out a summariser.
+
+The first has a twenty-page AI policy. It was approved, announced and filed. The engineer has never opened it. Their manager remembers that it exists. Nobody knows if it allows this. So the engineer decides alone. The emails go in.
+
+The second has a one-page policy. The engineer knows the rule without looking: personal data goes only into tools approved for it. They know whose name is on the page. They know a no from that person holds. The tool isn't on the approved list. So they ask first.
+
+Which company is yours? Ask three engineers to quote one rule from your AI policy and name its owner. Their answers will tell you.
+
+The second company has two things the first lacks: a rule people remember, and an owner whose no holds. This step gets you both. Who owns AI risk where you work? And what goes on the page?
+
+## The move
+
+Do three things, in this order.
+
+1. **Get one executive to own AI risk.** One person, by name, senior enough that their no holds when a sponsor loves the demo. Write the mandate in a few lines: who gave it, what the owner answers for, that they can stop a release, and where disputes go. That shape is the guide's recommendation. NIST's AI RMF asks executive leadership to take responsibility for decisions about the risks of developing and deploying AI systems (GOVERN 2.3). Naming one person is how this guide meets it.
+2. **Write down your risk appetite.** Say how much AI risk you will accept, and where. Without it, your owner's no is just an opinion. NIST leaves the level to you. The AI RMF does not prescribe risk tolerance, and asks you to determine and document yours (MAP 1.5).
+3. **Write the policy on one page, and publish it.** It has four parts: principles, rules, an owner and a review trigger. Beside every line, note who owns it and what would show that someone broke it. Then put it where every engineer can find it.
+
+**The guide's call: one page, one executive owner. A policy nobody can test is a wish.** People follow rules they can quote. A line with an owner and a test can be checked. So its owner finds out when it breaks.
+
+Break the one-page rule only for what a board, a regulator or a certification auditor needs in the approved document. Even then, keep the one page on top.
+
+**Your call.** Take one line from your current policy, or from the one you were about to copy. Write down who owns it. Then write what you would look at to learn that someone broke it.
+
+## How it works
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-02-policy.svg" alt="A one-page AI policy: principles, rules, one owner and a review trigger, each pointing to the step that makes it real." />
+
+Each part points to the step that makes it real.
+
+**Principles.** A few commitments, in your words, each one testable. The framework's [policy template](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/templates/ai-policy.md) offers one for accountability: every AI system has one named business owner who accepts its residual risk. You can test the first half today: ask the register for any system with no business owner. The second half needs a signed acceptance, and Steps 8 and 9 set up that sign-off. "We use AI responsibly" has no test at all. It is a slogan.
+
+**Rules.** What people may and may not do. Prohibited uses never ship: the practices banned by Article 5 of the EU AI Act, plus your own list. Acceptable use covers staff using AI tools: which tools, and which data each may see. Step 4 enforces the rules for systems. It screens out prohibited uses before anyone scores a system, and each tier sets what a system must pass. Staff rules are enforced through the approved tools list and shadow AI detection, and Step 3 starts finding the shadow AI.
+
+**Owner.** One named executive, printed on the page. They own the policy and answer for AI risk across the programme. Below them, each system keeps a business owner who accepts that system's residual risk. Step 8 hands out decision rights by tier, so every decision has one accountable person.
+
+**Review.** A date and a trigger. The framework reviews its policy on a fixed cycle, and again on a material change in regulation, strategy or risk appetite. Add a trigger of your own: the first system of a new kind, such as your first agent with tools. Step 11 runs the review.
+
+Here is a sketch of three lines, with owners taken from the framework's roles:
+
+- *Every AI system has a named business owner.* Owner: AI Risk, which keeps the register. Check: no entry lacks one.
+- *Personal data goes only into AI tools approved for it.* Owner: the CISO, who owns acceptable use. Check: data loss prevention alerts and Security's shadow AI reports.
+- *An agent contacts customers only through an approved workflow.* Owner: the system's business owner. Check: the gateway blocks every other route, and its logs show the blocks.
+
+Two things stay off the page. The first is the risk appetite. The page cites it by approval date, because restated copies drift, as the template warns. The second is the how. The workflow, the control register and the acceptable use standard sit beneath the page, and the page points to them.
+
+Now look at the line you picked. Did you name one person and a check? Keep it. Did you name a committee, or "everyone"? Then it has no owner yet. Would you learn of a breach only after someone was harmed? Then add a check that runs earlier: a register query, a pipeline gate, a log review. Here you only name the check. Later steps build them, and Step 12 does it for your principles. A line left with no owner and no check is a wish, and it comes out. A legal duty is the exception. It stays, and gets an owner first. What survives is short, named and checkable. That is why the page stays at one page.
+
+## How it scales
+
+Both tracks need the same four parts and one named owner. What changes is who signs, and what sits beneath the page.
+
+<Track for="small">
+The CTO owns AI risk, or a founder if you have no CTO. Keep the policy as one file in your repo, with the owner's name at the top. Change it by reviewed pull request.
+
+If you have no board to approve a separate risk appetite, write it at the top of the page in two or three sentences, and keep that as its only copy. Say which kinds of system you won't build yet, and which data never goes to an outside model. The file and the appetite on the page are the guide's recommendations.
+
+A new kind of system triggers a review. Your first agent counts. So does your first model that talks to customers, and your first vendor model that sees personal data.
+</Track>
+
+<Track for="enterprise">
+The board approves the AI risk appetite. In the framework, AI Risk drafts the statement, the Board Risk Committee approves it, and the same Board Risk Committee approves the AI Risk Committee's [charter](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/templates/ai-risk-committee-charter.md). In the template, the CRO chairs the AI Risk Committee and owns the policy. [Acceptable use](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/acceptable-use.md) goes to every employee, and staff attest to it when they join and again at each refresh of the all-staff literacy module.
+
+Your board-approved policy will run past one page. The framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/templates/ai-policy.md) aims for six to ten. Its sections also cover governance bodies, exceptions, incident reporting and, for certification, an ISO/IEC 42001 annex. The guide's call is to make the one page its first page. Publish that page to everyone. The sections behind it serve the approver and the auditor.
+</Track>
+
+<Shortcut quote="We'll copy a long policy from a big company.">
+**Why it's tempting.** It looks complete. It has every heading a board expects, and someone else's lawyers wrote it.
+
+**Why it bites.** Nobody can follow a document they cannot quote, and nobody owns its lines. It names committees you don't have, approvers who don't exist and tools you don't use. The first time a line matters, nobody knows who enforces it.
+
+**The forcing function.** Each policy line names its owner and its test, or it comes out. Run that rule over the copied document. Keep what survives.
+</Shortcut>
+
+<StarterKit n={2} />
+
+<DeepDive>
+
+### Risk appetite statements
+
+A risk appetite statement tells your owner where the line is before a request arrives. The framework's [risk appetite section](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement) suggests six dimensions: deployment scope, vendor dependency, human oversight, incident tolerance, regulatory posture and the balance with innovation.
+
+Some are easier to check than others. A cap on how much of your high- and critical-risk portfolio runs on one model provider can be checked against the register, and a target of zero S1 incidents against the incident log. "We comply with all applicable AI regulation in jurisdictions where we operate" is a posture. It reads well. It gives your owner nothing to decide with. The guide's call is to write each dimension so the register or a log can answer it.
+
+NIST asks for the link. GOVERN 1.3 calls for processes that set the level of risk management activity by your risk tolerance. That is the appetite's job. It says which tiers you will run, and where. In the framework, the governance controls are then calibrated to it, and Step 9's gates apply those controls.
+
+### Acceptable use and prohibited use
+
+Acceptable use governs people using AI tools at work: chat assistants, coding assistants, AI features in software you already pay for. Prohibited use governs what the organisation will build or deploy at all.
+
+The framework separates using from building. Wire an AI tool into an automation that acts in production systems or sends output to customers, and you are building an AI system, so the governance workflow applies. Put that sentence in your rules. It stops a personal shortcut from becoming an unregistered system.
+
+Acceptable use runs on an approved tools list that sets the data classes each tool may see; in the framework, an unapproved tool gets public data only, and new tools are requested through intake. The standard opens with an amnesty. Staff declare the tools they use and anything they built on them. A self-report route stays open after that. The framework's reasoning: finding that use matters more than punishing it.
+
+Prohibited uses stop at the Step 0 screen, before anyone scores them, and the framework allows no exception to that check. Start your list from Article 5 of the EU AI Act. It bans practices such as building facial recognition databases by untargeted scraping of facial images from the internet or CCTV footage. Then add your own.
+
+The framework teaches acceptable use in its all-staff [literacy module](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/operating-model/ai-literacy.md). That module is one of the measures it maps to Article 4 of the AI Act. Article 4 was replaced by the [Digital Omnibus on AI](https://eur-lex.europa.eu/eli/reg/2026/1744/oj), Regulation (EU) 2026/1744. It now requires providers and deployers of AI systems to take measures to support the AI literacy of their staff and others who operate or use AI systems for them. It does not require a guaranteed level of literacy for any individual.
+
+### Principles you can test
+
+The framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/templates/ai-policy.md#3-principles) lists nine principles. It fills in the commitment for five of them (accountability, proportionality, human oversight, lawful use and continual improvement) and leaves you to write fairness, transparency, reliability and safety, and security and privacy. Every row names where the principle is enforced. That column keeps the principles testable.
+
+Write each principle so you can name the evidence of a breach. Take the template's "Humans oversee AI in proportion to its impact." It becomes testable once each tier states the oversight it needs and the register shows which systems have it. A fairness principle becomes testable only when you choose a metric. That is Step 13. Step 12 finishes the job: every principle gets a test and an owner.
+
+### Committee charters and quorum
+
+An enterprise owner uses a committee for decisions that need several senior views at once. The charter makes those decisions valid. In the framework's template, the AI Risk Committee acts under authority delegated by the Board Risk Committee, with the CRO in the chair and the CTO and the heads of model risk, compliance and data science among its voting members. For systems, it approves only critical-risk decisions. High-, medium- and low-risk decisions stay with the roles named for each tier, and reach the committee only when someone escalates them.
+
+Quorum decides whether a decision counts. The framework's default is the chair or deputy chair plus at least half the voting members, and one of those members must be the head of model risk or the head of compliance. A member who sponsors, owns or built a system declares the conflict and does not vote on it. A decision taken without quorum is retaken at a quorate meeting. Drop those rules and a sponsor can approve their own system with friends in the room. The minute will still read like oversight.
+
+### What the standards ask for
+
+GOVERN 1 asks that policies, processes, procedures and practices for mapping, measuring and managing AI risk are in place, transparent and implemented effectively. Its subcategories ask for the characteristics of trustworthy AI to be built into those policies (1.2), and for periodic review that is planned, with its frequency set in advance (1.5). Your principles answer the first. Your review trigger answers the second.
+
+ISO/IEC 42001 puts the AI policy in its Leadership clause, as clause 5.2, next to roles, responsibilities and authorities (5.3). This step pairs the policy with its owner the same way.
+
+</DeepDive>
+
+You now have an owner and a page. The page governs every AI system you build, buy or use. Nobody can yet tell you what those are. Your owner can't say no to a system they've never heard of. Nor can anyone check your rules across systems nobody has found. Step 3 builds the list, so the policy has something to govern.
