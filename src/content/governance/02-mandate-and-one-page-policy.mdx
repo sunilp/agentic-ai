@@ -2,7 +2,7 @@
 dek: "Get one executive to own AI risk, then write a one-page policy whose every line has an owner and a test."
 description: "Step 2 of AI Governance, from Scratch. Get an executive to own AI risk, write down your risk appetite, and publish a one-page AI policy of principles, rules, an owner and a review trigger, with an owner and a test for every line."
 updated: 2026-11-11
-readingTime: 8
+readingTime: 9
 spot: /assets/spots/gov-02.png
 spotCaption: "One sheet under one seal: short enough to quote, and owned by whoever pressed the seal."
 anchors:
@@ -44,6 +44,7 @@ import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
 import StarterKit from '~/components/governance/StarterKit.astro';
 import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
 import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 
 Picture two companies on the same afternoon. At each, an engineer wants to paste customer emails into an AI tool to test a summariser.
@@ -91,6 +92,16 @@ A sketch of three lines, with owners from the framework's roles:
 The how stays off the page, in the standards beneath it: the workflow, [the control register](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/control-register.md#programme-level-controls), acceptable use. In an enterprise, the risk appetite stays off too. The page cites it by approval date, because restated copies drift, as the template warns.
 
 Now look at the line you picked. Did you name a committee, or "everyone"? Then it has no owner yet. Would you learn of a breach only after someone was harmed? Then add a check that runs earlier: a register query, a pipeline gate, a log review. You only name the check here; later steps build it. Lines with neither come out, except legal duties, which stay and get an owner first. What survives is short, named and checkable.
+
+<RunningExample>
+Step 1's assistant drafts replies for a person to edit and send. Three lines of the page already govern it.
+
+- *Every AI system has a named business owner.* Say the head of customer support. They accept its residual risk.
+- *Personal data goes only into AI tools approved for it.* Customer emails are personal data. The model behind the assistant has to be on the approved list for that data before the first real email goes in.
+- *An agent contacts customers only through an approved workflow.* Today a person sends every reply, so this line waits. The day the assistant sends its own replies, it applies.
+
+The mandate adds the fourth thing the team needs to know: who can stop the release.
+</RunningExample>
 
 ## How it scales
 

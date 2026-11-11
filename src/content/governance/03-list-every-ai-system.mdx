@@ -34,6 +34,7 @@ import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
 import StarterKit from '~/components/governance/StarterKit.astro';
 import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
 import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 
 An auditor asks for every AI system you run. You send the ones you know, the models with a budget, an owner and a project code. Then the auditor's own sample turns up three more.
@@ -79,6 +80,29 @@ Match every item to an entry. Each one is a lead until you trace it to something
 On the right, the register feeds Step 4's tiers, Step 8's owners and Step 21's answers to auditors and regulators. The framework makes it the single source for every portfolio number the board sees. Keep no second count.
 
 Now look at your number. If it came from asking around, it counts only what people remember. Bills, consoles and code remember what people forget.
+
+<RunningExample>
+The assistant gets its entry at intake, before anyone builds it. This is how the entry starts, in the framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-inventory-entry.yaml). The names and the date are made up.
+
+```yaml
+system_id: "support-reply-assistant-v0.1"
+name: "Support Reply Assistant"
+entry_type: "ai-system"
+purpose: "Drafts support email replies for a person to edit and send."
+business_unit: "Customer Support"
+owners:
+  business_owner: "Head of Customer Support"
+  product_owner: "Product manager, support tooling"
+  ai_lead: "AI lead, support tooling"
+deployment_status: "proposed"
+risk_tier: "pending"
+dates:
+  registered: "2026-11-11"
+registration_source: "intake"
+```
+
+The entry starts the governance process. It approves nothing. Step 4 replaces `pending` with a tier, and fills in the data classes and the EU AI Act fields.
+</RunningExample>
 
 ## How it scales
 

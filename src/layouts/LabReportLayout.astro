@@ -97,7 +97,7 @@ const collectionRoute: Record<string, string> = {
   /* Section headings are scroll-spy targets for SectionAnchors; keep the
      offset so the sticky TopNav + anchors bar don't cover the heading. */
   .lab-body :global(h2) {
-    scroll-margin-top: 120px;
+    scroll-margin-top: 36px; /* on top of html scroll-padding-top, to clear the sticky section bar too */
   }
 
   .lab-cited-by {

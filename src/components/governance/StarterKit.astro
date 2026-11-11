@@ -1,11 +1,19 @@
 ---
-import { stepByN, kitUrl, FRAMEWORK_TAG, FRAMEWORK_REPO } from '~/data/governance-path';
+import { stepByN, kitUrl, kitLabel, FRAMEWORK_TAG, FRAMEWORK_REPO } from '~/data/governance-path';
 interface Props { n: number }
 const s = stepByN(Astro.props.n);
 if (!s) throw new Error(`no step ${Astro.props.n}`);
+const kind = (p: string) => (p.endsWith('.md') ? 'Markdown' : /\.ya?ml$/.test(p) ? 'YAML' : 'File');
 ---
 <section class="gov-kit" aria-labelledby="starter-kit">
   <h2 id="starter-kit">Starter kit</h2>
   <p class="gov-kit__note">From the open <a href={FRAMEWORK_REPO}>AI governance framework</a>, pinned at {FRAMEWORK_TAG}.</p>
-  <ul>{s.kit.map((p) => <li><a href={kitUrl(p)}><code>{p}</code></a></li>)}</ul>
+  <ul>
+    {s.kit.map((p) => (
+      <li>
+        <a href={kitUrl(p)}>{kitLabel(p)}</a>
+        <span class="gov-kit__meta">{kind(p)} · <code>{p}</code></span>
+      </li>
+    ))}
+  </ul>
 </section>

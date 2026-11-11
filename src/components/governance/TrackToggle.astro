@@ -1,5 +1,9 @@
 ---
-/** Page-wide Small team / Enterprise switch. Works without JS (CSS :has); JS only remembers the choice. */
+/**
+ * Page-wide Small team / Enterprise switch. Works without JS (CSS :has); JS only remembers the choice.
+ * The site uses client-side page transitions, and an inline script identical to one on the previous
+ * page is not run again after a swap. So the restore runs on astro:after-swap as well as on first load.
+ */
 ---
 <div class="track-toggle" role="radiogroup" aria-label="Show the guide for">
   <input type="radio" name="gov-track" id="track-small" value="small" />
@@ -10,13 +14,20 @@
 <script is:inline>
   (function () {
     var KEY = 'gov-track';
-    try {
-      var saved = localStorage.getItem(KEY);
-      if (saved === 'small' || saved === 'enterprise') {
-        var el = document.getElementById('track-' + saved);
-        if (el) el.checked = true;
-      }
-    } catch (e) {}
+    function restore() {
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved === 'small' || saved === 'enterprise') {
+          var el = document.getElementById('track-' + saved);
+          if (el) el.checked = true;
+        }
+      } catch (e) {}
+    }
+    restore();
+    if (window.__govTrackBound) return;
+    window.__govTrackBound = true;
+    document.addEventListener('astro:after-swap', restore);
+    document.addEventListener('astro:page-load', restore);
     document.addEventListener('change', function (e) {
       var t = e.target;
       if (t && t.name === 'gov-track') {

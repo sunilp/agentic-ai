@@ -2,7 +2,7 @@
 dek: "Screen out the uses you will never allow, score every other system by one rule, and let its tier decide what it must pass."
 description: "Step 4 of AI Governance, from Scratch. Ask whether a use should be AI at all, screen it against prohibited practices, score five risk dimensions where the highest wins, apply overrides that only raise, and let the tier set approval, validation and review."
 updated: 2026-11-11
-readingTime: 9
+readingTime: 10
 spot: /assets/spots/gov-04.png
 spotCaption: "The weakest link decides what the chain can bear, however strong the other four."
 anchors:
@@ -40,6 +40,7 @@ import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
 import StarterKit from '~/components/governance/StarterKit.astro';
 import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
 import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
 import TierExamples from '~/components/governance/TierExamples.astro';
 import TierRequirements from '~/components/governance/TierRequirements.astro';
@@ -68,6 +69,8 @@ Everything that passes gets a tier, by one rule:
 
 Break it in one direction only: an approver can hold a system to a stricter tier's bar, never a looser one.
 
+These defaults are strict on purpose. Every AI agent is at least T2, and personal data in a prompt scores Critical. The framework was written for regulated industries, and its floors carry that risk appetite. NIST leaves risk tolerance to each organisation (MAP 1.5). If yours differs, change the matrix in the open, for every system, and record who approved the change. Never bend it for one system.
+
 ## How it works
 
 <ArchitectureDiagram wide src="/assets/diagrams/gov-04-tiering.svg" alt="Tiering: a prohibited-use screen, five scored dimensions, the highest wins, overrides only raise, the approver may raise but never lower." />
@@ -80,7 +83,7 @@ Overrides are yes-or-no questions. Does it directly influence a credit decision?
 
 <TierExamples />
 
-Both of your requests have a twin in the table. The knowledge search records Medium at most and no override, so it is T3, and a team lead approves it. That Medium on model dependency has to be earned. The search runs on a vendor API, and the matrix's [level text](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/risk-classification/genai-risk-matrix.md#dimension-5-third-party-model-dependency) allows Medium only because the business owner recorded that an outage is tolerable and manual search will do. Without that record it scores High, and the system is T2. The credit model scores Critical on four dimensions, so the AI Risk Committee approves it. The credit model waits for its T1 evidence. The wiki assistant never waits for that committee. At T3 it needs nobody outside the team.
+Both of your requests have a twin in the table. The knowledge search records Medium at most and no override, so it is T3, and a team lead approves it. That Medium on model dependency has to be earned. The search runs on a vendor API, and the matrix's [level text](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/risk-classification/genai-risk-matrix.md#dimension-5-third-party-model-dependency) allows Medium only because the business owner recorded that an outage is tolerable and manual search will do. Without that record it scores High, and the system is T2. The credit model scores Critical on four dimensions, so the AI Risk Committee approves it. The credit model waits for its T1 evidence. The wiki assistant never waits for that committee. At T3 its approvals stay with the team lead and the business owner, who co-signs the deployment. Two things still come from outside the build team: a red-teamer, and AI Risk's simplified vendor assessment, because the search calls a vendor API.
 
 The [agentic research assistant](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/examples/agentic-research-assistant/risk-assessment.md) shows the last arrow. Its highest dimensions are High, which gives T2. Override 6 puts every agent at T2 or above, so it changes nothing. The AI Risk Committee then raised the pilot to T1, and recorded why. It sends confidential research data to an external vendor API, plans and runs multi-step tool use, and feeds research distributed under MiFID II.
 
@@ -90,6 +93,36 @@ Here is what the tier changes.
 
 One field in your register now decides who approves a system, who validates it and when it is reviewed again.
 
+<RunningExample>
+Score the assistant from Step 3 on the GenAI matrix.
+
+- **Hallucination severity: Medium.** A trained support agent checks every draft against the customer's case and corrects it before it goes. A wrong draft costs time, and it is caught.
+- **Data exposure risk: Critical.** Customer emails carry personal data, and they go into the prompt.
+- **Prompt injection susceptibility: High.** A customer can write anything in an email. The assistant only drafts.
+- **Output controllability: Medium.** That check is a qualified person reviewing each output before use. A skim would score High.
+- **Third-party model dependency: High.** It runs on a vendor API, customers receive the replies, and the only fallback is agents writing by hand.
+
+The highest score is Critical, so the assistant is T1.
+
+Now the overrides. Assume the vendor keeps no data, the endpoint is in the right region, a DPA is signed and personal data is cut down before each call. With those four safeguards, override item 8 sets a minimum of T2, which changes nothing here. Miss one, and item 3 would make the assistant T1 by itself.
+
+The AI Risk Committee approves the risk assessment, and Model Risk Management validates the system. The entry from Step 3 gains its tier:
+
+```yaml
+risk_tier: "T1"
+tier_basis: "Data exposure risk: Critical"
+data:
+  classes: ["personal-data"]
+human_oversight: "human-in-the-loop"
+```
+
+The same assessment fills in the entry's EU AI Act fields.
+
+That is a heavy bar for a drafting tool. It follows from one strict default: personal data in a prompt scores Critical.
+
+Now the team wants the assistant to send replies itself. Output controllability becomes Critical, and override item 2 applies, because customers get content no person reviewed. The tier is still T1. The change is material, so the assessment runs again and goes back to the committee with new evidence.
+</RunningExample>
+
 ## How it scales
 
 Size decides who prepares the assessment and who signs it.
@@ -97,7 +130,7 @@ Size decides who prepares the assessment and who signs it.
 <Track for="small">
 Have your team lead score each system. The framework lets a team lead hold the product owner's role, which prepares the assessment.
 
-Your T3 and T4 systems take the framework's [fast lane](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4): the same stages, less evidence, no committee, and the team lead's sign-off. Any override puts a system at T2 or above, outside the fast lane.
+Your T3 and T4 systems take the framework's [fast lane](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4): the same stages, less evidence, no committee, and the team lead's sign-off. At T3 the business owner co-signs the deployment, and the red team comes from outside the build team. Any override puts a system at T2 or above, outside the fast lane.
 
 A [small team](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#small-teams) can't govern a T1 or T2 system on its own. Approval and validation come from outside it: AI Risk and a second-line validator at T2, the AI Risk Committee and Model Risk Management at T1. The framework assumes a second line, and another first-line team doesn't meet its T1 and T2 validation rule. If your company has none, the guide's call is to name a risk or compliance owner outside the building team to play that part before your first T2 system arrives, and book them at intake.
 </Track>
@@ -147,6 +180,16 @@ Two of the standard's eight positions are the Step 0 screen and the simpler-meth
 A team that thinks a position shouldn't apply takes its case to the tier approver, who decides and records it. Two can't be set aside at all: the prohibited-use screen, and the kill switch in the no-undo position.
 
 Your no-list also grows with the law. From 2 December 2026, the [Digital Omnibus on AI](https://eur-lex.europa.eu/eli/reg/2026/1744/oj) adds two practices to Article 5: AI systems that generate intimate imagery of an identifiable person without their consent, and systems that generate child sexual abuse material. Check the safeguards of every image and video tool you run.
+
+### Tier, legal class and residual risk
+
+Three things get confused, and the register entry keeps them apart.
+
+**The tier is yours.** T1 to T4 says which reviews, approvals and controls your organisation requires.
+
+**The legal class comes from the law and your role under it.** The EU AI Act asks whether you are a provider or a deployer, and whether the use falls under an Annex III point. The entry records both beside the tier. The two are set by different rules, so check each one. The support assistant is T1 here. Whether the Act treats it as high-risk is a separate question, answered on its entry.
+
+**Residual risk is what is left once the controls run.** The business owner accepts it by name. The tier sets the controls. It does not say how much risk remains after them.
 
 ### The aggregate score
 

@@ -17,6 +17,14 @@
 @import './reset.css';
 @import './prose.css';
 
+/* In-page links land below the sticky header (72px at desktop widths; it is static at 1000px and below). */
+html { scroll-padding-top: 92px; }
+@media (max-width: 1000px) {
+  html { scroll-padding-top: 16px; }
+  /* Governance step pages keep a sticky step bar on narrow screens. */
+  html:has(.gov-bar) { scroll-padding-top: 60px; }
+}
+
 /* Baseline element styles */
 
 h1 {

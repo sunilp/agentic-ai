@@ -4,6 +4,7 @@ import Track from './Track.astro';
 interface Props { n: number }
 const s = stepByN(Astro.props.n);
 if (!s) throw new Error(`no step ${Astro.props.n}`);
+const se = s.session;
 ---
 <section class="gov-check" aria-label="Done when">
   <p class="gov-check__line">
@@ -16,5 +17,31 @@ if (!s) throw new Error(`no step ${Astro.props.n}`);
     </>
   ) : (
     <p class="gov-check__done"><b>Done when</b> {s.doneWhen}</p>
+  )}
+  {s.keptWhen && (s.keptWhenSmall ? (
+    <>
+      <Track for="enterprise"><p class="gov-check__kept"><b>Stays done when</b> {s.keptWhen}</p></Track>
+      <Track for="small"><p class="gov-check__kept"><b>Stays done when</b> {s.keptWhenSmall}</p></Track>
+    </>
+  ) : (
+    <p class="gov-check__kept"><b>Stays done when</b> {s.keptWhen}</p>
+  ))}
+  {se && (
+    <dl class="gov-check__session">
+      <div>
+        <dt>Lead</dt>
+        {se.leadSmall ? (
+          <><Track for="enterprise"><dd>{se.lead}</dd></Track><Track for="small"><dd>{se.leadSmall}</dd></Track></>
+        ) : <dd>{se.lead}</dd>}
+      </div>
+      <div>
+        <dt>With</dt>
+        {se.withSmall ? (
+          <><Track for="enterprise"><dd>{se.with}</dd></Track><Track for="small"><dd>{se.withSmall}</dd></Track></>
+        ) : <dd>{se.with}</dd>}
+      </div>
+      <div><dt>Bring</dt><dd>{se.bring}</dd></div>
+      <div><dt>Leave with</dt><dd>{se.leave}</dd></div>
+    </dl>
   )}
 </section>

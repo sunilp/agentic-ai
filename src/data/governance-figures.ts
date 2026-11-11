@@ -3,7 +3,7 @@ export type Ref = number | string; // numbers are step references, strings are p
 
 export const HOURGLASS = {
   above: { title: 'EVERYTHING YOU ANSWER TO', sub: 'EU AI Act · ISO/IEC 42001 · NIST AI RMF · SR 26-2 · board · customers' },
-  upper: { title: 'Principles and policy, mapped in once', refs: [2, ' · ', 12, ' to ', 16, ' · ', 21] as Ref[] },
+  upper: { title: 'Principles and policy, mapped to one control set', refs: [2, ' · ', 12, ' to ', 16, ' · ', 21] as Ref[] },
   waist: {
     title: 'THE NARROW WAIST',
     lines: ['register · tier · controls', 'evidence pack · platform'],

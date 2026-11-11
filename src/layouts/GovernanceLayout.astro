@@ -12,7 +12,7 @@ import ChecklistLine from '~/components/governance/ChecklistLine.astro';
 import GoDeeper from '~/components/governance/GoDeeper.astro';
 import GovNav from '~/components/governance/GovNav.astro';
 import GovernanceMachine from '~/components/governance/GovernanceMachine.svelte';
-import { STEPS, stepBySlug, neighbours, PART_LABEL, writtenHref } from '~/data/governance-path';
+import { STEPS, RELEASE, stepBySlug, neighbours, PART_LABEL, writtenHref, kitUrl, kitLabel } from '~/data/governance-path';
 
 interface Props { entry: CollectionEntry<'governance'> }
 const { entry } = Astro.props;
@@ -34,6 +34,11 @@ const total = STEPS.length;
 const partName = step.part === 'Close' ? 'CLOSE' : `PART ${step.part} · ${PART_LABEL[step.part].toUpperCase()}`;
 const ogImage = d.spot ?? '/assets/og/governance.png';
 const anchors = d.anchors ?? [];
+// On the last published step, show what the reader has so far and where to go until the next one lands.
+const atFrontier = !!next && !href(next.n);
+const soFar = atFrontier ? STEPS.filter((s) => s.n <= step.n && href(s.n)) : [];
+const MEANWHILE = ['005-ownership-and-decision-rights', '006-the-guardrail-lifecycle', '007-telemetry-audit-and-review'];
+const meanwhile = atFrontier ? MEANWHILE.flatMap((id) => architecture.filter((a) => a.id === id)) : [];
 ---
 <PageLayout
   title={`${step.title}, Governance`}
@@ -65,6 +70,7 @@ const anchors = d.anchors ?? [];
       <div class="gov-track-row gov-track-row--step">
         <span class="gov-track-row__label" aria-hidden="true">Show the guide for a</span>
         <TrackToggle />
+        <span class="gov-track-row__note">Your choice changes the guidance in every step, and stays set as you move through the guide.</span>
       </div>
 
       {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
@@ -92,6 +98,33 @@ const anchors = d.anchors ?? [];
       )}
       <Sources items={d.sources} />
 
+      {atFrontier && (
+        <section class="gov-sofar" aria-labelledby="so-far">
+          <h2 id="so-far">What you have so far</h2>
+          <p>Steps {soFar[0].n} to {soFar[soFar.length - 1].n} set {RELEASE.covers}. That is a foundation you can use now. {RELEASE.next} is next.</p>
+          <ol>
+            {soFar.map((s) => (
+              <li>
+                <span class="gov-sofar__n">{s.n}</span>
+                <span>
+                  <a href={href(s.n)!}>{s.short}</a>
+                  {s.doneWhenSmall ? (
+                    <><Track for="enterprise"><span class="gov-sofar__d">{s.doneWhen}</span></Track><Track for="small"><span class="gov-sofar__d">{s.doneWhenSmall}</span></Track></>
+                  ) : <span class="gov-sofar__d">{s.doneWhen}</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+          {meanwhile.length > 0 && (
+            <p class="gov-sofar__more">
+              Until the next steps are written up, the engineering side of owners, gates and evidence is in Architecture:{' '}
+              {meanwhile.map((a, i) => <>{i > 0 && (i === meanwhile.length - 1 ? ' and ' : ', ')}<a href={`/architecture/${a.id}/`}>{a.data.title}</a></>)}.
+              Every later step's call and starting files are on <a href="/governance/#one-sheet">the one-sheet</a>.
+            </p>
+          )}
+        </section>
+      )}
+
       <nav class="gov-next" aria-label="Steps">
         {next && (href(next.n) ? (
           <a class="gov-next__card" href={href(next.n)!}>
@@ -111,7 +144,9 @@ const anchors = d.anchors ?? [];
           <div class="gov-next__card gov-next__card--coming">
             <span class="gov-next__k">Next · Step {next.n} of {total} · Coming</span>
             <span class="gov-next__t">{next.title}</span>
-            <span class="gov-next__d">This step is not published yet. The full path, with what done looks like for each step, is on the guide's front page.</span>
+            <span class="gov-next__d"><b>Done when</b> {next.doneWhen}</span>
+            <span class="gov-next__d"><b>The call</b> {next.call}</span>
+            <span class="gov-next__d"><b>Start from</b> {next.kit.map((k, i) => <>{i > 0 && ', '}<a href={kitUrl(k)}>{kitLabel(k)}</a></>)}</span>
           </div>
         ))}
         <p class="gov-next__links">
