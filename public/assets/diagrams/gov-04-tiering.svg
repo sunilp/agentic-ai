@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 230" role="img" aria-label="Tiering: a prohibited-use screen, five scored dimensions, the highest wins, overrides only raise, the approver may raise but never lower."><rect width="880" height="230" fill="#fff"/>
+<rect x="10" y="30" width="140" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="80.0" y="56.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">STEP 0</text>
+<text x="80.0" y="71.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">prohibited use?</text>
+<rect x="180" y="30" width="170" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="265.0" y="56.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">SCORE</text>
+<text x="265.0" y="71.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">five dimensions</text>
+<rect x="380" y="30" width="140" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="450.0" y="56.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">HIGHEST WINS</text>
+<text x="450.0" y="71.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">not the sum</text>
+<rect x="550" y="30" width="150" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="625.0" y="56.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">OVERRIDES</text>
+<text x="625.0" y="71.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">can only raise</text>
+<rect x="730" y="30" width="140" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="800.0" y="56.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">TIER</text>
+<text x="800.0" y="71.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">T1 · T2 · T3 · T4</text>
+<path d="M150 58 L178 58" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M171.6 60.7 L178 58 L171.6 55.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M350 58 L378 58" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M371.6 60.7 L378 58 L371.6 55.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M520 58 L548 58" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M541.6 60.7 L548 58 L541.6 55.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M700 58 L728 58" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M721.6 60.7 L728 58 L721.6 55.3" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M80 86 L80 148" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M77.3 141.6 L80 148 L82.7 141.6" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="10" y="150" width="140" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="80.0" y="176.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">REJECTED</text>
+<text x="80.0" y="191.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">not tiered</text>
+<rect x="670" y="150" width="200" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="770.0" y="176.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">APPROVER</text>
+<text x="770.0" y="191.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">may raise, never lower</text>
+<path d="M800 150 L800 88" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M802.7 94.4 L800 88 L797.3 94.4" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<text x="88" y="121" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">yes</text>
+<text x="164" y="51" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">no</text>
+</svg>

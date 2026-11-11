@@ -1,0 +1,16 @@
+---
+import policy from '~/data/governance-policy.json';
+import { TIER_ROWS as ROWS } from '~/lib/governance-tier';
+const TIERS = ['T1', 'T2', 'T3', 'T4'] as const;
+---
+<div class="gov-table-wrap">
+  <table class="gov-table">
+    <caption>What the tier changes ({policy.source})</caption>
+    <thead><tr><th scope="col"></th>{TIERS.map((t) => <th scope="col">{t} · {policy.tiers[t].name}</th>)}</tr></thead>
+    <tbody>
+      {ROWS.map(([key, label]) => (
+        <tr><th scope="row">{label}</th>{TIERS.map((t) => <td>{policy.tiers[t][key]}</td>)}</tr>
+      ))}
+    </tbody>
+  </table>
+</div>

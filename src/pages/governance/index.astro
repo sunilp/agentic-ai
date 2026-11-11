@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+import '~/styles/governance.css';
+import PageLayout from '~/layouts/PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
+import Spot from '~/components/universal/Spot.astro';
+import TrackToggle from '~/components/governance/TrackToggle.astro';
+import Hourglass from '~/components/governance/Hourglass.astro';
+import Track from '~/components/governance/Track.astro';
+import GovernanceMachine from '~/components/governance/GovernanceMachine.svelte';
+import { PARTS, PART_LABEL, stepsInPart, writtenHref } from '~/data/governance-path';
+
+const written = (await getCollection('governance')).filter((e) => e.data.status !== 'draft').map((e) => e.id);
+const href = writtenHref(new Set(written));
+
+const CALLS: [string, string][] = [
+  ['Govern by tier, not by project.', 'Medium- and low-risk systems take a fast lane. Effort goes where the risk is.'],
+  ['The register is the gate.', 'No entry, no production credential. Registration hands back something the team needs.'],
+  ['Some uses get a no.', 'Write the prohibited list before the first request arrives.'],
+  ["If it can't block a release, it isn't a control.", 'Evidence that runs in the pipeline beats a signature on a form.'],
+  ['Builders never validate their own high-risk systems.', 'Book the independent validator at intake.'],
+  ['Agents get identity and least authority before they get tools.', 'Authority is granted per task and expires.'],
+  ['Controls live in the platform. Committees handle exceptions.', 'A committee that reviews every change becomes the queue engineers route around.'],
+  ['Thank people for near-misses.', 'A culture that hides problems defeats every control above.'],
+];
+---
+<PageLayout
+  title="AI Governance, from Scratch"
+  description="One opinionated path from no AI governance to running it across many teams: the register, risk tiers, gates, evidence, culture, Responsible AI, agents and regulators."
+  ogImage="/assets/og/governance.png"
+  currentNav="Governance"
+>
+  <Reader>
+    <ArticleHeader
+      rubric="AGENT ENGINEERING LAB · GUIDE"
+      title="AI Governance, from Scratch"
+      dek="How to stand up AI governance in an organisation that has none, and make it the reason your teams can move fast. One path, twenty-two steps, in this order."
+    />
+    <TrackToggle />
+    <Spot
+      src="/assets/spots/governance-hub.png"
+      alt="Seen from behind, a cyclist leans into a bend on a mountain road; the outer wall at that bend is brick red and the open road winds on into the valley."
+      caption="The wall is what lets the rider go fast."
+      eager
+    />
+
+    <section aria-labelledby="how-to-use">
+      <h2 id="how-to-use">How to use this guide</h2>
+      <ol class="gov-rules">
+        <li><b>Start at Step 1. Everyone does.</b> Each step opens with what done looks like. If you can show it, move on. If you can only describe it, you are not done.</li>
+        <li><b>Do the steps in order.</b> Each one rests on the ones before it. A gate without a register has nothing to stop.</li>
+        <li><b>Don't skip Part II.</b> It is the reason the rest gets followed instead of routed around.</li>
+        <li><b>Read the deep dive when the step is real for you.</b> The top half of a step gets it working. The deep dive is for the edge cases you meet later.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="one-picture">
+      <h2 id="one-picture">Governance in one picture</h2>
+      <p class="gov-hub-sub">Everything you answer to keeps growing above. Every team, system and agent keeps growing below. Wire each rule to each team and the connections multiply. Put one narrow waist between them and they add.</p>
+      <Hourglass written={written} caption="The narrow waist: one register, one tiering, one control set, one evidence pack, built into the platform." />
+    </section>
+
+    <section aria-labelledby="the-path">
+      <h2 id="the-path">The path</h2>
+      <p class="gov-hub-sub">Each step adds one part. Select a part to see what it rests on, what rests on it, and the patterns it puts into play.</p>
+      <div class="gov-figure gov-figure--wide gov-figure--machine">
+        <GovernanceMachine client:visible initial={1} mode="explore" written={written} interactive />
+        <p class="gov-figure__caption">Brick outline and tint: the selected step. Solid line: what it rests on. Dashed outline: what rests on it. Pattern colours follow the catalogue: blue capability, brick control, gold evidence; a diamond marks an anti-pattern.</p>
+      </div>
+      {PARTS.map((part) => (
+        <div class="gov-part">
+          <h3 class="gov-part__name">{part === 'Close' ? 'Close' : `Part ${part} · ${PART_LABEL[part]}`}</h3>
+          <ol class="gov-steps">
+            {stepsInPart(part).map((s) => (
+              <li class="gov-step">
+                <span class="gov-step__n">{s.n}</span>
+                <div>
+                  <p class="gov-step__t">{href(s.n) ? <a href={href(s.n)!}>{s.title}</a> : s.title}</p>
+                  <p class="gov-step__check"><span>{s.n} {s.checklist.item}</span><span class="gov-step__dots" aria-hidden="true"></span><span class="gov-step__resp">{s.checklist.response}</span></p>
+                  {s.doneWhenSmall ? (
+                    <>
+                      <Track for="enterprise"><p class="gov-step__done"><b>Done when</b> {s.doneWhen}</p></Track>
+                      <Track for="small"><p class="gov-step__done"><b>Done when</b> {s.doneWhenSmall}</p></Track>
+                    </>
+                  ) : (
+                    <p class="gov-step__done"><b>Done when</b> {s.doneWhen}</p>
+                  )}
+                  <p class="gov-step__deep">Deep dive: {s.deepDive.join(' · ')}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </section>
+
+    <section aria-labelledby="the-calls">
+      <h2 id="the-calls">The calls this guide makes</h2>
+      <p class="gov-hub-sub">Each step argues for its call and says when to break it.</p>
+      <dl class="gov-calls">{CALLS.map(([t, b]) => <div><dt>{t}</dt><dd>{b}</dd></div>)}</dl>
+    </section>
+  </Reader>
+</PageLayout>

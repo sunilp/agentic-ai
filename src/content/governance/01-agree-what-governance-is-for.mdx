@@ -1,0 +1,156 @@
+---
+dek: "Before a policy, a committee or a single form, agree what governance is for: deciding what ships, naming who decides, and keeping the evidence behind each decision."
+description: "Step 1 of AI Governance, from Scratch. Define governance as decisions, owners and evidence, agree that it exists to make safe delivery faster, and see where it is decided and where it is enforced."
+updated: 2026-11-11
+readingTime: 8
+spot: /assets/spots/gov-01.png
+spotCaption: "A small rudder lets a large ship run at full sail into open water."
+anchors:
+  - { label: The move, anchor: the-move }
+  - { label: How it works, anchor: how-it-works }
+  - { label: How it scales, anchor: how-it-scales }
+  - { label: Deep dive, anchor: deep-dive }
+sources:
+  - title: "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1"
+    url: "https://doi.org/10.6028/NIST.AI.100-1"
+    authors: ["National Institute of Standards and Technology"]
+    year: 2023
+  - title: "NIST AI Risk Management Framework (AI RMF 1.0 is being revised)"
+    url: "https://www.nist.gov/itl/ai-risk-management-framework"
+    authors: ["National Institute of Standards and Technology"]
+  - title: "ISO/IEC 42001:2023, AI management systems"
+    url: "https://www.iso.org/standard/81230.html"
+    authors: ["ISO/IEC JTC 1/SC 42"]
+    year: 2023
+  - title: "AI Governance Framework v2.1.0: README"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/README.md"
+  - title: "AI Governance Framework v2.1.0: Start Here, small teams"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/START-HERE.md#small-teams"
+  - title: "AI Governance Framework v2.1.0: roles, approvals by tier and accountability principles"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/roles-responsibilities.md"
+  - title: "AI Governance Framework v2.1.0: board reporting, AI risk appetite statement"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement"
+  - title: "AI Governance Framework v2.1.0: AI inventory standard (RA-006)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/ai-inventory.md"
+  - title: "AI Governance Framework v2.1.0: retroactive governance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/governance-workflow.md#retroactive-governance"
+  - title: "AI Governance Framework v2.1.0: NIST AI RMF mapping"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/compliance/nist-ai-rmf-mapping.md"
+  - title: "AI Governance Framework v2.1.0: ISO/IEC 42001 mapping"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/compliance/iso-42001-mapping.md"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import Diamond from '~/components/governance/Diamond.astro';
+
+Picture the meeting where the demo lands. A team has put a language model behind the customer support inbox, and its drafts for routine questions need almost no editing. Then someone senior asks: can we ship it on Friday?
+
+Nobody answers. Nobody in the room knows who is allowed to say no. The engineer holds the API key and the product lead owns the roadmap. Risk wasn't invited. Legal will hear about it when a customer complains.
+
+The meeting can go two ways. The system ships on Friday, owned by whoever pressed deploy, or it stalls while people hunt for someone with the authority to approve it. If nobody can say no, nobody can say yes with any confidence either.
+
+So settle one question before you write a policy or form a committee. What is governance for?
+
+## The move
+
+Define governance as three things, and write each one down.
+
+- **Decisions.** What gets built, what ships, and what has to stop.
+- **Owners.** Who makes each decision, by name.
+- **Evidence.** What each decision rested on, and what shows later that it was right.
+
+You make these decisions per system. A system here means the model with its prompts, data, tools and permissions.
+
+Everything else you build serves one of the three. A policy records decisions. A register and a list of approvers record owners. Evaluations, logs and sign-offs are evidence. A meeting that serves none of them can go.
+
+**The guide's call: governance exists to make safe delivery faster.** The speed comes from knowing the answers before anyone asks. A team that knows who decides, and what evidence they need, produces it while it builds. A team that doesn't finds the approver late. Then it waits.
+
+Some uses must never ship, however fast you could clear them. Speed is the wrong measure there, and Step 4 sets the list of uses that get a no.
+
+Write the three definitions and the call in a short paragraph. Agree it with your sponsor. This step is done when your sponsor can explain, in a minute, why governance makes delivery faster. First, one test for you.
+
+**Your call.** Before you read on, write down who in your organisation could stop a model from shipping today. A name, a role or a forum. Keep it in front of you.
+
+## How it works
+
+<Diamond caption="Decided at one point, enforced at one point." />
+
+The diamond is the guide's picture of governance. The top tip is accountability. In an enterprise that is the board. It sets how much AI risk the organisation will accept, and it answers for the result. Direction flows down from it: the policy, the principles, and the risk tiers that turn appetite into rules a team can follow.
+
+The bottom tip is the call, the moment a model or agent acts. A credit model returns a score. An agent calls a tool that changes a record. Every decision above has to show up here: a release the pipeline allowed, a credential the system holds, a tool it was granted, a switch that can turn it off. A decision that never shows up at the call is advice.
+
+Your teams work in the wide middle, with owners, gates, evidence and the paved road. Platform and model controls sit below them. Evidence flows back up the right side. Evaluation results, approvals, logs and incident reports tell the top whether its decisions held.
+
+Now look at the name you wrote down. Whoever can stop a model needs two lines through the diamond.
+
+The first runs up to the top tip. Their authority came from someone accountable, so an executive who loves the demo can't overrule them in the corridor. The second runs down to the call. Their decision switches something real: a release the pipeline blocks, a credential that is withheld, a kill switch that works.
+
+If you wrote "nobody", you have your starting point. A committee that has never heard of the system has no line to the call. The engineer with the API key has no line to the top. They can stop the model, but nobody gave them the right.
+
+Both tips stay narrow on purpose. Accountability sits in one place. Enforcement converges on one moment, the call, even when its mechanisms live in the pipeline, the credential store and the gateway. Between the tips, the middle can be as wide as you need, and each team can work its own way.
+
+## How it scales
+
+The two tips exist at every size. What changes is how many people stand between them.
+
+<Track for="small">
+Name one owner for each system, such as the team lead. Write the decisions in the repo, next to the code: what the system is allowed to do, who approved it, and which evaluation results the approval rested on. A decisions file reviewed like code is the guide's recommendation. The framework leaves the format to you. Your top tip is whoever answers for the company, such as a founder or the CTO.
+
+The framework lets a team of three to five [run a medium- or low-risk system on its own](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/START-HERE.md#small-teams), apart from a few named touchpoints such as a red-teamer from outside the team. A high- or critical-risk system is different. It needs validation and approval from outside the team, so decide now where that independence will come from.
+</Track>
+
+<Track for="enterprise">
+The board approves the risk appetite. In the framework, the AI Risk function drafts the statement and the Board Risk Committee approves it. Two groups hold the middle. An AI Risk Committee, chaired by the CRO, approves the highest-tier systems and their exceptions. First-line teams build and run the systems, and their team leads approve systems in the two lowest tiers.
+
+Step 8 fills in everyone between and gives every decision one accountable person.
+</Track>
+
+<Shortcut quote="We'll add governance once we have something to govern.">
+**Why it's tempting.** Nothing is live yet. Rules for systems that don't exist feel like paperwork, and the team would rather build.
+
+**Why it bites.** The first system sets the precedent. Ship it without an owner, a tier or evidence, and the next team will point to it. By then you are negotiating with a system customers already use. The framework needs a separate path, retroactive governance, for systems that went live first.
+
+**The forcing function.** The first production model credential needs a named owner and a register entry. The framework already requires the entry before development starts (control RA-006). Tying the credential to it is the guide's recommendation, because then nobody has to remember the rule. Step 3 builds the register.
+</Shortcut>
+
+<StarterKit n={1} />
+
+<DeepDive>
+
+### One system, three decisions
+
+Here is the support assistant from the meeting with the three written down. It is a hypothetical, and the roles follow the framework.
+
+- **Build.** The assistant drafts replies for a person to edit and send. It cannot send anything itself. The approver for its risk tier signs that scope, against a risk assessment that records the tier and the reasons.
+- **Ship.** The deployment approver for the tier signs the release, with the evaluation results and review records linked to the approval.
+- **Stop.** A named person in AI operations can switch the assistant off, and watches its monitoring and incident reports.
+
+Then someone wants the assistant to send replies itself. That is a new decision. It goes back to the approver, with new evidence.
+
+The framework gives each decision [exactly one accountable approver per tier](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/roles-responsibilities.md#approvals-by-tier), and for its two highest tiers a verbal approval doesn't count. If you can't write the three lines for your most important system, start there.
+
+### Three things mistaken for governance
+
+**A committee.** A committee is one kind of owner, suited to decisions that need several senior views at once: the highest-risk systems and the exceptions. Ask it to review every change and it becomes the queue your engineers learn to route around. The guide's call is that controls live in the platform and committees handle exceptions.
+
+**A policy document.** A policy sets direction at the top of the diamond. On its own it enforces nothing at the call. A policy nobody can test is a wish, which is why Step 2 keeps yours to one testable page.
+
+**A review queue.** A queue of approvals feels like control because it produces signatures. A signature with no evidence linked to it doesn't show that the required checks passed. Tiers (Step 4) put the waiting where the risk is, and gates that check evidence (Steps 9 and 10) leave a test result behind.
+
+### Where the NIST AI RMF puts Govern
+
+NIST published the AI Risk Management Framework, AI RMF 1.0, in January 2023 as NIST AI 100-1, and says 1.0 is now under revision. It sorts AI risk work into four functions: Govern, Map, Measure and Manage. NIST calls Govern "a cross-cutting function that is infused throughout AI risk management". It also notes that most users would start on Map once Govern's outcomes are in place.
+
+GOVERN 2.3 asks executive leadership to take responsibility for decisions about AI risk. That is the top tip. GOVERN 2.1 asks for documented roles and lines of communication, which are your owners. GOVERN 1.6 asks for a way to inventory AI systems: the register in Step 3. The AI RMF is voluntary. The framework this guide uses maps [all 19 of its Core categories](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/compliance/nist-ai-rmf-mapping.md) to documents and control IDs, at category level, and marks the gaps.
+
+### How ISO/IEC 42001 frames it
+
+ISO/IEC 42001:2023 treats AI governance as a management system. In ISO's description, that is the set of connected parts an organisation uses to set policies and objectives for developing, providing or using AI responsibly, plus the processes that meet them. The standard sets requirements for establishing, implementing, maintaining and continually improving that system.
+
+The framework's [ISO mapping](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/compliance/iso-42001-mapping.md) is candid about its limits. It supplies much of the operational content a management system needs, and says it is not one by itself. Some documents only your organisation can write and approve, starting with the AI policy and the AI Risk Committee charter.
+
+</DeepDive>
+
+You now have a definition and a picture. You don't yet have the person at the top. Your sponsor can explain why governance makes delivery faster, but explaining it is a long way from owning the risk. Without a mandate, nobody can hold the top tip. Every decision below it can be overruled by the next person who likes a demo. Step 2 gets you that mandate, and a one-page policy that says what it covers.

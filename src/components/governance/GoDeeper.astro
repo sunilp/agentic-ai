@@ -1,0 +1,8 @@
+---
+import type { Book } from '~/data/governance-path';
+interface Props { book: Book }
+const { book } = Astro.props;
+---
+<p class="gov-deeper">
+  Go deeper: {book.url ? <a href={book.url}><em>{book.title}</em></a> : <em>{book.title}</em>}{book.url ? '.' : ' (forthcoming).'} {book.note}
+</p>

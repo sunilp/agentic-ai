@@ -1,16 +1,18 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { stepBySlug } from '~/data/governance-path';
 import { bySlug } from '~/data/pattern-language';
 
 export async function GET(context: APIContext) {
-  const [fieldNotes, signal, recipes, labs, architecture, patterns] = await Promise.all([
+  const [fieldNotes, signal, recipes, labs, architecture, patterns, governance] = await Promise.all([
     getCollection('fieldNotes'),
     getCollection('signal'),
     getCollection('recipes'),
     getCollection('labs'),
     getCollection('architecture'),
     getCollection('patterns'),
+    getCollection('governance'),
   ]);
 
   const items = [
@@ -63,6 +65,18 @@ export async function GET(context: APIContext) {
           link: `/patterns/${e.id}/`,
           categories: ['Patterns'],
         };
+      }),
+    ...governance
+      .filter((e) => e.data.status !== 'draft')
+      .flatMap((e) => {
+        const s = stepBySlug(e.id);
+        return s ? [{
+          title: `Governance, Step ${s.n}: ${s.title}`,
+          pubDate: e.data.updated,
+          description: e.data.description,
+          link: `/governance/${e.id}/`,
+          categories: ['Governance'],
+        }] : [];
       }),
   ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 

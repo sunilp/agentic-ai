@@ -1,0 +1,9 @@
+---
+interface Props { quote: string }
+const { quote } = Astro.props;
+---
+<aside class="gov-shortcut" aria-label="The shortcut">
+  <p class="gov-shortcut__k">The shortcut</p>
+  <p class="gov-shortcut__q">“{quote}”</p>
+  <div class="gov-shortcut__body"><slot /></div>
+</aside>

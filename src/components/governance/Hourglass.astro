@@ -1,0 +1,39 @@
+---
+import { HOURGLASS as H } from '~/data/governance-figures';
+import { renderRefs } from '~/lib/governance-refs';
+import { writtenHref } from '~/data/governance-path';
+
+interface Props { written: string[]; caption?: string }
+const { written, caption } = Astro.props;
+const href = writtenHref(new Set(written));
+const refs = (r: (number | string)[]) => renderRefs(r, href);
+---
+<figure class="gov-figure gov-figure--wide">
+  <svg class="gov-svg" viewBox="0 0 880 440" role="img" aria-labelledby="hourglass-title">
+    <title id="hourglass-title">The narrow waist: everything you answer to above, every team and system below, and one register, tiering, control set and evidence pack between them.</title>
+    <path class="shape" d="M70 20 L810 20 L700 95 L180 95 Z" />
+    <path class="shape" d="M180 95 L700 95 L560 175 L320 175 Z" />
+    <path class="shape shape--brick" d="M320 175 L560 175 L560 255 L320 255 Z" />
+    <path class="shape" d="M320 255 L560 255 L700 335 L180 335 Z" />
+    <path class="shape" d="M180 335 L700 335 L810 420 L70 420 Z" />
+    <g text-anchor="middle">
+      <text class="t-strong" x="440" y="50">{H.above.title}</text>
+      <text class="t-sub" x="440" y="68">{H.above.sub}</text>
+      <text class="t" x="440" y="130">{H.upper.title}</text>
+      <text class="t-sub" x="440" y="146" set:html={refs(H.upper.refs)} />
+      <text class="t-strong t-brick" x="440" y="203">{H.waist.title}</text>
+      <text class="t t-brick" x="440" y="221">{H.waist.lines[0]}</text>
+      <text class="t t-brick" x="440" y="237">{H.waist.lines[1]}</text>
+      <text class="t" x="440" y="290">{H.lower.title}</text>
+      <text class="t-sub" x="440" y="306" set:html={refs(H.lower.refs)} />
+      <text class="t-strong" x="440" y="370">{H.below.title}</text>
+      <text class="t-sub" x="440" y="388" set:html={refs(H.below.refs)} />
+    </g>
+    <text class="t-sub" x="580" y="190" set:html={`<tspan>steps </tspan>${refs(H.waist.refs)}`} />
+    <text class="t-sub" x="60" y="215">{H.sides.left[0]}</text>
+    <text class="t-sub" x="60" y="229">{H.sides.left[1]}</text>
+    <text class="t-sub t-brick" x="800" y="226" text-anchor="end">{H.sides.right[0]}</text>
+    <text class="t-sub t-brick" x="800" y="240" text-anchor="end">{H.sides.right[1]}</text>
+  </svg>
+  {caption && <figcaption class="gov-figure__caption">{caption}</figcaption>}
+</figure>

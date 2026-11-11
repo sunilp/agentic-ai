@@ -1,0 +1,38 @@
+/* The governance machine and its panel. Literal brand colours, as in the Lab's diagrams. */
+.machine { width: 100%; height: auto; display: block; font-family: var(--font-mono); }
+.machine__layer { font-size: 11px; letter-spacing: 0.5px; fill: #6b6b6b; }
+.machine__label { font-size: 11px; fill: #1a1a1a; }
+.machine__part { fill: #fff; stroke: #1a1a1a; stroke-width: 1; }
+.machine__node { transition: opacity 0.2s ease; outline: none; }
+.machine__node.is-selected .machine__part { fill: #f5ece9; stroke: #9b4a3f; stroke-width: 1.8; }
+.machine__node.is-selected .machine__label { fill: #9b4a3f; }
+.machine__node.is-holdsUp .machine__part { stroke-dasharray: 4 3; }
+.machine__node.is-faded, .machine__node.is-future { opacity: 0.28; }
+.machine__node[role='button'], a.machine__node { cursor: pointer; }
+.machine__node:focus-visible .machine__part { stroke: #9b4a3f; stroke-width: 2.2; }
+.machine__halo { fill: none; stroke: #fafaf8; stroke-width: 6; stroke-linecap: round; }
+.machine__link {
+  fill: none; stroke: #9b4a3f; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: machine-draw 0.7s ease-out forwards;
+}
+.machine__port { fill: #9b4a3f; }
+.machine__end { fill: #fafaf8; stroke: #9b4a3f; stroke-width: 1.4; }
+@keyframes machine-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .machine__link { animation: none; stroke-dashoffset: 0; } }
+
+/* One column by default; the panel moves beside the drawing only when the frame is wide enough to keep labels legible. */
+.machine-figure__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-items: start; }
+.machine-figure__drawing { min-width: 0; overflow-x: auto; }
+.machine-figure__drawing .machine { min-width: 720px; }
+@media (min-width: 1240px) { .machine-figure__grid { grid-template-columns: minmax(0, 1fr) 240px; } }
+.machine-panel { border-left: 3px solid #9b4a3f; background: #f5ece9; padding: 12px 14px; }
+.machine-panel__k { font: 500 10px/1.4 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: #6b6b6b; margin: 10px 0 2px; }
+.machine-panel__k:first-child { margin-top: 0; }
+.machine-panel__t { font-family: var(--font-display, Georgia, serif); font-size: 20px; line-height: 1.25; margin: 0 0 4px; }
+.machine-panel__l { font-size: 15px; line-height: 1.45; margin: 0; }
+.machine-panel__chips { list-style: none; padding: 0; margin: 0; }
+.machine-panel__chips li { display: flex; align-items: center; gap: 7px; font-size: 15px; line-height: 1.5; }
+.machine-panel__chips .chip { width: 11px; height: 11px; border-radius: 50%; border: 1px solid #1a1a1a; flex: none; }
+.machine-panel__chips .chip--anti { border-radius: 0; transform: rotate(45deg) scale(0.85); }
+.machine-panel__anti { color: #6b6b6b; font-size: 13px; white-space: nowrap; }
+.machine-panel__open { margin: 12px 0 0; font-family: var(--font-mono); font-size: 12px; }

@@ -1,0 +1,104 @@
+/* ---- Figures (inline SVG) ---- */
+.gov-figure {
+  margin: var(--space-5) 0;
+  padding: var(--space-5);
+  background: var(--paper-bright);
+  border: 1px solid var(--fg-faint);
+  border-radius: var(--radius-md);
+}
+/* Same breakout as ArchitectureDiagram: wide on desktop, pan inside the frame below ~800px. */
+.gov-figure--wide {
+  --wide: min(880px, calc(100vw - 3rem));
+  width: var(--wide);
+  margin-left: calc((100% - var(--wide)) / 2);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+/* The machine takes a wider frame once its panel sits beside the drawing. */
+@media (min-width: 1240px) { .gov-figure--machine { --wide: min(1160px, calc(100vw - 4rem)); } }
+.gov-figure--wide > .gov-svg { min-width: 720px; }
+@media (max-width: 720px) { .gov-figure--wide { padding: var(--space-3); } }
+.gov-figure__caption {
+  position: sticky; left: 0; margin-top: var(--space-3); text-align: center;
+  font-family: var(--font-mono); font-size: var(--meta-2); color: var(--fg-light);
+}
+.gov-svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); }
+.gov-svg .shape { fill: #fff; stroke: #1a1a1a; stroke-width: 1; }
+.gov-svg .shape--brick { fill: #f5ece9; stroke: #9b4a3f; stroke-width: 1.6; }
+.gov-svg .t { font-size: 11px; fill: #1a1a1a; }
+.gov-svg .t-strong { font-size: 11px; fill: #1a1a1a; font-weight: 500; }
+.gov-svg .t-sub { font-size: 10px; fill: #6b6b6b; }
+.gov-svg .t-brick { fill: #9b4a3f; }
+.gov-svg .ref--link { fill: #9b4a3f; text-decoration: underline; }
+.gov-svg a:hover .ref--link, .gov-svg a:focus-visible .ref--link { fill: #1a1a1a; font-weight: 600; }
+.gov-svg .arrow { fill: none; stroke: #1a1a1a; }
+.gov-svg .arrow--brick { stroke: #9b4a3f; }
+
+/* ---- Track toggle and tracks ---- */
+.track-toggle { position: relative; display: inline-flex; border: 1px solid #1a1a1a; font-family: var(--font-mono); font-size: 11px; margin: var(--space-3) 0 var(--space-4); }
+.track-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+.track-toggle label { padding: 5px 12px; cursor: pointer; }
+.track-toggle input:checked + label { background: #1a1a1a; color: #fafaf8; }
+.track-toggle input:focus-visible + label { outline: 2px solid #9b4a3f; outline-offset: 2px; }
+body:has(#track-small:checked) .track--enterprise,
+body:has(#track-enterprise:checked) .track--small { display: none; }
+.track { border-top: 2px solid #1a1a1a; padding-top: 6px; margin: var(--space-3) 0; }
+.track__label { font: 500 10px/1.4 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: #6b6b6b; margin: 0 0 4px; }
+
+/* ---- Checklist line ---- */
+.gov-check { margin: var(--space-4) 0; }
+.gov-check__line { display: flex; gap: 6px; font: 500 13px/1.6 var(--font-mono); margin: 0; }
+.gov-check__dots { flex: 1; border-bottom: 1px dotted #6b6b6b; transform: translateY(-6px); }
+.gov-check__resp { color: #9b4a3f; }
+.gov-check__done { margin: 4px 0 0; }
+.gov-check__done b { font: 500 10px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: #9b4a3f; margin-right: 6px; }
+.gov-check .track, .gov-step .track { border-top: 0; padding-top: 0; margin: 0; }
+.gov-check .track__label, .gov-step .track__label { display: none; }
+
+/* ---- Shortcut, kit, deep dive, go deeper, related, prev/next ---- */
+.gov-shortcut { background: #f5ece9; border-left: 3px solid #9b4a3f; padding: 16px 20px; margin: var(--space-5) 0; }
+.gov-shortcut__k { font: 500 11px var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: #9b4a3f; margin: 0; }
+.gov-shortcut__q { font-family: var(--font-display, Georgia, serif); font-size: 22px; line-height: 1.35; margin: 4px 0 10px; }
+.gov-kit ul { list-style: none; padding: 0; }
+.gov-kit code { font-size: 13px; }
+.gov-kit__note { color: var(--fg-light); }
+.gov-deep { border-top: 1px solid var(--fg-faint); margin-top: var(--space-6); padding-top: var(--space-4); }
+.gov-deeper { font-style: italic; color: var(--fg-light); border-top: 1px solid var(--fg-faint); padding-top: var(--space-3); margin-top: var(--space-5); }
+.gov-related ul { padding-left: 1.2em; }
+.gov-prevnext { display: flex; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; font: 400 12px/1.5 var(--font-mono); margin-top: var(--space-6); color: var(--fg-light); }
+.gov-where h2 { margin-bottom: var(--space-2); }
+
+/* ---- Tables ---- */
+.gov-table-wrap { overflow-x: auto; margin: var(--space-4) 0; }
+.gov-table { border-collapse: collapse; width: 100%; min-width: 600px; font-size: 15px; } /* under the 612px reader column, so only narrow screens scroll the wrapper */
+.gov-table caption { text-align: left; font: 400 11px var(--font-mono); color: var(--fg-light); margin-bottom: 6px; }
+.gov-table th, .gov-table td { border-bottom: 1px solid var(--fg-faint); padding: 6px 8px; vertical-align: top; text-align: left; }
+.gov-table thead th { font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; color: #6b6b6b; }
+.gov-table__sub { display: block; font-size: 13px; color: var(--fg-light); }
+.gov-table__tier { font: 500 13px var(--font-mono); color: #9b4a3f; }
+
+/* ---- Hub ---- */
+.gov-hub-sub { font-style: italic; color: var(--fg-light); }
+.gov-rules { counter-reset: r; list-style: none; padding: 0; border-top: 1px solid #1a1a1a; }
+.gov-rules li { counter-increment: r; border-bottom: 1px solid var(--fg-faint); padding: 10px 0 10px 40px; position: relative; }
+.gov-rules li::before { content: counter(r); position: absolute; left: 0; top: 8px; font-family: var(--font-display, Georgia, serif); font-size: 26px; line-height: 1; color: #9b4a3f; }
+.gov-part { margin-top: var(--space-5); }
+.gov-part__name { font: 500 12px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: #9b4a3f; border-bottom: 1px solid #1a1a1a; padding-bottom: 5px; }
+.gov-steps { list-style: none; padding: 0; margin: 0; }
+.gov-step { display: grid; grid-template-columns: 34px 1fr; gap: 4px 10px; padding: 10px 0; border-bottom: 1px solid var(--fg-faint); }
+.gov-step__n { font-family: var(--font-display, Georgia, serif); font-size: 24px; line-height: 1.1; color: var(--fg-light); }
+.gov-step__t { font-size: 19px; font-weight: 500; margin: 0; }
+.gov-step__check { display: flex; gap: 6px; font: 500 11px/1.6 var(--font-mono); margin: 2px 0; }
+.gov-step__dots { flex: 1; border-bottom: 1px dotted #6b6b6b; transform: translateY(-5px); }
+.gov-step__resp { color: #9b4a3f; }
+.gov-step__done { margin: 0; font-size: 16px; }
+.gov-step__done b { font: 500 10px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: #9b4a3f; margin-right: 6px; }
+.gov-step__deep { margin: 2px 0 0; font: 400 12px/1.5 var(--font-mono); color: var(--fg-light); }
+.gov-calls { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+.gov-calls div { border-top: 1px solid var(--fg-faint); padding: 10px 0; }
+.gov-calls dt { font-family: var(--font-display, Georgia, serif); font-size: 19px; line-height: 1.3; }
+.gov-calls dd { margin: 3px 0 0; color: var(--fg-light); font-size: 15px; }
+@media (max-width: 700px) { .gov-calls { grid-template-columns: 1fr; } }
+/* .prose figure (src/styles/prose.css) resets figure margins; this restores the breakout centring for wide figures inside essays. */
+.prose .gov-figure--wide { margin-left: calc((100% - var(--wide)) / 2); }

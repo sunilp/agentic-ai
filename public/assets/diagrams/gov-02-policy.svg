@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" role="img" aria-label="A one-page AI policy: principles, rules, one owner and a review trigger, each pointing to the step that makes it real."><rect width="880" height="280" fill="#fff"/>
+<rect x="300" y="12" width="280" height="256" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="440" y="34" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">ONE PAGE</text>
+<rect x="316" y="46" width="248" height="44" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="440.0" y="66.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PRINCIPLES</text>
+<text x="440.0" y="81.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">each one testable</text>
+<path d="M564 68 L640 68" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M633.6 70.7 L640 68 L633.6 65.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="648" y="72" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">tested in Step 12</text>
+<rect x="316" y="100" width="248" height="44" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="440.0" y="120.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">RULES</text>
+<text x="440.0" y="135.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">acceptable and prohibited uses</text>
+<path d="M564 122 L640 122" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M633.6 124.7 L640 122 L633.6 119.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="648" y="126" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">screened and tiered, Step 4</text>
+<rect x="316" y="154" width="248" height="44" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="440.0" y="174.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">OWNER</text>
+<text x="440.0" y="189.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">one named executive</text>
+<path d="M564 176 L640 176" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M633.6 178.7 L640 176 L633.6 173.3" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<text x="648" y="180" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">decision rights, Step 8</text>
+<rect x="316" y="208" width="248" height="44" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="440.0" y="228.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">REVIEW</text>
+<text x="440.0" y="243.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">a date and a trigger</text>
+<path d="M564 230 L640 230" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M633.6 232.7 L640 230 L633.6 227.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="648" y="234" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">run in Step 11</text>
+<text x="282" y="140" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#6b6b6b" text-anchor="end" font-weight="400" xml:space="preserve">one page,</text>
+<text x="282" y="156" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#6b6b6b" text-anchor="end" font-weight="400" xml:space="preserve">one owner</text>
+</svg>

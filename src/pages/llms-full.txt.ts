@@ -1,5 +1,9 @@
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { STEPS, kitUrl, stepByN } from '~/data/governance-path';
+import { EXAMPLES } from '~/data/governance-examples';
+import policy from '~/data/governance-policy.json';
+import { OVERRIDES, TIER_ROWS, computeTier } from '~/lib/governance-tier';
 import { bySlug, ENTRIES, type Entry, type Layer, type Stage } from '~/data/pattern-language';
 
 // Generated llms-full.txt: the full text of the four editorial streams,
@@ -40,12 +44,13 @@ function statusLabel(e: Entry): string {
 export async function GET(context: APIContext) {
   const base = (context.site?.toString() ?? 'https://agenticlab.sunilprakash.com/').replace(/\/$/, '');
 
-  const [fieldNotes, signal, recipes, labs, patternEssays] = await Promise.all([
+  const [fieldNotes, signal, recipes, labs, patternEssays, govEssays] = await Promise.all([
     getCollection('fieldNotes'),
     getCollection('signal'),
     getCollection('recipes'),
     getCollection('labs'),
     getCollection('patterns'),
+    getCollection('governance'),
   ]);
   const patternsBySlug = new Map(patternEssays.map((e) => [e.id, e]));
 
@@ -103,6 +108,42 @@ The book chapters are indexed at ${base}/llms.txt and published at ${base}/book/
   // recommendation rather than a named failure.
   out += `\n\n----------------------------------------\nANTI-PATTERNS (DO NOT USE)\n----------------------------------------\nNamed failures, not recommendations. Each one names the pattern that replaces it.\n`;
   for (const meta of antiPatterns) out += patternEntryText(meta);
+
+  // Governance guide: labels survive clean(), which drops every tag, so mark tracks,
+  // shortcuts and the deep dive in words first, and print the data-driven lists and
+  // tables as plain text from the same data the components use. Steps print in path order.
+  const TIERS = ['T1', 'T2', 'T3', 'T4'] as const;
+  const overrideList = OVERRIDES.map((o) => `- Item ${o.item}, ${o.floor === 'T1' ? 'automatic T1' : 'minimum T2'}: ${o.text}.`).join('\n');
+  const tierTable = `What the tier changes (${policy.source}):\n` + TIER_ROWS.map(([key, label]) =>
+    `- ${label}: ${TIERS.map((t) => `${t} ${policy.tiers[t].name}: ${policy.tiers[t][key]}`).join('; ')}.`).join('\n');
+  const examplesTable = "The framework's six worked examples: its recorded scores, run through its rule.\n" + EXAMPLES.map((e) => {
+    const r = computeTier(e);
+    const overrides = e.overrides.length ? e.overrides.join(', ') : 'none';
+    return `- ${e.name} (${e.matrix}, ${kitUrl(`examples/${e.slug}/risk-assessment.md`)}): scored ${r.scored}, overrides ${overrides}, tier ${r.tier}. ${r.reasons.join(' ')}${e.rationale ? ` ${e.rationale}` : ''}`;
+  }).join('\n');
+  const govClean = (body: string) =>
+    clean(body
+      .replace(/<ul>\s*\{OVERRIDES\.map[\s\S]*?<\/ul>/, () => overrideList)
+      .replace(/<TierRequirements\s*\/>/g, () => tierTable)
+      .replace(/<TierExamples\s*\/>/g, () => examplesTable)
+      .replace(/<Track for="small">/g, '\nSmall team:\n')
+      .replace(/<Track for="enterprise">/g, '\nEnterprise:\n')
+      .replace(/<Shortcut quote="([^"]*)">/g, '\nThe shortcut: "$1"\n')
+      .replace(/<DeepDive>/g, '\nDeep dive\n'));
+  const govBySlug = new Map(govEssays.filter((e) => e.data.status !== 'draft').map((e) => [e.id, e]));
+  out += `\n\n========================================\nAI GOVERNANCE, FROM SCRATCH\n========================================\n`;
+  for (const s of STEPS) {
+    const e = govBySlug.get(s.slug);
+    if (!e) continue;
+    out += `\n\n---\n\n# Step ${s.n}: ${s.title}\n\nSource: ${base}/governance/${s.slug}/\n`;
+    const rests = s.n === 22 ? 'every step' : s.restsOn.length ? s.restsOn.map((n) => `${n} ${stepByN(n)!.short}`).join(', ') : 'nothing';
+    out += `\n${e.data.dek}\n\nDone when: ${s.doneWhen}\n`;
+    if (s.doneWhenSmall) out += `Done when (small team): ${s.doneWhenSmall}\n`;
+    out += `Rests on: ${rests}.\n`;
+    if (s.patterns.length) out += `Patterns: ${s.patterns.join(', ')}.\n`;
+    out += `Starter kit: ${s.kit.map(kitUrl).join(' ')}\n`;
+    out += `\n${govClean(e.body ?? '')}\n`;
+  }
 
   return new Response(out, {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },

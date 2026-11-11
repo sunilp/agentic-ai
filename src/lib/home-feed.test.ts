@@ -106,6 +106,19 @@ describe('buildHomeFeed', () => {
     expect(rest.map((i) => i.id)).toEqual(['arch-001']);
   });
 
+  it('adds at most one guide step and never features it', () => {
+    const empty = { fieldNotes: [], signal: [], recipes: [], labs: [], architecture: [] };
+    const step = (n: number, day: number) => ({
+      id: `Step ${n}`, slug: `0${n}-step`, title: `Title ${n}`, dek: 'dek', order: n,
+      updated: new Date(Date.UTC(2026, 10, day)),
+    });
+    const { featured, rest } = buildHomeFeed({ ...empty, governance: [step(1, 1), step(2, 3)] });
+    expect(featured).toBeUndefined();
+    const guide = rest.filter((i) => i.stream === 'Guide');
+    expect(guide).toHaveLength(1);
+    expect(guide[0].href).toBe('/governance/02-step/');
+  });
+
   it('handles empty streams', () => {
     const { featured, rest } = buildHomeFeed({ fieldNotes: [], signal: [], recipes: [], labs: [], architecture: [] });
     expect(featured).toBeUndefined();

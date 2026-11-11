@@ -1,0 +1,76 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import '~/styles/governance.css';
+import PageLayout from './PageLayout.astro';
+import Reader from '~/components/layout/Reader.astro';
+import ArticleHeader from '~/components/universal/ArticleHeader.astro';
+import Spot from '~/components/universal/Spot.astro';
+import SectionAnchors from '~/components/universal/SectionAnchors.astro';
+import Sources from '~/components/universal/Sources.astro';
+import TrackToggle from '~/components/governance/TrackToggle.astro';
+import ChecklistLine from '~/components/governance/ChecklistLine.astro';
+import GoDeeper from '~/components/governance/GoDeeper.astro';
+import GovernanceMachine from '~/components/governance/GovernanceMachine.svelte';
+import { stepBySlug, neighbours, PART_LABEL, writtenHref, type Step } from '~/data/governance-path';
+
+interface Props { entry: CollectionEntry<'governance'> }
+const { entry } = Astro.props;
+const d = entry.data;
+const step = stepBySlug(entry.id);
+if (!step) throw new Error(`No governance-path step for ${entry.id}`);
+
+const written = (await getCollection('governance')).filter((e) => e.data.status !== 'draft').map((e) => e.id);
+const href = writtenHref(new Set(written));
+const { prev, next } = neighbours(step.n);
+const architecture = await getCollection('architecture');
+const related = step.related.flatMap((id) => architecture.filter((a) => a.id === id));
+
+const updatedLong = d.updated
+  .toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+  .toUpperCase();
+const byline = ['SUNIL PRAKASH', `UPDATED ${updatedLong}`, `${d.readingTime} MIN`];
+const partName = step.part === 'Close' ? 'CLOSE' : `PART ${step.part} · ${PART_LABEL[step.part].toUpperCase()}`;
+const ogImage = d.spot ?? '/assets/og/governance.png';
+const navLabel = (s: Step, dir: 'prev' | 'next') => (dir === 'prev' ? `← Step ${s.n} · ${s.title}` : `Step ${s.n} · ${s.title} →`);
+---
+<PageLayout
+  title={`${step.title}, Governance`}
+  description={d.description}
+  ogImage={ogImage}
+  currentNav="Governance"
+  articleData={{ publishedTime: d.updated.toISOString(), section: 'Governance', headline: step.title }}
+>
+  <Reader>
+    <ArticleHeader rubric={`GOVERNANCE · STEP ${step.n} OF 22 · ${partName}`} title={step.title} dek={d.dek} byline={byline} />
+    <TrackToggle />
+    {d.spot && <Spot src={d.spot} alt={d.spotCaption ?? ''} caption={d.spotCaption} />}
+    <ChecklistLine n={step.n} />
+    {step.n <= 21 && (
+      <section class="gov-where" aria-labelledby="where-this-sits">
+        <h2 id="where-this-sits">Where this sits</h2>
+        <div class="gov-figure gov-figure--wide gov-figure--machine">
+          <GovernanceMachine initial={step.n} mode="progress" written={written} />
+          <p class="gov-figure__caption">Solid line: what this step rests on. Dashed outline: what rests on it. Faded: steps still to come.{step.patterns.length > 0 && ' Pattern colours follow the catalogue: blue capability, brick control, gold evidence; a diamond marks an anti-pattern.'}</p>
+        </div>
+      </section>
+    )}
+    {d.anchors && d.anchors.length > 0 && <SectionAnchors items={d.anchors} label="In this step" />}
+    <article class="gov-body prose">
+      <slot />
+    </article>
+    {step.book && <GoDeeper book={step.book} />}
+    {related.length > 0 && (
+      <section class="gov-related">
+        <h2>Engineering depth</h2>
+        <ul>{related.map((a) => <li><a href={`/architecture/${a.id}/`}>{a.data.title}</a></li>)}</ul>
+      </section>
+    )}
+    <Sources items={d.sources} />
+    <nav class="gov-prevnext" aria-label="Steps">
+      {prev ? (href(prev.n) ? <a href={href(prev.n)!}>{navLabel(prev, 'prev')}</a> : <span>{navLabel(prev, 'prev')}</span>) : <span />}
+      <a href="/governance/">All steps</a>
+      {next ? (href(next.n) ? <a href={href(next.n)!}>{navLabel(next, 'next')}</a> : <span>{navLabel(next, 'next')}</span>) : <span />}
+    </nav>
+  </Reader>
+</PageLayout>
