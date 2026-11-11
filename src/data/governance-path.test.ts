@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readdirSync } from 'node:fs';
-import { STEPS, PARTS, holdsUp, neighbours, stepBySlug, kitUrl, writtenHref } from './governance-path';
+import { STEPS, PARTS, holdsUp, neighbours, stepBySlug, kitUrl, kitLabel, writtenHref } from './governance-path';
 import { ENTRIES } from './pattern-language';
 
 describe('governance path', () => {
@@ -75,5 +75,18 @@ describe('governance path', () => {
   it('never links a forthcoming book', () => {
     for (const s of STEPS) if (s.book && !s.book.url) expect(s.book.note.length).toBeGreaterThan(0);
     expect(STEPS.find((s) => s.book?.title === 'Designing Agentic Systems')?.book?.url).toBeUndefined();
+  });
+});
+
+describe('kitLabel', () => {
+  it('names framework files in plain words', () => {
+    expect(kitLabel('templates/ai-policy.md')).toBe('AI policy');
+    expect(kitLabel('framework/compliance/iso-42001-mapping.md')).toBe('ISO/IEC 42001 mapping');
+    expect(kitLabel('framework/compliance/eu-ai-act-mapping.md')).toBe('EU AI Act mapping');
+    expect(kitLabel('README.md')).toBe('Framework overview');
+    expect(kitLabel('controls/stage-07-deployment.yaml')).toBe('Deployment controls');
+  });
+  it('gives every kit file in a step a distinct label', () => {
+    for (const s of STEPS) expect(new Set(s.kit.map(kitLabel)).size).toBe(s.kit.length);
   });
 });
