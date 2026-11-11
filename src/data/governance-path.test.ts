@@ -45,7 +45,7 @@ describe('governance path', () => {
 
   it('has no em dashes and no calendar language', () => {
     const all = JSON.stringify(STEPS);
-    expect(all).not.toContain('—');
+    expect(all).not.toContain('\u2014');
     expect(all).not.toMatch(/\b\d+ days\b|\bweek \d+\b/i);
   });
 

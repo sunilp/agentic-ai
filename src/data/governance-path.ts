@@ -67,7 +67,7 @@ export const STEPS: Step[] = [
   {
     n: 2, slug: '02-mandate-and-one-page-policy', part: 'I',
     title: 'Get a mandate and a one-page AI policy', short: 'Mandate and policy',
-    checklist: { item: 'MANDATE, POLICY', response: 'OWNED - PUBLISHED' },
+    checklist: { item: 'MANDATE, POLICY', response: 'OWNED · PUBLISHED' },
     doneWhen: 'An executive owns AI risk, and the policy is published.',
     restsOn: [1], patterns: [],
     deepDive: ['risk appetite', 'acceptable use', 'principles you can test'],
@@ -90,7 +90,7 @@ export const STEPS: Step[] = [
   {
     n: 4, slug: '04-tier-every-system', part: 'I',
     title: 'Tier every system, and say no to some', short: 'Tier',
-    checklist: { item: 'TIER', response: 'SET - SOME SAID NO' },
+    checklist: { item: 'TIER', response: 'SET · SOME SAID NO' },
     doneWhen: 'Each entry has a tier, and the tier changes what it must pass.',
     doneWhenSmall: 'Each entry has a tier, and the tier decides who signs it off and what it must pass.',
     restsOn: [3], patterns: ['earn-the-complexity', 'workflow-first'],
@@ -128,7 +128,7 @@ export const STEPS: Step[] = [
   {
     n: 7, slug: '07-a-culture-that-reports-problems', part: 'II',
     title: 'Build a culture that reports problems', short: 'Reporting culture',
-    checklist: { item: 'NEAR-MISSES', response: 'REPORTED - THANKED' },
+    checklist: { item: 'NEAR-MISSES', response: 'REPORTED · THANKED' },
     doneWhen: 'Someone reported a near-miss and was thanked for it.',
     restsOn: [5], patterns: [],
     deepDive: ['just culture', 'blameless review', 'the brilliant rule-breaker'],
@@ -213,7 +213,7 @@ export const STEPS: Step[] = [
   {
     n: 13, slug: '13-choose-your-fairness-trade-off', part: 'IV',
     title: 'Choose your fairness trade-off on purpose', short: 'Fairness',
-    checklist: { item: 'FAIRNESS', response: 'CHOSEN - SIGNED' },
+    checklist: { item: 'FAIRNESS', response: 'CHOSEN · SIGNED' },
     doneWhen: 'The fairness metric was chosen, written down and signed.',
     restsOn: [12], patterns: [],
     deepDive: ['why the metrics conflict', 'LLM bias testing'],
@@ -222,7 +222,7 @@ export const STEPS: Step[] = [
   },
   {
     n: 14, slug: '14-explain-disclose-allow-appeal', part: 'IV',
-    title: 'Explain, disclose and allow appeal', short: 'Explain - appeal',
+    title: 'Explain, disclose and allow appeal', short: 'Explain · appeal',
     checklist: { item: 'EXPLANATION, APPEAL', response: 'AVAILABLE' },
     doneWhen: 'An affected person can find out, and contest the outcome.',
     restsOn: [12], patterns: [],
@@ -245,7 +245,7 @@ export const STEPS: Step[] = [
   },
   {
     n: 16, slug: '16-bound-reliability-safety-privacy', part: 'IV',
-    title: 'Bound reliability, safety and privacy', short: 'Safety - privacy',
+    title: 'Bound reliability, safety and privacy', short: 'Safety · privacy',
     checklist: { item: 'LIMITS', response: 'TESTED PER TIER' },
     doneWhen: 'Hallucination, abuse and leak limits are tested per tier.',
     restsOn: [10, 12], patterns: ['tiered-detection', 'verdict-composition', 'the-uncalibrated-ensemble'],
@@ -256,8 +256,8 @@ export const STEPS: Step[] = [
   },
   {
     n: 17, slug: '17-govern-models-vendors-prompts-retrieval', part: 'V',
-    title: 'Govern models, vendors, prompts and retrieval', short: 'Models - prompts - RAG',
-    checklist: { item: 'MODELS, PROMPTS', response: 'VERSIONED - REVIEWED' },
+    title: 'Govern models, vendors, prompts and retrieval', short: 'Models · prompts · RAG',
+    checklist: { item: 'MODELS, PROMPTS', response: 'VERSIONED · REVIEWED' },
     doneWhen: 'Prompts and model versions are reviewed and versioned like code.',
     restsOn: [9, 10], patterns: ['earn-the-complexity', 'workflow-in-an-agent-costume', 'hallucinated-done'],
     deepDive: ['vendor exit plans', 'RAG permissions', 'fine-tuning', 'deprecation'],
@@ -272,8 +272,8 @@ export const STEPS: Step[] = [
   },
   {
     n: 18, slug: '18-agents-identity-and-bounded-authority', part: 'V',
-    title: 'Give agents identity and bounded authority', short: 'Agent identity - authority',
-    checklist: { item: 'AGENT AUTHORITY', response: 'GRANTED - BOUNDED' },
+    title: 'Give agents identity and bounded authority', short: 'Agent identity · authority',
+    checklist: { item: 'AGENT AUTHORITY', response: 'GRANTED · BOUNDED' },
     doneWhen: "No agent can call a tool it wasn't granted.",
     restsOn: [3, 9, 15],
     patterns: ['attenuating-delegation', 'bounded-grant', 'authority-at-the-call-site', 'chokepoint-placement'],
