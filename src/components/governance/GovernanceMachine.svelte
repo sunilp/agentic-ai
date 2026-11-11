@@ -5,6 +5,7 @@
    * (client:visible interactive). The drawing comes from renderMachineSvg, which is
    * unit-tested, so this file only wires selection.
    */
+  import { tick } from 'svelte';
   import '~/styles/governance-machine.css';
   import { renderMachineSvg, type MachineMode } from '~/lib/machine-svg';
   import { panelFor } from '~/lib/machine-panel';
@@ -14,29 +15,35 @@
   let { initial, mode, written, interactive = false }: Props = $props();
 
   let selected = $state(initial);
+  let drawing: HTMLDivElement | undefined = $state();
   const writtenSet = $derived(new Set(written));
   const href = $derived(writtenHref(writtenSet));
   const svg = $derived(renderMachineSvg({ selected, mode, href, interactive }));
   const panel = $derived(panelFor(selected, writtenSet));
 
-  function pick(target: EventTarget | null) {
+  async function pick(target: EventTarget | null, restoreFocus: boolean) {
     const node = (target as Element | null)?.closest?.('[data-step]');
-    if (node) selected = Number(node.getAttribute('data-step'));
+    if (!node) return;
+    selected = Number(node.getAttribute('data-step'));
+    if (restoreFocus) {
+      await tick();
+      drawing?.querySelector<SVGGElement>(`[data-step="${selected}"]`)?.focus();
+    }
   }
   function onclick(e: MouseEvent) {
-    if (interactive) pick(e.target);
+    if (interactive) pick(e.target, true);
   }
   function onkeydown(e: KeyboardEvent) {
     if (interactive && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
-      pick(e.target);
+      pick(e.target, true);
     }
   }
 </script>
 
 <div class="machine-figure__grid">
   <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="machine-figure__drawing" {onclick} {onkeydown}>{@html svg}</div>
+  <div class="machine-figure__drawing" bind:this={drawing} {onclick} {onkeydown}>{@html svg}</div>
   <aside class="machine-panel" aria-live="polite">
     <p class="machine-panel__k">Step {panel.n}</p>
     <p class="machine-panel__t">{#if panel.href}<a href={panel.href}>{panel.title}</a>{:else}{panel.title}{/if}</p>
