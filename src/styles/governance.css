@@ -97,3 +97,5 @@ body:has(#track-enterprise:checked) .track--small { display: none; }
 .gov-calls dt { font-family: var(--font-display, Georgia, serif); font-size: 19px; line-height: 1.3; }
 .gov-calls dd { margin: 3px 0 0; color: var(--fg-light); font-size: 15px; }
 @media (max-width: 700px) { .gov-calls { grid-template-columns: 1fr; } }
+/* .prose figure (src/styles/prose.css) resets figure margins; this restores the breakout centring for wide figures inside essays. */
+.prose .gov-figure--wide { margin-left: calc((100% - var(--wide)) / 2); }
