@@ -1,0 +1,171 @@
+---
+dek: "Build a paved road that makes the governed path the quickest way to production, and move every check a rule can make out of meetings and into the pipeline."
+description: "Step 6 of AI Governance, from Scratch. Race the governed path against the workaround, pave the common case with approved endpoints, credentials and templates, run the governance gate in the pipeline so the build writes the evidence, and add a risk budget modelled on SRE error budgets."
+updated: 2026-11-11
+readingTime: 9
+spot: /assets/spots/gov-06.png
+spotCaption: "People take the bridge when the bridge is the short way."
+anchors:
+  - { label: The move, anchor: the-move }
+  - { label: How it works, anchor: how-it-works }
+  - { label: How it scales, anchor: how-it-scales }
+  - { label: Deep dive, anchor: deep-dive }
+sources:
+  - title: "Full Cycle Developers at Netflix: Operate What You Build"
+    url: "https://netflixtechblog.com/full-cycle-developers-at-netflix-a08c31f83249"
+    authors: ["Philip Fisher-Ogden", "Greg Burrell", "Dianne Marsh"]
+    year: 2018
+  - title: "How We Use Golden Paths to Solve Fragmentation in Our Software Ecosystem"
+    url: "https://engineering.atspotify.com/2020/8/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem"
+    authors: ["Gary Niemen"]
+    year: 2020
+  - title: "Zero Quality Control: Source Inspection and the Poka-Yoke System"
+    url: "https://www.routledge.com/Zero-Quality-Control-Source-Inspection-and-the-Poka-yoke-System/Shingo/p/book/9780915299072"
+    authors: ["Shigeo Shingo"]
+    year: 1986
+  - title: "The Design of Everyday Things, Revised and Expanded Edition"
+    url: "https://jnd.org/the-design-of-everyday-things-revised-and-expanded/"
+    authors: ["Don Norman"]
+    year: 2013
+  - title: "Site Reliability Engineering: How Google Runs Production Systems, chapter 3: Embracing Risk"
+    url: "https://sre.google/sre-book/embracing-risk/"
+    authors: ["Marc Alvidrez", "Mark Roth"]
+    year: 2016
+  - title: "AI Governance Framework v2.2.0: reference implementations, governance gate"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/reference-implementations/README.md#governance-gate"
+  - title: "AI Governance Framework v2.2.0: what the gate does not do"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/reference-implementations/README.md#what-the-gate-does-not-do"
+  - title: "AI Governance Framework v2.2.0: GitHub features as evidence"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/reference-implementations/README.md#github-features-as-evidence"
+  - title: "AI Governance Framework v2.2.0: governance workflow, fast lane (T3/T4)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4"
+  - title: "AI Governance Framework v2.2.0: exceptions, risk acceptance and the non-waivable list"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance"
+  - title: "AI Governance Framework v2.2.0: third-party model risk, assessment depth by tier"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/compliance/third-party-model-risk.md#assessment-depth-by-tier"
+  - title: "AI Governance Framework v2.2.0: AI CoE design, anti-patterns"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/ai-coe-design.md#anti-patterns"
+  - title: "AI Governance Framework v2.2.0: cost governance, threshold alerts and escalation"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/cost-governance.md#threshold-alerts-and-escalation"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture a team that wants a model to summarise support tickets. The governed path starts with a form. The team hunts for whoever approves vendors. Does the vendor keep the data? Nobody knows. The next committee slot is weeks away.
+
+The workaround takes an afternoon. An engineer buys an API key on a company card and calls the model directly. The demo works by Friday. By the time anyone asks where the tickets went, it has users.
+
+The team did what people do. It took the shorter path.
+
+You can ban personal keys, or make the governed path the shorter one. Which do you do first? Write your answer down.
+
+## The move
+
+1. **Race one system.** Take one real system and the shortcut your teams take most, from Step 5. List every step and every wait on both paths. A wait is time spent on someone else: a reply, a ticket, a meeting slot.
+2. **Pave the common case.** Offer pre-approved patterns: an approved model behind an approved endpoint, a credential issued from the register entry, and a repository template with the pipeline built in.
+3. **Put the rules in the pipeline.** Any check a rule can make runs on every change and blocks the release when it fails.
+4. **Let the build write the evidence.** The pipeline produces the evaluation report, the gate result and the approval record.
+
+**The guide's call: make the safe way the easy way, and enforce it in the pipeline, not in a meeting.** People take the short path. Make the safe path the short one, and put its rules where they run on every change, whoever is in the room.
+
+Keep the meeting where a decision needs judgement. A pipeline can show that evidence exists. It can't decide that a risk is acceptable. T1 and T2 systems still get approval and independent validation from outside the team, and every exception goes to its approver. The road clears the waits around those decisions. The decisions stay with people.
+
+Most of this step builds the first of the guide's two kinds of safety: the wrong move made impossible by construction. The second kind, caught early and cheap to recover, is Step 7's.
+
+**Your call.** Write down the shortcut your teams take most, and each step and each wait it saves them today.
+
+## How it works
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-06-paved-road.svg" alt="Two routes from idea to production. Without a road, five boxes, four of them waits: find an approver, argue the tier, answer vendor checks again, build evidence by hand, wait for a meeting. On the paved road, four boxes: register, use an approved pattern, run pipeline checks that produce the evidence, then the approvals the tier sets." />
+
+Netflix calls this a "paved road": tools and practices that central teams support. Teams aren't made to use them. The aim is that working on the road beats working off it ([Netflix](https://netflixtechblog.com/full-cycle-developers-at-netflix-a08c31f83249)). Spotify's golden path is "the 'opinionated and supported' path to 'build something'" ([Spotify](https://engineering.atspotify.com/2020/8/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem)). A team that leaves it loses the support. In governance, a team can leave the road, and it still owes every control.
+
+**An approved endpoint.** One way to reach each approved model, with Step 4's four safeguards set once: no vendor data retention, a regional endpoint, a signed data processing agreement (DPA), and personal data cut down before each call. It writes the audit record for every call, so nobody has to remember a control no tier can waive. The safeguards live in the [harness](/patterns/harness-engineering/), the engineering around the model, outside each team's code.
+
+**A credential from the register.** The register entry issues the key, and the key works only through the endpoint. Step 3's gate is built in.
+
+**A repository template.** A `governance.yaml` with the system's ID and tier, an evaluation job that writes its report in the gate's format, and a pipeline with the gate wired in.
+
+**The gate.** The framework's [governance gate](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/reference-implementations/README.md#governance-gate) runs in the pipeline before deployment. It fails the job when a control it checks has no evidence, an evaluation misses its threshold, or an exception has expired or names the wrong approver. A valid exception can cover a gap where the framework allows one. Its result file becomes the release's evidence for control DA-003. Run it before sign-off, so approvers sign after it passes.
+
+**Pre-approved patterns.** A pattern is an approved model, endpoint and template used together. The framework has a small version. At T3 and T4 the team lead picks the model from the approved vendor list, and a T4 system on an approved vendor needs [no separate vendor assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/compliance/third-party-model-risk.md#assessment-depth-by-tier). The guide's recommendation goes further. Answer the questions that don't depend on the system once per pattern, such as the endpoint's data residency, and let each system's evidence point there. Questions about the system's own data and use still get asked.
+
+**Evidence the build produces.** Prompt history comes from version control. Code-owner reviews and deployment environments with required reviewers record who approved what ([GitHub features as evidence](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/reference-implementations/README.md#github-features-as-evidence)). The evaluation job writes the report, and the gate records its hash. Nobody assembles a pack the night before a meeting.
+
+At T3 and T4 the road carries the framework's [fast lane](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4): the same ten stages, less evidence and no committee. The team lead approves, and at T3 the business owner co-signs the deployment. Book the outsiders at intake: at T3, a red-teamer from outside the build team and AI Risk's simplified vendor assessment for an external API; at either tier, the DPO's DPIA screening when personal data is processed.
+
+And the road waives nothing on the framework's [non-waivable list](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance): a DPIA the law requires, the prohibited-use check, zero unresolved Critical red-team findings, a kill switch for T1 customer-facing and all agentic systems, and audit logging.
+
+Now look at what you wrote. For each step your shortcut saves, have the road do it for the team. Remove each wait it skips, unless your tier requires it. Then race again. You are done, by the guide's test, when the governed path has fewer steps and fewer waits than the shortcut, and a registered team reaches its first model call as fast as someone with a personal key. Any wait your tier doesn't set is a pothole.
+
+<RunningExample>
+The support team builds the assistant on the road.
+
+**What the road hands them.** An approved endpoint with Step 4's four safeguards already set. A credential issued from the entry `support-reply-assistant-v0.1`, which works only through that endpoint. A repository template whose `governance.yaml` holds the ID and the tier, T1, with the evaluation job and the gate wired in.
+
+**What it doesn't hand them.** T1 keeps its people. The AI Risk Committee approves the risk assessment and, with the CISO, the model selection. The architecture review board signs off the design. The DPO runs a full DPIA, Model Risk Management validates in full, and the red team runs at least 200 cases. The committee, the CISO and the DPO sign the deployment.
+
+**What changes.** Under the guide's recommendation, the retention and residency evidence points to the endpoint's record. The committee spends its time on this system's risk. The gate's pre-approval result is already attached.
+</RunningExample>
+
+## How it scales
+
+Same road at any size. Who builds it changes.
+
+<Track for="small">
+Your road can be small. Hold one account per approved vendor with the safeguards set, its keys kept by the team lead and issued only for a register entry. Keep one repository template with the framework's gate in CI, your build pipeline. The gate needs Python and PyYAML, and no network. Pin it to one exact commit of the framework release, by its full SHA, so your controls change only when you move the pin.
+
+Holding the keys is the guide's recommendation. The road can carry your whole fast lane. A T1 or T2 system still needs approval and validation from outside your team.
+</Track>
+
+<Track for="enterprise">
+A platform team builds and runs the road, and AI Risk approves each pattern on it. The framework's [CoE design](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/ai-coe-design.md#anti-patterns) puts model serving, evaluation pipelines, monitoring and guardrails with AI Platform Engineering. It warns against a governance-only CoE, and its remedy is "platform and tooling that makes compliance easy". Pattern approval by AI Risk is the guide's recommendation. Step 20 builds the gateway that holds the endpoints.
+</Track>
+
+<Shortcut quote="We'll call the vendor API directly. It's only a pilot.">
+**Why it's tempting.** A raw key takes minutes. The approved endpoint needs a register entry and a request.
+
+**Why it bites.** The direct call has none of the endpoint's safeguards. Customer personal data sent without all four makes the system T1 by override item 3. Now a fast-lane pilot needs the committee. Pilots also drift into production on the same key.
+
+**The forcing function.** Vendor keys live only in the endpoint, which accepts only credentials issued from a register entry. For every account you hold, the direct call is impossible by construction. A team that pays with its own card is left to Step 3's sweep of bills and expense claims. Central keys are the guide's recommendation. They work only if the road's credential comes as fast as a raw key.
+</Shortcut>
+
+<StarterKit n={6} />
+
+<DeepDive>
+
+### Forcing functions
+
+A policy asks people to remember a rule. A forcing function removes the wrong move. Don Norman uses the term for a constraint where failing one step stops the next from happening ([The Design of Everyday Things](https://jnd.org/the-design-of-everyday-things-revised-and-expanded/)). Its manufacturing cousin is poka-yoke, mistake-proofing, which Shigeo Shingo paired with inspection at the source on his route to zero defects ([Zero Quality Control](https://www.routledge.com/Zero-Quality-Control-Source-Inspection-and-the-Poka-yoke-System/Shingo/p/book/9780915299072)).
+
+You have built some already. Step 3 issues no production credential without a register entry, and Step 4 computes the tier so nobody can type one in. The framework's gate adds one: an exception against a non-waivable control fails, whoever approved it.
+
+A forcing function that blocks good work teaches people to find the next workaround. Make the road quick before you make it strict.
+
+### Guardrails, not gates
+
+In this guide, a gate is any point that can stop a release (Step 9). Trouble starts when the gate is a meeting, held when diaries allow, checking what the people in the room think to ask. A guardrail runs on every change and checks the same things each time. The framework's pipeline gate is a guardrail in this sense.
+
+It checks evidence for the controls that apply before go-live: stages 2 to 7, and the stage 8 controls in the minimum evidence pack. It tests the framework's metrics against their thresholds. At T1 and T2 a metric passes on its one-sided 95 percent confidence bound, so a good score on a small test set is not enough. It fails on any open Critical finding, which no exception can cover, and on an exception that has expired or names the wrong approver role. It reads what the file declares. It can't confirm a signature.
+
+The framework is plain about [what stays with people](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/reference-implementations/README.md#what-the-gate-does-not-do). The gate checks that evidence is present. People judge whether it is adequate. The gate also trusts the evaluation report, so the pipeline must generate it.
+
+The framework also uses the word guardrail for runtime filters on a model's inputs and outputs (control DE-004). The guide's recommendation is to put those in the endpoint, and to run a new statistical detector in [shadow](/patterns/shadow-before-enforce/) on real traffic before it blocks anything. One that wrongly blocks good work sends teams back to the workaround.
+
+### Risk budgets
+
+Google's SRE book supplies the model ([Embracing Risk](https://sre.google/sre-book/embracing-risk/)). Product management sets a service level objective, and monitoring, "a neutral third party", measures actual uptime. The difference is the error budget. While budget remains, releases ship. When failures use it up, releases halt for a while and effort moves to testing. And the development team "becomes self-policing".
+
+The framework has nothing like this for risk. Its nearest relative is the [cost budget](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/cost-governance.md#threshold-alerts-and-escalation), with alerts at 80, 100 and 120 percent of the monthly budget. What follows is the guide's recommendation.
+
+Agree a risk budget for each system with its tier approver at deployment. Count events your monitoring already records, such as sampled live responses that fail online scoring. Inside the budget, changes ship under the tier's normal rules, and nobody adds a review because a change feels risky. Once it is spent, only fixes ship, and the next change waits for the tier approver.
+
+A budget adds a brake. It never removes a control: the non-waivable list, re-tiering and revalidation on material change all stay. Incidents stay out of the budget. They go to incident response. Set the budget before you see the numbers, as you would a threshold.
+
+</DeepDive>
+
+You now have a road shorter than the workaround, and rules that run on every change. Some things never pass through a gate. A support agent fixes a dangerous draft and says nothing, and the lesson is lost. Step 7 builds a culture that reports problems, and thanks the person who does.

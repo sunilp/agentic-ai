@@ -1,0 +1,179 @@
+---
+dek: "Before you add a rule, find the corners your teams cut, learn what each one says about your process, and name the three they cut most."
+description: "Step 5 of AI Governance, from Scratch. Treat every shortcut as a finding about your process. Learn the forces behind shortcuts, from present bias and demos that become production to normalised deviance and hero culture, find your teams' shortcuts by asking and by reading traces, and name the three they take most."
+updated: 2026-11-11
+readingTime: 9
+spot: /assets/spots/gov-05.png
+spotCaption: "The worn path shows where the paved one fails."
+anchors:
+  - { label: The move, anchor: the-move }
+  - { label: How it works, anchor: how-it-works }
+  - { label: How it scales, anchor: how-it-scales }
+  - { label: Deep dive, anchor: deep-dive }
+sources:
+  - title: "Doing It Now or Later, American Economic Review 89(1), 103-124"
+    url: "https://doi.org/10.1257/aer.89.1.103"
+    authors: ["Ted O'Donoghue", "Matthew Rabin"]
+    year: 1999
+  - title: "Hidden Technical Debt in Machine Learning Systems, Advances in Neural Information Processing Systems 28"
+    url: "https://proceedings.neurips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html"
+    authors: ["D. Sculley", "Gary Holt", "Daniel Golovin", "Eugene Davydov", "Todd Phillips", "Dietmar Ebner", "Vinay Chaudhary", "Michael Young", "Jean-François Crespo", "Dan Dennison"]
+    year: 2015
+  - title: "On the Folly of Rewarding A, While Hoping for B, Academy of Management Journal 18(4), 769-783"
+    url: "https://doi.org/10.2307/255378"
+    authors: ["Steven Kerr"]
+    year: 1975
+  - title: "The Challenger Launch Decision: Risky Technology, Culture, and Deviance at NASA"
+    url: "https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html"
+    authors: ["Diane Vaughan"]
+    year: 1996
+  - title: "Report of the Presidential Commission on the Space Shuttle Challenger Accident, Volume 1, Chapter VI: An Accident Rooted in History"
+    url: "https://www.nasa.gov/history/rogersrep/v1ch6.htm"
+    authors: ["Presidential Commission on the Space Shuttle Challenger Accident"]
+    year: 1986
+  - title: "Nobody Ever Gets Credit for Fixing Problems that Never Happened: Creating and Sustaining Process Improvement, California Management Review 43(4), 64-88"
+    url: "https://doi.org/10.2307/41166101"
+    authors: ["Nelson P. Repenning", "John D. Sterman"]
+    year: 2001
+  - title: "The WyCash Portfolio Management System, OOPSLA '92 experience report"
+    url: "https://doi.org/10.1145/157709.157715"
+    authors: ["Ward Cunningham"]
+    year: 1992
+  - title: "AI Governance Framework v2.2.0: acceptable use, amnesty route"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#amnesty-route"
+  - title: "AI Governance Framework v2.2.0: AI inventory, how entries are created"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/ai-inventory.md#how-entries-are-created"
+  - title: "AI Governance Framework v2.2.0: exceptions and risk acceptance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance"
+  - title: "AI Governance Framework v2.2.0: governance metrics, interpreting governance health"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/governance-metrics.md#interpreting-governance-health"
+  - title: "AI Governance Framework v2.2.0: human-in-the-loop pattern selection matrix"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/responsible-ai/human-in-loop-patterns.md#pattern-selection-matrix"
+  - title: "AI Governance Framework v2.2.0: Start Here, small teams"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#small-teams"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture a team that has built an assistant to summarise customer complaints. A director has announced the launch date. The register entry is in, and the system is T1. The outside red team is booked, but its first free slot comes after the date.
+
+So the team calls the launch a pilot, on one desk, and goes live on the date. Nothing goes wrong. At the next all-hands, the director thanks the engineer who found the way through.
+
+Every other team in the room learned two things. The date held. And "pilot" is the word that gets a system past the gate.
+
+You own the process that team went around. Who was wrong: the team, or your process? Write down your answer.
+
+## The move
+
+Find the shortcuts before you build more process. Do three things.
+
+1. **Ask the people who build.** Ask about the last time the process got in their way. Then ask what they did. Make them the promise the framework's [amnesty route](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#amnesty-route) makes for unapproved AI tools: what someone declares before it is detected is not treated as a breach, as long as they help register it and clean up. Extending that promise from tools to process shortcuts is the guide's recommendation. People tell you about shortcuts only when telling is safe.
+2. **Read the traces.** Look in the register, the exception register, shadow AI reports, gate results and cloud bills.
+3. **Name three.** Write each one in a line: what teams skip, what the skip saves them, and who pays if it goes wrong. Then mark which kind of safety it needs.
+
+**The guide's call: a shortcut tells you something about your process.** A team goes around a step when the step costs more than the way around, or when the organisation rewards the way around. Ask what the step costs before you ask who skipped it.
+
+So the guide's answer to the opening question is your process, first. The call stops where the framework's amnesty stops: deliberate exfiltration, use after a specific instruction to stop, and repeat breaches. Those are misconduct. Your disciplinary policy handles them.
+
+**Your call.** Write down the shortcut you think your teams take most. Then write how you know: someone told you, you saw it in a record, or you guessed.
+
+## How it works
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-05-shortcuts.svg" alt="The governed path runs idea, register, tier, gate, live. Three shortcuts leave it and land on live: real data before the entry, call it a pilot, and secure it later. Each one leaves where the path costs more than the way around it." />
+
+Every arc lands where the governed path lands, on real data and real users. What it skipped is missing. That is the evidence, and sometimes the safeguard itself, such as the audit log. Where an arc leaves the path, you have found a step that costs more than the way around.
+
+Six forces push teams onto the arcs. None of them needs a careless engineer.
+
+**Present bias.** Following the process costs now: an entry, a wait for a reviewer, an evaluation set to build. Skipping costs later, if ever. People give the present extra weight. In [O'Donoghue and Rabin's](https://doi.org/10.1257/aer.89.1.103) model, people who don't expect this of themselves keep putting off tasks whose costs come first. "We'll secure it later" is sincere. That is the trouble.
+
+**The demo that becomes production.** A demo is built to impress. It has no owner. Then a sponsor wants it live, and it ships as it is. [Sculley and colleagues](https://proceedings.neurips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html) warned that time pressure can turn a prototype into the production system.
+
+**Local incentives against shared risk.** A team is measured on what it ships, and when. If a skipped control fails, the cost lands on customers and on whoever runs the system next. Steven Kerr called this ["the folly of rewarding A, while hoping for B"](https://doi.org/10.2307/255378). Reward the date and hope for the evidence. You get the date.
+
+**Normalised deviance.** Each shortcut that ends well makes the next one feel safe. Diane Vaughan named the pattern in her study of the Challenger launch decision. More on it below.
+
+**Hero culture.** The engineer who rescues a launch is thanked in public. [Repenning and Sterman](https://doi.org/10.2307/41166101) found organisations that "reward and promote those who, through heroic efforts, manage to save troubled projects". An engineer they interviewed gave their paper its title: "Nobody ever gets credit for fixing problems that never happened."
+
+**Security later.** A skipped control is a debt. Ward Cunningham, who coined the [debt metaphor](https://doi.org/10.1145/157709.157715), wrote that every minute spent on not-quite-right code "counts as interest on that debt", and Sculley and colleagues added that hidden debt "compounds silently". Some governance debts can never be repaid. A log you never kept can't be written afterwards.
+
+Each force leaves a trace.
+
+- **Entries that arrived late.** The framework records [how each register entry was created](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/ai-inventory.md#how-entries-are-created). An entry from reconciliation is a system found outside the register before anyone declared it.
+- **Exceptions that come back.** A renewal, or a new request that cites an old exception. The guide reads both as deviance on its way to normal. The framework's [metrics guidance](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/governance-metrics.md#interpreting-governance-health) reads a rising exception count this way: "either the policy is too rigid or risk acceptance is becoming a habit; either way, investigate."
+- **Shadow AI findings and self-reports.** Each one is a tool someone chose over the approved route. Ask why.
+- **First-attempt gate failures.** What teams arrive without shows which evidence they leave to the end.
+
+For each of your three, decide which kind of safety it needs. Some shortcuts must be **impossible by construction**: a forcing function removes the way around, as "no entry, no production credential" does in Step 3. Others can only be **caught early and cheap to recover**: detection finds them, and people report them. The guide's call is that a shortcut whose harm can't be undone needs the first kind. This step only diagnoses. Step 6 builds the paved road and its forcing functions, Step 9 the gates, and Step 7 the culture that reports.
+
+Now look at what you wrote down. If you guessed, test the guess against one trace. If you would take the same shortcut under the same deadline, you have found a process problem.
+
+<RunningExample>
+The assistant is T1, and drafts replies for a person to edit and send. Three shortcuts will tempt its team.
+
+- **Test on real customer emails before the entry exists.** It is the quickest test. It says the governed route to a first test is slow: no approved endpoint ready for personal data, and no realistic synthetic emails. Step 3's gate holds back the production credential. Step 6 puts an approved endpoint behind the register entry, so the governed route is also the quick one.
+- **Call it a pilot.** Ten support agents use the drafts on live tickets "to learn". It says the full T1 gate is the only way to learn from real use, and nobody booked the outside reviewers at intake, as [Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2) advises. The label buys nothing. In the framework, a pilot on real data is registered and tiered like any system.
+- **Auto-send the "simple" replies.** Someone proposes sending password-reset drafts unedited. It says review is costly on routine work. Nobody showed the team the framework's route to lighter oversight: [Pattern 3](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/responsible-ai/human-in-loop-patterns.md#pattern-selection-matrix), with all five safeguards evidenced. Step 4 already ruled the switch a material change. The quiet version is harder to see. Support agents stop reading and press send. The framework reads a human override rate below 2 percent on a T1 system as possible rubber-stamping. A support agent who admits to it deserves thanks (Step 7).
+
+The first two can be made impossible on the paths you control: your credentials and your pipeline. The third, in its quiet form, can only be caught.
+</RunningExample>
+
+## How it scales
+
+Same method at every size. What changes is who asks, and where the traces live.
+
+<Track for="small">
+In a team of five, whoever asks also takes some of the shortcuts. Ask someone outside the team to run the conversation. Then read three traces: model credentials issued without an entry, prompt or model changes merged without review, and evidence written after the release it supports. Both are the guide's recommendations.
+
+The framework's [Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#traps) lists traps for small teams. Each is a shortcut waiting to be taken: a co-author who signs as the peer reviewer, oversight reviewers agreed only after launch, and an on-call rota of three people.
+</Track>
+
+<Track for="enterprise">
+Ask in every business unit, through the stewards from Step 3. Read the traces centrally. In the framework, AI Risk owns the register, its quarterly reconciliation and the exception register. The AI Risk Committee reviews exceptions every month (GV-004). Security runs shadow AI detection and reports monthly.
+
+Take your three shortcuts and their causes to the AI Risk Committee, beside the governance health metrics it already sees. That is the guide's recommendation, and so is this reading: the same shortcut in several units points at the centre.
+</Track>
+
+<Shortcut quote="Our engineers follow the process.">
+**Why it's tempting.** The register is clean, the gates pass, and nobody has reported a problem. Silence looks like compliance.
+
+**Why it bites.** A shortcut leaves no record in the process it skips. A quiet register can mean nobody cuts corners, or nobody tells you. From inside the process, you can't tell the two apart.
+
+**The early catch.** Check the process against records it doesn't control: bills, admin consoles, proxy logs and code, as Step 3's quarterly reconciliation does. Treat a long run of zero self-reports as a reason to test the reporting route. That is the guide's recommendation. This early catch rests on detection and a reporting culture, which Step 7 builds.
+</Shortcut>
+
+<StarterKit n={5} />
+
+<DeepDive>
+
+### Present bias
+
+In [O'Donoghue and Rabin's model](https://doi.org/10.1257/aer.89.1.103), a person must do a task once and chooses when. When the task costs now and pays later, people naive about their own self-control put it off again and again, each time sure they will do it next time. With costs up front, the authors show, even a small present bias can do severe harm to naive people.
+
+Governance work has that shape. The register entry, the evaluation set and the outside validator's booking cost now. Their reward is a problem that never happens.
+
+The framework moves those costs to the start. [Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2) tells builders to start evaluation sets early and to book outside reviewers at intake, "because their capacity usually sets your date". The guide adds one move: tie each cost to something the team wants now, such as a credential.
+
+### The demo that became production
+
+A demo answers one question. Can this work? Production also asks who owns it, what data it touches and who can switch it off. A demo that ships as it is answers none of them.
+
+[Sculley and colleagues](https://proceedings.neurips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html) name a prototype smell. They warn of "a significant danger that time pressures may encourage a prototyping system to be used as a production solution", and add that "results found at small scale rarely reflect the reality at full scale". The inputs that won the demo were chosen. Your customers' emails won't be.
+
+In the framework, pilots and proofs of concept that touch real data are registered. The schema refuses a pilot entry without a tier, a deployed date and a next review date. A demo on synthetic data can still drift towards launch with no entry. Find those in the bill: model spend that grows with no entry to match.
+
+### Normalised deviance
+
+The [Rogers Commission](https://www.nasa.gov/history/rogersrep/v1ch6.htm) investigated the loss of Challenger in January 1986. Its chapter on the booster joint, "An Accident Rooted in History", says NASA and contractor management "first failed to recognize it as a problem, then failed to fix it and finally treated it as an acceptable flight risk." Erosion of a primary O-ring was first found after the second shuttle flight, in November 1981. As damage recurred, the reaction was "to increase the amount of damage considered 'acceptable.'"
+
+[Diane Vaughan's study](https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html) calls the launch a disastrous mistake, and names the process behind it. Faced again and again with evidence that something was wrong, insiders normalised the deviance until it became acceptable to them. A new preface traces a similar decision process in the loss of Columbia in 2003.
+
+Your version starts with an exception granted for a good reason. It is renewed. The next team cites it as precedent. In the framework, an [exception](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance) lasts 90 days at most and can be renewed once, by an approver one level higher; at T1, a renewal needs a full committee decision and is reported to the Board Risk Committee. Five controls can't be waived at all. The guide's call: when a request cites an earlier exception, read it as a trace, and ask what the first one taught the team.
+
+</DeepDive>
+
+You can now name your three shortcuts, and what each says about your process. That alone changes nothing. Each arc is still quicker than the step it skips. The next date will put a team back on it. Present bias will make it feel cheap. Step 6 makes the governed path the fastest path, so the shortcut stops paying.
