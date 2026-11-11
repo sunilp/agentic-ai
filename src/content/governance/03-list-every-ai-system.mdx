@@ -19,16 +19,16 @@ sources:
     url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
     authors: ["European Parliament and Council of the European Union"]
     year: 2024
-  - title: "AI Governance Framework v2.1.0: AI inventory standard (RA-006, GV-006)"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/ai-inventory.md"
-  - title: "AI Governance Framework v2.1.0: AI inventory entry template"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-inventory-entry.yaml"
-  - title: "AI Governance Framework v2.1.0: retroactive governance"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/governance-workflow.md#retroactive-governance"
-  - title: "AI Governance Framework v2.1.0: acceptable use, shadow AI detection"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/acceptable-use.md#shadow-ai-detection"
-  - title: "AI Governance Framework v2.1.0: agent identity and tool governance"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md"
+  - title: "AI Governance Framework v2.2.0: AI inventory standard (RA-006, GV-006)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/ai-inventory.md"
+  - title: "AI Governance Framework v2.2.0: AI inventory entry template"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-inventory-entry.yaml"
+  - title: "AI Governance Framework v2.2.0: retroactive governance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#retroactive-governance"
+  - title: "AI Governance Framework v2.2.0: acceptable use, shadow AI detection"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#shadow-ai-detection"
+  - title: "AI Governance Framework v2.2.0: agent identity and tool governance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md"
 ---
 import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
@@ -50,7 +50,7 @@ Your one-page policy governs a list you don't have. How do you find every AI sys
 2. **Find what nobody declared.** Search where AI leaves a trace, not only your teams' memories.
 3. **Make the register the gate.** A system with no entry gets nothing it needs to run in production.
 
-**The guide's call: the register is the gate. No entry, no production credential.** The framework requires the entry before development begins (control RA-006). Holding back the credential turns that rule into a lock. Put the same check wherever a system goes live: the deployment pipeline for a self-hosted model, the admin switch for a material vendor feature, the tool grants for an agent. Break it only for a system already live when the register opens. [Retroactive governance](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/governance-workflow.md#retroactive-governance) registers and tiers it, finds its gaps, and sets an interim mitigation for each until the evidence exists.
+**The guide's call: the register is the gate. No entry, no production credential.** The framework requires the entry before development begins (control RA-006). Holding back the credential turns that rule into a lock. Put the same check wherever a system goes live: the deployment pipeline for a self-hosted model, the admin switch for a material vendor feature, the tool grants for an agent. Break it only for a system already live when the register opens. [Retroactive governance](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#retroactive-governance) registers and tiers it, finds its gaps, and sets an interim mitigation for each until the evidence exists.
 
 Pilots get no exception. What bends is how much the entry holds. At intake it needs an ID, a name, a purpose, owners and a status, with the tier pending until Step 4. A live pilot's entry needs a tier, a deployed date and a next review date. Registering a system doesn't approve it. Step 9's gates do. When in doubt, the framework says, register.
 
@@ -60,7 +60,7 @@ Pilots get no exception. What bends is how much the entry holds. At intake it ne
 
 <ArchitectureDiagram wide src="/assets/diagrams/gov-03-register.svg" alt="Five discovery sources feed one AI register, which feeds tiering, owners and audit." />
 
-The five sources come from the framework's [inventory standard](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/ai-inventory.md), grouped for this guide.
+The five sources come from the framework's [inventory standard](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/ai-inventory.md), grouped for this guide.
 
 **Contracts and procurement.** Purchases from AI vendors, contracts with AI terms, and renewals where a vendor added AI features.
 
@@ -85,7 +85,7 @@ Now look at your number. If it came from asking around, it counts only what peop
 Same fields, same gate. A bigger organisation adds feeds.
 
 <Track for="small">
-Keep the register as one YAML file in your repo, one entry per system, from the framework's [entry template](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-inventory-entry.yaml). The team lead owns it. Changes go through review like code. Once a month, sweep your cloud accounts for model API keys, and the admin settings of every SaaS tool you pay for. Issue no model credential without an entry.
+Keep the register as one YAML file in your repo, one entry per system, from the framework's [entry template](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-inventory-entry.yaml). The team lead owns it. Changes go through review like code. Once a month, sweep your cloud accounts for model API keys, and the admin settings of every SaaS tool you pay for. Issue no model credential without an entry.
 
 The file, the owner and the sweep are the guide's recommendations. A file in version control meets the framework's bar for a first register: every change has an author, and the history stays.
 </Track>
@@ -112,7 +112,7 @@ In the framework, AI Risk owns the register, issues IDs and checks it each quart
 
 Someone installs a browser extension that summarises pages. Someone else buys a chatbot subscription on a corporate card. Proxy, secure web gateway, CASB and DNS logs show the traffic. Endpoint management shows desktop apps and extensions. Expense claims show subscriptions bought one seat at a time.
 
-In the framework's [shadow AI detection](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/acceptable-use.md#shadow-ai-detection), Security runs these feeds, and the finding sets the response. Confidential or personal data sent to an unapproved tool is an incident. An automation or agent built on one is stopped and registered, and goes through retroactive governance if it must keep running.
+In the framework's [shadow AI detection](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#shadow-ai-detection), Security runs these feeds, and the finding sets the response. Confidential or personal data sent to an unapproved tool is an incident. An automation or agent built on one is stopped and registered, and goes through retroactive governance if it must keep running.
 
 ### Vendor and SaaS features
 
@@ -122,7 +122,7 @@ Register each material feature once per tenant, never per licence. A feature tha
 
 ### Agents as entries
 
-An agent is registered like any AI system, flagged as agentic. What it may do sits one level down. In the framework, each agent has its own [identity record](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md), linked to the system's entry, with one accountable owner and its tool allowlist. A system with several agents has one entry and a record for each agent. A new tool or a wider scope waits for approval.
+An agent is registered like any AI system, flagged as agentic. What it may do sits one level down. In the framework, each agent has its own [identity record](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md), linked to the system's entry, with one accountable owner and its tool allowlist. A system with several agents has one entry and a record for each agent. A new tool or a wider scope waits for approval.
 
 When an agent misbehaves, the entry says whose it is. The identity record says what it was allowed to touch. Step 18 sets those grants.
 
@@ -132,7 +132,7 @@ When a system starts behaving differently, ask what changed underneath. The entr
 
 ### The fields
 
-The framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-inventory-entry.yaml) gives each entry exactly one business owner, one product owner and one AI lead. It records status, tier and what set it, data classes and regions, and review dates. Characteristics such as genai, rag or agentic decide which controls apply, and each linked control carries its evidence status.
+The framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-inventory-entry.yaml) gives each entry exactly one business owner, one product owner and one AI lead. It records status, tier and what set it, data classes and regions, and review dates. Characteristics such as genai, rag or agentic decide which controls apply, and each linked control carries its evidence status.
 
 Two rules matter more than any field. A retired entry stays, so its records can still be found. A use refused at the prohibited-use screen keeps its entry too, as evidence the screen ran. The register remembers what you said no to.
 

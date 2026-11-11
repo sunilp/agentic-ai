@@ -92,7 +92,7 @@ The Lab is a layered editorial system. The book is the canonical reference. Four
 
 ## AI governance, from scratch
 
-One opinionated path from no AI governance to running it across many teams, built on the open AI governance framework (https://github.com/sunilp/ai-governance-framework, v2.1.0). Every step rests only on earlier steps.
+One opinionated path from no AI governance to running it across many teams, built on the open AI governance framework (https://github.com/sunilp/ai-governance-framework, v2.2.0). Every step rests only on earlier steps.
 ${governance}
 
 Index: ${base}/governance/

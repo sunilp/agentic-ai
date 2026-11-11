@@ -27,18 +27,18 @@ sources:
     url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj"
     authors: ["European Parliament and Council of the European Union"]
     year: 2026
-  - title: "AI Governance Framework v2.1.0: AI policy template"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-policy.md"
-  - title: "AI Governance Framework v2.1.0: acceptable use of AI tools"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/acceptable-use.md"
-  - title: "AI Governance Framework v2.1.0: AI Risk Committee charter template"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-risk-committee-charter.md"
-  - title: "AI Governance Framework v2.1.0: board reporting, AI risk appetite statement"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement"
-  - title: "AI Governance Framework v2.1.0: AI literacy"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/ai-literacy.md"
-  - title: "AI Governance Framework v2.1.0: control register, programme-level controls GV-001 to GV-006"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/control-register.md#programme-level-controls"
+  - title: "AI Governance Framework v2.2.0: AI policy template"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-policy.md"
+  - title: "AI Governance Framework v2.2.0: acceptable use of AI tools"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md"
+  - title: "AI Governance Framework v2.2.0: AI Risk Committee charter template"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-risk-committee-charter.md"
+  - title: "AI Governance Framework v2.2.0: board reporting, AI risk appetite statement"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement"
+  - title: "AI Governance Framework v2.2.0: AI literacy"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/ai-literacy.md"
+  - title: "AI Governance Framework v2.2.0: control register, programme-level controls GV-001 to GV-006"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/control-register.md#programme-level-controls"
 ---
 import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
@@ -74,7 +74,7 @@ Break the one-page rule only for what a board, a regulator or a certification au
 
 <ArchitectureDiagram wide src="/assets/diagrams/gov-02-policy.svg" alt="A one-page AI policy: principles, rules, one owner and a review trigger, each pointing to the step that makes it real." />
 
-**Principles.** A few testable commitments, in your words. The framework's [policy template](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-policy.md) offers one: every AI system has one named business owner who accepts its residual risk. The register shows the owner; the acceptance needs the sign-off that Steps 8 and 9 set up. "We use AI responsibly" has no test. It is a slogan.
+**Principles.** A few testable commitments, in your words. The framework's [policy template](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-policy.md) offers one: every AI system has one named business owner who accepts its residual risk. The register shows the owner; the acceptance needs the sign-off that Steps 8 and 9 set up. "We use AI responsibly" has no test. It is a slogan.
 
 **Rules.** What people are allowed and not allowed to do: prohibited uses that never ship, and acceptable use, which names the tools staff can use and the data each takes. Step 4 screens and tiers systems against them. Staff rules are enforced through the approved tools list and shadow AI detection, which Step 3 starts.
 
@@ -88,7 +88,7 @@ A sketch of three lines, with owners from the framework's roles:
 - *Personal data goes only into AI tools approved for it.* Owner: the CISO, who owns acceptable use. Check: data loss prevention alerts and Security's shadow AI reports.
 - *An agent contacts customers only through an approved workflow.* Owner: the system's business owner. Check: the gateway blocks every other route, and its logs show the blocks.
 
-The how stays off the page, in the standards beneath it: the workflow, [the control register](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/control-register.md#programme-level-controls), acceptable use. In an enterprise, the risk appetite stays off too. The page cites it by approval date, because restated copies drift, as the template warns.
+The how stays off the page, in the standards beneath it: the workflow, [the control register](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/control-register.md#programme-level-controls), acceptable use. In an enterprise, the risk appetite stays off too. The page cites it by approval date, because restated copies drift, as the template warns.
 
 Now look at the line you picked. Did you name a committee, or "everyone"? Then it has no owner yet. Would you learn of a breach only after someone was harmed? Then add a check that runs earlier: a register query, a pipeline gate, a log review. You only name the check here; later steps build it. Lines with neither come out, except legal duties, which stay and get an owner first. What survives is short, named and checkable.
 
@@ -105,9 +105,9 @@ Review the page when a new kind of system arrives: your first agent, your first 
 </Track>
 
 <Track for="enterprise">
-In the framework, the Board Risk Committee approves the risk appetite and the AI Risk Committee's [charter](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-risk-committee-charter.md); the CRO, who chairs that committee, owns the policy. [Acceptable use](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/acceptable-use.md) goes to every employee, and staff attest to it on joining and at each literacy refresh.
+In the framework, the Board Risk Committee approves the risk appetite and the AI Risk Committee's [charter](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-risk-committee-charter.md); the CRO, who chairs that committee, owns the policy. [Acceptable use](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md) goes to every employee, and staff attest to it on joining and at each literacy refresh.
 
-Your board-approved policy will run longer: the framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-policy.md) aims for six to ten pages, adding governance bodies, exceptions, incident reporting and an ISO/IEC 42001 annex. The guide's call is to make the one page its first page and publish that page to everyone. The sections behind it serve the approver and the auditor.
+Your board-approved policy will run longer: the framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-policy.md) aims for six to ten pages, adding governance bodies, exceptions, incident reporting and an ISO/IEC 42001 annex. It opens with a Policy on a Page. Publish that page to everyone. The sections behind it serve the approver and the auditor.
 </Track>
 
 <Shortcut quote="We'll copy a long policy from a big company.">
@@ -124,7 +124,7 @@ Your board-approved policy will run longer: the framework's [template](https://g
 
 ### Risk appetite statements
 
-The framework's [risk appetite section](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement) suggests six dimensions, among them deployment scope, vendor dependency and incident tolerance.
+The framework's [risk appetite section](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement) suggests six dimensions, among them deployment scope, vendor dependency and incident tolerance.
 
 A cap on how much of your high- and critical-risk portfolio runs on one model provider can be checked against the register, and a target of zero severity-1 incidents against the incident log. "We comply with all applicable AI regulation in jurisdictions where we operate" is a posture. It gives your owner nothing to decide with. The guide's call is to write each dimension so the register or a log can answer it.
 
@@ -138,11 +138,11 @@ Acceptable use runs on an approved tools list that sets the data classes each to
 
 The framework allows no exception to the prohibited-use check. Start your list from Article 5 of the EU AI Act, which bans practices such as untargeted scraping of facial images to build facial recognition databases. Then add your own.
 
-The framework teaches acceptable use in its all-staff [literacy module](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/operating-model/ai-literacy.md), one of the measures it maps to Article 4 of the AI Act. As replaced by the [Digital Omnibus on AI](https://eur-lex.europa.eu/eli/reg/2026/1744/oj), Article 4 requires providers and deployers to take measures to support the AI literacy of their staff and others operating AI systems for them, without having to guarantee any individual's level.
+The framework teaches acceptable use in its all-staff [literacy module](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/ai-literacy.md), one of the measures it maps to Article 4 of the AI Act. As replaced by the [Digital Omnibus on AI](https://eur-lex.europa.eu/eli/reg/2026/1744/oj), Article 4 requires providers and deployers to take measures to support the AI literacy of their staff and others operating AI systems for them, without having to guarantee any individual's level.
 
 ### Principles you can test
 
-The framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/ai-policy.md#3-principles) lists nine principles, fills in the commitment for five and leaves you to write fairness, transparency, reliability and safety, and security and privacy. Every row names where the principle is enforced, which keeps them testable.
+The framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/templates/ai-policy.md#3-principles) lists nine principles, fills in the commitment for five and leaves you to write fairness, transparency, reliability and safety, and security and privacy. Every row names where the principle is enforced, which keeps them testable.
 
 Write each principle so you can name the evidence of a breach. Fairness needs a chosen metric first, which is Step 13, and Step 12 gives every principle a test and an owner.
 

@@ -1,5 +1,5 @@
 /**
- * The six worked examples from ai-governance-framework v2.1.0 (examples/<slug>/risk-assessment.md),
+ * The six worked examples from ai-governance-framework v2.2.0 (examples/<slug>/risk-assessment.md),
  * with the dimension scores, override items and tiers those files record. The test checks that the
  * framework's own rule reproduces every recorded tier.
  */
