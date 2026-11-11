@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { STEPS, kitUrl } from '~/data/governance-path';
 import { bySlug, ENTRIES, type Entry, type Layer, type Stage } from '~/data/pattern-language';
 
 // Generated llms-full.txt: the full text of the four editorial streams,
@@ -40,12 +41,13 @@ function statusLabel(e: Entry): string {
 export async function GET(context: APIContext) {
   const base = (context.site?.toString() ?? 'https://agenticlab.sunilprakash.com/').replace(/\/$/, '');
 
-  const [fieldNotes, signal, recipes, labs, patternEssays] = await Promise.all([
+  const [fieldNotes, signal, recipes, labs, patternEssays, govEssays] = await Promise.all([
     getCollection('fieldNotes'),
     getCollection('signal'),
     getCollection('recipes'),
     getCollection('labs'),
     getCollection('patterns'),
+    getCollection('governance'),
   ]);
   const patternsBySlug = new Map(patternEssays.map((e) => [e.id, e]));
 
@@ -103,6 +105,25 @@ The book chapters are indexed at ${base}/llms.txt and published at ${base}/book/
   // recommendation rather than a named failure.
   out += `\n\n----------------------------------------\nANTI-PATTERNS (DO NOT USE)\n----------------------------------------\nNamed failures, not recommendations. Each one names the pattern that replaces it.\n`;
   for (const meta of antiPatterns) out += patternEntryText(meta);
+
+  // Governance guide: labels survive clean(), which drops every tag, so mark tracks,
+  // shortcuts and the deep dive in words first. Steps print in path order.
+  const govClean = (body: string) =>
+    clean(body
+      .replace(/<Track for="small">/g, '\nSmall team:\n')
+      .replace(/<Track for="enterprise">/g, '\nEnterprise:\n')
+      .replace(/<Shortcut quote="([^"]*)">/g, '\nThe shortcut: "$1"\n')
+      .replace(/<DeepDive>/g, '\nDeep dive\n'));
+  const govBySlug = new Map(govEssays.filter((e) => e.data.status !== 'draft').map((e) => [e.id, e]));
+  out += `\n\n========================================\nAI GOVERNANCE, FROM SCRATCH\n========================================\n`;
+  for (const s of STEPS) {
+    const e = govBySlug.get(s.slug);
+    if (!e) continue;
+    out += `\n\n---\n\n# Step ${s.n}: ${s.title}\n\nSource: ${base}/governance/${s.slug}/\n`;
+    out += `\n${e.data.dek}\n\nDone when: ${s.doneWhen}\n`;
+    out += `Starter kit: ${s.kit.map(kitUrl).join(' ')}\n`;
+    out += `\n${govClean(e.body ?? '')}\n`;
+  }
 
   return new Response(out, {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },

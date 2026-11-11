@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { STEPS, stepByN } from '~/data/governance-path';
 import { byLayer, bySlug, ENTRIES, type Layer } from '~/data/pattern-language';
 
 // Generated llms.txt: a curated, link-first index of the Lab for LLMs and
@@ -7,7 +8,7 @@ import { byLayer, bySlug, ENTRIES, type Layer } from '~/data/pattern-language';
 export async function GET(context: APIContext) {
   const base = (context.site?.toString() ?? 'https://agenticlab.sunilprakash.com/').replace(/\/$/, '');
 
-  const [chapters, fieldNotes, signal, recipes, labs, architecture, patternEssays] = await Promise.all([
+  const [chapters, fieldNotes, signal, recipes, labs, architecture, patternEssays, governanceEssays] = await Promise.all([
     getCollection('chapters'),
     getCollection('fieldNotes'),
     getCollection('signal'),
@@ -15,6 +16,7 @@ export async function GET(context: APIContext) {
     getCollection('labs'),
     getCollection('architecture'),
     getCollection('patterns'),
+    getCollection('governance'),
   ]);
 
   const byDateDesc = (a: any, b: any) =>
@@ -67,6 +69,14 @@ export async function GET(context: APIContext) {
     })
     .join('\n');
 
+  const govWritten = new Set(governanceEssays.filter((e) => e.data.status !== 'draft').map((e) => e.id));
+  const governance = STEPS.map((s) => {
+    const name = govWritten.has(s.slug) ? `[Step ${s.n}: ${s.title}](${base}/governance/${s.slug}/)` : `Step ${s.n}: ${s.title}`;
+    const rests = s.n === 22 ? 'every step' : s.restsOn.length ? s.restsOn.map((n) => `${n} ${stepByN(n)!.short}`).join(', ') : 'nothing';
+    const pats = s.patterns.length ? ` Patterns: ${s.patterns.join(', ')}.` : '';
+    return `- ${name}. Done when: ${s.doneWhen} Rests on: ${rests}.${pats}`;
+  }).join('\n');
+
   const body = `# Agent Engineering Lab
 
 > A working publication on building agent systems that survive contact with reality. Field Notes, Signals, Recipes, Lab Notes, Architecture blueprints, and an interactive Bench, grounded in evidence. Written by Sunil Prakash.
@@ -79,6 +89,13 @@ export async function GET(context: APIContext) {
 ## What this is
 
 The Lab is a layered editorial system. The book is the canonical reference. Four ongoing streams sit alongside it: Field Notes are observations from inside the work, Signals are commentary on the discourse around agent engineering, Recipes are buildable-in-an-afternoon walkthroughs with verified code, and Lab Notes are empirical experiments with measured results. Evidence, Patterns, and Projects are reference material. The Bench is an interactive, in-browser playground.
+
+## AI governance, from scratch
+
+One opinionated path from no AI governance to running it across many teams, built on the open AI governance framework (https://github.com/sunilp/ai-governance-framework, v2.0.0). Every step rests only on earlier steps.
+${governance}
+
+Index: ${base}/governance/
 
 ## Architecture blueprints
 ${arch}
