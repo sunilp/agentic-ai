@@ -37,7 +37,7 @@ const { featured, rest } = buildHomeFeed({
 const webp = (src: string) => src.replace(/\.png$/, '.webp');
 const meta = (i: FeedItem) => {
   const when = `${i.dateLabel ? i.dateLabel + ' ' : ''}${formatFeedDate(i.date)}`;
-  return i.minutes ? `${when} · ${i.minutes} min` : when;
+  return i.minutes ? `${when}, ${i.minutes} min read` : when;
 };
 
 const streamLinks = [
@@ -51,7 +51,7 @@ const streamLinks = [
 
 <section class="latest" aria-labelledby="latest-heading">
   <header class="latest__header">
-    <h2 id="latest-heading" class="latest__label">Latest</h2>
+    <h2 id="latest-heading" class="latest__label">Latest work</h2>
     <nav class="latest__streams" aria-label="Browse by stream">
       {streamLinks.map((s, i) => (
         <>
@@ -122,16 +122,13 @@ const streamLinks = [
 </section>
 
 <style>
-  .latest { margin: var(--space-6) 0 var(--space-8); border-top: 3px solid var(--ink); }
+  .latest { margin: var(--space-6) 0 var(--space-8); }
 
   .latest__header {
     display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
-    gap: var(--space-2) var(--space-5); padding: var(--space-3) 0 var(--space-5);
+    gap: var(--space-2) var(--space-5); padding: 0 0 var(--space-3); margin-bottom: var(--space-6); border-bottom: 1px solid var(--ink);
   }
-  .latest__label {
-    font-family: var(--font-mono); font-size: var(--meta-3); font-weight: 400;
-    letter-spacing: var(--tracking-rubric); text-transform: uppercase; color: var(--brick); margin: 0;
-  }
+  .latest__label { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: var(--display-2); margin: 0; }
   .latest__streams { font-family: var(--font-body); font-style: italic; font-size: var(--body-2); }
   .latest__streams a { color: var(--fg); }
   .latest__streams a:hover { color: var(--brick); }
@@ -147,10 +144,11 @@ const streamLinks = [
     display: block; width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover;
     border: 1px solid var(--fg-faint); border-radius: var(--radius-sm); background: var(--paper-recess);
   }
+  .featured__spot, .row__spot { mix-blend-mode: multiply; }
   .featured__spot { display: block; max-width: min(420px, 82%); height: auto; margin: 0 auto; }
   .featured__rubric {
-    font-family: var(--font-mono); font-size: var(--meta-3);
-    letter-spacing: var(--tracking-rubric); text-transform: uppercase; color: var(--brick);
+    font-family: var(--font-mono); font-size: var(--meta-2);
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--brick);
   }
   .featured__title {
     font-family: var(--font-display); font-weight: 400; font-size: var(--display-1);
@@ -163,8 +161,7 @@ const streamLinks = [
     margin: var(--space-4) 0 0; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
   }
   .featured__meta {
-    margin-top: var(--space-4); font-family: var(--font-mono); font-size: var(--meta-2);
-    letter-spacing: var(--tracking-loose); text-transform: uppercase; color: var(--fg-light);
+    margin-top: var(--space-4); font-family: var(--font-body); font-style: italic; font-size: var(--body-2); color: var(--fg-light);
   }
 
   /* List + rail */
@@ -191,10 +188,10 @@ const streamLinks = [
   }
   .row__rubric {
     display: flex; flex-wrap: wrap; gap: 0 var(--space-3);
-    font-family: var(--font-mono); font-size: var(--meta-3);
-    letter-spacing: var(--tracking-rubric); text-transform: uppercase; color: var(--brick);
+    align-items: baseline; font-family: var(--font-mono); font-size: var(--meta-3);
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--brick);
   }
-  .row__date { color: var(--fg-light); letter-spacing: var(--tracking-loose); }
+  .row__date { font-family: var(--font-body); font-style: italic; font-size: 14.5px; letter-spacing: 0; text-transform: none; color: var(--fg-light); }
   .row__title {
     font-family: var(--font-display); font-weight: 600; font-size: clamp(19px, 2.2vw, 22px);
     line-height: 1.25; margin: var(--space-2) 0 0;

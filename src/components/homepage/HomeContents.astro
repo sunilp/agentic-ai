@@ -1,0 +1,75 @@
+---
+/**
+ * HomeContents: the Lab's table of contents. One row per section, saying what it
+ * is and how much is there, so a first visit shows the whole shelf at once.
+ * Counts are read from the collections, so they cannot drift.
+ */
+import { getCollection } from 'astro:content';
+import { STEPS } from '~/data/governance-path';
+
+const live = <T extends { data: { status?: string } }>(xs: T[]) => xs.filter((x) => x.data.status !== 'draft');
+const [chapters, arch, gov, patterns, notes, signal, labs] = await Promise.all([
+  getCollection('chapters'), getCollection('architecture'), getCollection('governance'),
+  getCollection('patterns'), getCollection('fieldNotes'), getCollection('signal'), getCollection('labs'),
+]);
+const n = (count: number, one: string, many: string) => `${count} ${count === 1 ? one : many}`;
+
+const rows = [
+  { href: '/book/', name: 'The Book', what: 'Agentic AI for Serious Engineers, from first tool call to production', count: live(chapters).length < chapters.length ? `${chapters.length} chapters, ${live(chapters).length} free here` : n(chapters.length, 'chapter', 'chapters') },
+  { href: '/architecture/', name: 'Architecture', what: 'Blueprints for what a system can do, may do, and can prove it did', count: n(live(arch).length, 'blueprint', 'blueprints') },
+  { href: '/governance/', name: 'Governance', what: 'Standing up AI governance from nothing, one step at a time', count: `${live(gov).length} of ${STEPS.length} steps` },
+  { href: '/patterns/', name: 'Patterns', what: 'A pattern language for shipping agents, anti-patterns included', count: n(patterns.length, 'pattern', 'patterns') },
+  { href: '/labs/', name: 'Labs', what: 'Experiments with the repo, the data and the seed published', count: n(labs.length, 'report', 'reports') },
+  { href: '/field-notes/', name: 'Field Notes', what: 'Notes from inside the work of building agents', count: n(notes.length, 'note', 'notes') },
+  { href: '/signal/', name: 'Signal', what: 'What to keep and what to skip in the talk around agents', count: n(signal.length, 'piece', 'pieces') },
+];
+---
+<section class="contents" aria-labelledby="contents-heading">
+  <h2 id="contents-heading" class="contents__heading">In the Lab</h2>
+  <ol class="contents__list">
+    {rows.map((r) => (
+      <li>
+        <a class="contents__row" href={r.href}>
+          <span class="contents__name">{r.name}</span>
+          <span class="contents__what">{r.what}</span>
+          <span class="contents__dots" aria-hidden="true"></span>
+          <span class="contents__count">{r.count}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+  <p class="contents__also">
+    New here? <a href="/start/">Pick a path</a>. The Lab's position is in the <a href="/manifesto/">manifesto</a>, its terms in the <a href="/glossary/">glossary</a>.
+  </p>
+</section>
+
+<style>
+  .contents { margin: var(--space-6) 0 var(--space-8); }
+  .contents__heading {
+    font-family: var(--font-display); font-weight: 400; font-style: italic;
+    font-size: var(--display-2); margin: 0 0 var(--space-3);
+  }
+  .contents__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .contents__row {
+    display: grid; grid-template-columns: 190px auto minmax(24px, 1fr) auto;
+    align-items: baseline; gap: 0 var(--space-3);
+    padding: 15px 0; border-bottom: 1px solid var(--fg-faint); color: var(--fg);
+  }
+  .contents__name { font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.2; transition: color var(--dur-micro) var(--ease-out); }
+  .contents__what { font-family: var(--font-body); font-size: 18px; line-height: 1.35; color: #4a4a48; }
+  .contents__dots { border-bottom: 1px dotted #b5b2aa; transform: translateY(-5px); }
+  .contents__count { font-family: var(--font-body); font-style: italic; font-size: 17px; color: var(--fg-light); white-space: nowrap; font-variant-numeric: oldstyle-nums; }
+  .contents__row:hover .contents__name { color: var(--brick); }
+  .contents__row:hover .contents__dots { border-bottom-color: var(--brick); }
+  .contents__also { margin: var(--space-4) 0 0; font-family: var(--font-body); font-size: 17px; color: var(--fg-light); }
+  .contents__also a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--brick); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  .contents__also a:hover { color: var(--brick); }
+
+  @media (max-width: 860px) {
+    .contents__row { grid-template-columns: minmax(0, 1fr) auto; gap: 2px var(--space-3); padding: 13px 0; }
+    .contents__name { grid-column: 1; }
+    .contents__count { grid-column: 2; grid-row: 1; }
+    .contents__what { grid-column: 1 / -1; font-size: 16.5px; }
+    .contents__dots { display: none; }
+  }
+</style>

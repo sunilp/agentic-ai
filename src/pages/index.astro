@@ -3,7 +3,7 @@ import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
 import HeroEditorial from '~/components/homepage/HeroEditorial.astro';
 import LatestFeed from '~/components/homepage/LatestFeed.astro';
-import ManifestoPullquote from '~/components/homepage/ManifestoPullquote.astro';
+import HomeContents from '~/components/homepage/HomeContents.astro';
 ---
 
 <PageLayout
@@ -13,8 +13,7 @@ import ManifestoPullquote from '~/components/homepage/ManifestoPullquote.astro';
 >
   <Container>
     <HeroEditorial />
+    <HomeContents />
     <LatestFeed />
   </Container>
-
-  <ManifestoPullquote />
 </PageLayout>

@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import ArticleHeader from '~/components/universal/ArticleHeader.astro';
 
 const entries = (await getCollection('architecture'))
   .filter((e) => e.data.status !== 'draft')
@@ -12,17 +11,20 @@ const LAYERS = [
   {
     key: 'capability',
     label: 'Capability',
-    line: 'What the system can do. Models, retrieval, memory, tools, orchestration.',
+    question: 'What the system can do',
+    covers: 'Models, retrieval, memory, tools, orchestration',
   },
   {
     key: 'control',
     label: 'Control',
-    line: 'What the system is allowed to do. Chokepoints, detectors, policy, authority, human gates.',
+    question: 'What the system is allowed to do',
+    covers: 'Chokepoints, detectors, policy, authority, human gates',
   },
   {
     key: 'evidence',
     label: 'Evidence',
-    line: 'How you know what it did. Evaluation, telemetry, tracing, audit.',
+    question: 'How you know what it did',
+    covers: 'Evaluation, telemetry, tracing, audit',
   },
 ] as const;
 
@@ -30,6 +32,14 @@ const byLayer = LAYERS.map((l) => ({
   ...l,
   items: entries.filter((e) => e.data.layer === l.key),
 }));
+
+// When every blueprint applies to the same systems, say it once instead of on every row.
+const applies = entries.map((e) => e.data.appliesTo.join(', '));
+const sharedApplies = applies.length > 0 && applies.every((a) => a === applies[0]) ? entries[0].data.appliesTo : null;
+const list = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0] ?? '');
+// 'RAG platform' -> 'RAG platforms', 'Coding assistant' -> 'coding assistants': acronyms keep their capitals.
+const plural = (a: string) => `${a.split(' ').map((w) => (w === w.toUpperCase() ? w : w.toLowerCase())).join(' ')}s`;
+const n = (c: number) => (c === 0 ? 'No blueprint yet' : `${c} ${c === 1 ? 'blueprint' : 'blueprints'}`);
 ---
 
 <PageLayout
@@ -37,48 +47,61 @@ const byLayer = LAYERS.map((l) => ({
   description="Architectural blueprints for AI systems. Each one specifies a layer, names the decisions it forces, and says where the pattern breaks."
   currentNav="Architecture"
 >
-  <Container>
-    <div class="arch-index__header">
-      <ArticleHeader
-        rubric="ARCHITECTURE"
-        title="Architecture"
-        dek="Blueprints, not opinions. Each one pins down a layer of an AI system, names the decisions it forces on you, and says where the pattern stops working."
-      />
-    </div>
+  <Container maxWidth="1080px">
+    <header class="arch-hero">
+      <div class="arch-hero__text">
+        <h1 class="arch-hero__title">Architecture</h1>
+        <p class="arch-hero__dek">Blueprints for AI systems. Each one pins down a layer, names the decisions it forces on you, and says where the pattern stops working.</p>
+        <p class="arch-hero__body">
+          Most published reference architectures are a capability diagram with a governance box drawn beside it.
+          Capability is the part vendors will sell you. The other two layers are where systems fail in production,
+          so here each one gets its own blueprints.
+        </p>
+      </div>
 
-    <section class="arch-thesis">
-      <p>
-        Most published AI reference architectures are a capability diagram with a governance
-        box drawn beside it. The capability layer is the part the industry has converged on
-        and the part vendors will sell you. The other two are where systems actually fail
-        in production, and they get a box.
-      </p>
-      <p>
-        This section splits an AI system into three layers and treats each as load-bearing:
-        <strong>what it can do</strong>, <strong>what it is allowed to do</strong>, and
-        <strong>how you know what it did</strong>. Blueprints are written to be read in
-        order within a layer, and revised rather than republished.
-      </p>
-      <p class="arch-thesis__aside">
-        These are engineering specifications. For the same territory at board and operating-model
-        altitude, funding, mandate, maturity and the org structure around all of this, see the
-        <a href="https://sunilprakash.com/enterprise-ai/">Enterprise AI Transformation playbook</a>.
-      </p>
-      <p class="arch-thesis__aside">
-        Standing governance up from nothing? Start with the guide,
-        <a href="/governance/">AI Governance, from Scratch</a>, and come back here for the engineering.
-      </p>
-    </section>
+      <figure class="arch-figure">
+        <svg viewBox="0 0 460 250" role="img" aria-labelledby="arch-fig-title">
+          <title id="arch-fig-title">Left, the usual drawing: a large capability diagram with a small governance box beside it. Right, this section: capability, control and evidence as three equal layers.</title>
+          <g class="arch-figure__usual">
+            <rect x="8" y="34" width="138" height="150" />
+            <rect x="20" y="62" width="52" height="26" /><rect x="82" y="62" width="52" height="26" />
+            <rect x="20" y="98" width="52" height="26" /><rect x="82" y="98" width="52" height="26" />
+            <rect x="20" y="134" width="114" height="26" />
+            <rect x="158" y="34" width="38" height="150" class="arch-figure__box" />
+            <text x="77" y="52" text-anchor="middle">capability</text>
+            <text x="177" y="109" text-anchor="middle" transform="rotate(-90 177 109)" dominant-baseline="middle">governance</text>
+          </g>
+          <g class="arch-figure__ours">
+            {byLayer.map((l, i) => (
+              <a href={`#layer-${l.key}`}>
+                <rect x="252" y={34 + i * 50} width="200" height="50" />
+                <text x="266" y={34 + i * 50 + 22} class="arch-figure__name">{l.label}</text>
+                <text x="266" y={34 + i * 50 + 38} class="arch-figure__q">{l.question.replace('What the system ', 'what it ').replace('How you know what it did', 'how you know what it did')}</text>
+              </a>
+            ))}
+          </g>
+          <text x="102" y="212" text-anchor="middle" class="arch-figure__cap">The usual drawing</text>
+          <text x="352" y="212" text-anchor="middle" class="arch-figure__cap arch-figure__cap--ours">This section</text>
+          <path d="M214 109 H236" class="arch-figure__arrow" /><path d="M231 104 L237 109 L231 114" class="arch-figure__arrow" />
+        </svg>
+      </figure>
+    </header>
 
     {entries.length === 0 ? (
       <p class="arch-index__empty">No blueprints published yet.</p>
     ) : (
-      <div class="arch-layers">
+      <div class="arch-ledger">
+        <p class="arch-ledger__note">
+          Read the blueprints in order within a layer. They are revised in place, so a link stays good.
+          {sharedApplies && <> Every one applies to {list(sharedApplies.map((a) => plural(a)))}.</>}
+        </p>
         {byLayer.map((layer) => (
-          <section class="arch-layer">
+          <section class:list={['arch-layer', layer.items.length === 0 && 'arch-layer--empty']} id={`layer-${layer.key}`} aria-labelledby={`layer-${layer.key}-h`}>
             <header class="arch-layer__header">
-              <h2 class="arch-layer__title">{layer.label}</h2>
-              <p class="arch-layer__line">{layer.line}</p>
+              <h2 class="arch-layer__title" id={`layer-${layer.key}-h`}>{layer.label}</h2>
+              <p class="arch-layer__question">{layer.question}</p>
+              <p class="arch-layer__covers">{layer.covers}</p>
+              <p class="arch-layer__count">{n(layer.items.length)}</p>
             </header>
             {layer.items.length > 0 ? (
               <ol class="arch-list">
@@ -89,184 +112,108 @@ const byLayer = LAYERS.map((l) => ({
                       <span class="arch-list__body">
                         <span class="arch-list__title">{e.data.title}</span>
                         <span class="arch-list__dek">{e.data.dek}</span>
-                        <span class="arch-list__meta">
-                          {e.data.appliesTo.join(' · ')} <span class="arch-list__dot">·</span> {e.data.readingTime} min
-                        </span>
+                        {!sharedApplies && <span class="arch-list__applies">For {list(e.data.appliesTo.map((a) => plural(a)))}</span>}
                       </span>
+                      <span class="arch-list__time">{e.data.readingTime} min</span>
                     </a>
                   </li>
                 ))}
               </ol>
             ) : (
               <p class="arch-layer__empty">
-                No blueprint yet. The {layer.label.toLowerCase()} patterns live in the <a href="/patterns/">pattern catalogue</a>.
+                This layer has no blueprint yet. Its patterns are in the <a href="/patterns/">pattern catalogue</a>.
               </p>
             )}
           </section>
         ))}
       </div>
     )}
+
+    <aside class="arch-related" aria-labelledby="arch-related-h">
+      <h2 id="arch-related-h" class="arch-related__h">Around these blueprints</h2>
+      <ul>
+        <li><a href="/governance/"><b>AI Governance, from Scratch</b><span>Standing governance up from nothing? Start with the guide, then come back for the engineering.</span></a></li>
+        <li><a href="/patterns/"><b>The pattern catalogue</b><span>The named patterns these blueprints are built from.</span></a></li>
+        <li><a href="https://sunilprakash.com/enterprise-ai/"><b>Enterprise AI Transformation playbook</b><span>The same territory at board altitude: funding, mandate, maturity and org structure.</span></a></li>
+      </ul>
+    </aside>
   </Container>
 </PageLayout>
 
 <style>
-  .arch-index__header {
-    margin: 0 0 var(--space-5);
-    text-align: center;
+  .arch-hero {
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6);
+    align-items: center; padding: var(--space-8) 0 var(--space-7);
   }
-
-  .arch-thesis__aside {
-    font-size: var(--body-2);
-    color: var(--fg-light);
-    border-top: 1px solid var(--fg-faint);
-    padding-top: var(--space-4);
-    margin-top: var(--space-4);
+  @media (min-width: 900px) { .arch-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: var(--space-8); } }
+  .arch-hero__title {
+    font-family: var(--font-display); font-weight: 300; font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.02; letter-spacing: var(--tracking-tight); font-variation-settings: 'opsz' 144; margin: 0;
   }
+  .arch-hero__dek { font-family: var(--font-body); font-style: italic; font-size: var(--dek-size); line-height: 1.5; color: #3c3c3a; max-width: 42ch; margin: var(--space-4) 0 0; }
+  .arch-hero__body { font-family: var(--font-body); font-size: 18px; line-height: 1.6; color: #4a4a48; max-width: 52ch; margin: var(--space-4) 0 0; }
 
-  .arch-thesis__aside a {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--brick);
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
+  .arch-figure { margin: 0; }
+  .arch-figure svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); }
+  .arch-figure rect { fill: none; stroke: #b5b2aa; stroke-width: 1; }
+  .arch-figure__usual text { font-size: 10.5px; fill: #8a8780; }
+  .arch-figure__ours rect { fill: #fff; stroke: var(--ink); stroke-width: 1.2; transition: fill var(--dur-micro) var(--ease-out); }
+  .arch-figure__ours a:hover rect, .arch-figure__ours a:focus-visible rect { fill: #f5ece9; stroke: var(--brick); }
+  .arch-figure__name { font-family: var(--font-display); font-style: italic; font-size: 17px; fill: var(--ink); }
+  .arch-figure__q { font-size: 10.5px; fill: #6b6b6b; }
+  .arch-figure__cap { font-family: var(--font-body); font-style: italic; font-size: 14px; fill: #8a8780; }
+  .arch-figure__cap--ours { fill: var(--brick); }
+  .arch-figure__arrow { fill: none; stroke: var(--brick); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  .arch-ledger { border-top: 1px solid var(--ink); }
+  .arch-ledger__note { font-family: var(--font-body); font-style: italic; font-size: 17px; color: var(--fg-light); margin: var(--space-3) 0 0; }
+
+  .arch-layer { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); padding: var(--space-7) 0; border-bottom: 1px solid var(--ink); scroll-margin-top: 80px; }
+  .arch-layer--empty { padding: var(--space-5) 0; }
+  @media (min-width: 900px) {
+    .arch-layer { grid-template-columns: 250px minmax(0, 1fr); gap: var(--space-8); }
+    .arch-layer__header { position: sticky; top: 96px; align-self: start; }
   }
+  .arch-layer__title { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(30px, 3.6vw, 40px); line-height: 1.05; margin: 0; }
+  .arch-layer__question { font-family: var(--font-body); font-size: 19px; line-height: 1.35; color: var(--ink); margin: var(--space-2) 0 0; }
+  .arch-layer__covers { font-family: var(--font-body); font-size: 16px; line-height: 1.45; color: var(--fg-light); margin: var(--space-2) 0 0; }
+  .arch-layer__count { font-family: var(--font-body); font-style: italic; font-size: 15px; color: var(--brick); margin: var(--space-3) 0 0; }
+  .arch-layer--empty .arch-layer__covers, .arch-layer--empty .arch-layer__count { display: none; }
 
-  .arch-thesis__aside a:hover { color: var(--brick); }
-
-  .arch-thesis {
-    max-width: var(--reader-max);
-    margin: 0 auto var(--space-7);
-    padding-bottom: var(--space-5);
-    border-bottom: 1px solid var(--fg-faint);
-  }
-
-  .arch-thesis p {
-    font-family: var(--font-body);
-    font-size: var(--body-2);
-    line-height: var(--lh-base);
-    color: var(--fg);
-    margin: 0 0 var(--space-3);
-  }
-
-  .arch-thesis p:last-child { margin-bottom: 0; }
-
-  .arch-layers {
-    max-width: var(--reader-max);
-    margin: 0 auto;
-  }
-
-  .arch-layer { margin: 0 0 var(--space-7); }
-
-  .arch-layer__header {
-    margin: 0 0 var(--space-4);
-    padding-bottom: var(--space-2);
-    border-bottom: 2px solid var(--brick);
-  }
-
-  .arch-layer__title {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: var(--display-2);
-    line-height: var(--lh-tight);
-    color: var(--fg);
-    margin: 0 0 4px;
-  }
-
-  .arch-layer__line {
-    font-family: var(--font-body);
-    font-size: var(--body-3);
-    color: var(--fg-light);
-    margin: 0;
-  }
-
-  .arch-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .arch-list__item + .arch-list__item {
-    border-top: 1px solid var(--fg-faint);
-  }
-
+  .arch-list { list-style: none; margin: 0; padding: 0; }
+  .arch-list__item + .arch-list__item { border-top: 1px solid var(--fg-faint); }
   .arch-list__link {
-    display: grid;
-    grid-template-columns: 88px 1fr;
-    gap: var(--space-4);
-    padding: var(--space-4) 0;
-    border-bottom: none;
+    display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: var(--space-4);
+    align-items: baseline; padding: var(--space-4) 0; color: var(--fg);
   }
-
-  .arch-list__link:hover .arch-list__title { color: var(--brick); }
-
-  .arch-list__num {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    letter-spacing: 0.14em;
-    color: var(--brick);
-    padding-top: 5px;
-  }
-
+  .arch-list__item:first-child .arch-list__link { padding-top: 6px; }
+  .arch-list__num { font-family: var(--font-mono); font-size: var(--meta-2); letter-spacing: 0.08em; color: var(--brick); }
   .arch-list__body { display: block; }
+  .arch-list__title { display: block; font-family: var(--font-display); font-weight: 500; font-size: 23px; line-height: 1.25; transition: color var(--dur-micro) var(--ease-out); }
+  .arch-list__link:hover .arch-list__title { color: var(--brick); }
+  .arch-list__dek { display: block; font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: #4a4a48; margin-top: 4px; max-width: 62ch; }
+  .arch-list__applies { display: block; font-family: var(--font-body); font-style: italic; font-size: 15px; color: var(--fg-light); margin-top: 4px; }
+  .arch-list__time { font-family: var(--font-body); font-style: italic; font-size: 15px; color: var(--fg-light); white-space: nowrap; }
 
-  .arch-list__title {
-    display: block;
-    font-family: var(--font-display);
-    font-size: var(--display-3);
-    line-height: var(--lh-snug);
-    color: var(--fg);
-    margin-bottom: 4px;
-    transition: color var(--dur-micro) var(--ease-out);
-  }
-
-  .arch-list__dek {
-    display: block;
-    font-family: var(--font-body);
-    font-size: var(--body-3);
-    line-height: var(--lh-snug);
-    color: var(--fg-light);
-    margin-bottom: 6px;
-  }
-
-  .arch-list__meta {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--fg-lighter);
-  }
-
-  .arch-list__dot { color: var(--brick); }
-
-  .arch-layer__empty {
-    font-family: var(--font-body);
-    font-size: var(--body-2);
-    font-style: italic;
-    color: var(--fg-light);
-    margin: 0;
-    padding: var(--space-3) 0;
-  }
-
-  .arch-layer__empty a {
-    color: var(--fg);
-    text-decoration: underline;
-    text-decoration-color: var(--brick);
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
-  }
-
+  .arch-layer__empty { font-family: var(--font-body); font-size: 17px; color: var(--fg-light); margin: 0; align-self: center; }
+  .arch-layer__empty a, .arch-related a b { text-decoration: underline; text-decoration-color: var(--brick); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  .arch-layer__empty a { color: var(--fg); }
   .arch-layer__empty a:hover { color: var(--brick); }
 
-  .arch-index__empty {
-    color: var(--fg-light);
-    font-style: italic;
-    margin: var(--space-7) 0;
-    text-align: center;
-  }
+  .arch-related { margin: var(--space-7) 0 var(--space-8); }
+  .arch-related__h { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: var(--display-2); margin: 0 0 var(--space-4); }
+  .arch-related ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-5) var(--space-7); }
+  .arch-related a { display: block; color: var(--fg); }
+  .arch-related a b { display: block; font-family: var(--font-display); font-weight: 500; font-size: 19px; line-height: 1.3; }
+  .arch-related a span { display: block; font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: #4a4a48; margin-top: 4px; }
+  .arch-related a:hover b { color: var(--brick); }
 
-  @media (max-width: 720px) {
-    .arch-list__link { grid-template-columns: 1fr; gap: 4px; }
-    .arch-list__num { padding-top: 0; }
+  .arch-index__empty { color: var(--fg-light); font-style: italic; margin: var(--space-7) 0; }
+
+  @media (max-width: 620px) {
+    .arch-list__link { grid-template-columns: minmax(0, 1fr) auto; gap: 2px var(--space-3); }
+    .arch-list__num { grid-column: 1; }
+    .arch-list__time { grid-column: 2; grid-row: 1; }
+    .arch-list__body { grid-column: 1 / -1; }
   }
 </style>
