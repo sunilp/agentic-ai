@@ -2,62 +2,27 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import MagazineGrid from '~/components/layout/MagazineGrid.astro';
-import ArticleHeader from '~/components/universal/ArticleHeader.astro';
-import Cadence from '~/components/universal/Cadence.astro';
-import EntryCard from '~/components/universal/EntryCard.astro';
+import IndexHeader from '~/components/universal/IndexHeader.astro';
+import EntryList from '~/components/universal/EntryList.astro';
 
-const entries = await getCollection('fieldNotes');
-const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const entries = (await getCollection('fieldNotes')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const items = entries.map((e) => ({
+  href: `/field-notes/${e.id}/`, id: e.data.id.toUpperCase(), title: e.data.title, line: e.data.dek,
+  date: e.data.date, minutes: e.data.readingTime, image: e.data.spot, imageKind: 'spot' as const,
+}));
 ---
 
 <PageLayout
   title="Field Notes — Agent Engineering Lab"
-  description="Twice-weekly Field Notes on building agents that survive contact with reality."
+  description="Field Notes on building agents that survive contact with reality."
   currentNav="Field Notes"
 >
-  <Container>
-    <div class="fn-index__header">
-      <ArticleHeader
-        rubric="FIELD NOTES"
-        title="Field Notes"
-        dek="Twice-weekly observations on building agents that survive contact with reality."
-      />
-      <Cadence text="Thursdays · Sundays" />
-    </div>
-
-    {sorted.length === 0 ? (
-      <p class="fn-index__empty">No Field Notes published yet.</p>
-    ) : (
-      <MagazineGrid cols={3}>
-        {sorted.map((e) => (
-          <EntryCard
-            href={`/field-notes/${e.id}/`}
-            rubric={`FIELD NOTE · ${e.data.id.toUpperCase()} · ${e.data.date.toISOString().slice(0, 10)}`}
-            title={e.data.title}
-            line={e.data.dek}
-            image={e.data.spot}
-            imageKind="spot"
-          />
-        ))}
-      </MagazineGrid>
-    )}
+  <Container maxWidth="1080px">
+    <IndexHeader title="Field Notes" dek="Notes from inside the work of building agents that survive contact with reality." />
+    {items.length === 0 ? <p class="index-empty">No Field Notes published yet.</p> : <EntryList items={items} lead label="Field Notes, newest first" />}
   </Container>
 </PageLayout>
 
 <style>
-  .fn-index__header {
-    margin: 0 0 var(--space-6);
-    text-align: center;
-  }
-
-  .fn-index__header :global(.cadence) {
-    margin-top: var(--space-2);
-  }
-
-  .fn-index__empty {
-    color: var(--fg-light);
-    font-style: italic;
-    margin: var(--space-7) 0;
-  }
+  .index-empty { color: var(--fg-light); font-style: italic; margin: var(--space-7) 0; }
 </style>

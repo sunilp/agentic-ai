@@ -1,0 +1,33 @@
+---
+/**
+ * IndexHeader: the header for section index pages. Left-aligned title in light
+ * Fraunces with an italic dek, matching Home, Architecture and Governance.
+ * No label above the title: the title already says where you are.
+ * Optional `aside` slot sits to the right on wide screens (a figure, a cover).
+ */
+interface Props { title: string; dek?: string }
+const { title, dek } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+---
+<header class:list={['index-header', hasAside && 'index-header--aside']}>
+  <div class="index-header__text">
+    <h1 class="index-header__title">{title}</h1>
+    {dek && <p class="index-header__dek">{dek}</p>}
+    <slot />
+  </div>
+  {hasAside && <div class="index-header__aside"><slot name="aside" /></div>}
+</header>
+
+<style>
+  .index-header { padding: var(--space-8) 0 var(--space-6); border-bottom: 1px solid var(--ink); margin-bottom: var(--space-6); }
+  .index-header--aside { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); align-items: center; }
+  @media (min-width: 860px) { .index-header--aside { grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-8); } }
+  .index-header__title {
+    font-family: var(--font-display); font-weight: 300; font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.02; letter-spacing: var(--tracking-tight); font-variation-settings: 'opsz' 144; margin: 0; text-wrap: balance;
+  }
+  .index-header__dek {
+    font-family: var(--font-body); font-style: italic; font-size: var(--dek-size); line-height: 1.5;
+    color: #3c3c3a; max-width: 58ch; margin: var(--space-4) 0 0;
+  }
+</style>

@@ -2,13 +2,14 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import MagazineGrid from '~/components/layout/MagazineGrid.astro';
-import ArticleHeader from '~/components/universal/ArticleHeader.astro';
-import Cadence from '~/components/universal/Cadence.astro';
-import EntryCard from '~/components/universal/EntryCard.astro';
+import IndexHeader from '~/components/universal/IndexHeader.astro';
+import EntryList from '~/components/universal/EntryList.astro';
 
-const entries = await getCollection('recipes');
-const sorted = entries.sort((a, b) => b.data.verifiedOn.getTime() - a.data.verifiedOn.getTime());
+const entries = (await getCollection('recipes')).sort((a, b) => b.data.verifiedOn.getTime() - a.data.verifiedOn.getTime());
+const items = entries.map((e) => ({
+  href: `/recipes/${e.id}/`, id: e.data.id.toUpperCase(), title: e.data.title, line: e.data.description,
+  date: e.data.verifiedOn, dateLabel: 'Verified', minutes: e.data.estimatedMinutes, image: e.data.spot, imageKind: 'spot' as const,
+}));
 ---
 
 <PageLayout
@@ -16,46 +17,15 @@ const sorted = entries.sort((a, b) => b.data.verifiedOn.getTime() - a.data.verif
   description="Verified-on-real-systems Recipes. Build it in an afternoon."
   currentNav="Recipes"
 >
-  <Container>
-    <div class="r-index__header">
-      <ArticleHeader
-        rubric="RECIPES"
-        title="Recipes"
-        dek="Build it in an afternoon. Every Recipe verified end-to-end against a live system on a known date with explicit versions."
-      />
-      <Cadence text="Every other Wednesday" />
-    </div>
-
-    {sorted.length === 0 ? (
-      <p class="r-index__empty">No Recipes published yet.</p>
-    ) : (
-      <MagazineGrid cols={3}>
-        {sorted.map((e) => (
-          <EntryCard
-            href={`/recipes/${e.id}/`}
-            rubric={`RECIPE · ${e.data.id.toUpperCase()} · Verified ${e.data.verifiedOn.toISOString().slice(0, 10)}`}
-            title={e.data.title}
-            line={e.data.description}
-            image={e.data.spot}
-            imageKind="spot"
-          />
-        ))}
-      </MagazineGrid>
-    )}
+  <Container maxWidth="1080px">
+    <IndexHeader
+      title="Recipes"
+      dek="Build it in an afternoon. Every recipe is verified end to end against a live system, on a known date, with explicit versions."
+    />
+    {items.length === 0 ? <p class="index-empty">No Recipes published yet.</p> : <EntryList items={items} lead label="Recipes, newest first" />}
   </Container>
 </PageLayout>
 
 <style>
-  .r-index__header {
-    margin: 0 0 var(--space-6);
-    text-align: center;
-  }
-
-  .r-index__header :global(.cadence) { margin-top: var(--space-2); }
-
-  .r-index__empty {
-    color: var(--fg-light);
-    font-style: italic;
-    margin: var(--space-7) 0;
-  }
+  .index-empty { color: var(--fg-light); font-style: italic; margin: var(--space-7) 0; }
 </style>

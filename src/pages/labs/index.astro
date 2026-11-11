@@ -2,13 +2,17 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import MagazineGrid from '~/components/layout/MagazineGrid.astro';
-import ArticleHeader from '~/components/universal/ArticleHeader.astro';
-import Cadence from '~/components/universal/Cadence.astro';
-import EntryCard from '~/components/universal/EntryCard.astro';
+import IndexHeader from '~/components/universal/IndexHeader.astro';
+import EntryList from '~/components/universal/EntryList.astro';
 
-const entries = await getCollection('labs');
-const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+// Several reports share a date, so ties break on the report number, newest first.
+const entries = (await getCollection('labs')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime() || b.data.id.localeCompare(a.data.id)
+);
+const items = entries.map((e) => ({
+  href: `/labs/${e.id}/`, id: e.data.id.toUpperCase(), title: e.data.title, line: e.data.description,
+  date: e.data.date, minutes: e.data.readingTime, image: e.data.spot, imageKind: 'spot' as const,
+}));
 ---
 
 <PageLayout
@@ -16,40 +20,15 @@ const sorted = entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   description="Empirical Lab Reports. Every claim reproducible from repo + data + seed."
   currentNav="Labs"
 >
-  <Container>
-    <div class="labs-index__header">
-      <ArticleHeader
-        rubric="LAB NOTES"
-        title="Labs"
-        dek="Empirical Lab Reports on agent architecture. Hypothesis, method, results, what we got wrong. Repo + data + seed published with every report."
-      />
-      <Cadence text="Every 2-3 weeks" />
-    </div>
-
-    {sorted.length === 0 ? (
-      <p style="color: var(--fg-light); font-style: italic;">No Labs yet.</p>
-    ) : (
-      <MagazineGrid cols={2}>
-        {sorted.map((e) => (
-          <EntryCard
-            href={`/labs/${e.id}/`}
-            rubric={`LAB · ${e.data.id.toUpperCase()} · ${e.data.date.toISOString().slice(0, 10)}`}
-            title={e.data.title}
-            line={e.data.hypothesis}
-            image={e.data.spot}
-            imageKind="spot"
-          />
-        ))}
-      </MagazineGrid>
-    )}
+  <Container maxWidth="1080px">
+    <IndexHeader
+      title="Labs"
+      dek="Lab reports on agent architecture. Each one states its hypothesis, method and results, says what went wrong, and publishes the repo, the data and the seed."
+    />
+    {items.length === 0 ? <p class="index-empty">No Labs yet.</p> : <EntryList items={items} lead label="Lab reports, newest first" />}
   </Container>
 </PageLayout>
 
 <style>
-  .labs-index__header {
-    margin: 0 0 var(--space-6);
-    text-align: center;
-  }
-
-  .labs-index__header :global(.cadence) { margin-top: var(--space-2); }
+  .index-empty { color: var(--fg-light); font-style: italic; margin: var(--space-7) 0; }
 </style>

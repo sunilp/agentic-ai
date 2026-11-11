@@ -2,9 +2,7 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
-import KineticHeading from '~/components/universal/KineticHeading.astro';
-import Dek from '~/components/universal/Dek.astro';
-import Tag from '~/components/universal/Tag.astro';
+import IndexHeader from '~/components/universal/IndexHeader.astro';
 import PatternWheel from '~/components/islands/PatternWheel.svelte';
 import { ENTRIES, REFERENCED, byLayer, counts, type Entry } from '~/data/pattern-language';
 import { placeEntries } from '~/lib/pattern-wheel';
@@ -73,15 +71,10 @@ const patternTermSet = {
   ogImage="/assets/og/patterns.png"
 >
   <Container>
-    <header style="margin: var(--space-7) 0 var(--space-6);">
-      <Tag>Patterns</Tag>
-      <KineticHeading level={1}>Patterns</KineticHeading>
-      <Dek italic>
-        A pattern language for shipping agentic systems. {c.total} entries: {c.patterns} patterns
-        and {c.antiPatterns} anti-patterns, of which {c.documented} keep an established name,
-        {c.restated} are named here after a prior description, and {c.proposed} are proposed.
-      </Dek>
-    </header>
+    <IndexHeader
+      title="Patterns"
+      dek={`A pattern language for shipping agentic systems. ${c.total} entries: ${c.patterns} patterns and ${c.antiPatterns} anti-patterns. ${c.documented} keep an established name, ${c.restated} are named here after a prior description, and ${c.proposed} are proposed.`}
+    />
 
     <PatternWheel client:visible essaySlugs={essaySlugs} />
 
@@ -165,16 +158,15 @@ const patternTermSet = {
   }
 
   .pat-statuses dt {
-    font-family: var(--font-mono);
-    font-size: var(--meta-3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--brick);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--fg);
     margin: 0 0 4px;
   }
 
   .pat-statuses dd {
-    font-size: var(--body-3);
+    font-size: 15.5px;
     color: var(--fg-light);
     line-height: var(--lh-snug);
     margin: 0;
@@ -188,7 +180,7 @@ const patternTermSet = {
   .pat-group__header {
     margin: 0 0 var(--space-4);
     padding-bottom: var(--space-2);
-    border-bottom: 2px solid var(--brick);
+    border-bottom: 1px solid var(--ink);
   }
 
   .pat-group__title {
@@ -297,7 +289,31 @@ const patternTermSet = {
     font-size: var(--meta-3);
   }
 
+  /* Ledger layout: the layer on the left, its patterns on the right, as on the Architecture index. */
+  .pat-statuses { max-width: none; margin: var(--space-6) 0 var(--space-7); padding: var(--space-4) 0; border-top: 1px solid var(--fg-faint); border-bottom: 1px solid var(--fg-faint); }
+  .pat-statuses dl { grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto; grid-auto-flow: column; gap: 4px var(--space-6); }
+  .pat-group { max-width: none; margin: 0; padding: var(--space-6) 0; border-top: 1px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  .pat-group--referenced { border-bottom: 1px solid var(--ink); margin-bottom: var(--space-8); }
+  .pat-group__header { border-bottom: 0; padding-bottom: 0; margin: 0; }
+  .pat-group__title { font-weight: 400; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.08; margin: 0; }
+  .pat-group--referenced .pat-group__title { font-size: 24px; line-height: 1.2; }
+  .pat-group__line { font-size: 17px; line-height: 1.45; color: #4a4a48; margin-top: var(--space-2); }
+  @media (min-width: 900px) {
+    .pat-group { grid-template-columns: 250px minmax(0, 1fr); gap: var(--space-8); }
+    .pat-group__header { position: sticky; top: 96px; align-self: start; }
+  }
+  .pat-list__item { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 2px var(--space-3); align-items: baseline; }
+  .pat-list__item:first-child { padding-top: 4px; }
+  .pat-list__key { width: auto; font-size: var(--meta-2); color: var(--brick); }
+  .pat-list__name { font-size: 21px; text-decoration: none; justify-self: start; transition: color var(--dur-micro) var(--ease-out); }
+  .pat-list__status { margin-left: 0; font-family: var(--font-body); font-style: italic; font-size: 14.5px; letter-spacing: 0; color: var(--fg-light); text-align: right; }
+  .pat-list__one-line { grid-column: 2 / -1; font-size: 17px; line-height: 1.5; color: #4a4a48; max-width: 62ch; margin: 0; }
+  .pat-referenced li { font-size: 17px; }
+  .pat-referenced__who { font-family: var(--font-body); font-style: italic; font-size: 14.5px; color: var(--fg-light); }
+
   @media (max-width: 720px) {
-    .pat-statuses dl { grid-template-columns: repeat(2, 1fr); }
+    .pat-statuses dl { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, auto); }
+    .pat-list__item { grid-template-columns: 34px minmax(0, 1fr); }
+    .pat-list__status { grid-column: 2; text-align: left; }
   }
 </style>

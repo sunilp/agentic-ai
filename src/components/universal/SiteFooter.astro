@@ -7,15 +7,6 @@
 
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <div class="site-footer__cadence">
-      <span class="site-footer__cadence-label">Cadence</span>
-      <span>Field Notes Thu/Sun</span>
-      <span>·</span>
-      <span>Recipes Wed</span>
-      <span>·</span>
-      <span>Labs every 2-3 wks</span>
-    </div>
-
     <div class="site-footer__columns">
       <div class="site-footer__col">
         <div class="site-footer__col-label">Read</div>
@@ -33,15 +24,15 @@
       </div>
       <div class="site-footer__col">
         <div class="site-footer__col-label">Subscribe</div>
-        <a href="https://agenticlab.substack.com" target="_blank" rel="noopener">Substack →</a>
+        <a href="https://agenticlab.substack.com" target="_blank" rel="noopener">Substack</a>
         <a
           href="https://www.linkedin.com/newsletters/building-ai-systems-7437710572604870656/"
           target="_blank"
           rel="noopener"
         >
-          LinkedIn newsletter →
+          LinkedIn newsletter
         </a>
-        <a href="https://github.com/sunilp/agentic-ai" target="_blank" rel="noopener">GitHub →</a>
+        <a href="https://github.com/sunilp/agentic-ai" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
 
@@ -51,7 +42,7 @@
     </div>
 
     <div class="site-footer__base">
-      <span>&copy; 2026 Sunil Prakash · MIT license · Book on <a href="https://www.amazon.com/dp/B0GVG6848F">Amazon</a></span>
+      <span>&copy; 2026 Sunil Prakash. MIT license. Book on <a href="https://www.amazon.com/dp/B0GVG6848F">Amazon</a></span>
       <a href="https://sunilprakash.com" class="site-footer__home">sunilprakash.com</a>
     </div>
   </div>
@@ -60,18 +51,9 @@
 <style>
   .site-footer { background: var(--paper); border-top: 3px double var(--ink); margin-top: var(--space-9); color: var(--fg-light); }
   .site-footer__inner { max-width: var(--container-max); margin: 0 auto; padding: var(--space-6) var(--space-5) var(--space-5); }
-  .site-footer__cadence {
-    font-family: var(--font-mono); font-size: var(--meta-2); letter-spacing: var(--tracking-loose);
-    text-transform: uppercase; color: var(--fg-light); padding-bottom: var(--space-5);
-    border-bottom: 1px solid var(--fg-faint); display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center;
-  }
-  .site-footer__cadence-label { color: var(--brick); margin-right: var(--space-3); }
-  .site-footer__columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); padding: var(--space-6) 0; }
+  .site-footer__columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); padding: 0 0 var(--space-6); }
   .site-footer__col { display: flex; flex-direction: column; gap: var(--space-2); }
-  .site-footer__col-label {
-    font-family: var(--font-mono); font-size: var(--meta-3); letter-spacing: var(--tracking-loose);
-    text-transform: uppercase; color: var(--fg-light); margin-bottom: var(--space-2);
-  }
+  .site-footer__col-label { font-family: var(--font-display); font-style: italic; font-size: 19px; color: var(--fg); margin-bottom: var(--space-2); }
   .site-footer__col a { color: var(--fg); font-family: var(--font-body); font-size: var(--display-4); }
   .site-footer__col a:hover { color: var(--brick); }
   .site-footer__colophon {
@@ -82,8 +64,8 @@
   .site-footer__mark { border-radius: 4px; }
   .site-footer__swatch { display: inline-block; width: 10px; height: 10px; background: var(--brick); border-radius: 2px; vertical-align: baseline; }
   .site-footer__base {
-    padding-top: var(--space-4); border-top: 1px solid var(--fg-faint); font-size: var(--body-3);
-    font-family: var(--font-mono); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);
+    padding-top: var(--space-4); border-top: 1px solid var(--fg-faint); font-size: 15px;
+    font-family: var(--font-body); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);
   }
   .site-footer__base a { color: var(--fg); }
   @media (max-width: 720px) { .site-footer__columns { grid-template-columns: 1fr; gap: var(--space-4); } }
