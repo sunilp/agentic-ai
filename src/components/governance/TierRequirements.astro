@@ -1,13 +1,6 @@
 ---
 import policy from '~/data/governance-policy.json';
-const ROWS: [keyof typeof policy.tiers.T1, string][] = [
-  ['approver', 'Approves the risk assessment'],
-  ['validation', 'Independent validation'],
-  ['redTeam', 'Red-team depth'],
-  ['metricsReview', 'Metrics review'],
-  ['reviewCadence', 'Formal governance review'],
-  ['revalidation', 'Revalidation'],
-];
+import { TIER_ROWS as ROWS } from '~/lib/governance-tier';
 const TIERS = ['T1', 'T2', 'T3', 'T4'] as const;
 ---
 <div class="gov-table-wrap">

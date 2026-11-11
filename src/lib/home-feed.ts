@@ -1,5 +1,5 @@
 /**
- * Home feed: merges the five publication streams into one dated list for the homepage.
+ * Home feed: merges the publication streams into one dated list for the homepage.
  *
  * Rules:
  * - Newest first across Field Notes, Signal, Recipes, Labs and Architecture blueprints.
@@ -7,6 +7,7 @@
  *   republished, so at most `maxBlueprints` (default 1) appear: the most recently
  *   updated, lowest `order` on ties. Draft blueprints never appear, and a blueprint is
  *   never the featured piece (it slots into the list by its updated date).
+ * - Patterns and the Guide (governance steps) follow the same rule as blueprints, each stream on its own cap.
  * - Featured = the newest editorial piece; the next `limit` (default 5) are the list.
  *
  * Inputs are plain shapes (not astro:content types) so this stays unit-testable.

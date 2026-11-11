@@ -10,7 +10,7 @@ export const HOURGLASS = {
     refs: [3, ' · ', 4, ' · ', 9, ' · ', 10, ' · ', 20] as Ref[],
   },
   lower: { title: 'Paved road, owners and gates per team', refs: [5, ' to ', 11, ' · ', 19] as Ref[] },
-  below: { title: 'EVERY TEAM · SYSTEM · AGENT · BUSINESS UNIT', refs: [17, ' · ', 18, ' · and whatever you build next year'] as Ref[] },
+  below: { title: 'EVERY TEAM · SYSTEM · AGENT · BUSINESS UNIT', refs: [17, ' · ', 18, ' · and whatever you build next'] as Ref[] },
   sides: { left: ['rules × teams', 'without a waist'], right: ['rules + teams', 'with one'] },
 };
 

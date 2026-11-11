@@ -5,7 +5,7 @@
  *   Step 0: a prohibited use is rejected, not tiered.
  *   The highest-scoring dimension sets the tier.
  *   Overrides can raise the tier, never lower it.
- *   The approver may raise a tier with a recorded rationale. Nobody can lower it.
+ *   The approver may raise a tier with a recorded rationale. Nobody can lower it below what scoring and overrides give.
  */
 export type Level = 'Low' | 'Medium' | 'High' | 'Critical';
 export type Tier = 'T1' | 'T2' | 'T3' | 'T4';
@@ -17,16 +17,26 @@ export interface Override { item: number; floor: Tier; text: string }
 
 /** The canonical override list, numbered as in genai-risk-matrix.md. */
 export const OVERRIDES: Override[] = [
-  { item: 1, floor: 'T1', text: 'Makes or directly influences a regulated decision (credit, insurance, AML or sanctions, employment)' },
+  { item: 1, floor: 'T1', text: 'Makes or directly influences a regulated decision (credit, insurance underwriting or pricing, AML or sanctions, employment)' },
   { item: 2, floor: 'T1', text: 'Generates customer-facing content with no per-output human review' },
-  { item: 3, floor: 'T1', text: 'Sends customer personal data to an external LLM API without all four safeguards' },
-  { item: 4, floor: 'T1', text: 'Agent with write access to production, or authority to move money, contact customers or change access' },
+  { item: 3, floor: 'T1', text: 'Processes customer personal data through an external LLM API without all four safeguards' },
+  { item: 4, floor: 'T1', text: 'Agent with write access to production systems or data stores, or authority to move money, contact customers or change access' },
   { item: 5, floor: 'T1', text: 'Biometrics, deepfake-capable synthetic media, voice cloning or medical imagery' },
   { item: 6, floor: 'T2', text: 'Any agentic system, including read-only tool use, or any multi-agent system' },
   { item: 7, floor: 'T2', text: 'Other synthetic media generation' },
-  { item: 8, floor: 'T2', text: 'Sends customer personal data to an external LLM API with all four safeguards' },
+  { item: 8, floor: 'T2', text: 'Processes customer personal data through an external LLM API with all four safeguards' },
   { item: 9, floor: 'T2', text: 'Personal data in visual content' },
 ];
+
+/** Rows of the "what the tier changes" table: a governance-policy.json tier field and its label. */
+export const TIER_ROWS = [
+  ['approver', 'Approves the risk assessment'],
+  ['validation', 'Independent validation'],
+  ['redTeam', 'Red-team depth (GenAI systems)'],
+  ['metricsReview', 'Metrics review'],
+  ['reviewCadence', 'Formal governance review'],
+  ['revalidation', 'Revalidation'],
+] as const;
 
 export interface TierInput {
   prohibited?: boolean;

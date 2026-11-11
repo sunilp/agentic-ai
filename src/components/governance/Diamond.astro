@@ -1,10 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
 import { DIAMOND as D } from '~/data/governance-figures';
 import { renderRefs } from '~/lib/governance-refs';
 import { writtenHref } from '~/data/governance-path';
 
-interface Props { written: string[]; caption?: string }
-const { written, caption } = Astro.props;
+interface Props { written?: string[]; caption?: string }
+const { caption } = Astro.props;
+// Same derivation as GovernanceLayout and the hub: essay ids (slugs) that are not drafts.
+const written = Astro.props.written ?? (await getCollection('governance')).filter((e) => e.data.status !== 'draft').map((e) => e.id);
 const href = writtenHref(new Set(written));
 const bandY = [120, 190, 260, 330];
 ---
