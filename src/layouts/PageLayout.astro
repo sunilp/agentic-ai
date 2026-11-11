@@ -173,6 +173,11 @@ const websiteSchema = Astro.url.pathname === '/' ? {
       // define:vars wraps this script in an IIFE, so publish gtag explicitly:
       // event calls elsewhere on the site expect the usual global.
       window.gtag = gtag;
+      // Every link to buy the book carries data-buy with its position, so clicks can be compared.
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('[data-buy]') : null;
+        if (a) gtag('event', 'book_buy_click', { location: a.getAttribute('data-buy'), page_path: window.location.pathname });
+      });
       gtag('js', new Date());
       gtag('config', gaId);
       document.addEventListener('astro:page-load', () => {

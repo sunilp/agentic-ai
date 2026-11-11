@@ -12,6 +12,8 @@ import Breadcrumb from '~/components/universal/Breadcrumb.astro';
 import ProgressReader from '~/components/universal/ProgressReader.astro';
 import ChapterMap from '~/components/universal/ChapterMap.astro';
 import NextPrev from '~/components/universal/NextPrev.astro';
+import BuyCard from '~/components/universal/BuyCard.astro';
+import { BOOK_TITLE, isFree } from '~/lib/book';
 import { buildReverseIndex, getReverseLinks } from '~/lib/cross-links';
 import { entriesToContentEntries } from '~/lib/content-helpers';
 
@@ -53,7 +55,11 @@ const partLabel = partLabels[d.part] ?? d.part;
 
 const chapterPrefix = entry.id.split('-')[0].toUpperCase();
 const dateStr = d.date.toISOString().slice(0, 10);
-const metaItems = [chapterPrefix, dateStr, `${d.readingTime} min`];
+// A book-only chapter holds a preview, so it shows no date or reading time: both would describe the stub, not the chapter.
+const free = isFree(entry);
+const nextIsBookOnly = !!next && !isFree(next);
+const metaItems = free ? [chapterPrefix, dateStr, `${d.readingTime} min`] : [chapterPrefix, 'Preview'];
+const PART_ANCHOR: Record<string, string> = { 'foundations': 'foundations', 'I-build': 'part-1', 'II-judge': 'part-2', 'III-operate': 'part-3', 'IV-advanced': 'part-4' };
 
 const collectionRoute: Record<string, string> = {
   chapters: '/book',
@@ -78,7 +84,7 @@ const collectionRoute: Record<string, string> = {
     <Breadcrumb
       items={[
         { label: 'Book', href: '/book/' },
-        { label: partLabel, href: `/book/#${d.part}` },
+        { label: partLabel, href: `/book/#${PART_ANCHOR[d.part] ?? ''}` },
         { label: chapterPrefix },
       ]}
     />
@@ -90,9 +96,32 @@ const collectionRoute: Record<string, string> = {
         <KineticHeading level={1}>{d.title}</KineticHeading>
         <Dek italic>{d.description}</Dek>
 
-        <div class="chapter-body prose prose--dropcap">
+        {free ? (
+          <p class="chapter-from">A free chapter from <a href="/book/"><em>{BOOK_TITLE}</em></a>.</p>
+        ) : (
+          <BuyCard
+            compact
+            kicker="Preview"
+            title="This page is a preview. The full chapter is in the book."
+            text="Below: what the chapter covers, and where its working code lives."
+            location="chapter-preview"
+            secondary={{ href: '/book/', label: 'See all chapters' }}
+          />
+        )}
+
+        <div class:list={['chapter-body', 'prose', free && 'prose--dropcap']}>
           <slot />
         </div>
+
+        {free && nextIsBookOnly && next && (
+          <BuyCard
+            kicker="Next in the book"
+            title={next.data.title}
+            text={next.data.description}
+            location="chapter-end"
+            secondary={{ href: `/book/${next.id}/`, label: 'See what it covers' }}
+          />
+        )}
 
         <NextPrev
           prev={prev ? { slug: prev.id, title: prev.data.title } : undefined}
@@ -168,6 +197,10 @@ const collectionRoute: Record<string, string> = {
     letter-spacing: var(--tracking-loose);
   }
 
+  .chapter-from { font-family: var(--font-body); font-size: 16px; color: var(--fg-light); margin: var(--space-3) 0 var(--space-4); }
+  .chapter-from a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--brick); text-underline-offset: 3px; }
+  .chapter-from a:hover { color: var(--brick); }
+
   .chapter-sidebar {
     position: sticky;
     top: 80px;
@@ -200,5 +233,7 @@ const collectionRoute: Record<string, string> = {
 
   @media (max-width: 720px) {
     .chapter-sidebar { display: none; }
+    /* A wide table scrolls inside itself on a phone instead of pushing the page sideways. */
+    .chapter-body.prose :global(table) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   }
 </style>

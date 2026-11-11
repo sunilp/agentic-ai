@@ -1,0 +1,53 @@
+---
+/**
+ * BuyCard: the one place the site asks a reader to buy the book. Says what they
+ * get, then offers the Amazon link and, where it helps, a second quieter link.
+ * `location` names where the card sits, so a click can be told apart in analytics.
+ */
+import { AMAZON_URL } from '~/lib/book';
+
+interface Props {
+  kicker?: string;
+  title: string;
+  text?: string;
+  location: string;
+  secondary?: { href: string; label: string };
+  compact?: boolean;
+}
+const { kicker, title, text, location, secondary, compact = false } = Astro.props;
+---
+<aside class:list={['buy-card', compact && 'buy-card--compact']} aria-label="Get the book">
+  <div class="buy-card__text">
+    {kicker && <p class="buy-card__kicker">{kicker}</p>}
+    <p class="buy-card__title">{title}</p>
+    {text && <p class="buy-card__body">{text}</p>}
+  </div>
+  <p class="buy-card__actions">
+    <a class="buy-card__btn" href={AMAZON_URL} target="_blank" rel="noopener noreferrer" data-buy={location}>Get the book on Amazon</a>
+    {secondary && <a class="buy-card__link" href={secondary.href}>{secondary.label}</a>}
+  </p>
+</aside>
+
+<style>
+  .buy-card {
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4);
+    margin: var(--space-6) 0; padding: var(--space-5);
+    background: #f5ece9; border: 1px solid var(--brick); border-radius: var(--radius-md);
+  }
+  @media (min-width: 760px) { .buy-card { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-6); } }
+  .buy-card--compact { margin: var(--space-4) 0 var(--space-5); padding: var(--space-4) var(--space-5); }
+  .buy-card p { margin: 0; }
+  .buy-card__kicker { font-family: var(--font-body); font-style: italic; font-size: 15px; color: var(--brick); }
+  .buy-card__title { font-family: var(--font-display); font-weight: 500; font-size: clamp(21px, 2.6vw, 26px); line-height: 1.2; margin-top: 2px !important; }
+  .buy-card--compact .buy-card__title { font-size: 19px; }
+  .buy-card__body { font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: #4a4a48; margin-top: 6px !important; max-width: 60ch; }
+  .buy-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); }
+  .buy-card__btn {
+    display: inline-flex; align-items: center; padding: 12px 20px; background: var(--ink); color: var(--paper);
+    border: 1px solid var(--ink); font-family: var(--font-display); font-weight: 500; font-size: 17px; line-height: 1.2;
+    white-space: nowrap; transition: background var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+  }
+  .buy-card__btn:hover { background: var(--brick); border-color: var(--brick); color: var(--paper); }
+  .buy-card__link { font-family: var(--font-body); font-size: 17px; color: var(--ink); text-decoration: underline; text-decoration-color: var(--brick); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  .buy-card__link:hover { color: var(--brick); }
+</style>

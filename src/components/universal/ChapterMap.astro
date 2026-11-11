@@ -3,9 +3,14 @@
  * ChapterMap — visual sitemap of all 19 chapters, current one highlighted.
  * Renders as 5 stacked rows (one per Part) of tiny rectangles.
  */
+import { getCollection } from 'astro:content';
+import { isFree } from '~/lib/book';
+
 interface Props {
   currentSlug: string;
 }
+
+const bookOnly = new Set((await getCollection('chapters')).filter((c) => !isFree(c)).map((c) => c.id));
 
 const { currentSlug } = Astro.props;
 
@@ -45,8 +50,9 @@ function chapterLabel(slug: string): string {
         {part.chapters.map((slug) => (
           <a
             href={`/book/${slug}/`}
-            class:list={['chapter-map__chip', slug === currentSlug && 'chapter-map__chip--current']}
-            aria-label={`Chapter ${chapterLabel(slug)}`}
+            class:list={['chapter-map__chip', slug === currentSlug && 'chapter-map__chip--current', bookOnly.has(slug) && 'chapter-map__chip--book']}
+            aria-label={`Chapter ${chapterLabel(slug)}${bookOnly.has(slug) ? ', preview, full text in the book' : ', free to read'}`}
+            title={bookOnly.has(slug) ? 'Preview. The full chapter is in the book.' : 'Free to read'}
             aria-current={slug === currentSlug ? 'page' : undefined}
           >
             {chapterLabel(slug)}
@@ -55,6 +61,7 @@ function chapterLabel(slug: string): string {
       </div>
     </div>
   ))}
+  <p class="chapter-map__key"><span class="chapter-map__chip">00</span> free to read <span class="chapter-map__chip chapter-map__chip--book">00</span> in the book</p>
 </nav>
 
 <style>
@@ -76,6 +83,9 @@ function chapterLabel(slug: string): string {
     color: var(--fg-light);
     margin-bottom: var(--space-1);
   }
+
+  .chapter-map__key { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-family: var(--font-body); font-style: italic; font-size: 13.5px; color: var(--fg-light); margin: var(--space-3) 0 0; }
+  .chapter-map__key .chapter-map__chip { color: transparent; min-width: 18px; padding: 2px 4px; }
 
   .chapter-map__chips {
     display: flex;
@@ -102,6 +112,9 @@ function chapterLabel(slug: string): string {
     background: var(--fg-faint);
     color: var(--fg);
   }
+
+  /* Book-only chapters: an outline instead of a fill, so the free ones stand out. */
+  .chapter-map__chip--book { background: transparent; border: 1px dashed #c9c5bb; color: #999; }
 
   .chapter-map__chip--current {
     background: var(--brick);
