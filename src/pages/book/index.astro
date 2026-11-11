@@ -3,231 +3,241 @@ import { getCollection } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 import Container from '~/components/layout/Container.astro';
 import IndexHeader from '~/components/universal/IndexHeader.astro';
+import BuyCard from '~/components/universal/BuyCard.astro';
+import { AMAZON_URL, BOOK_TITLE, CODE_REPO, chapterNumber, isFree, parsePreview } from '~/lib/book';
 
 const chapters = (await getCollection('chapters')).sort((a, b) => a.id.localeCompare(b.id));
+const free = chapters.filter(isFree);
+const locked = chapters.filter((c) => !isFree(c));
+const firstFree = free[0];
 
 const parts = [
-  {
-    id: 'foundations',
-    label: 'Foundations',
-    description: 'Six hands-on sections that take you from zero to building your first agent, connecting it to tools via MCP, and drawing the line around what it can safely do.',
-    filter: (id: string) => id.startsWith('00'),
-  },
-  {
-    id: 'part-1',
-    label: 'Part I · Build',
-    description: 'From components to multi-agent systems.',
-    filter: (id: string) => /^0[1-4]-/.test(id),
-  },
-  {
-    id: 'part-2',
-    label: 'Part II · Judge',
-    description: 'Oversight, evaluation, and knowing when to stop.',
-    filter: (id: string) => /^0[5-7]-/.test(id),
-  },
-  {
-    id: 'part-3',
-    label: 'Part III · Operate',
-    description: 'Production reality.',
-    filter: (id: string) => /^(08|09|10|11)-/.test(id),
-  },
-  {
-    id: 'part-4',
-    label: 'Part IV · Advanced',
-    description: 'Memory and protocols at scale.',
-    filter: (id: string) => /^(12|13)-/.test(id),
-  },
-];
+  { id: 'foundations', kicker: 'Start here', label: 'Foundations', description: 'Six hands-on sections that take you from zero to your first agent, connect it to tools through MCP, and draw the line around what it can safely do.', filter: (id: string) => id.startsWith('00') },
+  { id: 'part-1', kicker: 'Part I', label: 'Build', description: 'From components to multi-agent systems.', filter: (id: string) => /^0[1-4]-/.test(id) },
+  { id: 'part-2', kicker: 'Part II', label: 'Judge', description: 'Oversight, evaluation, and knowing when to stop.', filter: (id: string) => /^0[5-7]-/.test(id) },
+  { id: 'part-3', kicker: 'Part III', label: 'Operate', description: 'Production reality.', filter: (id: string) => /^(08|09|10|11)-/.test(id) },
+  { id: 'part-4', kicker: 'Part IV', label: 'Advanced', description: 'Memory and protocols at scale.', filter: (id: string) => /^(12|13)-/.test(id) },
+].map((p) => ({ ...p, chapters: chapters.filter((c) => p.filter(c.id)) }));
 
-function chapterPrefix(slug: string): string {
-  const m = slug.match(/^(\d+[a-z]?)/);
-  return m ? m[1] : slug;
-}
+const bookSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  name: BOOK_TITLE,
+  description: 'A practical field guide to building reliable, evaluable, production-grade agent systems.',
+  author: { '@type': 'Person', name: 'Sunil Prakash', url: 'https://sunilprakash.com' },
+  url: new URL('/book/', Astro.site).toString(),
+  image: new URL('/assets/images/book-cover.jpg', Astro.site).toString(),
+  sameAs: AMAZON_URL,
+  inLanguage: 'en',
+};
 ---
 
 <PageLayout
-  title="The Book — Agent Engineering Lab"
-  description="A field guide to building reliable, evaluable, production-grade agent systems. 6 Foundations + 13 chapters across 4 parts."
+  title={`${BOOK_TITLE}: the book`}
+  description={`A field guide to building reliable, evaluable, production-grade agent systems. ${chapters.length} chapters. ${free.length} are free to read here in full.`}
   currentNav="Book"
 >
   <Container>
-    <IndexHeader title="Agentic AI for Serious Engineers" dek="A field guide to building reliable, evaluable, production-grade agent systems. Start with the free Foundations here, then get the book.">
-      <div class="book-header__ctas">
-        <a class="book-header__cta book-header__cta--primary" href="https://www.amazon.com/dp/B0GVG6848F" target="_blank" rel="noopener noreferrer">Get the book on Amazon</a>
-        <a class="book-header__cta" href="/book/00a-how-llms-work/">Start the Foundations</a>
+    <IndexHeader
+      title={BOOK_TITLE}
+      dek="A field guide to building reliable, evaluable, production-grade agent systems. It teaches you when to build an agent, when not to, and how to make the ones you build hold up in production."
+    >
+      <div class="book-cta">
+        <a class="book-btn book-btn--primary" href={AMAZON_URL} target="_blank" rel="noopener noreferrer" data-buy="book-hero">Get the book on Amazon</a>
+        <a class="book-btn" href={`/book/${firstFree.id}/`}>Read {free.length} chapters free</a>
       </div>
-      <div slot="aside" class="book-header__cover">
-        <img src="/assets/images/book-cover.jpg" alt="Agentic AI for Serious Engineers, book cover" loading="eager" width="320" height="480" />
+      <p class="book-facts">
+        {chapters.length} chapters. {free.length} are free to read here, in full. The other {locked.length} are in the book, each with a preview below.
+      </p>
+      <div slot="aside" class="book-cover">
+        <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" data-buy="book-cover">
+          <img src="/assets/images/book-cover.jpg" alt={`${BOOK_TITLE}, book cover`} loading="eager" width="320" height="480" />
+        </a>
       </div>
     </IndexHeader>
 
-    {parts.map((part) => {
-      const partChapters = chapters.filter((c) => part.filter(c.id));
-      return (
-        <section class="book-part" id={part.id}>
+    <section class="book-why" aria-label="What you get">
+      <div>
+        <h2>Read before you buy</h2>
+        <p>The six Foundations and Chapter 1 are on this site in full. Read them first, and buy only if they earn it.</p>
+      </div>
+      <div>
+        <h2>Run the code</h2>
+        <p>The <a href={CODE_REPO}>companion repository</a> holds working Python, evaluation harnesses and end-to-end projects for the book, under the MIT licence.</p>
+      </div>
+      <div>
+        <h2>Check the evidence</h2>
+        <p>The <a href="/labs/">lab reports</a> on this site test the book's ideas, and publish the repo, the data and the seed.</p>
+      </div>
+    </section>
+
+    <section class="book-contents" aria-labelledby="contents-h">
+      <header class="book-contents__head">
+        <h2 id="contents-h">Contents</h2>
+        <p class="book-key">
+          <span class="book-tag book-tag--free">Read free</span> the whole chapter is on this site.
+          <span class="book-tag">In the book</span> open the row to see what it covers.
+        </p>
+      </header>
+
+      {parts.map((part) => (
+        <section class="book-part" id={part.id} aria-labelledby={`${part.id}-h`}>
           <header class="book-part__header">
-            <h2 class="book-part__label">{part.label}</h2>
-            <p class="book-part__description">{part.description}</p>
+            <h3 id={`${part.id}-h`}><span class="book-part__kicker">{part.kicker}</span>{part.label}</h3>
+            <p>{part.description}</p>
           </header>
-          <ol class="book-part__chapters">
-            {partChapters.map((c) => (
-              <li class="book-part__chapter">
-                <a href={`/book/${c.id}/`}>
-                  <span class="book-part__chapter-num">{chapterPrefix(c.id).toUpperCase()}</span>
-                  <span class="book-part__chapter-text">
-                    <span class="book-part__chapter-title">{c.data.title}</span>
-                    {c.data.description && <span class="book-part__chapter-dek">{c.data.description}</span>}
-                  </span>
-                  <span class="book-part__chapter-meta">{c.data.status === 'draft' ? 'in the book' : `${c.data.readingTime} min`}</span>
-                </a>
-              </li>
-            ))}
+          <ol class="book-rows">
+            {part.chapters.map((c) => {
+              const num = chapterNumber(c.id);
+              if (isFree(c)) {
+                return (
+                  <li class="book-row book-row--free">
+                    <a class="book-row__line" href={`/book/${c.id}/`}>
+                      <span class="book-row__num">{num}</span>
+                      <span class="book-row__text">
+                        <span class="book-row__title">{c.data.title}</span>
+                        {c.data.description && <span class="book-row__dek">{c.data.description}</span>}
+                      </span>
+                      <span class="book-row__state"><b>Read free</b> {c.data.readingTime} min</span>
+                    </a>
+                  </li>
+                );
+              }
+              const preview = parsePreview(c.body ?? '');
+              return (
+                <li class="book-row book-row--locked">
+                  <details>
+                    <summary class="book-row__line">
+                      <span class="book-row__num">{num}</span>
+                      <span class="book-row__text">
+                        <span class="book-row__title">{c.data.title}</span>
+                        {c.data.description && <span class="book-row__dek">{c.data.description}</span>}
+                      </span>
+                      <span class="book-row__state">In the book</span>
+                    </summary>
+                    <div class="book-row__more">
+                      {preview.points.length > 0 && (
+                        <>
+                          <p class="book-row__more-h">What the chapter covers</p>
+                          <ul>
+                            {preview.points.map((pt) => <li><b>{pt.title}.</b> {pt.text.charAt(0).toUpperCase() + pt.text.slice(1)}{/[.?!]$/.test(pt.text) ? '' : '.'}</li>)}
+                          </ul>
+                        </>
+                      )}
+                      {preview.code && <p class="book-row__code">Working code: <a href={preview.code.href}><code>{preview.code.label}</code> on GitHub</a></p>}
+                      <p class="book-row__actions">
+                        <a class="book-btn book-btn--primary book-btn--small" href={AMAZON_URL} target="_blank" rel="noopener noreferrer" data-buy="book-row">Get the book on Amazon</a>
+                        {(preview.points.length > 0 || preview.code) && <a class="book-row__preview" href={`/book/${c.id}/`}>Open the preview page</a>}
+                      </p>
+                    </div>
+                  </details>
+                </li>
+              );
+            })}
           </ol>
         </section>
-      );
-    })}
+      ))}
+    </section>
+
+    <BuyCard
+      kicker="The rest of the book"
+      title={`The other ${locked.length} chapters are in the book.`}
+      text="Tools and the agent loop, workflows before agents, multi-agent systems, human oversight, evaluation, deployment, governance, security, memory and agent protocols."
+      location="book-end"
+      secondary={{ href: `/book/${firstFree.id}/`, label: 'Or start with the free chapters' }}
+    />
+
+    <section class="book-author" aria-labelledby="author-h">
+      <h2 id="author-h">About the author</h2>
+      <p>
+        Sunil Prakash is an engineering leader and researcher working on enterprise AI systems, agent identity and
+        production agent architecture. He writes the <a href="/about/">Agent Engineering Lab</a>, where the book's ideas are argued about and tested.
+      </p>
+    </section>
   </Container>
+
+  <script type="application/ld+json" set:html={JSON.stringify(bookSchema)} />
 </PageLayout>
 
 <style>
-  .book-header__ctas {
-    margin-top: var(--space-4);
-    display: flex;
-    gap: var(--space-3);
-    flex-wrap: wrap;
-  }
-
-  .book-header__cta {
-    display: inline-flex;
-    align-items: center;
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 1.2;
-    color: var(--fg);
-    text-decoration: none;
-    padding: 12px 20px;
-    border: 1px solid var(--ink);
+  .book-cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+  .book-btn {
+    display: inline-flex; align-items: center; padding: 12px 20px; border: 1px solid var(--ink);
+    font-family: var(--font-display); font-weight: 500; font-size: 17px; line-height: 1.2; color: var(--ink);
     transition: background var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
   }
+  .book-btn:hover { color: var(--brick); border-color: var(--brick); }
+  .book-btn--primary { background: var(--ink); color: var(--paper); }
+  .book-btn--primary:hover { background: var(--brick); border-color: var(--brick); color: var(--paper); }
+  .book-btn--small { padding: 9px 16px; font-size: 16px; }
+  .book-facts { font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: var(--fg-light); margin: var(--space-4) 0 0; max-width: 52ch; }
 
-  .book-header__cta:hover {
-    background: var(--ink);
-    color: var(--paper);
+  .book-cover img { display: block; width: 230px; height: auto; box-shadow: 0 12px 28px rgba(26, 26, 26, 0.14); transition: transform var(--dur-micro) var(--ease-out); }
+  .book-cover a:hover img { transform: translateY(-2px); }
+  @media (max-width: 859px) { .book-cover img { width: 170px; } }
+
+  .book-why { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-5) var(--space-7); margin: 0 0 var(--space-7); }
+  .book-why h2 { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 22px; margin: 0 0 var(--space-2); }
+  .book-why p { font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: #4a4a48; margin: 0; }
+  .book-why a, .book-author a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--brick); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  .book-why a:hover, .book-author a:hover { color: var(--brick); }
+
+  .book-contents__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-5); border-top: 1px solid var(--ink); padding-top: var(--space-5); }
+  .book-contents__head h2 { font-family: var(--font-display); font-weight: 500; font-size: var(--display-2); margin: 0; }
+  .book-key { font-family: var(--font-body); font-size: 16px; color: var(--fg-light); margin: 0; }
+  .book-tag { font-family: var(--font-body); font-style: italic; color: var(--fg-light); border: 1px solid var(--fg-faint); border-radius: 999px; padding: 1px 10px; margin: 0 4px 0 10px; white-space: nowrap; }
+  .book-tag--free { color: var(--brick); border-color: var(--brick); margin-left: 0; }
+
+  .book-part { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); padding: var(--space-6) 0; border-bottom: 1px solid var(--ink); }
+  @media (min-width: 900px) {
+    .book-part { grid-template-columns: 250px minmax(0, 1fr); gap: var(--space-8); }
+    .book-part__header { position: sticky; top: 96px; align-self: start; }
   }
+  .book-part__header h3 { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.08; margin: 0; }
+  .book-part__kicker { display: block; font-family: var(--font-body); font-size: 15px; color: var(--brick); margin-bottom: 4px; }
+  .book-part__header p { font-family: var(--font-body); font-size: 17px; line-height: 1.45; color: #4a4a48; margin: var(--space-2) 0 0; }
 
-  .book-header__cta--primary {
-    background: var(--ink);
-    color: var(--paper);
-  }
+  .book-rows { list-style: none; margin: 0; padding: 0; }
+  .book-row + .book-row { border-top: 1px solid var(--fg-faint); }
+  .book-row__line { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: var(--space-3); align-items: baseline; padding: 14px 0; color: var(--fg); }
+  .book-rows .book-row:first-child .book-row__line { padding-top: 4px; }
+  .book-row__num { font-family: var(--font-mono); font-size: var(--meta-2); letter-spacing: 0.06em; color: var(--brick); text-transform: uppercase; }
+  .book-row__text, .book-row__text span { display: block; }
+  .book-row__title { font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.3; transition: color var(--dur-micro) var(--ease-out); }
+  .book-row__dek { font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: #4a4a48; margin-top: 3px; max-width: 62ch; }
+  .book-row__state { font-family: var(--font-body); font-style: italic; font-size: 15px; color: var(--fg-light); white-space: nowrap; }
+  .book-row__state b { font-style: normal; font-weight: 500; color: var(--brick); margin-right: 8px; }
+  .book-row--free a:hover .book-row__title { color: var(--brick); }
 
-  .book-header__cta--primary:hover {
-    background: var(--brick);
-    border-color: var(--brick);
-  }
+  /* Book-only chapters: quieter, and they open in place instead of leading to a thin page. */
+  .book-row--locked summary { list-style: none; cursor: pointer; }
+  .book-row--locked summary::-webkit-details-marker { display: none; }
+  .book-row--locked .book-row__num { color: #999; }
+  .book-row--locked .book-row__title { color: #6b6b6b; font-weight: 400; }
+  .book-row--locked .book-row__dek { color: #767676; }
+  .book-row--locked .book-row__state::after { content: ' +'; font-style: normal; color: var(--brick); }
+  .book-row--locked details[open] .book-row__state::after { content: ' \2212'; }
+  .book-row--locked summary:hover .book-row__title, .book-row--locked details[open] .book-row__title { color: var(--ink); }
+  .book-row__more { margin: 0 0 var(--space-4) 44px; padding: var(--space-4) var(--space-5); background: var(--paper-bright); border: 1px solid var(--fg-faint); border-left: 2px solid var(--brick); }
+  .book-row__more p { margin: 0; }
+  .book-row__more-h { font-family: var(--font-display); font-style: italic; font-size: 18px; margin-bottom: var(--space-2) !important; }
+  .book-row__more ul { margin: 0 0 var(--space-3); padding-left: 1.1em; }
+  .book-row__more li { font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: #3c3c3a; margin-bottom: 4px; }
+  .book-row__more li::marker { color: var(--brick); }
+  .book-row__code { font-family: var(--font-body); font-size: 16px; color: var(--fg-light); margin-bottom: var(--space-3) !important; }
+  .book-row__code a, .book-row__preview { color: var(--ink); text-decoration: underline; text-decoration-color: var(--brick); text-underline-offset: 3px; }
+  .book-row__code code { font-size: 13px; background: none; border: 0; padding: 0; }
+  .book-row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); }
+  .book-row__preview { font-family: var(--font-body); font-size: 16px; }
+  .book-row__preview:hover, .book-row__code a:hover { color: var(--brick); }
 
-  .book-header__cover img {
-    display: block;
-    width: 240px;
-    height: auto;
-    border-radius: var(--radius-sm);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  }
+  .book-author { margin: var(--space-6) 0 var(--space-8); max-width: 62ch; }
+  .book-author h2 { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 22px; margin: 0 0 var(--space-2); }
+  .book-author p { font-family: var(--font-body); font-size: 18px; line-height: 1.55; color: #3c3c3a; margin: 0; }
 
-  @media (max-width: 720px) {
-    .book-header__cover img {
-      width: 180px;
-      margin: 0 auto;
-    }
-  }
-
-  .book-part {
-    margin: var(--space-7) 0;
-  }
-
-  .book-part__header {
-    margin-bottom: var(--space-4);
-  }
-
-  .book-part__label {
-    font-family: var(--font-display);
-    font-size: var(--display-2);
-    font-weight: 500;
-    margin: 0 0 var(--space-2);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--fg-faint);
-  }
-
-  .book-part__description {
-    color: var(--fg-light);
-    font-size: var(--body-1);
-    margin: 0;
-  }
-
-  .book-part__chapters {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .book-part__chapter {
-    margin: 0;
-  }
-
-  .book-part__chapter a {
-    display: grid;
-    grid-template-columns: 60px 1fr auto;
-    align-items: start;
-    gap: var(--space-4);
-    padding: var(--space-3) var(--space-4);
-    color: var(--fg);
-    text-decoration: none;
-    border-bottom: 1px solid var(--fg-faint);
-    transition: background var(--dur-micro) var(--ease-out);
-  }
-
-  .book-part__chapter a:hover {
-    background: var(--paper-recess);
-  }
-
-  .book-part__chapter-num {
-    font-family: var(--font-mono);
-    font-size: var(--meta-2);
-    color: var(--brick);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-loose);
-  }
-
-  .book-part__chapter-text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    min-width: 0;
-  }
-
-  .book-part__chapter-title {
-    font-family: var(--font-display);
-    font-size: var(--display-4);
-    font-weight: 500;
-  }
-
-  .book-part__chapter-dek {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: var(--body-2);
-    color: #666;
-    line-height: 1.4;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-
-  .book-part__chapter-meta {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: 15px;
-    color: var(--fg-light);
-    white-space: nowrap;
+  @media (max-width: 620px) {
+    .book-row__line { grid-template-columns: 38px minmax(0, 1fr); }
+    .book-row__state { grid-column: 2; }
+    .book-row__more { margin-left: 0; }
   }
 </style>
