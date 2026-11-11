@@ -19,22 +19,22 @@ sources:
     url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj"
     authors: ["European Parliament and Council of the European Union"]
     year: 2026
-  - title: "AI Governance Framework v2.0.0: AI risk classification matrix and decision process"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/risk-matrix.md"
-  - title: "AI Governance Framework v2.0.0: GenAI risk matrix, Step 0 screen and canonical override list"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/genai-risk-matrix.md"
-  - title: "AI Governance Framework v2.0.0: when to say no"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/governance-operations/when-to-say-no.md"
-  - title: "AI Governance Framework v2.0.0: GenAI use case assessment, section 0"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/templates/genai-use-case-assessment.md#0-should-this-use-genai-at-all"
-  - title: "AI Governance Framework v2.0.0: agentic AI risk, mandatory tier classification"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/agentic-ai-risk.md#mandatory-risk-tier-classification"
-  - title: "AI Governance Framework v2.0.0: governance workflow, fast lane (T3/T4) and leaving it"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4"
-  - title: "AI Governance Framework v2.0.0: Start Here, small teams"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/START-HERE.md#small-teams"
-  - title: "AI Governance Framework v2.0.0: worked example, agentic research assistant risk assessment"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/examples/agentic-research-assistant/risk-assessment.md"
+  - title: "AI Governance Framework v2.1.0: AI risk classification matrix and decision process"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/risk-matrix.md"
+  - title: "AI Governance Framework v2.1.0: GenAI risk matrix, Step 0 screen and canonical override list"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/genai-risk-matrix.md"
+  - title: "AI Governance Framework v2.1.0: when to say no"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/when-to-say-no.md"
+  - title: "AI Governance Framework v2.1.0: GenAI use case assessment, section 0"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/genai-use-case-assessment.md#0-should-this-use-genai-at-all"
+  - title: "AI Governance Framework v2.1.0: agentic AI risk, mandatory tier classification"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/agentic-ai-risk.md#mandatory-risk-tier-classification"
+  - title: "AI Governance Framework v2.1.0: governance workflow, fast lane (T3/T4) and leaving it"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4"
+  - title: "AI Governance Framework v2.1.0: Start Here, small teams"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/START-HERE.md#small-teams"
+  - title: "AI Governance Framework v2.1.0: worked example, agentic research assistant risk assessment"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/examples/agentic-research-assistant/risk-assessment.md"
 ---
 import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
@@ -53,9 +53,9 @@ So one of them waits. Which one, and what does it wait for? Write your answer do
 
 ## The move
 
-Before any score, ask whether this should be AI at all. The framework's [use case assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/templates/genai-use-case-assessment.md#0-should-this-use-genai-at-all) opens with eight questions from its [when to say no](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/governance-operations/when-to-say-no.md) standard. Would the model generate a fee or a balance instead of taking it from a system of record? Would an agent take a write action nobody can undo, with no human confirming it? Would plain search or a rules engine do the job? A yes means stop or redesign. Saying no at intake, the standard notes, "costs a conversation".
+Before any score, ask whether this should be AI at all. The framework's [use case assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/templates/genai-use-case-assessment.md#0-should-this-use-genai-at-all) opens with eight questions from its [when to say no](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/when-to-say-no.md) standard. Would the model generate a fee or a balance instead of taking it from a system of record? Would an agent take a write action nobody can undo, with no human confirming it? Would plain search or a rules engine do the job? A yes means stop or redesign. Saying no at intake, the standard notes, "costs a conversation".
 
-The first of those questions is the [Step 0 screen](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/genai-risk-matrix.md#step-0-prohibited-use-screen). Check the use against the prohibited practices in [Article 5 of the EU AI Act](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), such as social scoring, and against your own list from Step 2. A match is rejected. It gets no tier and no exception. A redesign starts again at intake.
+The first of those questions is the [Step 0 screen](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/genai-risk-matrix.md#step-0-prohibited-use-screen). Check the use against the prohibited practices in [Article 5 of the EU AI Act](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), such as social scoring, and against your own list from Step 2. A match is rejected. It gets no tier and no exception. A redesign starts again at intake.
 
 Everything that passes gets a tier, by one rule:
 
@@ -80,9 +80,9 @@ Overrides are yes-or-no questions. Does it directly influence a credit decision?
 
 <TierExamples />
 
-Both of your requests have a twin in the table. The knowledge search records Medium at most and no override, so it is T3, and a team lead approves it. Check that against the matrix, though. The search runs on a vendor API with manual search as its fallback, and the matrix's [level text](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/genai-risk-matrix.md#dimension-5-third-party-model-dependency) scores that High on model dependency, which makes it T2. The guide's call: score from the level text, not from an example that looks like yours. The credit model scores Critical on four dimensions, so the AI Risk Committee approves it. The credit model waits for its T1 evidence. The wiki assistant never waits for that committee. At T3 it needs nobody outside the team. At T2 it waits for AI Risk and a second-line validator, so book them at intake.
+Both of your requests have a twin in the table. The knowledge search records Medium at most and no override, so it is T3, and a team lead approves it. That Medium on model dependency has to be earned. The search runs on a vendor API, and the matrix's [level text](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/genai-risk-matrix.md#dimension-5-third-party-model-dependency) allows Medium only because the business owner recorded that an outage is tolerable and manual search will do. Without that record it scores High, and the system is T2. The credit model scores Critical on four dimensions, so the AI Risk Committee approves it. The credit model waits for its T1 evidence. The wiki assistant never waits for that committee. At T3 it needs nobody outside the team.
 
-The [agentic research assistant](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/examples/agentic-research-assistant/risk-assessment.md) shows the last arrow. Its highest dimensions are High, which gives T2. Override 6 puts every agent at T2 or above, so it changes nothing. The AI Risk Committee then raised the pilot to T1, and recorded why. It sends confidential research data to an external vendor API, plans and runs multi-step tool use, and feeds research distributed under MiFID II.
+The [agentic research assistant](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/examples/agentic-research-assistant/risk-assessment.md) shows the last arrow. Its highest dimensions are High, which gives T2. Override 6 puts every agent at T2 or above, so it changes nothing. The AI Risk Committee then raised the pilot to T1, and recorded why. It sends confidential research data to an external vendor API, plans and runs multi-step tool use, and feeds research distributed under MiFID II.
 
 Here is what the tier changes.
 
@@ -97,13 +97,13 @@ Size decides who prepares the assessment and who signs it.
 <Track for="small">
 Have your team lead score each system. The framework lets a team lead hold the product owner's role, which prepares the assessment.
 
-Your T3 and T4 systems take the framework's [fast lane](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4): the same stages, less evidence, no committee, and the team lead's sign-off. Any override puts a system at T2 or above, outside the fast lane.
+Your T3 and T4 systems take the framework's [fast lane](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4): the same stages, less evidence, no committee, and the team lead's sign-off. Any override puts a system at T2 or above, outside the fast lane.
 
-A [small team](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/START-HERE.md#small-teams) can't govern a T1 or T2 system on its own. Approval and validation come from outside it: AI Risk and a second-line validator at T2, the AI Risk Committee and Model Risk Management at T1. The framework assumes a second line, and another first-line team doesn't meet its T1 and T2 validation rule. If your company has none, the guide's call is to name a risk or compliance owner outside the building team to play that part before your first T2 system arrives, and book them at intake.
+A [small team](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/START-HERE.md#small-teams) can't govern a T1 or T2 system on its own. Approval and validation come from outside it: AI Risk and a second-line validator at T2, the AI Risk Committee and Model Risk Management at T1. The framework assumes a second line, and another first-line team doesn't meet its T1 and T2 validation rule. If your company has none, the guide's call is to name a risk or compliance owner outside the building team to play that part before your first T2 system arrives, and book them at intake.
 </Track>
 
 <Track for="enterprise">
-The product owner prepares the assessment. The tier picks the approver: the AI Risk Committee for T1, AI Risk in the second line for T2, a team lead for T3, and for T4 a team lead who acknowledges the self-assessment. Model Risk Management validates every T1 tier independently, as the framework's [decision process](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/risk-matrix.md#decision-process) requires. Re-run the tiering check at every formal review and on any material change; the deep dive lists the triggers.
+The product owner prepares the assessment. The tier picks the approver: the AI Risk Committee for T1, AI Risk in the second line for T2, a team lead for T3, and for T4 a team lead who acknowledges the self-assessment. Model Risk Management validates every T1 tier independently, as the framework's [decision process](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/risk-matrix.md#decision-process) requires. Re-run the tiering check at every formal review and on any material change; the deep dive lists the triggers.
 </Track>
 
 <Shortcut quote="Call it T3 so we can ship Friday.">
@@ -120,7 +120,7 @@ The product owner prepares the assessment. The tier picks the approver: the AI R
 
 ### The override list
 
-The [canonical list](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/genai-risk-matrix.md#tier-override-rules) applies in every matrix: GenAI, traditional ML, multimodal and agentic.
+The [canonical list](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/genai-risk-matrix.md#tier-override-rules) applies in every matrix: GenAI, traditional ML, multimodal and agentic.
 
 <ul>
 {OVERRIDES.map((o) => <li><strong>Item {o.item} · {o.floor === 'T1' ? 'automatic T1' : 'minimum T2'}.</strong> {o.text}.</li>)}
@@ -132,7 +132,7 @@ The four safeguards in items 3 and 8 are zero data retention by the vendor, a re
 
 An agent with read-only tools still acts on content it can't trust. A retrieved document can carry instructions, and an early error in a multi-step plan carries through every later step. So item 6 sets T2 for any agent, and for any multi-agent system.
 
-Write access to production systems or data stores, or authority to move money, contact customers or change access, makes it T1 under item 4. The [agentic risk standard](https://github.com/sunilp/ai-governance-framework/blob/v2.0.0/framework/risk-classification/agentic-ai-risk.md#mandatory-risk-tier-classification) adds one more route: an agent that processes PII, MNPI or regulated data scores Critical on data exposure, so it is T1 even with read-only tools.
+Write access to production systems or data stores, or authority to move money, contact customers or change access, makes it T1 under item 4. The [agentic risk standard](https://github.com/sunilp/ai-governance-framework/blob/v2.1.0/framework/risk-classification/agentic-ai-risk.md#mandatory-risk-tier-classification) adds one more route: an agent that processes PII, MNPI or regulated data scores Critical on data exposure, so it is T1 even with read-only tools.
 
 ### Re-tiering
 

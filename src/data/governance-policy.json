@@ -1,5 +1,5 @@
 {
-  "source": "ai-governance-framework@v2.0.0",
+  "source": "ai-governance-framework@v2.1.0",
   "tiers": {
     "T1": {
       "name": "Critical",

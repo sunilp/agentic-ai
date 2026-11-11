@@ -47,7 +47,7 @@ export interface Step {
 }
 
 export const FRAMEWORK_REPO = 'https://github.com/sunilp/ai-governance-framework';
-export const FRAMEWORK_TAG = 'v2.0.0';
+export const FRAMEWORK_TAG = 'v2.1.0';
 export const kitUrl = (path: string) => `${FRAMEWORK_REPO}/blob/${FRAMEWORK_TAG}/${path}`;
 
 const AAFSE = { title: 'Agentic AI for Serious Engineers', url: 'https://www.amazon.com/dp/B0GVG6848F' };
