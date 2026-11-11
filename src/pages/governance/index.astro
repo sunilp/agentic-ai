@@ -7,7 +7,8 @@ import TrackToggle from '~/components/governance/TrackToggle.astro';
 import Hourglass from '~/components/governance/Hourglass.astro';
 import Track from '~/components/governance/Track.astro';
 import GovernanceMachine from '~/components/governance/GovernanceMachine.svelte';
-import { PARTS, PART_LABEL, STEPS, stepsInPart, writtenHref, type Part } from '~/data/governance-path';
+import TierRequirements from '~/components/governance/TierRequirements.astro';
+import { PARTS, PART_LABEL, STEPS, FRAMEWORK_REPO, FRAMEWORK_TAG, kitUrl, kitLabel, stepsInPart, writtenHref, type Part } from '~/data/governance-path';
 
 const written = (await getCollection('governance')).filter((e) => e.data.status !== 'draft').map((e) => e.id);
 const href = writtenHref(new Set(written));
@@ -30,15 +31,11 @@ const RULES: [string, string][] = [
   ['Deep dives can wait.', 'The top half of a step gets it working. The deep dive is for the edge cases you meet later.'],
 ];
 
-const CALLS: [string, string][] = [
-  ['Govern by tier, not by project.', 'Medium- and low-risk systems take a fast lane. Effort goes where the risk is.'],
-  ['The register is the gate.', 'No entry, no production credential. Registration hands back something the team needs.'],
-  ['Some uses get a no.', 'Write the prohibited list before the first request arrives.'],
-  ["If it can't block a release, it isn't a control.", 'Evidence that runs in the pipeline beats a signature on a form.'],
-  ['Builders never validate their own high-risk systems.', 'Book the independent validator at intake.'],
-  ['Agents get identity and least authority before they get tools.', 'Authority is granted per task and expires.'],
-  ['Controls live in the platform. Committees handle exceptions.', 'A committee that reviews every change becomes the queue engineers route around.'],
-  ['Thank people for near-misses.', 'A culture that hides problems defeats every control above.'],
+const ON_PAGE = [
+  ['#the-path', 'The path'],
+  ['#one-sheet', 'Every call and template'],
+  ['#tiers', 'What each tier demands'],
+  ['#fits-together', 'How it fits together'],
 ];
 ---
 <PageLayout
@@ -78,6 +75,12 @@ const CALLS: [string, string][] = [
         {RULES.map(([t, b]) => <li><b>{t}</b> {b}</li>)}
       </ol>
     </section>
+
+    <nav class="gov-onpage" aria-label="On this page">
+      <span>On this page</span>
+      {ON_PAGE.map(([h, t]) => <a href={h}>{t}</a>)}
+      <button type="button" class="gov-onpage__print" data-print>Print the checklist</button>
+    </nav>
 
     <section aria-labelledby="the-path" class="gov-path">
       <div class="gov-path__head">
@@ -131,6 +134,34 @@ const CALLS: [string, string][] = [
       ))}
     </section>
 
+    <section aria-labelledby="one-sheet" class="gov-sheet" id="one-sheet-section">
+      <h2 id="one-sheet">The guide on one sheet</h2>
+      <p class="gov-hub-sub">Each step's call, and the files to start from. All {STEPS.length} are here, including the steps still to be written up. The files come from the open <a href={FRAMEWORK_REPO}>AI governance framework</a>, pinned at {FRAMEWORK_TAG}.</p>
+      <div class="gov-table-wrap">
+        <table class="gov-sheet__table">
+          <thead><tr><th scope="col">Step</th><th scope="col">The call</th><th scope="col">Start from</th></tr></thead>
+          <tbody>
+            {STEPS.map((s) => (
+              <tr>
+                <th scope="row">
+                  <span class="gov-sheet__n">{s.n}</span>
+                  {href(s.n) ? <a href={href(s.n)!}>{s.short}</a> : <span>{s.short}</span>}
+                </th>
+                <td class="gov-sheet__call">{s.call}</td>
+                <td class="gov-sheet__kit">{s.kit.map((k, i) => <>{i > 0 && ', '}<a href={kitUrl(k)}>{kitLabel(k)}</a></>)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="tiers" class="gov-tiers">
+      <h2 id="tiers">What each tier demands</h2>
+      <p class="gov-hub-sub">Step 4 gives every system a tier from T1, the highest risk, to T4. The tier then sets who approves it, who checks it and how often it is looked at again.</p>
+      <TierRequirements />
+    </section>
+
     <section aria-labelledby="fits-together" class="gov-fits">
       <h2 id="fits-together">How it fits together</h2>
       <p class="gov-hub-sub">Everything you answer to keeps growing above. Every team, system and agent keeps growing below. Wire each rule to each team and the connections multiply. Put one narrow waist between them and they add.</p>
@@ -146,12 +177,6 @@ const CALLS: [string, string][] = [
       </div>
     </section>
 
-    <section aria-labelledby="the-calls" class="gov-calls-block">
-      <h2 id="the-calls">The calls this guide makes</h2>
-      <p class="gov-hub-sub">Each step argues for its call and says when to break it.</p>
-      <dl class="gov-calls">{CALLS.map(([t, b]) => <div><dt>{t}</dt><dd>{b}</dd></div>)}</dl>
-    </section>
-
     {firstHref && (
       <a class="gov-next__card gov-hub-start" href={firstHref}>
         <span class="gov-next__k">Begin · Step 1 of {STEPS.length}</span>
@@ -162,3 +187,9 @@ const CALLS: [string, string][] = [
     )}
   </Reader>
 </PageLayout>
+
+<script>
+  document.addEventListener('click', (e) => {
+    if ((e.target as Element | null)?.closest('[data-print]')) window.print();
+  });
+</script>

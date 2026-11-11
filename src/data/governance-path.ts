@@ -50,6 +50,26 @@ export const FRAMEWORK_REPO = 'https://github.com/sunilp/ai-governance-framework
 export const FRAMEWORK_TAG = 'v2.2.0';
 export const kitUrl = (path: string) => `${FRAMEWORK_REPO}/blob/${FRAMEWORK_TAG}/${path}`;
 
+const KIT_WORDS: Record<string, string> = {
+  ai: 'AI', genai: 'GenAI', llm: 'LLM', rag: 'RAG', grc: 'GRC', eu: 'EU', iso: 'ISO', nist: 'NIST', rmf: 'RMF', coe: 'CoE', raci: 'RACI',
+};
+/** A readable name for a framework file: 'templates/ai-policy.md' -> 'AI policy'. */
+export function kitLabel(path: string): string {
+  const parts = path.split('/');
+  const file = parts[parts.length - 1].replace(/\.(md|ya?ml)$/, '');
+  const parent = parts.length > 1 ? parts[parts.length - 2] : '';
+  // Files whose own name says little take their folder's name.
+  const stem =
+    file === 'README' ? (parent ? `${parent} overview` : 'framework overview')
+    : file === 'START-HERE' ? 'start here'
+    : file === 'governance' || file === 'governance-case-file' ? `${parent} ${file.replace('governance-', '').replace('governance', 'gate input')}`
+    : /^stage-\d+-/.test(file) ? `${file.replace(/^stage-\d+-/, '')} controls`
+    : file;
+  const words = stem.toLowerCase().split(/[-\s]+/).filter(Boolean).map((w) => KIT_WORDS[w] ?? w);
+  const text = words.join(' ').replace(/\biso (\d+)/i, 'ISO/IEC $1').replace('AI act', 'AI Act');
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 const AAFSE = { title: 'Agentic AI for Serious Engineers', url: 'https://www.amazon.com/dp/B0GVG6848F' };
 const EVERY_STEP_BEFORE_22 = Array.from({ length: 21 }, (_, i) => i + 1);
 
@@ -61,7 +81,7 @@ export const STEPS: Step[] = [
     doneWhen: 'Your sponsor can explain, in a minute, why it makes delivery faster.',
     restsOn: [], patterns: [],
     deepDive: ['decisions, owners, evidence', 'what governance is not'],
-    call: 'Governance exists to make safe delivery faster, not to slow every delivery down.',
+    call: 'Governance exists to make safe delivery faster.',
     kit: ['README.md', 'START-HERE.md'], related: [],
   },
   {
@@ -111,7 +131,7 @@ export const STEPS: Step[] = [
     doneWhen: 'You can name the three shortcuts your teams take most.',
     restsOn: [1], patterns: [],
     deepDive: ['present bias', 'the demo that became production', 'normalised deviance'],
-    call: 'A shortcut is a signal about your process, not a character flaw.',
+    call: 'A shortcut tells you something about your process.',
     kit: ['START-HERE.md'], related: [],
   },
   {
