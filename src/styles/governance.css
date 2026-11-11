@@ -1,0 +1,33 @@
+/* ---- Figures (inline SVG) ---- */
+.gov-figure {
+  margin: var(--space-5) 0;
+  padding: var(--space-5);
+  background: var(--paper-bright);
+  border: 1px solid var(--fg-faint);
+  border-radius: var(--radius-md);
+}
+/* Same breakout as ArchitectureDiagram: wide on desktop, pan inside the frame below ~800px. */
+.gov-figure--wide {
+  --wide: min(880px, calc(100vw - 3rem));
+  width: var(--wide);
+  margin-left: calc((100% - var(--wide)) / 2);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+.gov-figure--wide > .gov-svg { min-width: 720px; }
+@media (max-width: 720px) { .gov-figure--wide { padding: var(--space-3); } }
+.gov-figure__caption {
+  position: sticky; left: 0; margin-top: var(--space-3); text-align: center;
+  font-family: var(--font-mono); font-size: var(--meta-2); color: var(--fg-light);
+}
+.gov-svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); }
+.gov-svg .shape { fill: #fff; stroke: #1a1a1a; stroke-width: 1; }
+.gov-svg .shape--brick { fill: #f5ece9; stroke: #9b4a3f; stroke-width: 1.6; }
+.gov-svg .t { font-size: 11px; fill: #1a1a1a; }
+.gov-svg .t-strong { font-size: 11px; fill: #1a1a1a; font-weight: 500; }
+.gov-svg .t-sub { font-size: 10px; fill: #6b6b6b; }
+.gov-svg .t-brick { fill: #9b4a3f; }
+.gov-svg .ref--link { fill: #9b4a3f; text-decoration: underline; }
+.gov-svg .arrow { fill: none; stroke: #1a1a1a; }
+.gov-svg .arrow--brick { stroke: #9b4a3f; }

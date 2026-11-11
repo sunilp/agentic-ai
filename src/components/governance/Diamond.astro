@@ -1,0 +1,40 @@
+---
+import { DIAMOND as D } from '~/data/governance-figures';
+import { renderRefs } from '~/lib/governance-refs';
+import { writtenHref } from '~/data/governance-path';
+
+interface Props { written: string[]; caption?: string }
+const { written, caption } = Astro.props;
+const href = writtenHref(new Set(written));
+const bandY = [120, 190, 260, 330];
+---
+<figure class="gov-figure gov-figure--wide">
+  <svg class="gov-svg" viewBox="0 0 880 440" role="img" aria-labelledby="diamond-title">
+    <title id="diamond-title">Governance as a diamond: decided at one point, the board, and enforced at one point, the moment a model or agent acts. Direction flows down; evidence flows up.</title>
+    <path class="shape shape--brick" d="M440 20 L500 80 L380 80 Z" />
+    <path class="shape" d="M380 80 L500 80 L570 150 L310 150 Z" />
+    <path class="shape" d="M310 150 L570 150 L640 220 L240 220 Z" />
+    <path class="shape" d="M240 220 L640 220 L570 290 L310 290 Z" />
+    <path class="shape" d="M310 290 L570 290 L500 360 L380 360 Z" />
+    <path class="shape shape--brick" d="M380 360 L500 360 L440 420 Z" />
+    <g text-anchor="middle">
+      {D.bands.map((b, i) => (
+        <>
+          <text class="t" x="440" y={bandY[i]}>{b.title}</text>
+          <text class="t-sub" x="440" y={bandY[i] + 14} set:html={renderRefs(b.refs, href)} />
+        </>
+      ))}
+    </g>
+    <path class="arrow" d="M425 50 L230 50" />
+    <text class="t-strong t-brick" x="40" y="54">{D.top}</text>
+    <path class="arrow" d="M455 400 L650 400" />
+    <text class="t-strong t-brick" x="656" y="404">{D.bottom}</text>
+    <path class="arrow" d="M200 110 L200 330 M194 322 L200 334 L206 322" />
+    <text class="t" x="188" y="225" text-anchor="end">{D.left[0]}</text>
+    <text class="t-sub" x="188" y="239" text-anchor="end">{D.left[1]}</text>
+    <path class="arrow arrow--brick" d="M680 330 L680 110 M674 118 L680 106 L686 118" />
+    <text class="t t-brick" x="692" y="225">{D.right[0]}</text>
+    <text class="t-sub" x="692" y="239">{D.right[1]}</text>
+  </svg>
+  {caption && <figcaption class="gov-figure__caption">{caption}</figcaption>}
+</figure>
