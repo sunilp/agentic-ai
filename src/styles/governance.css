@@ -15,6 +15,8 @@
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
 }
+/* The machine takes a wider frame once its panel sits beside the drawing. */
+@media (min-width: 1240px) { .gov-figure--machine { --wide: min(1160px, calc(100vw - 4rem)); } }
 .gov-figure--wide > .gov-svg { min-width: 720px; }
 @media (max-width: 720px) { .gov-figure--wide { padding: var(--space-3); } }
 .gov-figure__caption {
@@ -29,6 +31,7 @@
 .gov-svg .t-sub { font-size: 10px; fill: #6b6b6b; }
 .gov-svg .t-brick { fill: #9b4a3f; }
 .gov-svg .ref--link { fill: #9b4a3f; text-decoration: underline; }
+.gov-svg a:hover .ref--link, .gov-svg a:focus-visible .ref--link { fill: #1a1a1a; font-weight: 600; }
 .gov-svg .arrow { fill: none; stroke: #1a1a1a; }
 .gov-svg .arrow--brick { stroke: #9b4a3f; }
 
@@ -50,8 +53,8 @@ body:has(#track-enterprise:checked) .track--small { display: none; }
 .gov-check__resp { color: #9b4a3f; }
 .gov-check__done { margin: 4px 0 0; }
 .gov-check__done b { font: 500 10px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: #9b4a3f; margin-right: 6px; }
-.gov-check .track { border-top: 0; padding-top: 0; margin: 0; }
-.gov-check .track__label { display: none; }
+.gov-check .track, .gov-step .track { border-top: 0; padding-top: 0; margin: 0; }
+.gov-check .track__label, .gov-step .track__label { display: none; }
 
 /* ---- Shortcut, kit, deep dive, go deeper, related, prev/next ---- */
 .gov-shortcut { background: #f5ece9; border-left: 3px solid #9b4a3f; padding: 16px 20px; margin: var(--space-5) 0; }
@@ -68,7 +71,7 @@ body:has(#track-enterprise:checked) .track--small { display: none; }
 
 /* ---- Tables ---- */
 .gov-table-wrap { overflow-x: auto; margin: var(--space-4) 0; }
-.gov-table { border-collapse: collapse; width: 100%; font-size: 15px; }
+.gov-table { border-collapse: collapse; width: 100%; min-width: 600px; font-size: 15px; } /* under the 612px reader column, so only narrow screens scroll the wrapper */
 .gov-table caption { text-align: left; font: 400 11px var(--font-mono); color: var(--fg-light); margin-bottom: 6px; }
 .gov-table th, .gov-table td { border-bottom: 1px solid var(--fg-faint); padding: 6px 8px; vertical-align: top; text-align: left; }
 .gov-table thead th { font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; color: #6b6b6b; }

@@ -64,7 +64,7 @@ export function renderMachineSvg(o: MachineSvgOptions): string {
     } else if (href) {
       out.push(`<a ${attrs} href="${esc(href)}" aria-label="${name}">${shape}${text}</a>`);
     } else {
-      out.push(`<g ${attrs} aria-label="${name}">${shape}${text}</g>`);
+      out.push(`<g ${attrs} role="img" aria-label="${name}">${shape}${text}</g>`);
     }
   }
 

@@ -5,7 +5,7 @@
  * both call it, so they can never differ. Links may cross each other in a channel
  * (the paper halo keeps that readable). They never cross a part or a label.
  */
-import { GUTTER, partOf, type MachinePart } from '~/data/governance-machine';
+import { GUTTER, labelBoxes, partOf, type MachinePart } from '~/data/governance-machine';
 import { stepByN } from '~/data/governance-path';
 
 export type Pt = [number, number];
@@ -17,8 +17,19 @@ const LEFT_TRUNK = 56; // lanes 56, 60, 64: between the rail (ends 50) and the s
 const RIGHT_TRUNK = 874; // lanes 874, 870, 866: right of the stack (ends 860)
 const MID = 440;
 
+const LABEL_CLEAR = 8; // gap between a layer label's end and a link dropping past it
 const bottom = (p: MachinePart) => p.y + p.h;
 const cx = (p: MachinePart) => p.x + p.w / 2;
+
+/** Where a link drops onto a part's top edge: its centre, or just right of the layer label above it when the label reaches past the centre. */
+function landX(t: MachinePart): number {
+  const label = t.row >= 0 ? labelBoxes()[t.row + 1] : undefined; // [0] is the roof label, then one per layer from the top
+  const end = label ? label.x + label.w : -Infinity;
+  if (!label || t.x > end || cx(t) > end + LABEL_CLEAR) return cx(t);
+  const x = Math.ceil(end + LABEL_CLEAR);
+  if (x > t.x + t.w - LABEL_CLEAR) throw new Error(`step ${t.n}: no room to land a link right of its layer label`);
+  return x;
+}
 
 export function roundedPath(points: Pt[], r = 7): string {
   let d = `M${points[0][0]} ${points[0][1]}`;
@@ -67,15 +78,16 @@ export function routeLinks(selected: number): RoutedLink[] {
   const plans = targets.map((t) => {
     const kind = kindOf(s, t);
     const side: 'left' | 'right' | undefined = kind === 'trunk' ? ((cx(s) + cx(t)) / 2 < MID ? 'left' : 'right') : undefined;
-    const key = side === 'left' ? -1 : side === 'right' ? 10_000 + cx(t) : cx(t);
-    return { t, kind, side, key };
+    const tx = kind === 'same' ? cx(t) : landX(t); // where the link meets the target
+    const key = side === 'left' ? -1 : side === 'right' ? 10_000 + tx : tx;
+    return { t, kind, side, key, tx };
   });
   plans.sort((a, b) => a.key - b.key);
 
   const ports = plans.map((_, i) => s.x + (s.w * (i + 1)) / (plans.length + 1));
   // Left-going links take lanes left to right and right-going links right to left,
   // so no horizontal run passes under a sibling's port.
-  const goesLeft = plans.map((p, i) => (p.kind === 'trunk' ? p.side === 'left' : cx(p.t) <= ports[i]));
+  const goesLeft = plans.map((p, i) => (p.kind === 'trunk' ? p.side === 'left' : p.tx <= ports[i]));
   const lane: number[] = [];
   let nl = 0;
   plans.forEach((_, i) => { if (goesLeft[i]) lane[i] = nl++; });
@@ -89,9 +101,8 @@ export function routeLinks(selected: number): RoutedLink[] {
   for (let i = plans.length - 1; i >= 0; i--) if (plans[i].side === 'right') trunkX[i] = RIGHT_TRUNK - LANE_STEP * tr++;
 
   return plans.map((p, i) => {
-    const { t } = p;
+    const { t, tx } = p;
     const port = +ports[i].toFixed(2);
-    const tx = cx(t);
     const y1 = bottom(s) + LANE_OFFSET + LANE_STEP * lane[i];
     if (p.kind === 'same') return link(t, [[port, bottom(s)], [port, y1], [tx, y1], [tx, bottom(t)]]);
     if (p.kind === 'next') return link(t, [[port, bottom(s)], [port, y1], [tx, y1], [tx, t.y]]);

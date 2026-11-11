@@ -44,16 +44,18 @@
 <div class="machine-figure__grid">
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="machine-figure__drawing" bind:this={drawing} {onclick} {onkeydown}>{@html svg}</div>
-  <aside class="machine-panel" aria-live="polite">
-    <p class="machine-panel__k">Step {panel.n}</p>
-    <p class="machine-panel__t">{#if panel.href}<a href={panel.href}>{panel.title}</a>{:else}{panel.title}{/if}</p>
+  <aside class="machine-panel">
+    <div aria-live="polite" aria-atomic="true">
+      <p class="machine-panel__k">Step {panel.n}</p>
+      <p class="machine-panel__t">{#if panel.href}<a href={panel.href}>{panel.title}</a>{:else}{panel.title}{/if}</p>
+    </div>
     <p class="machine-panel__k">Rests on</p>
     <p class="machine-panel__l">
-      {#if panel.restsOn.length === 0}Nothing. This is where you start.{:else}{#each panel.restsOn as r, i}{#if i > 0} · {/if}{#if r.href}<a href={r.href}>{r.n} {r.short}</a>{:else}{r.n} {r.short}{/if}{/each}{/if}
+      {#if panel.restsOn.length === 0}Nothing. This is where you start.{:else}{#each panel.restsOn as r, i}{#if i > 0}{', '}{/if}{#if r.href}<a href={r.href}>{r.n} {r.short}</a>{:else}{r.n} {r.short}{/if}{/each}{/if}
     </p>
     <p class="machine-panel__k">Holds up</p>
     <p class="machine-panel__l">
-      {#if panel.holdsUp.length === 0}Step 22, the walk-through{:else}{#each panel.holdsUp as r, i}{#if i > 0} · {/if}{#if r.href}<a href={r.href}>{r.n} {r.short}</a>{:else}{r.n} {r.short}{/if}{/each}{/if}
+      {#if panel.holdsUp.length === 0}Step 22, the walk-through{:else}{#each panel.holdsUp as r, i}{#if i > 0}{', '}{/if}{#if r.href}<a href={r.href}>{r.n} {r.short}</a>{:else}{r.n} {r.short}{/if}{/each}{/if}
     </p>
     {#if panel.patterns.length > 0}
       <p class="machine-panel__k">Patterns in play</p>
@@ -61,7 +63,7 @@
         {#each panel.patterns as p (p.slug)}
           <li>
             <span class="chip" class:chip--anti={p.anti} style={`background:${p.colour}`}></span>
-            <a href={p.href}>{p.name}</a>{#if p.anti}<span class="machine-panel__anti">&nbsp;(anti-pattern)</span>{/if}
+            <span><a href={p.href}>{p.name}</a>{#if p.anti}<span class="machine-panel__anti">&nbsp;(anti-pattern)</span>{/if}</span>
           </li>
         {/each}
       </ul>

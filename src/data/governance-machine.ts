@@ -6,7 +6,7 @@
 export const FRAME = { width: 880, height: 500 };
 export const PART_H = 40;
 export const GUTTER = 32; // vertical gap between layers
-export const LABEL_CHAR_W = 5.45; // 9px mono label, width per character
+export const LABEL_CHAR_W = 7.1; // 11px mono label at 0.5px letter-spacing, measured width per character
 
 export interface Rect { x: number; y: number; w: number; h: number }
 export interface MachinePart extends Rect { n: number; row: number }
@@ -42,8 +42,8 @@ export function partOf(n: number): MachinePart {
   return p;
 }
 
-/** Boxes the layer and roof labels occupy: baseline minus 9 to baseline plus 2. */
+/** Boxes the layer and roof labels occupy: baseline minus 11 to baseline plus 2. */
 export function labelBoxes(): Rect[] {
-  const box = (x: number, baseline: number, text: string): Rect => ({ x, y: baseline - 9, w: text.length * LABEL_CHAR_W, h: 11 });
+  const box = (x: number, baseline: number, text: string): Rect => ({ x, y: baseline - 11, w: text.length * LABEL_CHAR_W, h: 13 });
   return [box(ROOF_LABEL.x, ROOF_LABEL.y, ROOF_LABEL.text), ...LAYERS.map((l) => box(70, l.y - 6, l.name))];
 }

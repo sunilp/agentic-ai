@@ -49,9 +49,9 @@ const navLabel = (s: Step, dir: 'prev' | 'next') => (dir === 'prev' ? `← Step 
     {step.n <= 21 && (
       <section class="gov-where" aria-labelledby="where-this-sits">
         <h2 id="where-this-sits">Where this sits</h2>
-        <div class="gov-figure gov-figure--wide">
+        <div class="gov-figure gov-figure--wide gov-figure--machine">
           <GovernanceMachine initial={step.n} mode="progress" written={written} />
-          <p class="gov-figure__caption">Solid line: what this step rests on. Dashed outline: what rests on it. Faded: steps still to come.</p>
+          <p class="gov-figure__caption">Solid line: what this step rests on. Dashed outline: what rests on it. Faded: steps still to come.{step.patterns.length > 0 && ' Pattern colours follow the catalogue: blue capability, brick control, gold evidence; a diamond marks an anti-pattern.'}</p>
         </div>
       </section>
     )}
