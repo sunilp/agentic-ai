@@ -1,8 +1,8 @@
 ---
 id: fn-001
 title: The multi-agent papers nobody is citing
-dek: Three studies published since March 2025 put multi-agent failure rates between 41 and 86.7 percent and error amplification up to 17.2x over single-agent baselines. The vendor decks have not caught up.
-description: "Three papers and one practitioner survey put multi-agent failure rates between 41 and 86.7 percent and error amplification up to 17.2x. The version that survived production looks more like a CI pipeline than a faculty meeting."
+dek: Three studies published since March 2025 put multi-agent failure rates between 41 and 86.7 percent, and error amplification up to 17.2x for agents that never check each other's work. The vendor decks have not caught up.
+description: "Three papers and one practitioner survey put multi-agent failure rates between 41 and 86.7 percent, and error amplification at 17.2x for independent agents against 4.4x under central coordination. The version that survived production looks more like a CI pipeline than a faculty meeting."
 primaryChapter: ch-04
 banner: /assets/banners/fn-001.png
 spot: /assets/spots/fn-001.png
@@ -17,9 +17,8 @@ sources:
     url: https://arxiv.org/pdf/2503.13657
     authors: [Cemri M., Pan M., Yang S.]
     year: 2025
-  - title: "Why Your Multi-Agent System Is Failing: Escaping the 17x Error Trap of the \"Bag of Agents\""
-    url: https://towardsdatascience.com/why-your-multi-agent-system-is-failing-escaping-the-17x-error-trap-of-the-bag-of-agents/
-    authors: [DeepMind]
+  - title: "Towards a Science of Scaling Agent Systems"
+    url: https://arxiv.org/abs/2512.08296
     year: 2025
   - title: "Multi-Agent in Production in 2026: What Actually Survived"
     url: https://medium.com/@Micheal-Lanham/multi-agent-in-production-in-2026-what-actually-survived-f86de8bb1cd1
@@ -36,9 +35,9 @@ Three papers and one practitioner essay set the new floor. None of them killed m
 
 ## The papers
 
-**MAST** (Cemri, Pan, Yang et al., March 2025) is the first proper taxonomy of multi-agent failure modes. The authors measured seven open-source frameworks on standard benchmarks and reported failure rates between 41 and 86.7 percent. They cluster the failures into three buckets: specification issues, inter-agent misalignment, and task verification gaps. Inter-agent misalignment alone accounts for 36.9 percent of failures. The taxonomy is the most useful thing in the paper. The failure rates are the headline. [1]
+**MAST** (Cemri, Pan, Yang et al., March 2025) is the first proper taxonomy of multi-agent failure modes. The authors measured seven open-source frameworks on standard benchmarks and reported failure rates between 41 and 86.7 percent. They cluster the failures into three buckets: system design issues, inter-agent misalignment, and task verification gaps. System design issues are the largest at 44.2 percent, inter-agent misalignment is second at 32.4 percent, and task verification accounts for the remaining 23.5 percent. The rates are not directly comparable across systems, because the frameworks were evaluated on different benchmarks. The taxonomy is the most useful thing in the paper. The failure rates are the headline. [1]
 
-**The 17x Error Trap** is the popular framing of a DeepMind study published in December 2025. Unstructured peer-to-peer networks amplified small reasoning errors by up to 17.2x over single-agent baselines on the same task. Hierarchical orchestration with a verifier kept amplification under 2x. Free-form collaboration did not. The mechanism is intuitive in hindsight. In a network where every agent both produces and consumes, a small bias gets re-cited as evidence, and the system convinces itself of its own error. [2]
+**Towards a Science of Scaling Agent Systems** (arXiv:2512.08296, December 2025) compares five architectures across 180 configurations and three model families. Independent agents, which produce output without checking one another, amplified errors by 17.2x. Centralized coordination contained the same effect to 4.4x. The figure is a trace-level amplification factor estimated from execution traces, so it measures the extra work coordination failure costs, not a multiplier on the MAST failure percentages. The mechanism is intuitive in hindsight. Output that nothing checks still reaches the final answer. [2]
 
 **Multi-Agent in Production 2026: What Actually Survived** (Micheal Lanham) is the field survey that matters. Teams that shipped multi-agent in production had three architectural traits in common. A single orchestrator owned the plan. Message contracts read like API specs, with typed inputs and validated outputs. A verifier loop could fire a worker and force a retry. Nothing that looked like a Slack channel of debating agents survived contact with on-call rotations. [3]
 
@@ -50,17 +49,17 @@ The constructive read across all three: the architectures that worked in product
 
 ![Diagram comparing error amplification in single-agent, hierarchical with verifier, and free-form coordination architectures](/assets/diagrams/multi-agent-error-amplification.svg)
 
-*Error amplification across three architectures. MAST measured failure modes. DeepMind measured amplification ratios.*
+*Error amplification by architecture. MAST measured failure modes. The scaling study measured amplification ratios.*
 
 ## The bounded-agent test
 
 Chapter 4 of the book frames the multi-agent decision around three questions. If a workload cannot answer "yes" to all three, do not reach for multi-agent.
 
 1. **Decomposition is structural, not aspirational.** The task has a clean partition that any reasonable engineer would draw the same way: retriever, reasoner, verifier; or planner, executor, critic. If two engineers draw the partition differently, you do not have a multi-agent system. You have an architectural disagreement dressed up as architecture.
-2. **Each agent has an enforceable contract.** Inputs are typed. Outputs are validated. A downstream agent will reject a malformed message without invoking the upstream agent's reasoning. The MAST taxonomy calls the absence of this "inter-agent misalignment" and it is the largest single failure cluster they measured.
-3. **There is a verifier that can fire a worker.** The verifier is the bound on error compounding. Hierarchical orchestration with a verifier kept DeepMind's amplification under 2x. Free-form coordination did not. The verifier is the difference between a multi-agent system and an expensive single-agent system with extra latency.
+2. **Each agent has an enforceable contract.** Inputs are typed. Outputs are validated. A downstream agent will reject a malformed message without invoking the upstream agent's reasoning. The MAST taxonomy calls the absence of this "inter-agent misalignment", and it is roughly a third of the failures they measured, second only to system design issues.
+3. **There is a verifier that can fire a worker.** The verifier is the bound on error compounding. Centralized coordination held amplification to 4.4x where independent agents reached 17.2x. No published study has isolated an orchestrator-plus-verifier configuration, so treat the verifier as the mechanism the evidence points at rather than one it has measured. The verifier is the difference between a multi-agent system and an expensive single-agent system with extra latency.
 
-These three questions are the architectural floor. They are not the ceiling. A system that answers yes to all three can still fail in ways the three questions do not catch, particularly around cost and latency. But a system that answers no to any of them will almost certainly fail in production for the reasons MAST and DeepMind documented.
+These three questions are the architectural floor. They are not the ceiling. A system that answers yes to all three can still fail in ways the three questions do not catch, particularly around cost and latency. But a system that answers no to any of them will almost certainly fail in production for the reasons MAST and the scaling study documented.
 
 ## Where this fails
 
@@ -78,7 +77,7 @@ The pattern is implemented in [`src/ch04_multiagent/`](https://github.com/sunilp
 - `orchestrator.py` -- single-orchestrator pattern with a verifier loop, addressing the third question
 - `compare.py` -- single-agent versus multi-agent on the same task, with accuracy, cost, and latency reported side by side
 
-Run `python -m ch04_multiagent.compare` to reproduce the comparison on the document-intelligence workload. The numbers move with model choice and seed. The shape is consistent with what MAST and DeepMind reported on much larger studies.
+Run `python -m ch04_multiagent.compare` to reproduce the comparison on the document-intelligence workload. The numbers move with model choice and seed. The shape is consistent with what MAST and the scaling study reported on much larger studies.
 
 <PullQuote>Free-form agent collaboration is the slowest known way to amplify a small error into a large one.</PullQuote>
 
