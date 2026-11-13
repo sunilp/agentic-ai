@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 252" role="img" aria-label="The incident path a drill walks: detect, stop, preserve, tell, fix, restart, then back to what you watch. Under each link, what the drill has to prove: acknowledged inside the clock, the stop in effect within 15 minutes, evidence pulled within the hour, the right people told in order, a change that sticks, and a restart lifted by name and recorded."><rect width="880" height="252" fill="#fff"/>
+<rect x="11" y="56" width="118" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="70.0" y="82.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">DETECT</text>
+<text x="70.0" y="97.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">the real route</text>
+<rect x="159" y="56" width="118" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="218.0" y="82.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">STOP</text>
+<text x="218.0" y="97.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">a named person</text>
+<rect x="307" y="56" width="118" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="366.0" y="82.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PRESERVE</text>
+<text x="366.0" y="97.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">logs, versions</text>
+<rect x="455" y="56" width="118" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="514.0" y="82.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">TELL</text>
+<text x="514.0" y="97.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">who hears, when</text>
+<rect x="603" y="56" width="118" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="662.0" y="82.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">FIX</text>
+<text x="662.0" y="97.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">test or control</text>
+<rect x="751" y="56" width="118" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="810.0" y="82.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">RESTART</text>
+<text x="810.0" y="97.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">on evidence</text>
+<path d="M129 84.0 L157 84.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M150.6 86.7 L157 84.0 L150.6 81.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M277 84.0 L305 84.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M298.6 86.7 L305 84.0 L298.6 81.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M425 84.0 L453 84.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M446.6 86.7 L453 84.0 L446.6 81.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M573 84.0 L601 84.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M594.6 86.7 L601 84.0 L594.6 81.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M721 84.0 L749 84.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M742.6 86.7 L749 84.0 L742.6 81.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M810.0 56 L810.0 24 L70.0 24" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M70.0 24 L70.0 54" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M67.3 47.6 L70.0 54 L72.7 47.6" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="440.0" y="42" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">the fix joins what you watch</text>
+<text x="11" y="150" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">THE DRILL PROVES</text>
+<path d="M11 156 L869 156" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<path d="M70.0 112 L70.0 134" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="70.0" y="174" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">acknowledged</text>
+<text x="70.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">inside the clock</text>
+<path d="M218.0 112 L218.0 134" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="218.0" y="174" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="400" xml:space="preserve">in effect within</text>
+<text x="218.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="400" xml:space="preserve">15 minutes</text>
+<path d="M366.0 112 L366.0 134" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="366.0" y="174" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">evidence pulled</text>
+<text x="366.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">within the hour</text>
+<path d="M514.0 112 L514.0 134" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="514.0" y="174" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">the right people,</text>
+<text x="514.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">in order</text>
+<path d="M662.0 112 L662.0 134" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="662.0" y="174" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">a change</text>
+<text x="662.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">that sticks</text>
+<path d="M810.0 112 L810.0 134" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="810.0" y="174" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">lifted by name,</text>
+<text x="810.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">recorded</text>
+<circle cx="16" cy="226" r="4.5" fill="#9b4a3f"/>
+<text x="28" y="230" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">A drill plants one fault and walks it down every link. Each link has to hold.</text>
+</svg>

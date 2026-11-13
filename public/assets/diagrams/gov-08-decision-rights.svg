@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 482" role="img" aria-label="Who decides, by tier. Four rows across T1 to T4. Build, meaning approve the risk assessment: AI Risk Committee, AI Risk, team lead, team lead. Validate: MRM in full, MRM or another second-line reviewer in reduced scope, a peer who is not the developer, a self-test. Ship: AI Risk Committee with the CISO and, for personal data, the DPO; Head of AI with the Business Unit Head; team lead with the business owner; team lead. Exception: AI Risk Committee, Head of AI Risk, Head of AI, team lead. Cells decided outside the build team are shaded: every T1 and T2 cell, and the T3 exception. Two rows apply at every tier: a change goes back to the ship approver after revalidation, and whoever is on call can stop a system first and tell the owners after."><rect width="880" height="482" fill="#fff"/>
+<path d="M136 34 L136 28 L496 28 L496 34" fill="none" stroke="#9b4a3f" stroke-width="1.2"/>
+<text x="316.0" y="20" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">HIGH-RISK · THE BUILD TEAM NEVER VALIDATES</text>
+<text x="225.0" y="52" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">T1 · CRITICAL</text>
+<text x="407.0" y="52" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">T2 · HIGH</text>
+<text x="589.0" y="52" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">T3 · MEDIUM</text>
+<text x="771.0" y="52" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">T4 · LOW</text>
+<text x="10" y="90.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">BUILD</text>
+<text x="10" y="105.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">risk assessment</text>
+<rect x="136" y="62" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="225.0" y="89.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">AI Risk Committee</text>
+<text x="225.0" y="103.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">MRM checks the tier</text>
+<rect x="318" y="62" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="407.0" y="89.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">AI Risk</text>
+<text x="407.0" y="103.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">second line</text>
+<rect x="500" y="62" width="178" height="60" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="589.0" y="96.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">Team lead</text>
+<rect x="682" y="62" width="178" height="60" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="771.0" y="82.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">Team lead</text>
+<text x="771.0" y="96.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">acknowledges the</text>
+<text x="771.0" y="110.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">self-assessment</text>
+<text x="10" y="156.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">VALIDATE</text>
+<text x="10" y="171.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">independent check</text>
+<rect x="136" y="128" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="225.0" y="155.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">MRM</text>
+<text x="225.0" y="169.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">full scope</text>
+<rect x="318" y="128" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="407.0" y="155.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">MRM or second line</text>
+<text x="407.0" y="169.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">reduced scope</text>
+<rect x="500" y="128" width="178" height="60" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="589.0" y="155.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">Peer review</text>
+<text x="589.0" y="169.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">not the developer</text>
+<rect x="682" y="128" width="178" height="60" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="771.0" y="155.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">Self-test</text>
+<text x="771.0" y="169.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">by the developer</text>
+<text x="10" y="222.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">SHIP</text>
+<text x="10" y="237.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">deployment</text>
+<rect x="136" y="194" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="225.0" y="214.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">AI Risk Committee</text>
+<text x="225.0" y="228.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">CISO co-signs</text>
+<text x="225.0" y="242.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">DPO too, if personal data</text>
+<rect x="318" y="194" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="407.0" y="214.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">Head of AI</text>
+<text x="407.0" y="228.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">Business Unit Head</text>
+<text x="407.0" y="242.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">co-signs</text>
+<rect x="500" y="194" width="178" height="60" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="589.0" y="221.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">Team lead</text>
+<text x="589.0" y="235.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">business owner co-signs</text>
+<rect x="682" y="194" width="178" height="60" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="771.0" y="228.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">Team lead</text>
+<text x="10" y="288.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">EXCEPTION</text>
+<text x="10" y="303.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">to a control</text>
+<rect x="136" y="260" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="225.0" y="294.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">AI Risk Committee</text>
+<rect x="318" y="260" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="407.0" y="294.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">Head of AI Risk</text>
+<rect x="500" y="260" width="178" height="60" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="589.0" y="294.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">Head of AI</text>
+<rect x="682" y="260" width="178" height="60" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="771.0" y="294.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">Team lead</text>
+<text x="136" y="344" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">AT EVERY TIER</text>
+<text x="10" y="370.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">CHANGE</text>
+<text x="10" y="385.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">material change</text>
+<rect x="136" y="352" width="724" height="40" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="150" y="376.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">The ship approver signs again, after revalidation. A higher tier brings its own approvers.</text>
+<text x="10" y="416.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">STOP</text>
+<text x="10" y="431.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">pause it now</text>
+<rect x="136" y="398" width="724" height="40" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="150" y="422.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">Whoever is on call can stop it first. The owners hear after.</text>
+<rect x="136" y="460" width="28" height="14" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="174" y="471" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">decided outside the build team</text>
+<rect x="500" y="460" width="28" height="14" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="538" y="471" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">decided inside the team</text>
+</svg>

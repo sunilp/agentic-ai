@@ -1,0 +1,197 @@
+---
+dek: "Once a system is live, watch what its approval rested on, give named people a tested way to stop it, run every incident to a change, let every exception expire, and retire systems on purpose."
+description: "Step 11 of AI Governance, from Scratch. Give every signal a threshold and an owner, test the kill switch, run incidents on the framework's severity clock, give each exception an owner and an expiry date, make every periodic review decide, retire systems cleanly, and prove the machinery with one incident drill run end to end."
+updated: 2026-11-13
+readingTime: 10
+spot: /assets/spots/gov-11.png
+spotCaption: "Lower the boat on a calm day, so you know the ropes run."
+sources:
+  - title: "Guide to Test, Training, and Exercise Programs for IT Plans and Capabilities, NIST SP 800-84"
+    url: "https://csrc.nist.gov/pubs/sp/800/84/final"
+    authors: ["Tim Grance", "Tamara Nolan", "Kristin Burke", "Rich Dudley", "Gregory White", "Travis Good"]
+    year: 2006
+  - title: "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 14(4)(e)"
+    url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+    authors: ["European Parliament and Council of the European Union"]
+    year: 2024
+  - title: "Regulation (EU) 2016/679 (General Data Protection Regulation), Article 33(1)"
+    url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+    authors: ["European Parliament and Council of the European Union"]
+    year: 2016
+  - title: "AI Governance Framework v2.3.0: LLM production monitoring"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/monitoring.md#monitoring-dimensions"
+  - title: "AI Governance Framework v2.3.0: LLM production monitoring, RAG pipeline health"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/monitoring.md#rag-pipeline-health"
+  - title: "AI Governance Framework v2.3.0: LLM production monitoring, drift detection"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/monitoring.md#drift-detection-for-llms"
+  - title: "AI Governance Framework v2.3.0: agent identity and tool governance, kill switch"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md#8-kill-switch"
+  - title: "AI Governance Framework v2.3.0: control register, Stage 8 production operations (PM-006, IR-001 to IR-006)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-8-production-operations"
+  - title: "AI Governance Framework v2.3.0: escalation paths, severity classification"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/escalation-paths.md#severity-classification"
+  - title: "AI Governance Framework v2.3.0: escalation paths, regulatory notification"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/escalation-paths.md#regulatory-notification"
+  - title: "AI Governance Framework v2.3.0: incident forensics, evidence preservation"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/incident-forensics.md#evidence-preservation"
+  - title: "AI Governance Framework v2.3.0: governance workflow, exceptions and risk acceptance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance"
+  - title: "AI Governance Framework v2.3.0: exception register, monthly review record"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/exception-register.md#monthly-review-record"
+  - title: "AI Governance Framework v2.3.0: governance review cadence by tier"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/review-cadence.md#cadence-by-tier"
+  - title: "AI Governance Framework v2.3.0: governance workflow, Stage 10 deprecation and retirement"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#stage-10-deprecation--retirement"
+  - title: "AI Governance Framework v2.3.0: AI inventory standard, quarterly reconciliation"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#quarterly-reconciliation-gv-006"
+  - title: "AI Governance Framework v2.3.0: AI procurement clauses, clause set"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/ai-procurement-clauses.md#clause-set"
+  - title: "AI Governance Framework v2.3.0: human-in-the-loop patterns, pattern selection matrix"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/human-in-loop-patterns.md#pattern-selection-matrix"
+  - title: "AI Governance Framework v2.3.0: Start Here, small teams traps"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#traps"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture a chatbot that went live with every signature its tier asked for. The evaluations passed. The committee approved it.
+
+Months later, a support lead sees it tell a customer a fee was waived. It wasn't. On the quality dashboard, the faithfulness score has sagged for a week, on a chart with no alert line and no owner. She looks for the off switch. The runbook names an engineer who left in the summer.
+
+Nobody approved anything wrong. The approval described the system on the day it shipped. Since then the fees have changed, and so have the people.
+
+So what keeps a live system inside the decision that let it ship, and who stops it when it strays?
+
+## Six jobs once the system is live
+
+An approval is a decision about one system on one day. Six jobs keep it true afterwards.
+
+1. **Watch what the approval rested on.** Write down what it assumed, such as "a person reads every draft", and watch a signal for each. The framework's [monitoring standard](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/monitoring.md#monitoring-dimensions) covers quality, safety, operations, cost and user feedback, plus pipeline health for retrieval systems. The guide adds a rule: each signal gets a threshold, a named owner and a next step with a deadline, an [escalation path](/patterns/escalation-path/) in miniature. A metric with no threshold and no owner is decoration.
+2. **Give the stop to named people, and test it.** T1 customer-facing systems and all agentic systems need a [kill switch](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md#8-kill-switch) that stops or degrades the system within 15 minutes of the decision. The on-call operator, the incident commander or the system owner pulls it, with no further approval. It is tested at least quarterly, and no exception can cover it. The guide gives every other system a way to stop too. For most, that is revoking the credential Step 3 tied to its register entry.
+3. **Run every incident to a change.** Step 7 built the reporting. This is the machinery. [Severity](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/escalation-paths.md#severity-classification) sets the clock to acknowledge and start containment: 15 minutes at S1, four hours at S2, 24 hours at S3. An S1 or S2 also gets a root cause within 48 hours, a post-mortem and a notification assessment. Each incident ends in an evaluation case or a control change.
+4. **Give every exception an owner and an expiry date.** An [exception](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance) is the only way to run without a control. It is recorded at every tier and lasts 90 days at most, with one renewal, signed one level higher. A T1 renewal takes the full committee. Once it expires, the control counts as failed. The guide adds a named owner who closes the gap. The kill switch is one of five controls nobody can except.
+5. **Make each review decide.** The formal review comes quarterly at T1, every six months at T2 and yearly below that. It re-checks the tier and confirms revalidation after any material change. The guide's recommendation: end it with one recorded decision. Continue, change a control, narrow the scope, suspend or retire.
+6. **Retire on purpose.** The framework's [Stage 10](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#stage-10-deprecation--retirement) maps who depends on the system, archives its evidence and records the decommission. The register entry stays.
+
+**The guide's call: every exception expires. Every system has a way to stop.** Both halves keep temporary decisions temporary. An exception with no end date has quietly become your policy. A system nobody can stop can't be corrected in time, however good your monitoring is.
+
+For some systems, off is the dangerous state. Switch off a fraud model and every payment goes through. There, the stop is a fallback you have tested, such as rules or a human queue. Bend the stop to fit the system. Never bend the expiry.
+
+This step is done when an incident drill has run end to end: a planted fault, found through your real route, stopped by a person who holds the stop and carried through to a change.
+
+**Your call.** Write down who can stop your most important AI system tonight, and how long it would take. Then write down when anyone last tried.
+
+## One fault, walked down the whole path
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-11-incident-drill.svg" alt="The incident path a drill walks: detect, stop, preserve, tell, fix, restart, then back to what you watch. Under each link, what the drill has to prove: acknowledged inside the clock, the stop in effect within 15 minutes, evidence pulled within the hour, the right people told in order, a change that sticks, and a restart lifted by name and recorded." caption="Under each link, what the drill has to prove there." />
+
+NIST's guide to exercises separates two kinds. A tabletop exercise is discussion only. In a functional exercise, people perform their duties "as they would in an actual emergency situation, but in a simulated manner" ([NIST SP 800-84](https://csrc.nist.gov/pubs/sp/800/84/final)). Your drill is the second kind. A tabletop tells you what people think happens. A drill shows you.
+
+The framework requires the kill switch test, and mentions drills only as a place to practise forensics. The full drill is the guide's recommendation.
+
+**Plant a fault you can contain.** Take one from your near-miss log, such as a draft that states an old policy, and put it on a test ticket for a reviewer you briefed.
+
+**Start it through the real route.** The real flag button, or the real alert. Nobody hands the on-call a script.
+
+**Time every link.** Record when the signal fired, when someone acknowledged it, and when the stop was decided and confirmed. Confirm from outside, with a test request that gets nothing back. A process that says it stopped is the system's own word, and [silent fail-open](/patterns/silent-fail-open/) shows why that isn't enough.
+
+**Pull the evidence.** The [forensics standard](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/incident-forensics.md#evidence-preservation) wants it within the hour: prompt and response logs, retrieved documents, the exact model version. If nobody has written that query yet, you have found your first gap.
+
+**Tell the people the severity names.** At S2, the business owner hears within 8 hours and AI Risk within 24. Compliance assesses notification. Under GDPR, a personal data breach goes to the supervisory authority without undue delay and, where feasible, within 72 hours of the controller becoming aware of it, unless it is unlikely to put people's rights and freedoms at risk ([Article 33(1)](https://eur-lex.europa.eu/eli/reg/2016/679/oj)).
+
+**Fix, restart and write the gaps down.** The fault becomes an evaluation case or a control change. The framework names who can pull the stop. It names nobody to lift it. The guide's recommendation: the fix is signed like any other change, then the system owner lifts the stop and records why. Every gap gets an owner and a date. Expect some. Finding them is the drill's job.
+
+The drill passes when every link held. Have someone who didn't build the system pull the stop. A stop only its author can pull fails the night its author is away.
+
+<RunningExample>
+The assistant is in its limited pilot from Step 9. The company shortens its refund window from 30 days to 14, and the policy page changes the same day. The numbers here are illustrative.
+
+Days later, a support agent sees a draft promising a refund "within 30 days". The retrieved page says 14. She corrects it and presses the flag button. So far it is S3, caught before it reached anyone outside.
+
+The AI lead replays the email. The system prompt carries an example reply, written before the change, that quotes 30 days, and the model followed it. The audit log shows four sent replies with the old window that nobody edited. Wrong output reached customers on a T1 system, so the incident is at least S2. AI Operations names an incident commander.
+
+**Stop.** The pilot's approval says to pause on any S1 or S2 incident. The on-call operator switches drafting off for all ten agents. Twelve minutes after the decision, a test ticket arrives with no draft. The agents write by hand, as they did before the pilot.
+
+**Respond.** The evidence is preserved within the hour. The Head of Customer Support decides the four customers get a corrected reply. Compliance records no personal data breach and nothing to notify.
+
+**Change.** The fix takes policy facts out of the prompt. The framework treats a prompt change as material, so it gets T1 prompt review, a full offline suite re-run and revalidation. Faithfulness was scored on every draft, but its alert watched the overall rate, where refunds are a small share. It now alerts by topic. The committee signs the change, as Step 8's table says. Then the system owner lifts the pause.
+
+**Then the request.** The Head of Customer Support asks for the assistant to send routine replies itself. Step 1 called that a new decision. It goes back to the AI Risk Committee as a material change, with new evidence: the five [Pattern 3 safeguards](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/human-in-loop-patterns.md#pattern-selection-matrix), a kill switch test on the sending channel and this incident report. The committee asks what the report raises. A person caught this fault. With nobody reading each reply, what catches the next one? Until the evidence answers that, the assistant drafts.
+</RunningExample>
+
+Now look at what you wrote. If you named a person and a time, the drill tests both. If you can't say when anyone last tried, start with the stop.
+
+## Same drill, different people on the call
+
+The path is the same at every size. Who stands at each link changes.
+
+<Track for="small">
+Most small teams run T3 and T4 systems. You still report every incident on the severity clock, and hold a post-mortem for any S1 or S2. The framework asks a T3 or T4 system for no playbook, on-call rota or kill switch. An agentic system is never below T2, and always needs a kill switch.
+
+The guide's recommendation is a stop anyway. Your team lead holds the vendor keys from Step 6, and revoking one stops a system in minutes. Drill it each quarter: one hour, the whole team, the real channel.
+
+A T1 or T2 system needs a staffed on-call rota, and the framework's Start Here calls a rota of three fragile. Share one with a platform team, and drill with them.
+</Track>
+
+<Track for="enterprise">
+AI Operations runs the monitoring, the on-call rota and the playbooks, and assigns each incident commander. The AI Risk Committee meets monthly on T1 system health, every S1 and S2 and the exception register, and quarterly on what was retired. Every S1 reaches the Board Risk Committee within 24 hours.
+
+The guide's recommendations: a full drill for each T1 system at least once a year, with the quarterly kill switch tests in between. Rotate the incident commander in drills, so the job is never new when it is real.
+</Track>
+
+<Shortcut quote="We can always just switch it off.">
+**Why it's tempting.** Every engineer knows how to scale a service to zero. Testing that feels like ceremony.
+
+**Why it bites.** The stop that counts comes at night, from someone who didn't build the system. Scaling to zero leaves queued jobs, open sessions and the batch job that calls the model another way. With no degrade option, the choice is all or nothing. All costs so much that the decision waits for a meeting.
+
+**The forcing function.** The framework's [control PM-006](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-8-production-operations): no traffic until a kill switch test passes, the decision and confirmation times on record, a retest each quarter and after runtime changes, and a live system restricted until a test passes. Nothing can except it. Outside PM-006, the guide recommends revoking the register credential as the stop, and testing that a revoked key is refused.
+</Shortcut>
+
+<StarterKit n={11} />
+
+<DeepDive>
+
+### Drift
+
+The framework [watches three kinds](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/monitoring.md#drift-detection-for-llms): changes in what people ask, in what the system says, and in the model the vendor serves you. A canary of fixed queries, run daily at T1, catches the last.
+
+A fourth kind starts outside your system. The world moves. A fee changes, and the same question now has a different right answer. Your quality metrics show it late. The framework's pipeline health checks came from its own worked example: a refresh job failed silently and left outdated fee schedules in the corpus for two weeks.
+
+Those checks catch a stale corpus. They miss a fact written into a prompt, or an evaluation case that still expects last month's answer. The framework re-runs the full suite on any model, provider or prompt change. The guide's recommendation adds a trigger: a change to a source your system speaks from. Its owner tells the system owner, and the suite runs with its expected answers checked.
+
+### Kill switches
+
+The framework defines stop. No new actions start. Work in flight is halted or completed safely. Queued and scheduled tasks are cancelled. An agent's credentials are revoked, so a process that keeps running can't act.
+
+For high-risk systems, the EU AI Act asks for a way to interrupt the system "through a 'stop' button or a similar procedure that allows the system to come to a halt in a safe state" ([Article 14(4)(e)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)). Design for the safe state. For a drafting assistant, that is people writing by hand. For a fraud model, it isn't off.
+
+Put the stop outside the thing it stops: in the gateway, the credential store or the routing layer. A system that has gone wrong is a poor judge of whether to obey. When a control itself fails, [fail closed, degrade on exposure](/patterns/fail-closed-degrade-on-exposure/) sets the default.
+
+Give whoever holds the stop the right to be wrong. A false alarm costs an hour and proves the switch works.
+
+### Exceptions that expire
+
+An approval is the event everyone remembers. The expiry is what keeps it bounded, the argument of [the expiring exception](/patterns/the-expiring-exception/). A date field is an expiry only if crossing it forces a decision.
+
+The framework forces one. Every exception goes in the [exception register](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/exception-register.md#monthly-review-record), which the AI Risk Committee reviews monthly. Each review counts what is open, expiring within 30 days or expired, and checks with evidence that compensating controls work. The pipeline gate from Step 6 fails a release whose exception has expired.
+
+The register records who approved an exception. It has no field for who closes the gap. The guide's recommendation: add one, the system owner by default, and track the work like an incident's remediation.
+
+### Retirement
+
+Beyond the framework's four triggers, such as a vendor ending a model, the [quarterly reconciliation](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#quarterly-reconciliation-gv-006) finds a fifth: an entry in production with no spend, no traffic and no users. Confirm it is dead, then retire it properly.
+
+The business owner decides. The AI Risk Committee approves at T1 and the Head of AI at T2. Nothing is decommissioned until its evidence is archived.
+
+- **Access revoked.** Every credential, service account and agent identity. A retired system that can still call a model isn't retired.
+- **Data handled.** The decommission record skips what the system holds. The guide's recommendation is a data line: the retrieval index, caches, and what the vendor holds, which the framework's [exit clause](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/ai-procurement-clauses.md#clause-set) covers with certified deletion when a contract ends. Keep what retention requires, delete the rest, and record which is which.
+- **Dependants told.** The impact assessment maps who consumes the output. Tell them before the date.
+- **Records kept.** Governance records stay for the system's life plus the tier period, seven years after retirement at T1. The register entry stays findable, and its ID is never reused.
+
+</DeepDive>
+
+Part III ends with a system you can run. Its signals have owners, someone has pulled its stop, and its exceptions end on a date. It can't yet show that it keeps your policy's promises. Your policy says fair, explainable and safe, and none of those is a test yet. Part IV starts there. Step 12 turns principles into tests.
