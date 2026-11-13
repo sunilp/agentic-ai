@@ -1,5 +1,5 @@
 /**
- * The six worked examples from ai-governance-framework v2.2.0 (examples/<slug>/risk-assessment.md),
+ * The six worked examples from ai-governance-framework v2.3.0 (examples/<slug>/risk-assessment.md),
  * with the dimension scores, override items and tiers those files record. The test checks that the
  * framework's own rule reproduces every recorded tier.
  */
@@ -36,7 +36,7 @@ export const EXAMPLES: WorkedExample[] = [
   },
   {
     slug: 'document-summarization', name: 'Regulatory document summarisation', matrix: 'GenAI',
-    dimensions: genai('High', 'High', 'Low', 'Low', 'High'), overrides: [], recordedTier: 'T2',
+    dimensions: genai('High', 'High', 'Medium', 'Low', 'High'), overrides: [], recordedTier: 'T2',
   },
   {
     slug: 'customer-service-chatbot', name: 'Customer service chatbot', matrix: 'GenAI',

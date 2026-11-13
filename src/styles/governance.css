@@ -83,6 +83,15 @@ body:has(#track-enterprise:checked) .track--small { display: none; }
 .gov-table__sub { display: block; font-size: 13px; color: var(--fg-light); }
 .gov-table__tier { font: 500 13px var(--font-mono); color: #9b4a3f; }
 
+/* Markdown tables inside a step essay: plain rules, italic heads, sideways scroll on a phone. */
+.gov-table-wrap--prose { margin: var(--space-5) 0; }
+.gov-table-wrap--prose:focus-visible { outline: 2px solid #9b4a3f; outline-offset: 3px; }
+.gov-body.prose .gov-table-wrap--prose table { width: 100%; min-width: 560px; margin: 0; border-collapse: collapse; font-size: 16px; line-height: 1.45; }
+.gov-body.prose .gov-table-wrap--prose th, .gov-body.prose .gov-table-wrap--prose td { border: 0; border-bottom: 1px solid var(--fg-faint); padding: 9px var(--space-4) 9px 0; vertical-align: top; text-align: left; }
+.gov-body.prose .gov-table-wrap--prose thead th { font-family: var(--font-body); font-style: italic; font-weight: 400; font-size: 15px; text-transform: none; letter-spacing: 0; color: var(--fg-light); border-bottom: 1px solid var(--ink); }
+.gov-body.prose .gov-table-wrap--prose td:last-child, .gov-body.prose .gov-table-wrap--prose th:last-child { padding-right: 0; }
+@media print { .gov-body.prose .gov-table-wrap--prose table { min-width: 0; font-size: 10pt; } }
+
 /* .prose figure (src/styles/prose.css) resets figure margins; this restores the breakout centring for wide figures inside essays. */
 .prose .gov-figure--wide { margin-left: calc((100% - var(--wide)) / 2); }
 

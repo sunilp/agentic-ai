@@ -8,7 +8,7 @@ import { writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
 
 const repo = process.argv[2] ?? '../ai-governance-framework';
-const tag = process.argv[3] ?? 'v2.2.0';
+const tag = process.argv[3] ?? 'v2.3.0';
 const gitBin = process.env.GIT_BIN ?? '/usr/bin/git';
 const git = (...args) => execFileSync(gitBin, ['-C', repo, ...args], { encoding: 'utf8' });
 

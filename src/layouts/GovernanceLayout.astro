@@ -14,8 +14,8 @@ import GovNav from '~/components/governance/GovNav.astro';
 import GovernanceMachine from '~/components/governance/GovernanceMachine.svelte';
 import { STEPS, RELEASE, stepBySlug, neighbours, PART_LABEL, writtenHref, kitUrl, kitLabel } from '~/data/governance-path';
 
-interface Props { entry: CollectionEntry<'governance'> }
-const { entry } = Astro.props;
+interface Props { entry: CollectionEntry<'governance'>; anchors?: { label: string; anchor: string }[] }
+const { entry, anchors = [] } = Astro.props;
 const d = entry.data;
 const step = stepBySlug(entry.id);
 if (!step) throw new Error(`No governance-path step for ${entry.id}`);
@@ -33,7 +33,6 @@ const byline = ['SUNIL PRAKASH', `UPDATED ${updatedLong}`, `${d.readingTime} MIN
 const total = STEPS.length;
 const partName = step.part === 'Close' ? 'CLOSE' : `PART ${step.part} · ${PART_LABEL[step.part].toUpperCase()}`;
 const ogImage = d.spot ?? '/assets/og/governance.png';
-const anchors = d.anchors ?? [];
 // On the last published step, show what the reader has so far and where to go until the next one lands.
 const atFrontier = !!next && !href(next.n);
 const soFar = atFrontier ? STEPS.filter((s) => s.n <= step.n && href(s.n)) : [];

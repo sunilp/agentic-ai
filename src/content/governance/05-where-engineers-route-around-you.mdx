@@ -1,15 +1,10 @@
 ---
 dek: "Before you add a rule, find the corners your teams cut, learn what each one says about your process, and name the three they cut most."
 description: "Step 5 of AI Governance, from Scratch. Treat every shortcut as a finding about your process. Learn the forces behind shortcuts, from present bias and demos that become production to normalised deviance and hero culture, find your teams' shortcuts by asking and by reading traces, and name the three they take most."
-updated: 2026-11-11
+updated: 2026-11-13
 readingTime: 9
 spot: /assets/spots/gov-05.png
 spotCaption: "The worn path shows where the paved one fails."
-anchors:
-  - { label: The move, anchor: the-move }
-  - { label: How it works, anchor: how-it-works }
-  - { label: How it scales, anchor: how-it-scales }
-  - { label: Deep dive, anchor: deep-dive }
 sources:
   - title: "Doing It Now or Later, American Economic Review 89(1), 103-124"
     url: "https://doi.org/10.1257/aer.89.1.103"
@@ -39,18 +34,18 @@ sources:
     url: "https://doi.org/10.1145/157709.157715"
     authors: ["Ward Cunningham"]
     year: 1992
-  - title: "AI Governance Framework v2.2.0: acceptable use, amnesty route"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#amnesty-route"
-  - title: "AI Governance Framework v2.2.0: AI inventory, how entries are created"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/ai-inventory.md#how-entries-are-created"
-  - title: "AI Governance Framework v2.2.0: exceptions and risk acceptance"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance"
-  - title: "AI Governance Framework v2.2.0: governance metrics, interpreting governance health"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/governance-metrics.md#interpreting-governance-health"
-  - title: "AI Governance Framework v2.2.0: human-in-the-loop pattern selection matrix"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/responsible-ai/human-in-loop-patterns.md#pattern-selection-matrix"
-  - title: "AI Governance Framework v2.2.0: Start Here, small teams"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#small-teams"
+  - title: "AI Governance Framework v2.3.0: acceptable use, amnesty route"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/acceptable-use.md#amnesty-route"
+  - title: "AI Governance Framework v2.3.0: AI inventory, how entries are created"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#how-entries-are-created"
+  - title: "AI Governance Framework v2.3.0: exceptions and risk acceptance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance"
+  - title: "AI Governance Framework v2.3.0: governance metrics, interpreting governance health"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/governance-metrics.md#interpreting-governance-health"
+  - title: "AI Governance Framework v2.3.0: human-in-the-loop pattern selection matrix"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/human-in-loop-patterns.md#pattern-selection-matrix"
+  - title: "AI Governance Framework v2.3.0: Start Here, small teams"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#small-teams"
 ---
 import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
@@ -67,11 +62,11 @@ Every other team in the room learned two things. The date held. And "pilot" is t
 
 You own the process that team went around. Who was wrong: the team, or your process? Write down your answer.
 
-## The move
+## Every shortcut is a finding
 
 Find the shortcuts before you build more process. Do three things.
 
-1. **Ask the people who build.** Ask about the last time the process got in their way. Then ask what they did. Make them the promise the framework's [amnesty route](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/acceptable-use.md#amnesty-route) makes for unapproved AI tools: what someone declares before it is detected is not treated as a breach, as long as they help register it and clean up. Extending that promise from tools to process shortcuts is the guide's recommendation. People tell you about shortcuts only when telling is safe.
+1. **Ask the people who build.** Ask about the last time the process got in their way. Then ask what they did. Make them the promise that the framework's [amnesty route](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/acceptable-use.md#amnesty-route) makes for unapproved AI tools, and that this guide extends to process shortcuts: what someone declares before it is detected is not treated as a breach, as long as they help register it and clean up. People tell you about shortcuts only when telling is safe.
 2. **Read the traces.** Look in the register, the exception register, shadow AI reports, gate results and cloud bills.
 3. **Name three.** Write each one in a line: what teams skip, what the skip saves them, and who pays if it goes wrong. Then mark which kind of safety it needs.
 
@@ -81,7 +76,7 @@ So the guide's answer to the opening question is your process, first. The call s
 
 **Your call.** Write down the shortcut you think your teams take most. Then write how you know: someone told you, you saw it in a record, or you guessed.
 
-## How it works
+## Six forces and the traces they leave
 
 <ArchitectureDiagram wide src="/assets/diagrams/gov-05-shortcuts.svg" alt="The governed path runs idea, register, tier, gate, live. Three shortcuts leave it and land on live: real data before the entry, call it a pilot, and secure it later. Each one leaves where the path costs more than the way around it." />
 
@@ -103,8 +98,8 @@ Six forces push teams onto the arcs. None of them needs a careless engineer.
 
 Each force leaves a trace.
 
-- **Entries that arrived late.** The framework records [how each register entry was created](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/ai-inventory.md#how-entries-are-created). An entry from reconciliation is a system found outside the register before anyone declared it.
-- **Exceptions that come back.** A renewal, or a new request that cites an old exception. The guide reads both as deviance on its way to normal. The framework's [metrics guidance](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/operating-model/governance-metrics.md#interpreting-governance-health) reads a rising exception count this way: "either the policy is too rigid or risk acceptance is becoming a habit; either way, investigate."
+- **Entries that arrived late.** Each register entry records [how it was created](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#how-entries-are-created). An entry from reconciliation is a system found outside the register before anyone declared it.
+- **Exceptions that come back.** A renewal, or a new request that cites an old exception. The guide reads both as deviance on its way to normal. The framework's [metrics guidance](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/governance-metrics.md#interpreting-governance-health) reads a rising exception count this way: "either the policy is too rigid or risk acceptance is becoming a habit; either way, investigate."
 - **Shadow AI findings and self-reports.** Each one is a tool someone chose over the approved route. Ask why.
 - **First-attempt gate failures.** What teams arrive without shows which evidence they leave to the end.
 
@@ -116,20 +111,20 @@ Now look at what you wrote down. If you guessed, test the guess against one trac
 The assistant is T1, and drafts replies for a person to edit and send. Three shortcuts will tempt its team.
 
 - **Test on real customer emails before the entry exists.** It is the quickest test. It says the governed route to a first test is slow: no approved endpoint ready for personal data, and no realistic synthetic emails. Step 3's gate holds back the production credential. Step 6 puts an approved endpoint behind the register entry, so the governed route is also the quick one.
-- **Call it a pilot.** Ten support agents use the drafts on live tickets "to learn". It says the full T1 gate is the only way to learn from real use, and nobody booked the outside reviewers at intake, as [Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2) advises. The label buys nothing. In the framework, a pilot on real data is registered and tiered like any system.
-- **Auto-send the "simple" replies.** Someone proposes sending password-reset drafts unedited. It says review is costly on routine work. Nobody showed the team the framework's route to lighter oversight: [Pattern 3](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/responsible-ai/human-in-loop-patterns.md#pattern-selection-matrix), with all five safeguards evidenced. Step 4 already ruled the switch a material change. The quiet version is harder to see. Support agents stop reading and press send. The framework reads a human override rate below 2 percent on a T1 system as possible rubber-stamping. A support agent who admits to it deserves thanks (Step 7).
+- **Call it a pilot.** Ten support agents use the drafts on live tickets "to learn". It says the full T1 gate is the only way to learn from real use, and nobody booked the outside reviewers at intake, as [Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2) advises. The label buys nothing. In the framework, a pilot on real data is registered and tiered like any system.
+- **Auto-send the "simple" replies.** Someone proposes sending password-reset drafts unedited. It says review is costly on routine work. Nobody showed the team the framework's route to lighter oversight: [Pattern 3](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/human-in-loop-patterns.md#pattern-selection-matrix), with all five safeguards evidenced. Step 4 already ruled the switch a material change. The quiet version is harder to see. Support agents stop reading and press send. The framework reads a human override rate below 2 percent on a T1 system as possible rubber-stamping. A support agent who admits to it deserves thanks (Step 7).
 
 The first two can be made impossible on the paths you control: your credentials and your pipeline. The third, in its quiet form, can only be caught.
 </RunningExample>
 
-## How it scales
+## Outsiders for small teams, stewards for large ones
 
 Same method at every size. What changes is who asks, and where the traces live.
 
 <Track for="small">
 In a team of five, whoever asks also takes some of the shortcuts. Ask someone outside the team to run the conversation. Then read three traces: model credentials issued without an entry, prompt or model changes merged without review, and evidence written after the release it supports. Both are the guide's recommendations.
 
-The framework's [Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#traps) lists traps for small teams. Each is a shortcut waiting to be taken: a co-author who signs as the peer reviewer, oversight reviewers agreed only after launch, and an on-call rota of three people.
+[Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#traps) lists traps for small teams. Each is a shortcut waiting to be taken: a co-author who signs as the peer reviewer, oversight reviewers agreed only after launch, and an on-call rota of three people.
 </Track>
 
 <Track for="enterprise">
@@ -156,7 +151,7 @@ In [O'Donoghue and Rabin's model](https://doi.org/10.1257/aer.89.1.103), a perso
 
 Governance work has that shape. The register entry, the evaluation set and the outside validator's booking cost now. Their reward is a problem that never happens.
 
-The framework moves those costs to the start. [Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2) tells builders to start evaluation sets early and to book outside reviewers at intake, "because their capacity usually sets your date". The guide adds one move: tie each cost to something the team wants now, such as a credential.
+[Start Here](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2) tells builders to start evaluation sets early and to book outside reviewers at intake, "because their capacity usually sets your date". The guide adds one move: tie each cost to something the team wants now, such as a credential.
 
 ### The demo that became production
 
@@ -172,7 +167,7 @@ The [Rogers Commission](https://www.nasa.gov/history/rogersrep/v1ch6.htm) invest
 
 [Diane Vaughan's study](https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html) calls the launch a disastrous mistake, and names the process behind it. Faced again and again with evidence that something was wrong, insiders normalised the deviance until it became acceptable to them. A new preface traces a similar decision process in the loss of Columbia in 2003.
 
-Your version starts with an exception granted for a good reason. It is renewed. The next team cites it as precedent. In the framework, an [exception](https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance) lasts 90 days at most and can be renewed once, by an approver one level higher; at T1, a renewal needs a full committee decision and is reported to the Board Risk Committee. Five controls can't be waived at all. The guide's call: when a request cites an earlier exception, read it as a trace, and ask what the first one taught the team.
+Your version starts with an exception granted for a good reason. It is renewed. The next team cites it as precedent. In the framework, an [exception](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance) lasts 90 days at most and can be renewed once, by an approver one level higher; at T1, a renewal needs a full committee decision and is reported to the Board Risk Committee. Five controls can't be waived at all. The guide's call: when a request cites an earlier exception, read it as a trace, and ask what the first one taught the team.
 
 </DeepDive>
 

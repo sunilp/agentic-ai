@@ -1,0 +1,10 @@
+---
+/**
+ * GovTable: wraps a Markdown table in a step essay so it scrolls sideways on a
+ * narrow screen instead of widening the page. Passed to the essay as the
+ * `table` element.
+ */
+---
+<div class="gov-table-wrap gov-table-wrap--prose" tabindex="0" role="region" aria-label="Table, scrolls sideways on a narrow screen">
+  <table><slot /></table>
+</div>

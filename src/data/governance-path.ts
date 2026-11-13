@@ -58,7 +58,7 @@ export const RELEASE = {
 };
 
 export const FRAMEWORK_REPO = 'https://github.com/sunilp/ai-governance-framework';
-export const FRAMEWORK_TAG = 'v2.2.0';
+export const FRAMEWORK_TAG = 'v2.3.0';
 export const kitUrl = (path: string) => `${FRAMEWORK_REPO}/blob/${FRAMEWORK_TAG}/${path}`;
 
 const KIT_WORDS: Record<string, string> = {
