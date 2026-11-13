@@ -222,7 +222,6 @@ const governance = defineCollection({
     readingTime: z.number(),
     spot: z.string().optional(),
     spotCaption: z.string().optional(),
-    anchors: z.array(z.object({ label: z.string(), anchor: z.string() })).optional(),
     sources: z.array(z.object({
       title: z.string(),
       url: z.string().url(),

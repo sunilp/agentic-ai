@@ -1,15 +1,10 @@
 ---
 dek: "Screen out the uses you will never allow, score every other system by one rule, and let its tier decide what it must pass."
 description: "Step 4 of AI Governance, from Scratch. Ask whether a use should be AI at all, screen it against prohibited practices, score five risk dimensions where the highest wins, apply overrides that only raise, and let the tier set approval, validation and review."
-updated: 2026-11-11
+updated: 2026-11-13
 readingTime: 10
 spot: /assets/spots/gov-04.png
 spotCaption: "The weakest link decides what the chain can bear, however strong the other four."
-anchors:
-  - { label: The move, anchor: the-move }
-  - { label: How it works, anchor: how-it-works }
-  - { label: How it scales, anchor: how-it-scales }
-  - { label: Deep dive, anchor: deep-dive }
 sources:
   - title: "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 5: Prohibited AI practices"
     url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
@@ -52,7 +47,7 @@ One process for both fails one of them. Hold the wiki assistant to the credit mo
 
 So one of them waits. Which one, and what does it wait for? Write your answer down.
 
-## The move
+## Screen first, then tier by one rule
 
 Before any score, ask whether this should be AI at all. The framework's [use case assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/genai-use-case-assessment.md#0-should-this-use-genai-at-all) opens with eight questions from its [when to say no](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/when-to-say-no.md) standard. Would the model generate a fee or a balance instead of taking it from a system of record? Would an agent take a write action nobody can undo, with no human confirming it? Would plain search or a rules engine do the job? A yes means stop or redesign. Saying no at intake, the standard notes, "costs a conversation".
 
@@ -71,7 +66,7 @@ Break it in one direction only: an approver can hold a system to a stricter tier
 
 These defaults are strict on purpose. Every AI agent is at least T2, and personal data in a prompt scores Critical. The framework was written for regulated industries, and its floors carry that risk appetite. NIST leaves risk tolerance to each organisation (MAP 1.5). If yours differs, change the matrix in the open, for every system, and record who approved the change. Never bend it for one system.
 
-## How it works
+## The highest score wins
 
 <ArchitectureDiagram wide src="/assets/diagrams/gov-04-tiering.svg" alt="Tiering: a prohibited-use screen, five scored dimensions, the highest wins, overrides only raise, the approver may raise but never lower." />
 
@@ -123,9 +118,7 @@ That is a heavy bar for a drafting tool. It follows from one strict default: per
 Now the team wants the assistant to send replies itself. Output controllability becomes Critical, and override item 2 applies, because customers get content no person reviewed. The tier is still T1. The change is material, so the assessment runs again and goes back to the committee with new evidence.
 </RunningExample>
 
-## How it scales
-
-Size decides who prepares the assessment and who signs it.
+## Scoring and signing, small team or enterprise
 
 <Track for="small">
 Have your team lead score each system. The framework lets a team lead hold the product owner's role, which prepares the assessment.
@@ -169,7 +162,7 @@ Write access to production systems or data stores, or authority to move money, c
 
 ### Re-tiering
 
-The framework re-runs the check at every formal governance review and on any material change to scope, data, autonomy or regulation. A model change, a provider update or a prompt change counts too. The common ways out of the fast lane: the system starts serving customers, gains a tool, sends customer personal data to an external model API, or starts to influence a regulated decision.
+In the framework, the check re-runs at every formal governance review and on any material change to scope, data, autonomy or regulation. A model change, a provider update or a prompt change counts too. The common ways out of the fast lane: the system starts serving customers, gains a tool, sends customer personal data to an external model API, or starts to influence a regulated decision.
 
 A change that raises the tier goes back through assessment and needs the new tier's evidence before it goes live. If the change has already happened, each missing control needs an approved, time-limited exception until the evidence exists. Non-waivable controls get none.
 

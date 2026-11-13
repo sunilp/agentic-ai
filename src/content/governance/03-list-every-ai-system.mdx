@@ -1,15 +1,10 @@
 ---
 dek: "Build one register of every AI system you build, buy or use, find the ones nobody declared, and make an entry the price of a production credential."
 description: "Step 3 of AI Governance, from Scratch. Build an AI register, find systems in contracts, cloud bills, code, SaaS consoles and team declarations, and make the register the gate: no entry, no production credential."
-updated: 2026-11-11
+updated: 2026-11-13
 readingTime: 8
 spot: /assets/spots/gov-03.png
 spotCaption: "Every boat tied to its own post, and the ledger open where its keeper can see the whole row."
-anchors:
-  - { label: The move, anchor: the-move }
-  - { label: How it works, anchor: how-it-works }
-  - { label: How it scales, anchor: how-it-scales }
-  - { label: Deep dive, anchor: deep-dive }
 sources:
   - title: "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1, GOVERN 1.6"
     url: "https://doi.org/10.6028/NIST.AI.100-1"
@@ -45,7 +40,7 @@ Nobody hid them. Nobody thought to declare them. Each one handles data, and none
 
 Your one-page policy governs a list you don't have. How do you find every AI system, and keep the list true?
 
-## The move
+## Make the register the gate
 
 1. **Open the register.** One entry per AI system you build, buy or use. The framework's default test: it uses a trained or calibrated model to produce predictions, content, recommendations or decisions, and it supports operations, customers, decisions about people or reporting. Pilots that touch real data count. So do agents of every kind. A script with no model stays off the register until it calls one, or its rules came from one.
 2. **Find what nobody declared.** Search where AI leaves a trace, not only your teams' memories.
@@ -53,11 +48,11 @@ Your one-page policy governs a list you don't have. How do you find every AI sys
 
 **The guide's call: the register is the gate. No entry, no production credential.** The framework requires the entry before development begins (control RA-006). Holding back the credential turns that rule into a lock. Put the same check wherever a system goes live: the deployment pipeline for a self-hosted model, the admin switch for a material vendor feature, the tool grants for an agent. Break it only for a system already live when the register opens. [Retroactive governance](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#retroactive-governance) registers and tiers it, finds its gaps, and sets an interim mitigation for each until the evidence exists.
 
-Pilots get no exception. What bends is how much the entry holds. At intake it needs an ID, a name, a purpose, owners and a status, with the tier pending until Step 4. A live pilot's entry needs a tier, a deployed date and a next review date. Registering a system doesn't approve it. Step 9's gates do. When in doubt, the framework says, register.
+Pilots get no exception. What bends is how much the entry holds. At intake it needs an ID, a name, a purpose, owners and a status, with the tier pending until Step 4. A live pilot's entry needs a tier, a deployed date and a next review date. Registering a system doesn't approve it. Step 9's gates do. When in doubt, register.
 
 **Your call.** Write down how many AI systems a full search would find in your organisation that are on no list today. Then write where your number came from.
 
-## How it works
+## Five sources and a two-way match
 
 <ArchitectureDiagram wide src="/assets/diagrams/gov-03-register.svg" alt="Five discovery sources feed one AI register, which feeds tiering, owners and audit." />
 
@@ -104,12 +99,12 @@ registration_source: "intake"
 The entry starts the governance process. It approves nothing. Step 4 replaces `pending` with a tier, and fills in the data classes and the EU AI Act fields.
 </RunningExample>
 
-## How it scales
+## One register, whatever your size
 
 Same fields, same gate. A bigger organisation adds feeds.
 
 <Track for="small">
-Keep the register as one YAML file in your repo, one entry per system, from the framework's [entry template](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-inventory-entry.yaml). The team lead owns it. Changes go through review like code. Once a month, sweep your cloud accounts for model API keys, and the admin settings of every SaaS tool you pay for. Issue no model credential without an entry.
+Keep the register as one YAML file in your repo, one entry per system, from the [entry template](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-inventory-entry.yaml). The team lead owns it. Changes go through review like code. Once a month, sweep your cloud accounts for model API keys, and the admin settings of every SaaS tool you pay for. Issue no model credential without an entry.
 
 The file, the owner and the sweep are the guide's recommendations. A file in version control meets the framework's bar for a first register: every change has an author, and the history stays.
 </Track>
@@ -156,7 +151,7 @@ When a system starts behaving differently, ask what changed underneath. The entr
 
 ### The fields
 
-The framework's [template](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-inventory-entry.yaml) gives each entry exactly one business owner, one product owner and one AI lead. It records status, tier and what set it, data classes and regions, and review dates. Characteristics such as genai, rag or agentic decide which controls apply, and each linked control carries its evidence status.
+The [template](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-inventory-entry.yaml) gives each entry exactly one business owner, one product owner and one AI lead. It records status, tier and what set it, data classes and regions, and review dates. Characteristics such as genai, rag or agentic decide which controls apply, and each linked control carries its evidence status.
 
 Two rules matter more than any field. A retired entry stays, so its records can still be found. A use refused at the prohibited-use screen keeps its entry too, as evidence the screen ran. The register remembers what you said no to.
 

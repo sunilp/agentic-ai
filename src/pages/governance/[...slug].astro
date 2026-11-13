@@ -1,6 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import GovernanceLayout from '~/layouts/GovernanceLayout.astro';
+import GovTable from '~/components/governance/GovTable.astro';
+import { stepAnchors } from '~/lib/governance-anchors';
 
 export async function getStaticPaths() {
   const entries = await getCollection('governance');
@@ -11,8 +13,9 @@ export async function getStaticPaths() {
 
 interface Props { entry: CollectionEntry<'governance'> }
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
+const anchors = stepAnchors(headings, entry.body);
 ---
-<GovernanceLayout entry={entry}>
-  <Content />
+<GovernanceLayout entry={entry} anchors={anchors}>
+  <Content components={{ table: GovTable }} />
 </GovernanceLayout>
