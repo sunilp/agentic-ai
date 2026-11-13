@@ -36,8 +36,9 @@ const ogImage = d.spot ?? '/assets/og/governance.png';
 // On the last published step, show what the reader has so far and where to go until the next one lands.
 const atFrontier = !!next && !href(next.n);
 const soFar = atFrontier ? STEPS.filter((s) => s.n <= step.n && href(s.n)) : [];
-const MEANWHILE = ['005-ownership-and-decision-rights', '006-the-guardrail-lifecycle', '007-telemetry-audit-and-review'];
-const meanwhile = atFrontier ? MEANWHILE.flatMap((id) => architecture.filter((a) => a.id === id)) : [];
+// Until the next part is written up, point at the Architecture pages its steps lean on.
+const nextPartRelated = atFrontier ? [...new Set(STEPS.filter((s) => s.part === next!.part).flatMap((s) => s.related))] : [];
+const meanwhile = nextPartRelated.flatMap((id) => architecture.filter((a) => a.id === id));
 ---
 <PageLayout
   title={`${step.title}, Governance`}
@@ -116,7 +117,7 @@ const meanwhile = atFrontier ? MEANWHILE.flatMap((id) => architecture.filter((a)
           </ol>
           {meanwhile.length > 0 && (
             <p class="gov-sofar__more">
-              Until the next steps are written up, the engineering side of owners, gates and evidence is in Architecture:{' '}
+              Until the next steps are written up, the engineering behind them is in Architecture:{' '}
               {meanwhile.map((a, i) => <>{i > 0 && (i === meanwhile.length - 1 ? ' and ' : ', ')}<a href={`/architecture/${a.id}/`}>{a.data.title}</a></>)}.
               Every later step's call and starting files are on <a href="/governance/#one-sheet">the one-sheet</a>.
             </p>

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 366" role="img" aria-label="The framework's ten stages with a gate before each. Stages 1 and 2, intake and risk assessment with tiering, are shared. The tier then picks a lane. T1 and T2 systems run stages 3 to 7 with signers outside the team. The fast lane runs T3 and T4 through the same stages with a lighter pack and no committee. Both lanes meet the last gate before go-live. After go-live come operations, review and retirement, and a material change means the tier is checked again at stage 2."><rect width="880" height="366" fill="#fff"/>
+<text x="258" y="38" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">T1 · T2 · SIGNERS OUTSIDE THE TEAM</text>
+<text x="258" y="148" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">FAST LANE · T3 · T4 · LIGHTER PACK, NO COMMITTEE</text>
+<text x="853.0" y="38" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">LIVE</text>
+<rect x="12" y="105.0" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="60.0" y="127.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">1 INTAKE</text>
+<text x="60.0" y="142.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">sponsor named</text>
+<rect x="130" y="105.0" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="178.0" y="127.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">2 RISK, TIER</text>
+<text x="178.0" y="142.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">sets the lane</text>
+<path d="M108 129.0 L129 129.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M122.6 131.7 L129 129.0 L122.6 126.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M116 119.0 L116 139.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<path d="M226 129.0 L246 129.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M234 119.0 L234 139.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<path d="M246 74.0 L246 184.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M246 74.0 L257 74.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M250.6 76.7 L257 74.0 L250.6 71.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M246 184.0 L257 184.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M250.6 186.7 L257 184.0 L250.6 181.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="258" y="50" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="306.0" y="72.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">3 DESIGN</text>
+<text x="306.0" y="87.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">design review</text>
+<rect x="258" y="160" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="306.0" y="182.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">3 DESIGN</text>
+<text x="306.0" y="197.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">documented</text>
+<rect x="376" y="50" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="424.0" y="72.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">4 DEVELOP</text>
+<text x="424.0" y="87.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">prompt lead</text>
+<rect x="376" y="160" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="424.0" y="182.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">4 DEVELOP</text>
+<text x="424.0" y="197.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">peer or self</text>
+<path d="M354 74.0 L375 74.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M368.6 76.7 L375 74.0 L368.6 71.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M362 64.0 L362 84.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<path d="M354 184.0 L375 184.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M368.6 186.7 L375 184.0 L368.6 181.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M362 174.0 L362 194.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<rect x="494" y="50" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="542.0" y="72.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">5 EVALUATE</text>
+<text x="542.0" y="87.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">independent</text>
+<rect x="494" y="160" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="542.0" y="182.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">5 EVALUATE</text>
+<text x="542.0" y="197.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">peer or self</text>
+<path d="M472 74.0 L493 74.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M486.6 76.7 L493 74.0 L486.6 71.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M480 64.0 L480 84.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<path d="M472 184.0 L493 184.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M486.6 186.7 L493 184.0 L486.6 181.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M480 174.0 L480 194.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<rect x="612" y="50" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="660.0" y="72.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">6 SECURITY</text>
+<text x="660.0" y="87.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">100+ or 200+</text>
+<rect x="612" y="160" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="660.0" y="182.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">6 SECURITY</text>
+<text x="660.0" y="197.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">T3 scan + 50</text>
+<path d="M590 74.0 L611 74.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M604.6 76.7 L611 74.0 L604.6 71.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M598 64.0 L598 84.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<path d="M590 184.0 L611 184.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M604.6 186.7 L611 184.0 L604.6 181.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M598 174.0 L598 194.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<rect x="730" y="50" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="778.0" y="72.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">7 APPROVE</text>
+<text x="778.0" y="87.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">outside team</text>
+<rect x="730" y="160" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="778.0" y="182.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">7 APPROVE</text>
+<text x="778.0" y="197.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">team lead</text>
+<path d="M708 74.0 L729 74.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M722.6 76.7 L729 74.0 L722.6 71.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M716 64.0 L716 84.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<path d="M708 184.0 L729 184.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M722.6 186.7 L729 184.0 L722.6 181.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M716 174.0 L716 194.0" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<rect x="850" y="50" width="6" height="158" fill="#9b4a3f" stroke="#9b4a3f" stroke-width="1"/>
+<path d="M826 74.0 L849 74.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M842.6 76.7 L849 74.0 L842.6 71.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M826 184.0 L849 184.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M842.6 186.7 L849 184.0 L842.6 181.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="258" y="262" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="306.0" y="284.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">8 OPERATE</text>
+<text x="306.0" y="299.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">monitored</text>
+<rect x="376" y="262" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="424.0" y="284.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">9 REVIEW</text>
+<text x="424.0" y="299.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">tier cadence</text>
+<path d="M354 286.0 L375 286.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M368.6 288.7 L375 286.0 L368.6 283.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="494" y="262" width="96" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="542.0" y="284.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">10 RETIRE</text>
+<text x="542.0" y="299.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">archived</text>
+<path d="M472 286.0 L493 286.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M486.6 288.7 L493 286.0 L486.6 283.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="258" y="252" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">AFTER GO-LIVE</text>
+<path d="M853.0 208 L853.0 230 L240 230 L240 286.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M240 286.0 L257 286.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M250.6 288.7 L257 286.0 L250.6 283.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M424.0 310 L424.0 334 L178.0 334 L178.0 163.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M178.0 163.0 L178.0 154.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M180.7 160.4 L178.0 154.0 L175.3 160.4" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="190.0" y="350" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">material change: tier checked again</text>
+<path d="M646 270 L646 290" fill="none" stroke="#9b4a3f" stroke-width="2.5"/>
+<text x="660" y="284" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">gate: blocks without evidence</text>
+<rect x="643" y="300" width="6" height="22" fill="#9b4a3f" stroke="#9b4a3f" stroke-width="1"/>
+<text x="660" y="315" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">last gate: pack and sign-off</text>
+</svg>

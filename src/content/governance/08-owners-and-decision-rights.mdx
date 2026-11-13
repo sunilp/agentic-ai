@@ -1,0 +1,181 @@
+---
+dek: "Write one accountable name against every decision a system needs, by tier, give each name a deputy and a route up, and keep validation out of the build team wherever the risk is high."
+description: "Step 8 of AI Governance, from Scratch. List the decisions every AI system needs (build, validate, ship, change, stop and accept an exception), write one accountable name against each by tier, take validation outside the build team at T1 and T2, and settle what happens when an owner is away or disagrees."
+updated: 2026-11-13
+readingTime: 10
+spot: /assets/spots/gov-08.png
+spotCaption: "The climber doesn't hold their own rope."
+sources:
+  - title: "The IIA's Three Lines Model: An Update of the Three Lines of Defense"
+    url: "https://www.theiia.org/globalassets/site/communication/2020/three-lines-model-updated.pdf"
+    authors: ["Institute of Internal Auditors"]
+    year: 2020
+  - title: "The Protection of Information in Computer Systems"
+    url: "https://web.mit.edu/Saltzer/www/publications/protection/Basic.html"
+    authors: ["Jerome H. Saltzer", "Michael D. Schroeder"]
+    year: 1975
+  - title: "SR 26-2 attachment: Supervisory Guidance on Model Risk Management"
+    url: "https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf"
+    authors: ["Board of Governors of the Federal Reserve System", "Federal Deposit Insurance Corporation", "Office of the Comptroller of the Currency"]
+    year: 2026
+  - title: "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1"
+    url: "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10"
+    authors: ["National Institute of Standards and Technology"]
+    year: 2023
+  - title: "AI Governance Framework v2.3.0: roles and responsibilities, approvals by tier"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#approvals-by-tier"
+  - title: "AI Governance Framework v2.3.0: roles and responsibilities, accountability principles"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#accountability-principles"
+  - title: "AI Governance Framework v2.3.0: model validation, validation independence"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/model-lifecycle/validation.md#validation-independence"
+  - title: "AI Governance Framework v2.3.0: governance workflow, small teams"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#small-teams"
+  - title: "AI Governance Framework v2.3.0: Start Here, where independence comes from at T1 and T2"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2"
+  - title: "AI Governance Framework v2.3.0: governance workflow, exceptions and risk acceptance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance"
+  - title: "AI Governance Framework v2.3.0: AI Risk Committee charter, quorum and conflicts"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-risk-committee-charter.md#3-quorum-and-conflicts"
+  - title: "AI Governance Framework v2.3.0: AI Risk Committee charter, delegation"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-risk-committee-charter.md#6-delegation"
+  - title: "AI Governance Framework v2.3.0: escalation paths, S1 critical"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/escalation-paths.md#s1-critical"
+  - title: "AI Governance Framework v2.3.0: agent identity and tool governance, kill switch"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md#8-kill-switch"
+  - title: "AI Governance Framework v2.3.0: when to say no, how it fits the workflow"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/when-to-say-no.md#how-it-fits-the-workflow"
+  - title: "AI Governance Framework v2.3.0: deployment approval with environments and required reviewers"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#deployment-approval-environments-with-required-reviewers-da-002"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture an assistant that suggests discounts to your sales team. One Monday its suggestions start going past what the pricing policy allows. Three people notice before lunch.
+
+The engineer who built it wants to roll back the prompt. The sales director wants it left on, because the quarter closes on Friday and the reps are catching the worst ones. The product manager who owns it is on leave. Everyone has a view. Nobody knows whose decision it is, so the assistant keeps running.
+
+On Wednesday the engineer ships a fix. She wrote it, tested it on cases she chose, and marked it validated. Nobody knows the system better. Nobody is worse placed to find what she missed.
+
+The model made neither of those decisions. In your organisation, who should have made each one, and who should have checked her work?
+
+## One accountable name on every decision
+
+Build one table for each system at intake, before anyone builds.
+
+1. **List the decisions.** Six recur through a system's life: build it (approve the risk assessment and its scope), validate it, ship it, change it, stop it, and accept an exception to a control. One more never moves. The business owner accepts the residual risk, at every tier.
+2. **Write one accountable name against each, by tier.** Start from the framework's [approvals by tier](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#approvals-by-tier). Each decision has one accountable approver per tier. Where several roles sign, the first named is accountable and the others co-sign. Where your approver is a committee, write its chair's name beside it, so a person answers for the record. That addition is the guide's recommendation.
+3. **Take validation out of the team at T1 and T2.** Name your validator at intake, and book them then.
+4. **Give every name a deputy and a route up.** Write who acts when the owner is away, and who settles it when they disagree.
+5. **Put the names where the decision is enforced.** Keep them in the register entry, and have your pipeline ask each signer to approve. The framework's [reference implementation](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#deployment-approval-environments-with-required-reviewers-da-002) gives each signing role its own environment, with self-review switched off. A name in a slide deck has no line to the call.
+
+**The guide's call: builders never validate their own high-risk systems.** High-risk here means T1 and T2, the framework's Critical and High tiers. Its rule: "The team that builds a T1 or T2 model never validates it." At T1, Model Risk Management (MRM) validates in full. At T2, MRM or another second-line reviewer who didn't contribute to development validates a reduced scope.
+
+Below T2 the rule relaxes on purpose. At T3 a peer who didn't write it reviews it, and at T4 the developer self-tests. Wherever a red team runs, nobody red-teams their own system.
+
+Your builders chose the test cases, and they're measured on the launch. Their checks share their blind spots. A validator who didn't build it looks for what nobody on the team thought to test.
+
+This step is done when every decision has one accountable person.
+
+**Your call.** Pick your most important system. Write who would decide to switch it off tomorrow morning, and who validated it last. If either one built it, note that too.
+
+## Decisions leave the team as the tier rises
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-08-decision-rights.svg" alt="Who decides, by tier. Four rows across T1 to T4. Build, meaning approve the risk assessment: AI Risk Committee, AI Risk, team lead, team lead. Validate: MRM in full, MRM or another second-line reviewer in reduced scope, a peer who is not the developer, a self-test. Ship: AI Risk Committee with the CISO and, for personal data, the DPO; Head of AI with the Business Unit Head; team lead with the business owner; team lead. Exception: AI Risk Committee, Head of AI Risk, Head of AI, team lead. Cells decided outside the build team are shaded: every T1 and T2 cell, and the T3 exception. Two rows apply at every tier: a change goes back to the ship approver after revalidation, and whoever is on call can stop a system first and tell the owners after." caption="At T1 and T2, every one of these decisions leaves the build team." />
+
+Each cell names who the framework holds accountable for that decision at that tier. Shaded cells sit outside the build team. That is all of T1 and T2, and the T3 exception, which goes to the Head of AI. At T3 and T4 the rest stay with your team.
+
+Two rows don't change with the tier. **A change goes back to the ship approver.** A model, provider, prompt or regulatory change counts as material. You revalidate and go through the gates again. A change that raises the tier needs the new tier's approvers.
+
+**Stopping sits with whoever is on call.** In the framework's [severity rules](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/escalation-paths.md#s1-critical), the on-call engineer moves first on an S1, starting a rollback, kill switch or fallback if needed. The business owner hears within 30 minutes. Where a [kill switch](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md#8-kill-switch) is required, the on-call operator, the incident commander or the system owner can pull it "with no further approval needed". The framework doesn't say who turns a system back on. The guide's recommendation: the fix is a change, so whoever signs a change signs the fix, and the system owner lifts the stop once it has passed. Make stopping cheap. Make restarting deliberate.
+
+**When the owner is away.** Silence is never a yes. A release without its signed approval is blocked (control DA-002), so a deputy has to act. The framework gives the committee a deputy chair and a standing delegate per member, and most single owners, such as the business owner, no deputy at all. The guide's recommendation: name one for each owner in the register entry, with the same limits. Some decisions never pass down. The committee doesn't delegate T1 risk assessment, model selection or deployment, or exception renewals. A T1 or T2 safety-regression exception is decided by the tier's exception approver, "never by a delegate".
+
+**When the owner disagrees.** Any role holder who finds a material risk must escalate it, at any tier. A team that thinks a [when to say no](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/when-to-say-no.md#how-it-fits-the-workflow) position shouldn't apply takes its case to the tier approver, who decides and records it. A disagreement the committee can't settle with the first line goes to the Board Risk Committee, at the chair's discretion. Give each rung of your [escalation path](/patterns/escalation-path/) an owner and a deadline. Write the dissent into the [decision record](/patterns/decision-record/), so the approver above reads the strongest case against. Both are the guide's recommendations.
+
+Now look at what you wrote. If the person who would switch your system off tomorrow needs someone's permission, fix the stop row. If a T1 or T2 system was validated by its builders, it hasn't been validated.
+
+<RunningExample>
+The assistant is T1. Here are its decisions, with the roles from its register entry. The names and the scenarios are made up.
+
+| Decision | Accountable | Signs with, or does the work |
+|---|---|---|
+| Build: drafts only, a person sends | AI Risk Committee, chaired by the CRO | The product manager, support tooling, prepares it. MRM checks the tier |
+| Validate | Model Risk Management, full scope | Nobody from the support tooling team |
+| Ship | AI Risk Committee | The CISO and the DPO co-sign |
+| Change | AI Risk Committee, after MRM revalidates | The CISO and the DPO co-sign again |
+| Stop | AI Operations | The on-call engineer pulls the switch, then tells the owners |
+| Accept an exception | AI Risk Committee | A renewal needs the full committee |
+| Accept the residual risk | Head of Customer Support | As business owner |
+
+Build needs two more T1 signatures: the architecture review board on the design, and the committee with the CISO on the model. At go-live the product manager becomes the system owner, who received Step 7's near-miss report.
+
+**Who validates it.** MRM, in full: the tier, the evaluation design and results, the red-team results and the monitoring design. Security's red team runs at least 200 cases. Neither team worked on the build. The AI lead hands over the evidence and stays out of the conclusion.
+
+**When someone is away.** On a Saturday, a draft quoting a fee that doesn't exist reaches a customer. On a T1 system that is at least S2, and the business owner hears within 8 hours. The Head of Customer Support is on leave. Her deputy, named in the entry, takes the call.
+
+**When they disagree.** The Head of Customer Support wants password-reset replies sent without review (Step 5), and the AI lead agrees. Neither can approve it. Sending replies is a material change (Step 4), so MRM revalidates and the committee decides. If the committee says no and the business owner still disagrees, the chair decides whether the Board Risk Committee hears it.
+</RunningExample>
+
+## Where independence comes from at each size
+
+The rule is the same at every size. What changes is where you find someone who didn't build it.
+
+<Track for="small">
+At T3 and T4, your team of three to five can run a system itself, apart from a few named touchpoints. One person can hold every first-line delivery role, if each is named in the entry. Some jobs still need a second person. Your red team is never the build team. A T3 peer reviewer didn't write the code or the prompt, and pair-writing counts as writing. At T3 the team lead and the business owner both sign, so they are two people.
+
+At T1 and T2 you can't supply independence from inside. Inside a larger organisation, book MRM or the second line at intake. Another team's engineer doesn't meet the rule. A second line without GenAI depth can bring in an outside validator. The framework [recommends](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2) that the second line sets the scope, reviews the work and signs the conclusion.
+
+If your company has no second line at all, the framework gives you no route for a T1 or T2 system. The guide's recommendation: name one person outside the build team, who answers to your founder or board, to scope, review and sign an outside validator's work. If you can't name one, don't build a T1 or T2 system yet.
+</Track>
+
+<Track for="enterprise">
+Your second line exists. Your job is to keep the names real. Put the people and their deputies in each register entry. Attach each decision to a role, so a reorganisation changes the person and leaves the rule alone. Check the names at each formal review. These are the guide's recommendations.
+
+The [charter template](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-risk-committee-charter.md#3-quorum-and-conflicts) gives your committee its own separation of duties. A member who sponsors, owns or built a system declares the conflict and doesn't vote on it. A decision taken without quorum isn't valid.
+
+Expect Internal Audit to ask who approved a T1 release, and whether they were allowed to. If your answer needs an interview, your table isn't finished.
+</Track>
+
+<Shortcut quote="She built it and nobody knows it better. Let her sign the validation.">
+**Why it's tempting.** Nobody does know it better. MRM is booked for weeks, and the launch date is public.
+
+**Why it bites.** A builder tests what they thought of. Their cases and their reading of the results share one set of blind spots. At T1 and T2 the framework doesn't count it as validation. The date slips anyway, later.
+
+**The forcing function.** Book the validator at intake, as the framework advises, and the reason for the shortcut goes. Then make it impossible on the paths you control. Give validation its own pipeline environment, with MRM or the second line as its only reviewers and self-review switched off, and make the release wait for it. Nobody on your build team can approve it. That environment is the guide's recommendation.
+</Shortcut>
+
+<StarterKit n={8} />
+
+<DeepDive>
+
+### Three lines
+
+In plain words: the first line builds and runs your system, and owns its risk. The second line sets the standard and challenges the first. The third line, internal audit, checks that both did what they said.
+
+The framework sorts its [roles](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions) the same way. The people who own, build, run and secure a system, and their leaders, are first line. AI Risk, MRM, the DPO, Compliance, Legal and the AI Risk Committee are second line. Internal Audit is third. The CISO is first line, though some organisations put the role in the second.
+
+The Institute of Internal Auditors' [Three Lines Model](https://www.theiia.org/globalassets/site/communication/2020/three-lines-model-updated.pdf) (2020) is easy to misquote. "Second line roles provide assistance with managing risk," with "complementary expertise, support, monitoring, and challenge". First and second line roles "may be blended or separated". And "responsibility for managing risk remains a part of first line roles".
+
+So the model gives your second line no approval rights. The framework gives it some at T1 and T2, a design choice the model leaves open. That moves the challenge outside the team. The risk stays with the business owner. [ARCH-005](/architecture/005-ownership-and-decision-rights/) maps the same lines onto the decisions inside one guardrail.
+
+### Separation of duties
+
+In 1975 Jerome Saltzer and Michael Schroeder [described](https://web.mit.edu/Saltzer/www/publications/protection/Basic.html) separation of privilege: a lock with two keys, held by different people. Then "no single accident, deception, or breach of trust is sufficient" to open it. In your system, the two keys are the builder's evidence and someone else's judgement of it.
+
+The framework's [small team rules](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#small-teams) apply that idea. At T1 and T2, validation, the approvals, prompt review beyond the peer, the vendor assessment and the DPIA all sit outside the team.
+
+A different desk isn't enough. US bank supervisors call the check "effective challenge". Their April 2026 guidance, [SR 26-2](https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf), says it takes "appropriate expertise", "sufficient independence to maintain objectivity", and "the organizational standing and influence to effect any change". SR 26-2 excludes generative and agentic AI. Its test still works as three questions for your validator. Can they judge it? Did they help build it? Can they stop it? The questions are the guide's recommendation. NIST's [AI RMF](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10) asks the same of any AI system in MEASURE 1.3: "internal experts who did not serve as front-line developers for the system and/or independent assessors".
+
+### Approvals by tier
+
+The framework's [table](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#approvals-by-tier) covers six decisions: risk assessment, architecture, validation, model selection, deployment and exception. At T1 the AI Risk Committee holds four. Verbal approvals don't count at T1 or T2, and no T3 or T4 decision goes to the committee.
+
+[Exceptions](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance) climb on renewal. Each lasts 90 days at most, and its one renewal goes to an approver a level higher. A T1 renewal needs a full committee decision and is reported to the Board Risk Committee. An urgent first-time T1 exception can go to the chair, acting with the Head of MRM or the Head of Compliance, under the charter's [delegation](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-risk-committee-charter.md#6-delegation) rule. The next meeting ratifies it. Nobody can except your five non-waivable controls.
+
+</DeepDive>
+
+You now have a name and a deputy on every decision, and validation outside the team wherever the tier is high. A name alone stops nothing. A release can still go out with a signature missing, or before the validator's report is in. Step 9 puts gates between idea and production, so a system can't deploy without its tier's evidence pack.

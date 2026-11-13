@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" role="img" aria-label="Four evaluation runs against the T1 hallucination cap of 1%. Each shows its score as a dot and its 95% upper bound as the end of a bar. No failures in 200 cases: score 0%, bound 1.49%, fail. No failures in 300: bound 0.99%, pass. Four failures in 500: score 0.8%, bound 1.82%, fail. One failure in 500: score 0.2%, bound 0.95%, pass."><rect width="880" height="330" fill="#fff"/>
+<path d="M300.0 58 L300.0 262" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="300.0" y="278" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">0%</text>
+<path d="M420.0 58 L420.0 262" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="420.0" y="278" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">0.5%</text>
+<text x="540.0" y="278" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">1%</text>
+<path d="M660.0 58 L660.0 262" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="660.0" y="278" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">1.5%</text>
+<path d="M780.0 58 L780.0 262" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="780.0" y="278" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">2%</text>
+<text x="540.0" y="294" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">failure rate</text>
+<text x="10" y="30" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">RUN</text>
+<text x="855" y="30" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="500" xml:space="preserve">GATE</text>
+<path d="M540.0 42 L540.0 262" fill="none" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="540.0" y="30" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">T1 CAP 1%</text>
+<text x="10" y="81" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">0 failures in 200</text>
+<text x="10" y="96" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">score 0%</text>
+<path d="M300.0 84 L540.0 84" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<path d="M540.0 84 L657.6 84" fill="none" stroke="#9b4a3f" stroke-width="2"/>
+<path d="M657.6 77 L657.6 91" fill="none" stroke="#9b4a3f" stroke-width="2"/>
+<text x="664.6" y="88" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">1.49%</text>
+<circle cx="300.0" cy="84" r="5" fill="#1a1a1a" stroke="#fff" stroke-width="2"/>
+<text x="855" y="88" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">FAIL</text>
+<text x="10" y="133" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">0 failures in 300</text>
+<text x="10" y="148" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">score 0% · the T1 minimum</text>
+<path d="M300.0 136 L537.6 136" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<path d="M537.6 129 L537.6 143" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<text x="544.6" y="140" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">0.99%</text>
+<circle cx="300.0" cy="136" r="5" fill="#1a1a1a" stroke="#fff" stroke-width="2"/>
+<text x="855" y="140" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PASS</text>
+<text x="10" y="185" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">4 failures in 500</text>
+<text x="10" y="200" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">first candidate · score 0.8%</text>
+<path d="M492.0 188 L540.0 188" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<path d="M540.0 188 L736.8 188" fill="none" stroke="#9b4a3f" stroke-width="2"/>
+<path d="M736.8 181 L736.8 195" fill="none" stroke="#9b4a3f" stroke-width="2"/>
+<text x="743.8" y="192" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">1.82%</text>
+<circle cx="492.0" cy="188" r="5" fill="#1a1a1a" stroke="#fff" stroke-width="2"/>
+<text x="855" y="192" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">FAIL</text>
+<text x="10" y="237" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">1 failure in 500</text>
+<text x="10" y="252" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">candidate 2 · score 0.2%</text>
+<path d="M348.0 240 L528.0 240" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<path d="M528.0 233 L528.0 247" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<text x="535.0" y="244" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">0.95%</text>
+<circle cx="348.0" cy="240" r="5" fill="#1a1a1a" stroke="#fff" stroke-width="2"/>
+<text x="855" y="244" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PASS</text>
+<circle cx="16" cy="310" r="5" fill="#1a1a1a"/>
+<text x="28" y="314" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">score: what the run measured</text>
+<path d="M300 310 L330 310" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<path d="M330 303 L330 317" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<text x="340" y="314" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">end of bar: 95% upper bound, what the gate reads</text>
+</svg>
