@@ -63,7 +63,7 @@ describe('governance path', () => {
   });
 
   it('pins kit links to the framework tag', () => {
-    expect(kitUrl('README.md')).toBe('https://github.com/sunilp/ai-governance-framework/blob/v2.2.0/README.md');
+    expect(kitUrl('README.md')).toBe('https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/README.md');
   });
 
   it('links a step only when its essay is written', () => {
