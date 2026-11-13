@@ -19,7 +19,11 @@ Two agents can score identically on a benchmark and fail differently in producti
   ![Editorial illustration of failure bucket distributions across two agents with identical aggregate scores](../assets/images/field-notes/002-banner.png){ loading=lazy }
 </figure>
 
-The single largest reported pain point in agentic AI right now is not capability. It is evaluation. The LangChain State of AI Agents 2026 survey, with 1,340 practitioners responding, places evaluation at the top of the list. Stanford's HAI 2026 AI Index measures a 37 percent gap between lab benchmark scores and real-world deployment performance, with 50x cost variation across systems achieving comparable accuracy. Practitioners are calling 2026 the year benchmark trust collapsed. The reason is not that the benchmarks got worse. The benchmarks measure what they were designed to measure. The rubrics were never designed to catch the failure modes that get agents pulled from production.
+Quality is what teams say keeps their agents out of production. LangChain's State of Agent Engineering report, built from 1,340 survey responses collected over two weeks in late 2025, puts quality first at 32 percent of respondents, ahead of latency at 20 percent. The same report finds evals in place at 52 percent of teams while observability sits near 89 percent. The thing people name as the blocker is the thing they measure least.
+
+Stanford's 2026 AI Index supplies the other half, and it is worth being precise about what it does and does not say. It puts no number on the drop from benchmark score to deployed behavior. It makes the point in words instead: even when benchmark scores are technically valid, strong benchmark performance does not always translate to real-world utility. On structured benchmarks it finds agents still failing roughly one attempt in three. And the benchmarks are themselves shakier than their scores suggest. Truong et al. count 88 of GSM8K's 997 questions as invalid: ambiguous wording, answer keys that are simply wrong, and a grader that takes the last number in a response and calls it the answer.
+
+So the benchmarks measure what they were designed to measure, and not much past it. The rubrics were never designed to catch the failure modes that get agents pulled from production.
 
 A rubric that produces a single accuracy number tells you the average of your failure modes. It does not tell you which failure modes you have, or how much each one is costing you. For an agent that runs in production, that distinction is the entire game.
 
@@ -64,14 +68,14 @@ The third failure mode is more political than technical. Failure buckets reveal 
 
 ## In code
 
-The pattern is implemented in [`src/ch06/`](https://github.com/sunilp/agentic-ai/tree/main/src/ch06) in the companion repo:
+The harness this pattern runs on is in [`src/ch06/`](https://github.com/sunilp/agentic-ai/tree/master/src/ch06) in the companion repo:
 
-- `rubric.py` -- bucket definitions with detection rules and severity tiers
-- `harness.py` -- eval harness that scores by distribution, not by average
-- `gold.jsonl` -- gold dataset with bucket-annotated expected outcomes
-- `report.py` -- generates the bucket distribution report
+- `eval_harness.py` -- `Rubric`, `FailureCategory`, and an `EvalReport` that carries a `failure_distribution` next to the aggregate score
+- `cost_profiler.py` -- the cost and latency measurements the cost runaway and latency buckets are scored against
+- `reliability.py` -- repeat-run checks, for buckets that only show up intermittently
+- `tracer.py` -- structured traces, which is where a detection rule gets the evidence to fire on
 
-Run `python -m ch06.harness --gold gold.jsonl --bucket-report` to reproduce the bucket-distribution output for the document-intelligence agent in the repo. Swap in your own gold dataset to run against a different workload.
+The rubric for the document-intelligence agent is checked in at [`project/doc-intelligence-agent/evals/rubric.yaml`](https://github.com/sunilp/agentic-ai/tree/master/project/doc-intelligence-agent/evals/rubric.yaml) as weighted criteria with a pass threshold. There is no command-line entry point yet, so [`tests/unit/test_eval_harness.py`](https://github.com/sunilp/agentic-ai/tree/master/tests/unit/test_eval_harness.py) is the shortest way to see the harness run end to end. The categories in `FailureCategory` are the document-intelligence set rather than the eight general buckets above; the eight are the starting list, not the code.
 
 <div class="fn-pullquote" markdown>
 An aggregate score is the average of the failure modes you did not catalog.
@@ -81,10 +85,9 @@ An aggregate score is the average of the failure modes you did not catalog.
 
 <div class="fn-sources" markdown>
 
-1. *State of AI Agents 2026.* LangChain, n = 1,340 practitioners. <https://www.langchain.com/state-of-agent-engineering>
-2. *2026 AI Index Report -- Technical Performance.* Stanford HAI. <https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance>
-3. *State of AI Agents 2026: Lessons on Governance, Evaluation and Scale.* Lovelytics. <https://lovelytics.com/post/state-of-ai-agents-2026-lessons-on-governance-evaluation-and-scale/>
-4. *5 Production Scaling Challenges for Agentic AI in 2026.* Machine Learning Mastery. <https://machinelearningmastery.com/5-production-scaling-challenges-for-agentic-ai-in-2026/>
+1. *State of Agent Engineering.* LangChain, 1,340 survey responses, fielded 18 Nov to 2 Dec 2025. <https://www.langchain.com/state-of-agent-engineering>
+2. *2026 AI Index Report, Chapter 2: Technical Performance.* Stanford HAI. <https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf>
+3. *Fantastic Bugs and Where to Find Them in AI Benchmarks.* Truong et al., 2025. <https://arxiv.org/abs/2511.16842>
 
 </div>
 
