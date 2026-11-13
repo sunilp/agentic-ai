@@ -1,22 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 460" width="820" height="460" style="background:#fff;font-family:'IBM Plex Sans',system-ui,sans-serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 470" width="820" height="470" style="background:#fff;font-family:'IBM Plex Sans',system-ui,sans-serif;">
 
   <defs>
     <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
-    </marker>
-    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#b91c1c"/>
     </marker>
     <marker id="arrowhead-thin" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
       <polygon points="0 0, 8 3, 0 6" fill="#6b7280"/>
     </marker>
   </defs>
 
-  <rect width="820" height="460" fill="#ffffff"/>
+  <rect width="820" height="470" fill="#ffffff"/>
 
   <!-- Title -->
-  <text x="410" y="34" text-anchor="middle" font-size="18" font-weight="500" fill="#1a1a1a" font-family="Fraunces, Georgia, serif">Error amplification across three architectures</text>
-  <text x="410" y="56" text-anchor="middle" font-size="12" fill="#6b6b6b">MAST (Mar 2025) and DeepMind (Dec 2025) on multi-agent failure modes</text>
+  <text x="410" y="34" text-anchor="middle" font-size="18" font-weight="500" fill="#1a1a1a" font-family="Fraunces, Georgia, serif">Error amplification by architecture</text>
+  <text x="410" y="56" text-anchor="middle" font-size="12" fill="#6b6b6b">Measured across 180 configurations and three model families (arXiv:2512.08296, Dec 2025)</text>
 
   <!-- Divider lines between columns -->
   <line x1="280" y1="80" x2="280" y2="400" stroke="#e8e8e8" stroke-width="1"/>
@@ -24,111 +21,89 @@
 
   <!-- ========== Column 1: Single agent ========== -->
   <g>
-    <text x="140" y="100" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a" letter-spacing="0.02em">SINGLE AGENT</text>
+    <text x="140" y="100" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">SINGLE AGENT</text>
 
-    <rect x="85" y="135" width="110" height="60" rx="4" fill="#EFF6FF" stroke="#1e40af" stroke-width="1.5"/>
-    <text x="140" y="170" text-anchor="middle" font-size="13" fill="#1a1a1a">Agent</text>
+    <rect x="85" y="140" width="110" height="60" rx="4" fill="#EFF6FF" stroke="#1e40af" stroke-width="1.5"/>
+    <text x="140" y="175" text-anchor="middle" font-size="13" fill="#1a1a1a">Agent</text>
+    <circle cx="170" cy="160" r="4.5" fill="#b91c1c" opacity="0.9"/>
 
-    <!-- One small error dot inside -->
-    <circle cx="170" cy="155" r="4.5" fill="#b91c1c" opacity="0.9"/>
+    <line x1="140" y1="205" x2="140" y2="250" stroke="#374151" stroke-width="1.5" marker-end="url(#arrowhead)"/>
 
-    <!-- Arrow down -->
-    <line x1="140" y1="200" x2="140" y2="245" stroke="#374151" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <rect x="100" y="255" width="80" height="36" rx="3" fill="#fafaf8" stroke="#9ca3af" stroke-width="1"/>
+    <text x="140" y="278" text-anchor="middle" font-size="11" fill="#374151">Output</text>
 
-    <!-- Output -->
-    <rect x="100" y="250" width="80" height="36" rx="3" fill="#fafaf8" stroke="#9ca3af" stroke-width="1"/>
-    <text x="140" y="273" text-anchor="middle" font-size="11" fill="#374151">Output</text>
-
-    <!-- Amplification number -->
-    <text x="140" y="345" text-anchor="middle" font-size="38" font-weight="500" fill="#1a1a1a" font-family="Fraunces, Georgia, serif">1x</text>
-    <text x="140" y="370" text-anchor="middle" font-size="11" fill="#6b6b6b">error stays localized</text>
+    <text x="140" y="352" text-anchor="middle" font-size="38" font-weight="500" fill="#1a1a1a" font-family="Fraunces, Georgia, serif">1x</text>
+    <text x="140" y="376" text-anchor="middle" font-size="11" fill="#6b6b6b">baseline</text>
   </g>
 
-  <!-- ========== Column 2: Hierarchical with verifier ========== -->
+  <!-- ========== Column 2: Centralized coordination ========== -->
   <g>
-    <text x="417" y="100" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a" letter-spacing="0.02em">HIERARCHICAL WITH VERIFIER</text>
-
-    <!-- Orchestrator -->
-    <rect x="360" y="120" width="115" height="40" rx="4" fill="#ECFDF5" stroke="#047857" stroke-width="1.5"/>
-    <text x="417" y="145" text-anchor="middle" font-size="12" fill="#1a1a1a">Orchestrator</text>
+    <text x="417" y="100" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">CENTRALIZED COORDINATION</text>
 
     <!-- Workers -->
-    <rect x="310" y="185" width="85" height="36" rx="3" fill="#EFF6FF" stroke="#1e40af" stroke-width="1.2"/>
-    <text x="352" y="208" text-anchor="middle" font-size="11" fill="#1a1a1a">Worker</text>
-    <circle cx="380" cy="194" r="4.5" fill="#b91c1c" opacity="0.9"/>
+    <rect x="315" y="140" width="85" height="36" rx="3" fill="#EFF6FF" stroke="#1e40af" stroke-width="1.2"/>
+    <text x="357" y="163" text-anchor="middle" font-size="11" fill="#1a1a1a">Worker</text>
+    <circle cx="387" cy="149" r="4.5" fill="#b91c1c" opacity="0.9"/>
 
-    <rect x="440" y="185" width="85" height="36" rx="3" fill="#EFF6FF" stroke="#1e40af" stroke-width="1.2"/>
-    <text x="482" y="208" text-anchor="middle" font-size="11" fill="#1a1a1a">Worker</text>
+    <rect x="435" y="140" width="85" height="36" rx="3" fill="#EFF6FF" stroke="#1e40af" stroke-width="1.2"/>
+    <text x="477" y="163" text-anchor="middle" font-size="11" fill="#1a1a1a">Worker</text>
 
-    <!-- Orchestrator to workers -->
-    <line x1="392" y1="160" x2="352" y2="185" stroke="#6b7280" stroke-width="1" marker-end="url(#arrowhead-thin)"/>
-    <line x1="442" y1="160" x2="482" y2="185" stroke="#6b7280" stroke-width="1" marker-end="url(#arrowhead-thin)"/>
+    <!-- Workers into the orchestrator -->
+    <line x1="357" y1="176" x2="395" y2="212" stroke="#6b7280" stroke-width="1" marker-end="url(#arrowhead-thin)"/>
+    <line x1="477" y1="176" x2="439" y2="212" stroke="#6b7280" stroke-width="1" marker-end="url(#arrowhead-thin)"/>
 
-    <!-- Verifier -->
-    <rect x="360" y="245" width="115" height="36" rx="3" fill="#FFFBEB" stroke="#b45309" stroke-width="1.5"/>
-    <text x="417" y="268" text-anchor="middle" font-size="11" fill="#1a1a1a">Verifier</text>
+    <!-- Orchestrator -->
+    <rect x="360" y="217" width="115" height="42" rx="4" fill="#ECFDF5" stroke="#047857" stroke-width="1.5"/>
+    <text x="417" y="243" text-anchor="middle" font-size="12" fill="#1a1a1a">Orchestrator</text>
+    <circle cx="455" cy="228" r="3" fill="#b91c1c" opacity="0.85"/>
 
-    <!-- Workers to verifier -->
-    <line x1="352" y1="221" x2="385" y2="245" stroke="#6b7280" stroke-width="1" marker-end="url(#arrowhead-thin)"/>
-    <line x1="482" y1="221" x2="450" y2="245" stroke="#6b7280" stroke-width="1" marker-end="url(#arrowhead-thin)"/>
+    <line x1="417" y1="259" x2="417" y2="288" stroke="#374151" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <rect x="377" y="293" width="80" height="30" rx="3" fill="#fafaf8" stroke="#9ca3af" stroke-width="1"/>
+    <text x="417" y="313" text-anchor="middle" font-size="11" fill="#374151">Output</text>
 
-    <!-- Retry feedback to orchestrator (dashed red) -->
-    <path d="M 360 263 Q 290 263 290 140 Q 290 120 310 120" fill="none" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowhead-red)"/>
-    <text x="260" y="195" text-anchor="middle" font-size="10" fill="#b91c1c" font-style="italic" font-family="Fraunces, Georgia, serif">retry</text>
-
-    <!-- Amplification number -->
-    <text x="417" y="345" text-anchor="middle" font-size="38" font-weight="500" fill="#1a1a1a" font-family="Fraunces, Georgia, serif">&lt; 2x</text>
-    <text x="417" y="370" text-anchor="middle" font-size="11" fill="#6b6b6b">verifier catches it</text>
+    <text x="417" y="368" text-anchor="middle" font-size="38" font-weight="500" fill="#1a1a1a" font-family="Fraunces, Georgia, serif">4.4x</text>
+    <text x="417" y="390" text-anchor="middle" font-size="11" fill="#6b6b6b">one place to catch it</text>
   </g>
 
-  <!-- ========== Column 3: Free-form coordination ========== -->
+  <!-- ========== Column 3: Independent agents ========== -->
   <g>
-    <text x="687" y="100" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a" letter-spacing="0.02em">FREE-FORM COORDINATION</text>
+    <text x="687" y="100" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">INDEPENDENT AGENTS</text>
+    <text x="687" y="118" text-anchor="middle" font-size="10.5" fill="#6b6b6b" font-style="italic" font-family="Fraunces, Georgia, serif">no agent checks another</text>
 
-    <!-- Web of agents with growing error -->
-    <line x1="687" y1="140" x2="630" y2="180" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="687" y1="140" x2="744" y2="180" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="687" y1="140" x2="655" y2="240" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="687" y1="140" x2="719" y2="240" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="630" y1="180" x2="744" y2="180" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="630" y1="180" x2="655" y2="240" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="744" y1="180" x2="719" y2="240" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="655" y1="240" x2="719" y2="240" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="630" y1="180" x2="719" y2="240" stroke="#9ca3af" stroke-width="1" opacity="0.5"/>
-    <line x1="744" y1="180" x2="655" y2="240" stroke="#9ca3af" stroke-width="1" opacity="0.5"/>
+    <!-- Four agents, deliberately unconnected to each other -->
+    <circle cx="616" cy="155" r="21" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="616" y="159" text-anchor="middle" font-size="11" fill="#1a1a1a">A</text>
+    <circle cx="630" cy="144" r="4" fill="#b91c1c"/>
 
-    <!-- Agent A: small error -->
-    <circle cx="687" cy="140" r="22" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
-    <text x="687" y="144" text-anchor="middle" font-size="11" fill="#1a1a1a">A</text>
-    <circle cx="700" cy="132" r="3" fill="#b91c1c"/>
+    <circle cx="663" cy="155" r="21" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="663" y="159" text-anchor="middle" font-size="11" fill="#1a1a1a">B</text>
+    <circle cx="677" cy="144" r="5.5" fill="#b91c1c"/>
 
-    <!-- Agent B: medium -->
-    <circle cx="630" cy="180" r="22" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
-    <text x="630" y="184" text-anchor="middle" font-size="11" fill="#1a1a1a">B</text>
-    <circle cx="640" cy="173" r="5" fill="#b91c1c"/>
+    <circle cx="710" cy="155" r="21" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="710" y="159" text-anchor="middle" font-size="11" fill="#1a1a1a">C</text>
+    <circle cx="724" cy="144" r="7" fill="#b91c1c"/>
 
-    <!-- Agent C: medium -->
-    <circle cx="744" cy="180" r="22" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
-    <text x="744" y="184" text-anchor="middle" font-size="11" fill="#1a1a1a">C</text>
-    <circle cx="755" cy="172" r="7" fill="#b91c1c"/>
+    <circle cx="757" cy="155" r="21" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="757" y="159" text-anchor="middle" font-size="11" fill="#1a1a1a">D</text>
+    <circle cx="771" cy="144" r="8.5" fill="#b91c1c"/>
 
-    <!-- Agent D: larger -->
-    <circle cx="655" cy="240" r="22" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
-    <text x="655" y="244" text-anchor="middle" font-size="11" fill="#1a1a1a">D</text>
-    <circle cx="667" cy="232" r="9" fill="#b91c1c"/>
+    <!-- Each output flows straight through, unchecked -->
+    <line x1="616" y1="176" x2="660" y2="248" stroke="#b91c1c" stroke-width="1" opacity="0.55" marker-end="url(#arrowhead-thin)"/>
+    <line x1="663" y1="176" x2="678" y2="248" stroke="#b91c1c" stroke-width="1" opacity="0.55" marker-end="url(#arrowhead-thin)"/>
+    <line x1="710" y1="176" x2="697" y2="248" stroke="#b91c1c" stroke-width="1" opacity="0.55" marker-end="url(#arrowhead-thin)"/>
+    <line x1="757" y1="176" x2="715" y2="248" stroke="#b91c1c" stroke-width="1" opacity="0.55" marker-end="url(#arrowhead-thin)"/>
 
-    <!-- Agent E: largest -->
-    <circle cx="719" cy="240" r="22" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5"/>
-    <text x="719" y="244" text-anchor="middle" font-size="11" fill="#1a1a1a">E</text>
-    <circle cx="731" cy="232" r="11" fill="#b91c1c"/>
+    <!-- Nothing in between: straight into the answer -->
+    <rect x="620" y="253" width="135" height="38" rx="3" fill="#FEF2F2" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="687" y="277" text-anchor="middle" font-size="11" fill="#1a1a1a">Merged answer</text>
 
-    <!-- Amplification number -->
-    <text x="687" y="345" text-anchor="middle" font-size="38" font-weight="500" fill="#b91c1c" font-family="Fraunces, Georgia, serif">17.2x</text>
-    <text x="687" y="370" text-anchor="middle" font-size="11" fill="#6b6b6b">error compounds across nodes</text>
+    <text x="687" y="352" text-anchor="middle" font-size="38" font-weight="500" fill="#b91c1c" font-family="Fraunces, Georgia, serif">17.2x</text>
+    <text x="687" y="376" text-anchor="middle" font-size="11" fill="#6b6b6b">nothing rejects anything</text>
   </g>
 
   <!-- Bottom caption -->
-  <rect x="60" y="402" width="700" height="40" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1" rx="3"/>
-  <text x="410" y="426" text-anchor="middle" font-size="12" fill="#374151" font-style="italic" font-family="Fraunces, Georgia, serif">Hierarchical orchestration with a verifier kept amplification under 2x. Unstructured peer-to-peer networks did not.</text>
+  <rect x="60" y="412" width="700" height="46" fill="#fafaf8" stroke="#e8e8e8" stroke-width="1" rx="3"/>
+  <text x="410" y="431" text-anchor="middle" font-size="11.5" fill="#374151" font-style="italic" font-family="Fraunces, Georgia, serif">Independent agents amplified errors 17.2x. Centralized coordination contained the same effect to 4.4x.</text>
+  <text x="410" y="448" text-anchor="middle" font-size="10.5" fill="#6b6b6b" font-style="italic" font-family="Fraunces, Georgia, serif">A trace-level factor: the extra work coordination failure costs, not a multiplier on task failure rates.</text>
 
 </svg>
