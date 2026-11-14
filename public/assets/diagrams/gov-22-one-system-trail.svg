@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 486" role="img" aria-label="The support assistant's trail through all 22 steps, grouped in the guide's six parts and the close, with the record each step left, from three decisions at Step 1 to this walk at Step 22. Eight records are in brick. Each shows something failing or being refused: the evaluation case from a flagged wrong fee, two evaluation reports with the failed first candidate kept, the incident report, the bias evaluation, the planted-error drill, the release record, the identity record with its refused call, and the signed failure mode the gateway outage tested."><rect width="880" height="486" fill="#fff"/>
+<path d="M24 54.0 L24 398.0" fill="none" stroke="#e8e8e8" stroke-width="2"/>
+<text x="44" y="31" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">PART I · FOUNDATIONS</text>
+<path d="M44 36 L428 36" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="44" y="175" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">PART II · PEOPLE BEFORE PROCESS</text>
+<path d="M44 180 L428 180" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="44" y="291" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">PART III · SETTING IT UP</text>
+<path d="M44 296 L428 296" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<circle cx="24" cy="54.0" r="10" fill="#1a1a1a"/>
+<text x="24" y="57.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">1</text>
+<text x="44" y="58.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">three decisions</text>
+<text x="228" y="58.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">build, ship and stop, each owned</text>
+<circle cx="24" cy="82.0" r="10" fill="#1a1a1a"/>
+<text x="24" y="85.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">2</text>
+<text x="44" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">one-page policy</text>
+<text x="228" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">three of its lines govern it</text>
+<circle cx="24" cy="110.0" r="10" fill="#1a1a1a"/>
+<text x="24" y="113.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">3</text>
+<text x="44" y="114.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">register entry</text>
+<text x="228" y="114.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">proposed · tier pending</text>
+<circle cx="24" cy="138.0" r="10" fill="#1a1a1a"/>
+<text x="24" y="141.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">4</text>
+<text x="44" y="142.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">signed risk assessment</text>
+<text x="228" y="142.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">T1 · data exposure Critical</text>
+<circle cx="24" cy="198.0" r="10" fill="#1a1a1a"/>
+<text x="24" y="201.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">5</text>
+<text x="44" y="202.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">three named shortcuts</text>
+<text x="228" y="202.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">each with its cause and fix</text>
+<circle cx="24" cy="226.0" r="10" fill="#1a1a1a"/>
+<text x="24" y="229.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">6</text>
+<text x="44" y="230.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">governance.yaml</text>
+<text x="228" y="230.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">ID, tier, gate in the pipeline</text>
+<circle cx="24" cy="254.0" r="10" fill="#9b4a3f"/>
+<text x="24" y="257.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">7</text>
+<text x="44" y="258.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">evaluation case</text>
+<text x="228" y="258.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">from a flagged wrong fee</text>
+<circle cx="24" cy="314.0" r="10" fill="#1a1a1a"/>
+<text x="24" y="317.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">8</text>
+<text x="44" y="318.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">decision table</text>
+<text x="228" y="318.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">one accountable name each</text>
+<circle cx="24" cy="342.0" r="10" fill="#1a1a1a"/>
+<text x="24" y="345.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">9</text>
+<text x="44" y="346.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">deployment approvals</text>
+<text x="228" y="346.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">pilot, then production</text>
+<circle cx="24" cy="370.0" r="10" fill="#9b4a3f"/>
+<text x="24" y="373.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">10</text>
+<text x="44" y="374.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">two evaluation reports</text>
+<text x="228" y="374.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">RC1 failed and is kept</text>
+<circle cx="24" cy="398.0" r="10" fill="#9b4a3f"/>
+<text x="24" y="401.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">11</text>
+<text x="44" y="402.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">incident report</text>
+<text x="228" y="402.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">S2 · stopped, fixed, restarted</text>
+<path d="M464 54.0 L464 430.0" fill="none" stroke="#e8e8e8" stroke-width="2"/>
+<text x="484" y="31" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">PART IV · RESPONSIBLE AI IN DEPTH</text>
+<path d="M484 36 L868 36" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="484" y="203" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">PART V · GENAI AND AGENTS</text>
+<path d="M484 208 L868 208" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="484" y="291" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">PART VI · ENTERPRISE SCALE</text>
+<path d="M484 296 L868 296" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="484" y="407" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">CLOSE</text>
+<path d="M484 412 L868 412" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<circle cx="464" cy="54.0" r="10" fill="#1a1a1a"/>
+<text x="464" y="57.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">12</text>
+<text x="484" y="58.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">principles table</text>
+<text x="668" y="58.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">a test and owner per principle</text>
+<circle cx="464" cy="82.0" r="10" fill="#9b4a3f"/>
+<text x="464" y="85.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">13</text>
+<text x="484" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">bias evaluation</text>
+<text x="668" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">fluency failed, then passed</text>
+<circle cx="464" cy="110.0" r="10" fill="#1a1a1a"/>
+<text x="464" y="113.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">14</text>
+<text x="484" y="114.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">contest decision</text>
+<text x="668" y="114.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">all four keep the 30 days</text>
+<circle cx="464" cy="138.0" r="10" fill="#9b4a3f"/>
+<text x="464" y="141.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">15</text>
+<text x="484" y="142.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">planted-error drill</text>
+<text x="668" y="142.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">17 of 20 caught, then 20</text>
+<circle cx="464" cy="166.0" r="10" fill="#1a1a1a"/>
+<text x="464" y="169.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">16</text>
+<text x="484" y="170.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">signed limits</text>
+<text x="668" y="170.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">set before the run, then tested</text>
+<circle cx="464" cy="226.0" r="10" fill="#9b4a3f"/>
+<text x="464" y="229.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">17</text>
+<text x="484" y="230.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">release record</text>
+<text x="668" y="230.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">successor failed, then passed</text>
+<circle cx="464" cy="254.0" r="10" fill="#9b4a3f"/>
+<text x="464" y="257.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">18</text>
+<text x="484" y="258.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">identity record</text>
+<text x="668" y="258.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">waive_fee refused, no grant</text>
+<circle cx="464" cy="314.0" r="10" fill="#1a1a1a"/>
+<text x="464" y="317.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">19</text>
+<text x="484" y="318.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">reuse table</text>
+<text x="668" y="318.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">what travels · one shared model</text>
+<circle cx="464" cy="342.0" r="10" fill="#9b4a3f"/>
+<text x="464" y="345.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">20</text>
+<text x="484" y="346.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">signed failure mode</text>
+<text x="668" y="346.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">gateway down, every call refused</text>
+<circle cx="464" cy="370.0" r="10" fill="#1a1a1a"/>
+<text x="464" y="373.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">21</text>
+<text x="484" y="374.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">applicability record</text>
+<text x="668" y="374.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">one gap, owned by Compliance</text>
+<circle cx="464" cy="430.0" r="10" fill="#1a1a1a"/>
+<text x="464" y="433.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="9.5" fill="#fff" text-anchor="middle" font-weight="500" xml:space="preserve">22</text>
+<text x="484" y="434.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">this walk</text>
+<text x="668" y="434.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">every gap with an owner</text>
+<circle cx="24" cy="466" r="6" fill="#9b4a3f"/>
+<text x="38" y="470" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">a record that shows something failing or being refused</text>
+<circle cx="464" cy="466" r="6" fill="#1a1a1a"/>
+<text x="478" y="470" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">every other record · each opened where it was made</text>
+</svg>

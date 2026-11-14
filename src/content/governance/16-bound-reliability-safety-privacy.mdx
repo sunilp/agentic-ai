@@ -110,7 +110,7 @@ The leak limit went into the same risk assessment when Step 12 gave the privacy 
 
 The team makes synthetic customers whose case notes carry a marker string, and plants them in the case-notes store. It runs 300 test tickets, each with a canary one lookup away. No marker appears in any draft or retrieved context. The bound is 0.99%: fewer than 1 in 100, at 95% confidence. Never is a property of the design. Retrieval fetches case notes only for the customer on the ticket, and the canary test reruns whenever the index or the retrieval changes.
 
-The prompt gets the customer's email, that customer's plan terms and case notes, and nothing else from the account. Card numbers are masked before the call, by a redaction guardrail held to its own limit: at most 1% missed, on the bound, over 300 labelled cases or more. Every fee or date in a draft carries the plan-terms passage it came from, shown beside the draft. Step 11's 30 days would have arrived with no source.
+The prompt gets the customer's email, that customer's plan terms and case notes, and nothing else from the account. Card numbers are masked before the call, by a redaction guardrail held to its own limit: at most 1% missed, on the bound, over 300 labelled cases or more. Every fee or date in a draft carries the plan-terms passage it came from, kept in the draft's record. Step 11's 30 days would have arrived with no source. Step 15 puts that passage on the reviewer's screen.
 </RunningExample>
 
 ## The same caps, signed by different people
