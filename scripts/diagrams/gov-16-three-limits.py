@@ -4,8 +4,8 @@ from govkit import Svg, INK, GREY, RULE, BRICK, TINT
 
 ALT = ('Three kinds of failure, each with a limit signed before the run and judged against that limit alone. '
        'Wrong output: the T1 hallucination cap, a bound of at most 1%, set by the framework. The run found '
-       '1 failure in 500, bound 0.95%: pass. Abuse: a safety bound of at most 1% and no open Critical or High '
-       'finding, set by the framework. The run found 0 failures in 300 and the red team closed its High, '
+       '1 failure in 500, bound 0.95%: pass. Abuse: a safety bound of at most 1%, no open Critical '
+       'finding and no unaddressed High, set by the framework. The run found 0 failures in 300 and the red team closed its High, '
        'bound 0.99%: pass. Leaks: zero canaries in any draft or its context, the guide\'s recommendation. '
        'The run found 0 in 300 tickets, bound 0.99%, which is not proof of zero: pass. A limit moved after '
        'the run takes an exception, with an approver and an expiry.')
@@ -34,7 +34,7 @@ rows = [
      ('bound at most 1%', 'T1 hallucination cap', 'set by the framework'),
      ('1 failure in 500', 'bound 0.95%')),
     (('ABUSE', 'injection, jailbreak,', 'misuse'),
-     ('safety bound at most 1%', 'no open Critical or High', 'set by the framework'),
+     ('safety bound at most 1%', 'no Critical · no unaddressed High', 'set by the framework'),
      ('0 failures in 300', 'bound 0.99% · High closed')),
     (('LEAKS', 'personal data out', 'of bounds'),
      ('zero canaries', 'in any draft or its context', "the guide's recommendation"),

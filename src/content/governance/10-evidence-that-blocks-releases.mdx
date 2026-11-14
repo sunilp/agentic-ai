@@ -20,26 +20,26 @@ sources:
   - title: "OWASP Top 10 for LLM Applications 2025: LLM01 Prompt Injection"
     url: "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
     authors: ["OWASP Foundation"]
-  - title: "AI Governance Framework v2.3.0: evaluation governance, statistical pass rule"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#statistical-pass-rule"
-  - title: "AI Governance Framework v2.3.0: evaluation governance, evaluation types and suite sizes"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#evaluation-types"
-  - title: "AI Governance Framework v2.3.0: evaluation governance, segment results"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#segment-results"
-  - title: "AI Governance Framework v2.3.0: evaluation governance, anti-patterns"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#anti-patterns"
-  - title: "AI Governance Framework v2.3.0: red-teaming protocol, severity classification"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/ai-security/red-teaming-protocol.md#phase-4-severity-classification"
-  - title: "AI Governance Framework v2.3.0: red-teaming protocol, team and qualifications"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/ai-security/red-teaming-protocol.md#team-and-qualifications"
-  - title: "AI Governance Framework v2.3.0: red-team report template"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/red-team-report.md"
-  - title: "AI Governance Framework v2.3.0: reference implementations, what the gate checks"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#what-it-checks"
-  - title: "AI Governance Framework v2.3.0: start here, where independence comes from at T1 and T2"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2"
-  - title: "AI Governance Framework v2.3.0: human-in-the-loop patterns, reviewer fatigue mitigation"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/human-in-loop-patterns.md#reviewer-fatigue-mitigation"
+  - title: "AI Governance Framework v2.4.0: evaluation governance, statistical pass rule"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#statistical-pass-rule"
+  - title: "AI Governance Framework v2.4.0: evaluation governance, evaluation types and suite sizes"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#evaluation-types"
+  - title: "AI Governance Framework v2.4.0: evaluation governance, segment results"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#segment-results"
+  - title: "AI Governance Framework v2.4.0: evaluation governance, anti-patterns"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#anti-patterns"
+  - title: "AI Governance Framework v2.4.0: red-teaming protocol, severity classification"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/ai-security/red-teaming-protocol.md#phase-4-severity-classification"
+  - title: "AI Governance Framework v2.4.0: red-teaming protocol, team and qualifications"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/ai-security/red-teaming-protocol.md#team-and-qualifications"
+  - title: "AI Governance Framework v2.4.0: red-team report template"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/templates/red-team-report.md"
+  - title: "AI Governance Framework v2.4.0: reference implementations, what the gate checks"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/reference-implementations/README.md#what-it-checks"
+  - title: "AI Governance Framework v2.4.0: start here, where independence comes from at T1 and T2"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/START-HERE.md#where-independence-comes-from-at-t1-and-t2"
+  - title: "AI Governance Framework v2.4.0: human-in-the-loop patterns, reviewer fatigue mitigation"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/responsible-ai/human-in-loop-patterns.md#reviewer-fatigue-mitigation"
 ---
 import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
@@ -58,10 +58,10 @@ Step 9 put gates between idea and production. This step decides what they read. 
 
 ## Evidence that can say no
 
-1. **Write the claim before the run.** For each thing the system must get right, write one sentence a stranger could check, with its number: "fewer than 1 in 100 drafts states a wrong fee, date or policy term." Use the framework's metrics where they fit. Its [hallucination rate](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#metric-definitions) counts a response with one material false claim as a failure, and a fee is material. Put your own targets in the risk assessment. Fix them all before anyone sees a result.
-2. **Size each suite for the tier.** The [minimums](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#evaluation-types) for the pre-release and safety suites are 300 distinct cases at T1, 100 at T2, 50 at T3 and 20 at T4. The red team runs 200 cases at T1, including manual testing, and 100 at T2. Paraphrases of one case count once.
-3. **Pass on the bound, never on the score.** At T1 and T2, a [rate passes](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#how-a-metric-passes) only when the one-sided 95% upper bound on its failure rate sits inside the cap. That covers the framework's own rates, such as hallucinations and safety failures. For a target you set yourself, the risk assessment says whether the bound or the score decides, and the framework recommends the bound. Record the denominator and the failures, so anyone can recompute the bound. At T3 and T4 the score decides, on at least the minimum suite.
-4. **Let one serious finding block on its own.** Each red-team finding gets a [severity](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/ai-security/red-teaming-protocol.md#phase-4-severity-classification), and no pass rate absorbs it. An open Critical finding blocks at every tier, and no exception can cover it. At T1 and T2, so does an unaddressed High.
+1. **Write the claim before the run.** For each thing the system must get right, write one sentence a stranger could check, with its number: "fewer than 1 in 100 drafts states a wrong fee, date or policy term." Use the framework's metrics where they fit. Its [hallucination rate](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#metric-definitions) counts a response with one material false claim as a failure, and a fee is material. Put your own targets in the risk assessment. Fix them all before anyone sees a result.
+2. **Size each suite for the tier.** The [minimums](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#evaluation-types) for the pre-release and safety suites are 300 distinct cases at T1, 100 at T2, 50 at T3 and 20 at T4. The red team runs 200 cases at T1, including manual testing, and 100 at T2. Paraphrases of one case count once.
+3. **Pass on the bound, never on the score.** At T1 and T2, a [rate passes](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#how-a-metric-passes) only when the one-sided 95% upper bound on its failure rate sits inside the cap. That covers the framework's own rates, such as hallucinations and safety failures. For a target you set yourself, the risk assessment says whether the bound or the score decides, and the framework recommends the bound. Record the denominator and the failures, so anyone can recompute the bound. At T3 and T4 the score decides, on at least the minimum suite.
+4. **Let one serious finding block on its own.** Each red-team finding gets a [severity](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/ai-security/red-teaming-protocol.md#phase-4-severity-classification), and no pass rate absorbs it. An open Critical finding blocks at every tier, and no exception can cover it. At T1 and T2, so does an unaddressed High. A High is addressed when its fix passes retest or an approved exception covers it. A plan to fix it later doesn't count.
 5. **Keep the testers away from the build.** The team that builds a system never red-teams it. At T1 and T2 it never validates its own results either.
 6. **Make the gate fail on purpose.** Feed the real pipeline a report that should fail, and check that nothing deploys. This one is the guide's recommendation.
 
@@ -79,13 +79,13 @@ A score describes one run. A threshold describes the system, across every email 
 
 Read the chart from the top. A run with no failures at all, on 200 cases, still fails at T1: it can't rule out a true rate of 1.49%. With 300 cases and none failing, the bound falls to 0.99%, inside the 1% cap. That is where the T1 minimum comes from. Four failures in 500 score 0.8%, under the cap, and fail on a bound of 1.82%. One in 500 passes at 0.95%.
 
-The framework's reference gate [recomputes](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#what-it-checks) each rate's bound from the case count and the failures, and fails any report that sets a looser threshold, unless an approved exception covers it. Nobody can argue a bound down in a meeting.
+The framework's reference gate [recomputes](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/reference-implementations/README.md#what-it-checks) each rate's bound from the case count and the failures, and fails any report that sets a looser threshold, unless an approved exception covers it. Nobody can argue a bound down in a meeting.
 
-**One finding is enough.** Some failures you accept at no rate, and the red-team protocol classifies them. Critical means a complete safety bypass, data exfiltration, an unauthorised action or leaked personal data. High means a partial bypass, information disclosure or a significant change in behaviour. A draft that shows one customer another customer's account is Critical. Found once in 240 cases, it would score a 99.6% pass rate, and it still stops the release. The [regression rule](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#regression-rule) works the same way at T1 and T2: on a model or prompt change, one safety case the old version passed and the new one fails blocks the release.
+**One finding is enough.** Some failures you accept at no rate, and the red-team protocol classifies them. Critical means a complete safety bypass, data exfiltration, an unauthorised action or leaked personal data. High means a partial bypass, information disclosure or a significant change in behaviour. A draft that shows one customer another customer's account is Critical. Found once in 240 cases, it would score a 99.6% pass rate, and it still stops the release. The [regression rule](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#regression-rule) works the same way at T1 and T2: on a model or prompt change, one safety case the old version passed and the new one fails blocks the release.
 
-**Planting a failure.** The framework's gate ships with [tests](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#run-it-locally-and-test-it) that feed it known failures: a T1 metric that passes on its score and fails on its bound, a suite below the minimum, an open Critical finding with an exception attached. Those prove the gate's code. They don't prove your pipeline. In the example workflow, the deploy job waits for the approval jobs, and they wait for the gate. Delete one `needs:` line and the gate becomes a report nobody has to read.
+**Planting a failure.** The framework's gate ships with [tests](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/reference-implementations/README.md#run-it-locally-and-test-it) that feed it known failures: a T1 metric that passes on its score and fails on its bound, a suite below the minimum, an open Critical finding with an exception attached. Those prove the gate's code. They don't prove your pipeline. In the example workflow, the deploy job waits for the approval jobs, and they wait for the gate. Delete one `needs:` line and the gate becomes a report nobody has to read.
 
-So keep a few known-bad reports, and run them through the real pipeline whenever the workflow or the framework pin changes. The deploy job must never start. The framework already does this to people, slipping human reviewers [known-bad outputs](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/human-in-loop-patterns.md#reviewer-fatigue-mitigation). The failure you are guarding against is the [rubber-stamp verifier](/patterns/rubber-stamp-verifier/): a check that approves good work and broken work alike.
+So keep a few known-bad reports, and run them through the real pipeline whenever the workflow or the framework pin changes. The deploy job must never start. The framework already does this to people, slipping human reviewers [known-bad outputs](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/responsible-ai/human-in-loop-patterns.md#reviewer-fatigue-mitigation). The failure you are guarding against is the [rubber-stamp verifier](/patterns/rubber-stamp-verifier/): a check that approves good work and broken work alike.
 
 Now look at what you wrote. All three numbers and a date mean your gate reads evidence, and you have watched it say no. A score with no case count can't be checked against any bound. If you found no stopped release, plant one before the next real one.
 
@@ -137,7 +137,7 @@ The guide recommends one more line in the quarterly portfolio report: how many r
 <Shortcut quote="We fixed the four failures. Run the same suite again.">
 **Why it's tempting.** The suite is ready and the fix is in. The rerun will be green by tomorrow.
 
-**Why it bites.** The team fixed the cases it could see. A rerun on those cases measures the fix. It says nothing about the emails the assistant hasn't met. The framework lists tuning and release validation on the same set as an [anti-pattern](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#anti-patterns), and asks for more than one independent set at T1.
+**Why it bites.** The team fixed the cases it could see. A rerun on those cases measures the fix. It says nothing about the emails the assistant hasn't met. The framework lists tuning and release validation on the same set as an [anti-pattern](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#anti-patterns), and asks for more than one independent set at T1.
 
 **The forcing function.** Failing cases go to the team and into the regression suite. The release suite stays access-controlled, and every report records its dataset version, as control EV-006 requires. The guide adds two things: hold the suite outside the build team, and have the pipeline refuse a release run on any dataset version whose cases the team has seen.
 </Shortcut>
@@ -148,13 +148,13 @@ The guide recommends one more line in the quarterly portfolio report: how many r
 
 ### Suite sizes
 
-Zero failures in n cases bounds the true rate at `1 - 0.05^(1/n)`: 1.49% at 200 cases, 0.99% at 300, 0.50% at 600. Statisticians shorten it to the rule of three, a bound near 3/n ([Hanley and Lippman-Hand](https://doi.org/10.1001/jama.1983.03330370053031)). Turn it round and you get the [minimum suites](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#minimum-suite-sizes). Showing a 1% cap with no failures takes 299 cases, and a 3% cap takes 99. The framework rounds to 300 and 100.
+Zero failures in n cases bounds the true rate at `1 - 0.05^(1/n)`: 1.49% at 200 cases, 0.99% at 300, 0.50% at 600. Statisticians shorten it to the rule of three, a bound near 3/n ([Hanley and Lippman-Hand](https://doi.org/10.1001/jama.1983.03330370053031)). Turn it round and you get the [minimum suites](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#minimum-suite-sizes). Showing a 1% cap with no failures takes 299 cases, and a 3% cap takes 99. The framework rounds to 300 and 100.
 
 At the minimum, only a perfect run passes, so it is a poor size to plan for. By the framework's own arithmetic, a system whose true hallucination rate is 0.3%, well inside the cap, fails 59% of 300-case runs, 44% of 500-case runs and 18% of 1,000-case runs. Bigger suites leave room: one failure at 500 cases, four at 1,000. Size for the rate you expect.
 
 Count what is independent. Ten turns of one conversation are one case. Where cases cluster, count the clusters, or bootstrap over them.
 
-Then size the slices. At T1 and T2, any [segment](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#segment-results) the risk assessment names that holds 100 cases or more must meet the threshold by itself. A smaller one is reported, its gap becomes a finding, and the suite grows for it. For the assistant, plans with a cancellation fee are a segment worth building to 100.
+Then size the slices. At T1 and T2, any [segment](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/llm-lifecycle/evaluation-governance.md#segment-results) the risk assessment names that holds 100 cases or more must meet the threshold by itself. A smaller one is reported, its gap becomes a finding, and the suite grows for it. For the assistant, plans with a cancellation fee are a segment worth building to 100.
 
 ### Confidence bounds
 
