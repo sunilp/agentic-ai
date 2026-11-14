@@ -1,0 +1,195 @@
+---
+dek: "Move the controls that repeat into five shared services every team runs through, put each where it can see enough to decide, settle what each does when it fails, and keep people for the judgements."
+description: "Step 20 of AI Governance, from Scratch. Count which controls a machine can run, build an AI gateway, a registry, a policy gate in CI/CD, a shared evaluation service and an audit store at the narrow waist, let lifecycle state change real access, decide fail closed or degrade for each piece before it breaks, and fit the platform to the architecture review board and a target state."
+updated: 2026-11-14
+readingTime: 10
+spot: /assets/spots/gov-20.png
+spotCaption: "The governor rides on the engine and never leaves its post."
+sources:
+  - title: "CWE-636: Not Failing Securely ('Failing Open')"
+    url: "https://cwe.mitre.org/data/definitions/636.html"
+    authors: ["MITRE"]
+  - title: "AI Governance Framework v2.3.0: tools, what each control records"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/tools/README.md"
+  - title: "AI Governance Framework v2.3.0: Stage 7 deployment controls"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/controls/stage-07-deployment.yaml"
+  - title: "AI Governance Framework v2.3.0: reference implementations"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md"
+  - title: "AI Governance Framework v2.3.0: governance gate, control matching rule"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#control-matching-rule"
+  - title: "AI Governance Framework v2.3.0: governance gate, outputs"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#outputs"
+  - title: "AI Governance Framework v2.3.0: ticketing workflow, generated attachment lists"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/ticketing-workflow.md#required-attachments-by-control-and-tier"
+  - title: "AI Governance Framework v2.3.0: prompt audit trail, logging architecture"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/prompt-audit-trail.md#logging-architecture"
+  - title: "AI Governance Framework v2.3.0: evaluation governance, eval infrastructure requirements"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#eval-infrastructure-requirements"
+  - title: "AI Governance Framework v2.3.0: evaluation governance, eval dataset governance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#eval-dataset-governance"
+  - title: "AI Governance Framework v2.3.0: AI inventory standard, ownership"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#ownership"
+  - title: "AI Governance Framework v2.3.0: AI inventory standard, required fields"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#required-fields"
+  - title: "AI Governance Framework v2.3.0: minimum evidence pack by tier"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#minimum-evidence-pack-by-tier"
+  - title: "AI Governance Framework v2.3.0: governance workflow, fast lane (T3/T4)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4"
+  - title: "AI Governance Framework v2.3.0: exceptions and the non-waivable list"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance"
+  - title: "AI Governance Framework v2.3.0: roles and responsibilities, role definitions"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions"
+  - title: "AI Governance Framework v2.3.0: agent identity and tool governance, human approval gates"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md#4-human-approval-gates"
+  - title: "AI Governance Framework v2.3.0: agent identity and tool governance, tier scaling"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md#tier-scaling"
+  - title: "AI Governance Framework v2.3.0: GRC integration, control embedding"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/grc-integration.md#control-embedding"
+  - title: "AI Governance Framework v2.3.0: GRC integration, implementation notes"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/grc-integration.md#implementation-notes"
+  - title: "AI Governance Framework v2.3.0: AI CoE design, core functions"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-coe-design.md#core-functions"
+  - title: "AI Governance Framework v2.3.0: audit trail requirements, storage and access controls"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/audit-trail-requirements.md#storage-and-access-controls"
+  - title: "AI Governance Framework v2.3.0: board reporting, material incident criteria"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/board-reporting.md#material-incident-criteria"
+  - title: "AI Governance Framework v2.3.0: Start Here, small teams"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#small-teams"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture the AI Risk Committee's monthly meeting, with eleven releases on the agenda. For each one, someone from AI Risk reads out that the evaluation report is attached, that its prompt version matches the release and that no exception has expired. The committee agrees eleven times.
+
+The decision that needs the committee comes last. A new system wants customer data. Ten minutes are left.
+
+Meanwhile each team runs its own copy of the controls. Three teams log prompts three different ways, and a fourth keeps nothing. Two pin the gate to different framework releases. One kill switch is a script on an engineer's laptop.
+
+Every control exists somewhere. People make checks a machine should make, and the machines sit where they can't see. Which controls should run themselves, where should each one sit, and what happens when the machinery stops?
+
+## Move the repeating controls into shared services
+
+1. **Sort your controls by what they need.** Each control in the framework's [control files](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/tools/README.md) records how it runs: automated, semi-automated or manual. Mark yours the same way. A rule can check that a report passes on its bound. Only a person can accept a residual risk.
+2. **Build five shared pieces at the narrow waist.** An AI gateway for every model call, a registry as the system of record, a policy gate in every pipeline, a shared evaluation service and a central audit store. Step 6 gave one team an endpoint and a template. Now a platform team runs them for everyone.
+3. **Put each control where it can see enough to decide.** The gateway sees every call and nothing of the release. The gate sees every release and no live traffic.
+4. **Let lifecycle state change real access.** A retired system's credential stops working. A pilot's reaches its named users only. A status that changes nothing is a label. This is the guide's recommendation.
+5. **Decide what each piece does when it fails.** Fail closed, or degrade to a fallback you have tested. Write the choice into the design the architecture review board signs, as the guide recommends. Then break each piece on purpose.
+6. **Leave the judgements with people.** The platform runs the checks and records each decision. People make the decisions.
+
+**The guide's call: automate the controls that repeat. Keep committees for high-risk approvals and exceptions.** A check that runs on every release costs a machine nothing. It wears people down. They skim, and a skimmed check is a [rubber stamp](/patterns/rubber-stamp-verifier/). A T1 approval or an exception comes rarely, and it needs people who answer for it.
+
+The step is done when most controls run automatically on the paved road. Count before you claim it. The framework's control files mark 4 of its 71 controls automated, 25 semi-automated and 42 manual. All four automated ones run in production: monitoring, alerting, cost monitoring and audit logging. A machine has a hand in 29 of the 71. That is short of most, and it should be. The register also holds the policy, every assessment, every incident and every retirement.
+
+So count where the work repeats. This is the guide's count: stages 4 to 7, which every release passes through. There, 18 of 26 controls are semi-automated and 8 are manual. That is most. Read semi-automated as the platform running the control while a person supplies part of it, as raters do for an evaluation. The framework's [own gate](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md) already writes DA-001's evidence checklist and re-checks SR-002's open findings. The other six manual ones, such as a prompt review or a [signed deployment](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/controls/stage-07-deployment.yaml), are people's work by design. As your platform takes a control over, re-mark your copy and count again.
+
+**Your call.** List every check in your last T1 or T2 release that someone made by hand. Mark each one a rule can make. Then write down what your gateway does tonight if the service that checks its credentials stops answering.
+
+## Five pieces at the narrow waist
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-20-narrow-waist.svg" alt="The narrow waist. Above it, every team's AI systems. Below it, models, data and production. In the waist, five shared pieces, each with what it sees and two controls it enforces. Gateway: every model call; PM-006 the stop, DE-004 guardrails. Registry: every system; RA-006 entry first, GV-006 inventory reconciled. Policy gate: every release; DA-003 gates passed, DA-001 evidence checklist. Evaluation service: every suite run; EV-001 to EV-009 release suites, PM-004 live scoring. Audit store: every record; PM-007 audit log, DR-003 evidence archive." caption="Each piece sits where it can see enough to enforce its controls." />
+
+Each piece sees one kind of traffic, and what it sees decides what it can enforce. The Lab calls this [chokepoint placement](/patterns/chokepoint-placement/): choose where a check sits before you choose the check.
+
+**The gateway** sees every model call. It holds the vendor keys, Step 4's four safeguards, the guardrails (DE-004) and the stop (PM-006), so no team holds any of them. It can't tell whether a retrieved document was one this customer is allowed to read. Retrieval enforces that, where the documents live (DE-008).
+
+**The registry** holds each entry from Step 3, created before the build (RA-006), and Step 17's record of what shipped. It is the inventory the quarterly reconciliation checks (GV-006).
+
+**The policy gate** is Step 9's gate, shared. Its result is DA-003's evidence. It reads the framework's control and policy files, so a changed threshold reaches every pipeline without a code change.
+
+**The evaluation service** computes Step 10's bounds one way for everyone, and runs the live scoring in production (PM-004).
+
+**The audit store** is [append-only and tamper-evident](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/prompt-audit-trail.md#logging-architecture), kept apart from application logs. The systems that feed it can only append. It also keeps each retired system's evidence (DR-003). Keep its streams apart too, as [split the log](/patterns/split-the-log/) argues.
+
+**When a piece fails.** Each piece is now a dependency of every system above it. The framework settles failure for one. Its gate exits with a failure when it can't run, and treats a newly added control as unconditional, so it [fails closed](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#control-matching-rule). For the other four it says nothing. These defaults are the guide's:
+
+| Piece down | Default | Why |
+|---|---|---|
+| Gateway's policy check | Fail closed. Systems switch to their tested fallback | An unchecked call carries none of the safeguards |
+| Registry | No new credentials or promotions. Issued credentials and the stop keep working | The stop lives in the gateway |
+| Policy gate | Releases wait. Rollback and the stop don't (Step 9) | A gate that didn't run passed nothing |
+| Evaluation service | Releases wait. A gap in live scoring alerts, with a time limit set in advance. Past it, the system degrades as its approval says | A T1 system nobody watches has left its approval |
+| Audit store | Buffer, with the guaranteed delivery the framework asks for. Stop when the buffer fills | Audit logging can [never be excepted](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#exceptions-and-risk-acceptance) |
+
+Fail closed is affordable only with a fallback people have used. The engineering is in the Lab's [production execution](/architecture/008-production-execution/) blueprint.
+
+Now look at what you wrote. Each check a rule can make belongs on the platform. If you couldn't say what your gateway does when its check fails, find out in a drill.
+
+<RunningExample>
+The assistant is T1, so its pack has all 17 of the framework's [rows](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#minimum-evidence-pack-by-tier). Sort them by what the framework says produces each one. The outage after it is made up, and so are its times.
+
+**Two rows the platform attaches by itself.** The guardrail configuration with its test results, and the evaluation report. The evaluation service writes the report, with the two senior support agents' blind ratings inside.
+
+**Five it builds in part.** Version control holds the prompt history, and the AI lead writes the model card. A scanner runs part of the red team, and people run the manual cases. The build holds the defence configuration, and people run the penetration test, since password-reset replies now reach customers with nobody reading each one. The platform holds the monitoring and cost configuration, and someone staffs the human oversight. The gate writes its result and the checklist, and the committee, the CISO and the DPO sign.
+
+**Ten need a person throughout.** The risk assessment, the impact assessment, the DPIA, the architecture document, the review board's record, the model selection and vendor assessment, the prompt review, MRM's validation, the incident playbook and on-call rota, and the rollback plan with its test.
+
+T1 keeps its people: the committee, the CISO, the DPO, MRM and the red team. Their meeting changes. Nobody reads out that a report exists, because the gate checked it before anyone signed.
+
+**Then the waist breaks.** One morning the gateway's policy service stops answering. The gateway can't confirm that a credential belongs to a live register entry. So it refuses every call, as the signed design says. Drafting stops in both support units, and no password-reset reply gets queued. Agents write by hand, Step 4's fallback. The service is back within the hour, and the audit store shows no call went out unchecked. Past four hours, an outage of a T1 system would meet one of the framework's [criteria](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/board-reporting.md#material-incident-criteria) for a material incident.
+</RunningExample>
+
+## From one CI job to a platform team
+
+The five pieces stay the same at any size. Who builds them, and how much of each, changes.
+
+<Track for="small">
+A team of five does not build a platform. Build the smallest version of each piece. One repository template holds `governance.yaml`, the evaluation job and the gate. One CI job runs the gate, pinned to a full commit SHA. One credential path: the team lead holds the vendor key, and every call goes through a thin wrapper that writes the audit record. That wrapper is your gateway, Step 3's YAML file your registry and the evaluation job your evaluation service. If the CI job can't run, nothing deploys.
+
+Keep the audit record at any size. No tier can except it. At T1 or T2 you also need what you can't build alone: outside validation and approval, and an on-call rota shared with a platform or AI Operations team, as the framework's [small-team guidance](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/START-HERE.md#small-teams) says. If that team runs a gateway, use theirs.
+</Track>
+
+<Track for="enterprise">
+A platform team runs the five pieces. The framework's [CoE design](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-coe-design.md#core-functions) puts model serving, evaluation pipelines, monitoring and guardrails with AI Platform Engineering, three to six engineers. AI Risk owns what the gate reads, as Step 9 recommends. The platform team owns how it runs. The framework gives audit store admin access to the platform team only, with [dual approval](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/audit-trail-requirements.md#storage-and-access-controls) for configuration changes.
+
+Fit the pieces into what you already run. "Do not create parallel governance processes," say the framework's [GRC notes](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/grc-integration.md#implementation-notes). Its [control mapping](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/grc-integration.md#control-embedding) puts AI deployment gates into your change management, audit logging under your IT general controls and model providers into your third-party risk programme.
+</Track>
+
+<Shortcut quote="Set the gateway to fail open. Support can't stop for an outage.">
+**Why it's tempting.** Outages are rare. The support queue is real, and pass-through is one line of configuration.
+
+**Why it bites.** A gateway that passes calls it can't check honours no stop, no retirement and no grant. A system someone switched off an hour ago starts drafting again. MITRE lists failing open as a weakness, [CWE-636](https://cwe.mitre.org/data/definitions/636.html). One of its examples is falling back to "the most permissive access control restrictions". The drafts look the same, so nobody notices. That is [silent fail-open](/patterns/silent-fail-open/).
+
+**The forcing function.** Fail closed is the gateway's default, set on the platform where no team can flip it. Any degrade path goes into the signed design, keyed on exposure, as [fail closed, degrade on exposure](/patterns/fail-closed-degrade-on-exposure/) argues. A read-only internal lookup is allowed to degrade. A call carrying personal data to a vendor is not. Each degraded call is marked in its record, under a time limit and an alert. Then stop the policy service in a drill and watch the fallback start. All of this is the guide's recommendation.
+</Shortcut>
+
+<StarterKit n={20} />
+
+<DeepDive>
+
+### The gateway
+
+The gateway is Step 6's endpoint, run once for everyone. Agents add a second path, tool calls, and the framework puts their approval gates in "the tool gateway or policy layer, so an injected instruction cannot skip it" ([agent identity](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md#4-human-approval-gates)). Run both paths through it.
+
+Its view still has edges, so retrieval and each tool keep their own checks. The Lab's [control plane](/architecture/001-the-control-plane/) blueprint maps six points on a request's path and what each one sees. The gateway also covers only the calls that reach it, so Step 3's sweep of bills still matters.
+
+### The registry
+
+The framework wants the inventory in "a system of record with access control and change history" ([ownership](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#ownership)). Its [status](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#required-fields) runs from proposed through pilot and production to retired.
+
+The guide's recommendation: the gateway checks status with every credential, from a copy the registry pushes to it. A change takes effect within minutes, and a registry outage stops nothing. The list has no state for a stopped system. Add one, such as `suspended`, and let the stop set it. Then the register tells the truth about Step 11's pause.
+
+### Policy as code
+
+Your thresholds live in files the gate reads, and those files are code. Review them. Test them with Step 10's known-bad reports. Pin each pipeline to a full commit SHA. The gate's [result file](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/README.md#outputs) records the ref and a digest of what it read, so you can show which rules judged a release.
+
+Roll a policy change out like a release. The guide's recommendation: move one system's pin, rerun its recent releases, fix the surprises, then move the rest. Generate every checklist from the same files. In the framework's [words](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/ticketing-workflow.md#required-attachments-by-control-and-tier), "Hand-maintained checklists drift from the register; generated ones cannot."
+
+### Shared evaluation
+
+The framework's [infrastructure requirements](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#eval-infrastructure-requirements) read like a service specification. At T1 and T2, a pipeline wired into CI/CD computes the bounds and blocks on failure. Results are append-only, tied to model, prompt and dataset versions and to who evaluated. Datasets get the "same rigor as code" ([dataset governance](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#eval-dataset-governance)).
+
+Sharing buys one bound calculation and one attack library for every red team. Each LLM judge is calibrated in one place. The cases stay with each system. Release suites stay away from the build team, as Step 10 asked.
+
+### Architecture direction
+
+The framework gives the architecture review board one job: signing off T1 architecture ([AR-002](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions)), with a recorded decision and conditions. At T2, a design review approved by the Head of AI or a delegate replaces it. No [fast-lane](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4) decision reaches it. At T1, an agent change that adds write access or an external peer [goes back](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/agent-identity-and-tool-governance.md#tier-scaling) to it.
+
+The rest is the guide's recommendation. Publish the five pieces as a reference architecture, failure modes included. A T1 design built on them gets a shorter review, spent on its own risk and its deviations. Write the target state as one line per piece: every call through the gateway, every system in one registry, every release through the gate, every evaluation in one service, every record in one store. Order the roadmap by the register, T1 systems first, the order the framework's [GRC notes](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/grc-integration.md#implementation-notes) use for mapping AI into existing structures. Each item on it retires a manual check or a private copy of a control.
+
+</DeepDive>
+
+You now have the controls that repeat running in five shared pieces, each placed where it can see enough, each with a failure mode you chose and tested. The committee's time goes to judgement. All of it answers to one framework. Your regulators and auditors ask in their own terms, from the EU AI Act to ISO/IEC 42001 and the NIST AI RMF, often for the same evidence. Step 21 keeps one mapping from rules to controls and reuses one evidence pack across them all.

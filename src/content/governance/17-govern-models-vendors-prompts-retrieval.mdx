@@ -1,0 +1,186 @@
+---
+dek: "Give the model, the prompt, the retrieval sources and the vendor each a version, keep one release record that ties them to the evidence that passed, and send each kind of change down its own route."
+description: "Step 17 of AI Governance, from Scratch. Keep a release record of the model, prompt, retrieval index and guardrail configuration that shipped together, put every prompt change through a pull request and the evaluation suite, treat a source update as a behavioural change, ask vendors the questions that can change your design, and watch the model behaviour you cannot pin."
+updated: 2026-11-14
+readingTime: 10
+spot: /assets/spots/gov-17.png
+spotCaption: "Change one piece of type and it is a new edition."
+sources:
+  - title: "How is ChatGPT's behavior changing over time?"
+    url: "https://arxiv.org/abs/2307.09009"
+    authors: ["Lingjiao Chen", "Matei Zaharia", "James Zou"]
+    year: 2023
+  - title: "Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design or: How I learned to start worrying about prompt formatting"
+    url: "https://arxiv.org/abs/2310.11324"
+    authors: ["Melanie Sclar", "Yejin Choi", "Yulia Tsvetkov", "Alane Suhr"]
+    year: 2024
+  - title: "AI Governance Framework v2.3.0: prompt engineering standards, versioning rules"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/prompt-engineering-standards.md#versioning-rules"
+  - title: "AI Governance Framework v2.3.0: prompt engineering standards, review authority"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/prompt-engineering-standards.md#review-authority"
+  - title: "AI Governance Framework v2.3.0: prompt review checklist"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/prompt-review-checklist.md"
+  - title: "AI Governance Framework v2.3.0: model registry tagging pattern, systems on vendor APIs"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/model-registry.md#platform-notes"
+  - title: "AI Governance Framework v2.3.0: control register, Stage 9 ongoing governance (RV-003)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-9-ongoing-governance"
+  - title: "AI Governance Framework v2.3.0: RAG governance, access control leakage (DE-008)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/rag-governance.md#2-access-control-leakage"
+  - title: "AI Governance Framework v2.3.0: third-party model risk, ongoing monitoring"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#ongoing-monitoring"
+  - title: "AI Governance Framework v2.3.0: third-party model risk, exit strategy requirements"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#exit-strategy-requirements"
+  - title: "AI Governance Framework v2.3.0: AI procurement clauses, clause set"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/ai-procurement-clauses.md#clause-set"
+  - title: "AI Governance Framework v2.3.0: model deprecation governance, migration governance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/model-deprecation-governance.md#migration-governance"
+  - title: "AI Governance Framework v2.3.0: fine-tuning governance, when to fine-tune"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/fine-tuning-governance.md#when-to-fine-tune"
+  - title: "AI Governance Framework v2.3.0: prompt and response audit trail, decision reconstruction"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/prompt-audit-trail.md#decision-reconstruction"
+  - title: "AI Governance Framework v2.3.0: worked example, material change revalidation"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#12-material-change-revalidation-v120-stage-9"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture a pull request with a one-line diff. In the system prompt, "Quote any fee exactly as the plan terms state it" becomes "Mention any fee from the plan terms." The reviewer reads it in seconds. It's shorter. It reads better. She approves it.
+
+What will the assistant now say about a cancellation fee? The exact figure, or "a small fee"? The diff can't tell her. A few hundred test emails can, unless a customer tells her first.
+
+The prompt is one of four parts of a GenAI system that change while the code stands still. The vendor retires the model you pinned. Another team edits a page your retrieval reads. The vendor changes its terms. Part V starts with these moving parts, then turns to agents, which take actions.
+
+So when one of them changes, what has to happen before the change reaches a customer?
+
+## Version every moving part and route its changes
+
+Your approval covered one combination of parts. Change one part, and nobody approved what now runs. Six habits keep the approval tied to the live system.
+
+1. **Write down what shipped.** One record per release: the pinned model version, the prompt version, the retrieval index build, the guardrail configuration, and the evaluation that passed them together. For a system on a vendor API, the framework's [registry pattern](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/model-registry.md#platform-notes) registers the release itself as one versioned entry. Its [promotion rule](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/reference-implementations/model-registry.md#promotion-rule) moves the production label only to a version that passed the gate and was approved.
+2. **Put every prompt through a pull request.** The framework allows [no unversioned change](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/prompt-engineering-standards.md#versioning-rules). The signed review checklist goes with the pull request. The suite runs on every prompt change before merge, and so does the [adversarial regression set](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/prompt-engineering-standards.md#minimum-evaluation-suite-size), at least 50 cases at T1 and T2.
+3. **Route each change by what it changes.** A new model or provider is a material change under [RV-003](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-9-ongoing-governance): a re-tiering check, the full suite, revalidation and your tier's signers. Prompts split in two, in the guide's reading. A change in behaviour is a major version and goes the same way. A refinement is a minor version and takes peer review. The reviewer decides which, never the author.
+4. **Run each retrieval source as a data product.** Each gets an [owner and a freshness rule](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/rag-governance.md#1-document-quality-and-currency), and its permissions travel into the index with it. A change to a page the system quotes changes what it says. The framework re-evaluates retrieval quality on a material document change. The guide adds the full suite, with expected answers checked against the new page.
+5. **Ask the vendor what would change your decision.** Take the framework's [clause set](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/ai-procurement-clauses.md#clause-set). Before you ask, write beside each question the answer that would stop you: retention, region, training on your data, pinning, notice before a version retires, and whose model sits behind the product. At T1 the [vendor assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#assessment-depth-by-tier) needs the CISO, the CRO and Legal to sign. The contract is checked again at renewal and when the model changes.
+6. **Pin what you can. Watch what you can't.** T1 and T2 systems call a fixed, dated model version, never a "latest" alias. At T1 a daily canary checks that it still behaves the same.
+
+**The guide's call: a prompt change is a code change.** Here that means a pull request, a new version, a reviewer who didn't write it, the suite before merge and a rollback to the last approved version. One thing differs. A code reviewer reads what a change does. A prompt diff only shows which words moved. What the model does with them shows up in its outputs, so the suite stands in for the compiler. A prompt change that skipped the suite hasn't been reviewed, however closely someone read it.
+
+For emergencies, the framework gives you a rollback to the previous version within a set time. The guide makes it the only emergency route. The last approved version already passed, so reverting needs no new review. A live edit in production has no route at all.
+
+The step is done when prompts and model versions are reviewed and versioned like code. Test it on a draft from last week. From the records alone, name its model, prompt and index, and the evaluation that passed them.
+
+**Your call.** For your highest-tier GenAI system, write down three dates: the last prompt change, the last change to a retrieval source, and the last suite run. If the suite ran before either change, nobody has evaluated the system your customers use today.
+
+## Four moving parts and where each change goes
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-17-four-moving-parts.svg" alt="The four moving parts of a GenAI system, each with a version and the route a change takes. Model: a pinned, dated version, never a latest alias; the vendor retires or updates it; the change is material: re-tier, full suite, MRM, the signers. Prompt: major.minor, changed by a pull request; the reviewer decides which: a major version is material, a minor version takes peer review and the suite still runs. Sources: an index build and each page version, changed by a page owner; the suite re-runs with expected answers checked and permissions re-tested. Vendor: the contract and assessment; new terms or a sub-processor bring a contract re-check, and a new provider is material. Every change: a new version, the suite before release, a line in the release record and a rollback to the last approved version." caption="Brick cells take the material route. Only the prompt's route turns on a reviewer's judgement." />
+
+Read it by column. Brick is the material route: the re-tiering check, the full suite, revalidation by MRM at T1, then your tier's signers. The bottom row applies to every change.
+
+**One record ties them.** A version per part is half the job. The release record names one version of each, and the evidence that passed them together. A prompt evaluated on the old model proves nothing on the new one. The [audit trail](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/prompt-audit-trail.md#decision-reconstruction) leans on the same record. At T1 and T2 you must recover, for any request, the exact prompt, model version, retrieved documents and guardrail actions.
+
+**The reviewer calls it major or minor.** The author knows what they meant. The reviewer sees what changed. The opening's diff is one shorter sentence, and it frees the assistant to paraphrase every fee. That changes behaviour, so it's major, however small it looks. On one open model in few-shot tasks, subtle changes to prompt formatting alone shifted accuracy by up to 76 points ([Sclar and colleagues](https://arxiv.org/abs/2310.11324)). By the framework's own definition, a prompt retargeted to a new model is always major. So was Step 11's fix, which took policy facts out of the prompt and went to revalidation. The guide's recommendation: when the reviewer is unsure, it's major.
+
+**Sources are part of the system.** Since Step 11, every fee and date the assistant states comes from a retrieved page. Whoever edits the refund policy now changes the assistant's behaviour. Nobody has told them it exists. So each source gets an owner who knows it feeds a system, and a change to it starts the suite. A green refresh job is the pipeline's own word that it finished, the trap in [hallucinated done](/patterns/hallucinated-done/). The suite checks what the assistant says.
+
+**What you cannot pin.** A hosted model can change behind a name that stays the same. A pinned, dated version is the most a vendor offers, and the framework still checks it. Its [pinning clause](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/ai-procurement-clauses.md#clause-set) adds that behaviour changes are still caught by the vendor behaviour canary. Its [vendor risk assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#1-model-behavior-risk) rates unannounced changes High for likelihood, because vendors update models routinely. Researchers who ran the same tasks on the March and June 2023 versions of GPT-4 saw its accuracy at spotting prime numbers fall from 84% to 51% ([Chen, Zaharia and Zou](https://arxiv.org/abs/2307.09009)). The name tells you what you asked for. The [canary](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#ongoing-monitoring), a fixed domain set AI Operations runs daily at T1, tells you what you got.
+
+Now check your three dates. If a source changed last and nothing ran, you've found the gap Step 11's incident came through.
+
+<RunningExample>
+The vendor announces that the model version the assistant is pinned to will retire. The notice is the six months the contract asked for, with old and new running side by side. Every number here is illustrative.
+
+A retirement forces a model change, so it is material. The AI lead assesses the impact: one system, T1, whose only fallback is people writing by hand. The re-tiering check keeps it at T1. Legal confirms the contract covers the successor: same region, no data kept, same DPA.
+
+The successor meets 500 emails the team has never seen. Three drafts state a wrong term: 0.6%, with a bound of 1.54%. It fails. The old model quoted plan terms word for word. The new one paraphrases, and "cancel within 14 days of purchase" comes back as "cancel within two weeks of your last payment".
+
+The fix goes in the prompt: quote plan terms exactly, never restate them. It retargets the prompt and changes behaviour, so the reviewer marks it major. A peer, the prompt engineering lead, Security and AI Risk review it, and the adversarial regression set runs again.
+
+The team sizes the next run before it starts. On 500 cases even two failures would fail, at a bound of 1.25%, so they draw 700 fresh emails. Two fail: 0.29%, with a bound of 0.90%. The safety suite is clean. MRM revalidates, and the committee signs with the CISO and the DPO. AI Operations points the daily canary at the new version. The release record, abridged:
+
+```yaml
+system_id: "support-reply-assistant-v0.1"
+tier: "T1"
+model_id: "vendor-model-2027-01-20"      # replaces vendor-model-2026-06-02, retiring
+system_prompt_version: "support-reply/draft/v4.0"   # major: quote plan terms, never restate
+retrieval_index: "plan-terms-and-policies, build 212"
+guardrail_config: "guardrails-v1.4"      # unchanged
+evaluation:
+  hallucination_rate: {n: 700, failures: 2}
+  safety_pass_rate: {n: 300, failures: 0}
+change_ref: "material change: model retirement"
+approval_ref: "AI Risk Committee, CISO, DPO"
+exceptions: "none"
+status: "approved"
+```
+
+Step 11's incident was the retrieval lesson: the refund page changed, and nothing re-ran. Now each plan-terms and policy page has an owner in Customer Support, and publishing a change to one starts the suite.
+</RunningExample>
+
+## Who reviews a prompt at each size
+
+Every change gets a version and the suite at any size. How many people sign, and who watches the vendor, changes.
+
+<Track for="small">
+At T3 a prompt change needs a peer who didn't write it. At T4 you review your own, as the [review authority](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/prompt-engineering-standards.md#review-authority) table allows, and record it. The guide's recommendation: CI runs the suite on any change in the prompts folder, and the peer is a required reviewer there.
+
+A T3 system on an external API gets AI Risk's simplified vendor assessment: a technical evaluation, a security checklist and a DPA. A T4 system uses an approved vendor. Pin where you can, and run the canary monthly.
+
+A T1 or T2 prompt needs reviewers from [outside the team](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#small-teams): the prompt engineering lead, plus Security and AI Risk at T1. Book them before the first pull request.
+</Track>
+
+<Track for="enterprise">
+AI Operations reads vendor changelogs weekly, keeps the model version inventory and runs the canaries. After a retirement notice, that inventory answers the first question of the [impact assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/model-deprecation-governance.md#step-1-system-identification): which systems use this model, at which tier, and who owns them.
+
+Watch concentration. When more than half your T1 systems sit on one provider, fallback validation becomes [mandatory](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#concentration-risk). Two vendors built on the same model count as one dependency.
+</Track>
+
+<Shortcut quote="It's one sentence. I'll fix it in the console.">
+**Why it's tempting.** A complaint is open and the fix is obvious. The console saves it in seconds. A pull request means a reviewer and a suite run.
+
+**Why it bites.** One sentence changes behaviour on every email, and nobody can read which way from the text. The edit has no version either. At T1 the audit trail must recover the exact prompt behind any request. From that moment it can't.
+
+**The forcing function.** The framework allows no unversioned change. The guide's recommendation makes that hold by construction. The serving path loads only the prompt version named in the release record. People can't write to the production prompt store. The emergency route is a rollback.
+</Shortcut>
+
+<StarterKit n={17} />
+
+<DeepDive>
+
+### Vendor exit plans
+
+At T1 and T2 the framework requires a written [exit strategy](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#exit-strategy-requirements): a validated alternative model, the migration effort, the performance gap, data portability, exit terms and a maximum switchover time. The [exit clause](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/ai-procurement-clauses.md#clause-set) makes prompts, embeddings and evaluation data exportable.
+
+The assistant's plan is thin. Its fallback is people writing by hand, which keeps the queue moving and is why Step 4 scored its model dependency High. Writing by hand is where you wait while you find another model. At T1 the framework wants that model found first: a [validated fallback](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/model-selection.md#3-vendor-risk) from a different vendor or self-hosted. [PM-008](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-8-production-operations) tests its switch each quarter. Only a fallback that has passed the suite and been switched in a test lowers the score to Medium. The guide's reading: a pilot can lean on people writing by hand, and the assistant owes a validated fallback before it goes to production.
+
+Use the retirement as your rehearsal. The successor took a major prompt version and two suite runs. That is your migration effort, measured. Budget for one more cost. At T1 and T2 every prompt version must also [work on the fallback](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/prompt-review-checklist.md#functional-review) model. So every prompt is evaluated twice.
+
+### RAG permissions
+
+[DE-008](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-4-development--prompt-engineering) applies wherever sources carry access restrictions. Permissions travel into the index with every chunk, and retrieval filters on the requesting user's identity before anything reaches the model. Filtering the answer afterwards is too late. Test with identities that hold different entitlements, and again on any change to sources, index, retrieval logic or identity ([RAG governance](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/rag-governance.md#2-access-control-leakage)).
+
+For the assistant, that filter is too wide. The requesting user is a support agent. A support agent can open every customer's record. Filter on the agent alone, and one customer's draft can draw on another's case notes. The guide's recommendation: also scope each retrieval to the customer on the ticket. Step 16's canary records test that second filter.
+
+Removing a document also clears the [cached retrievals](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/rag-governance.md#removal) that point at it.
+
+### Fine-tuning
+
+The framework says [try prompts and retrieval first](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/fine-tuning-governance.md#when-to-fine-tune). Fine-tuning fits a task with stable requirements, a need for consistency that prompting can't reach and, for most tasks, at least a thousand good examples. It makes a model you own. Its training data must be traceable. Customer data needs the DPO's approval. At T1 or T2 [no safety regression](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/fine-tuning-governance.md#mandatory-safety-checks) is allowed.
+
+The assistant is a poor candidate. Its facts change: the refund window went from 30 days to 14. Fine-tune on old replies and the old window sits in the weights, where no prompt edit reaches it. The framework rules fine-tuning out when requirements change frequently. It also wants the evaluation suite set before training. Go further and name the metric the fine-tune must move, and by how much. That is [earn the complexity](/patterns/earn-the-complexity/): a gain decided in advance, then measured.
+
+### Deprecation
+
+A [retirement notice](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/model-deprecation-governance.md#deprecation-triggers) starts a clock. The impact assessment and word to every affected owner are due within five business days. Notice is negotiable. The framework's default is six months at T1 and T2, with old and new side by side. [Under three months](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/model-deprecation-governance.md#step-2-impact-classification), a T1 system with no validated fallback lands in the Critical class.
+
+The replacement gets the [same rigour](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/model-deprecation-governance.md#migration-governance) as the first choice: the domain and safety suites, every prompt tested on the new model, a side-by-side comparison. At T1 and T2 it runs in shadow first, then takes a share of traffic. Cutover passes the same deployment gates as a new system. The framework's [worked example](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#12-material-change-revalidation-v120-stage-9) walks one migration through them.
+
+Plan the way back. The framework wants a validated rollback for 30 days after cutover. Once the old version is gone, only a pre-validated alternative model can be that rollback. So cut over while the old one still answers, and keep its prompt versions for the [tier's retention period](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/model-deprecation-governance.md#archival-requirements).
+
+</DeepDive>
+
+You now have moving parts that each carry a version and a route, and a release record that ties them to their evidence. Every route still ends with a person. The assistant only drafts. Step 11's open request would change that: password-reset replies sent with nobody reading each one. Step 18 gives an agent its own identity and the least authority that does the job, before it gets a tool.
