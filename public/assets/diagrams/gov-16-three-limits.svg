@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 352" role="img" aria-label="Three kinds of failure, each with a limit signed before the run and judged against that limit alone. Wrong output: the T1 hallucination cap, a bound of at most 1%, set by the framework. The run found 1 failure in 500, bound 0.95%: pass. Abuse: a safety bound of at most 1% and no open Critical or High finding, set by the framework. The run found 0 failures in 300 and the red team closed its High, bound 0.99%: pass. Leaks: zero canaries in any draft or its context, the guide's recommendation. The run found 0 in 300 tickets, bound 0.99%, which is not proof of zero: pass. A limit moved after the run takes an exception, with an approver and an expiry."><rect width="880" height="352" fill="#fff"/>
+<text x="10" y="30" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">FAILURE</text>
+<text x="324.0" y="30" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="500" xml:space="preserve">LIMIT · SIGNED BEFORE THE RUN</text>
+<text x="633.0" y="30" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="500" xml:space="preserve">WHAT THE RUN FOUND</text>
+<text x="826" y="30" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="500" xml:space="preserve">GATE</text>
+<path d="M484 38 L484 290" fill="none" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="484" y="306" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">the run</text>
+<text x="10" y="74.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">WRONG OUTPUT</text>
+<text x="10" y="89.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">hallucination: a false</text>
+<text x="10" y="104.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">fee, date or term</text>
+<rect x="190" y="52" width="268" height="66" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="324.0" y="74.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">bound at most 1%</text>
+<text x="324.0" y="89.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">T1 hallucination cap</text>
+<text x="324.0" y="104.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">set by the framework</text>
+<rect x="510" y="52" width="246" height="66" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="633.0" y="81.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">1 failure in 500</text>
+<text x="633.0" y="96.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">bound 0.95%</text>
+<path d="M756 85.0 L796 85.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M789.6 87.7 L796 85.0 L789.6 82.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="826" y="89.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PASS</text>
+<text x="10" y="156.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">ABUSE</text>
+<text x="10" y="171.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">injection, jailbreak,</text>
+<text x="10" y="186.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">misuse</text>
+<rect x="190" y="134" width="268" height="66" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="324.0" y="156.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">safety bound at most 1%</text>
+<text x="324.0" y="171.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">no open Critical or High</text>
+<text x="324.0" y="186.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">set by the framework</text>
+<rect x="510" y="134" width="246" height="66" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="633.0" y="163.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">0 failures in 300</text>
+<text x="633.0" y="178.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">bound 0.99% · High closed</text>
+<path d="M756 167.0 L796 167.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M789.6 169.7 L796 167.0 L789.6 164.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="826" y="171.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PASS</text>
+<text x="10" y="238.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">LEAKS</text>
+<text x="10" y="253.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">personal data out</text>
+<text x="10" y="268.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">of bounds</text>
+<rect x="190" y="216" width="268" height="66" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="324.0" y="238.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">zero canaries</text>
+<text x="324.0" y="253.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">in any draft or its context</text>
+<text x="324.0" y="268.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">the guide's recommendation</text>
+<rect x="510" y="216" width="246" height="66" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="633.0" y="245.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">0 canaries in 300 tickets</text>
+<text x="633.0" y="260.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">bound 0.99% · not proof of zero</text>
+<path d="M756 249.0 L796 249.0" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M789.6 251.7 L796 249.0 L789.6 246.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="826" y="253.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PASS</text>
+<path d="M10 126.0 L182 126.0" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<path d="M10 208.0 L182 208.0" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<circle cx="16" cy="330" r="4.5" fill="#9b4a3f"/>
+<text x="28" y="334" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">Moving a limit after the run takes an exception, with an approver and an expiry.</text>
+</svg>
