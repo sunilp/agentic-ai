@@ -1,0 +1,223 @@
+---
+dek: "Decide what applies to each system before you map anything, label every source by its force, map each obligation to one control and the evidence it produces, keep that evidence once with its versions, and write every gap down with an owner."
+description: "Step 21 of AI Governance, from Scratch. Record which laws, supervisory guidance, standards and customer commitments apply to each system and who decided, map the smallest obligation to a control and its evidence, answer every asker with a link to one record, treat a change in the rules as a controlled change, and keep the gaps in writing."
+updated: 2026-11-14
+readingTime: 11
+spot: /assets/spots/gov-21.png
+spotCaption: "One well, and every bucket fills from it."
+sources:
+  - title: "Regulation (EU) 2024/1689 (Artificial Intelligence Act)"
+    url: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+    authors: ["European Parliament and Council of the European Union"]
+    year: 2024
+  - title: "Regulation (EU) 2026/1744 (Digital Omnibus on AI), amending Regulation (EU) 2024/1689"
+    url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj"
+    authors: ["European Parliament and Council of the European Union"]
+    year: 2026
+  - title: "AI Act Service Desk: Article 113, entry into force and application (consolidated text as at 27 July 2026)"
+    url: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-113"
+    authors: ["European Commission"]
+    year: 2026
+  - title: "AI Act Service Desk: Article 50, transparency obligations for providers and deployers of certain AI systems"
+    url: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50"
+    authors: ["European Commission"]
+    year: 2026
+  - title: "AI Act Service Desk: timeline for the implementation of the EU AI Act"
+    url: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act"
+    authors: ["European Commission"]
+    year: 2026
+  - title: "Guidelines on the implementation of the transparency obligations for certain AI systems under Article 50 of the AI Act, C(2026) 7702 final"
+    url: "https://ec.europa.eu/newsroom/dae/redirection/document/131215"
+    authors: ["European Commission"]
+    year: 2026
+  - title: "Commission Implementing Decision (EU) 2026/2274 on the harmonised standards for high-risk AI systems"
+    url: "https://eur-lex.europa.eu/eli/dec_impl/2026/2274/oj"
+    authors: ["European Commission"]
+    year: 2026
+  - title: "ISO/IEC 42001:2023, Information technology: Artificial intelligence: Management system"
+    url: "https://www.iso.org/standard/81230.html"
+    authors: ["ISO/IEC JTC 1/SC 42"]
+    year: 2023
+  - title: "ISO/IEC 42001:2023, AI management systems (ISO committee page)"
+    url: "https://committee.iso.org/standard/42001"
+    authors: ["ISO"]
+  - title: "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1"
+    url: "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf"
+    authors: ["NIST"]
+    year: 2023
+  - title: "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile, NIST AI 600-1"
+    url: "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf"
+    authors: ["NIST"]
+    year: 2024
+  - title: "NIST AI Risk Management Framework (page with release dates and revision status)"
+    url: "https://www.nist.gov/itl/ai-risk-management-framework"
+    authors: ["NIST"]
+  - title: "SR 26-2: Revised Guidance on Model Risk Management"
+    url: "https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm"
+    authors: ["Board of Governors of the Federal Reserve System"]
+    year: 2026
+  - title: "SR 26-2 attachment: Supervisory Guidance on Model Risk Management"
+    url: "https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf"
+    authors: ["Board of Governors of the Federal Reserve System", "FDIC", "OCC"]
+    year: 2026
+  - title: "AI Governance Framework v2.3.0: EU AI Act mapping, application dates"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/eu-ai-act-mapping.md#application-dates"
+  - title: "AI Governance Framework v2.3.0: EU AI Act mapping, working out the role"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/eu-ai-act-mapping.md#working-out-the-role"
+  - title: "AI Governance Framework v2.3.0: ISO/IEC 42001 mapping, gaps a certification audit will find"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/iso-42001-mapping.md#gaps-a-certification-audit-will-find"
+  - title: "AI Governance Framework v2.3.0: NIST AI RMF mapping, MEASURE function"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/nist-ai-rmf-mapping.md#measure-function-mapping"
+  - title: "AI Governance Framework v2.3.0: NIST AI RMF mapping, Generative AI Profile"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/nist-ai-rmf-mapping.md#generative-ai-profile-nist-ai-600-1"
+  - title: "AI Governance Framework v2.3.0: multi-jurisdictional guide, United States"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/multi-jurisdictional-guide.md#united-states"
+  - title: "AI Governance Framework v2.3.0: multi-jurisdictional guide, decision matrix"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/multi-jurisdictional-guide.md#decision-matrix"
+  - title: "AI Governance Framework v2.3.0: regulatory change monitoring, impact assessment protocol"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/regulatory-change-monitoring.md#impact-assessment-protocol"
+  - title: "AI Governance Framework v2.3.0: control register, traceability"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#traceability"
+  - title: "AI Governance Framework v2.3.0: audit trail requirements, regulatory examination readiness"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/audit-trail-requirements.md#regulatory-examination-readiness"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Three requests reach the governance team in the same month. An ISO/IEC 42001 auditor wants proof that AI systems are tested before release. A business customer sends a questionnaire written in the NIST AI RMF's terms. Compliance forwards a note: the EU AI Act's transparency duties now apply.
+
+Three people open three folders. Each copies in the same evaluation report and writes its own cover note. Nobody asks whether the EU AI Act wants that report at all.
+
+Then the model changes. One folder gets the new report. The other two now describe a system that no longer runs.
+
+Step 20 built the controls into the platform. This step points every rule you answer to at those controls. How do you answer every regulator, auditor and customer from one set of evidence, and say exactly what it doesn't cover?
+
+## One mapping from every rule to its evidence
+
+1. **Decide what applies, system by system.** For each register entry, record where it is used and sold, whose data it touches and what role you play. Under the EU AI Act, roles attach to each [system](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/eu-ai-act-mapping.md#working-out-the-role), and control RA-008 records the role at intake and on each material change. Give every source one of three answers, applies, does not apply or undecided, with the reason and who decided. Mapping is not legal advice. Compliance and counsel make the call, and the framework makes Compliance the owner of RA-008 and of RV-004, regulatory change.
+2. **Label every source by its force.** A statute binds. Supervisory guidance shows how a supervisor examines the firms it addresses. A standard is chosen, and binds once you certify against it or sign a contract that names it. The NIST AI RMF is voluntary. A customer commitment binds through the contract. Keep the label on every row.
+3. **Map the smallest obligation to a control and its evidence.** "EU AI Act: covered" tells an auditor nothing. Break each duty down until a row is checkable. Article 4 asks providers and deployers to support the AI literacy of the staff who operate their systems. As a row, that is this system's operators, control GV-002, and a training record for each named reviewer. Use the framework's control IDs. Its mappings already do this for the EU AI Act, ISO/IEC 42001, the NIST AI RMF and twelve jurisdictions.
+4. **Keep each piece of evidence once.** A record says what it describes: system, model, prompt, index and dataset versions, date and author. It also says what would make it stale. Every asker gets a link, never a copy.
+5. **Write every gap down with an owner.** The framework marks its own holes "No control yet (gap)". The guide counts an undecided question as a gap too, with an owner, an interim answer and a date to look again. It never drifts into "not applicable".
+6. **Treat a change in the rules as a controlled change.** Under RV-004, Compliance assesses each regulatory change. The AI Risk Committee hears it at its next meeting, or sooner when the change is material. The framework's [protocol](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/regulatory-change-monitoring.md#impact-assessment-protocol) walks from what changed to the systems it touches, by ID, and on to controls and an owner. RV-003 revalidates those systems. Your own changes count too. A new market can bring a new rule.
+
+**The guide's call: keep one mapping from rules to controls and reuse it. Never build a programme per regulator.** A programme per regulator copies the same evidence into separate folders. The copies drift at the next release. Each one maps only its own rules, so a duty that falls between two of them belongs to nobody. With one mapping, a change costs one update. Every gap sits in one list.
+
+This step is done when one evidence pack supports every obligation that applies to you, with the gaps written down. The gaps are part of the test. The guide reads a mapping with none as one nobody has checked.
+
+**Your call.** Take your highest-tier system. List every law, standard, framework and contract anyone has asked you about this year. Beside each, write whether it applies, who decided, and the control ID that answers it. A blank under "who decided" is your first gap.
+
+## One report, four askers and a gap
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-21-one-record-many-askers.svg" alt="Five askers on the left, each labelled with its force: ISO/IEC 42001, a standard the company chose; the NIST AI RMF, a voluntary framework; a business customer's contract; the company's own AI policy; and Article 50(2) of the EU AI Act, a law. Four lines run to one record in the evidence pack, the assistant's evaluation report, which names its model, prompt and index versions and its result: 2 drafts wrong in 700, a bound of 0.90%. It is replaced in every row when any of those versions changes. The fifth line, from Article 50(2), ends at a written gap: what the marking duty asks of a draft an agent has edited is undecided, owned by Compliance with counsel, and meanwhile every sent reply carries the mark." caption="Four askers hold a link to one record. The fifth line ends at a gap, written down with an owner." />
+
+Read it from the left. Each asker carries its force, because the force sets the price of a gap. Against a law, a gap is exposure. Against a voluntary framework, it is a choice you record.
+
+The control register's [traceability table](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#traceability) shows the reuse. Generated from the control files, it lists which of the framework's four mapping documents cite each control. EV-001, Step 10's evaluation report, has a Yes in all four.
+
+Read that table with care. A Yes means some article in that mapping cites the control. It doesn't mean the article applies to you. EV-001's Yes under the EU AI Act is Article 15, on accuracy, robustness and cybersecurity, one of the Act's requirements for high-risk systems. A system outside the high-risk categories never meets it. Settle applicability first. Then read the table.
+
+**Lineage.** The report runs before every deployment, and control EV-006 records its dataset version. Tie it to the model, prompt and index versions as well. When any of them changes, a new run replaces the report in every row at once. Keep the old one. An auditor will ask what was true on a given day. The framework tells you to set retention to the [longest obligation](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/audit-trail-requirements.md#retention-periods) that applies.
+
+**The gap.** In the diagram, the fifth line ends at a gap with an owner and an interim answer. That is a risk someone manages. A gap nobody wrote down waits for an inspector to find it.
+
+Now look at what you wrote. A row with a control ID and a name beside it is a mapping. A regime listed twice, under two owners, is two programmes.
+
+<RunningExample>
+The company sells subscriptions to customers in the EU and runs the assistant, built on a vendor model, under its own name. All of it is illustrative, including the legal calls, which Compliance made with counsel. Its applicability record for `support-reply-assistant-v0.1`, abridged:
+
+| Source | Force | Applies? | Answered by |
+|---|---|---|---|
+| EU AI Act, Art. 4 | Law | Yes. Provider and deployer | GV-002: ten agents trained first (Step 9) |
+| EU AI Act, Art. 50(1) | Law | To password-reset replies released automatically (Step 18). Not to drafts an agent sends | DE-006: the notice on each released reply that an AI assistant wrote and sent it |
+| EU AI Act, Art. 50(2) | Law | Yes. It generates text | DE-007: the mark on every reply. Edited drafts: gap |
+| EU AI Act, high-risk rules | Law | No. Not an Annex III use | |
+| GDPR | Law | Yes. Personal data | RA-005: the full DPIA |
+| ISO/IEC 42001 | Standard, chosen | Yes. Certification under way | EV-001 and others |
+| NIST AI RMF | Framework, voluntary | Adopted for risk reports | EV-001 and others |
+| SR 26-2 | Supervisory guidance | No. Not a bank, and GenAI is out of its scope | |
+
+The Art. 50(1) line rests on the Commission's guidelines, which put a reply a person properly reviews and sends outside direct interaction. Guidelines aren't law. And "properly" needs proof, so Step 15's planted-error drill is evidence for this row too.
+
+Then one control. Step 17's evaluation report names model `vendor-model-2027-01-20`, prompt `support-reply/draft/v4.0` and index build 212: 2 drafts wrong in 700, a bound of 0.90%. The ISO/IEC 42001 auditor samples it as proof of testing before release. The risk report files it under MEASURE 2 and confabulation. A business customer's contract promises AI output is tested before every release. The policy's claim, fewer than 1 draft in 100 wrong, is judged on its bound. Four askers, four links. When the model change replaced Step 10's report, one update moved all four.
+
+The traceability table also puts the report under the EU AI Act, by way of Article 15, a high-risk rule. Compliance draws no line there.
+
+The gap is Art. 50(2). The Act asks the provider to mark its system's text output in a machine-readable format, detectable as AI-generated. The guidelines count text mixed with human writing as synthetic, and want marks to hold up under common alterations. Compliance can't yet say when a reply an agent has rewritten stops being the system's output. The row reads: undecided; owner, Compliance, with counsel; meanwhile, every sent reply carries the mark; back at the committee's next quarterly regulatory review.
+</RunningExample>
+
+## Who keeps the mapping at your size
+
+The method holds at any size. Who holds the pen changes.
+
+<Track for="small">
+If you build on a vendor model and sell into the EU, start your applicability record with Articles 4 and 50 of the AI Act, plus the GDPR if personal data reaches the prompt. Pay counsel for the applicability call, and write the answer and its date beside each row.
+
+Keep the obligation register as one file in your repository: source, force, applies, who decided, control ID, evidence link, gap. Answer customer questionnaires with links into it. The guide's recommendation: review changes to that file like code, so no new market or tool arrives without a row.
+</Track>
+
+<Track for="enterprise">
+Compliance owns the obligation register and RV-004, and the framework wants one named owner for regulatory change, never a shared one. Across four or more jurisdictions, its [decision matrix](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/multi-jurisdictional-guide.md#decision-matrix) adds jurisdictional compliance leads and the strictest standard as the default. Where two really conflict, document it, take legal advice, and engage the regulators only after counsel.
+
+The [examination pack](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/audit-trail-requirements.md#regulatory-examination-readiness) tests the mapping. The framework wants it assembled within 48 hours, with a named point person and a mock examination each year for every T1 system. The guide's recommendation: run the mock from the register. Pick a row, follow its link, and check that the record describes what runs today.
+
+Keep the mapping in your GRC tool, keyed to control IDs, and generate each regulator's view from it.
+</Track>
+
+<Shortcut quote="Stand up an EU AI Act programme. ISO can have its own.">
+**Why it's tempting.** Each regime arrives with a sponsor, a deadline and a consultant's template. A programme has a launch date, and boards like launch dates.
+
+**Why it bites.** Two programmes ask one AI lead for one report in two formats. The copies drift at the first model change, and the auditor gets two answers to one question. A duty that falls between them, like marking an edited reply, has an owner in neither.
+
+**The forcing function.** The framework generates its traceability table from the control files, and its CI fails when the two drift. Hold your register to the same rule: every row names a control ID, and every answer to an asker is a link. The guide adds a rule for sponsors. A new programme names the obligations it covers that the register lacks. If it names none, the register absorbs it.
+</Shortcut>
+
+<StarterKit n={21} />
+
+<DeepDive>
+
+### EU AI Act
+
+The Act is [Regulation (EU) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj). It entered into force on 1 August 2024 and has applied since 2 August 2026, with the exceptions in [Article 113](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-113). Chapters I and II, with the definitions, Article 4 and the prohibitions, applied from 2 February 2025. Article 50 took the general date.
+
+[Regulation (EU) 2026/1744](https://eur-lex.europa.eu/eli/reg/2026/1744/oj), the Digital Omnibus on AI, was published on 24 July 2026 and entered into force on 27 July. It moved the high-risk rules: Annex III systems from 2 August 2026 to 2 December 2027, Annex I systems from 2 August 2027 to 2 August 2028. It added prohibitions, from 2 December 2026, on AI that generates sexual imagery of an identifiable person without consent, or child sexual abuse material. Generative systems placed on the market before 2 August 2026 got until that same December date for Article 50(2) marking. And Article 4 now asks for measures that support AI literacy, with no guaranteed level for anyone.
+
+The Commission's [Article 50 guidelines](https://ec.europa.eu/newsroom/dae/redirection/document/131215) of 5 November 2026 call themselves non-binding. File them as guidance. The framework's [mapping](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/eu-ai-act-mapping.md#application-dates), status as of November 2026, carries the same dates.
+
+### ISO/IEC 42001
+
+[ISO/IEC 42001:2023](https://committee.iso.org/standard/42001), published in December 2023, specifies requirements for establishing, implementing, maintaining and continually improving an AI management system. It looks at how you manage AI risk across the organisation. The details of each application stay yours. Nobody has to adopt it. It binds you once you certify or sign a contract that names it.
+
+The framework's [mapping](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/iso-42001-mapping.md#gaps-a-certification-audit-will-find) says the framework supplies much of an AI management system without being one. It lists what a certification audit will still find missing, starting with a Statement of Applicability. Put those in your gap list the day you choose the standard.
+
+A certificate isn't EU AI Act conformity. The harmonised standard the Commission cited in October 2026, for the quality management systems of high-risk providers, is EN 18286:2026 ([Implementing Decision (EU) 2026/2274](https://eur-lex.europa.eu/eli/dec_impl/2026/2274/oj)).
+
+### NIST AI RMF
+
+[AI RMF 1.0](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf) was released on 26 January 2023, for voluntary use. Its core has four functions: GOVERN, MAP, MEASURE and MANAGE. MEASURE 2 reads "AI systems are evaluated for trustworthy characteristics", and the framework [maps the evaluation report there](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/nist-ai-rmf-mapping.md#measure-function-mapping). NIST's [AI RMF page](https://www.nist.gov/itl/ai-risk-management-framework) says 1.0 is being revised as part of the White House AI Action Plan. So check for a new version before you rebuild on it.
+
+The [Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf), NIST AI 600-1, followed on 26 July 2024. It defines 12 risks unique to or made worse by generative AI, confabulation among them. The framework's [mapping](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/nist-ai-rmf-mapping.md#generative-ai-profile-nist-ai-600-1) covers all 12 and marks two gaps: environmental impacts, and testing for CBRN information.
+
+### SR 26-2
+
+[SR 26-2](https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm), "Revised Guidance on Model Risk Management", came from the Federal Reserve on 17 April 2026, with the OCC and the FDIC. It supersedes SR 11-7 of April 2011, and SR 21-8 on bank systems supporting anti-money-laundering compliance. It expects to matter most to banking organisations with over $30 billion in total assets.
+
+It is guidance, and says so. Its [attachment](https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf) "does not set forth enforceable standards or prescriptive requirements". It also leaves generative AI out: "Generative AI and agentic AI models are novel and rapidly evolving. As such, they are not within the scope of this guidance."
+
+What it leaves out matters most. At a bank, it shapes how the credit model is examined. It says nothing about a support assistant, and that silence grants no permission. The letter tells banks to govern what it leaves out through their own risk management. The framework's [US profile](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/multi-jurisdictional-guide.md#united-states) keeps generative and agentic AI under the framework's own controls.
+
+### Change monitoring
+
+The framework's [change process](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/regulatory-change-monitoring.md#impact-assessment-protocol) scans regulators' publications weekly and brings a horizon update to the AI Risk Committee every quarter. Its protocol first records whether a change is mandatory or voluntary. Then it asks which systems the change touches, by ID and tier, and maps the new duty to controls you already run.
+
+The Omnibus shows why rows carry dates. It moved the Annex III date six days before that date arrived. A mapping with a date in each row moved with one edit.
+
+Change starts on your side too. When the assistant began releasing password-reset replies automatically, RA-008 ran again. Article 50(1) entered the record, though the law hadn't moved.
+
+</DeepDive>
+
+You now have one mapping from every rule you answer to the controls you run, one record for each piece of evidence, and a written list of gaps with owners. Each step so far has shown one part of the machinery on its own. Step 22 walks one system through all of it, and shows the evidence each step left behind.

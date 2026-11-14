@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 394" role="img" aria-label="One agent, sra-reply-agent, makes two calls, and both meet two checks at the call site, outside the model. Identity: a live credential and an approved record with an active owner. Grant: this tool, this resource, inside its caps, before its end date. queue_reply on a password-reset ticket passes both and is queued. waive_fee on the billing service passes identity, fails the grant check and never runs. Both decisions go to the agent action audit record."><rect width="880" height="394" fill="#fff"/>
+<path d="M300 34 L300 28 L700 28 L700 34" fill="none" stroke="#9b4a3f" stroke-width="1.2"/>
+<text x="500.0" y="20" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">AT THE CALL SITE · OUTSIDE THE MODEL</text>
+<text x="10" y="60" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">THE AGENT</text>
+<text x="730" y="60" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">WHERE IT HAPPENS</text>
+<rect x="300" y="44" width="180" height="230" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="390.0" y="68" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">1 · IDENTITY</text>
+<text x="390.0" y="84" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">who is calling</text>
+<path d="M316 96 L464 96" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="390.0" y="114" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">live credential</text>
+<text x="390.0" y="128" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">record approved</text>
+<text x="390.0" y="142" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">owner active</text>
+<rect x="520" y="44" width="180" height="230" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="610.0" y="68" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">2 · GRANT</text>
+<text x="610.0" y="84" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">may it do this</text>
+<path d="M536 96 L684 96" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<text x="610.0" y="114" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">this tool, this resource</text>
+<text x="610.0" y="128" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">inside its caps</text>
+<text x="610.0" y="142" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">before its end date</text>
+<rect x="10" y="160" width="140" height="96" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="80.0" y="206.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">sra-reply-agent</text>
+<text x="80.0" y="221.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">one identity</text>
+<text x="225.0" y="157" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">queue_reply</text>
+<text x="225.0" y="171" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">password-reset ticket</text>
+<text x="225.0" y="217" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">waive_fee</text>
+<text x="225.0" y="231" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">billing service</text>
+<path d="M150 178 L728 178" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M710 178 L728 178" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M721.6 180.7 L728 178 L721.6 175.3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<rect x="372.9" y="169" width="34.2" height="15" fill="#fff" stroke="#fff" stroke-width="1"/>
+<text x="390.0" y="181" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">pass</text>
+<rect x="592.9" y="169" width="34.2" height="15" fill="#fff" stroke="#fff" stroke-width="1"/>
+<text x="610.0" y="181" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">pass</text>
+<rect x="730" y="156" width="140" height="44" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="800.0" y="176.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">outbox</text>
+<text x="800.0" y="191.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">reply queued</text>
+<path d="M150 238 L604.0 238" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M604.0 228 L604.0 248" fill="none" stroke="#9b4a3f" stroke-width="3"/>
+<rect x="372.9" y="229" width="34.2" height="15" fill="#fff" stroke="#fff" stroke-width="1"/>
+<text x="390.0" y="241" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">pass</text>
+<text x="610.0" y="260" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">refused · no grant</text>
+<rect x="730" y="216" width="140" height="44" fill="#fff" stroke="#6b6b6b" stroke-width="1"/>
+<text x="800.0" y="235" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#6b6b6b" text-anchor="middle" font-weight="500" xml:space="preserve">billing service</text>
+<text x="800.0" y="250" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" font-weight="400" xml:space="preserve">waive_fee never runs</text>
+<path d="M610.0 274 L610.0 300" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M610.0 288 L610.0 301" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<path d="M607.3 294.6 L610.0 301 L612.7 294.6" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="620.0" y="292" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">both decisions</text>
+<rect x="300" y="302" width="400" height="40" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="314" y="319" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">AGENT ACTION AUDIT RECORD</text>
+<text x="314" y="334" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">agent_id · tool · authorisation_decision · rule</text>
+<circle cx="16" cy="374" r="4.5" fill="#9b4a3f"/>
+<text x="28" y="378" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">The model can ask for any tool. The check where the effect happens decides what runs.</text>
+</svg>

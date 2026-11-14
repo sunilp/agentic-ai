@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 486" role="img" aria-label="The four moving parts of a GenAI system, each with a version and the route a change takes. Model: a pinned, dated version, never a latest alias; the vendor retires or updates it; the change is material: re-tier, full suite, MRM, the signers. Prompt: major.minor, changed by a pull request; the reviewer decides which: a major version is material, a minor version takes peer review and the suite still runs. Sources: an index build and each page version, changed by a page owner; the suite re-runs with expected answers checked and permissions re-tested. Vendor: the contract and assessment; new terms or a sub-processor bring a contract re-check, and a new provider is material. Every change: a new version, the suite before release, a line in the release record and a rollback to the last approved version."><rect width="880" height="486" fill="#fff"/>
+<text x="10" y="30" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">MOVING PART</text>
+<text x="225.0" y="26" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">MODEL</text>
+<text x="225.0" y="42" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">the vendor serves it</text>
+<text x="407.0" y="26" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">PROMPT</text>
+<text x="407.0" y="42" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">your team writes it</text>
+<text x="589.0" y="26" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">SOURCES</text>
+<text x="589.0" y="42" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">other teams edit them</text>
+<text x="771.0" y="26" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">VENDOR</text>
+<text x="771.0" y="42" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">the contract behind it</text>
+<text x="10" y="78.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">VERSION</text>
+<text x="10" y="93.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">what you record</text>
+<rect x="136" y="56" width="178" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="225.0" y="77.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">pinned, dated ID</text>
+<text x="225.0" y="91.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">never a latest alias</text>
+<rect x="318" y="56" width="178" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="407.0" y="77.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">major.minor</text>
+<text x="407.0" y="91.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">no unversioned change</text>
+<rect x="500" y="56" width="178" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="589.0" y="77.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">index build</text>
+<text x="589.0" y="91.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">and each page version</text>
+<rect x="682" y="56" width="178" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="771.0" y="77.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">contract, assessment</text>
+<text x="771.0" y="91.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">checked at renewal</text>
+<text x="10" y="132.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">CHANGED BY</text>
+<text x="10" y="147.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">who moves it</text>
+<rect x="136" y="110" width="178" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="225.0" y="131.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">the vendor</text>
+<text x="225.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">retires or updates it</text>
+<rect x="318" y="110" width="178" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="407.0" y="131.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">a pull request</text>
+<text x="407.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">from your own team</text>
+<rect x="500" y="110" width="178" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="589.0" y="131.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">a page owner</text>
+<text x="589.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">fees, dates, terms</text>
+<rect x="682" y="110" width="178" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="771.0" y="131.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">new terms</text>
+<text x="771.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">or a new sub-processor</text>
+<text x="10" y="224.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">ROUTE</text>
+<text x="10" y="239.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">what a change takes</text>
+<rect x="136" y="164" width="178" height="124" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="225.0" y="216.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">material change</text>
+<text x="225.0" y="230.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">re-tier · full suite</text>
+<text x="225.0" y="244.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">MRM · the signers</text>
+<rect x="318" y="164" width="178" height="59.0" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="407.0" y="190.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">major · material</text>
+<text x="407.0" y="204.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">same route as a model</text>
+<rect x="318" y="229.0" width="178" height="59.0" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="407.0" y="255.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">minor · peer review</text>
+<text x="407.0" y="269.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">the suite still runs</text>
+<rect x="500" y="164" width="178" height="124" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="589.0" y="216.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">suite re-runs</text>
+<text x="589.0" y="230.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">expected answers checked</text>
+<text x="589.0" y="244.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">permissions re-tested</text>
+<rect x="682" y="164" width="178" height="59.0" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="771.0" y="190.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">contract re-check</text>
+<text x="771.0" y="204.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">region, retention, DPA</text>
+<rect x="682" y="229.0" width="178" height="59.0" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="771.0" y="255.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">new provider</text>
+<text x="771.0" y="269.5" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">material, like a model</text>
+<text x="407.0" y="306" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">the reviewer decides which</text>
+<text x="10" y="344.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="500" xml:space="preserve">EVERY CHANGE</text>
+<text x="10" y="359.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">any part</text>
+<rect x="136" y="322" width="724" height="48" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="150" y="342" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">A new version, the suite before release, a new line in the release record,</text>
+<text x="150" y="358" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="start" font-weight="400" xml:space="preserve">and a rollback to the last approved version.</text>
+<rect x="136" y="392" width="28" height="14" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="174" y="403" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">material: revalidation, then the signers</text>
+<rect x="500" y="392" width="28" height="14" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="538" y="403" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="400" xml:space="preserve">reviewed and tested, no revalidation</text>
+<circle cx="16" cy="440" r="4.5" fill="#9b4a3f"/>
+<text x="28" y="444" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">The release record names one version of each part, and the evidence that passed them together.</text>
+</svg>

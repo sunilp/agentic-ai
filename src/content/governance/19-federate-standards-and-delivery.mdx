@@ -1,0 +1,191 @@
+---
+dek: "Keep the standards, the road and the register at the centre, give every business unit its own delivery and its own gate, reuse evidence only with its conditions attached, and send the centre decisions, never work."
+description: "Step 19 of AI Governance, from Scratch. Split governance between a centre that sets standards, builds the road, keeps the register, calibrates across units and reads the portfolio, and business units that deliver and run their own gates. Reuse evidence with its conditions, fund and train the units for the work, and test that no unit queues on the centre."
+updated: 2026-11-14
+readingTime: 10
+spot: /assets/spots/gov-19.png
+spotCaption: "One fork gives the pitch, and each player tunes their own instrument."
+sources:
+  - title: "AI Governance Framework v2.3.0: AI CoE design, CoE mandate"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-coe-design.md#coe-mandate"
+  - title: "AI Governance Framework v2.3.0: AI CoE design, reporting structure"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-coe-design.md#reporting-structure"
+  - title: "AI Governance Framework v2.3.0: AI CoE design, anti-patterns"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-coe-design.md#anti-patterns"
+  - title: "AI Governance Framework v2.3.0: roles and responsibilities, role definitions"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions"
+  - title: "AI Governance Framework v2.3.0: governance workflow, fast lane (T3/T4)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4"
+  - title: "AI Governance Framework v2.3.0: AI inventory standard, board reporting"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#board-reporting"
+  - title: "AI Governance Framework v2.3.0: evaluation governance, human evaluation protocol"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#human-evaluation-protocol"
+  - title: "AI Governance Framework v2.3.0: AI cost governance, cost attribution"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/cost-governance.md#cost-attribution"
+  - title: "AI Governance Framework v2.3.0: AI literacy, audiences and measures"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-literacy.md#audiences-and-measures"
+  - title: "AI Governance Framework v2.3.0: governance metrics, portfolio KPIs"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/governance-metrics.md#portfolio-kpis"
+  - title: "AI Governance Framework v2.3.0: governance metrics, what not to measure"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/governance-metrics.md#anti-patterns-what-not-to-measure"
+  - title: "AI Governance Framework v2.3.0: governance metrics, implementation notes"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/governance-metrics.md#implementation-notes"
+  - title: "AI Governance Framework v2.3.0: third-party model risk, concentration risk"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#concentration-risk"
+  - title: "AI Governance Framework v2.3.0: board-level AI risk reporting, quarterly report structure"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/board-reporting.md#quarterly-ai-risk-report-structure"
+  - title: "AI Governance Framework v2.3.0: board-level AI risk reporting, material incident criteria"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/board-reporting.md#material-incident-criteria"
+  - title: "AI Governance Framework v2.3.0: board-level AI risk reporting, AI risk appetite statement"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement"
+  - title: "AI Governance Framework v2.3.0: quarterly AI risk report template, risk concentration"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/board-ai-risk-report.md#3-risk-concentration"
+  - title: "AI Governance Framework v2.3.0: AI Risk Committee charter, escalation to the Board Risk Committee"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-risk-committee-charter.md#7-escalation-to-the-board-risk-committee"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Picture the governance team's queue on a Monday. Marketing asks whether its copywriting tool is T2 or T3. Finance attaches a vendor questionnaire the same vendor answered for HR last quarter. A third team finished its evaluation on Friday and is waiting for someone at the centre to run the gate. Four people work the queue.
+
+A fifth team stopped asking. A vendor key was quicker, and its tool went live last week.
+
+Nothing in that queue is hard. Each item is an answer the centre already gave someone else, or work the team could do itself.
+
+Parts I to V built governance for one team, with you close enough to answer every question. Part VI takes it to every business unit. How do you spread it without every unit waiting on you?
+
+## Standards at the centre, delivery in the units
+
+Draw the line in writing before the second unit asks.
+
+1. **Name what the centre owns.** The standards (your policy, the tiering rule, the control set and its thresholds), the road from Step 6, the register, calibration across units and the portfolio view. The framework's [CoE design](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-coe-design.md#coe-mandate) gives a central function three jobs: set standards, build shared capability and enable domain teams, "not to build AI for them".
+2. **Hand each unit its own delivery.** The unit builds and runs its systems, and runs the gate in its own pipeline. Its product owner assembles the pack and runs the sign-off chain, as the framework's [role definitions](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions) say. At T3 and T4 the [fast lane](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4) keeps risk assessment, model selection and deployment with the unit's team lead and business owner.
+3. **Let units add to a standard, never loosen it.** A unit with its own customers or regulators adds a tighter threshold, an extra test or a local notice. Loosening a rule takes an exception from the tier's approver. Record each addition in the register entry with its source and owner. Both rules are the guide's. Step 21 maps local obligations onto the one control set.
+4. **Reuse evidence with its conditions attached.** Evidence about a shared part, such as the endpoint, is produced once. Each system that relies on it records which version, data and use the evidence covered. When a condition stops holding, so does the reuse. This extends Step 6's recommendation.
+5. **Fund and train the units for the work.** A unit runs its own gate only with its own raters, its own reviewers and a product owner who has the time. The framework's [cost model](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/cost-governance.md#cost-attribution) attributes every AI cost, human review and evaluation included, to a system and its unit. Its [literacy standard](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-literacy.md#audiences-and-measures) trains each role before the person acts in it.
+
+**The guide's call: the centre sets standards and builds the road. Teams deliver.** You answer a question once at the centre, for everyone. A unit answers what only it knows: its customers, its data and the people who review its drafts. Start delivering from the centre and you become the queue. The framework says what follows: "It will become a bottleneck, and shadow AI will grow around it."
+
+Some decisions still come to you, because the framework keeps them away from the build team. They are T1 and T2 approvals and the independent checks behind them, and exceptions above T4. Two checks stay even in the fast lane: AI Risk's vendor assessment at T3, and the DPO's screening for personal data. The guide adds new patterns for the road, and changes to them, because every unit on the road inherits those.
+
+This step is done when business units run governance without queuing on the centre. Test it on one unit's last release. List every request the unit sent to the centre. Each item should be one of those reserved decisions. Anything else is a queue: "What tier is this?", a pack assembled by central staff, a gate somebody else ran, a vendor questionnaire answered twice.
+
+**Your call.** Pick one business unit. Write down the last three things it asked your team for. Mark each one: a decision only the centre can make, or work the unit could have done with a better road.
+
+## What crosses between the centre and a unit
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-19-centre-and-units.svg" alt="The centre above, every business unit below, and what crosses between them. The centre sets and builds the standards and the control set, the paved road and its patterns, the register, calibration across units and the portfolio view. It decides T1 and T2 approvals, exceptions above T4 and new patterns for the road. Each business unit, such as Customer Support and Business Customer Support, delivers its systems end to end with its own owners, data and raters, runs its own gate and adds local requirements on top. It decides T3 and T4 approvals, and its business owner accepts the residual risk. Standards and the road go out, written once for every unit, and a unit adds to them but never loosens them. Evidence comes back from every gate run in every unit into the register, and the portfolio view is read from it." caption="Standards and the road go out once. Evidence comes back from every gate run, and the centre reads the whole portfolio from it." />
+
+The hourglass on the [guide's front page](/governance/#fits-together) draws Part VI in one picture: everything you answer to above, every team and system below, and one register, tiering, control set and evidence pack at the narrow waist. The centre keeps the waist. This diagram shows what passes through it.
+
+**Standards and the road go out.** A standard says what must be true and how a unit proves it. The road makes it quick to meet. Write each standard with the units that will use it. The framework's [anti-patterns](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-coe-design.md#anti-patterns) include the ivory tower, a centre that "publishes standards nobody uses because they weren't developed with practitioners".
+
+**Evidence comes back.** Every gate run, in every unit, leaves its result against the system's register entry. You never ask a unit for a status report. You read the register. The framework's [inventory standard](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#board-reporting) makes the register the single source of every portfolio number: "Do not keep a second count."
+
+**Calibration keeps one rule one rule.** Step 4 computes the tier, but its inputs are judgements. Is this data personal? Does a person read every output? Two units can answer differently, and both think they followed the standard. In the framework, AI Risk challenges tiering. The guide's recommendation: AI Risk has product owners from two units tier one case alone, then compares their inputs. Each settled disagreement becomes a worked example in your standard.
+
+**Reused evidence carries its conditions.** Evidence about a shared part travels. Evidence about a system's own data, people and behaviour stays put. Each pointer names the version it covers. When the shared part changes, the register shows every system pointing at it, and the part's owner tells each system owner. That rule is the guide's. It is Step 11's lesson about a changed source, applied across units.
+
+Now look at your three requests. A request for a decision means the split works. A request for work points at a gap in the road or a standard nobody can read. When several units send the same one, build the answer into the road.
+
+<RunningExample>
+Business Customer Support, which serves the company's business accounts, wants the assistant for its own queue. The numbers here are illustrative. Its product owner sorts Customer Support's pack.
+
+| From Customer Support's pack | Travels? | Condition or reason |
+|---|---|---|
+| Approved endpoint, four safeguards | Yes | Calls go through it on the new system's own credential |
+| Vendor assessment | Yes | Same model version only |
+| Prompt template | Yes | Filled with the unit's own terms, then reviewed at T1 as a new prompt |
+| The gate and its thresholds | Yes | Unchanged. The unit adds, never loosens |
+| Business owner | No | One per system: the Head of Business Customer Support |
+| Plan terms | No | Business plans carry their own fees |
+| Evaluation results | No | They measured a different queue |
+| Tier check | No | Business contacts are people too, so personal data reaches the prompt. Still T1 |
+| Step 18's grant for password-reset replies | No | It belongs to one agent identity in one unit |
+
+Two of the unit's senior agents, who didn't build it, qualify as raters. They rate 500 emails from their own queue blind. Two drafts are wrong: 0.4%, with a bound of 1.25%, over the 1% cap. Both quote a list-price fee where the account's contract sets a discount. Customer Support's emails never came with a contract. Its evaluation had no way to catch this.
+
+The fix puts each account's contract terms beside its plan terms. On 500 unseen emails one draft is wrong, a bound of 0.95%, and the gate passes. The product owner ran both gates in the unit's own pipeline. Only what any T1 system sends reached the centre: MRM's full validation, booked at intake, and the committee's approvals, with the CISO and the DPO.
+
+Then the portfolio view shows what neither unit can see. Both entries name the same model snapshot. In Step 17 a retirement notice landed on one system. When the vendor retires this snapshot, the notice lands on two T1 systems, and both need MRM's revalidation at once. AI Risk books that capacity for both, and lists the dependency under risk concentration in the quarterly report.
+</RunningExample>
+
+## From one team to many business units
+
+The split holds at every size. What counts as the centre changes.
+
+<Track for="small">
+You have no business units, so nothing federates. The idea still applies in one form: your standards must outlive the person who wrote them. Keep the tiering rule, the thresholds and the pack your CI checks in Step 6's repository template. Write them so a new engineer can ship a T3 system without asking anyone. Test that while their author is on leave. Your centre is the T1 and T2 decisions that already leave the team (Step 8). If a second team starts building, your template becomes its road.
+</Track>
+
+<Track for="enterprise">
+Staff the centre in the four functions the framework's CoE design names, from platform engineering to enablement and training. Don't let it [report to a single business unit](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/ai-coe-design.md#reporting-structure), which the framework says "limits cross-organizational mandate".
+
+Each unit needs its own people for the road: Step 3's steward, Step 7's champion and a product owner with time for the pack. The framework spreads shared platform costs by tier weight, four for a T1 system down to one for T4. The guide's recommendation: keep a unit's charge for the road below what the workaround costs it. Otherwise Step 5's shortcut comes back.
+
+Train them before they act. The framework's default is a knowledge check before anyone reviews or operates a T1 or T2 system, and a reviewer whose training has lapsed does not act. Your quarterly board report asks the question that ties both together: "is governance capacity proportional in each business unit?"
+</Track>
+
+<Shortcut quote="It's the same assistant. Customer Support already got it approved.">
+**Why it's tempting.** The code, the vendor and the prompt haven't changed. The first approval took a full T1 cycle. A copy takes an afternoon.
+
+**Why it bites.** An approval covers one system: its business owner, its data, the emails it was measured on. Business Customer Support's first run failed on contracts the first queue never saw. A copied approval would have shipped that failure with the committee's signature on it.
+
+**The forcing function.** The framework allows exactly one business owner per system, so a unit with its own owner needs its own register entry. Make the entry the only way in. The endpoint takes only credentials issued from an entry (Step 6), so the new queue can't borrow the first system's key. Inside the entry, each reused item is a pointer with its version, so reviewers see what was inherited. The pointers are the guide's recommendation.
+</Shortcut>
+
+<StarterKit n={19} />
+
+<DeepDive>
+
+### Hub and spoke
+
+The framework's CoE design calls this shape hub and spoke. The centre keeps the standards and the platform. Domain teams build their own systems with them, and the centre never builds for them. One of the framework's exit tests for the shape is the line this step is done on: "Governance processes running without CoE bottleneck."
+
+Its anti-patterns name the ways a hub fails. In the bottleneck, "all AI work queues through the CoE". The ivory tower writes standards nobody uses. Step 6 answered a third, the governance-only centre that adds overhead and no engineering value, with the road.
+
+The guide reads hub and spoke as a map of decisions, whatever your org chart says. AI Risk and MRM sit in the second line, the platform team in engineering, the committee under the board. They are one hub because they own the waist together. The framework expects your standards to end up "embedded in tooling, not enforced by a central team". Step 20 does that.
+
+### Portfolio view
+
+The portfolio view is your register, read across units. Each portfolio number comes from an inventory field: systems by tier from `risk_tier`, vendor concentration from `vendor_and_model`. Business unit heads see their own systems. Only the centre sees across.
+
+Read it for what no unit sees from inside. Concentration comes first. The framework's [portfolio KPIs](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/governance-metrics.md#portfolio-kpis) target under 70% of T1 and T2 systems on any one model provider. Its [vendor standard](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/third-party-model-risk.md#concentration-risk) makes fallback validation mandatory once more than half of T1 use cases sit with one provider. Capacity comes next. The [board report](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/board-ai-risk-report.md#3-risk-concentration) asks whether T1 systems are "accumulating faster than governance investment".
+
+The register records each system's vendor and model. It has no field for the other things units share: an endpoint, a retrieval source, a pool of reviewers. The guide recommends recording those too, so one query finds every system a change touches.
+
+### Metrics
+
+The framework sorts its governance metrics into four groups. Its [advice](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/governance-metrics.md#implementation-notes) is to start with three to five you can measure today. Each gets a named owner, because "unowned metrics stop being measured".
+
+For a federated programme the guide picks five of them, each broken down by business unit:
+
+- risk assessment coverage, 100% at T1 and T2;
+- overdue reviews, zero at T1;
+- active exceptions, read as a trend;
+- vendor concentration;
+- training completion, beside knowledge check results, since completion records "do not prove that anyone is literate".
+
+Read one more with care. A T1 override rate below 2% is the framework's prompt to look for rubber-stamping (Step 15). It is never a target.
+
+The framework also [warns](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/governance-metrics.md#anti-patterns-what-not-to-measure) about measures that backfire. Counting models deployed rewards deployment over quality. Timing governance reviews "incentivizes rushing reviews; governance is not an obstacle to optimize away". So never make time in review, or approval speed, a target.
+
+Measure your queue by what is in it. Count the requests that reach the centre and aren't reserved decisions. Each one is a gap in the road or a standard nobody can read. The fix is the centre's. That count is the guide's recommendation.
+
+### The board
+
+Your board sees the portfolio once a quarter. The framework's [quarterly report](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/board-reporting.md#quarterly-ai-risk-report-structure) has nine sections and a five-page limit, and the committee approves it at its full-portfolio meeting. Its rule for writing it: "Lead with decisions required, not with data." Each recommendation ends in approve, note or defer.
+
+Material incidents don't wait for the quarter. Every S1, and any S2 that meets the framework's [material criteria](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/board-reporting.md#material-incident-criteria), goes to the Board Risk Committee between reports.
+
+The board also approves the [risk appetite statement](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/board-reporting.md#ai-risk-appetite-statement) each year. The framework's example on vendors is the line your federation tests: "No single model provider accounts for more than 70% of our T1/T2 AI systems." Under the committee's [charter](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-risk-committee-charter.md#7-escalation-to-the-board-risk-committee), a breach goes to the Board Risk Committee at its next meeting. For the assistant's company, the shared snapshot sits in section 3 of the report. Once the share crosses that line, it is the board's decision.
+
+Directors need literacy too. The framework briefs them on appointment and every year: what puts a system in T1, what reaches the board and how fast.
+
+</DeepDive>
+
+You now have one set of standards and many units delivering on them. Each unit runs its own gate, the centre decides only what it must, and one register shows the portfolio. Much of the road still runs on people: a product owner sorts what travels by hand, and someone checks that every call goes through the endpoint. Step 20 builds governance into the platform, so the controls that repeat run by themselves and committees keep the decisions that need judgement.

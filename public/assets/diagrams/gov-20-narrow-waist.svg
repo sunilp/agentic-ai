@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 352" role="img" aria-label="The narrow waist. Above it, every team's AI systems. Below it, models, data and production. In the waist, five shared pieces, each with what it sees and two controls it enforces. Gateway: every model call; PM-006 the stop, DE-004 guardrails. Registry: every system; RA-006 entry first, GV-006 inventory reconciled. Policy gate: every release; DA-003 gates passed, DA-001 evidence checklist. Evaluation service: every suite run; EV-001 to EV-009 release suites, PM-004 live scoring. Audit store: every record; PM-007 audit log, DR-003 evidence archive."><rect width="880" height="352" fill="#fff"/>
+<rect x="20" y="14" width="840" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="440" y="34" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">EVERY TEAM'S AI SYSTEMS</text>
+<text x="440" y="49" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">many teams, each built on the paved road</text>
+<rect x="20" y="290" width="840" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="440" y="310" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">MODELS, DATA AND PRODUCTION</text>
+<text x="440" y="325" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">vendor models, sources, live traffic</text>
+<path d="M20 60 L116 92" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M860 60 L764 92" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M116 258 L20 290" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M764 258 L860 290" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<rect x="116" y="92" width="648" height="166" fill="none" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="778" y="136" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">NARROW</text>
+<text x="778" y="150" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#9b4a3f" text-anchor="start" font-weight="500" xml:space="preserve">WAIST</text>
+<text x="106" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="500" xml:space="preserve">SEES</text>
+<text x="106" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="end" font-weight="500" xml:space="preserve">ENFORCES</text>
+<path d="M188.0 60 L188.0 103" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M185.3 96.6 L188.0 103 L190.7 96.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<rect x="129.0" y="104" width="118" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="188.0" y="130.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">GATEWAY</text>
+<text x="188.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">every model call</text>
+<text x="188.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">PM-006</text>
+<text x="188.0" y="204" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">the stop</text>
+<text x="188.0" y="224" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">DE-004</text>
+<text x="188.0" y="238" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">guardrails</text>
+<path d="M188.0 258 L188.0 289" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M185.3 282.6 L188.0 289 L190.7 282.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M314.0 60 L314.0 103" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M311.3 96.6 L314.0 103 L316.7 96.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<rect x="255.0" y="104" width="118" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="314.0" y="130.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">REGISTRY</text>
+<text x="314.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">every system</text>
+<text x="314.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">RA-006</text>
+<text x="314.0" y="204" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">entry first</text>
+<text x="314.0" y="224" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">GV-006</text>
+<text x="314.0" y="238" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">reconciled</text>
+<path d="M314.0 258 L314.0 289" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M311.3 282.6 L314.0 289 L316.7 282.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M440.0 60 L440.0 103" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M437.3 96.6 L440.0 103 L442.7 96.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<rect x="381.0" y="104" width="118" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="440.0" y="130.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">POLICY GATE</text>
+<text x="440.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">every release</text>
+<text x="440.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">DA-003</text>
+<text x="440.0" y="204" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">gates passed</text>
+<text x="440.0" y="224" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">DA-001</text>
+<text x="440.0" y="238" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">checklist</text>
+<path d="M440.0 258 L440.0 289" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M437.3 282.6 L440.0 289 L442.7 282.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M566.0 60 L566.0 103" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M563.3 96.6 L566.0 103 L568.7 96.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<rect x="507.0" y="104" width="118" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="566.0" y="130.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">EVAL SERVICE</text>
+<text x="566.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">every suite run</text>
+<text x="566.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">EV-001 to EV-009</text>
+<text x="566.0" y="204" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">release suites</text>
+<text x="566.0" y="224" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">PM-004</text>
+<text x="566.0" y="238" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">live scoring</text>
+<path d="M566.0 258 L566.0 289" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M563.3 282.6 L566.0 289 L568.7 282.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M692.0 60 L692.0 103" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M689.3 96.6 L692.0 103 L694.7 96.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<rect x="633.0" y="104" width="118" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="692.0" y="130.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">AUDIT STORE</text>
+<text x="692.0" y="145.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">every record</text>
+<text x="692.0" y="190" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">PM-007</text>
+<text x="692.0" y="204" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">audit log</text>
+<text x="692.0" y="224" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">DR-003</text>
+<text x="692.0" y="238" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">archive</text>
+<path d="M692.0 258 L692.0 289" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<path d="M689.3 282.6 L692.0 289 L694.7 282.6" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+</svg>
