@@ -1,0 +1,213 @@
+---
+dek: "Pick your highest-risk system, hand the walk to someone who didn't build it, and open the record each step left behind, in the order things happened. Every missing record is a finding, with an owner."
+description: "Step 22 of AI Governance, from Scratch. Trace one high-risk system through every step of the guide: open each record where it was made, check that it names a version that ran and people still in their roles, write every gap down with an owner, and finish where the system's permission meets its last approval. With the support assistant's whole trail and a reading of the framework's T1 governance case file."
+updated: 2026-11-14
+readingTime: 12
+spot: /assets/spots/gov-22.png
+spotCaption: "One set of footprints, through every gate."
+sources:
+  - title: "AI Governance Framework v2.3.0: governance case file, retail banking customer service assistant"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md"
+  - title: "AI Governance Framework v2.3.0: governance case file, control coverage"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#control-coverage"
+  - title: "AI Governance Framework v2.3.0: governance case file, material change revalidation v1.2.0"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#12-material-change-revalidation-v120-stage-9"
+  - title: "AI Governance Framework v2.3.0: governance case file, incident GEN-2026-042"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#14-example-incident-s2-customer-facing-hallucination-gen-2026-042-stage-8"
+  - title: "AI Governance Framework v2.3.0: governance case file, post-mortem GEN-2026-042"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#15-post-mortem-gen-2026-042-stage-8"
+  - title: "AI Governance Framework v2.3.0: governance workflow, minimum evidence pack by tier"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#minimum-evidence-pack-by-tier"
+  - title: "AI Governance Framework v2.3.0: governance workflow, fast lane"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4"
+  - title: "AI Governance Framework v2.3.0: governance workflow, retroactive governance"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#retroactive-governance"
+  - title: "AI Governance Framework v2.3.0: control register, Stage 8 production operations (PM-008)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-8-production-operations"
+  - title: "AI Governance Framework v2.3.0: GenAI risk matrix, third-party model dependency"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/risk-classification/genai-risk-matrix.md#dimension-5-third-party-model-dependency"
+  - title: "AI Governance Framework v2.3.0: model selection, vendor risk"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/model-selection.md#3-vendor-risk"
+  - title: "AI Governance Framework v2.3.0: AI inventory standard, how entries stay current"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#how-entries-stay-current"
+  - title: "AI Governance Framework v2.3.0: audit trail requirements, regulatory examination readiness"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/audit-trail-requirements.md#regulatory-examination-readiness"
+  - title: "AI Governance Framework v2.3.0: review cadence, annual activities"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/review-cadence.md#annual-activities"
+  - title: "AI Governance Framework v2.3.0: LLM monitoring, RAG pipeline health"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/monitoring.md#rag-pipeline-health"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+The audit committee has seen the programme slides: a one-page policy, a full register, tiers, gates and a dashboard that is mostly green. Then one member asks for something smaller. Show us one system. The riskiest one, from the idea to the reply it sent this morning.
+
+The governance lead opens the register entry. The risk assessment link works. The evaluation folder holds three reports, and nobody noted which one shipped. The red-team report is in someone's email. The pilot had an end date. Nobody can find the decision that took it into production.
+
+Most of what the slides promised did happen. Whether it happened to this system, at this version, only the records can say.
+
+Can you walk your highest-risk system through every step of this guide and open the record each one left?
+
+## Pull the record each step left behind
+
+1. **Pick your highest-risk system.** Take the highest-tier system that real people use. If two tie, take the one you know least about. Never the tidiest.
+2. **Hand the walk to someone who didn't build it.** They ask. The system owner opens each record. At T1 the framework has the seat ready: its [review cadence](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/review-cadence.md#annual-activities) gives MRM and Compliance a mock examination of every T1 system each year.
+3. **Bring records, never summaries.** The owner brings the register entry. The walker brings the 22 steps and the controls the register applies to this tier and type. Every record is opened where it was made, with its own date, version and author.
+4. **Go in the order things happened.** At each step, ask for the record and check three things. Does it exist? Does it name a version that ran? Do the people it names still hold their roles?
+5. **Write every gap down, and say which kind.** Some steps were never done. Others were done and never recorded. Both go on the list with an owner and a date. The second kind is worse. Anyone asking for proof counts it as not done. The team thinks it is covered, so nobody plans a fix. And it shows that record keeping broke somewhere, which casts doubt on every other record.
+6. **End at the permission.** Set what the system can reach today (its credential, users, data and tools) against what its last approval covers. Step 9 kept those records apart for this moment. Any reach beyond the approval is the first finding.
+
+**The guide's call: governance is proven on one real system, not on a slide.** A slide shows the machinery. It can't show that the machinery ran on the system that matters, at the version running today. Only that system's records can, opened by someone who didn't write them.
+
+This step is done when you can trace one high-risk system through every step and show the evidence at each. The guide counts a written gap with an owner as traced. A step nobody asked about isn't.
+
+**Your call.** Name your highest-risk system. Before you open anything, list the steps where you expect to find no record. Then walk, and compare.
+
+## The assistant's trail, in the order it happened
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-22-one-system-trail.svg" alt="The support assistant's trail through all 22 steps, grouped in the guide's six parts and the close, with the record each step left, from three decisions at Step 1 to this walk at Step 22. Eight records are in brick. Each shows something failing or being refused: the evaluation case from a flagged wrong fee, two evaluation reports with the failed first candidate kept, the incident report, the bias evaluation, the planted-error drill, the release record, the identity record with its refused call, and the signed failure mode the gateway outage tested." caption="One record per step, grouped by part. The eight in brick show something failing or being refused." />
+
+The figure groups the trail by part, so you can find any step. Each record has a home: the register, the pipeline, the model card, the audit store or the committee's minutes. The walker opens it there.
+
+Eight records are in brick, more than a third of the trail. Each shows something failing or refused, from a free cancellation a support agent caught to the morning the gateway went down. A programme slide leaves all eight out. Yet they are the strongest evidence here. Each shows a control acting when it had to. If your own trail holds no failure at all, ask whether anyone tested the system hard, or whether someone tidied its records.
+
+The walk follows events, and they ran out of step order. The work of Steps 12 and 13, and the signing of Step 16's limits, came before the first release candidate. Steps 7, 11, 14, 15 and 17 happened in the pilot. The move to production, which no earlier step tells, sits between 17 and 18.
+
+<RunningExample>
+MRM and Compliance walk it as the framework's yearly mock examination. The system owner opens each record. All of it is illustrative, as in every step.
+
+**Before anything was built**
+
+| Step | What happened | The record it left |
+|---|---|---|
+| [1](/governance/01-agree-what-governance-is-for/) | Three decisions written down: build drafts only, ship on the tier's signatures, stop through AI Operations | The three lines, each with its owner |
+| [2](/governance/02-mandate-and-one-page-policy/) | Three policy lines apply: a named business owner, personal data only into approved tools, customer contact only through an approved workflow | The one-page policy and its executive owner |
+| [3](/governance/03-list-every-ai-system/) | Registered at intake, before the build | Entry `support-reply-assistant-v0.1`, `proposed`, tier `pending`, 2026-11-11 |
+| [4](/governance/04-tier-every-system/) | Data exposure Critical, so T1. The four vendor safeguards bring in override item 8, which changes nothing | The signed risk assessment |
+| [5](/governance/05-where-engineers-route-around-you/) | Three shortcuts named before anyone took them: real emails before an entry, a pilot by another name, auto-sending simple replies | Each with its cause and its fix |
+| [6](/governance/06-make-the-governed-path-fastest/) | Built on the road: the approved endpoint, a credential issued from the entry, the template | `governance.yaml`, with the gate wired in |
+| [8](/governance/08-owners-and-decision-rights/) | One accountable name per decision, and a named deputy for the Head of Customer Support | The decision table |
+
+**Before the first release candidate**
+
+| Step | What happened | The record it left |
+|---|---|---|
+| [12](/governance/12-turn-principles-into-tests/) | A test, an owner and a pack row for each principle. The impact assessment named non-native speakers, so fairness tests English too | The principles table and the impact assessment |
+| [13](/governance/13-choose-your-fairness-trade-off/) | Same facts, same entitlements, signed. Names: 7 of 200 pairs inconsistent, a pass. Fluency: 19 of 200, a bound of 13.63%, a fail. After the fix, 9 of 200, a pass | The model card's `bias_evaluation` |
+| [16](/governance/16-bound-reliability-safety-privacy/) | The 1% cap and the leak limit signed before any suite ran. No canary in 300 test tickets, a bound of 0.99% | The limits in the risk assessment, and the canary test |
+
+**The gate**
+
+| Step | What happened | The record it left |
+|---|---|---|
+| [10](/governance/10-evidence-that-blocks-releases/) | Candidate 1: 4 wrong in 500, a bound of 1.82%, and an open High. Candidate 2, with each customer's plan terms: 1 in 500, a bound of 0.95%, rerun by MRM | Both reports, the failing one kept, and the red team's 240 cases |
+| [9](/governance/09-gates-between-idea-and-production/) | Pilot approved with limits: 10 named agents, the billing queue, ending 2027-03-31 | The signed pilot approval, and the entry at `pilot` |
+
+**In the pilot**
+
+| Step | What happened | The record it left |
+|---|---|---|
+| [7](/governance/07-a-culture-that-reports-problems/) | A support agent flagged a draft offering a free cancellation on a plan with a fee, and was thanked | Evaluation case `cancel-plan-with-fee` |
+| [11](/governance/11-run-watch-respond-review-retire/) | The refund window fell to 14 days, and a prompt example still said 30. Four replies went out unedited: S2. Drafting was off for all ten agents 12 minutes after the decision | The incident report, the signed fix, the restart |
+| [14](/governance/14-explain-disclose-allow-appeal/) | One of the four wrote back: "You told me 30 days." The Head of Customer Support decided all four keep the 30 days | Her recorded decision |
+| [15](/governance/15-make-human-oversight-real/) | 20 planted errors, 17 caught. The plan terms went beside the draft, with a cap per shift. The next round caught all 20 | Row 14 of the pack |
+| [17](/governance/17-govern-models-vendors-prompts-retrieval/) | The vendor gave notice that the pinned model would retire. Its successor failed, 3 in 500 at 1.54%. Prompt v4.0, then 2 in 700 at 0.90%. MRM revalidated | The release record: `vendor-model-2027-01-20`, `support-reply/draft/v4.0`, index build 212 |
+
+**Out of the pilot.** Before the end date, the system owner shows each exit condition met, from the record: production evaluation inside the T1 thresholds, the override rate reviewed, every near-miss closed. Then Step 17's debt. The guide reads the framework as letting a pilot lean on people writing by hand, and wanting a validated fallback model before production. A model from a second vendor gets its own vendor assessment and the four safeguards. It passes the suite with prompt v4.0 and takes over in a switch test, the first PM-008 record. Third-party dependency drops to Medium. Data exposure keeps the tier at T1. Going wider is a material change, so the risk assessment covers every queue, the pilot's evidence joins the pack, and the gate runs on a fresh suite from those queues. MRM revalidates and the same three sign. The entry moves from `pilot` to `production`.
+
+**In production**
+
+| Step | What happened | The record it left |
+|---|---|---|
+| [18](/governance/18-agents-identity-and-bounded-authority/) | For password resets, the review board sent `send_reply` back. `sra-reply-agent` holds one grant, `queue_reply`, and a release service sends. A `waive_fee` call was refused | The identity record, a grant ending at the next quarterly review, and the refusal in the audit record |
+| [19](/governance/19-federate-standards-and-delivery/) | Business Customer Support adopted it as its own T1 system. The portfolio view found both on one model snapshot | The reuse table, and a risk-concentration line in the quarterly report |
+| [20](/governance/20-build-governance-into-the-platform/) | The 17-row pack sorted: 2 rows the platform attaches, 5 it builds in part, 10 that need a person. Then the gateway's policy service went down, and every call to either model was refused | The signed failure mode, and an audit store with no unchecked call |
+| [21](/governance/21-reuse-controls-and-evidence/) | Compliance and counsel recorded what applies: Articles 4, 50(1) for released replies and 50(2), and the GDPR. Not the high-risk rules or SR 26-2 | The applicability record, with one gap: must the Art. 50(2) mark survive an agent's edits? |
+
+**What comes round again.** Each quarter the formal review re-checks the tier and decides on the `queue_reply` grant. The kill switch, the fallback switch, the red team and a planted-error round each leave a dated record. The full suite reruns monthly. Each year MRM revalidates, and walks the trail again with Compliance. One day the assistant retires under Step 11's rules, its entry kept and its ID never reused.
+
+The walk's own record is a link per step and one gap, already owned.
+</RunningExample>
+
+## A fast-lane trail and a first audit
+
+The walk is the same at any size. The length of the trail and the walker change.
+
+<Track for="small">
+If your riskiest system is T3, it runs the framework's [fast lane](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#fast-lane-t3t4), and its trail is shorter. Its pack holds at most 12 of the 17 rows. Steps 13, 15 and 18 require nothing at T3. Bias testing and human oversight are T1 and T2 controls, and an agent with a single tool is T2 at least. Give each such step one line saying why, as the case file does for the controls it doesn't need.
+
+The rest lives in your repository: the register file, `governance.yaml`, the CI report, the gate result, two signatures, and the scan and 50 manual cases another team ran. Ask someone from that team to walk it at your yearly review.
+</Track>
+
+<Track for="enterprise">
+Walk your first T1 system before an auditor picks one. The framework wants an [examination pack](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/audit-trail-requirements.md#regulatory-examination-readiness) you can assemble within 48 hours, a named point person, and a yearly mock examination of every T1 system. Make this walk that examination.
+
+If the system predates your programme, the walk is the framework's [retroactive route](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#retroactive-governance). Mark every control as evidence exists, evidence missing or not applicable. Each missing item gets an owner, a date and an interim control. T1 gaps close within three months.
+
+Expect a long list. The assistant's trail is nearly complete because it was governed from intake, and because it is made up. The guide's recommendation: choose each later walk's system at random from your T1 list. Then nobody can tidy one system for the auditor.
+</Track>
+
+<Shortcut quote="Turn it into a case study deck for the audit committee.">
+**Why it's tempting.** A deck takes an afternoon. The committee wants a story. You pick the parts.
+
+**Why it bites.** A deck summarises records, so it proves nothing. The people under review write it, today, about the version they remember. The failed release candidate drops out. So does the gap. And once one missing record is written up to fill a slide, an auditor must doubt every other record in the file.
+
+**The forcing function.** The walk's record is a list of links, each to a record where it was made, with its own date, version and author. Nothing written for the walk counts. A record written to fill a gap carries the day it was written, and the gap stays open until the control runs again. This is the guide's recommendation.
+</Shortcut>
+
+<StarterKit n={22} />
+
+<DeepDive>
+
+### A bank's chatbot on the same trail
+
+The framework's T1 worked example is a [governance case file](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md) for a different system, `cs-assistant-retail-v1.2`. It is a customer service assistant in a bank's mobile app and online banking chat, and it answers customers itself. Nobody reads each answer first. So it runs under Pattern 3 with all five safeguards, and override trigger 2 makes it T1. The support assistant drafts for a person, and data exposure sets its tier.
+
+The two share a lot. Both send customer personal data to a vendor model behind the same four safeguards, and both score data exposure Critical. Each changed its model once, as a material change. Each recorded an S2 incident that began when a source of truth changed and the system kept quoting the old version. The file runs from intake to six months in production. Read it as a walk written down.
+
+### Reading it section by section
+
+It opens with [control coverage](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#control-coverage): each control mapped to its section, then the controls that don't apply, with reasons. Fifteen numbered sections follow, from intake to the post-mortem.
+
+| Section | What it holds | Controls |
+|---|---|---|
+| 1 Intake record | Proposer, sponsor, screening as likely T1 | None, pre-register |
+| 2 Risk assessment summary | Scores, override check, accepted residual risks | RA-001 to RA-005 |
+| 3 Architecture review | Conditions, residency, model selection, vendor assessments | AR-001 to AR-005 |
+| 4 Model card summary | Models, prompt version, guardrails, custom rules | DE-001, DE-002, DE-004 |
+| 5 Prompt review | Four T1 reviewers, red-team fixes folded in | DE-003 |
+| 6 Evaluation report | Nine metrics under the T1 pass rule, fallback on the same suites | EV-001 to EV-007, EV-009 |
+| 7 Red-team summary | 200 cases, one High fixed and retested | SR-001 to SR-003 |
+| 8 Independent validation | MRM, full scope | Stage 5 |
+| 9 Deployment approval | Dated sequence, 17-row checklist, five signatures | DA-001 to DA-004 |
+| 10 Production operations | Alerts, production evaluation, five Pattern 3 safeguards | PM-001 to PM-005, IR-001, IR-002 |
+| 11 Ongoing governance log | Every review, test and change, dated | RV-001 to RV-004 |
+| 12 Material change | The v1.2.0 model swap, revalidated | RV-003 |
+| 13 Q1 2026 review | Checks, and two Low findings | RV-001, RV-002 |
+| 14 Incident GEN-2026-042 | An S2 from stale fee documents | IR-002, IR-003, PM-002, PM-004 |
+| 15 Post-mortem | Root cause, four improvements, a control gap | IR-004, IR-005 |
+
+### The change and the incident
+
+[Section 12](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#12-material-change-revalidation-v120-stage-9) records the material change. Version 1.2.0 moved the base model from `claude-sonnet-4-20250514` to `claude-sonnet-4-5-20250929`, for quality and cost, and retargeted the prompt as v2.0.0. Fourteen dated rows of revalidation follow. They run from the re-tiering check, through a full T1 prompt review, safety and bias re-runs, the fallback revalidated on the new prompt and MRM's addendum, to an out-of-cycle approval by the committee, the CISO and the DPO. It is Step 17's route, taken by choice.
+
+[Sections 14](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#14-example-incident-s2-customer-facing-hallucination-gen-2026-042-stage-8) and [15](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/customer-service-chatbot/governance-case-file.md#15-post-mortem-gen-2026-042-stage-8) record the incident. Fee schedules changed on 2026-03-01 and never reached the retrieval corpus. The refresh pipeline's token had expired that day, and it failed silently. Two weeks later the 7-day hallucination rate reached 1.1%, over its 1% alert line. About 40 customers had been given wrong fee information. None was charged wrongly. The post-mortem found the gap: monitoring watched output quality, and nothing upstream. The committee accepted the fix, and the framework's monitoring standard gained [RAG pipeline health](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/monitoring.md#rag-pipeline-health).
+
+Set it beside Step 11. The assistant's stale fact sat in its prompt, and a person caught it. The chatbot's sat in its corpus, and a monitor caught it. Both ended in a changed control.
+
+### What a reviewer looks for
+
+Read the file the way the walk reads your own system.
+
+- **Coverage.** Every control the register applies needs a section or a reason. [PM-008](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-8-production-operations), the quarterly fallback switch test for T1 systems on external models, appears in neither list. Section 2 says no switch is recorded, and counts the fallback as degraded because one platform serves both models. Ask for the escalation to AI Risk that PM-008 requires.
+- **Order.** Section 9's dated sequence runs from risk assessment to deployment, with validation before the signatures. The red team tested prompt v1.2.0. Its fix was retested on v1.2.3, the version evaluated and shipped.
+- **Classification.** Version 1.1.0 added German and updated the corpus. The Head of AI approved it as non-material. The framework's [inventory standard](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/ai-inventory.md#how-entries-stay-current) lists scope and data among material changes. The next review found German faithfulness at 0.88 against a 0.90 threshold, on 80 cases, too few to gate. Ask whether that release belonged on the material route.
+- **Closure.** A fix belongs in the operating record too. Section 10's alert table carries a row for refresh pipeline failure, added after GEN-2026-042.
+
+</DeepDive>
+
+Twenty-two steps in, you have the machinery governance runs on. You have watched one invented system pass through all of it, failures included. What you don't have yet is that trail for a system of your own. So take your highest-risk system to someone who didn't build it. Open the register entry together and ask for the record Step 1 left. Keep going until you reach the permission it runs on today. Write every gap down with an owner, close them, and walk it again.

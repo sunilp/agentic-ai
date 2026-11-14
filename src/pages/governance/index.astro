@@ -13,6 +13,7 @@ import { PARTS, PART_LABEL, STEPS, RELEASE, FRAMEWORK_REPO, FRAMEWORK_TAG, kitUr
 const written = (await getCollection('governance')).filter((e) => e.data.status !== 'draft').map((e) => e.id);
 const href = writtenHref(new Set(written));
 const publishedCount = STEPS.filter((s) => href(s.n)).length;
+const lastHref = href(STEPS.length) ?? undefined;
 const firstHref = href(1);
 const partId = (p: Part) => `part-${p.toLowerCase()}`;
 const partName = (p: Part) => (p === 'Close' ? 'Close' : `Part ${p}`);
@@ -56,7 +57,11 @@ const ON_PAGE = [
           {firstHref && <a class="gov-btn" href={firstHref}>Start at Step 1 <span aria-hidden="true">→</span></a>}
           <a class="gov-btn gov-btn--ghost" href="#the-path">See all 22 steps</a>
         </p>
-        <p class="gov-hero__status">{publishedCount} of {STEPS.length} steps are published. They set {RELEASE.covers}. {RELEASE.next} is next. New steps appear in the <a href="/rss.xml">RSS feed</a>.</p>
+        {publishedCount === STEPS.length ? (
+          <p class="gov-hero__status">All {STEPS.length} steps are published. One worked example, a customer support assistant, runs through the guide, and <a href={lastHref}>Step {STEPS.length}</a> walks it from first idea to production. Corrections appear in the <a href="/rss.xml">RSS feed</a>.</p>
+        ) : (
+          <p class="gov-hero__status">{publishedCount} of {STEPS.length} steps are published. They set {RELEASE.covers}. {RELEASE.next} is next. New steps appear in the <a href="/rss.xml">RSS feed</a>.</p>
+        )}
       </div>
       <figure class="gov-hero__art">
         <picture>
