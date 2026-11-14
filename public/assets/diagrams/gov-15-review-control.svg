@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 262" role="img" aria-label="What a reviewer needs for a review to be a control. Four conditions mean reviewers can overrule the system: the decision, one question written down; the evidence, in view beside the output; the time, a cap per shift; and the authority to say no at no cost. The fifth, the test, planted errors that get caught, shows that they sometimes do. Without each one: the reviewer checks how it reads, an error that looks right goes out, rare errors slip by late in a session, yes becomes the quick answer, and a check and a stamp look the same."><rect width="880" height="262" fill="#fff"/>
+<path d="M20 52 L20 44 L688 44 L688 52" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+<text x="354.0" y="34" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">reviewers can overrule the system</text>
+<path d="M708 52 L708 44 L860 44 L860 52" fill="none" stroke="#9b4a3f" stroke-width="1"/>
+<text x="784.0" y="34" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">and sometimes do</text>
+<rect x="20" y="60" width="152" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="96.0" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">THE DECISION</text>
+<text x="96.0" y="101.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">one question, written</text>
+<rect x="192" y="60" width="152" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="268.0" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">THE EVIDENCE</text>
+<text x="268.0" y="101.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">in view, beside it</text>
+<rect x="364" y="60" width="152" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="440.0" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">THE TIME</text>
+<text x="440.0" y="101.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">a cap per shift</text>
+<rect x="536" y="60" width="152" height="56" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
+<text x="612.0" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="500" xml:space="preserve">THE AUTHORITY</text>
+<text x="612.0" y="101.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">to say no, at no cost</text>
+<rect x="708" y="60" width="152" height="56" fill="#f5ece9" stroke="#9b4a3f" stroke-width="1.5"/>
+<text x="784.0" y="86.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="500" xml:space="preserve">THE TEST</text>
+<text x="784.0" y="101.0" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="middle" font-weight="400" xml:space="preserve">planted errors, caught</text>
+<text x="20" y="152" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="#6b6b6b" text-anchor="start" font-weight="500" xml:space="preserve">WITHOUT IT</text>
+<path d="M20 158 L860 158" fill="none" stroke="#e8e8e8" stroke-width="1"/>
+<path d="M96.0 116 L96.0 136" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="96.0" y="178" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">the reviewer checks</text>
+<text x="96.0" y="194" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">how it reads</text>
+<path d="M268.0 116 L268.0 136" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="268.0" y="178" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">an error that looks</text>
+<text x="268.0" y="194" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">right goes out</text>
+<path d="M440.0 116 L440.0 136" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="440.0" y="178" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">rare errors slip by</text>
+<text x="440.0" y="194" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">late in a session</text>
+<path d="M612.0 116 L612.0 136" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="612.0" y="178" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">yes becomes the</text>
+<text x="612.0" y="194" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#1a1a1a" text-anchor="middle" font-weight="400" xml:space="preserve">quick answer</text>
+<path d="M784.0 116 L784.0 136" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+<text x="784.0" y="178" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="400" xml:space="preserve">a check and a stamp</text>
+<text x="784.0" y="194" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b4a3f" text-anchor="middle" font-weight="400" xml:space="preserve">look the same</text>
+<circle cx="24" cy="236" r="4.5" fill="#9b4a3f"/>
+<text x="36" y="240" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#9b4a3f" text-anchor="start" font-weight="400" xml:space="preserve">The first four make a no possible. Only the test shows one happening.</text>
+</svg>

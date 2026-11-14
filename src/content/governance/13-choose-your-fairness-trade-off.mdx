@@ -1,0 +1,232 @@
+---
+dek: "When groups differ in base rates, no model can level every fairness metric. Choose the one that guards the people your system decides about, write down what it costs, and have someone else sign it."
+description: "Step 13 of AI Governance, from Scratch. Work one credit example to see why equal error rates, equal predictive value and equal selection rates cannot all hold when base rates differ, read what the impossibility results prove, have the business owner choose the metric that gates before the run, write down its cost, have the second line sign it, and test an LLM for bias with counterfactual pairs."
+updated: 2026-11-14
+readingTime: 10
+spot: /assets/spots/gov-13.png
+spotCaption: "No flat map keeps every distance true, so the mapmaker chooses."
+sources:
+  - title: "Fair prediction with disparate impact: A study of bias in recidivism prediction instruments"
+    url: "https://arxiv.org/abs/1703.00056"
+    authors: ["Alexandra Chouldechova"]
+    year: 2017
+  - title: "Inherent Trade-Offs in the Fair Determination of Risk Scores"
+    url: "https://arxiv.org/abs/1609.05807"
+    authors: ["Jon Kleinberg", "Sendhil Mullainathan", "Manish Raghavan"]
+    year: 2016
+  - title: "Equality of Opportunity in Supervised Learning"
+    url: "https://arxiv.org/abs/1610.02413"
+    authors: ["Moritz Hardt", "Eric Price", "Nathan Srebro"]
+    year: 2016
+  - title: "Uniform Guidelines on Employee Selection Procedures, 29 CFR 1607.4(D): adverse impact and the four-fifths rule"
+    url: "https://www.ecfr.gov/current/title-29/section-1607.4"
+    authors: ["US Equal Employment Opportunity Commission and other federal agencies"]
+    year: 1978
+  - title: "AI Governance Framework v2.3.0: responsible AI checklist, fairness"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/responsible-ai-checklist.md#1-fairness"
+  - title: "AI Governance Framework v2.3.0: bias detection for LLM systems, counterfactual testing protocol"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/bias-detection-llm.md#counterfactual-testing-protocol"
+  - title: "AI Governance Framework v2.3.0: bias detection for LLM systems, metrics"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/bias-detection-llm.md#metrics"
+  - title: "AI Governance Framework v2.3.0: bias detection for LLM systems, bias incident response"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/bias-detection-llm.md#bias-incident-response"
+  - title: "AI Governance Framework v2.3.0: evaluation governance, maximum failures allowed"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#maximum-failures-allowed"
+  - title: "AI Governance Framework v2.3.0: roles and responsibilities, role definitions"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions"
+  - title: "AI Governance Framework v2.3.0: roles and responsibilities, model development phase RACI"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#model-development-phase"
+  - title: "AI Governance Framework v2.3.0: worked example, credit scoring model card"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/credit-scoring-model/model-card.yaml#L83-L105"
+  - title: "AI Governance Framework v2.3.0: model card template, fairness fields"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/model-card-template.yaml#L67-L76"
+  - title: "AI Governance Framework v2.3.0: LLM model card template, bias evaluation fields"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/llm-model-card.yaml#L155-L163"
+  - title: "AI Governance Framework v2.3.0: model validation, fairness assessment"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/model-lifecycle/validation.md#4-fairness-assessment"
+  - title: "AI Governance Framework v2.3.0: control register, Stage 5 evaluation and testing (EV-005)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-5-evaluation--testing"
+  - title: "AI Governance Framework v2.3.0: review cadence, escalation triggers"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/review-cadence.md#escalation-triggers"
+  - title: "AI Governance Framework v2.3.0: GenAI risk matrix, tier override rules"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/risk-classification/genai-risk-matrix.md#tier-override-rules"
+---
+import Track from '~/components/governance/Track.astro';
+import Shortcut from '~/components/governance/Shortcut.astro';
+import StarterKit from '~/components/governance/StarterKit.astro';
+import DeepDive from '~/components/governance/DeepDive.astro';
+import RunningExample from '~/components/governance/RunningExample.astro';
+import ArchitectureDiagram from '~/components/universal/ArchitectureDiagram.astro';
+
+Step 4's credit model reaches validation. The report says it treats two groups of applicants alike. In each, nine in ten people who would repay get approved.
+
+Compliance reads the same report and sees a gap. Group A is approved 84% of the time. Group B, 75%. A risk analyst finds a third problem: approved loans in group B go bad nearly three times as often.
+
+Nobody got the arithmetic wrong. Each measured fairness a different way. On these numbers, no model can satisfy all three.
+
+So someone has to choose. Which measure does your model answer to, and who decides?
+
+## Choose the metric before you see results
+
+Every system that decides about people carries a fairness choice. Make yours on purpose.
+
+1. **Name the decision and who bears each error.** For the credit model, a wrongful decline costs a creditworthy applicant the loan. A wrongful approval costs the lender. It can also bury a borrower in debt.
+2. **Name the groups.** The framework's [checklist](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/responsible-ai-checklist.md#1-fairness) wants protected attributes identified at T1 to T3. At T1 and T2 it adds proxy analysis. A proxy stands in for an attribute you left out: the credit model drops age but watches length of credit history, which tracks it.
+3. **Choose the metric that gates, before the run.** One per attribute, with a threshold, chosen for the error that hurts people most. At T1 and T2 the checklist wants each metric "selected with documented justification". The guide adds the timing. Write the reason before any result exists, so nobody can pick the metric the model happens to pass.
+4. **Report the others, with the cost.** The metrics you didn't choose sit beside the one that gates, with counts. Then write what your choice gives up, and for whom.
+5. **Let the owner choose and the second line sign.** The checklist names who signs its fairness section: Model Risk Management at T1, MRM or another second-line reviewer at T2, the team lead at T3. The choice itself sits among the builders' tasks in the framework's development standard. The guide's recommendation: give it to the business owner, who already [accepts the residual risk](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions). A fairness trade-off is residual risk with a name on it. Compliance brings the law. MRM checks the reason and the numbers, then signs.
+6. **Say what reopens it.** A model change, a shift in base rates, a new attribute or law. A breached fairness threshold goes to MRM and Compliance [within 24 hours](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/review-cadence.md#escalation-triggers).
+
+**The guide's call: you cannot satisfy every fairness metric at once, so choose one in the open.** If your groups' base rates differ, the arithmetic rules out having them all. In the open means written before the results, with the cost in numbers, and signed by someone who didn't choose. A metric picked by whoever wrote the evaluation script is a choice too. Nobody signed it.
+
+Think your base rates are equal? Show it with counts. Then the conflict goes away.
+
+This step is done when the fairness metric was chosen, written down and signed: for each attribute, the metric that gates, its threshold, the reason and the cost.
+
+**Your call.** Pick your highest-tier system that decides about people. Write down the error that hurts them most. Then find the metric its last validation gated on. Who picked it? If the metric doesn't guard against that error, or the answer is a library default, start there.
+
+## Three metrics that cannot all be level
+
+<ArchitectureDiagram wide src="/assets/diagrams/gov-13-three-metrics.svg" alt="One credit model, one cutoff, made-up counts for two groups of 1,000 applicants. The base rates differ: 900 would repay in group A and 750 in group B. Error rates are level: 10% of the people who would repay are declined in both groups, and 30% of those who would default are approved in both. Predictive value is apart: 96% of approvals are repaid in A against 90% in B. Selection rates are apart: 84% of A is approved against 75% of B. Level the error rates and the other two come apart. Even a perfect model approves 90% of A and 75% of B." caption="The error rates are level. That is exactly why the other two are not." />
+
+Here are the counts behind the opening. They are made up. Take 1,000 applicants per group from the credit model's test set. Pretend you know how each would have turned out. One model, one cutoff:
+
+| Applicants | Group A | Group B |
+|---|---:|---:|
+| Would repay | 900 | 750 |
+| Would default | 100 | 250 |
+| Repayers approved | 810 | 675 |
+| Repayers declined | 90 | 75 |
+| Defaulters approved | 30 | 75 |
+| Defaulters declined | 70 | 175 |
+| Approved in all | 840 | 750 |
+
+Read it three ways.
+
+**Error rates are level.** In both groups the model declines 10% of the people who would repay, and approves 30% of those who would default. Hardt, Price and Srebro called this [equalized odds](https://arxiv.org/abs/1610.02413).
+
+**Predictive value is not.** Of A's 840 approvals, 810 repay: 96%. In B, 675 of 750 repay: 90%. An approval means less in B.
+
+**Selection rates are not.** A is approved 84% of the time, B 75%.
+
+Now try to level another. Say B's approvals must repay at 96%, with nine in ten of its repayers still approved. Then B can approve only 25 of its 250 future defaulters, 10% against A's 30%. In practice that takes a stricter cutoff for B. It turns good applicants away too.
+
+Level the approval rates instead. B needs 90 more. Each goes to a future repayer or a future defaulter, so one of B's error rates moves off A's.
+
+Even a perfect model fails one test. It approves exactly the people who would repay. Its error rates are zero. Every approval repays. It still approves 90% of A and 75% of B.
+
+The base rate is the cause. Each metric divides by different people: error rates by those who would repay or default, predictive value by those approved, selection by everyone, and when base rates differ, the mix in each differs too. [Chouldechova](https://arxiv.org/abs/1703.00056) proved the clash between predictive value and error rates for any yes-or-no decision. [Kleinberg, Mullainathan and Raghavan](https://arxiv.org/abs/1609.05807) proved its cousin for risk scores. Both need unequal base rates. Neither says which metric is right. That part is yours.
+
+So choose by the error.
+
+| Gate on | It protects | Here it costs |
+|---|---|---|
+| Error rates | A creditworthy applicant's chance, the same in both groups | Approvals repay at 90% in B, 96% in A |
+| Predictive value | What an approval means | Good applicants in B, turned away by a stricter cutoff |
+| Selection rates | Equal approval rates | Bad loans in B, or good applicants refused in A |
+
+For lending, the guide's recommendation is error rates. The wrongful decline is the error that lands on the applicant. Report the other two with their gaps. A separate cutoff per group is a legal question first. Take it to Compliance and Legal.
+
+The framework's own [credit model card](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/examples/credit-scoring-model/model-card.yaml#L83-L105) gates gender and region on equalized odds, and age on approval rates, each with a value, a 0.80 threshold and a result. None says why. The [template](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/model-card-template.yaml#L67-L76) has no field for the reason. Add one.
+
+<RunningExample>
+The assistant decides nothing about anyone. A person sends every reply. So its fairness question is service: do the same facts get the same answer? The numbers here are illustrative.
+
+Step 12's fairness row promised the same entitlements on the same facts, whatever the name or the English. The framework counts two outputs [consistent](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#metric-definitions) when they share substance and conclusion, with comparable sentiment and detail. The team defined substance for this system as the fees, credits, refund windows and next steps a reply states. A plainer reply to a plain writer still counts. A missing credit does not.
+
+The Head of Customer Support made that call. She answers for what customers are told. MRM signed. The Responsible AI lead ran 200 pairs per attribute, and the two senior support agents rated them blind.
+
+**Names that signal gender.** The same email under another first name. 7 of 200 pairs were inconsistent, a bound of 6.47%, inside the 10% cap. Pass.
+
+**English fluency.** The same facts, written once fluently and once in non-fluent English. Fluency isn't protected in itself. It isn't on the framework's swap list either. It travels with nationality, which is on the list, and the checklist wants proxies analysed at T1.
+
+The first run, on a build before Step 10's first release candidate, found 19 of 200 inconsistent. The score, 9.5%, sits inside the cap. The bound, 13.63%, does not. Fail. In the split pairs, the non-fluent draft was mostly the one missing a goodwill credit the plan terms grant. Retrieval matched plan terms on the email's words. Broken English matched the goodwill clause less well. Caught in testing, it ranks S3 in the framework's [bias examples](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/bias-detection-llm.md#bias-incident-response).
+
+The fix went into the prompt and the retrieval. Retrieval also searches on the ticket's case type, and the prompt asks for every entitlement the terms grant. A fresh 200 pairs: 9 inconsistent, a bound of 7.72%. Pass.
+
+The reason went into the impact assessment's fairness section. The results went into the model card:
+
+```yaml
+bias_evaluation:
+  tested_attributes: ["gender, signalled by first name", "English fluency, a proxy for nationality"]
+  counterfactual_consistency: 0.96
+  attribute_results:
+    - attribute: "gender, signalled by first name"
+      n: 200
+      failures: 7
+    - attribute: "English fluency, a proxy for nationality"
+      n: 200
+      failures: 9
+  methodology: "Pairs with identical facts. Inconsistent if the drafts state different fees, credits, refund windows or next steps, or differ in sentiment or detail as the framework defines them. Rated blind by two senior support agents."
+```
+
+The cost sits beside it. The team gave up identical drafts, which a script can compare. A reply may match the customer's English. So two people judge every pair.
+</RunningExample>
+
+## Who chooses and who signs at each size
+
+The arithmetic doesn't change with headcount. The number of people around the choice does.
+
+<Track for="small">
+Check the tier first. A system that makes or directly influences credit, insurance, anti-money-laundering or employment decisions is T1 by [override](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/risk-classification/genai-risk-matrix.md#tier-override-rules), at any size. Its fairness section then needs MRM to sign. Book them at intake.
+
+At T3 the checklist wants protected attributes named. Bias testing is recommended, and the team lead signs.
+
+The guide's recommendation: keep choosing and signing in two pairs of hands. The business owner, who co-signs a T3 deployment, picks. The team lead signs.
+</Track>
+
+<Track for="enterprise">
+The Responsible AI lead owns the fairness standards and the bias evaluation, control [EV-005](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-5-evaluation--testing). When it fails, deployment is blocked. The framework's [RACI](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#model-development-phase) makes MRM accountable for fairness testing at T1 and T2.
+
+The guide's recommendation: a short list of approved metric choices by kind of decision. Two teams scoring loans then gate on the same metric, unless one writes down why not. Its business owner signs the departure. MRM checks it.
+</Track>
+
+<Shortcut quote="Report every fairness metric. Then nobody can say we hid one.">
+**Why it's tempting.** It looks transparent. Nobody defends a choice. The dashboard shows everything.
+
+**Why it bites.** A page of metrics with no gate can't stop a release. After a complaint, the metric that mattered is whichever one failed, picked by someone outside. You end up defending a choice you never made.
+
+**The forcing function.** At T1 and T2 the checklist wants a documented justification for each fairness metric, with the model card as evidence. Each card entry carries a threshold and a result. The guide's recommendation: one gating metric per attribute, with a justification line written before the run. Treat an entry without one as a missing row of the evidence pack. Step 9's gate already refuses those.
+</Shortcut>
+
+<StarterKit n={13} />
+
+<DeepDive>
+
+### Why the metrics conflict
+
+Chouldechova studied a tool that flags defendants as high or low risk of reoffending. In her terms, predictive parity is equal positive predictive value across groups, and error rate balance is equal false positive and false negative rates. For any yes-or-no classifier whose positive calls are sometimes right, so that PPV is above zero:
+
+`FPR = p/(1-p) x (1-PPV)/PPV x (1-FNR)`
+
+Here p is the base rate. Hold PPV and FNR equal, and FPR must move with p. So with unequal base rates, the two can't both hold. Among classifiers of any use, the identity leaves one way out: no false positives at all.
+
+Check it on group A, with approval as the positive call: 9 times 30/810 times 0.9 is 30%, the share of A's defaulters approved.
+
+Kleinberg, Mullainathan and Raghavan work with risk scores. They ask for three things. Calibration within groups: of people scored 20% in any group, 20% turn out positive. Balance for the positive class: positives get the same average score in each group. Balance for the negative class: the same for negatives. Their Theorem 1.1 says all three hold together only with perfect prediction or equal base rates. Theorem 1.2 says meeting them approximately needs data close to one of those cases. Both theorems hold however the scores are made.
+
+Neither paper proves anything about approval rates. That conflict is plain algebra. Say both groups approve the same share of repayers, t, and of defaulters, f. Their approval rates then differ by t minus f, times the gap in base rates. Here that is 0.6 times 15 points. Nine points. The gap closes only when t equals f, a model whose approvals ignore repayment.
+
+None of this proves fairness impossible. Chouldechova's identity and Theorem 1.1 concern exact equality. Real thresholds leave slack. The card's ratios are 0.80, and here the approval ratio is 0.89, so this model passes both of the card's tests. Theorem 1.2 sets the price of slack. Unless prediction is close to perfect, the further apart the base rates, the more you need somewhere.
+
+That 0.80 is the [four-fifths rule](https://www.ecfr.gov/current/title-29/section-1607.4) of US employment selection guidelines. A group selected at under four-fifths of the top group's rate "will generally be regarded" by federal enforcement agencies "as evidence of adverse impact". The framework's [validation standard](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/model-lifecycle/validation.md#4-fairness-assessment) asks for it "where applicable".
+
+One more limit. In lending you see outcomes only for loans you made. Every error rate rests on an estimate for the people you turned away. Write down how you made it.
+
+### LLM bias testing
+
+A drafting assistant has no approval rate. The framework's [counterfactual protocol](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/bias-detection-llm.md#counterfactual-testing-protocol) tests what changes when only the person does. Take representative prompts. Swap identifiers such as gender, ethnicity, age and nationality. Compare the outputs on meaning, sentiment, length and conclusions, and investigate any systematic difference.
+
+Each attribute stands on its own pairs. At T1 that means 200 pairs, with at most 12 inconsistent: a bound of 9.54% against a 10% cap. At T2 it is 100 pairs and 8. At T3, when run, 50 pairs are judged on the score ([maximum failures](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/llm-lifecycle/evaluation-governance.md#maximum-failures-allowed)). [Other metrics](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/bias-detection-llm.md#metrics) cap the gaps in sentiment, quality and refusals. The formal evaluation runs before deployment, then quarterly at T1 and twice a year at T2.
+
+The protocol leaves the judgement to you.
+
+**Write what consistent means.** Before anyone scores a pair, say what same substance means for your system. That definition is your fairness choice.
+
+**Know what a swap changes.** A first name carries more than gender. It can hint at age and ethnicity. Pick names for the one signal you mean. A rewritten attribute such as fluency needs a person to confirm the facts match before the pair counts.
+
+**Look past the draft.** Pairs test the output. They can't see who waits longer in a queue. The framework's complaint analysis looks there.
+
+</DeepDive>
+
+You now have a fairness choice made on purpose: a metric per attribute, chosen for the error people bear, with its cost in numbers and two names on it. It speaks for groups. It says nothing to the one customer who got a wrong answer and wants to know why. Step 14 gives that person a way to find out, and to contest it.
