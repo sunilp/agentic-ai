@@ -2,7 +2,7 @@ import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 from govkit import Svg, INK, GREY, BRICK
 
-# Stage names follow framework/governance-operations/governance-workflow.md at v2.3.0:
+# Stage names follow framework/governance-operations/governance-workflow.md at v2.4.0:
 # 1 Idea Intake, 2 Risk Assessment & Tiering, 3 Architecture & Design Review,
 # 4 Development & Prompt Engineering, 5 Evaluation & Testing, 6 Security Review & Red-Teaming,
 # 7 Deployment Approval, 8 Production Operations, 9 Ongoing Governance, 10 Deprecation & Retirement.

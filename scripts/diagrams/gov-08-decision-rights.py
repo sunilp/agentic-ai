@@ -8,7 +8,7 @@ ALT = ('Who decides, by tier. Four rows across T1 to T4. Build, meaning approve 
        'the CISO and, for personal data, the DPO; Head of AI with the Business Unit Head; team lead with the '
        'business owner; team lead. Exception: AI Risk Committee, Head of AI Risk, Head of AI, team lead. '
        'Cells decided outside the build team are shaded: every T1 and T2 cell, and the T3 exception. '
-       'Two rows apply at every tier: a change goes back to the ship approver after revalidation, and '
+       'Two rows apply at every tier: a material change goes back to the ship approver after revalidation, and '
        'whoever is on call can stop a system first and tell the owners after.')
 s = Svg(880, 482, ALT)
 

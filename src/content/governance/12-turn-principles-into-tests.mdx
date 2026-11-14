@@ -10,26 +10,26 @@ sources:
     url: "https://doi.org/10.6028/NIST.AI.100-1"
     authors: ["National Institute of Standards and Technology"]
     year: 2023
-  - title: "AI Governance Framework v2.3.0: AI policy template, principles"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-policy.md#3-principles"
-  - title: "AI Governance Framework v2.3.0: responsible AI pre-deployment checklist"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/responsible-ai-checklist.md"
-  - title: "AI Governance Framework v2.3.0: impact assessment template"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/impact-assessment-template.md"
-  - title: "AI Governance Framework v2.3.0: control register, Stage 2 risk assessment and tiering (RA-003)"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-2-risk-assessment--tiering"
-  - title: "AI Governance Framework v2.3.0: control register, Stage 5 evaluation and testing (EV-005)"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-5-evaluation--testing"
-  - title: "AI Governance Framework v2.3.0: governance workflow, minimum evidence pack by tier"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#minimum-evidence-pack-by-tier"
-  - title: "AI Governance Framework v2.3.0: bias detection for LLM systems, counterfactual testing protocol"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/bias-detection-llm.md#counterfactual-testing-protocol"
-  - title: "AI Governance Framework v2.3.0: human-in-the-loop patterns, reviewer fatigue mitigation"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/human-in-loop-patterns.md#reviewer-fatigue-mitigation"
-  - title: "AI Governance Framework v2.3.0: roles and responsibilities, role definitions"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions"
-  - title: "AI Governance Framework v2.3.0: NIST AI RMF mapping, gaps and recommendations"
-    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/nist-ai-rmf-mapping.md#gaps-and-recommendations"
+  - title: "AI Governance Framework v2.4.0: AI policy template, principles"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/templates/ai-policy.md#3-principles"
+  - title: "AI Governance Framework v2.4.0: responsible AI pre-deployment checklist"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/compliance/responsible-ai-checklist.md"
+  - title: "AI Governance Framework v2.4.0: impact assessment template"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/templates/impact-assessment-template.md"
+  - title: "AI Governance Framework v2.4.0: control register, Stage 2 risk assessment and tiering (RA-003)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/governance-operations/control-register.md#stage-2-risk-assessment--tiering"
+  - title: "AI Governance Framework v2.4.0: control register, Stage 5 evaluation and testing (EV-005)"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/governance-operations/control-register.md#stage-5-evaluation--testing"
+  - title: "AI Governance Framework v2.4.0: governance workflow, minimum evidence pack by tier"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/governance-operations/governance-workflow.md#minimum-evidence-pack-by-tier"
+  - title: "AI Governance Framework v2.4.0: bias detection for LLM systems, counterfactual testing protocol"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/responsible-ai/bias-detection-llm.md#counterfactual-testing-protocol"
+  - title: "AI Governance Framework v2.4.0: human-in-the-loop patterns, reviewer fatigue mitigation"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/responsible-ai/human-in-loop-patterns.md#reviewer-fatigue-mitigation"
+  - title: "AI Governance Framework v2.4.0: roles and responsibilities, role definitions"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/operating-model/roles-responsibilities.md#role-definitions"
+  - title: "AI Governance Framework v2.4.0: NIST AI RMF mapping, gaps and recommendations"
+    url: "https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/compliance/nist-ai-rmf-mapping.md#gaps-and-recommendations"
 ---
 import Track from '~/components/governance/Track.astro';
 import Shortcut from '~/components/governance/Shortcut.astro';
@@ -48,13 +48,13 @@ Both lines sit in the same policy. Only one of them could ever fail. Parts I to 
 
 ## Give every principle a test it can fail
 
-Start from your policy's principles, one row each. The framework's [policy template](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-policy.md#3-principles) lists nine. Five arrive with a commitment written in: accountability, proportionality, human oversight, lawful use and continual improvement. Four arrive blank, as Step 2 said: fairness, transparency, reliability and safety, and security and privacy. The template already names where each is enforced. You add the rest of the row.
+Start from your policy's principles, one row each. The framework's [policy template](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/templates/ai-policy.md#3-principles) lists nine. Five arrive with a commitment written in: accountability, proportionality, human oversight, lawful use and continual improvement. Four arrive blank, as Step 2 said: fairness, transparency, reliability and safety, and security and privacy. The template already names where each is enforced. You add the rest of the row.
 
 1. **Write a commitment a test can fail.** One sentence, in your organisation's words. Picture the breach. The template's own "Humans oversee AI in proportion to its impact" names none. "A trained agent reads every draft before it is sent" does. Write the sharp version for each system, where you know who it touches.
-2. **Give it a test, and a threshold where one fits.** Use the framework's numbers where they exist, such as the tier caps for hallucination and the [counterfactual caps](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/bias-detection-llm.md#counterfactual-testing-protocol) for fairness. Zero counts as a threshold: no entry without an owner, no leaked record. Fix every threshold before the first run.
-3. **Name one owner.** The person who hears first when the test fails. The framework's pre-deployment [checklist](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/responsible-ai-checklist.md) names who signs four of the principles, tier by tier, and it splits security from privacy. Do the same. Two owners means two commitments, so give them two rows.
-4. **Give the result a row in the evidence pack.** The gate reads the pack. A result kept anywhere else never meets a release. Most land in one of the framework's [17 rows](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/governance-workflow.md#minimum-evidence-pack-by-tier): fairness and reliability in the evaluation report, security in the red-team report, privacy in the DPIA.
-5. **Run the impact assessment before development.** The framework requires one at T1 and T2, and a system without it [cannot proceed](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-2-risk-assessment--tiering) to development. Here your principles meet the people one system touches.
+2. **Give it a test, and a threshold where one fits.** Use the framework's numbers where they exist, such as the tier caps for hallucination and the [counterfactual caps](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/responsible-ai/bias-detection-llm.md#counterfactual-testing-protocol) for fairness. Zero counts as a threshold: no entry without an owner, no leaked record. Fix every threshold before the first run.
+3. **Name one owner.** The person who hears first when the test fails. The framework's pre-deployment [checklist](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/compliance/responsible-ai-checklist.md) names who signs four of the principles, tier by tier, and it splits security from privacy. Do the same. Two owners means two commitments, so give them two rows.
+4. **Give the result a row in the evidence pack.** The gate reads the pack. A result kept anywhere else never meets a release. Most land in one of the framework's [17 rows](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/governance-operations/governance-workflow.md#minimum-evidence-pack-by-tier): fairness and reliability in the evaluation report, security in the red-team report, privacy in the DPIA.
+5. **Run the impact assessment before development.** The framework requires one at T1 and T2, and a system without it [cannot proceed](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/governance-operations/control-register.md#stage-2-risk-assessment--tiering) to development. Here your principles meet the people one system touches.
 6. **Let the people closest to the system change it.** Ask them, then record what changed because they spoke. The framework lists outside feedback as a gap, so the record is the guide's recommendation.
 
 **The guide's call: a principle without a test is a slogan.** A slogan is free to keep. No result can show you broke it. A tested principle can embarrass you, and that is its job: it tells you before a customer does.
@@ -73,11 +73,11 @@ Read the top row from the left. Each box needs the one before it, and a principl
 
 You have built one chain already. Step 10 did it for reliability and safety: a claim set before the run, a suite sized to the tier, a pass on the bound, the AI lead and Model Risk Management, the evaluation report. This step does the same for every other line.
 
-**Four kinds of test.** A query checks accountability and proportionality against the register and the pack. An evaluation runs fairness, reliability, security and privacy on cases. A drill tests oversight and transparency. You plant a known-wrong draft in the review queue, a control the framework already lists under [reviewer fatigue](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/responsible-ai/human-in-loop-patterns.md#reviewer-fatigue-mitigation), or you send a test complaint and watch where it lands. A review covers lawful use and continual improvement. Someone checks a record against a rule and signs.
+**Four kinds of test.** A query checks accountability and proportionality against the register and the pack. An evaluation runs fairness, reliability, security and privacy on cases. A drill tests oversight and transparency. You plant a known-wrong draft in the review queue, a control the framework already lists under [reviewer fatigue](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/responsible-ai/human-in-loop-patterns.md#reviewer-fatigue-mitigation), or you send a test complaint and watch where it lands. A review covers lawful use and continual improvement. Someone checks a record against a rule and signs.
 
 **Numbers only where they fit.** A rate needs a cap and a bound. A drill needs a bar set before it runs. Some rows take no number. Whether each law that applies has a control is a yes or a no, and Compliance signs it. Don't invent a percentage to look measured.
 
-**One name, the one who hears first.** In the framework's register, the owner is the role that produces the evidence, which isn't always the role accountable for the decision ([role definitions](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/roles-responsibilities.md#role-definitions)). In this table, name whoever hears first. A committee never does. When a case fails, tag it with the principle it breaks, as in [failure buckets](/patterns/failure-buckets/). A steady pass rate then can't hide a promise that is slipping.
+**One name, the one who hears first.** In the framework's register, the owner is the role that produces the evidence, which isn't always the role accountable for the decision ([role definitions](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/operating-model/roles-responsibilities.md#role-definitions)). In this table, name whoever hears first. A committee never does. When a case fails, tag it with the principle it breaks, as in [failure buckets](/patterns/failure-buckets/). A steady pass rate then can't hide a promise that is slipping.
 
 Now look at what you wrote. If a test you already run could produce that result, you have a row. If you wrote a mood, such as "complaints would go up", you have a signal with no threshold. If your named person would hear second, after a customer, move the test earlier.
 
@@ -117,9 +117,9 @@ The guide's recommendation: let CI run every row it can, such as the register ch
 </Track>
 
 <Track for="enterprise">
-Each principle gets an owner at two levels. A programme owner sets the standard and the threshold every system meets. Drawn from the framework's roles, the guide's assignment is the Responsible AI lead for fairness, Compliance for transparency and lawful use, the DPO for privacy, Security for security, and AI Risk for accountability and proportionality. Continual improvement goes to the Head of MRM, who runs the framework's [annual review](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/operating-model/review-cadence.md#annual-activities). Each system's row names who runs its test.
+Each principle gets an owner at two levels. A programme owner sets the standard and the threshold every system meets. Drawn from the framework's roles, the guide's assignment is the Responsible AI lead for fairness, Compliance for transparency and lawful use, the DPO for privacy, Security for security, and AI Risk for accountability and proportionality. Continual improvement goes to the Head of MRM, who runs the framework's [annual review](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/operating-model/review-cadence.md#annual-activities). Each system's row names who runs its test.
 
-The checklist's section sign-offs feed the deployment approval at Stage 7 ([final approval](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/responsible-ai-checklist.md#final-approval)). A T1 release with an unsigned section stops there.
+The checklist's section sign-offs feed the deployment approval at Stage 7 ([final approval](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/compliance/responsible-ai-checklist.md#final-approval)). A T1 release with an unsigned section stops there.
 
 The guide's recommendation: one line per principle in the committee's quarterly portfolio view, counting the T1 and T2 systems with a current passing result. When one row fails across many systems, fix the standard behind it.
 </Track>
@@ -129,7 +129,7 @@ The guide's recommendation: one line per principle in the committee's quarterly 
 
 **Why it bites.** A published principle is a promise outsiders can check, and someone will check the line you didn't. Inside, "later" comes only for the easy rows. Reliability already had a gate, so it gets tested. Fairness and transparency stay blank. Teams learn that the principles bind nobody.
 
-**The forcing function.** The template's [Policy on a Page](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/ai-policy.md#policy-on-a-page) gives every line an owner and "how a breach shows". Hold the principles to the same rule: each goes on the page with its test and owner, or it waits. The gate does the rest. At T1 and T2 a missing bias evaluation [blocks deployment](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/governance-operations/control-register.md#stage-5-evaluation--testing) under control EV-005.
+**The forcing function.** The template's [Policy on a Page](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/templates/ai-policy.md#policy-on-a-page) gives every line an owner and "how a breach shows". Hold the principles to the same rule: each goes on the page with its test and owner, or it waits. The gate does the rest. At T1 and T2 a missing bias evaluation [blocks deployment](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/governance-operations/control-register.md#stage-5-evaluation--testing) under control EV-005.
 </Shortcut>
 
 <StarterKit n={12} />
@@ -138,23 +138,23 @@ The guide's recommendation: one line per principle in the committee's quarterly 
 
 ### Impact assessment
 
-The framework's [impact assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/impact-assessment-template.md) is control RA-003: required at T1 and T2, recommended at T3, completed by the product owner before development. The business owner, Model Risk Management and Compliance sign it, and so does the AI Risk Committee at T1.
+The framework's [impact assessment](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/templates/impact-assessment-template.md) is control RA-003: required at T1 and T2, recommended at T3, completed by the product owner before development. The business owner, Model Risk Management and Compliance sign it, and so does the AI Risk Committee at T1.
 
-Its core is who is affected and how. Section 2 asks what a wrong output does to a customer, how they appeal, which [vulnerable groups](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/impact-assessment-template.md#23-vulnerable-populations) it hits harder and what they are told. Section 3 covers fairness, transparency, privacy and autonomy, including the oversight pattern. Section 5 is the EU AI Act's fundamental rights impact assessment under Article 27, which the template asks for only where your role record puts you in scope.
+Its core is who is affected and how. Section 2 asks what a wrong output does to a customer, how they appeal, which [vulnerable groups](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/templates/impact-assessment-template.md#23-vulnerable-populations) it hits harder and what they are told. Section 3 covers fairness, transparency, privacy and autonomy, including the oversight pattern. Section 5 is the EU AI Act's fundamental rights impact assessment under Article 27, which the template asks for only where your role record puts you in scope.
 
 Name people. "Customers" hides the one writing in a second language. Add people the record never shows, such as the agents whose day changes when every draft needs checking. Then write each harm as a sequence. "Bias risk" is a heading. "The draft leaves out a credit the plan grants, the agent misses it because the draft reads as complete, and the customer never knows to ask" is a claim you can test. Each one becomes a commitment in a row, or a case in its test.
 
-**When the answer is no.** The [recommendation](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/templates/impact-assessment-template.md#7-recommendation) offers four outcomes, and one is "Not approved". It comes before development, so a no costs a meeting. Nothing has been built. NIST's AI RMF asks in MANAGE 1.1 whether development or deployment should proceed. Where a system presents unacceptable negative risk, it says "development and deployment should cease in a safe manner until risks can be sufficiently managed" ([NIST AI 100-1](https://doi.org/10.6028/NIST.AI.100-1), section 1.2.3).
+**When the answer is no.** The [recommendation](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/templates/impact-assessment-template.md#7-recommendation) offers four outcomes, and one is "Not approved". It comes before development, so a no costs a meeting. Nothing has been built. NIST's AI RMF asks in MANAGE 1.1 whether development or deployment should proceed. Where a system presents unacceptable negative risk, it says "development and deployment should cease in a safe manner until risks can be sufficiently managed" ([NIST AI 100-1](https://doi.org/10.6028/NIST.AI.100-1), section 1.2.3).
 
 The guide's recommendation: write down what would make the answer no before you start. Put two cases on the list. A harm lands on people who can't see it or contest it, and no control catches it in time. Or the review can't work, because the reviewer has nothing to check the output against.
 
 A no can cover part of a system. Step 4's screen rejects what your policy prohibits. The impact assessment rejects uses that are allowed and still cost the people they touch too much. The assistant's assessment names two things it will never do: decide a refund or waive a fee. A person keeps both.
 
-**Keep it current.** The control register sets RA-003 once, before development. The guide's recommendation: reopen the assessment on every material change. The open request to send password-reset replies without review changes the oversight pattern in section 3.4. It also changes who gets hurt when a draft is wrong, and how fast.
+**Keep it current.** The control register has RA-003 completed before development and reviewed on every material change. The open request to send password-reset replies without review is one. It changes the oversight pattern in section 3.4. It also changes who gets hurt when a draft is wrong, and how fast.
 
 ### Stakeholder input
 
-The impact assessment lists who is affected. It asks them nothing. The framework's own NIST mapping [records the gap](https://github.com/sunilp/ai-governance-framework/blob/v2.3.0/framework/compliance/nist-ai-rmf-mapping.md#gaps-and-recommendations): no process yet for feedback from outside the team. NIST's GOVERN 5.1 asks for practices "to collect, consider, prioritize, and integrate feedback from those external to the team that developed or deployed the AI system". GOVERN 5.2 asks that adjudicated feedback reach system design. What follows is the guide's recommendation.
+The impact assessment lists who is affected. It asks them nothing. The framework's own NIST mapping [records the gap](https://github.com/sunilp/ai-governance-framework/blob/v2.4.0/framework/compliance/nist-ai-rmf-mapping.md#gaps-and-recommendations): no process yet for feedback from outside the team. NIST's GOVERN 5.1 asks for practices "to collect, consider, prioritize, and integrate feedback from those external to the team that developed or deployed the AI system". GOVERN 5.2 asks that adjudicated feedback reach system design. What follows is the guide's recommendation.
 
 **Log input by what it changed.** Who spoke, what they asked for, what changed or why not, and who decided. A request with no recorded answer teaches people to stop asking. Step 7 made the same point about near-misses.
 

@@ -1,5 +1,5 @@
 /**
- * The framework's tiering rule (ai-governance-framework v2.3.0,
+ * The framework's tiering rule (ai-governance-framework v2.4.0,
  * framework/risk-classification/risk-matrix.md "Classification Criteria" and
  * genai-risk-matrix.md "Tier Override Rules"):
  *   Step 0: a prohibited use is rejected, not tiered.
