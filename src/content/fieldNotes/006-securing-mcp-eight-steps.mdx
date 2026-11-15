@@ -1,0 +1,367 @@
+---
+id: fn-006
+title: "Securing MCP: eight steps and the attack each one stops"
+dek: "The MCP spec secures who may call a server. What the model obeys is mostly left to you. Here are eight steps, the attack each one stops, and how to check you took it."
+description: "Eight steps to secure an MCP agent on the 2026-07-28 spec, each with the attack it stops, the code or config to change, and a check. The companion page to the video How MCP Works, and How It Gets Attacked."
+primaryChapter: ch-11
+banner: /assets/banners/fn-006.png
+date: 2026-11-15
+readingTime: 13
+pullQuote: The model reads the words. Your code sets the limits.
+references: [ch-11, ch-13]
+patterns: [capability-gate]
+sources:
+  - title: "Model Context Protocol Specification (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Key Changes (2026-07-28 changelog)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/changelog
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Versioning"
+    url: https://modelcontextprotocol.io/specification/versioning
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Architecture (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/architecture
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Base Protocol Overview (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Transports Overview (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic/transports
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "stdio transport (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/stdio
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Streamable HTTP transport (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Authorization (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Authorization Server Discovery (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/authorization-server-discovery
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Client Registration (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/client-registration
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Authorization Security Considerations (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/security-considerations
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Tools (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/server/tools
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Resources (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/server/resources
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Prompts (2026-07-28)"
+    url: https://modelcontextprotocol.io/specification/2026-07-28/server/prompts
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Lifecycle (2025-11-25, superseded)"
+    url: https://modelcontextprotocol.io/specification/2025-11-25/basic/lifecycle
+    authors: [Model Context Protocol]
+    year: 2025
+  - title: "Security Best Practices (2026-07-28 docs)"
+    url: https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Local Server Security (2026-07-28 docs)"
+    url: https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/local-server-security
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "What is the Model Context Protocol (MCP)?"
+    url: https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Architecture overview (docs)"
+    url: https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture
+    authors: [Model Context Protocol]
+    year: 2026
+  - title: "Introducing the Model Context Protocol"
+    url: https://www.anthropic.com/news/model-context-protocol
+    authors: [Anthropic]
+    year: 2024
+  - title: "Donating the Model Context Protocol and establishing the Agentic AI Foundation"
+    url: https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation
+    authors: [Anthropic]
+    year: 2025
+  - title: "MCP Security Notification: Tool Poisoning Attacks"
+    url: https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks
+    authors: [Beurer-Kellner L., Fischer M.]
+    year: 2025
+  - title: "WhatsApp MCP Exploited: Exfiltrating your message history via MCP"
+    url: https://invariantlabs.ai/blog/whatsapp-mcp-exploited
+    authors: [Beurer-Kellner L., Fischer M.]
+    year: 2025
+  - title: "GitHub MCP Exploited: Accessing private repositories via MCP"
+    url: https://invariantlabs.ai/blog/mcp-github-vulnerability
+    authors: [Milanta M., Beurer-Kellner L.]
+    year: 2025
+  - title: "Jumping the line: How MCP servers can attack you before you ever use them"
+    url: https://blog.trailofbits.com/2025/04/21/jumping-the-line-how-mcp-servers-can-attack-you-before-you-ever-use-them/
+    authors: [Trail of Bits]
+    year: 2025
+  - title: "Model Context Protocol has prompt injection security problems"
+    url: https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/
+    authors: [Willison S.]
+    year: 2025
+  - title: "The lethal trifecta for AI agents: private data, untrusted content, and external communication"
+    url: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+    authors: [Willison S.]
+    year: 2025
+  - title: "First Malicious MCP in the Wild: The Postmark Backdoor That's Stealing Your Emails (Wayback snapshot; the live URL now redirects)"
+    url: https://web.archive.org/web/20260101202603/https://www.koi.ai/blog/postmark-mcp-npm-malicious-backdoor-email-theft
+    authors: [Dardikman I.]
+    year: 2025
+  - title: "Design Patterns for Securing LLM Agents against Prompt Injections"
+    url: https://arxiv.org/abs/2506.08837
+    authors: [Beurer-Kellner L., Buesser B., Cretu A., et al.]
+    year: 2025
+---
+
+import YouTube from '~/components/universal/YouTube.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+Every MCP server you add can put words in front of your model. Its tool descriptions [go into the model's context](https://blog.trailofbits.com/2025/04/21/jumping-the-line-how-mcp-servers-can-attack-you-before-you-ever-use-them/), and its [tool results](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture) go there too. The server code you install runs on your machine. That openness is what makes MCP useful. It is also how agents get attacked.
+
+MCP, the Model Context Protocol, is an [open standard](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro) for connecting AI apps to tools and data. Anthropic [released it](https://www.anthropic.com/news/model-context-protocol) in November 2024. In December 2025 it [gave MCP](https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation) to the Agentic AI Foundation, a directed fund under the Linux Foundation. The [MCP docs](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture) use three terms that the rest of this page needs. The host is the AI app you use, such as Cursor. An MCP server offers tools and data to it. A tool is an action the model can call, like a database query.
+
+The video traces one MCP call on the 2026-07-28 spec, the [current version](https://modelcontextprotocol.io/specification/versioning), and ends with a checklist. This page is that checklist, with the reasons.
+
+## Three ways in
+
+Start with one example. Invariant Labs built a [proof of concept](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) on their own test server: a tool called `add`. Its description tells the model to read `~/.ssh/id_rsa` and pass the contents out in a hidden argument called `sidenote`. The model sees the whole description. Users usually see a short version. When Invariant ran it in Cursor, the agent read the user's MCP config and SSH keys and sent them to the server.
+
+The video covers three ways in. Two are words the model reads: tool descriptions, when tools are listed, and tool results, when a tool runs. The [MCP docs](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/local-server-security) say it plainly: tool names and descriptions are instructions your model reads. The third way in is code. The server package you install runs on your machine.
+
+The model can't sort this out for you. As Simon Willison [puts it](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/), LLMs can't reliably weigh instructions by where they came from, because everything ends up glued into one sequence of tokens. So the limits have to sit in code.
+
+The spec secures who may call a remote server. What the model obeys is mostly left to you. Here are the eight steps:
+
+1. [Read and hash tool definitions, and ask again when one changes](#1-read-and-hash-tool-definitions-and-ask-again-when-one-changes)
+2. [Show full descriptions and arguments](#2-show-full-descriptions-and-arguments)
+3. [Give each task least privilege](#3-give-each-task-least-privilege)
+4. [Pin exact versions, and run local servers in containers](#4-pin-exact-versions-and-run-local-servers-in-containers)
+5. [Bind tokens to one server, and never pass them on](#5-bind-tokens-to-one-server-and-never-pass-them-on)
+6. [Use CIMD over DCR](#6-use-cimd-over-dcr)
+7. [Check the issuer before you redeem a code](#7-check-the-issuer-before-you-redeem-a-code)
+8. [Break one leg of the lethal trifecta](#8-break-one-leg-of-the-lethal-trifecta)
+
+Steps 1 to 4 and step 8 are yours to build. Steps 5 to 7 are rules the spec already sets for remote servers, and they only help if your code follows them.
+
+## 1. Read and hash tool definitions, and ask again when one changes
+
+**The attack.** Tool poisoning. Instructions hidden in a tool description are [visible to the model and invisible to users](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks), as in the `add` tool above. Two variants make it worse. In a rug pull, a server changes a tool's description after you approved it, so a one-time approval does not cover you. In shadowing, one server's description changes how the agent uses another server's tool, and in Invariant's demo the agent sent every email to the attacker, even when the user named a different recipient. The bad tool never has to run. Trail of Bits calls this [line jumping](https://blog.trailofbits.com/2025/04/21/jumping-the-line-how-mcp-servers-can-attack-you-before-you-ever-use-them/), because a server can attack before any tool is called. As [Invariant notes](https://invariantlabs.ai/blog/whatsapp-mcp-exploited), sandboxing that server does not help. The attack needs nothing but the agent following instructions.
+
+**What to do.** When you add a server, [read its tool list](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/local-server-security) before you rely on it, then hash each tool definition and store the hash with the approval. Invariant [recommends](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) a hash or checksum of each tool description, checked before the tool runs. Hash the whole definition, input schema included. The `add` tool smuggled the key out through an extra `sidenote` parameter, so a new parameter should trigger a new approval too.
+
+```python
+import hashlib, json
+
+def tool_hash(tool: dict) -> str:
+    # the whole definition: name, description, inputSchema, ...
+    canon = json.dumps(tool, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(canon.encode()).hexdigest()
+
+# at approval: approved[server] = {name: tool_hash(t) for each t}
+# on every tools/list response:
+def needs_approval(server, tools, approved):
+    pinned = approved.get(server, {})
+    return [t["name"] for t in tools
+            if pinned.get(t["name"]) != tool_hash(t)]
+# a new or edited tool lands in this list: keep its definition
+# out of the model's context, then ask again
+```
+
+Hold a changed definition back from the model until the person approves it. A description works on the model as soon as it is in the context, even if the tool never runs. Show the person the new text when you ask. [Willison](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/) asks clients to show the first descriptions and alert on any change. The protocol doesn't require this. Some clients do it, so the [MCP docs](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/local-server-security) call it worth choosing a client for. If yours doesn't, add the check to your own agent. Keep your server list short as well. The docs warn that every server you add extends the surface the others are exposed to.
+
+**How to check.** Connect your client to a test server you control. Approve it. Edit one word in one tool description, or add a parameter, and reconnect. The client should ask you again before the model sees the new text. If the model can see it or call the tool first, the pin is missing. Repeat with a description that mentions another server's tool, since that is how shadowing works.
+
+## 2. Show full descriptions and arguments
+
+**The attack.** The same Cursor test. Cursor showed a confirmation dialog, but [even in its extended mode](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) it did not show the full tool input. The SSH key in `sidenote` was hidden. That was Cursor as tested in April 2025, and its dialog may have changed since. Invariant says the attack works on any client that does not properly validate or display tool descriptions.
+
+**What to do.** The spec asks for two things. There [SHOULD always be a human](https://modelcontextprotocol.io/specification/2026-07-28/server/tools) who can deny a tool call. Clients should show tool inputs to the user before calling the server, to avoid data exfiltration. Apply both in full. When someone approves a server, show every tool description as the model will see it, and when they approve a call, show every argument with nothing cut short. A hidden argument is where the `add` tool carried the key.
+
+**How to check.** Make a test call with a long argument, a few kilobytes of text. Before you allow it, the approval screen must show all of it, or let you open all of it. Then add a test server whose description is longer than a screen. You should be able to read every word the model gets.
+
+## 3. Give each task least privilege
+
+**The attack.** Instructions in a tool result, from an honest server. In a [demo by Invariant Labs](https://invariantlabs.ai/blog/mcp-github-vulnerability), the instructions sat in a public GitHub issue. Once the agent read that issue, it pulled private repository data into its context and leaked it in a pull request on the public repository. It worked with fully trusted tools. Invariant called it an architectural issue at the agent level, outside the GitHub MCP server's own code. The researchers showed it on their own test repositories.
+
+**What to do.** Limit the agent's access to only the repositories the task needs, as Invariant recommends. Least privilege limits what a leak can reach. Do not count on approval prompts for this, because Invariant notes that many users switch to an Always Allow policy and stop watching single actions. Step 8 is the deeper fix.
+
+**How to check.** Start a session for one task. Ask the agent to read a repository outside that task. The call should fail with a permission error from the server or the API before the model has any say. If it succeeds, the credential is too broad. A repository inside the task should still work, or you have only proved that nothing works.
+
+## 4. Pin exact versions, and run local servers in containers
+
+**The attack.** A malicious package. Someone took the code of Postmark's real MCP server, added one line that BCC'd each email, and [published it to npm](https://web.archive.org/web/20260101202603/https://www.koi.ai/blog/postmark-mcp-npm-malicious-backdoor-email-theft) under the same name, `postmark-mcp`. Versions 1.0.0 through 1.0.15 worked as advertised. Version 1.0.16 added the BCC and changed nothing else. From then on it copied every email to the developer's own server. Koi Security, who found it, called it the first malicious MCP server seen in the wild.
+
+**What to do.** Install a [specific version, never `latest`](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/local-server-security), so a compromised release cannot arrive through an auto-update. Pinning a container image by digest freezes the whole dependency tree. Prefer the digest. Then run each local server in a container. The stdio transport is not a sandbox. Isolation turns "this server can read my SSH keys" into "this server can read an empty directory". Deny network access to any server that doesn't need it.
+
+```bash
+# an exact version, never latest
+npx -y example-mcp-server@1.4.2
+
+# better: an image pinned by digest, in a container that
+# sees one empty work folder and, if it needs none, no network
+# (DIGEST is the image's sha256 digest from your registry)
+docker run -i --rm --network none \
+  -v "$HOME/mcp-work/example:/work" \
+  "example/mcp-server@sha256:${DIGEST}"
+```
+
+Know what each control buys. The pin is what stops `postmark-mcp`. The BCC arrived in a new version, 1.0.16, so a server pinned to 1.0.15 never got it. The container keeps a server away from your keys, but an email server needs the network, so it would not have stopped the BCC. A pin also cannot make a bad version safe. Read what you pin.
+
+Pins do not stop a rug pull either. The [MCP docs](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/local-server-security) say package pinning does not cover a server that changes its tool definitions after you approved it. Step 1 does.
+
+**How to check.** Search your client's MCP config for `latest` and for any package with no version. Every local server should start from an exact version or an image digest. Then open a shell in the same image, with the same flags and mounts, and look for your `.ssh` folder. It should not be there.
+
+## 5. Bind tokens to one server, and never pass them on
+
+Steps 5 to 7 are for remote servers. [Authorization is optional](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) in MCP and defined for HTTP transports, so servers on stdio should take their credentials from the environment instead. A protected MCP server is an OAuth 2.1 resource server. A call with no token gets a 401. Its WWW-Authenticate header [points to the server's metadata](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/authorization-server-discovery), which names at least one authorization server.
+
+**The attack.** The [MCP security guide](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices) warns that a server that skips the audience check may accept tokens issued for other services. The related anti-pattern is token passthrough. A server accepts a client's token without checking it was issued for the server, then passes it on to a downstream API.
+
+**What to do.** The [authorization spec](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) sets the rules. Clients MUST name the server a token is for, with a `resource` parameter under RFC 8707, in both the authorization request and the token request, and they send the token in the Authorization header on every request. Servers MUST validate each token as an OAuth 2.1 resource server and then check that it was issued for them as its audience. Invalid or expired tokens get a 401. Servers MUST NOT accept or pass on any other token, so if your server calls another API, the client's token stays behind.
+
+```text
+# client: in the authorization request and the token request
+&resource=https%3A%2F%2Fmcp.example.com
+
+# client: on every request to the MCP server
+Authorization: Bearer eyJhbGciOiJSUzI1NiIs...
+```
+
+```python
+SELF = "https://mcp.example.com"
+
+def audience_ok(claims: dict) -> bool:
+    # call after the signature and expiry checks
+    aud = claims.get("aud")       # a string or a list
+    if isinstance(aud, str):
+        aud = [aud]
+    if not isinstance(aud, list):
+        return False              # missing or malformed
+    return SELF in aud            # exact match on each entry
+
+# if not audience_ok(claims): answer 401, not issued for this server
+# and never forward this token to another API
+```
+
+Write the check as an exact match. The `isinstance` lines are what make it one. On a string, Python's `in` is a substring test, so an audience of `https://mcp.example.com.attacker.example` would pass. On a list, it compares whole entries.
+
+**How to check.** Get a valid token from your authorization server for a different resource. Send it to your server. You should get a 401. Then search the server code for any place that copies the incoming Authorization header into an outgoing request. There should be none.
+
+## 6. Use CIMD over DCR
+
+**The attack.** A login code sent to an address the real client never listed. With a Client ID Metadata Document, the client ID is an HTTPS URL that points to a JSON document about the client, and the authorization server [MUST check](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/client-registration) the redirect addresses in each request against the ones listed there. Codes go nowhere else.
+
+**What to do.** Host the document at an HTTPS URL and use that URL as your `client_id`. List your real redirect addresses and nothing more. If you run the authorization server, check every redirect against the document. The 2026-07-28 spec [deprecates Dynamic Client Registration](https://modelcontextprotocol.io/specification/2026-07-28/changelog) in favour of Client ID Metadata Documents. If you register clients with DCR today, plan the move. This is the spec's own example, abridged:
+
+```json
+{
+  "client_id": "https://app.example.com/oauth/client-metadata.json",
+  "client_name": "Example MCP Client",
+  "client_uri": "https://app.example.com",
+  "redirect_uris": [
+    "http://127.0.0.1:3000/callback",
+    "http://localhost:3000/callback"
+  ]
+}
+```
+
+**How to check.** Fetch your `client_id` URL. It should return this JSON over HTTPS. Then start a login with your real `client_id` and a `redirect_uri` that is not in the document. The authorization server should refuse it.
+
+## 7. Check the issuer before you redeem a code
+
+**The attack.** A mix-up attack. When a client works with several authorization servers, a hostile one [may try to get the client to send it](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices) a code or token that an honest server issued. PKCE alone does not stop it. The client still sends its code verifier to the attacker's token endpoint.
+
+**What to do.** The [2026-07-28 changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog) adds a rule. When a login code comes back with an `iss` value, the client MUST compare it with the issuer it recorded, under RFC 9207, before it redeems the code. The [spec](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) calls for a simple string comparison. If the authorization server advertises that it sends `iss` and the response has none, reject the response. Keep PKCE as well: clients [MUST use the S256 method](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/security-considerations) when they can.
+
+```python
+# when you start a login, record it under its own state value
+pending[state] = {
+    "issuer": issuer,
+    "sends_iss": as_metadata.get(
+        "authorization_response_iss_parameter_supported", False),
+    "verifier": code_verifier,         # PKCE, S256
+}
+
+# when the code comes back, check it against that same login
+txn = pending.pop(params["state"])
+iss = params.get("iss")
+if iss is not None:
+    if iss != txn["issuer"]:           # simple string comparison
+        raise AuthError("issuer mismatch: stop")
+elif txn["sends_iss"]:
+    raise AuthError("iss missing: reject")
+
+# only now redeem params["code"], with txn["verifier"]
+```
+
+There is a limit. The check only protects you when the server sends `iss`. Authorization servers SHOULD send it, and the missing-`iss` rule covers the ones that say they do.
+
+**How to check.** In a test, send the redirect back with a different `iss`. The client must stop before it calls any token endpoint. Then remove `iss` from a server that advertises it. The client must reject that response too.
+
+## 8. Break one leg of the lethal trifecta
+
+**The attack.** Simon Willison's [lethal trifecta](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) has three legs: private data, untrusted content, and a way to send data out. If your agent combines all three, an attacker can easily trick it into accessing your private data and sending it to them. Willison cites the GitHub exploit from step 3, where one MCP server mixed all three in a single tool. OAuth decides who may call a server. It has no say over what the model believes.
+
+**What to do.** No filter catches everything. Willison writes that we still don't know how to prevent this 100% reliably, and that in web application security 95% is a failing grade. So remove a leg. Keep tools that read private data away from tools that can send data out, or check every outbound call in code, outside the model. A [design patterns paper](https://arxiv.org/abs/2506.08837) by Beurer-Kellner and colleagues sets the rule: once an agent has taken in untrusted input, it must be constrained so that input cannot trigger consequential actions. In their plan-then-execute pattern, tool outputs can feed back to the agent, but they cannot change which actions it takes. A check at the call itself is the [Capability Gate](/patterns/capability-gate/) pattern.
+
+```python
+READS_PRIVATE = {"read_repo", "query_db", "read_inbox"}
+SENDS_OUT = {"create_pull_request", "send_email", "fetch_url"}
+NEITHER = {"get_weather"}
+KNOWN = READS_PRIVATE | SENDS_OUT | NEITHER
+
+def gate(session, tool: str) -> None:
+    # runs before every tool call, outside the model
+    if tool not in KNOWN:
+        raise Blocked(f"{tool} is not classified: deny")
+    if tool in READS_PRIVATE:
+        session.saw_private_data = True
+    if tool in SENDS_OUT and session.saw_private_data:
+        raise Blocked(f"{tool} after private data: ask a person")
+```
+
+Deny by default. Every tool must be classified before the agent may use it. An unknown tool that can reach a URL is a way out you never listed.
+
+**How to check.** List each agent's tools. Mark which read private data, which take in untrusted content, and which can send data out. No agent should hold all three. Then run three test calls against the gate itself, with no model involved. A send after a private read must be blocked. A tool you never classified must be blocked. A send with no private read must still go through.
+
+## What the spec leaves to you
+
+The spec says MCP itself [cannot enforce its security principles](https://modelcontextprotocol.io/specification/2026-07-28) at the protocol level. It says tools represent arbitrary code execution and must be treated with appropriate caution. Most of its firm rules cover transport and authorization, the subject of steps 5 to 7. Against poisoned descriptions and injected results, the [Tools spec](https://modelcontextprotocol.io/specification/2026-07-28/server/tools) asks for much less:
+
+- SHOULD: a human in the loop who can deny a tool call.
+- SHOULD: show tool inputs to the user before calling the server.
+- MUST: treat tool annotations, the optional properties that describe a tool's behaviour, as untrusted unless they come from a trusted server.
+
+Re-asking when a tool changes isn't required at all, as the [MCP docs](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/local-server-security) note. Steps 1 to 4 and step 8 are yours.
+
+<PullQuote>The model reads the words. Your code sets the limits.</PullQuote>
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 0E: Connecting Your Agent to MCP", href: "/book/00e-connecting-to-mcp/" },
+    { label: "Ch 11: Security Deep Dive", href: "/book/11-security/" },
+    { label: "Ch 13: Agent Protocols in Production", href: "/book/13-agent-protocols-in-production/" },
+  ]}
+  readNext={{ label: "Pattern: Capability Gate", href: "/patterns/capability-gate/" }}
+/>
