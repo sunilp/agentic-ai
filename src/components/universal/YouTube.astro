@@ -1,0 +1,145 @@
+---
+/**
+ * YouTube: a click-to-load video embed.
+ *
+ * Shows a local poster and loads the youtube-nocookie.com player only when the
+ * reader presses play, so the page makes no request to YouTube until then.
+ * Without JavaScript, or on a modified click, the poster is a plain link to the
+ * video on youtube.com.
+ *
+ * `poster` is a PNG under /assets/ with a sibling .webp of the same name.
+ * Anything in the default slot becomes the caption.
+ */
+interface Props {
+  videoId: string;
+  title: string;
+  poster: string;
+  eager?: boolean;
+}
+
+const { videoId, title, poster, eager = false } = Astro.props;
+const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
+const hasCaption = Astro.slots.has('default');
+---
+
+<figure class="yt">
+  <div class="yt__frame">
+    <a
+      class="yt__play"
+      href={watchUrl}
+      data-youtube-id={videoId}
+      data-youtube-title={title}
+      aria-label={`Play video: ${title}`}
+    >
+      <picture>
+        <source srcset={poster.replace(/\.png$/, '.webp')} type="image/webp" />
+        <img
+          class="yt__poster"
+          src={poster}
+          alt=""
+          width="1280"
+          height="720"
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      </picture>
+      <span class="yt__button" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="30" height="30" focusable="false">
+          <path d="M8 5.5v13l10.5-6.5z" fill="currentColor" />
+        </svg>
+      </span>
+    </a>
+  </div>
+  {hasCaption && <figcaption><slot /></figcaption>}
+</figure>
+
+<script>
+  // One delegated listener on the document. Module scripts run once per visit,
+  // and the site's ClientRouter swaps pages without reloading, so a listener
+  // bound to the link itself would be lost after the first navigation.
+  const PLAYER = 'https://www.youtube-nocookie.com/embed/';
+
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    const link = target?.closest<HTMLAnchorElement>('a[data-youtube-id]');
+    if (!link) return;
+    // Let a modified click open youtube.com in a new tab as usual.
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+
+    const iframe = document.createElement('iframe');
+    iframe.src = `${PLAYER}${encodeURIComponent(link.dataset.youtubeId ?? '')}?autoplay=1&rel=0`;
+    iframe.title = link.dataset.youtubeTitle ?? 'YouTube video';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    link.replaceWith(iframe);
+    iframe.focus();
+  });
+</script>
+
+<style>
+  .yt { margin: var(--space-6) 0; }
+
+  .yt__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--ink);
+    border: 1px solid var(--fg-faint);
+    border-radius: var(--radius-sm);
+  }
+
+  .yt__play,
+  .yt__frame :global(iframe) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* Beats the shared `.prose figure img` border and auto height. */
+  .yt__poster {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .yt__button {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(26, 26, 26, 0.82);
+    color: var(--paper);
+    transition: background var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  }
+
+  .yt__button svg { margin-left: 4px; }
+
+  .yt__play:hover .yt__button,
+  .yt__play:focus-visible .yt__button {
+    background: var(--brick);
+    transform: scale(1.06);
+  }
+
+  .yt__play:focus-visible {
+    outline: 2px solid var(--brick);
+    outline-offset: -4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .yt__button { transition: none; }
+    .yt__play:hover .yt__button,
+    .yt__play:focus-visible .yt__button { transform: none; }
+  }
+</style>
