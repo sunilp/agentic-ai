@@ -143,6 +143,13 @@ MCP, the Model Context Protocol, is an [open standard](https://modelcontextproto
 
 The video traces one MCP call on the 2026-07-28 spec, the [current version](https://modelcontextprotocol.io/specification/versioning), and ends with a checklist. This page is that checklist, with the reasons.
 
+<YouTube
+  videoId="Fh_lMyjngMA"
+  title="How MCP Works, and How It Gets Attacked"
+  poster="/assets/video/mcp-explained-poster.png"
+  eager
+>How MCP Works, and How It Gets Attacked. The narration is an AI clone of my voice.</YouTube>
+
 ## Three ways in
 
 Start with one example. Invariant Labs built a [proof of concept](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) on their own test server: a tool called `add`. Its description tells the model to read `~/.ssh/id_rsa` and pass the contents out in a hidden argument called `sidenote`. The model sees the whole description. Users usually see a short version. When Invariant ran it in Cursor, the agent read the user's MCP config and SSH keys and sent them to the server.
