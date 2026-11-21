@@ -1,0 +1,452 @@
+---
+id: fn-008
+title: "Build an AI agent with JamJet: nine steps, three ideas"
+dek: "A three-part Python code-along. We build a venue-booking agent from an empty folder, watch it pay a deposit nobody approved, then give the decision to code and the memory to the engine. Every step runs without an API key."
+description: "The companion page to the YouTube code-along Build an AI Agent with JamJet: each episode with its chapters, the nine steps and every command, the three challenges and their answers, and what JamJet 0.13.0 does not do yet. Every step runs without an API key."
+primaryChapter: ch-05
+banner: /assets/banners/fn-008.png
+date: 2026-11-21
+readingTime: 12
+pullQuote: The model only asks. Your code decides. The engine remembers.
+references: [ch-02, ch-05, ch-10]
+patterns: [approval-gate, capability-gate, decision-record]
+sources:
+  - title: "venue-booking-agent: the series README (examples/venue-booking-agent)"
+    url: https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent
+    authors: [JamJet]
+    year: 2026
+  - title: "Step 02: tools (README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-02-tools/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "Step 03: a payment nobody approved (README and venue_tools.py)"
+    url: https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-03-pay-deposit
+    authors: [JamJet]
+    year: 2026
+  - title: "Step 04: a budget cap (README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-04-budget/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "Step 05: ask first (README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-05-ask-first/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "Step 06: the engine blocks a cancellation (README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-06-block/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "Step 07: the engine crashes (README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-07-engine-crash/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "Step 08: what the engine remembers (README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-08-what-it-remembers/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "Step 09: the audit (README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-09-audit/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "Episode 1 challenge: a weather tool (solution README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/solutions/ep1-weather-tool/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "Episode 2 challenge: approval only above 300 (solution README)"
+    url: https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/solutions/ep2-approval-above-300/README.md
+    authors: [JamJet]
+    year: 2026
+  - title: "jamjet tools/decorators.py at python-sdk-v0.13.0"
+    url: https://github.com/jamjet-labs/jamjet/blob/python-sdk-v0.13.0/sdk/python/jamjet/tools/decorators.py
+    authors: [JamJet]
+    year: 2026
+  - title: "jamjet agents/agent.py at python-sdk-v0.13.0"
+    url: https://github.com/jamjet-labs/jamjet/blob/python-sdk-v0.13.0/sdk/python/jamjet/agents/agent.py
+    authors: [JamJet]
+    year: 2026
+  - title: "jamjet 0.13.0 on PyPI"
+    url: https://pypi.org/project/jamjet/0.13.0/
+    authors: [JamJet]
+    year: 2026
+  - title: "Approvals (Runtime), JamJet docs"
+    url: https://docs.jamjet.dev/en/docs/open-source/approvals
+    authors: [JamJet]
+    year: 2026
+  - title: "Governance (on by default), JamJet docs"
+    url: https://docs.jamjet.dev/en/docs/open-source/governance
+    authors: [JamJet]
+    year: 2026
+  - title: "Reliability, JamJet docs"
+    url: https://docs.jamjet.dev/en/docs/open-source/reliability
+    authors: [JamJet]
+    year: 2026
+  - title: "Build an AI Agent with JamJet (Python Code-Along), YouTube playlist"
+    url: https://www.youtube.com/playlist?list=PLD5Bg9vUNgik
+    authors: [Prakash S.]
+    year: 2026
+---
+
+import YouTube from '~/components/universal/YouTube.astro';
+import PullQuote from '~/components/universal/PullQuote.astro';
+import Footer3Col from '~/components/universal/Footer3Col.astro';
+
+An AI agent books a venue and pays a 500 deposit. Nobody approved it, and nothing in the code checked. That is where this series starts.
+
+Over three short episodes we build one agent with JamJet, an [open-source agent runtime](https://github.com/jamjet-labs/jamjet). The agent books event venues for a product launch team, from [two made-up venues in Lisbon](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-03-pay-deposit/venue_tools.py). By the end it can't pay unless a person says yes, and it can tell you who did. [Nothing is really booked or paid](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent). A payment is one line in a log file.
+
+This page has every command from the three episodes. It also has the nine steps, the three challenges with their answers, and the limits the episodes own up to. The code is in the [JamJet repo](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent), one folder per step, on [JamJet 0.13.0](https://pypi.org/project/jamjet/0.13.0/). The episodes are in one [playlist](https://www.youtube.com/playlist?list=PLD5Bg9vUNgik).
+
+## Three ideas
+
+**The model only asks.** An agent is a model, some tools and a loop. The model reads your request and either answers or asks for a tool. JamJet runs the tool, which is your own Python function, and [hands the result back](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-02-tools/README.md). The model never runs anything itself. That is Part 1.
+
+**Your code decides.** If the model only asks, the place to say no is outside it. In Part 2 the agent gets three rules in code: a [token budget](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-04-budget/README.md), a policy that [holds `pay_deposit` until a person approves it](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-05-ask-first/README.md), and a policy that [blocks every `cancel_` tool](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-06-block/README.md) outright. The model can still ask for anything. Whether it happens is up to the policy, and to you.
+
+**The engine remembers.** An approval needs something that can hold a run and wait for a person. That is the JamJet engine. It [writes every step of a run to a log](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-08-what-it-remembers/README.md) as it goes. The log stays on disk, in `.jamjet/` in the folder where you start it. In Part 3 we kill the engine while a payment waits, and the agent still pays once. Then `jamjet audit` answers who approved the payment. It builds the answer from the [engine's event log and approval records](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-09-audit/README.md), never from what the model said.
+
+## The nine steps
+
+Each step is a folder you can run on its own. Steps 1 to 4 run in one Python process. Steps 5 to 9 are durable: the engine owns the run, so `jamjet dev` has to be [running in another terminal](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent).
+
+| Step | Folder | What it shows |
+|---|---|---|
+| 1 | [step-01-first-agent](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-01-first-agent) | An agent: a model and instructions. It can answer, not act. |
+| 2 | [step-02-tools](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-02-tools) | Two tools, `search_venues` and `check_dates`, and the loop |
+| 3 | [step-03-pay-deposit](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-03-pay-deposit) | A `pay_deposit` tool that pays with no checks |
+| 4 | [step-04-budget](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-04-budget) | A token budget that stops a looping run |
+| 5 | [step-05-ask-first](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-05-ask-first) | Approval before `pay_deposit`: the run waits for your yes |
+| 6 | [step-06-block](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-06-block) | A blocked `cancel_booking` tool, and the audit says why the run failed |
+| 7 | [step-07-engine-crash](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-07-engine-crash) | Kill the engine while a payment waits. It still pays once. |
+| 8 | [step-08-what-it-remembers](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-08-what-it-remembers) | The event log the engine picked the run up from |
+| 9 | [step-09-audit](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent/step-09-audit) | The audit: who approved this? |
+
+Part 1 covers steps 1 to 3, Part 2 steps 4 to 6, and Part 3 steps 7 to 9.
+
+## Run it without an API key
+
+You need [Python 3.11 or newer](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent). By default every step runs on a scripted model. It answers from a `script.yaml` file next to the code, so you need no API key and no network. The first line of every run says which model it is using.
+
+Make a folder and a virtual environment, then install JamJet 0.13.0. The `sidecar` extra is for the engine, which you start in Part 2.
+
+```bash
+mkdir venue && cd venue
+python3 -m venv .venv
+source .venv/bin/activate
+pip install "jamjet[sidecar]==0.13.0"
+```
+
+Before the first run, set a signing key for the audit log. Without it, JamJet prints a warning. From step 5 on you work in several terminals, and an `export` in one [does not reach the others](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-05-ask-first/README.md), so set it in each one.
+
+```bash
+export JAMJET_AUDIT_SIGNING_KEY=$(python -c "import secrets; print(secrets.token_hex(32))")
+```
+
+To build along, write the code as the episodes do. To skip ahead, or if you fall behind, copy that step's folder from the repo. Run it from inside the folder. Every folder is complete on its own.
+
+```bash
+git clone --depth 1 https://github.com/jamjet-labs/jamjet.git
+cd jamjet/examples/venue-booking-agent/step-01-first-agent
+python agent.py
+```
+
+To use a real model instead, install the model extra and set `VENUE_MODEL` and the provider's key:
+
+```bash
+pip install "jamjet[sidecar,model]==0.13.0"
+export ANTHROPIC_API_KEY=...
+VENUE_MODEL=anthropic/claude-sonnet-5-5 python agent.py
+```
+
+I ran the episodes on Claude Sonnet 5.5. A real model words its answers its own way and can call the tools in a different order. So [its output will not match](https://github.com/jamjet-labs/jamjet/tree/main/examples/venue-booking-agent) the expected output in each README. What runs, what waits for approval and what is blocked stay the same. From step 5 on, set the provider key in the engine's terminal too. [The engine's worker makes the model call](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-05-ask-first/README.md#notes), not `agent.py`.
+
+## Part 1: the model only asks
+
+<YouTube
+  videoId="VVLrZosEwhE"
+  title="Build Your First AI Agent with JamJet, Part 1"
+  poster="/assets/video/jamjet-codealong-1-poster.png"
+  eager
+>Part 1: steps 1 to 3. The narration is an AI clone of my voice, and the clips of me at my desk are AI-generated video.</YouTube>
+
+We start from an empty folder. An agent with a name, a model and instructions, then two tools and the loop, then a tool that pays. The agent pays because the prompt asked it to. Nothing in the code checks.
+
+Chapters:
+
+- [0:00](https://www.youtube.com/watch?v=VVLrZosEwhE&t=0s) An agent that paid without asking
+- [1:24](https://www.youtube.com/watch?v=VVLrZosEwhE&t=84s) What an agent is
+- [1:58](https://www.youtube.com/watch?v=VVLrZosEwhE&t=118s) Step 1: a first agent
+- [2:58](https://www.youtube.com/watch?v=VVLrZosEwhE&t=178s) Step 2: tools and the loop
+- [4:19](https://www.youtube.com/watch?v=VVLrZosEwhE&t=259s) Step 3: a tool that pays
+- [5:44](https://www.youtube.com/watch?v=VVLrZosEwhE&t=344s) Your turn
+
+### Steps 1 to 3
+
+Each of these steps runs in one process. In its folder:
+
+```bash
+python agent.py
+```
+
+**Step 1.** An agent has a name, a model and instructions. Mine ask for [plain text in 40 words or fewer](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-01-first-agent/agent.py), because the answer lands in a terminal. With no tools, it can answer and ask what it needs to know. That is all.
+
+**Step 2.** A tool is a plain Python function with the `@tool` decorator. JamJet takes its name, its type hints and its docstring, and that is what the model reads. Unless you pass a description, [the docstring is the description](https://github.com/jamjet-labs/jamjet/blob/python-sdk-v0.13.0/sdk/python/jamjet/tools/decorators.py). So write it for the model. The agent gets `strategy="react"`: call a tool, read the result, go again. The default strategy, plan-and-execute, [writes a plan first](https://github.com/jamjet-labs/jamjet/blob/python-sdk-v0.13.0/sdk/python/jamjet/agents/agent.py). This agent does not need one.
+
+**Step 3.** The risky tool. `pay_deposit` adds a line to `payments.log` each time it really runs. That line stands in for money.
+
+```python
+@tool
+def pay_deposit(venue: str, amount: float) -> str:
+    """Pay a venue deposit. In production this moves real money."""
+    with PAYMENTS.open("a") as f:
+        f.write(f"paid {amount} for {venue}\n")
+    return f"Deposit of {amount} paid for {venue}."
+```
+
+The scripted run [ends like this](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-03-pay-deposit/README.md):
+
+```text
+model: scripted (no API key)
+Booked Casa do Rio in Lisbon for 11 December. The 500 deposit is paid.
+called search_venues(city='Lisbon', date='2026-12-11')
+called check_dates(venue='Casa do Rio')
+called pay_deposit(venue='Casa do Rio', amount=500)
+payments.log: 1 line(s)
+```
+
+In the episode, my first prompt left the amount out. The real model found Casa do Rio, asked what deposit to pay, and paid nothing. With no key you will see it pay anyway, because the scripted model always asks for 500. Once the prompt said "and pay a 500 deposit", the real model paid too. Nothing in the code asked anyone. The only thing between the agent and the money was how I worded the prompt.
+
+## Part 2: your code decides
+
+<YouTube
+  videoId="tnqfI4vZt-g"
+  title="Make Your AI Agent Ask Before It Pays, Part 2"
+  poster="/assets/video/jamjet-codealong-2-poster.png"
+>Part 2: steps 4 to 6. The narration is an AI clone of my voice, and the clips of me at my desk are AI-generated video.</YouTube>
+
+The same agent, with rules under it. A token budget stops a runaway model, a policy holds `pay_deposit` until a person approves it from the command line, and a blocked tool can't run at all.
+
+Chapters:
+
+- [0:00](https://www.youtube.com/watch?v=tnqfI4vZt-g&t=0s) The payment nobody approved
+- [1:05](https://www.youtube.com/watch?v=tnqfI4vZt-g&t=65s) Step 4: a budget cap
+- [1:51](https://www.youtube.com/watch?v=tnqfI4vZt-g&t=111s) Step 5: ask first
+- [3:35](https://www.youtube.com/watch?v=tnqfI4vZt-g&t=215s) Step 6: block a tool
+- [4:22](https://www.youtube.com/watch?v=tnqfI4vZt-g&t=262s) The model proposes
+- [5:02](https://www.youtube.com/watch?v=tnqfI4vZt-g&t=302s) Your turn
+
+### Step 4: a budget
+
+One new argument on the agent, `budget={"tokens": 2000}`. JamJet [checks it before every model call](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-04-budget/README.md). The script plays a model stuck in a loop, so the run ends on:
+
+```text
+model: scripted (no API key)
+budget exceeded: tokens 2080 >= limit 2000
+```
+
+The total ends above the limit. The call that crosses the cap still finishes, because the check comes before the call. The prompt asks for every free date in December. In my runs, the real model asked for 31 searches in one turn, one for each day, about 3,000 tokens. The next call was refused.
+
+### Step 5: ask first
+
+Step 5 starts from the step 3 agent, without the budget. One policy line:
+
+```python
+policy={"require_approval_for": ["pay_deposit"]},
+```
+
+Run it in process first, the way every earlier step ran:
+
+```bash
+python try_in_process.py
+```
+
+It refuses with `ApprovalNotEnforceableError`. A single Python process has nothing that can hold a run at a gate. So [JamJet won't start it](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-05-ask-first/README.md#the-mistake). Nothing is paid. The [JamJet docs](https://docs.jamjet.dev/en/docs/open-source/governance) say the same: approval is enforced on the durable path.
+
+So `agent.py` uses `run_durable` inside an async `main`, and the engine owns the run. Open three terminals, all in the step folder, with the signing key set in each.
+
+Terminal 1, the engine:
+
+```bash
+jamjet dev --modules venue_tools
+```
+
+Terminal 2, the agent. It prints the model line, then waits at the gate:
+
+```bash
+python agent.py
+```
+
+It waits up to 5 minutes by default. If it gives up, run it again, or approve faster.
+
+Terminal 3, the approval. `jamjet approvals` lists the waiting run, the exact call it wants, and a ready `jamjet approve` command. Paste it and add `--as` with your name:
+
+```bash
+jamjet approvals
+jamjet approve exec_... --decision approved \
+  --node-id=... --action-digest=... --as alex
+```
+
+Terminal 2 picks up where it stopped and prints `payments.log: 1 line(s)`. One payment, and only after you said yes.
+
+### Step 6: block a tool
+
+Some tools should never run, whoever asks. A second rule blocks every tool whose name starts with `cancel_`. The agent also gets a `cancel_booking` tool, which writes to `cancellations.log`:
+
+```python
+policy={
+    "require_approval_for": ["pay_deposit"],
+    "blocked_tools": ["cancel_*"],
+},
+```
+
+Stop step 5's engine first (Ctrl-C). Then two terminals in the step folder: `jamjet dev --modules venue_tools` in one, `python agent.py` in the other. The [run fails](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-06-block/README.md). `cancellations.log` has 0 lines. Nothing was cancelled. The engine refused before the tool ran, and the model got no turn to argue.
+
+The failed line doesn't say why. Ask the engine, with the execution id the agent printed:
+
+```bash
+jamjet audit exec_...
+```
+
+Among its lines is `cancel_booking blocked`, with the reason: `tool 'cancel_booking' matches blocked pattern 'cancel_*'`.
+
+The same three rules fit a refund agent or an ops agent. Let the cheap actions run, hold the costly ones, and block the dangerous ones.
+
+## Part 3: the engine remembers
+
+{/*
+  EPISODE 3 SLOT. Part 3 is not public yet. When it is:
+  1. Uncomment the YouTube block below and replace EP3_VIDEO_ID with its id.
+  2. Copy master/thumbnail-youtube-long.png from reels/jamjet-codealong-3 to
+     public/assets/video/jamjet-codealong-3-poster.png, and make the .webp beside it
+     (cwebp -q 80).
+  3. Uncomment the chapter list, put EP3_VIDEO_ID in each link, and check every
+     stamp and title against the published description (these are from the
+     render of 2026-11-20, qa/chapters.json).
+  4. Delete the "Part 3 comes out soon" line.
+
+<YouTube
+  videoId="EP3_VIDEO_ID"
+  title="Build an AI Agent with JamJet, Part 3"
+  poster="/assets/video/jamjet-codealong-3-poster.png"
+>Part 3: steps 7 to 9. The narration is an AI clone of my voice, and the clips of me at my desk are AI-generated video.</YouTube>
+
+Chapters:
+
+- [0:00](https://www.youtube.com/watch?v=EP3_VIDEO_ID&t=0s) The engine dies mid-payment
+- [0:57](https://www.youtube.com/watch?v=EP3_VIDEO_ID&t=57s) Step 7: kill the engine
+- [2:13](https://www.youtube.com/watch?v=EP3_VIDEO_ID&t=133s) Step 8: what it remembers
+- [4:04](https://www.youtube.com/watch?v=EP3_VIDEO_ID&t=244s) Step 9: who approved this?
+- [4:57](https://www.youtube.com/watch?v=EP3_VIDEO_ID&t=297s) Three episodes
+- [5:33](https://www.youtube.com/watch?v=EP3_VIDEO_ID&t=333s) Your turn
+*/}
+
+Part 3 comes out soon, in the [same playlist](https://www.youtube.com/playlist?list=PLD5Bg9vUNgik). Every command is already here.
+
+We kill the engine while the payment waits for approval, restart it, and the agent pays exactly once. The engine's event log shows why, and the audit answers who approved the payment. The code does not change. These last three steps break things and read what is left.
+
+### Step 7: kill the engine
+
+The code goes back to step 5. If you are building along, [copy `agent.py`, `venue_tools.py` and `script.yaml`](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-07-engine-crash/README.md) from `step-05-ask-first` into the step 7 folder. The repo's folder already has them. Stop step 6's engine first.
+
+Open three terminals in the step 7 folder, with the signing key set in each.
+
+Terminal 1, the engine:
+
+```bash
+jamjet dev --modules venue_tools
+```
+
+Terminal 2, the agent, which prints the model line and waits at the gate:
+
+```bash
+python agent.py
+```
+
+Terminal 3. Check the payment is waiting, but don't approve it yet:
+
+```bash
+jamjet approvals
+```
+
+Now kill the engine, hard. First run `pgrep -f jamjet-server` on its own and check it prints one id. If another `jamjet-server` is running on your machine, the kill would end it too. Then, in terminal 3:
+
+```bash
+kill -9 $(pgrep -f jamjet-server)
+```
+
+`kill -9` gives the engine no chance to clean up. Terminal 1 shows `jamjet dev` stopping the rest of the stack. The README says this step is tested on macOS, not yet on Linux.
+
+Terminal 2 doesn't fail and doesn't pay. It says it lost the engine and keeps waiting:
+
+```text
+jamjet: lost the engine at http://127.0.0.1:7700; waiting for it to come back (execution exec_...)
+```
+
+Start the engine again in terminal 1, from the same folder, because `.jamjet/` holds the run:
+
+```bash
+jamjet dev --modules venue_tools
+```
+
+Terminal 2 prints `jamjet: the engine is back; resuming the wait`. In terminal 3, run `jamjet approvals` again. The run can take a few seconds to show up. Paste the approve command and add `--as`, as in step 5. Terminal 2 finishes with `payments.log: 1 line(s)`. The crash didn't make it pay twice. The run wasn't lost.
+
+### Step 8: what it remembers
+
+Nothing changes in the code. Keep the restarted engine running, and in another terminal in the step 8 folder:
+
+```bash
+jamjet executions
+jamjet events exec_...
+jamjet events exec_... --node __tools_2__
+```
+
+`jamjet executions` lists the run as `completed`, even though the engine died in the middle of it. `jamjet events` prints [the engine's log](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-08-what-it-remembers/README.md) for the run. `--node` keeps only the payment step. Pass the node on the `tool_approval_required` row. It depends on the tools the model called first, so a real model that skips `check_dates` gets `__tools_1__`.
+
+Two rows carry the point. `tool_approval_required` is the run stopping at the gate, and `approval_received` is your approval. The kill and the restart happened between them. The log doesn't mark them. After the restart the engine picked the run up from what it keeps in `.jamjet/`. The search was done and the payment was waiting for a person, so it went back to waiting. When you approved, `pay_deposit` ran once. The [JamJet docs](https://docs.jamjet.dev/en/docs/open-source/approvals) describe the same: the hold is an event in the event log, so a crash or restart does not lose the pending decision.
+
+### Step 9: who approved this?
+
+Nothing changes in the code here either. With the same engine running, in the step 9 folder:
+
+```bash
+jamjet audit exec_...
+jamjet audit exec_... --json
+```
+
+The audit lists what the model asked for, the approval, what ran, and when. The [last line](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-09-audit/README.md) is the answer, in the README's sample run:
+
+```text
+pay_deposit ran 1 time, approved by tester at 06:28:01
+```
+
+The times are UTC. Higher up, the approval line has `dev mode, name not verified` beside the name. In dev mode the engine takes whatever name you type after `--as` and doesn't check it. The audit says so itself. Add `--json` and you get the same rows as data, for checking a run from a script.
+
+## The three challenges
+
+Each episode ends with a challenge. Try it before you open the answer.
+
+**Part 1: add a weather tool.** Start from `step-03-pay-deposit`. Give the agent a tool that warns you if it will rain on the day. You need a function, a docstring, the decorator and one more name in the tools list. Then ask about rain in the prompt. With no key, add a turn to `script.yaml` for the scripted model. It works when you see `called get_weather`. The answer is in [solutions/ep1-weather-tool](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/solutions/ep1-weather-tool/README.md).
+
+**Part 2: approval only above 300.** Start from `step-05-ask-first`. Let deposits of 300 or less through, and ask a person only above that. A hint: the policy matches tool names. It never looks at the amount. It works when 200 pays without waiting. The answer is in [solutions/ep2-approval-above-300](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/solutions/ep2-approval-above-300/README.md).
+
+**Part 3: kill it at a different moment.** Start from `step-07-engine-crash`. Run `kill -9` about a second and a half after you start the agent, while it is still searching. Before you look, guess how many lines `payments.log` will have. Then read the audit, and count. The answer is in step 8's README, under ["Try it yourself"](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-08-what-it-remembers/README.md#try-it-yourself).
+
+## What it does not do
+
+The episodes say these out loud. They are worth knowing before you build on this.
+
+- **The payments are simulated.** `pay_deposit` writes a line to `payments.log`. In production that tool would move real money.
+- **Dev mode does not verify names.** Whatever you type after `--as` goes into the audit as the approver, marked `dev mode, name not verified`. Real identity for approvers is outside this series.
+- **0.13.0 does not resume a tool cut off halfway.** The engine surviving a crash is not the same as the worker surviving one. Kill the worker in the middle of a tool and [that run fails](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-08-what-it-remembers/README.md#the-limit). The run in step 7 survived because nothing was running when the engine died.
+- **The run lives in the folder you started the engine from.** It is in `.jamjet/` there. Start the engine from another folder, step 8's for example, and that engine has [no record of the run](https://github.com/jamjet-labs/jamjet/blob/main/examples/venue-booking-agent/step-07-engine-crash/README.md#if-you-restart-it-from-another-folder). `jamjet approvals` says no approvals are waiting. The agent stops with `404 Not Found`. The run is still on disk in the first folder. Stop that engine, start it from the step 7 folder, and the payment is back at the gate. The agent script has stopped by then, so check the result with `jamjet audit`.
+- **A budget stops a runaway loop, not one expensive call.** The cap is checked before each call, so the call that crosses it finishes.
+- **The approval policy matches tool names, not arguments.** That is why the Part 2 challenge splits the payment into two tools.
+
+<PullQuote>The model only asks. Your code decides. The engine remembers.</PullQuote>
+
+<Footer3Col
+  fromBook={[
+    { label: "Ch 2: Tools, Context, and the Agent Loop", href: "/book/02-tools-context-agent-loop/" },
+    { label: "Ch 5: Human-in-the-Loop as Architecture", href: "/book/05-human-in-the-loop/" },
+    { label: "Ch 10: Governance and Auditability", href: "/book/10-governance/" },
+  ]}
+  readNext={{ label: "Pattern: Approval Gate", href: "/patterns/approval-gate/" }}
+/>
