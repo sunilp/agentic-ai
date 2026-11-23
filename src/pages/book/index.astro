@@ -24,7 +24,7 @@ const bookSchema = {
   '@type': 'Book',
   name: BOOK_TITLE,
   description: 'A practical field guide to building reliable, evaluable, production-grade agent systems.',
-  author: { '@type': 'Person', name: 'Sunil Prakash', url: 'https://sunilprakash.com' },
+  author: { '@type': 'Person', '@id': 'https://sunilprakash.com/#person', name: 'Sunil Prakash', url: 'https://sunilprakash.com/' },
   url: new URL('/book/', Astro.site).toString(),
   image: new URL('/assets/images/book-cover.jpg', Astro.site).toString(),
   sameAs: AMAZON_URL,
